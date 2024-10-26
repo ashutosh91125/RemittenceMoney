@@ -371,7 +371,7 @@ public class AgentController {
 					} else {
 						logger.warn("Timezone not found: {}", timezone.getTimeZoneId());
 					}
-				}
+				}  
 				agent.setTimeZone(managedTimeZones);
 			}
 			// Handle Currencies

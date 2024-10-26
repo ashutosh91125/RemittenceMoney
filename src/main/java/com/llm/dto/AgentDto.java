@@ -65,6 +65,6 @@ public class AgentDto {
 	private Boolean statusFlag;
 	private List<Currency> currencies;
 	private SubAgent subagents;
-	private String password;
+
 
 }

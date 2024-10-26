@@ -371,7 +371,7 @@ public class AgentController {
 					} else {
 						logger.warn("Timezone not found: {}", timezone.getTimeZoneId());
 					}
-				}  
+				}
 				agent.setTimeZone(managedTimeZones);
 			}
 			// Handle Currencies
@@ -476,21 +476,15 @@ public class AgentController {
 	}
 
 	@PostMapping("/agentlogin")
-	public String processLogin(@ModelAttribute("agentDTO") AgentDto agentDTO, Model model) {
-		try {
-			Agent agent = agentService.getByEmail(agentDTO.getEmail());
-			if (agent != null && agent.getAdminPassword().equals(agentDTO.getAdminPassword())) {
+	public String loginAgent(@ModelAttribute("agentDTO") AgentDto agentDto, Model model) {
+		Agent agent = agentService.getByEmail(agentDto.getEmail());
 
-				model.addAttribute("loggedInAgent", agent);
-				return "redirect:/agentlist";
-			} else {
-				model.addAttribute("errorMessage", "Invalid email or password");
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "An error occurred while processing the login");
+		if (agent != null && agent.getAdminPassword().equals(agentDto.getAdminPassword())) {
+			return "redirect:/agentlist";
+		} else {
+			model.addAttribute("error", "Invalid email or password");
+			return "agentlogin";
 		}
-		return "login";
 	}
 
 	private Long getLongValue(Object value) {

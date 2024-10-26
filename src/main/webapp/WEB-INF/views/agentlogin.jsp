@@ -48,8 +48,8 @@
 									placeholder="Email" required="true" />
 							</div>
 							<div class="mb-3">
-								<form:password path="password" class="form-control"
-									placeholder="Password" value="123456" required="true" />
+								<form:password path="adminPassword" class="form-control"
+									placeholder="Password" required="true" />
 							</div>
 							<div class="d-flex align-items-center justify-content-between">
 								<div>

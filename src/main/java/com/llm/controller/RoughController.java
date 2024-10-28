@@ -29,9 +29,9 @@ public class RoughController {
 	public String createCustomer() {
 		return "customercreate";
 	}
-	@GetMapping("/subheader")
-	public String subHeader() {
-		return "subheader";
+	@GetMapping("/transfer")
+	public String transfer() {
+		return "transfer";
 	}
 	@GetMapping("/customer-onboard")
 	public String customerOnBoard() {

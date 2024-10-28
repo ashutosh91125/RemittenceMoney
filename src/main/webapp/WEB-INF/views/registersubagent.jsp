@@ -52,7 +52,7 @@
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Company</label>
-									<form:select path="agent">
+									<form:select path="agent" class="form-control" multiple="false">
 										<form:options items="${agentList}" itemValue="aId"
 											itemLabel="companyName" />
 									</form:select>

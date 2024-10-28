@@ -37,7 +37,7 @@
 <script type="text/javascript">
 	function agentClick() {
 		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "show", true);
+		xhr.open("GET", "agentlist", true);
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				document.getElementById("agent_Id").innerHTML = xhr.responseText;
@@ -82,7 +82,7 @@
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Remittance
-						</span></i></span>
+						</span>
 					</a></li>
 
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"

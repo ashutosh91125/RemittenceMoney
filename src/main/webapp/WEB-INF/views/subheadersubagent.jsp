@@ -31,24 +31,44 @@
 	href="assets/vendors/css/datepicker.min.css">
 
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+<script type="text/javascript">
+<script>
+// Get the current path of the page (e.g., "registersubagent.jsp")
+const currentPath = window.location.pathname.split('/').pop();
 
+// Select all links with the class 'nav-link'
+const links = document.querySelectorAll('.nav-link');
+
+
+links.forEach(link => {
+    // Check if the link's href matches the current path
+    if (link.getAttribute('href') === currentPath) {
+        // Add the 'active' class if it matches
+        link.classList.add('active');
+    } else {
+        // Remove the 'active' class from links that don't match (optional)
+        link.classList.remove('active');
+    }
+});
+</script>
 </head>
 
 <body>
 	<ul class="nav nav-tabs flex-wrap w-100 text-center customers-nav-tabs"
 		id="myTab" role="tablist">
 		<li class="nav-item flex-fill border-top" role="presentation"><a
-			href="javascript:void(0);" class="nav-link active"
+			href="registersubagent.jsp" class="nav-link active"
 			data-bs-toggle="tab" data-bs-target="#profileTab" role="tab">Agent
 				Details</a></li>
 		<li class="nav-item flex-fill border-top" role="presentation"><a
-			href="javascript:void(0);" class="nav-link" data-bs-toggle="tab"
-			data-bs-target="#passwordTab" role="tab">Contact Details</a></li>
+			href="contactdetailssubagent.jsp" class="nav-link"
+			data-bs-toggle="tab" data-bs-target="#passwordTab" role="tab">Contact
+				Details</a></li>
 		<li class="nav-item flex-fill border-top" role="presentation"><a
-			href="javascript:void(0);" class="nav-link" data-bs-toggle="tab"
+			href="regurilitysubagent.jsp" class="nav-link" data-bs-toggle="tab"
 			data-bs-target="#billingTab" role="tab">Regulatory Details </a></li>
 		<li class="nav-item flex-fill border-top" role="presentation"><a
-			href="javascript:void(0);" class="nav-link" data-bs-toggle="tab"
+			href="auditsubagent.jsp" class="nav-link" data-bs-toggle="tab"
 			data-bs-target="#connectionTab" role="tab">Audit Tails</a></li>
 	</ul>
 

@@ -1,5 +1,7 @@
 package com.llm.model;
 
+import com.llm.model.response.Data;
+
 @lombok.Data
 public class OnboardingSuccessResponse {
 

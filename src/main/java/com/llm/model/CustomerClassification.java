@@ -1,7 +1,12 @@
 package com.llm.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -12,88 +17,122 @@ public class CustomerClassification {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonProperty("customer_type_id")
     @Column(name = "customer_type_id")
-    private long customerTypeId;
+    private Integer customerTypeId;
 
+    @JsonProperty("annual_income_range_id")
     @Column(name = "annual_income_range_id")
-    private long annualIncomeRangeId;
+    private Integer annualIncomeRangeId;
 
-    @Column(name = "annual_income_currency_code", length = 10)
+    @JsonProperty("annual_income_currency_code")
+    @Column(name = "annual_income_currency_code", length = 3)
     private String annualIncomeCurrencyCode;
 
-    @Column(name = "social_security_number", length = 30)
+    @JsonProperty("social_security_number")
+    @Column(name = "social_security_number", length = 20)
     private String socialSecurityNumber;
 
+    @JsonProperty("tax_registration_number")
     @Column(name = "tax_registration_number")
-    private long taxRegistrationNumber;
+    private Integer taxRegistrationNumber;
 
+    @JsonProperty("txn_issued_country")
     @Column(name = "txn_issued_country", length = 2)
     private String txnIssuedCountry;
 
-    @Column(name = "employer_name", length = 100)
+    @JsonProperty("employer_name")
+    @Column(name = "employer_name", length = 255)
     private String employerName;
 
-    @Column(name = "employer_address")
+    @JsonProperty("employer_address")
+    @Column(name = "employer_address", length = 255)
     private String employerAddress;
 
+    @JsonProperty("employer_phone")
     @Column(name = "employer_phone", length = 20)
     private String employerPhone;
 
-    @Column(name = "employer_ecrn", length = 20)
-    private String employerEcrn;
-
-    @Column(name = "employer_establishment_id", length = 50)
+    @JsonProperty("employer_establishment_id")
+    @Column(name = "employer_establishment_id", length = 255)
     private String employerEstablishmentId;
 
+    @JsonProperty("risk_rating_id")
     @Column(name = "risk_rating_id")
-    private long riskRatingId;
+    private Integer riskRatingId;
 
+    @JsonProperty("pep_category")
     @Column(name = "pep_category")
-    private int pepCategory;
+    private Integer pepCategory;
 
+    @JsonProperty("personal_mohre_id")
     @Column(name = "personal_mohre_id", length = 50)
     private String personalMohreId;
 
+    @JsonProperty("income_type")
     @Column(name = "income_type")
-    private long incomeType;
+    private Integer incomeType;
 
-    @Column(name = "profession_category", length = 50)
+    @JsonProperty("profession_category")
+    @Column(name = "profession_category", length = 10)
     private String professionCategory;
 
-    @Column(name = "reason_for_acc")
+    @JsonProperty("reason_for_acc")
+    @Column(name = "reason_for_acc", length = 100)
     private String reasonForAcc;
 
+    @JsonProperty("txn_vol_month")
     @Column(name = "txn_vol_month")
-    private long txnVolMonth;
+    private Integer txnVolMonth;
 
+    @JsonProperty("txn_count_month")
     @Column(name = "txn_count_month")
-    private long txnCountMonth;
+    private Integer txnCountMonth;
 
+    @JsonProperty("show_remarks_on_txn")
     @Column(name = "show_remarks_on_txn")
     private Boolean showRemarksOnTxn;
 
-    @Column(name = "customer_remarks")
+    @JsonProperty("customer_remarks")
+    @Column(name = "customer_remarks", length = 500)
     private String customerRemarks;
 
-    @Column(name = "agent_ref_no", length = 50)
+    @JsonProperty("agent_ref_no")
+    @Column(name = "agent_ref_no", length = 100)
     private String agentRefNo;
 
-    @Column(name = "first_language", length = 5)
+    @JsonProperty("first_language")
+    @Column(name = "first_language", length = 2)
     private String firstLanguage;
 
+    @JsonProperty("marital_status")
     @Column(name = "marital_status")
-    private int maritalStatus;
+    private Integer maritalStatus;
 
+    @JsonProperty("dnfbp")
     @Column(name = "dnfbp")
     private Boolean dnfbp;
 
+    @JsonProperty("dpms")
     @Column(name = "dpms")
     private Boolean dpms;
 
+    @JsonProperty("profile_category")
     @Column(name = "profile_category")
-    private int profileCategory;
+    private Integer profileCategory;
 
-    // Instead of ManyToOne relation, just use the customer ID
-    @Column(name = "customer_id")
-    private Long customerId;
+    // Social Links Relation (One-to-Many)
+    @JsonProperty("social_links")
+    @JsonManagedReference
+    @OneToMany(mappedBy = "customerClassification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<SocialLink> socialLinks;
+
+    // Back Reference to Customer
+
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id")
+    @JsonBackReference
+    private Customer customer;
+
 }

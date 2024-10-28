@@ -32,8 +32,8 @@ public class CustomerRequest {
     private String updatedBy;
     private List<Document> additionalDocs;
     private List<Address> addressList;
-    private List<IdDetail> idDetails;
-    private CustomerClassification customerClassification;
+/*    private List<IdDetail> idDetails;
+    private CustomerClassification customerClassification;*/
 
 }
 

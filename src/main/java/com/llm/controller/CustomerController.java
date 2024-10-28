@@ -1,15 +1,19 @@
 package com.llm.controller;
 
 import com.llm.Service.CustomerService;
+import com.llm.Service.CustomerValidationService;
+import com.llm.Service.OnboardingService;
 import com.llm.model.Customer;
-import com.llm.model.CustomerResponse;
+import com.llm.model.CustomerValidationResponse;
+import com.llm.model.OnboardingSuccessResponse;
+import com.llm.model.request.CustomerValidationRequest;
+import com.llm.model.response.Data;
+import com.llm.util.AMLScanStatus;
+import com.llm.util.CustomerStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
@@ -20,20 +24,69 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<CustomerResponse> getCustomerDetails(@PathVariable Long id) {
-        Optional<Customer> customer = customerService.getById(id);
+    @Autowired
+    private CustomerValidationService customerValidationService;
+
+    @Autowired
+    private OnboardingService onboardingService;
+
+    // Endpoint 1: Get Customer Details by ID
+    @GetMapping("/{ecrn}")
+    public ResponseEntity<Customer> getCustomerDetails(@PathVariable String  ecrn) {
+        Optional<Customer> customer = customerService.getByEcrn(ecrn);
 
         if (!customer.isPresent()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if no customer is found
         }
 
-        CustomerResponse response = new CustomerResponse();
+        Customer response = new Customer();
+       // response.setStatus("success");
+       // response.setStatusCode(200);
+       //response.setData(customer.get());  // Mapping to the response DTO
+
+        return ResponseEntity.ok(customer.get());
+    }
+
+    // Endpoint 2: Validate Customer
+    @PostMapping("/validate")
+    public ResponseEntity<CustomerValidationResponse> validateCustomer(@RequestBody CustomerValidationRequest request) {
+        CustomerValidationResponse.CustomerData customerData = customerValidationService.validateCustomer(request.getIdNumber(), Integer.valueOf(request.getIdType()));
+
+        if (customerData == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if customer not found
+        }
+
+        CustomerValidationResponse response = new CustomerValidationResponse();
         response.setStatus("success");
         response.setStatusCode(200);
-
-        response.setData(customer.get());  
+        response.setData(customerData);
 
         return ResponseEntity.ok(response);
     }
+    // Endpoint 3: Onboard Customer
+    @PostMapping(value = "/onBoarding/customer", consumes = "application/json")
+    public ResponseEntity<OnboardingSuccessResponse> onboardCustomer(@RequestBody Customer customerRequest) {
+        // Call the onboarding service to save customer details
+        Customer customer = onboardingService.onboardCustomer(customerRequest);
+
+        // Create the success response
+        OnboardingSuccessResponse response = new OnboardingSuccessResponse();
+        response.setStatus("success");
+        response.setStatusCode(200);
+
+        // Populate the response with required data
+        Data responseData = new Data();
+        responseData.setAml_scan_status(AMLScanStatus.ACCEPTED); // Assuming this is determined elsewhere
+        responseData.setEcrn(customer.getEcrn()); // Assuming the customer has an ECRN field
+        responseData.setCustomer_status(CustomerStatus.ACTIVE.toString()); // Assuming the customer is active
+        responseData.setPep(customer.getPoliticalExposedPerson()); // Assuming there's a boolean field for PEP
+        responseData.setAml_category("2"); // Assuming a static value for now
+
+        response.setData(responseData);
+        response.setRequestId("4138e3038999d41b7534ce12a18a6031"); // Replace with dynamically generated request ID
+
+        // Return the response entity with a 200 status
+        return ResponseEntity.ok(response);
+    }
+
 }

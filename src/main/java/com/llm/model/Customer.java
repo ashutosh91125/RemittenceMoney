@@ -1,11 +1,22 @@
 package com.llm.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.persistence.*;
-import lombok.Data;
-
 import java.util.Date;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Data;
 
 @Data
 @Entity
@@ -16,104 +27,130 @@ public class Customer {
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
 
-        @Column(name = "id_number")
-        private String idNumber;
-
-        @Column(name = "id_type")
-        private String idType;
-
-        @Column(name = "channel", length = 50)
+        @JsonProperty("channel")
+        @Column(name = "channel", length = 20, nullable = false)
         private String channel;
 
-        @Column(name = "first_name", length = 100)
+        @JsonProperty("salutation")
+        @Column(name = "salutation", length = 3, nullable = false)
+        private String salutation;
+
+        @JsonProperty("first_name")
+        @Column(name = "first_name", length = 100, nullable = false)
         private String firstName;
 
+        @JsonProperty("middle_name")
         @Column(name = "middle_name", length = 60)
         private String middleName;
 
-        @Column(name = "last_name", length = 60)
+        @JsonProperty("last_name")
+        @Column(name = "last_name", length = 60, nullable = false)
         private String lastName;
 
-        @Column(name = "salutation", length = 10)
-        private String salutation;
-
-        @Column(name = "preferred_name")
+        @JsonProperty("preferred_name")
+        @Column(name = "preferred_name", length = 255)
         private String preferredName;
 
-        @Column(name = "nationality", length = 2)
+        @JsonProperty("nationality")
+        @Column(name = "nationality", length = 2, nullable = false)
         private String nationality;
 
+        @JsonProperty("second_nationality")
         @Column(name = "second_nationality", length = 2)
         private String secondNationality;
 
+        @JsonProperty("native_region")
         @Column(name = "native_region")
-        private int nativeRegion;
+        private Integer nativeRegion;
 
-        @Column(name = "date_of_birth")
+        @JsonProperty("date_of_birth")
+        @Column(name = "date_of_birth", nullable = false)
         private Date dateOfBirth;
 
-        @Column(name = "country_of_birth", length = 2)
+        @JsonProperty("country_of_birth")
+        @Column(name = "country_of_birth", length = 2, nullable = false)
         private String countryOfBirth;
 
+        @JsonProperty("place_of_birth")
         @Column(name = "place_of_birth", length = 40)
         private String placeOfBirth;
 
+        @JsonProperty("resident_type_id")
         @Column(name = "resident_type_id")
         private Long residentTypeId;
 
-        @Column(name = "country_of_residence", length = 2)
+        @JsonProperty("country_of_residence")
+        @Column(name = "country_of_residence", length = 2, nullable = false)
         private String countryOfResidence;
 
-        @Column(name = "gender", length = 10)
+        @JsonProperty("gender")
+        @Column(name = "gender", length = 12, nullable = false)
         private String gender;
 
-        @Column(name = "mothers_maiden_name")
+        @JsonProperty("mothers_maiden_name")
+        @Column(name = "mothers_maiden_name", length = 255)
         private String mothersMaidenName;
 
-        @Column(name = "primary_mobile_number", length = 20)
+        @JsonProperty("primary_mobile_number")
+        @Column(name = "primary_mobile_number", length = 20, nullable = false)
         private String primaryMobileNumber;
 
+        @JsonProperty("secondary_mobile_number")
         @Column(name = "secondary_mobile_number", length = 20)
         private String secondaryMobileNumber;
 
-        @Column(name = "email_id")
+        @JsonProperty("email_id")
+        @Column(name = "email_id", length = 255, nullable = false)
         private String emailId;
 
+        @JsonProperty("phone_number")
         @Column(name = "phone_number", length = 20)
         private String phoneNumber;
 
+        @JsonProperty("occupation_id")
         @Column(name = "occupation_id")
         private Long occupationId;
 
+        @JsonProperty("political_exposed_person")
         @Column(name = "political_exposed_person")
         private Boolean politicalExposedPerson;
 
+        @JsonProperty("updated_by")
         @Column(name = "updated_by", length = 50)
         private String updatedBy;
 
-        @OneToMany(mappedBy = "customerId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @JsonProperty("ecrn")
+        @Column(name = "ecrn", unique = true, length = 10, nullable = false)
+        private String ecrn;
+
+//        @PrePersist
+//        public void prePersist() {
+//                if (this.ecrn == null) {
+//                        this.ecrn = CustomerNumberUtil.generateUniqueCustomerNumber();
+//                }
+//        }
+
+        // Address List Relation (One-to-Many)
+        @JsonProperty("address_list")
+        @JsonManagedReference
+        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private List<Address> addressList;
 
-
-        // Apply @JsonManagedReference similarly to other relations as needed
-       /* @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        private List<IdDetail> idDetails;
-*/
+        // Additional Documents Relation (One-to-Many)
+        @JsonProperty("additional_docs")
+        @JsonManagedReference
         @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private List<Document> additionalDocs;
 
+        // ID Details (One-to-Many)
+        @JsonProperty("id_details")
+        @JsonManagedReference
         @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        private List<SocialLink> socialLinks;
+        private List<IdDetail> idDetails;
 
-
-
-        @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        @JoinColumn(name = "customer_classification_id", referencedColumnName = "customer_id")
+        // Customer Classification Relation (One-to-One)
+        @JsonProperty("customer_classification")
+        @JsonManagedReference
+        @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private CustomerClassification customerClassification;
-
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        private List<Subscription> subscriptions;
-
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-        private List<CommunicationConsent> communicationConsents;
 }

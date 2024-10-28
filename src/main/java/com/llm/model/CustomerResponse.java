@@ -2,15 +2,11 @@ package com.llm.model;
 
 import lombok.Data;
 
+import java.util.Optional;
+
 @Data
 public class CustomerResponse {
-    private String ecrn;
-    private String firstName;
-    private String lastName;
-    private String customerStatus;
-
-
     private String status;
     private int statusCode;
-    private Customer data;
+    private Optional<Customer> data;
 }

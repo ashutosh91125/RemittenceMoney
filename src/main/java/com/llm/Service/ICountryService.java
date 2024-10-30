@@ -9,10 +9,15 @@ import com.llm.model.Country;
 
 public interface ICountryService {
 
-	public  Country addCountries(Country country);
+	public Country addCountries(Country country);
+
 	public Page<Country> getCountry(Pageable pageable);
+
 	public List<Country> fetchCountries();
+
 	public Country findByCountryId(Integer countryId);
-//	public Country findByName(String countryName); 
+
+	public Country getCountryByCode(String countryCode);
+
 
 }

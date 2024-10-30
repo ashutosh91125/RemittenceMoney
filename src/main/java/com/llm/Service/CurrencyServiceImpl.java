@@ -20,8 +20,15 @@ public class CurrencyServiceImpl implements ICurrencyService {
 
 	@Override
 	public Currency getCurrecyById(Integer currencyId) {
-		
-		return currencyRepository.findById(currencyId).orElseThrow(() -> new IllegalArgumentException("currencyId not available: " + currencyId));
+
+		return currencyRepository.findById(currencyId)
+				.orElseThrow(() -> new IllegalArgumentException("currencyId not available: " + currencyId));
+	}
+
+	@Override
+	public Currency getCurrencybyCode(String ccycode) {
+
+		return currencyRepository.findByCcycode(ccycode);
 	}
 
 }

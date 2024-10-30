@@ -19,6 +19,6 @@ public class Proffession {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pId;
 	private Long code;
-	private String Label;
+	private String label;
 
 }

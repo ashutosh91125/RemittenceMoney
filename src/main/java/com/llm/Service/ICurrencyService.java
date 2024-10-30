@@ -6,6 +6,9 @@ import com.llm.model.Currency;
 
 public interface ICurrencyService {
 	public List<Currency> fetchCurrencies();
+
 	public Currency getCurrecyById(Integer currencyId);
+
+	public Currency getCurrencybyCode(String ccycode);
 
 }

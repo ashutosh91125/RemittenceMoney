@@ -25,17 +25,9 @@ public class RoughController {
 	public String dashboard() {
 		return "dashboard";
 	}
-	@GetMapping("/customercreate")
-	public String createCustomer() {
-		return "customercreate";
-	}
 	@GetMapping("/transfer")
 	public String transfer() {
 		return "transfer";
 	}
-	@GetMapping("/customer-onboard")
-	public String customerOnBoard() {
-		return "customeronboard";
-	}
-
+	
 }

@@ -107,6 +107,69 @@
 }
 </style>
 
+<script>
+	function copyAddress() {
+		const checkbox = document.getElementById("sameAsCurrentAddress");
+		if (checkbox.checked) {
+			document.getElementById("permanentBuildingName").value = document
+					.getElementById("currentBuildingName").value;
+			document.getElementById("permanentStreetName").value = document
+					.getElementById("currentStreetName").value;
+			document.getElementById("permanentLandmark").value = document
+					.getElementById("currentLandmark").value;
+			document.getElementById("permanentCity").value = document
+					.getElementById("currentCity").value;
+			document.getElementById("permanentDistrict").value = document
+					.getElementById("currentDistrict").value;
+			document.getElementById("permanentState").value = document
+					.getElementById("currentState").value;
+			document.getElementById("permanentZip").value = document
+					.getElementById("currentZip").value;
+			document.getElementById("permanentPoBox").value = document
+					.getElementById("currentPoBox").value;
+
+			const currentCountry = document.getElementById("currentCountry").value;
+			document.getElementById("permanentCountry").value = currentCountry;
+		} else {
+
+			document.getElementById("permanentBuildingName").value = "";
+			document.getElementById("permanentStreetName").value = "";
+			document.getElementById("permanentLandmark").value = "";
+			document.getElementById("permanentCity").value = "";
+			document.getElementById("permanentDistrict").value = "";
+			document.getElementById("permanentState").value = "";
+			document.getElementById("permanentZip").value = "";
+			document.getElementById("permanentPoBox").value = "";
+			document.getElementById("permanentCountry").selectedIndex = 0;
+		}
+	}
+
+	function submitForm() {
+		alert("122");
+		const form = document.getElementById('custDTO');
+		const formData = new FormData(form);
+		console.log(formData);
+	}
+	$.ajax({
+        url: '/caas/api/v2/customer/onBoarding/customer',
+        type: 'POST',
+        data: formData,
+        contentType: false,       
+        processData: false,       
+        success: function(data) {
+            console.log('form saved:', data);
+        },
+        error: function(error) {
+            console.error('Error saving customer:', error);
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("submitButton").addEventListener("click", function(event) {
+        // Prevent the default behavior if the button is part of a form
+        event.preventDefault();
+</script>
 </head>
 
 <body>
@@ -197,33 +260,11 @@
 				</div>
 			</div>
 
-			<!-- <script>
-				$(document).ready(
-						function() {
-							// Set the default value in the search heading on page load
-							const defaultValue = $(
-									'input[name="form-radio"]:checked').val();
-							$('#search-heading').text(defaultValue);
-
-							// Handle radio button change
-							$('.form-radio').change(function() {
-								const value = this.value;
-
-								// Update the heading above the search bar with the selected value
-								$('#search-heading').text(value);
-
-								// Clear the search input field when a new radio button is selected
-								$('#radio-search').val('');
-							});
-
-							// Initialize Feather Icons
-							feather.replace();
-						});
-			</script> -->
-			<form:form modelAttribute="custDTO">
+			<form:form id="custDTO" modelAttribute="custDTO">
+				<form:hidden path="channel" value="WEB" />
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
-					<div class="accordion-item">
+					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button" type="button"
 								data-bs-toggle="collapse"
@@ -251,9 +292,11 @@
 											<div class="mb-4">
 												<label class="form-label">Salutation <span
 													class="text-danger">*</span></label>
-												<form:select path="salutation" multiple="false">
-													<form:options item="salutationList" itemValue="salutation"
-														itemLabel="description" />
+												<form:select path="salutation" class="form-control"
+													data-select2-selector="icon" multiple="false">
+													<form:option value="" disabled="true" selected="true">Salutation</form:option>
+													<form:options items="${salutationList}"
+														itemValue="salutation" itemLabel="description" />
 												</form:select>
 
 											</div>
@@ -261,15 +304,17 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">First Name<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="First Name">
+													class="text-danger">*</span></label>
+												<form:input path="firstName" type="text"
+													class="form-control" placeholder="First Name" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Middle Name<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Middle Name">
+													class="text-danger">*</span></label>
+												<form:input path="middleName" type="text"
+													class="form-control" placeholder="Middle Name" />
 											</div>
 										</div>
 									</div>
@@ -277,15 +322,17 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Last Name<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Last Name">
+													class="text-danger">*</span></label>
+												<form:input path="lastName" type="text" class="form-control"
+													placeholder="Last Name" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Preferred Name<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Preferred Name">
+													class="text-danger">*</span></label>
+												<form:input path="preferredName" type="text"
+													class="form-control" placeholder="Preferred Name" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -315,15 +362,17 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Native Region<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Native Region">
+													class="text-danger">*</span></label>
+												<form:input path="nativeRegion" type="text"
+													class="form-control" placeholder="Native Region" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Date of Birth<span
-													class="text-danger">*</span></label> <input type="date"
-													class="form-control" placeholder="Date of Birth">
+													class="text-danger">*</span></label>
+												<form:input path="dateOfBirth" type="date"
+													class="form-control" placeholder="Date of Birth" />
 											</div>
 										</div>
 									</div>
@@ -331,26 +380,29 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
-													class="text-danger">*</span></label> <select class="form-control"
-													data-select2-selector="icon">
-													<option value="lead" disabled>Select</option>
-													<option value="coustomer">India</option>
-													<option value="coustomer">Malaysia</option>
-												</select>
+													class="text-danger">*</span></label>
+												<form:select path="countryOfBirth" class="form-control"
+													data-select2-selector="icon" multiple="false">
+													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
+													<form:options items="${countryList}"
+														itemValue="countryCode" itemLabel="countryName" />
+												</form:select>
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Place of Birth <span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Native Region">
+													class="text-danger">*</span></label>
+												<form:input path="placeOfBirth" type="text"
+													class="form-control" placeholder="Place of Birth" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Resident Type Id<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Resident Type Id">
+													class="text-danger">*</span></label>
+												<form:input path="residentTypeId" type="text"
+													class="form-control" placeholder="Resident Type Id" />
 											</div>
 										</div>
 									</div>
@@ -358,12 +410,13 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
-													class="text-danger">*</span></label> <select class="form-control"
-													data-select2-selector="icon">
-													<option value="lead" disabled>Select</option>
-													<option value="coustomer">India</option>
-													<option value="coustomer">Malaysia</option>
-												</select>
+													class="text-danger">*</span></label>
+												<form:select path="countryOfResidence" class="form-control"
+													data-select2-selector="icon" multiple="false">
+													<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
+													<form:options items="${countryList}"
+														itemValue="countryCode" itemLabel="countryName" />
+												</form:select>
 											</div>
 
 										</div>
@@ -381,8 +434,9 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Mothers Maiden Name<span
-													class="text-danger">*</span></label> <input type="Text"
-													class="form-control" placeholder="Occupation Id">
+													class="text-danger">*</span></label>
+												<form:input path="mothersMaidenName" type="Text"
+													class="form-control" placeholder="Mothers Maiden Name" />
 											</div>
 										</div>
 									</div>
@@ -391,22 +445,25 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Primary Mobile Number<span
-													class="text-danger">*</span></label> <input type="tel"
-													class="form-control" placeholder="Occupation Id">
+													class="text-danger">*</span></label>
+												<form:input path="primaryMobileNumber" type="tel"
+													class="form-control" placeholder="Primary Mobile Number" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Secondary Mobile Number<span
-													class="text-danger">*</span></label> <input type="tel"
-													class="form-control" placeholder="Secondary Mobile Number">
+													class="text-danger">*</span></label>
+												<form:input path="secondaryMobileNumber" type="tel"
+													class="form-control" placeholder="Secondary Mobile Number" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Email</label><span
-													class="text-danger">*</span></label> <input type="email"
-													class="form-control" placeholder="Email">
+												<label class="form-label">Email<span
+													class="text-danger">*</span></label>
+												<form:input path="emailId" type="email" class="form-control"
+													placeholder="Email" />
 											</div>
 										</div>
 									</div>
@@ -414,15 +471,17 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Phone Number<span
-													class="text-danger">*</span></label> <input type="tel"
-													class="form-control" placeholder="Phone Number">
+													class="text-danger">*</span></label>
+												<form:input path="phoneNumber" type="tel"
+													class="form-control" placeholder="Phone Number" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Occupation Id<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Occupation Id">
+													class="text-danger">*</span></label>
+												<form:input path="occupationId" type="text"
+													class="form-control" placeholder="Occupation Id" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -436,25 +495,12 @@
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<!-- <div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Additional Documents<span
-												class="text-danger">*</span></label> <input type="file"
-												class="form-control" placeholder="Additional Documents">
-										</div>
-									</div> -->
-										<div class="col-xl-4"></div>
-										<div class="col-xl-4"></div>
-									</div>
-
 								</div>
-
 							</div>
 						</div>
 					</div>
 
-					<div class="accordion-item">
+					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								data-bs-toggle="collapse"
@@ -466,358 +512,226 @@
 							class="accordion-collapse collapse">
 							<hr class="my-0">
 							<div class="card-body pass-security">
-								<div class="accordion-body" style="background: aliceblue;">
+								<div class="accordion-body">
 									<div class="card-body personal-info">
-										<div
-											class="mb-4 d-flex align-items-center justify-content-between">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Current Address</span> <span
-													class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-													information is publicly displayed, be careful! </span>
-											</h5>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Building Name<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Building Name">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Street Name<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Street Name">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Land Mark<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Land Mark">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">City<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="City">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">District<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="District">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">State<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="lead" disabled>Select</option>
-														<option value="coustomer">India</option>
-														<option value="coustomer">Malaysia</option>
-													</select>
-												</div>
+										<div class="main-content">
+											<div
+												class="mb-4 d-flex align-items-center justify-content-between">
+												<h5 class="fw-bold mb-0 me-4">
+													<span class="d-block mb-2">Current Address</span> <span
+														class="fs-12 fw-normal text-muted text-truncate-1-line">Following
+														information is publicly displayed, be careful! </span>
+												</h5>
 											</div>
 
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Country<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="lead" disabled>Select</option>
-														<option value="coustomer">India</option>
-														<option value="coustomer">Malaysia</option>
-													</select>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Building Name<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].buildingName" type="text"
+															class="form-control" placeholder="Building Name"
+															id="currentBuildingName" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Street Name<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].streetName" type="text"
+															class="form-control" placeholder="Street Name"
+															id="currentStreetName" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Land Mark<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].landmark" type="text"
+															class="form-control" placeholder="Land Mark"
+															id="currentLandmark" />
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Zip<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Zip">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">City<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].city" type="text"
+															class="form-control" placeholder="City" id="currentCity" />
+													</div>
 												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Po. Box<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Po.Box">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">District<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].district" type="text"
+															class="form-control" placeholder="District"
+															id="currentDistrict" />
+													</div>
 												</div>
-											</div>
-										</div>
-										<!-- 
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Mobile Number111<span
-													class="text-danger">*</span></label> <input type="tel"
-													class="form-control" placeholder="Mobile Number">
-											</div>
-										</div>
-										<div class="col-xl-4"></div>
-										<div class="col-xl-4"></div>
-									</div> -->
-										<div
-											class="mb-4 d-flex align-items-center justify-content-between">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Permanent Address:</span> <span
-													class="fs-12 fw-normal text-muted text-truncate-1-line">Keep
-													your account more secure with following preferences. </span>
-											</h5>
-											<!-- <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Check Auth</a> -->
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Same As A current Address<span
-														class="text-danger">*</span></label> <input type="radio"
-														class="form-control" placeholder="Building Name">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">State<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].state" type="text"
+															class="form-control" placeholder="State"
+															id="currentState" />
+													</div>
 												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Building Name<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Building Name">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Street Name<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Street Name">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Land Mark<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Land Mark">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">City<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="City">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">District<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="District">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">State<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="State">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Country<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="lead" disabled>Select</option>
-														<option value="coustomer">India</option>
-														<option value="coustomer">Malaysia</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Zip<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Zip">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Po. Box<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Po.Box">
-												</div>
-											</div>
-											<!-- <div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Mobile Number<span
-													class="text-danger">*</span></label> <input type="tel"
-													class="form-control" placeholder="Mobile Number">
-											</div>
-										</div> -->
-										</div>
 
-									</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Country<span
+															class="text-danger">*</span></label>
+														<form:select path="addressList[0].country"
+															class="form-control" data-select2-selector="icon"
+															multiple="false" id="currentCountry">
+															<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
+															<form:options items="${countryList}"
+																itemValue="countryCode" itemLabel="countryName" />
+														</form:select>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Zip<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].zip" type="text"
+															class="form-control" placeholder="Zip" id="currentZip" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Po. Box<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[0].poBox" type="text"
+															class="form-control" placeholder="Po.Box"
+															id="currentPoBox" />
+													</div>
+												</div>
+											</div>
 
-								</div>
+											<div
+												class="mb-4 d-flex align-items-center justify-content-between">
+												<h5 class="fw-bold mb-0 me-4">
+													<span class="d-block mb-2">Permanent Address:</span> <span
+														class="fs-12 fw-normal text-muted text-truncate-1-line">Keep
+														your account more secure with following preferences. </span>
+												</h5>
 
-							</div>
-						</div>
-					</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<label class="form-label">Current Address Is
+														Permanent address</label> <input type="checkbox"
+														id="sameAsCurrentAddress" name="sameAsCurrentAddress"
+														onclick="copyAddress()" />
+												</div>
+											</div>
 
-					<!-- <div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseFive"
-							aria-expanded="false" aria-controls="panelsStayOpen-collapseFive"
-							style="background: aliceblue;">Visa Details</button>
-					</h2>
-					<div id="panelsStayOpen-collapseFive"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div
-									class="mb-4 d-flex align-items-center justify-content-between">
-									<h5 class="fw-bold mb-0 me-4">
-										<span class="d-block mb-2">Visa Details</span> <span
-											class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-											information is publicly displayed, be careful! </span>
-									</h5>
-								</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Building Name<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].buildingName" type="text"
+															class="form-control" placeholder="Building Name"
+															id="permanentBuildingName" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Street Name<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].streetName" type="text"
+															class="form-control" placeholder="Street Name"
+															id="permanentStreetName" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Land Mark<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].landmark" type="text"
+															class="form-control" placeholder="Land Mark"
+															id="permanentLandmark" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">City<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].city" type="text"
+															class="form-control" placeholder="City"
+															id="permanentCity" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">District<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].district" type="text"
+															class="form-control" placeholder="District"
+															id="permanentDistrict" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">State<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].state" type="text"
+															class="form-control" placeholder="State"
+															id="permanentState" />
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Country<span
+															class="text-danger">*</span></label>
+														<form:select path="addressList[1].country"
+															class="form-control" data-select2-selector="icon"
+															multiple="false" id="permanentCountry">
+															<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
+															<form:options items="${countryList}"
+																itemValue="countryCode" itemLabel="countryName" />
+														</form:select>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Zip<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].zip" type="text"
+															class="form-control" placeholder="Zip" id="permanentZip" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Po. Box<span
+															class="text-danger">*</span></label>
+														<form:input path="addressList[1].poBox" type="text"
+															class="form-control" placeholder="Po.Box"
+															id="permanentPoBox" />
+													</div>
+												</div>
+											</div>
 
-								<div class="card-body pass-security">
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Id Number<span
-													class="text-danger">*</span></label> <input type="number"
-													class="form-control" placeholder="Id Number">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Visa Number<span
-													class="text-danger">*</span></label> <input type="number"
-													class="form-control" placeholder="Visa Number">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Visa Expiry Date<span
-													class="text-danger">*</span></label> <input type="Date"
-													class="form-control">
-											</div>
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Name as per Id<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Name as per Id">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Issued Country<span
-													class="text-danger">*</span></label> <select class="form-control"
-													data-select2-selector="icon">
-													<option value="lead" disabled>Select</option>
-													<option value="coustomer">India</option>
-													<option value="coustomer">Malaysia</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Issued By<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Issued By">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Issued at<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Issued at">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Issued on<span
-													class="text-danger">*</span></label> <input type="date"
-													class="form-control">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Date of Expiry<span
-													class="text-danger">*</span></label> <input type="date"
-													class="form-control">
-											</div>
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Default Status<span
-													class="text-danger">*</span></label> <select class="form-control"
-													data-select2-selector="icon">
-													<option value="lead">Yes</option>
-													<option value="coustomer">No</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Active Status<span
-													class="text-danger">*</span></label> <select class="form-control"
-													data-select2-selector="icon">
-													<option value="lead">Yes</option>
-													<option value="coustomer">No</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Id Front<span
-													class="text-danger">*</span></label> <input type="file"
-													class="form-control" placeholder="Id Front">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Id Back<span
-													class="text-danger">*</span></label> <input type="file"
-													class="form-control" placeholder="Id Back">
-											</div>
 										</div>
 									</div>
 								</div>
 
 							</div>
-
 						</div>
 					</div>
-				</div>
- -->
-					<div class="accordion-item">
+					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								data-bs-toggle="collapse"
@@ -830,34 +744,38 @@
 							class="accordion-collapse collapse">
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body pass-info">
-									<div
-										class="mb-4 d-flex align-items-center justify-content-between">
-										<h5 class="fw-bold mb-0 me-4">
-											<span class="d-block mb-2">Document Details</span>
-										</h5>
-									</div>
-
-
-									<div class="row mb-4 align-items-center">
-										<div class="col-lg-4">
-											<label for="" class="fw-semibold">Select id type: </label>
+									<div class="main-content">
+										<div
+											class="mb-4 d-flex align-items-center justify-content-between">
+											<h5 class="fw-bold mb-0 me-4">
+												<span class="d-block mb-2">Document Details</span>
+											</h5>
 										</div>
-										<div class="col-lg-8">
-											<div class="input-group">
-												<div class="input-group-text">
-													<i class="feather-user"></i>
+
+
+										<div class="row mb-4 align-items-center">
+											<div class="col-lg-4">
+												<label for="" class="fw-semibold">Select id type: </label>
+											</div>
+											<div class="col-lg-8">
+												<div class="input-group">
+													<div class="input-group-text">
+														<i class="feather-user"></i>
+													</div>
+													<form:select path="additionalDocs[0].document_id"
+														class="form-control" data-select2-selector="icon"
+														multiple="false" id="permanentCountry">
+														<form:option value="" disabled="true" selected="true">Select id type</form:option>
+														<form:options items="${idTypesList}" itemValue="idType"
+															itemLabel="idName" />
+													</form:select>
 												</div>
-												<select class="form-select form-control" id="search-select">
-													<option value="Paris">Passport</option>
-													<option value="London">National Id</option>
-												</select>
 											</div>
 										</div>
-									</div>
 
-									<hr>
-									<!-- cards content -->
-									<section>
+										<hr>
+										<!-- cards content -->
+
 										<div class="dropdown-content-bond" style="display: none;">
 
 											<div class="row">
@@ -1057,54 +975,13 @@
 												</div>
 											</div>
 										</div>
-									</section>
-
-									<script>
-										const deafultValue = 3;
-										$(document)
-												.ready(
-														function() {
-															$('#search-select')
-																	.prop(
-																			'selectedIndex',
-																			deafultValue);
-															$(
-																	".dropdown-content-bond")
-																	.hide();
-															$(
-																	".dropdown-content-bond")
-																	.eq(
-																			deafultValue)
-																	.show();
-															$("#search-select")
-																	.change(
-																			function() {
-																				$(
-																						'.dropdown-content-bond')
-																						.hide();
-
-																				var currentIndex = $(
-																						this)
-																						.prop(
-																								'selectedIndex');
-																				console
-																						.log(currentIndex);
-																				$(
-																						".dropdown-content-bond")
-																						.eq(
-																								currentIndex)
-																						.show();
-																			});
-
-														});
-									</script>
-
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 
-					<div class="accordion-item">
+					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								data-bs-toggle="collapse"
@@ -1117,421 +994,369 @@
 
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body personal-info">
-									<div
-										class="mb-4 d-flex align-items-center justify-content-between">
-										<h5 class="fw-bold mb-0 me-4">
-											<span class="d-block mb-2">Other Information </span> <span
-												class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-												information is publicly displayed, be careful! </span>
-										</h5>
-										<!-- <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a> -->
-									</div>
+									<div class="main-content">
+										<div
+											class="mb-4 d-flex align-items-center justify-content-between">
+											<h5 class="fw-bold mb-0 me-4">
+												<span class="d-block mb-2">Other Information </span> <span
+													class="fs-12 fw-normal text-muted text-truncate-1-line">Following
+													information is publicly displayed, be careful! </span>
+											</h5>
 
-									<div class="card-body pass-security">
-										<!-- <div class="mb-4 d-flex align-items-center justify-content-between">
-                                        <h5 class="fw-bold mb-0 me-4">
-                                            <span class="d-block mb-2">Permanent Address:</span>
-                                            <span class="fs-12 fw-normal text-muted text-truncate-1-line">Keep your account more secure with following preferences. </span>
-                                        </h5> -->
-										<!-- <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Check Auth</a> -->
-										<!-- </div> -->
-
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Customer type id<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Customer type id">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Annual Income Range Id<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Annual Income Range Id">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Annual Income Currency
-														Code<span class="text-danger">*</span>
-													</label> <select class="form-control" data-select2-selector="icon">
-														<option value="lead">INR</option>
-														<option value="coustomer">MYR</option>
-														<option value="coustomer">USD</option>
-													</select>
-												</div>
-											</div>
 										</div>
 
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Security Number<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Social Security Number">
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Customer type id<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.customerTypeId"
+															type="text" class="form-control"
+															placeholder="Customer type id" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Annual Income Range Id<span
+															class="text-danger">*</span></label>
+														<form:input
+															path="customerClassification.annualIncomeRangeId"
+															type="text" class="form-control"
+															placeholder="Annual Income Range Id" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Annual Income Currency
+															Code<span class="text-danger">*</span>
+														</label>
+														<form:select
+															path="customerClassification.annualIncomeRangeId"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
+															<form:options items="${currencyList}" itemValue="ccycode"
+																itemLabel="ccyname" />
+														</form:select>
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Registration Number<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Tax Registration Number">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Transaction Issued
-														Country<span class="text-danger">*</span>
-													</label> <select class="form-control" data-select2-selector="icon">
-														<option value="lead" disabled>Select</option>
-														<option value="coustomer">India</option>
-														<option value="coustomer">Malaysia</option>
-													</select>
-												</div>
-											</div>
-										</div>
 
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Name<span
-														class="text-danger">*</span></label> <input type="number"
-														class="form-control" placeholder="Employer Name">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Social Security Number<span
+															class="text-danger">*</span></label>
+														<form:input
+															path="customerClassification.socialSecurityNumber"
+															type="text" class="form-control"
+															placeholder="Social Security Number" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Tax Registration Number<span
+															class="text-danger">*</span></label>
+														<form:input
+															path="customerClassification.taxRegistrationNumber"
+															type="text" class="form-control"
+															placeholder="Tax Registration Number" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Transaction Issued
+															Country<span class="text-danger">*</span>
+														</label>
+														<form:select
+															path="customerClassification.txnIssuedCountry"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Transaction Issued Country</form:option>
+															<form:options items="${countryList}"
+																itemValue="countryCode" itemLabel="countryName" />
+														</form:select>
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Address<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Employer Address">
+
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Employer Name<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.employerName"
+															type="text" class="form-control"
+															placeholder="Employer Name" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Employer Address<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.employerAddress"
+															type="text" class="form-control"
+															placeholder="Employer Address" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Employer Phone<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.employerPhone"
+															type="tel" class="form-control"
+															placeholder="Employer Phone" />
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Phone<span
-														class="text-danger">*</span></label> <input type="tel"
-														class="form-control" placeholder="Employer Phone">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Employer ecrn<span
+															class="text-danger">*</span></label> <input type="text"
+															class="form-control" placeholder="Employer ecrn">
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Employer Establishment
+															Id<span class="text-danger">*</span>
+														</label>
+														<form:input
+															path="customerClassification.employerEstablishmentId"
+															type="text" class="form-control"
+															placeholder="Employer Establishment Id" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Risk Rating Id<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.riskRatingId"
+															type="text" class="form-control"
+															placeholder="Risk Rating Id" />
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer ecrn<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Employer ecrn">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">PEP Catagory<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.pepCategory"
+															type="text" class="form-control"
+															placeholder="PEP Catagory" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Personal Mohre Id<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.personalMohreId"
+															type="text" class="form-control"
+															placeholder="Personal Mohre Id" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Income Type<span
+															class="text-danger">*</span></label>
+														<form:select path="customerClassification.incomeType"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:options items="${incomeTypeList}"
+																itemValue="incomeType" itemLabel="incomeTypeDescription" />
+														</form:select>
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Establishment Id<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control"
-														placeholder="Employer Establishment Id">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Profession Catagory<span
+															class="text-danger">*</span></label>
+														<form:select
+															path="customerClassification.professionCategory"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
+															<form:options items="${professionCategoryList}"
+																itemValue="id" itemLabel="description" />
+														</form:select>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Reason For Acc.<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.reasonForAcc"
+															type="text" class="form-control"
+															placeholder="Reason For Acc." />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Transaction Volume Month<span
+															class="text-danger">*</span>
+														</label>
+														<form:input path="customerClassification.txnVolMonth"
+															type="text" class="form-control"
+															placeholder="Transaction Volume Month" />
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Risk Rating Id<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Risk Rating Id">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Transaction Count Month<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.txnCountMonth"
+															type="Text" class="form-control"
+															placeholder="Transaction Count Month" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Show Remark on
+															Transaction<span class="text-danger">*</span>
+														</label>
+														<form:select
+															path="customerClassification.showRemarksOnTxn"
+															class="form-control" data-select2-selector="icon">
+															<option value="true">true</option>
+															<option value="false">false</option>
+														</form:select>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Customer Remark<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.customerRemarks"
+															type="text" class="form-control"
+															placeholder="Customer Remark" />
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">PEP Catagory<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="PEP Catagory">
+											<div class="row">
+
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Agent Referenc Number<span
+															class="text-danger">*</span></label>
+														<form:input path="customerClassification.agentRefNo"
+															type="text" class="form-control"
+															placeholder="Agent Referenc Number" />
+													</div>
 												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Personal Mohre Id<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Personal Mohre Id">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Income Type<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="salary">Salary</option>
-														<option value="business">Business</option>
-														<option value="investment">Investment</option>
-														<option value="rental">Rental</option>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profession Catagory<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="" disabled selected>Select
-															Profession Category</option>
-														<option value="it">IT & Software</option>
-														<option value="healthcare">Healthcare</option>
-														<option value="finance">Finance</option>
-														<option value="education">Education</option>
-														<option value="construction">Construction</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Reason For Acc.<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Reason For Acc.">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Transaction Volume Month<span
-														class="text-danger">*</span></label> <input type="tel"
-														class="form-control"
-														placeholder="Transaction Volume Month">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Customer Remark<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Customer Remark">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Transaction Count Month<span
-														class="text-danger">*</span></label> <input type="Text"
-														class="form-control" placeholder="Transaction Count Month">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Show Remark on
-														Transaction<span class="text-danger">*</span>
-													</label> <select class="form-control" data-select2-selector="icon">
-														<option value="personal">Personal</option>
-														<option value="business">Business</option>
-														<option value="investment">Investment</option>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Customer Remark<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Customer Remark">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Agent Referenc Number<span
-														class="text-danger">*</span></label> <input type="tel"
-														class="form-control" placeholder="Agent Referenc Number">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Links<span
-														class="text-danger">*</span></label> <input type="tel"
-														class="form-control" placeholder="Social Links">
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">First Language<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="lead">Hindi</option>
-														<option value="coustomer">English</option>
-														<option value="coustomer">Malay</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Marital Status<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="coustomer">Unmarried</option>
-														<option value="lead">Married</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">DNFBP<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="lead">No</option>
-														<option value="coustomer">Yes</option>
-													</select>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">DPMS<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="DPMS">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Catagory<span
-														class="text-danger">*</span></label> <select class="form-control"
-														data-select2-selector="icon">
-														<option value="lead">Low Profile</option>
-														<option value="coustomer">High Profile</option>
-													</select>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Photo<span
-														class="text-danger">*</span></label> <input type="file"
-														class="form-control" placeholder="Profile Photo">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Social Links<span
+															class="text-danger">*</span></label>
+														<form:input
+															path="customerClassification.socialLinks.socialLinksId"
+															class="form-control" placeholder="Social Links" />
+													</div>
+													<div class="col-xl-4">
+														<div class="mb-4">
+															<label class="form-label">First Language<span
+																class="text-danger">*</span></label>
+															<form:input path="customerClassification.firstLanguage"
+																class="form-control" placeholder="First Language" />
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Marital Status<span
+																	class="text-danger">*</span></label>
+																<form:select path="customerClassification.maritalStatus"
+																	class="form-control" data-select2-selector="icon">
+																	<option value="true">Unmarried</option>
+																	<option value="false">Married</option>
+																</form:select>
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">DNFBP<span
+																	class="text-danger">*</span></label>
+																<form:select path="customerClassification.dnfbp"
+																	class="form-control" data-select2-selector="icon">
+																	<option value="false">No</option>
+																	<option value="true">Yes</option>
+																</form:select>
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">DPMS<span
+																	class="text-danger">*</span></label>
+																<form:select path="customerClassification.dpms"
+																	class="form-control" data-select2-selector="icon">
+																	<option value="false">No</option>
+																	<option value="true">Yes</option>
+																</form:select>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Profile Catagory<span
+																	class="text-danger">*</span></label>
+																<form:input
+																	path="customerClassification.profileCategory"
+																	class="form-control" placeholder="Profile Catagory" />
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Profile Photo<span
+																	class="text-danger">*</span></label>
+																<form:input path="socialLinks[0].content_type"
+																	type="file" class="form-control"
+																	placeholder="Profile Photo" />
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-
 						</div>
 					</div>
-
-					<!-- <div class="accordion-item">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								data-bs-toggle="collapse"
-								data-bs-target="#panelsStayOpen-collapseFour"
-								aria-expanded="false"
-								aria-controls="panelsStayOpen-collapseFour"
-								style="background: aliceblue;">Social Details</button>
-						</h2>
-						<div id="panelsStayOpen-collapseFour"
-							class="accordion-collapse collapse">
-
-
-							<div class="accordion-body" style="background: aliceblue;">
-								<div class="card-body personal-info">
-									<div class="d-flex align-items-center justify-content-between">
-										<h5 class="fw-bold mb-0 me-4">
-											<span class="d-block">Social Details</span> <span
-												class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-												information is publicly displayed, be careful! </span>
-										</h5>
-									</div>
-
-									<div class="card-body pass-security">
-										<div class="row my-5">
-											<div class="col-xl-4">
-												<div class="input-group">
-													<div class="input-group-text">
-														<i class="feather-linkedin"></i>
-													</div>
-													<input type="text" class="form-control" id=""
-														placeholder="www.linked.com">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="input-group">
-													<div class="input-group-text">
-														<i class="feather-twitter"></i>
-													</div>
-													<input type="text" class="form-control" id=""
-														placeholder="www.twitter.com">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="input-group">
-													<div class="input-group-text">
-														<i class="feather-facebook"></i>
-													</div>
-													<input type="text" class="form-control" id=""
-														placeholder="www.facebook.com">
-												</div>
-											</div>
-										</div>
-
-										<div class="row my-5">
-											<div class="col-xl-4">
-												<div class="input-group">
-													<div class="input-group-text">
-														<i class="feather-instagram"></i>
-													</div>
-													<input type="text" class="form-control" id=""
-														placeholder="www.instagram.com">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="input-group">
-													<div class="input-group-text">
-														<i class="feather-youtube"></i>
-													</div>
-													<input type="text" class="form-control" id=""
-														placeholder="www.youtube.com">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="input-group">
-													<div class="input-group-text">
-														<i class="feather-link"></i>
-													</div>
-													<input type="text" class="form-control" id=""
-														placeholder="www.link.com">
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-							</div>
-						</div>
-
-					</div> -->
-					<!-- [ Main Content ] end -->
 					<div class="mt-5 mb-5 text-center"
 						style="display: flex; justify-content: center">
-						<button type="button" class="btn btn-primary">Submit</button>
+						<button type="button" class="btn btn-primary"
+							onclick="submitForm()">Submit</button>
 					</div>
 				</div>
 			</form:form>
 			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
+	</div>
 
-		<!--! ================================================================ !-->
-		<!--! [End] Theme Customizer !-->
-		<!--! ================================================================ !-->
-		<script src="assets/vendors/js/vendors.min.js"></script>
-		<!-- vendors.min.js {always must need to be top} -->
-		<script src="assets/vendors/js/select2.min.js"></script>
-		<script src="assets/vendors/js/select2-active.min.js"></script>
-		<script src="assets/vendors/js/datepicker.min.js"></script>
-		<script src="assets/vendors/js/lslstrength.min.js"></script>
-		<!--! END: Vendors JS !-->
-		<!--! BEGIN: Apps Init  !-->
-		<script src="assets/js/common-init.min.js"></script>
-		<script src="assets/js/customers-create-init.min.js"></script>
-		<!--! END: Apps Init !-->
-		<!--! BEGIN: Theme Customizer  !-->
-		<script src="assets/js/theme-customizer-init.min.js"></script>
-		<!--! END: Theme Customizer !-->
+	<!--! ================================================================ !-->
+	<!--! [End] Theme Customizer !-->
+	<!--! ================================================================ !-->
+	<script src="assets/vendors/js/vendors.min.js"></script>
+	<!-- vendors.min.js {always must need to be top} -->
+	<script src="assets/vendors/js/select2.min.js"></script>
+	<script src="assets/vendors/js/select2-active.min.js"></script>
+	<script src="assets/vendors/js/datepicker.min.js"></script>
+	<script src="assets/vendors/js/lslstrength.min.js"></script>
+	<!--! END: Vendors JS !-->
+	<!--! BEGIN: Apps Init  !-->
+	<script src="assets/js/common-init.min.js"></script>
+	<script src="assets/js/customers-create-init.min.js"></script>
+	<!--! END: Apps Init !-->
+	<!--! BEGIN: Theme Customizer  !-->
+	<script src="assets/js/theme-customizer-init.min.js"></script>
+	<!--! END: Theme Customizer !-->
 </body>
 
 </html>

@@ -37,6 +37,11 @@ public class CountryServiceImpl implements ICountryService {
 				.orElseThrow(() -> new IllegalArgumentException("Country not available: " + countryId));
 	}
 
+	@Override
+	public Country getCountryByCode(String countryCode) {
+		return countryRepo.findByCountryCode(countryCode);
+	}
+
 //	@Override
 //	public Country findByName(String countryName) {
 //		return countryRepo.findCountryByName(countryName)

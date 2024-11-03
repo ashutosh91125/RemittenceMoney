@@ -109,17 +109,18 @@
 
 <script>
 function submitForm() {
-    console.log("Form submitted");
-    alert("122");
     const form = document.getElementById('custDTO');
 	const formData = new FormData(form);
 	console.log(formData);
+	 const jsonObject = {};
+	    formData.forEach((value, key) => { jsonObject[key] = value; });
+
 	
     $.ajax({
         url: '/caas/api/v2/customer/onBoarding/customer',
         type: 'POST',
-        data: formData,
-        contentType: false,
+         data: JSON.stringify(jsonObject), 
+       contentType: 'application/json',   
         processData: false,
         success: function(data) {
             console.log('form saved:', data);

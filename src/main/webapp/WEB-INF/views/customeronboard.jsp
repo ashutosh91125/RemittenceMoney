@@ -108,6 +108,28 @@
 </style>
 
 <script>
+function submitForm() {
+    console.log("Form submitted");
+    alert("122");
+    const form = document.getElementById('custDTO');
+	const formData = new FormData(form);
+	console.log(formData);
+	
+    $.ajax({
+        url: '/caas/api/v2/customer/onBoarding/customer',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function(data) {
+            console.log('form saved:', data);
+        },
+        error: function(error) {
+            console.error('Error saving customer:', error);
+        }
+    });
+}
+
 	function copyAddress() {
 		const checkbox = document.getElementById("sameAsCurrentAddress");
 		if (checkbox.checked) {
@@ -144,7 +166,8 @@
 		}
 	}
 
-	function submitForm() {
+	/* function submitForm() {
+		 console.log("Form submitted");
 		alert("122");
 		const form = document.getElementById('custDTO');
 		const formData = new FormData(form);
@@ -163,12 +186,8 @@
             console.error('Error saving customer:', error);
         }
     });
-}
+} */
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("submitButton").addEventListener("click", function(event) {
-        // Prevent the default behavior if the button is part of a form
-        event.preventDefault();
 </script>
 </head>
 
@@ -1042,285 +1061,281 @@ document.addEventListener("DOMContentLoaded", function() {
 													</div>
 												</div>
 											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Social Security Number<span
+														class="text-danger">*</span></label>
+													<form:input
+														path="customerClassification.socialSecurityNumber"
+														type="text" class="form-control"
+														placeholder="Social Security Number" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Tax Registration Number<span
+														class="text-danger">*</span></label>
+													<form:input
+														path="customerClassification.taxRegistrationNumber"
+														type="text" class="form-control"
+														placeholder="Tax Registration Number" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Transaction Issued
+														Country<span class="text-danger">*</span>
+													</label>
+													<form:select path="customerClassification.txnIssuedCountry"
+														class="form-control" data-select2-selector="icon"
+														multiple="false">
+														<form:option value="" disabled="true" selected="true">Transaction Issued Country</form:option>
+														<form:options items="${countryList}"
+															itemValue="countryCode" itemLabel="countryName" />
+													</form:select>
+												</div>
+											</div>
+										</div>
 
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Social Security Number<span
-															class="text-danger">*</span></label>
-														<form:input
-															path="customerClassification.socialSecurityNumber"
-															type="text" class="form-control"
-															placeholder="Social Security Number" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Tax Registration Number<span
-															class="text-danger">*</span></label>
-														<form:input
-															path="customerClassification.taxRegistrationNumber"
-															type="text" class="form-control"
-															placeholder="Tax Registration Number" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Transaction Issued
-															Country<span class="text-danger">*</span>
-														</label>
-														<form:select
-															path="customerClassification.txnIssuedCountry"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Transaction Issued Country</form:option>
-															<form:options items="${countryList}"
-																itemValue="countryCode" itemLabel="countryName" />
-														</form:select>
-													</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Name<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.employerName"
+														type="text" class="form-control"
+														placeholder="Employer Name" />
 												</div>
 											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Address<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.employerAddress"
+														type="text" class="form-control"
+														placeholder="Employer Address" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Phone<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.employerPhone"
+														type="tel" class="form-control"
+														placeholder="Employer Phone" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer ecrn<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Employer ecrn">
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Establishment Id<span
+														class="text-danger">*</span>
+													</label>
+													<form:input
+														path="customerClassification.employerEstablishmentId"
+														type="text" class="form-control"
+														placeholder="Employer Establishment Id" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Risk Rating Id<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.riskRatingId"
+														type="text" class="form-control"
+														placeholder="Risk Rating Id" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">PEP Catagory<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.pepCategory"
+														type="text" class="form-control"
+														placeholder="PEP Catagory" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Personal Mohre Id<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.personalMohreId"
+														type="text" class="form-control"
+														placeholder="Personal Mohre Id" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Income Type<span
+														class="text-danger">*</span></label>
+													<form:select path="customerClassification.incomeType"
+														class="form-control" data-select2-selector="icon"
+														multiple="false">
+														<form:options items="${incomeTypeList}"
+															itemValue="incomeType" itemLabel="incomeTypeDescription" />
+													</form:select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Profession Catagory<span
+														class="text-danger">*</span></label>
+													<form:select
+														path="customerClassification.professionCategory"
+														class="form-control" data-select2-selector="icon"
+														multiple="false">
+														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
+														<form:options items="${professionCategoryList}"
+															itemValue="id" itemLabel="description" />
+													</form:select>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Reason For Acc.<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.reasonForAcc"
+														type="text" class="form-control"
+														placeholder="Reason For Acc." />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Transaction Volume Month<span
+														class="text-danger">*</span>
+													</label>
+													<form:input path="customerClassification.txnVolMonth"
+														type="text" class="form-control"
+														placeholder="Transaction Volume Month" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Transaction Count Month<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.txnCountMonth"
+														type="Text" class="form-control"
+														placeholder="Transaction Count Month" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Show Remark on
+														Transaction<span class="text-danger">*</span>
+													</label>
+													<form:select path="customerClassification.showRemarksOnTxn"
+														class="form-control" data-select2-selector="icon">
+														<option value="true">true</option>
+														<option value="false">false</option>
+													</form:select>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Customer Remark<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.customerRemarks"
+														type="text" class="form-control"
+														placeholder="Customer Remark" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
 
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Name<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.employerName"
-															type="text" class="form-control"
-															placeholder="Employer Name" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Address<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.employerAddress"
-															type="text" class="form-control"
-															placeholder="Employer Address" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Phone<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.employerPhone"
-															type="tel" class="form-control"
-															placeholder="Employer Phone" />
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Agent Referenc Number<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.agentRefNo"
+														type="text" class="form-control"
+														placeholder="Agent Referenc Number" />
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer ecrn<span
-															class="text-danger">*</span></label> <input type="text"
-															class="form-control" placeholder="Employer ecrn">
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Establishment
-															Id<span class="text-danger">*</span>
-														</label>
-														<form:input
-															path="customerClassification.employerEstablishmentId"
-															type="text" class="form-control"
-															placeholder="Employer Establishment Id" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Risk Rating Id<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.riskRatingId"
-															type="text" class="form-control"
-															placeholder="Risk Rating Id" />
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Social Links<span
+														class="text-danger">*</span></label>
+													<form:input
+														path="customerClassification.socialLinks[0].socialLinksId"
+														class="form-control" placeholder="Social Links" />
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">PEP Catagory<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.pepCategory"
-															type="text" class="form-control"
-															placeholder="PEP Catagory" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Personal Mohre Id<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.personalMohreId"
-															type="text" class="form-control"
-															placeholder="Personal Mohre Id" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Income Type<span
-															class="text-danger">*</span></label>
-														<form:select path="customerClassification.incomeType"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:options items="${incomeTypeList}"
-																itemValue="incomeType" itemLabel="incomeTypeDescription" />
-														</form:select>
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">First Language<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.firstLanguage"
+														class="form-control" placeholder="First Language" />
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Profession Catagory<span
-															class="text-danger">*</span></label>
-														<form:select
-															path="customerClassification.professionCategory"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
-															<form:options items="${professionCategoryList}"
-																itemValue="id" itemLabel="description" />
-														</form:select>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Reason For Acc.<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.reasonForAcc"
-															type="text" class="form-control"
-															placeholder="Reason For Acc." />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Transaction Volume Month<span
-															class="text-danger">*</span>
-														</label>
-														<form:input path="customerClassification.txnVolMonth"
-															type="text" class="form-control"
-															placeholder="Transaction Volume Month" />
-													</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Marital Status<span
+														class="text-danger">*</span></label>
+													<form:select path="customerClassification.maritalStatus"
+														class="form-control" data-select2-selector="icon">
+														<option value="true">Unmarried</option>
+														<option value="false">Married</option>
+													</form:select>
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Transaction Count Month<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.txnCountMonth"
-															type="Text" class="form-control"
-															placeholder="Transaction Count Month" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Show Remark on
-															Transaction<span class="text-danger">*</span>
-														</label>
-														<form:select
-															path="customerClassification.showRemarksOnTxn"
-															class="form-control" data-select2-selector="icon">
-															<option value="true">true</option>
-															<option value="false">false</option>
-														</form:select>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Customer Remark<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.customerRemarks"
-															type="text" class="form-control"
-															placeholder="Customer Remark" />
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">DNFBP<span
+														class="text-danger">*</span></label>
+													<form:select path="customerClassification.dnfbp"
+														class="form-control" data-select2-selector="icon">
+														<option value="false">No</option>
+														<option value="true">Yes</option>
+													</form:select>
 												</div>
 											</div>
-											<div class="row">
-
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Agent Referenc Number<span
-															class="text-danger">*</span></label>
-														<form:input path="customerClassification.agentRefNo"
-															type="text" class="form-control"
-															placeholder="Agent Referenc Number" />
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">DPMS<span
+														class="text-danger">*</span></label>
+													<form:select path="customerClassification.dpms"
+														class="form-control" data-select2-selector="icon">
+														<option value="false">No</option>
+														<option value="true">Yes</option>
+													</form:select>
 												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Social Links<span
-															class="text-danger">*</span></label>
-														<form:input
-															path="customerClassification.socialLinks.socialLinksId"
-															class="form-control" placeholder="Social Links" />
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">First Language<span
-																class="text-danger">*</span></label>
-															<form:input path="customerClassification.firstLanguage"
-																class="form-control" placeholder="First Language" />
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Marital Status<span
-																	class="text-danger">*</span></label>
-																<form:select path="customerClassification.maritalStatus"
-																	class="form-control" data-select2-selector="icon">
-																	<option value="true">Unmarried</option>
-																	<option value="false">Married</option>
-																</form:select>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">DNFBP<span
-																	class="text-danger">*</span></label>
-																<form:select path="customerClassification.dnfbp"
-																	class="form-control" data-select2-selector="icon">
-																	<option value="false">No</option>
-																	<option value="true">Yes</option>
-																</form:select>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">DPMS<span
-																	class="text-danger">*</span></label>
-																<form:select path="customerClassification.dpms"
-																	class="form-control" data-select2-selector="icon">
-																	<option value="false">No</option>
-																	<option value="true">Yes</option>
-																</form:select>
-															</div>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Profile Catagory<span
-																	class="text-danger">*</span></label>
-																<form:input
-																	path="customerClassification.profileCategory"
-																	class="form-control" placeholder="Profile Catagory" />
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Profile Photo<span
-																	class="text-danger">*</span></label>
-																<form:input path="socialLinks[0].content_type"
-																	type="file" class="form-control"
-																	placeholder="Profile Photo" />
-															</div>
-														</div>
-													</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Profile Catagory<span
+														class="text-danger">*</span></label>
+													<form:input path="customerClassification.profileCategory"
+														class="form-control" placeholder="Profile Catagory" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Profile Photo<span
+														class="text-danger">*</span></label>
+													<form:input path="additionalDocs[0].content_type"
+														type="file" class="form-control"
+														placeholder="Profile Photo" />
 												</div>
 											</div>
 										</div>
@@ -1329,16 +1344,18 @@ document.addEventListener("DOMContentLoaded", function() {
 							</div>
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center"
-						style="display: flex; justify-content: center">
-						<button type="button" class="btn btn-primary"
-							onclick="submitForm()">Submit</button>
-					</div>
+				</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<button type="button" class="btn btn-primary"
+						onclick="submitForm()">Submit</button>
 				</div>
 			</form:form>
-			<jsp:include page="footer.jsp"></jsp:include>
 		</div>
 	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
+
+
 
 	<!--! ================================================================ !-->
 	<!--! [End] Theme Customizer !-->

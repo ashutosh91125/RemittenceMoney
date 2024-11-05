@@ -10,6 +10,7 @@ import com.llm.Service.ICountryService;
 import com.llm.Service.ICurrencyService;
 import com.llm.Service.IdTypesService;
 import com.llm.Service.IncomeTypeServiceImpl;
+import com.llm.Service.NationalityService;
 import com.llm.Service.ProfessionCategoryService;
 import com.llm.Service.SalutationServiceImpl;
 import com.llm.model.Customer;
@@ -29,6 +30,8 @@ public class CustomerControllerwithoutRest {
 	private ProfessionCategoryService professionCategoryService;
 	@Autowired
 	private IdTypesService idTypesService;
+	@Autowired
+	private NationalityService nationalityService;
 
 	@GetMapping("/customer")
 	public String onboardCustomer1(Model model) {
@@ -39,6 +42,7 @@ public class CustomerControllerwithoutRest {
 		model.addAttribute("incomeTypeList", incomeTypeService.getAllIncomeType());
 		model.addAttribute("professionCategoryList", professionCategoryService.getAllProfessionCategory());
 		model.addAttribute("idTypesList", idTypesService.getAllIdTypes());
+		model.addAttribute("nationalityList",nationalityService.getAllNationality());
 		return "customeronboard";
 	}
 

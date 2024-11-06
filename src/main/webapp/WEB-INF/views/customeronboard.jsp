@@ -109,9 +109,14 @@
 
 <script>
 function submitForm() {
+
     const form = document.getElementById('custDTO');
 	const formData = new FormData(form);
-	console.log(formData);
+	/* console.log(formData); */
+	/* formData.forEach((value, key) => {
+    console.log(key + ': ' + value); */
+});
+
 	 const jsonObject = {};
 	    formData.forEach((value, key) => { jsonObject[key] = value; });
 
@@ -166,29 +171,6 @@ function submitForm() {
 			document.getElementById("permanentCountry").selectedIndex = 0;
 		}
 	}
-
-	/* function submitForm() {
-		 console.log("Form submitted");
-		alert("122");
-		const form = document.getElementById('custDTO');
-		const formData = new FormData(form);
-		console.log(formData);
-	}
-	$.ajax({
-        url: '/caas/api/v2/customer/onBoarding/customer',
-        type: 'POST',
-        data: formData,
-        contentType: false,       
-        processData: false,       
-        success: function(data) {
-            console.log('form saved:', data);
-        },
-        error: function(error) {
-            console.error('Error saving customer:', error);
-        }
-    });
-} */
-
 </script>
 </head>
 
@@ -316,7 +298,7 @@ function submitForm() {
 													data-select2-selector="icon" multiple="false">
 													<form:option value="" disabled="true" selected="true">Salutation</form:option>
 													<form:options items="${salutationList}"
-														itemValue="salutation" itemLabel="description" />
+														itemValue="description" itemLabel="salutation" />
 												</form:select>
 
 											</div>
@@ -372,7 +354,7 @@ function submitForm() {
 												</label>
 												<form:select path="secondNationality" class="form-control"
 													data-select2-selector="icon" multiple="false">
-													<form:option value="" disabled="true" selected="true">Nationality</form:option>
+													<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
 													<form:options items="${nationalityList}" itemValue="code"
 														itemLabel="description" />
 												</form:select>
@@ -440,12 +422,13 @@ function submitForm() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Gender<span
-													class="text-danger">*</span></label> <select class="form-control"
-													data-select2-selector="icon">
-													<option value="lead">Male</option>
-													<option value="coustomer">Female</option>
-													<option value="coustomer">Others</option>
-												</select>
+													class="text-danger">*</span></label>
+												<form:select path="gender" class="form-control"
+													data-select2-selector="icon" multiple="false">
+													<form:option value="" disabled="true" selected="true">Gender</form:option>
+													<form:options items="${genderList }" itemValue="gId"
+														itemLabel="description" />
+												</form:select>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -592,7 +575,7 @@ function submitForm() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label>
+														<label class="form-label">Country of Residence</label>
 														<form:select path="addressList[0].country"
 															class="form-control" data-select2-selector="icon"
 															multiple="false" id="currentCountry">
@@ -692,7 +675,7 @@ function submitForm() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label>
+														<label class="form-label">Country of Residence</label>
 														<form:select path="addressList[1].country"
 															class="form-control" data-select2-selector="icon"
 															multiple="false" id="permanentCountry">
@@ -1006,8 +989,9 @@ function submitForm() {
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Employer ecrn<span
-															class="text-danger">*</span></label> <input type="text"
-															class="form-control" placeholder="Employer ecrn">
+															class="text-danger">*</span></label>
+														<form:input path="ecrn" type="text" class="form-control"
+															placeholder="Employer ecrn" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1220,11 +1204,12 @@ function submitForm() {
 							</div>
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center"
-						style="display: flex; justify-content: center">
-						<button type="button" class="btn btn-primary"
-							onclick="submitForm()">Submit</button>
-					</div>
+				</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<button type="button" class="btn btn-primary"
+						onclick="submitForm()">Submit</button>
+				</div>
 			</form:form>
 		</div>
 	</div>

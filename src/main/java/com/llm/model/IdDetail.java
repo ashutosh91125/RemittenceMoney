@@ -1,9 +1,12 @@
 package com.llm.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Table(name = "id_detail")
@@ -62,9 +65,19 @@ public class IdDetail {
     @Column(name = "active_status")
     private Boolean activeStatus;
 
+    @JsonProperty("id_front")
+    @JsonManagedReference
+    @OneToOne(mappedBy = "idDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private IdFront idFront;
+
+    @JsonProperty("id_back")
+    @JsonManagedReference
+    @OneToOne(mappedBy = "idDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private IdBack idBack;
+
     // Back Reference to Customer
     @JsonBackReference
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id", nullable = false)  // Ensures this is mapped to the Customer table
     private Customer customer;
 }

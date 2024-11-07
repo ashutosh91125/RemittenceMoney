@@ -16,13 +16,13 @@ public class Document {
     @Column(name = "document_id", length = 50, nullable = false)
     private String document_id;
 
-    @Column(name = "base64_data", columnDefinition = "TEXT", nullable = false)
+    @Column(name = "base64_data",columnDefinition = "TEXT")
     private String base64_data;
 
     @Column(name = "content_type", length = 50, nullable = false)
     private String content_type;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customer_id")
     @JsonBackReference
     private Customer customer;

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IdDetailRepository extends JpaRepository<IdDetail, Integer> {
+public interface IdDetailRepository extends JpaRepository<IdDetail, Long> {
 
     // Query to find IdDetail by idNumber and idType
     Optional<IdDetail> findByIdNumberAndIdType(String idNumber, Integer idType);

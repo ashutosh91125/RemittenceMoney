@@ -14,7 +14,7 @@ public class Address {
     private Long id;
 
     @Column(name = "address_type_id")
-    private Integer addressTypeId;
+    private String addressTypeId;
 
     @Column(name = "building_name", length = 255)
     private String buildingName;
@@ -38,7 +38,7 @@ public class Address {
     private String country;
 
     @Column(name = "zip")
-    private Integer zip;
+    private String zip;
 
     @Column(name = "po_box")
     private String poBox;

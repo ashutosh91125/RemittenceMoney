@@ -124,8 +124,14 @@ public class CustomerClassification {
     // Social Links Relation (One-to-Many)
     @JsonProperty("social_links")
     @JsonManagedReference
-    @OneToMany(mappedBy = "customerClassification", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "customerClassification", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<SocialLink> socialLinks;
+
+    @JsonProperty("profile_photo")
+    @JsonManagedReference
+    @OneToOne(mappedBy = "customerClassification", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private ProfilePhoto profilePhoto;
+
 
     // Back Reference to Customer
 

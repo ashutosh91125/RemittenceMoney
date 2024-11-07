@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface CustomerValidationRepository extends JpaRepository<Customer, Long> {
-    Customer findByIdNumberAndIdType(String idNumber, String idType);
+//    Customer findByIdNumberAndIdType(String idNumber, String idType);
 }

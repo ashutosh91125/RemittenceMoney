@@ -26,9 +26,4 @@ public class CustomerNumberUtil {
         return randomNumber.toString();
     }
 
-    public static void main(String[] args) {
-        // Test the customer number generator
-        String uniqueCustomerNumber = generateUniqueCustomerNumber();
-        System.out.println("Generated Customer Number: " + uniqueCustomerNumber);
-    }
 }

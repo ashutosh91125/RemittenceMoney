@@ -1,11 +1,15 @@
 package com.llm.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.llm.Service.CustomerService;
+import com.llm.Service.GenderService;
 import com.llm.Service.ICountryService;
 import com.llm.Service.ICurrencyService;
 import com.llm.Service.IdTypesService;
@@ -32,6 +36,11 @@ public class CustomerControllerwithoutRest {
 	private IdTypesService idTypesService;
 	@Autowired
 	private NationalityService nationalityService;
+	@Autowired
+	private GenderService genderService;
+	
+	@Autowired
+	private CustomerService customerService;
 
 	@GetMapping("/customer")
 	public String onboardCustomer1(Model model) {
@@ -42,8 +51,10 @@ public class CustomerControllerwithoutRest {
 		model.addAttribute("incomeTypeList", incomeTypeService.getAllIncomeType());
 		model.addAttribute("professionCategoryList", professionCategoryService.getAllProfessionCategory());
 		model.addAttribute("idTypesList", idTypesService.getAllIdTypes());
-		model.addAttribute("nationalityList",nationalityService.getAllNationality());
+		model.addAttribute("nationalityList", nationalityService.getAllNationality());
+		model.addAttribute("genderList", genderService.getGender());
 		return "customeronboard";
 	}
+
 
 }

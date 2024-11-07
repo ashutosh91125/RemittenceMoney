@@ -112,9 +112,9 @@ function submitForm() {
 
     const form = document.getElementById('custDTO');
 	const formData = new FormData(form);
-	/* console.log(formData); */
-	/* formData.forEach((value, key) => {
-    console.log(key + ': ' + value); */
+	console.log(formData); 
+	formData.forEach((value, key) => {
+    console.log(key + ': ' + value); 
 });
 
 	 const jsonObject = {};

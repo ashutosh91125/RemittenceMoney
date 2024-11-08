@@ -1,7 +1,5 @@
 package com.llm.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,9 +36,6 @@ public class CustomerControllerwithoutRest {
 	private NationalityService nationalityService;
 	@Autowired
 	private GenderService genderService;
-	
-	@Autowired
-	private CustomerService customerService;
 
 	@GetMapping("/customer")
 	public String onboardCustomer1(Model model) {
@@ -55,6 +50,5 @@ public class CustomerControllerwithoutRest {
 		model.addAttribute("genderList", genderService.getGender());
 		return "customeronboard";
 	}
-
 
 }

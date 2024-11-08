@@ -372,7 +372,8 @@ function submitForm() {
 											<div class="mb-4">
 												<label class="form-label">Date of Birth</label>
 												<form:input path="dateOfBirth" type="date"
-													class="form-control" placeholder="Date of Birth" />
+													class="form-control" placeholder="yyyy-MM-dd"
+													pattern="yyyy-MM-dd" />
 											</div>
 										</div>
 									</div>

@@ -1,14 +1,19 @@
 package com.llm.Service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.*;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import java.util.HashMap;
-import java.util.Map;
 
 @Service
 public class CustomerCreationService {
@@ -58,14 +63,33 @@ public class CustomerCreationService {
         return headers;
     }
 
-    public ResponseEntity<String> createCustomer(Map<String, Object> customerData) {
+//    public ResponseEntity<Map<String, Object>> createCustomer(Map<String, Object> customerData) {
+//        String token = getAccessToken();
+//
+//        // Set up headers and body for the customer onboarding request
+//        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(customerData, getCustomerHeaders(token));
+//
+//        // Call the customer onboarding API
+//        return restTemplate.exchange(CUSTOMER_ONBOARDING_URL, HttpMethod.POST, requestEntity, String.class);
+//    }
+
+    public ResponseEntity<Map<String, Object>> createCustomer(Map<String, Object> customerData) {
+        // Retrieve the access token
         String token = getAccessToken();
 
         // Set up headers and body for the customer onboarding request
         HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(customerData, getCustomerHeaders(token));
 
-        // Call the customer onboarding API
-        return restTemplate.exchange(CUSTOMER_ONBOARDING_URL, HttpMethod.POST, requestEntity, String.class);
+        // Call the customer onboarding API and expect a response of type Map<String, Object>
+        ResponseEntity<Map<String, Object>> response = restTemplate.exchange(
+                CUSTOMER_ONBOARDING_URL,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<Map<String, Object>>() {
+                }
+        );
+
+        return response;
     }
 }
 

@@ -27,6 +27,7 @@ public class Country {
     private String iso3;
     private String numCode;
     private Double phoneCode;
+    private Integer countryNo;
 
     @ManyToOne
     private Agent agents; // Ensure this is correct

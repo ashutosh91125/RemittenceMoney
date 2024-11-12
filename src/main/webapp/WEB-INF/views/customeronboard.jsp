@@ -108,7 +108,7 @@
 </style>
 
 <script>
-function submitForm() {
+/* function submitForm() {
 
     const form = document.getElementById('custDTO');
 	const formData = new FormData(form);
@@ -135,7 +135,7 @@ function submitForm() {
         }
     });
 }
-
+ */
 	function copyAddress() {
 		const checkbox = document.getElementById("sameAsCurrentAddress");
 		if (checkbox.checked) {
@@ -264,7 +264,7 @@ function submitForm() {
 
 			<form:form id="custDTO" modelAttribute="custDTO">
 				<form:hidden path="channel" value="WEB" />
-				<form:hidden path="agentLocationId" value="India"/>
+				<form:hidden path="agentLocationId" value="India" />
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">
@@ -422,14 +422,17 @@ function submitForm() {
 
 										</div>
 										<div class="col-xl-4">
-                                            <div class="mb-4">
-                                                <label class="form-label">Gender<span class="text-danger">*</span></label>
-                                                <form:select path="gender" class="form-control" data-select2-selector="icon" multiple="false">
-                                                    <form:option value="" disabled="true" selected="true">Gender</form:option>
-                                                    <form:options items="${genderList}" itemLabel="name" itemValue="name" />
-                                                </form:select>
-                                            </div>
-                                        </div>
+											<div class="mb-4">
+												<label class="form-label">Gender<span
+													class="text-danger">*</span></label>
+												<form:select path="gender" class="form-control"
+													data-select2-selector="icon" multiple="false">
+													<form:option value="" disabled="true" selected="true">Gender</form:option>
+													<form:options items="${genderList}" itemLabel="name"
+														itemValue="name" />
+												</form:select>
+											</div>
+										</div>
 
 										<div class="col-xl-4">
 											<div class="mb-4">
@@ -1207,8 +1210,7 @@ function submitForm() {
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
-					<button type="button" class="btn btn-primary"
-						onclick="submitForm()">Submit</button>
+					<button type="button" class="btn btn-primary">Submit</button>
 				</div>
 			</form:form>
 		</div>

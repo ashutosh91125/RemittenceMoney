@@ -32,7 +32,7 @@ public class Country {
     @ManyToOne
     private Agent agents; // Ensure this is correct
 
-    @OneToMany(mappedBy = "countries", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "countries", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Currency> currency;
     @ManyToOne
     private Admin admins;

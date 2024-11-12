@@ -4,16 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
@@ -88,8 +79,9 @@ public class Customer {
         private String countryOfResidence;
 
 //        @JsonProperty("gender")
+        @Enumerated(EnumType.STRING)
         @Column(name = "gender", length = 12, nullable = false)
-        private String gender;
+        private Gender gender;
 
 //        @JsonProperty("mothers_maiden_name")
         @Column(name = "mothers_maiden_name", length = 255)
@@ -130,24 +122,24 @@ public class Customer {
         // Address List Relation (One-to-Many)
 //        @JsonProperty("address_list")
         @JsonManagedReference
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         private List<Address> addressList;
 
         // Additional Documents Relation (One-to-Many)
 //        @JsonProperty("additional_docs")
         @JsonManagedReference
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         private List<Document> additionalDocs;
 
         // ID Details (One-to-Many)
 //        @JsonProperty("id_details")
         @JsonManagedReference
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         private List<IdDetail> idDetails;
 
         // Customer Classification Relation (One-to-One)
 //        @JsonProperty("customer_classification")
         @JsonManagedReference
-        @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+        @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
         private CustomerClassification customerClassification;
 }

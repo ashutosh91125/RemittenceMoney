@@ -2,6 +2,8 @@ package com.llm.Service;
 
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CustomerCreationService {
+    private static  final Logger looger= LoggerFactory.getLogger(CustomerCreationService.class);
 
     private RestTemplate restTemplate;
 

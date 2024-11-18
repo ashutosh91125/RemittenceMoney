@@ -2,6 +2,7 @@ package com.llm.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.llm.Service.CustomerEcrnService;
 import com.llm.Service.CustomerService;
-import com.llm.Service.CustomerValidationService;
+//import com.llm.Service.CustomerValidationService;
 import com.llm.Service.OnboardingService;
 import com.llm.model.Customer;
 import com.llm.model.CustomerValidationResponse;
@@ -36,13 +37,19 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-	@Autowired
-	private CustomerValidationService customerValidationService;
+//	@Autowired
+//	private CustomerValidationService customerValidationService;
 
 	@Autowired
 	private OnboardingService onboardingService;
 	@Autowired
 	private CustomerEcrnService customerEcrnService;
+	
+	@GetMapping
+	public ResponseEntity<List<Customer>> customer(){
+		
+		return ResponseEntity.ok(customerService.getAllCustomer());
+	}
 
 	@InitBinder
 	public void myDateBinder(WebDataBinder binder) {
@@ -74,22 +81,22 @@ public class CustomerController {
 	}
 
 	// Endpoint 2: Validate Customer
-	@PostMapping("/validate")
-	public ResponseEntity<CustomerValidationResponse> validateCustomer(@RequestBody CustomerValidationRequest request) {
-		CustomerValidationResponse.CustomerData customerData = customerValidationService
-				.validateCustomer(request.getIdNumber(), Integer.valueOf(request.getIdType()));
-
-		if (customerData == null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if customer not found
-		}
-
-		CustomerValidationResponse response = new CustomerValidationResponse();
-		response.setStatus("success");
-		response.setStatusCode(200);
-		response.setData(customerData);
-
-		return ResponseEntity.ok(response);
-	}
+//	@PostMapping("/validate")
+//	public ResponseEntity<CustomerValidationResponse> validateCustomer(@RequestBody CustomerValidationRequest request) {
+//		CustomerValidationResponse.CustomerData customerData = customerValidationService
+//				.validateCustomer(request.getIdNumber(), Integer.valueOf(request.getIdType()));
+//
+//		if (customerData == null) {
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if customer not found
+//		}
+//
+//		CustomerValidationResponse response = new CustomerValidationResponse();
+//		response.setStatus("success");
+//		response.setStatusCode(200);
+//		response.setData(customerData);
+//
+//		return ResponseEntity.ok(response);
+//	}
 
 	// Endpoint 3: Onboard Customer
 	@PostMapping(value = "/onBoarding/customer", consumes = "application/json")
@@ -118,7 +125,7 @@ public class CustomerController {
 //
 //		// Populate the response with required data
 //		Data responseData = new Data();
-//		responseData.setAml_scan_status(AMLScanStatus.ACCEPTED); // Assuming this is determined elsewhere
+//		responseData.setAml_scan_status(AMLScanStatu.ACCEPTED); // Assuming this is determined elsewhere
 //		// responseData.setEcrn(customer.getEcrn()); // Assuming the customer has an
 //		// ECRN field
 //		responseData.setCustomer_status(CustomerStatus.ACTIVE.toString()); // Assuming the customer is active

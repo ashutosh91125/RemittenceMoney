@@ -1,11 +1,14 @@
 package com.llm.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +30,8 @@ import jakarta.transaction.Transactional;
 @Service
 public class CustomerService {
 
+	private static  final Logger looger= LoggerFactory.getLogger(CustomerService.class);
+
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -35,6 +40,8 @@ public class CustomerService {
 
 	@Transactional
 	public String createCustomer(Customer customer) {
+		customer.setIssuedOn((LocalDate.now()).toString());
+		customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
 
 		Map<String, Object> customerData = new HashMap<>();
 		customerData.put("channel", customer.getChannel());
@@ -47,7 +54,12 @@ public class CustomerService {
 		customerData.put("nationality", customer.getNationality());
 		customerData.put("second_nationality", customer.getSecondNationality());
 		customerData.put("native_region", customer.getNativeRegion());
-		customerData.put("date_of_birth", customer.getDateOfBirth());
+//		customerData.put("date_of_birth", "1993-12-21");
+		if (customer.getDateOfBirth().isEmpty()) {
+			customerData.put("date_of_birth", null);
+		} else {
+			customerData.put("date_of_birth", customer.getDateOfBirth());
+		}
 		customerData.put("country_of_birth", customer.getCountryOfBirth());
 		customerData.put("place_of_birth", customer.getPlaceOfBirth());
 		customerData.put("resident_type_id", customer.getResidentTypeId());
@@ -61,112 +73,166 @@ public class CustomerService {
 
 // Mapping Address List
 		List<Map<String, Object>> addressListData = new ArrayList<>();
-		if (customer.getAddressList() != null) {
-			for (Address address : customer.getAddressList()) {
+		if (customer != null) {
+			for (int i = 0; i <= 1; i++) {
 				Map<String, Object> addressData = new HashMap<>();
-				addressData.put("address_type_id", address.getAddressTypeId());
-				addressData.put("building_name", address.getBuildingName());
-				addressData.put("street_name", address.getStreetName());
-				addressData.put("landmark", address.getLandmark());
-				addressData.put("city", address.getCity());
-				addressData.put("district", address.getDistrict());
-				addressData.put("state", address.getState());
-				addressData.put("country", address.getCountry());
-				addressData.put("zip", address.getZip());
-				addressData.put("po_box", address.getPoBox());
-				addressData.put("mobile_number", address.getMobileNumber());
-				addressListData.add(addressData);
+
+				if (i == 0) {
+					addressData.put("address_type_id", "1");
+					addressData.put("building_name", customer.getBuildingName());
+					addressData.put("street_name", customer.getStreetName());
+					addressData.put("landmark", customer.getLandmark());
+					addressData.put("city", customer.getCity());
+					addressData.put("district", customer.getDistrict());
+					addressData.put("state", customer.getState());
+					addressData.put("country", customer.getCountry());
+					addressData.put("zip", customer.getZip());
+					addressData.put("po_box", customer.getZip());
+					addressData.put("mobile_number", customer.getMobileNumber());
+					addressListData.add(addressData);
+				} else {
+					addressData.put("address_type_id", "2");
+					addressData.put("building_name", customer.getParBuildingName());
+					addressData.put("street_name", customer.getParStreetName());
+					addressData.put("landmark", customer.getParLandmark());
+					addressData.put("city", customer.getParCity());
+					addressData.put("district", customer.getParDistrict());
+					addressData.put("state", customer.getParState());
+					addressData.put("country", customer.getParCountry());
+					addressData.put("zip", customer.getParZip());
+					addressData.put("po_box", customer.getParPoBox());
+					addressData.put("mobile_number", customer.getParMobileNumber());
+					addressListData.add(addressData);
+				}
 			}
 		}
 		customerData.put("address_list", addressListData);
 
-// Mapping Additional Documents
+		// Mapping Additional Documents
 		List<Map<String, Object>> additionalDocsData = new ArrayList<>();
-		if (customer.getAdditionalDocs() != null) {
-			for (Document doc : customer.getAdditionalDocs()) {
-				Map<String, Object> docData = new HashMap<>();
-				docData.put("document_id", doc.getDocument_id());
-				docData.put("base64_data", doc.getBase64_data());
-				docData.put("content_type", doc.getContent_type());
-				additionalDocsData.add(docData);
-			}
+		if (false) {
+			//for (Document doc : customer.getAdditionalDocs()) {
+			Map<String, Object> docData = new HashMap<>();
+			docData.put("document_id", customer.getDocumentId());
+			docData.put("base64_data", customer.getDocbase64Data());
+			docData.put("content_type", customer.getDocContentType());
+			additionalDocsData.add(docData);
+//			}
 		}
 		customerData.put("additional_docs", additionalDocsData);
 
 // Mapping ID Details
 		List<Map<String, Object>> idDetailsData = new ArrayList<>();
-		if (customer.getIdDetails() != null) {
-			for (IdDetail idDetail : customer.getIdDetails()) {
-				Map<String, Object> idData = new HashMap<>();
-				idData.put("id_type", idDetail.getIdType());
-				idData.put("id_number", idDetail.getIdNumber());
-				idData.put("visa_number", idDetail.getVisaNumber());
-				idData.put("visa_expiry_date", idDetail.getVisaExpiryDate());
-				idData.put("name_as_per_id", idDetail.getNameAsPerId());
-				idData.put("issued_country", idDetail.getIssuedCountry());
-				idData.put("issued_by", idDetail.getIssuedBy());
-				idData.put("issued_at", idDetail.getIssuedAt());
-				idData.put("issued_on", idDetail.getIssuedOn());
-				idData.put("date_of_expiry", idDetail.getDateOfExpiry());
-				idData.put("active_status", idDetail.getActiveStatus());
+		if (!customer.getIdNumber().isEmpty()) {
+//			for (IdDetail idDetail : customer.getIdDetails()) {
+			Map<String, Object> idData = new HashMap<>();
 
-				if (idDetail.getIdFront() != null) {
+			if(customer.getResidentTypeId() == 101) {
+				idData.put("id_type", 28);
+				looger.info("======customer.getResidentTypeId()==="+customer.getResidentTypeId());
 
-					Map<String, Object> idFrontData = new HashMap<>();
-					idFrontData.put("base64_data", idDetail.getIdFront().getBase64Data());
-					idFrontData.put("content_type", idDetail.getIdFront().getContentType());
-					idData.put("id_front", idFrontData);
-				}
+				idData.put("id_number", customer.getIdNumber());
 
-				if (idDetail.getIdBack() != null) {
-					Map<String, Object> idBackData = new HashMap<>();
-					idBackData.put("base64_data", idDetail.getIdBack().getBase64Data());
-					idBackData.put("content_type", idDetail.getIdBack().getContentType());
-					idData.put("id_back", idBackData);
-				}
+//				Map<String, Object> idFrontData = new HashMap<>();
+//				idFrontData.put("base64_data", customer.getFrontBase64Data());
+//				idFrontData.put("content_type", customer.getFrontContentType());
+//				idData.put("id_front", idFrontData);
+//
+//
+//				Map<String, Object> idBackData = new HashMap<>();
+//				idBackData.put("base64_data", customer.getBackBase64Data());
+//				idBackData.put("content_type", customer.getBackContentType());
+//				idData.put("id_back", idBackData);
 
 				idDetailsData.add(idData);
+
 			}
+			else if (customer.getIdType() == 2) {
+				idData.put("id_type", customer.getIdType());
+				idData.put("id_number", customer.getIdNumber());
+				idData.put("visa_number", customer.getVisaNumber());
+				if (customer.getVisaExpiryDate().isEmpty()) {
+					customerData.put("visa_expiry_date", null);
+				} else {
+					customerData.put("visa_expiry_date", customer.getVisaExpiryDate());
+				}
+//				idData.put("visa_expiry_date", customer.getVisaExpiryDate());
+//				idData.put("visa_expiry_date", "2025-12-12");
+				idData.put("name_as_per_id", customer.getNameAsPerId());
+				idData.put("issued_country", customer.getIssuedCountry());
+				idData.put("issued_by", customer.getIssuedBy());
+				idData.put("issued_at", customer.getIssuedAt());
+				if (customer.getIssuedOn().isEmpty()) {
+					customerData.put("issued_on", null);
+				} else {
+					customerData.put("issued_on", customer.getIssuedOn());
+				}
+//				idData.put("issued_on", "2024-06-12");
+				if (customer.getDateOfExpiry().isEmpty()) {
+					customerData.put("date_of_expiry", null);
+				} else {
+					customerData.put("date_of_expiry", customer.getDateOfExpiry());
+				}
+				idData.put("date_of_expiry", "2025-12-12");
+//				idData.put("date_of_expiry", customer.getDateOfExpiry());
+				idData.put("active_status", customer.getActiveStatus());
+
+				Map<String, Object> idFrontData = new HashMap<>();
+				idFrontData.put("base64_data", customer.getFrontBase64Data());
+				idFrontData.put("content_type", customer.getFrontContentType());
+				idData.put("id_front", idFrontData);
+
+
+				Map<String, Object> idBackData = new HashMap<>();
+				idBackData.put("base64_data", customer.getBackBase64Data());
+				idBackData.put("content_type", customer.getBackContentType());
+				idData.put("id_back", idBackData);
+
+				idDetailsData.add(idData);
+
+			}
+
+
 		}
 		customerData.put("id_details", idDetailsData);
 
 		// Mapping Customer Classification
-		CustomerClassification classification = customer.getCustomerClassification();
-		if (classification != null) {
+//		CustomerClassification classification = customer.getCustomerClassification();
+		if (false) {
 			Map<String, Object> classificationData = new HashMap<>();
-			classificationData.put("customer_type_id", classification.getCustomerTypeId());
-			classificationData.put("income_type", classification.getIncomeType());
-			classificationData.put("annual_income_range_id", classification.getAnnualIncomeRangeId());
-			classificationData.put("annual_income_currency_code", classification.getAnnualIncomeCurrencyCode());
-			classificationData.put("txn_vol_month", classification.getTxnVolMonth());
-			classificationData.put("txn_count_month", classification.getTxnCountMonth());
-			classificationData.put("employer_name", classification.getEmployerName());
-			classificationData.put("employer_address", classification.getEmployerAddress());
-			classificationData.put("employer_phone", classification.getEmployerPhone());
-			classificationData.put("profession_category", classification.getProfessionCategory());
-			classificationData.put("reason_for_acc", classification.getReasonForAcc());
-			classificationData.put("agent_ref_no", classification.getAgentRefNo());
-			classificationData.put("first_language", classification.getFirstLanguage());
-			classificationData.put("marital_status", classification.getMaritalStatus());
+			classificationData.put("customer_type_id", customer.getCustomerTypeId());
+			classificationData.put("income_type", customer.getIncomeType());
+			classificationData.put("annual_income_range_id", customer.getAnnualIncomeRangeId());
+			classificationData.put("annual_income_currency_code", customer.getAnnualIncomeCurrencyCode());
+			classificationData.put("txn_vol_month", customer.getTxnVolMonth());
+			classificationData.put("txn_count_month", customer.getTxnCountMonth());
+			classificationData.put("employer_name", customer.getEmployerName());
+			classificationData.put("employer_address", customer.getEmployerAddress());
+			classificationData.put("employer_phone", customer.getEmployerPhone());
+			classificationData.put("profession_category", customer.getProfessionCategory());
+			classificationData.put("reason_for_acc", customer.getReasonForAcc());
+			classificationData.put("agent_ref_no", customer.getAgentRefNo());
+			classificationData.put("first_language", customer.getFirstLanguage());
+			classificationData.put("marital_status", customer.getMaritalStatus());
 
 			// Mapping Profile Photo if exists
-			if (classification.getProfilePhoto() != null) {
+			if (false) {
 				Map<String, Object> profilePhotoData = new HashMap<>();
-				profilePhotoData.put("base64_data", classification.getProfilePhoto().getBase64Data());
-				profilePhotoData.put("content_type", classification.getProfilePhoto().getContentType());
+				profilePhotoData.put("base64_data", customer.getProfBase64Data());
+				profilePhotoData.put("content_type", customer.getProfContentType());
 				classificationData.put("profile_photo", profilePhotoData);
 			}
 
 			// Mapping Social Links
 			List<Map<String, Object>> socialLinksData = new ArrayList<>();
-			if (classification.getSocialLinks() != null) {
+			if (false) {
 
-				for (SocialLink socialLink : classification.getSocialLinks()) {
-					Map<String, Object> socialLinkData = new HashMap<>();
-					socialLinkData.put("social_links_id", socialLink.getSocialLinksId());
-					socialLinkData.put("text_field", socialLink.getTextField());
-					socialLinksData.add(socialLinkData);
-				}
+//				for (SocialLink socialLink : classification.getSocialLinks()) {
+				Map<String, Object> socialLinkData = new HashMap<>();
+				socialLinkData.put("social_links_id", customer.getSocialLinksId());
+				socialLinkData.put("text_field", customer.getTextField());
+				socialLinksData.add(socialLinkData);
+//				}
 			}
 			classificationData.put("social_links", socialLinksData);
 
@@ -176,16 +242,18 @@ public class CustomerService {
 		Customer saveCustomer = new Customer();
 		String status = new String();
 
+looger.info(customerData.toString());
 		try {
 			ResponseEntity<Map<String, Object>> response = customerCreationService.createCustomer(customerData);
+			Map<String, Object> responseBody = response.getBody();
 			if (response.getStatusCode() == HttpStatus.OK) {
 
-//                JSONObject jsonResponse = new JSONObject(response.getBody());
-//                customer.setEcrn(jsonResponse.getString("ecrn"));
-				Map<String, Object> responseBody = response.getBody();
-				String ecrn = (String) responseBody.get("ecrn");
-				if (ecrn != null) {
-					customer.setEcrn(ecrn);
+				Map<String, Object> dataMap = (Map<String, Object>) responseBody.get("data");
+				if (dataMap != null) {
+					String ecrn = (String) dataMap.get("ecrn");
+					if (ecrn != null) {
+						customer.setEcrn(ecrn);
+					}
 				}
 
 				// Process the response and save to the database if necessary
@@ -249,16 +317,16 @@ public class CustomerService {
 		return Optional.ofNullable(customerRepository.findByEcrn(ecrn));
 	}
 
-	public List<Customer> searchByCriteria(String criteria, String query) {
-		return switch (criteria) {
-		case "Customer Number:" -> customerRepository.findByEcrnContaining(query);
-		case "Mobile Number:" -> customerRepository.findByPrimaryMobileNumberContaining(query);
-		case "Email Id:" -> customerRepository.findByEmailIdContaining(query);
-		case "ID No:" -> customerRepository.findByIdDetails_IdNumberContaining(query);
-		case "Customer Name:" -> customerRepository.findByFirstNameContainingOrLastNameContaining(query, query);
-		default -> List.of(); // Empty list if no criteria matches
-		};
-	}
+//	public List<Customer> searchByCriteria(String criteria, String query) {
+//		return switch (criteria) {
+//		case "Customer Number:" -> customerRepository.findByEcrnContaining(query);
+//		case "Mobile Number:" -> customerRepository.findByPrimaryMobileNumberContaining(query);
+//		case "Email Id:" -> customerRepository.findByEmailIdContaining(query);
+//		case "ID No:" -> customerRepository.findByIdDetails_IdNumberContaining(query);
+//		case "Customer Name:" -> customerRepository.findByFirstNameContainingOrLastNameContaining(query, query);
+//		default -> List.of(); // Empty list if no criteria matches
+//		};
+//	}
 
 	public Page<Customer> getCustomers(Pageable pageable) {
 		return customerRepository.findAll(pageable);

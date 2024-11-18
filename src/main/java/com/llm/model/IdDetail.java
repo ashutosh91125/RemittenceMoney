@@ -75,12 +75,12 @@ public class IdDetail {
 
 //    @JsonProperty("id_front")
 	@JsonManagedReference
-	@OneToOne(mappedBy = "idDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "idDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private IdFront idFront;
 
 //    @JsonProperty("id_back")
 	@JsonManagedReference
-	@OneToOne(mappedBy = "idDetail", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(mappedBy = "idDetail", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private IdBack idBack;
 
 	// Back Reference to Customer

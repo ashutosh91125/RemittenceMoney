@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="nxl-content" style="margin-top: -89px;">
-            <div class="main-content" style="background: aliceblue;">
+            <div class="main-content">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card stretch stretch-full">
@@ -54,7 +54,7 @@
                                             <c:forEach var="customer" items="${customerList}" varStatus="status">
                                                 <tr>
                                                     <td>${status.index + 1}</td>
-                                                    <td><a href="customerdetails?ecrn=${customer.ecrn}">${customer.ecrn}</a></td>
+                                                    <td>${customer.ecrn}</td>
                                                     <td>${customer.firstName}</td>
                                                     <td>${customer.phoneNumber}</td>
                                                     <td>${customer.emailId}</td>
@@ -62,7 +62,7 @@
                                                     <td>${customer.gender }</td>
 
                                                     <td class="text-end">
-                                                        <a href="customerdetails?ecrn=${customer.ecrn}" class="btn btn-light-brand">View</a>
+                                                        <a href="#" class="btn btn-light-brand">View</a>
                                                         <a href="#" class="btn btn-light-brand">Edit</a>
                                                         <a href="#" class="btn btn-light-brand">Delete</a>
                                                     </td>

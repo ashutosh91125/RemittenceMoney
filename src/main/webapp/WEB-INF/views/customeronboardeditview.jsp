@@ -111,7 +111,6 @@
 	function copyAddress() {
 		const checkbox = document.getElementById("sameAsCurrentAddress");
 		if (checkbox.checked) {
-
 			document.getElementById("permanentBuildingName").value = document
 					.getElementById("currentBuildingName").value;
 			document.getElementById("permanentStreetName").value = document
@@ -122,26 +121,14 @@
 					.getElementById("currentCity").value;
 			document.getElementById("permanentDistrict").value = document
 					.getElementById("currentDistrict").value;
-			document.getElementById("parStateDropdown").value = document
-					.getElementById("stateDropdown").value;
+			document.getElementById("permanentState").value = document
+					.getElementById("currentState").value;
 			document.getElementById("permanentZip").value = document
 					.getElementById("currentZip").value;
-			document.getElementById("permanentPoBox").value = document
-					.getElementById("currentPoBox").value;
+
 
 			const currentCountry = document.getElementById("currentCountry").value;
-			const permanentCountrySelect = document
-					.getElementById("permanentCountry");
-
-			for (let i = 0; i < permanentCountrySelect.options.length; i++) {
-				if (permanentCountrySelect.options[i].value === currentCountry) {
-					permanentCountrySelect.selectedIndex = i;
-					$(permanentCountrySelect).trigger('change'); // Trigger change event for state population
-					break;
-
-				}
-			}
-
+			document.getElementById("permanentCountry").value = currentCountry;
 		} else {
 
 			document.getElementById("permanentBuildingName").value = "";
@@ -149,189 +136,27 @@
 			document.getElementById("permanentLandmark").value = "";
 			document.getElementById("permanentCity").value = "";
 			document.getElementById("permanentDistrict").value = "";
-			document.getElementById("parStateDropdown").value = "";
+			document.getElementById("permanentState").value = "";
 			document.getElementById("permanentZip").value = "";
-			document.getElementById("permanentPoBox").value = "";
-			document.getElementById("permanentCountry").selectedIndex = 0; // Reset country select
+			document.getElementById("permanentCountry").selectedIndex = 0;
 		}
 	}
-
 	function toggleDiv(divId) {
 		const element = document.getElementById(divId);
 		element.classList.toggle("show");
 	}
-
-	$(document)
-			.ready(
-					function() {
-						$('#currentCountry')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#stateDropdown')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select State</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#stateDropdown')
-																							.append(
-																									'<option value="' + enumValue.description + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#stateDropdown')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select State</option>');
-											}
-										});
-					});
-
-	$(document)
-			.ready(
-					function() {
-						$('#permanentCountry')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#parStateDropdown')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select State</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#parStateDropdown')
-																							.append(
-																									'<option value="' + enumValue.description + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#parStateDropdown')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select State</option>');
-											}
-										});
-					});
-
-	$(document)
-			.ready(
-					function() {
-						$('#nationality')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#nativeRegion')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select Native Region</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#nativeRegion')
-																							.append(
-																									'<option value="' + enumValue.valueId + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#nativeRegion')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select Native Region</option>');
-											}
-										});
-					});
-
 	// Function to show/hide fields based on the selected idType
 	function toggleFields() {
-		const residentType = document.getElementById('residentType').value;
+		const idType = document.getElementById('idType').value;
 
-		// Show/hide fields based on residentType value
-		if (residentType === '101') {
+		// Show/hide fields based on idType value
+		if (idType === '28') {
 			// Show only the "idNumber" field
 			document.getElementById('idNumberField').style.display = 'block';
 			document.getElementById('idDetailsFields').style.display = 'none';
 			document.getElementById('additionalIdDetails').style.display = 'none';
 			document.getElementById('expiryAndStatusFields').style.display = 'none';
-		} else if (residentType === '100') {
+		} else if (idType === '2') {
 			// Show all fields
 			document.getElementById('idNumberField').style.display = 'block';
 			document.getElementById('idDetailsFields').style.display = 'block';
@@ -345,22 +170,11 @@
 			document.getElementById('expiryAndStatusFields').style.display = 'none';
 		}
 	}
-	function updateIdType() {
-            const residentType = document.getElementById("residentType").value;
-            const idTypeInput = document.getElementById("idType");
-
-            if (residentType === "101") {
-                idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
-            } else {
-                idTypeInput.value = ""; // Clear the field if residentType is not 101
-            }
-        }
 
 	// Initial check to set visibility based on the default selected value
 	document.addEventListener('DOMContentLoaded', function() {
 		toggleFields();
 	});
-
 </script>
 </head>
 
@@ -452,21 +266,20 @@
 				</div>
 			</div>
 			<form:form modelAttribute="customer"
-				action="${pageContext.request.contextPath}/createUser" method="post"
-				enctype="multipart/form-data">
+				action="${pageContext.request.contextPath}/createUser" method="post">
 				<form:hidden path="channel" value="WEB" />
 				<form:hidden path="agentLocationId" value="India" />
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
+						<h2 class="accordion-header" id="customer_Id">
 							<button class="accordion-button" type="button"
 								style="background: aliceblue;"
 								onclick="toggleDiv('panelsStayOpen-collapseOne')">Personal
 								Details</button>
 						</h2>
 						<div id="panelsStayOpen-collapseOne"
-							class="accordion-collapse collapse show">
+							class="accordion-collapse collapse">
 							<div class="accordion-body" style="background: aliceblue;">
 
 								<div class="main-content">
@@ -485,12 +298,8 @@
 											<div class="mb-4">
 												<label class="form-label">Salutation<span
 													class="text-danger">*</span></label>
-												<form:select path="salutation" class="form-control"
-													data-select2-selector="icon" multiple="false">
-													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
-													<form:options items="${salutationList}" itemValue="valueId"
-														itemLabel="description" />
-												</form:select>
+												<form:input path="salutation" type="text"
+													class="form-control" placeholder="salutation" />
 
 											</div>
 										</div>
@@ -528,13 +337,9 @@
 											<div class="mb-4">
 												<label class="form-label">Nationality <span
 													class="text-danger">*</span></label>
-												<form:select path="nationality" id="nationality"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
-													<form:option value="" disabled="true" selected="true">Nationality</form:option>
-													<form:options items="${countryList}" itemValue="valueId"
-														itemLabel="description" />
-												</form:select>
+
+												<form:input path="nationality" type="text"
+													class="form-control" placeholder="nationality" />
 											</div>
 										</div>
 									</div>
@@ -544,28 +349,23 @@
 												<label class="form-label">Secondary Nationality<span
 													class="text-danger">*</span>
 												</label>
-												<form:select path="secondNationality" class="form-control"
-													data-select2-selector="icon" multiple="false">
-													<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
-													<form:options items="${countryList}" itemValue="valueId"
-														itemLabel="description" />
-												</form:select>
+
+												<form:input path="secondNationality" type="text"
+													class="form-control" placeholder="First Name" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Native Region</label>
-												<form:select path="nativeRegion" id="nativeRegion"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
-													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
-												</form:select>
+												<label class="form-label">Native Region<span
+													class="text-danger">*</span></label>
+												<form:input path="nativeRegion" type="text"
+													class="form-control" placeholder="Native Region" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Date of Birth</label>
-												<form:input path="dateOfBirth" type="date"
+												<form:input path="dateOfBirth" type="text"
 													class="form-control" />
 											</div>
 										</div>
@@ -575,12 +375,9 @@
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" class="form-control"
-													data-select2-selector="icon" multiple="false">
-													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
-													<form:options items="${countryList}" itemValue="valueId"
-														itemLabel="description" />
-												</form:select>
+
+												<form:input path="firstName" type="text"
+													class="form-control" placeholder="firstName" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -592,29 +389,29 @@
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Country of Residence<span
+												<label class="form-label">Resident Type Id<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfResidence" class="form-control"
-													data-select2-selector="icon" multiple="false" >
-													<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
-													<form:options items="${countryList}" itemValue="valueId"
-														itemLabel="description" />
-												</form:select>
+												<form:input path="residentTypeId" type="text"
+													class="form-control" placeholder="Resident Type Id" />
 											</div>
-
 										</div>
 									</div>
 									<div class="row">
+										<div class="col-xl-4">
+											<div class="mb-4">
+												<label class="form-label">Country of Residence<span
+													class="text-danger">*</span></label>
+												<form:input path="countryOfResidence" type="text"
+													class="form-control" placeholder="countryOfResidence" />
+											</div>
 
+										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
-												<form:select path="gender" class="form-control"
-													data-select2-selector="icon" multiple="false">
-													<form:option value="" disabled="true" selected="true">Gender</form:option>
-													<form:options items="${genderList}" />
-												</form:select>
+												<form:input path="gender" type="text" class="form-control"
+													placeholder="gender" />
 											</div>
 										</div>
 
@@ -625,6 +422,9 @@
 													class="form-control" placeholder="Mothers Maiden Name" />
 											</div>
 										</div>
+									</div>
+
+									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Primary Mobile Number</label>
@@ -632,10 +432,6 @@
 													class="form-control" placeholder="Primary Mobile Number" />
 											</div>
 										</div>
-									</div>
-
-									<div class="row">
-
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Secondary Mobile Number</label>
@@ -651,6 +447,8 @@
 													placeholder="Email" />
 											</div>
 										</div>
+									</div>
+									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Phone Number</label>
@@ -658,9 +456,6 @@
 													class="form-control" placeholder="Phone Number" />
 											</div>
 										</div>
-									</div>
-									<div class="row">
-
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Occupation Id</label>
@@ -671,11 +466,9 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Political Exposed Person</label>
-												<form:select path="politicalExposedPerson"
-													class="form-select">
-													<option value="false" selected="selected">No</option>
-													<option value="true">Yes</option>
-												</form:select>
+
+												<form:input path="politicalExposedPerson" type="text"
+													class="form-control" placeholder="Political Exposed Person" />
 
 											</div>
 										</div>
@@ -686,7 +479,7 @@
 					</div>
 
 					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
+						<h2 class="accordion-header" id="address_Id">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
 								onclick="toggleDiv('panelsStayOpen-collapseTwo')">Address</button>
@@ -754,11 +547,8 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">State</label>
-														<form:select path="state" id="stateDropdown"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Select State</form:option>
-														</form:select>
+														<form:input path="state" type="text" class="form-control"
+															placeholder="State" id="currentState" />
 													</div>
 												</div>
 
@@ -767,13 +557,8 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label>
-														<form:select path="country" class="form-control"
-															data-select2-selector="icon" multiple="false"
-															id="currentCountry">
-															<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
-															<form:options items="${countryList}" itemValue="valueId"
-																itemLabel="description" />
-														</form:select>
+														<form:input path="country" type="text"
+															class="form-control" placeholder="Country" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -783,13 +568,7 @@
 															placeholder="Zip" id="currentZip" />
 													</div>
 												</div>
-												<!-- <div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Po. Box</label>
-														<form:input path="poBox" type="text" class="form-control"
-															placeholder="Po.Box" id="currentPoBox" />
-													</div>
-												</div> -->
+
 											</div>
 
 											<div
@@ -856,11 +635,9 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">State</label>
-														<form:select path="parState" id="parStateDropdown"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Select State</form:option>
-														</form:select>
+														<form:input path="parState" type="text"
+															class="form-control" placeholder="State"
+															id="permanentState" />
 													</div>
 												</div>
 											</div>
@@ -868,13 +645,9 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label>
-														<form:select path="parCountry" class="form-control"
-															data-select2-selector="icon" multiple="false"
-															id="permanentCountry">
-															<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
-															<form:options items="${countryList}" itemValue="valueId"
-																itemLabel="description" />
-														</form:select>
+
+														<form:input path="parCountry" type="text"
+															class="form-control" placeholder="Country of Residence" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -884,14 +657,7 @@
 															placeholder="Zip" id="permanentZip" />
 													</div>
 												</div>
-												<!-- <div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Po. Box</label>
-														<form:input path="parPoBox" type="text"
-															class="form-control" placeholder="Po.Box"
-															id="permanentPoBox" />
-													</div>
-												</div> -->
+
 											</div>
 
 										</div>
@@ -902,9 +668,10 @@
 						</div>
 
 
+
 					</div>
 					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
+						<h2 class="accordion-header" id="kyc_Id">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
 								onclick="toggleDiv('panelsStayOpen-collapseThree')">KYC</button>
@@ -923,22 +690,15 @@
 
 										<div class="row mb-4 align-items-center">
 											<div class="row">
-												<div class="col-lg-4">
-													<label class="fw-semibold">Resident Type</label>
-												</div>
+												<div class="col-lg-4"></div>
 												<div class="col-lg-8">
 													<div class="mb-4">
 														<div class="input-group">
 															<div class="input-group-text">
 																<i class="feather-user"></i>
 															</div>
-															<form:select id="residentType" path="residentTypeId"
-																class="form-control" data-select2-selector="icon"
-																multiple="false" onchange="toggleFields(); updateIdType();">
-																<form:option value="" disabled="true" selected="true">Select Resident Type</form:option>
-																<form:options items="${residentTypeList}"
-																	itemValue="valueId" itemLabel="description" />
-															</form:select>
+															<form:input id="idType" path="idType"
+																class="form-control" onchange="toggleFields()" />
 														</div>
 													</div>
 												</div>
@@ -953,20 +713,10 @@
 												<div class="row">
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Id Type <span
-																class="text-danger">*</span></label>
-															<input type="text"
-																class="form-control" placeholder="Id Type" id="idType" >
-
-														</div>
-													</div>
-
-													<div class="col-xl-4">
-														<div class="mb-4">
 															<label class="form-label">Id Number<span
-																class="text-danger">*</span></label> <input id="idNumber"
-																name="idNumber" placeholder="Id Number" type="text"
-																class="form-control" value="">
+																class="text-danger">*</span></label>
+															<form:input path="idNumber" id="idNumber"
+																placeholder="Id Number" type="text" class="form-control"/>
 														</div>
 													</div>
 
@@ -1041,23 +791,39 @@
 															<div class="mb-4">
 																<label class="form-label">Default Status<span
 																	class="text-danger">*</span></label>
-																<form:select path="defaultStatus" class="form-control">
-																	<form:option value="1">True</form:option>
-																	<form:option value="0">False</form:option>
-																</form:select>
+																<form:input path="defaultStatus" class="form-control" />
+
 															</div>
 														</div>
 														<div class="col-xl-4">
 															<div class="mb-4">
 																<label class="form-label">Active Status<span
 																	class="text-danger">*</span></label>
-																<form:select path="activeStatus" class="form-control">
-																	<option value="1" selected="selected">Yes</option>
-																	<option value="0">No</option>
-																</form:select>
+																<form:input path="activeStatus" type="text"
+																	class="form-control" />
 															</div>
 														</div>
-
+														<%-- <h5 class="fw-bold mb-0 me-4">
+                        															<span class="d-block mb-2">Upload Document</span>
+                        														</h5>
+                        														<div class="row">
+                        															<div class="col-xl-4">
+                        																<div class="mb-4">
+                        																	<label class="form-label">Id Front<span
+                        																		class="text-danger">*</span></label>
+                        																	<form:input path="frontBase64Data" type="file"
+                        																		class="form-control" placeholder="Id Front" />
+                        																</div>
+                        															</div>
+                        															<div class="col-xl-4">
+                        																<div class="mb-4">
+                        																	<label class="form-label">Id Back<span
+                        																		class="text-danger">*</span></label>
+                        																	<form:input path="backBase64Data" type="file"
+                        																		class="form-control" placeholder="Id Back" />
+                        																</div>
+                        															</div>
+                        														</div> --%>
 													</div>
 												</div>
 
@@ -1065,45 +831,13 @@
 										</div>
 									</div>
 								</div>
-								<!--<div class="card-body pass-info">
-									<div class="main-content">
-										<div
-											class="mb-4 d-flex align-items-center justify-content-between">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Upload Document</span>
-											</h5>
-										</div>
 
-										<div class="row mb-4 align-items-center">
-
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Id Front<span
-															class="text-danger">*</span></label>
-														<form:input path="frontBase64Data" type="file"
-															class="form-control" placeholder="Id Front" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Id Back<span
-															class="text-danger">*</span></label>
-														<form:input path="backBase64Data" type="file"
-															class="form-control" placeholder="Id Back" />
-													</div>
-												</div>
-											</div>
-										</div>
-
-									</div>
-								</div>
-								-->
 							</div>
 						</div>
 
 						<div class="accordion-item" style="background: aliceblue;">
-							<h2 class="accordion-header">
+							<h2 class="accordion-header" id="otherinfo_Id">
+
 								<button class="accordion-button collapsed" type="button"
 									style="background: aliceblue;"
 									onclick="toggleDiv('panelsStayOpen-collapseFour')">Other
@@ -1260,10 +994,9 @@
 													<div class="mb-4">
 														<label class="form-label">Income Type<span
 															class="text-danger">*</span></label>
-														<form:select path="incomeType" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:options items="${incomeTypeList}" />
-														</form:select>
+
+														<form:input path="incomeType" type="text"
+															class="form-control" placeholder="Income Type" />
 													</div>
 												</div>
 											</div>
@@ -1272,12 +1005,9 @@
 													<div class="mb-4">
 														<label class="form-label">Profession Catagory<span
 															class="text-danger">*</span></label>
-														<form:select path="professionCategory"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
-															<form:options items="${professionCategoryList}" />
-														</form:select>
+
+														<form:input path="professionCategory" type="text"
+															class="form-control" placeholder="Profession Catagory" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1314,11 +1044,11 @@
 														<label class="form-label">Show Remark on
 															Transaction<span class="text-danger">*</span>
 														</label>
-														<form:select path="showRemarksOnTxn" class="form-control"
-															data-select2-selector="icon">
-															<option value="true">true</option>
-															<option value="false">false</option>
-														</form:select>
+
+														<form:input path="showRemarksOnTxn" type="text"
+															class="form-control"
+															placeholder="Show Remark on
+                                                                                                                                              															Transaction" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1362,33 +1092,26 @@
 													<div class="mb-4">
 														<label class="form-label">Marital Status<span
 															class="text-danger">*</span></label>
-														<form:select path="maritalStatus" class="form-control"
-															data-select2-selector="icon">
-															<option value="0">Unmarried</option>
-															<option value="1">Married</option>
-														</form:select>
+
+														<form:input path="maritalStatus" type="text"
+															class="form-control" placeholder="Marital Status" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DNFBP<span
 															class="text-danger">*</span></label>
-														<form:select path="dnfbp" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
+
+														<form:input path="dnfbp" type="text" class="form-control"
+															placeholder="DNFBP" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DPMS<span
 															class="text-danger">*</span></label>
-														<form:select path="dpms" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
+														<form:input path="dpms" type="text" class="form-control"
+															placeholder="DPMS" />
 													</div>
 												</div>
 											</div>
@@ -1419,7 +1142,7 @@
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary">Update</button>
 				</div>
 
 			</form:form>
@@ -1437,6 +1160,8 @@
 	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
+	<script src="assets/vendors/js/datepicker.min.js"></script>
+	<script src="assets/vendors/js/lslstrength.min.js"></script>
 	<!--! END: Vendors JS !-->
 	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>

@@ -1,11 +1,13 @@
 package com.llm.model;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Data
 @Entity
@@ -57,10 +59,10 @@ public class Customer {
         @Column(name = "native_region")
         private Integer nativeRegion;
 
-////        @JsonProperty("date_of_birth")
-//        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        @Column(name = "date_of_birth", nullable = false)
-        private String dateOfBirth;
+//        @JsonProperty("date_of_birth")
+@Column(name = "date_of_birth")
+@DateTimeFormat(pattern = "yyyy-MM-dd")
+private String dateOfBirth;
 
 //        @JsonProperty("country_of_birth")
         @Column(name = "country_of_birth", length = 2, nullable = false)
@@ -116,30 +118,133 @@ public class Customer {
         private String updatedBy;
 
 //        @JsonProperty("ecrn")
-        @Column(name = "ecrn", unique = true, length = 10)
+        @Column(name = "ecrn")
         private String ecrn;
 
-        // Address List Relation (One-to-Many)
-//        @JsonProperty("address_list")
-        @JsonManagedReference
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-        private List<Address> addressList;
+        //Address data
+        @Column(name = "address_type_id")
+        private String addressTypeId;
 
-        // Additional Documents Relation (One-to-Many)
-//        @JsonProperty("additional_docs")
-        @JsonManagedReference
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-        private List<Document> additionalDocs;
+        @Column(name = "building_name", length = 255)
+        private String buildingName;
 
-        // ID Details (One-to-Many)
-//        @JsonProperty("id_details")
-        @JsonManagedReference
-        @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-        private List<IdDetail> idDetails;
+        @Column(name = "street_name", length = 255)
+        private String streetName;
 
-        // Customer Classification Relation (One-to-One)
-//        @JsonProperty("customer_classification")
-        @JsonManagedReference
-        @OneToOne(mappedBy = "customer",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-        private CustomerClassification customerClassification;
+        @Column(name = "landmark", length = 255)
+        private String landmark;
+
+        @Column(name = "city", length = 255)
+        private String city;
+
+        @Column(name = "district", length = 255)
+        private String district;
+
+        @Column(name = "state", length = 255)
+        private String state;
+
+        @Column(name = "country", length = 2)
+        private String country;
+
+        @Column(name = "zip")
+        private String zip;
+
+        @Column(name = "po_box")
+        private String poBox;
+
+        @Column(name = "mobile_number", length = 20)
+        private String mobileNumber;
+
+        //Permanent Address
+        private String parAddressTypeId;
+
+        private String parBuildingName;
+
+        private String parStreetName;
+
+        private String parLandmark;
+
+
+        private String parCity;
+
+        private String parDistrict;
+
+        private String parState;
+
+        private String parCountry;
+
+        private String parZip;
+
+        private String parPoBox;
+
+        private String parMobileNumber;
+
+
+        //Additional Document
+        private String documentId;
+        @Column(columnDefinition = "TEXT")
+        private String docbase64Data;
+        private String docContentType;
+
+        //IdDetails
+        private Integer idType;
+        private String idNumber;
+        private String visaNumber;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private String visaExpiryDate;
+        private String nameAsPerId;
+        private String issuedCountry;
+        private String issuedBy;
+        private String issuedAt;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private String issuedOn;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        private String dateOfExpiry;
+        private Boolean defaultStatus;
+        private Boolean activeStatus;
+
+        @Lob
+        private String frontBase64Data;
+        private String frontContentType;
+
+        @Lob
+        private String backBase64Data;
+        private String BackContentType;
+
+
+        //classification
+        private Integer customerTypeId;
+        private Integer annualIncomeRangeId;
+        private String annualIncomeCurrencyCode;
+        private String socialSecurityNumber;
+        private Integer taxRegistrationNumber;
+        private String txnIssuedCountry;
+        private String employerName;
+        private String employerAddress;
+        private String employerPhone;
+        private String employerEstablishmentId;
+        private Integer riskRatingId;
+        private Integer pepCategory;
+        private String personalMohreId;
+        private Integer incomeType;
+        private String professionCategory;
+        private String reasonForAcc;
+        private Integer txnVolMonth;
+        private Integer txnCountMonth;
+        private Boolean showRemarksOnTxn;
+        private String customerRemarks;
+        private String agentRefNo;
+        private String firstLanguage;
+        private Integer maritalStatus;
+        private Boolean dnfbp;
+        private Boolean dpms;
+        private Integer profileCategory;
+
+        //SocialLink
+        private Integer socialLinksId;
+        private String textField;
+
+        //Profile Photo
+        private String profBase64Data;
+        private String profContentType;
 }

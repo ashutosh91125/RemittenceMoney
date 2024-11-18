@@ -454,8 +454,7 @@
 			<form:form modelAttribute="customer"
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data">
-				<form:hidden path="channel" value="WEB" />
-				<form:hidden path="agentLocationId" value="India" />
+			
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">

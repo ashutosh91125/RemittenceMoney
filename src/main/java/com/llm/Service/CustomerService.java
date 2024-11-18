@@ -42,6 +42,8 @@ public class CustomerService {
 	public String createCustomer(Customer customer) {
 		customer.setIssuedOn((LocalDate.now()).toString());
 		customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
+		customer.setChannel("WEB");
+		customer.setAgentLocationId("India");
 
 		Map<String, Object> customerData = new HashMap<>();
 		customerData.put("channel", customer.getChannel());

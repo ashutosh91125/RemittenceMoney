@@ -192,6 +192,7 @@ private String dateOfBirth;
         private String visaNumber;
         @DateTimeFormat(pattern = "yyyy-MM-dd")
         private String visaExpiryDate;
+        private String visaType;
         private String nameAsPerId;
         private String issuedCountry;
         private String issuedBy;
@@ -202,6 +203,7 @@ private String dateOfBirth;
         private String dateOfExpiry;
         private Boolean defaultStatus;
         private Boolean activeStatus;
+        
 
         @Lob
         private String frontBase64Data;

@@ -1256,6 +1256,7 @@ function copyAddress() {
 														class="text-danger">*</span></label>
 													<form:select path="incomeType" class="form-control"
 														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Income Type</form:option>
 														<form:options items="${incomeTypeList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
@@ -1332,8 +1333,10 @@ function copyAddress() {
 												<div class="mb-4">
 													<label class="form-label">First Language<span
 														class="text-danger">*</span></label>
-													<form:input path="firstLanguage" class="form-control"
-														placeholder="First Language" />
+													<form:select path="firstLanguage" class="form-control" data-select2-selector="icon">
+                                                        <option value="en">English</option>
+                                                    </form:select>
+
 												</div>
 											</div>
 											<div class="row">
@@ -1343,12 +1346,34 @@ function copyAddress() {
 															class="text-danger">*</span></label>
 														<form:select path="maritalStatus" class="form-control"
 															data-select2-selector="icon">
-															<option value="0">Unmarried</option>
+															<option value="2">Unmarried</option>
 															<option value="1">Married</option>
 														</form:select>
 													</div>
 												</div>
 												<div class="col-xl-4">
+                                                													<div class="mb-4">
+                                                														<label class="form-label">Show Remark on
+                                                															Transaction<span class="text-danger">*</span>
+                                                														</label>
+                                                														<form:select path="showRemarksOnTxn" class="form-control"
+                                                															data-select2-selector="icon"
+                                                															onchange="toggleCustomerRemarks();">
+                                                															<option value="false">No</option>
+                                                															<option value="true">Yes</option>
+
+                                                														</form:select>
+                                                													</div>
+                                                												</div>
+                                                												<div id="customerRemarksContainer" class="col-xl-4"
+                                                													style="display: none;">
+                                                													<div class="mb-4">
+                                                														<label class="form-label">Customer Remarks</label>
+                                                														<form:input path="customerRemarks" class="form-control"
+                                                															placeholder="Enter your remarks here" />
+                                                													</div>
+                                                												</div>
+												<!-- <div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DNFBP<span
 															class="text-danger">*</span></label>
@@ -1369,7 +1394,7 @@ function copyAddress() {
 															<option value="true">Yes</option>
 														</form:select>
 													</div>
-												</div>
+												</div>  -->
 											</div>
 											<%--<div class="row">
 											 <div class="col-xl-4">
@@ -1390,28 +1415,7 @@ function copyAddress() {
 											</div>
 										</div>--%>
 											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Show Remark on
-															Transaction<span class="text-danger">*</span>
-														</label>
-														<form:select path="showRemarksOnTxn" class="form-control"
-															data-select2-selector="icon"
-															onchange="toggleCustomerRemarks();">
-															<option value="false">false</option>
-															<option value="true">true</option>
 
-														</form:select>
-													</div>
-												</div>
-												<div id="customerRemarksContainer" class="col-xl-4"
-													style="display: none;">
-													<div class="mb-4">
-														<label class="form-label">Customer Remarks</label>
-														<form:input path="customerRemarks" class="form-control"
-															placeholder="Enter your remarks here" />
-													</div>
-												</div>
 											</div>
 											<div class="row">
 												<%-- <div class="col-xl-4">

@@ -222,7 +222,7 @@ public class CustomerService {
 
 		// Mapping Customer Classification
 //		CustomerClassification classification = customer.getCustomerClassification();
-		if (false) {
+		if (customer.getIncomeType() != null) {
 			
 			customer.setCustomerTypeId(1);
 			customer.setPepCategory(1);
@@ -234,14 +234,24 @@ public class CustomerService {
 			classificationData.put("annual_income_currency_code", customer.getAnnualIncomeCurrencyCode());
 			classificationData.put("txn_vol_month", customer.getTxnVolMonth());
 			classificationData.put("txn_count_month", customer.getTxnCountMonth());
-			classificationData.put("employer_name", customer.getEmployerName());
-			classificationData.put("employer_address", customer.getEmployerAddress());
-			classificationData.put("employer_phone", customer.getEmployerPhone());
+//			classificationData.put("employer_name", customer.getEmployerName());
+//			classificationData.put("employer_address", customer.getEmployerAddress());
+//			classificationData.put("employer_phone", customer.getEmployerPhone());
 			classificationData.put("profession_category", customer.getProfessionCategory());
-			classificationData.put("reason_for_acc", customer.getReasonForAcc());
-			classificationData.put("agent_ref_no", customer.getAgentRefNo());
+//			classificationData.put("reason_for_acc", customer.getReasonForAcc());
+//			classificationData.put("agent_ref_no", customer.getAgentRefNo());
 			classificationData.put("first_language", customer.getFirstLanguage());
 			classificationData.put("marital_status", customer.getMaritalStatus());
+
+			classificationData.put("risk_rating_id", customer.getRiskRatingId());
+			classificationData.put("dnfbp", false);
+			classificationData.put("dpms", false);
+			classificationData.put("tax_registration_number", customer.getTaxRegistrationNumber());
+			classificationData.put("show_remarks_on_txn",customer.getShowRemarksOnTxn());
+
+			if(customer.getShowRemarksOnTxn()){
+				classificationData.put("customer_remarks",customer.getCustomerRemarks());
+			}
 
 			// Mapping Profile Photo if exists
 			if (false) {
@@ -252,17 +262,18 @@ public class CustomerService {
 			}
 
 			// Mapping Social Links
-			List<Map<String, Object>> socialLinksData = new ArrayList<>();
 			if (false) {
 
+				List<Map<String, Object>> socialLinksData = new ArrayList<>();
 //				for (SocialLink socialLink : classification.getSocialLinks()) {
 				Map<String, Object> socialLinkData = new HashMap<>();
 				socialLinkData.put("social_links_id", customer.getSocialLinksId());
 				socialLinkData.put("text_field", customer.getTextField());
 				socialLinksData.add(socialLinkData);
+				classificationData.put("social_links", socialLinksData);
 //				}
 			}
-			classificationData.put("social_links", socialLinksData);
+
 
 			customerData.put("customer_classification", classificationData);
 		}

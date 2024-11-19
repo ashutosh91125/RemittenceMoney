@@ -32,7 +32,6 @@
 
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
-<script>
 // Get the current path of the page (e.g., "registersubagent.jsp")
 const currentPath = window.location.pathname.split('/').pop();
 

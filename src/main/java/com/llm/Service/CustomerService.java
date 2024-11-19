@@ -43,9 +43,8 @@ public class CustomerService {
 		customer.setIssuedOn((LocalDate.now()).toString());
 		customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
 		customer.setChannel("WEB");
+//		customer.setAgentLocationId("Malaysia");
 		customer.setAgentLocationId("India");
-		customer.setCustomerTypeId(1);
-		customer.setPepCategory(1);
 		
 
 		Map<String, Object> customerData = new HashMap<>();
@@ -152,8 +151,8 @@ public class CustomerService {
 				idDetailsData.add(idData);
 
 			}
-			else if (customer.getIdType() == 2) {
-				idData.put("id_type", customer.getIdType());
+			else if (customer.getResidentTypeId() == 100) {
+				idData.put("id_type", 2);
 				idData.put("id_number", customer.getIdNumber());
 				idData.put("visa_number", customer.getVisaNumber());
 				if (customer.getVisaExpiryDate().isEmpty()) {
@@ -178,7 +177,7 @@ public class CustomerService {
 				} else {
 					customerData.put("date_of_expiry", customer.getDateOfExpiry());
 				}
-				idData.put("date_of_expiry", "2025-12-12");
+//				idData.put("date_of_expiry", "2025-12-12");
 //				idData.put("date_of_expiry", customer.getDateOfExpiry());
 				idData.put("active_status", customer.getActiveStatus());
 
@@ -204,6 +203,10 @@ public class CustomerService {
 		// Mapping Customer Classification
 //		CustomerClassification classification = customer.getCustomerClassification();
 		if (false) {
+			
+			customer.setCustomerTypeId(1);
+			customer.setPepCategory(1);
+			
 			Map<String, Object> classificationData = new HashMap<>();
 			classificationData.put("customer_type_id", customer.getCustomerTypeId());
 			classificationData.put("income_type", customer.getIncomeType());

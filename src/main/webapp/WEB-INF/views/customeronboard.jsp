@@ -1031,7 +1031,7 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Visa Expiry Date<span
 																class="text-danger">*</span></label>
-															<form:input path="visaExpiryDate" type="text"
+															<form:input path="visaExpiryDate" type="date"
 																class="form-control" placeholder="Visa Expiry Date" />
 														</div>
 													</div>
@@ -1120,7 +1120,8 @@ function copyAddress() {
 															class="form-control" data-select2-selector="icon"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
-															<form:options items="${currencyList}" />
+															<form:options items="${annualIncomeRangeList}"
+																itemValue="valueId" itemLabel="description" />
 														</form:select>
 													</div>
 												</div>
@@ -1132,7 +1133,9 @@ function copyAddress() {
 															class="form-control" data-select2-selector="icon"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
-															<form:options items="${currencyList}" />
+															<%-- <form:options items="${currencyList}" itemValue="valueId"
+														itemLabel="description"/> --%>
+															<form:option value="MYR">Malaysian Ringgit</form:option>
 														</form:select>
 													</div>
 												</div>
@@ -1227,7 +1230,8 @@ function copyAddress() {
 													<form:select path="riskRatingId" class="form-control"
 														data-select2-selector="icon" multiple="false">
 														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
-														<%-- <form:options items="${countryList}" /> --%>
+														<form:options items="${riskRatingIdList}"
+															itemValue="valueId" itemLabel="description" />
 													</form:select>
 												</div>
 											</div>
@@ -1237,7 +1241,8 @@ function copyAddress() {
 														class="text-danger">*</span></label>
 													<form:select path="incomeType" class="form-control"
 														data-select2-selector="icon" multiple="false">
-														<form:options items="${incomeTypeList}" />
+														<form:options items="${incomeTypeList}"
+															itemValue="valueId" itemLabel="description" />
 													</form:select>
 												</div>
 											</div>
@@ -1248,7 +1253,8 @@ function copyAddress() {
 													<form:select path="professionCategory" class="form-control"
 														data-select2-selector="icon" multiple="false">
 														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
-														<form:options items="${professionCategoryList}" />
+														<form:options items="${professionCategoryList}"
+															itemValue="valueId" itemLabel="description" />
 													</form:select>
 												</div>
 											</div>
@@ -1290,7 +1296,8 @@ function copyAddress() {
 													<form:select path="txnVolMonth" class="form-control"
 														data-select2-selector="icon" multiple="false">
 														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
-														<form:options items="${countryList}" />
+														<form:options items="${transactionVolumeMonthList}"
+															itemValue="valueId" itemLabel="description" />
 													</form:select>
 												</div>
 											</div>
@@ -1298,8 +1305,12 @@ function copyAddress() {
 												<div class="mb-4">
 													<label class="form-label">Transaction Count Month<span
 														class="text-danger">*</span></label>
-													<form:input path="txnCountMonth" type="Text"
-														class="form-control" placeholder="Transaction Count Month" />
+													<form:select path="txnCountMonth" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
+														<form:options items="${transactionCountMonthList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1372,8 +1383,9 @@ function copyAddress() {
 														<form:select path="showRemarksOnTxn" class="form-control"
 															data-select2-selector="icon"
 															onchange="toggleCustomerRemarks();">
-															<option value="true">true</option>
 															<option value="false">false</option>
+															<option value="true">true</option>
+
 														</form:select>
 													</div>
 												</div>

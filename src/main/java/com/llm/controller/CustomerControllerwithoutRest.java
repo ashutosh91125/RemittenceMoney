@@ -23,14 +23,13 @@ import com.llm.model.Gender;
 @Controller
 //@SessionAttributes({ "custDTO" })
 public class CustomerControllerwithoutRest {
-	private static  final Logger logger= LoggerFactory.getLogger(CustomerControllerwithoutRest.class);
-	
+	private static final Logger logger = LoggerFactory.getLogger(CustomerControllerwithoutRest.class);
+
 	@Autowired
 	private CustomerService customerService;
 
 	@Autowired
 	private EnumEntityService enumEntityService;
-
 
 	@GetMapping("/customer")
 	public String onboardCustomer1(Model model) {
@@ -57,7 +56,6 @@ public class CustomerControllerwithoutRest {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
 			salutationEntity.ifPresent(entity -> model.addAttribute("salutationList", entity.getValues()));
 
-
 		} catch (Exception e) {
 			logger.error("Error retrieving salutation list: ", e);
 			model.addAttribute("salutationList", List.of()); // or set a default list if needed
@@ -66,7 +64,6 @@ public class CustomerControllerwithoutRest {
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
-
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
@@ -92,7 +89,8 @@ public class CustomerControllerwithoutRest {
 
 		try {
 			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
-			professionCategoryEntity.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+			professionCategoryEntity
+					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
 		} catch (Exception e) {
 			logger.error("Error retrieving profession category list: ", e);
 			model.addAttribute("professionCategoryList", List.of());
@@ -117,11 +115,65 @@ public class CustomerControllerwithoutRest {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("residentType");
 			salutationEntity.ifPresent(entity -> model.addAttribute("residentTypeList", entity.getValues()));
 
-
 		} catch (Exception e) {
 			logger.error("Error retrieving residentType list: ", e);
 			model.addAttribute("residentTypeList", List.of()); // or set a default list if needed
 		}
+		try {
+			Optional<EnumEntity> annualIncomeRangeEntity = enumEntityService.getEnumEntityByKey("annualIncomeRange");
+			annualIncomeRangeEntity
+					.ifPresent(entity -> model.addAttribute("annualIncomeRangeList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving annual Income Range list: ", e);
+			model.addAttribute("annualIncomeRangeList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> transactionCountMonthEntity = enumEntityService
+					.getEnumEntityByKey("transactionCountMonth");
+			transactionCountMonthEntity
+					.ifPresent(entity -> model.addAttribute("transactionCountMonthList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving annual Income Range list: ", e);
+			model.addAttribute("transactionCountMonthList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> transactionVolumeMonthEntity = enumEntityService
+					.getEnumEntityByKey("transactionVolumeMonth");
+			transactionVolumeMonthEntity
+					.ifPresent(entity -> model.addAttribute("transactionVolumeMonthList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving transaction Volume Month List: ", e);
+			model.addAttribute("transactionVolumeMonthList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> riskRatingIdEntity = enumEntityService.getEnumEntityByKey("riskRatingId");
+			riskRatingIdEntity.ifPresent(entity -> model.addAttribute("riskRatingIdList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving riskRatingId list: ", e);
+			model.addAttribute("riskRatingIdList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> incomeTypeEntity = enumEntityService.getEnumEntityByKey("incomeType");
+			incomeTypeEntity.ifPresent(entity -> model.addAttribute("incomeTypeList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error income Type list: ", e);
+			model.addAttribute("incomeTypeList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
+			professionCategoryEntity
+					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error profession Category list: ", e);
+			model.addAttribute("incomeTypeList", List.of()); // or set a default list if needed
+		}
+		
 
 //		model.addAttribute("salutationList", salutationService.findAllRecords());
 //		model.addAttribute("countryList", countryService.fetchCountries());
@@ -133,7 +185,7 @@ public class CustomerControllerwithoutRest {
 		model.addAttribute("genderList", Gender.values());
 		return "customeronboard";
 	}
-	
+
 	@GetMapping("/customer-list")
 	public String getCustomerList(Model model) {
 		List<Customer> customerList = customerService.getAllCustomer();
@@ -145,8 +197,8 @@ public class CustomerControllerwithoutRest {
 
 	// Handle user creation form submission
 	@PostMapping("/createUser")
-	public String createUser(@ModelAttribute Customer customer){
-		logger.info("Customer"+customer);
+	public String createUser(@ModelAttribute Customer customer) {
+		logger.info("Customer" + customer);
 
 //		if (!frontBase64Data.isEmpty()) {
 //			String base64Image = Base64.getEncoder().encodeToString(frontBase64Data.getBytes());
@@ -164,12 +216,13 @@ public class CustomerControllerwithoutRest {
 		logger.info(customer.toString());
 		return "redirect:/customer-list"; // Redirect to home after creating a user
 	}
+
 	@GetMapping("/customerdetails")
 	public String getDetailsEcrn(@RequestParam("ecrn") String ecrn, Model model) {
 		try {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
-				model.addAttribute("customer", customer.get());  // Use the actual Customer object
+				model.addAttribute("customer", customer.get()); // Use the actual Customer object
 			} else {
 				model.addAttribute("error", "Customer details not found.");
 			}

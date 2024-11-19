@@ -965,8 +965,7 @@ function copyAddress() {
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Name as per Id<span
-																class="text-danger">*</span></label>
+															<label class="form-label">Name as per Id</label>
 															<form:input path="nameAsPerId" type="text"
 																class="form-control" placeholder="Name as per Id" />
 														</div>
@@ -977,8 +976,7 @@ function copyAddress() {
 												<div class="row">
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Issued Country<span
-																class="text-danger">*</span></label>
+															<label class="form-label">Issued Country</label>
 															<form:select path="issuedCountry" id="issuedCountry"
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
@@ -990,8 +988,7 @@ function copyAddress() {
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Issued at<span
-																class="text-danger">*</span></label>
+															<label class="form-label">Issued at</label>
 															<form:select path="issuedAt" id="issuedAt"
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
@@ -1003,8 +1000,7 @@ function copyAddress() {
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Issued By<span
-																class="text-danger">*</span></label>
+															<label class="form-label">Issued By</label>
 															<form:input path="issuedBy" type="text"
 																class="form-control" placeholder="Issued By"
 																id="issuedBy" />
@@ -1016,15 +1012,13 @@ function copyAddress() {
 												<div class="row">
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Issued on<span
-																class="text-danger">*</span></label> <input type="date"
+															<label class="form-label">Issued on</label> <input type="date"
 																class="form-control" />
 														</div>
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Date of Expiry<span
-																class="text-danger">*</span></label>
+															<label class="form-label">Date of Expiry</label>
 															<form:input path="dateOfBirth" type="date"
 																class="form-control" />
 														</div>
@@ -1040,24 +1034,21 @@ function copyAddress() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Visa Number<span
-															class="text-danger">*</span></label>
+														<label class="form-label">Visa Number</label>
 														<form:input path="visaNumber" type="text"
 															class="form-control" placeholder="Visa Number" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Visa Expiry Date<span
-															class="text-danger">*</span></label>
+														<label class="form-label">Visa Expiry Date</label>
 														<form:input path="visaExpiryDate" type="date"
 															class="form-control" placeholder="Visa Expiry Date" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Visa Type<span
-															class="text-danger">*</span></label>
+														<label class="form-label">Visa Type</label>
 														<form:input path="visaType" type="text"
 															class="form-control" placeholder="Visa Type" />
 													</div>

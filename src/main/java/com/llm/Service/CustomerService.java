@@ -1,6 +1,7 @@
 package com.llm.Service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -39,10 +40,13 @@ public class CustomerService {
 		customer.setAgentLocationId("Malaysia");
 		//customer.setAgentLocationId("India");
 		
+		ZoneId mytZone = ZoneId.of("Asia/Kuala_Lumpur");
+		
 
 		Map<String, Object> customerData = new HashMap<>();
 		customerData.put("channel", customer.getChannel());
 		customerData.put("agent_location_id", customer.getAgentLocationId());
+		customerData.put("salutation", customer.getSalutation());
 		customerData.put("first_name", customer.getFirstName());
 		customerData.put("middle_name", customer.getMiddleName());
 		customerData.put("last_name", customer.getLastName());
@@ -125,11 +129,11 @@ public class CustomerService {
 			Map<String, Object> idData = new HashMap<>();
 
 			if(customer.getResidentTypeId() == 101) {
-				customer.setIssuedOn((LocalDate.now()).toString());
-				customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
+//				customer.setIssuedOn((LocalDate.now(mytZone)).toString());
+//				customer.setDateOfExpiry((LocalDate.now(mytZone).plusYears(2)).toString());
 
 				idData.put("id_type", 28);
-				looger.info("======customer.getResidentTypeId()==="+customer.getResidentTypeId());
+				
 
 				idData.put("id_number", customer.getIdNumber());
 				idData.put("name_as_per_id", customer.getNameAsPerId());
@@ -138,18 +142,19 @@ public class CustomerService {
 				idData.put("issued_by", "MYKD");
 				idData.put("issued_at", "Malaysia");
 
-				if (customer.getIssuedOn().isEmpty()) {
-					customerData.put("issued_on", null);
-				} else {
-					customerData.put("issued_on", customer.getIssuedOn());
-				}
-//				idData.put("issued_on", "2024-06-12");
-				if (customer.getDateOfExpiry().isEmpty()) {
-					customerData.put("date_of_expiry", null);
-				} else {
-					customerData.put("date_of_expiry", customer.getDateOfExpiry());
-				}
-
+//				if (customer.getIssuedOn().isEmpty()) {
+//					customerData.put("issued_on", null);
+//				} else {
+//					customerData.put("issued_on", customer.getIssuedOn());
+//				}
+				
+//				if (customer.getDateOfExpiry().isEmpty()) {
+//					customerData.put("date_of_expiry", null);
+//				} else {
+//					customerData.put("date_of_expiry", customer.getDateOfExpiry());
+//				}
+				idData.put("issued_on", "2024-11-19");
+				idData.put("date_of_expiry", "2026-11-19");
 				idData.put("active_status", true);
 
 //				Map<String, Object> idFrontData = new HashMap<>();
@@ -162,7 +167,7 @@ public class CustomerService {
 //				idBackData.put("base64_data", customer.getBackBase64Data());
 //				idBackData.put("content_type", customer.getBackContentType());
 //				idData.put("id_back", idBackData);
-
+				looger.info("======customer.getResidentTypeId()==="+idData);
 				idDetailsData.add(idData);
 
 			}

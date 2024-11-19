@@ -171,7 +171,17 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error profession Category list: ", e);
-			model.addAttribute("incomeTypeList", List.of()); // or set a default list if needed
+			model.addAttribute("professionCategoryList", List.of()); // or set a default list if needed
+		}
+
+		try {
+			Optional<EnumEntity> occupationIdEntity = enumEntityService.getEnumEntityByKey("occupationId");
+			occupationIdEntity
+					.ifPresent(entity -> model.addAttribute("occupationIdList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error occupation Id list: ", e);
+			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
 		}
 		
 

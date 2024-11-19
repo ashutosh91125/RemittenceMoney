@@ -36,8 +36,8 @@ public class CustomerService {
 	@Transactional
 	public String createCustomer(Customer customer) {
 		customer.setChannel("WEB");
-//		customer.setAgentLocationId("Malaysia");
-		customer.setAgentLocationId("India");
+		customer.setAgentLocationId("Malaysia");
+		//customer.setAgentLocationId("India");
 		
 
 		Map<String, Object> customerData = new HashMap<>();

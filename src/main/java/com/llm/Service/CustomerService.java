@@ -247,6 +247,7 @@ public class CustomerService {
 			classificationData.put("dnfbp", false);
 			classificationData.put("dpms", false);
 			classificationData.put("tax_registration_number", customer.getTaxRegistrationNumber());
+			classificationData.put("txn_issued_country", "MY");
 			classificationData.put("show_remarks_on_txn",customer.getShowRemarksOnTxn());
 
 			if(customer.getShowRemarksOnTxn()){

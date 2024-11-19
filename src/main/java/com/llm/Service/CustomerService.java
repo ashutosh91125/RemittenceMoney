@@ -155,7 +155,7 @@ public class CustomerService {
 					customerData.put("date_of_expiry", customer.getDateOfExpiry());
 				}
 
-				idData.put("active_status", customer.getActiveStatus());
+				idData.put("active_status", true);
 
 //				Map<String, Object> idFrontData = new HashMap<>();
 //				idFrontData.put("base64_data", customer.getFrontBase64Data());
@@ -199,7 +199,7 @@ public class CustomerService {
 				}
 //				idData.put("date_of_expiry", "2025-12-12");
 //				idData.put("date_of_expiry", customer.getDateOfExpiry());
-				idData.put("active_status", customer.getActiveStatus());
+				idData.put("active_status", true);
 
 				Map<String, Object> idFrontData = new HashMap<>();
 				idFrontData.put("base64_data", customer.getFrontBase64Data());

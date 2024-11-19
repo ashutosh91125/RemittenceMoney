@@ -670,9 +670,12 @@ function copyAddress() {
 
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Occupation Id</label>
-												<form:input path="occupationId" type="text"
-													class="form-control" placeholder="Occupation Id" />
+												<label class="form-label">Occupation</label>
+												<form:select path="occupationId" class="form-control"
+                                                    data-select2-selector="icon" multiple="false">
+                                                	<form:option value="" disabled="true" selected="true">Occupation</form:option>
+                                                	<form:options items="${occupationIdList}" itemValue="valueId" itemLabel="description" />
+                                                </form:select>
 											</div>
 										</div>
 
@@ -991,7 +994,7 @@ function copyAddress() {
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
 																<form:option value="" disabled="true" selected="true">Issued at</form:option>
-																<form:options items="${countryList}" itemValue="valueId"
+																<form:options items="${countryList}" itemValue="description"
 																	itemLabel="description" />
 															</form:select>
 														</div>

@@ -89,8 +89,8 @@ public class CustomerService {
 					addressData.put("state", customer.getState());
 					addressData.put("country", customer.getCountry());
 					addressData.put("zip", customer.getZip());
-					addressData.put("po_box", customer.getZip());
-					addressData.put("mobile_number", customer.getMobileNumber());
+//					addressData.put("po_box", customer.getZip());
+					addressData.put("mobile_number", customer.getPhoneNumber());
 					addressListData.add(addressData);
 				} else {
 					addressData.put("address_type_id", "2");
@@ -102,8 +102,8 @@ public class CustomerService {
 					addressData.put("state", customer.getParState());
 					addressData.put("country", customer.getParCountry());
 					addressData.put("zip", customer.getParZip());
-					addressData.put("po_box", customer.getParPoBox());
-					addressData.put("mobile_number", customer.getParMobileNumber());
+//					addressData.put("po_box", customer.getParPoBox());
+					addressData.put("mobile_number", customer.getPhoneNumber());
 					addressListData.add(addressData);
 				}
 			}

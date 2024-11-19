@@ -17,12 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.llm.model.Address;
 import com.llm.model.Customer;
-import com.llm.model.CustomerClassification;
-import com.llm.model.Document;
-import com.llm.model.IdDetail;
-import com.llm.model.SocialLink;
 import com.llm.repositories.CustomerRepository;
 
 import jakarta.transaction.Transactional;

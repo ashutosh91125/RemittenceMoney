@@ -310,34 +310,49 @@ function copyAddress() {
 											}
 										});
 					});
-
 	function toggleFields() {
-		const residentType = document.getElementById('residentType').value;
-		const idTypeInput = document.getElementById("idType");
+	    const residentType = document.getElementById('residentType').value;
+	    const idTypeInput = document.getElementById("idType");
+	    const issuedCountryInput = document.querySelector("[name='issuedCountry']");
+	    const issuedAtInput = document.querySelector("[name='issuedAt']");
+	    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
+	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
 
-		// Show/hide fields based on residentType value
-		if (residentType === '101') {
-			// Show only the "idNumber" field
-			idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
-			document.getElementById('idNumberField').style.display = 'block';
-			document.getElementById('idDetailsFields').style.display = 'none';
-			document.getElementById('additionalIdDetails').style.display = 'none';
-			document.getElementById('expiryAndStatusFields').style.display = 'none';
-		} else if (residentType === '100') {
-			// Show all fields
-			idTypeInput.value = "PASSPORT";
-			document.getElementById('idNumberField').style.display = 'block';
-			document.getElementById('idDetailsFields').style.display = 'block';
-			document.getElementById('additionalIdDetails').style.display = 'block';
-			document.getElementById('expiryAndStatusFields').style.display = 'block';
-		} else {
-			// Hide all fields if no matching residentType
-			document.getElementById('idNumberField').style.display = 'none';
-			document.getElementById('idDetailsFields').style.display = 'none';
-			document.getElementById('additionalIdDetails').style.display = 'none';
-			document.getElementById('expiryAndStatusFields').style.display = 'none';
-		}
+	    if (residentType === '101') {
+	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
+	        issuedCountryInput.value = "MY";
+	        issuedAtInput.value = "MALAYSIA";
+	        issuedCountryInput.disabled = true;
+	        issuedAtInput.disabled = true;
+	        issuedDateExpiryNonResident.style.display = 'none';
+	        issuedForNonResidents.style.display = 'none';
+	        document.getElementById('idNumberField').style.display = 'block';
+	        document.getElementById('idDetailsFields').style.display = 'none';
+	        document.getElementById('additionalIdDetails').style.display = 'none';
+	        document.getElementById('expiryAndStatusFields').style.display = 'none';
+	    } else if (residentType === '100') {
+	        idTypeInput.value = "PASSPORT";
+	        issuedCountryInput.value = "";
+	        issuedAtInput.value = "";
+	        issuedCountryInput.disabled = false;
+	        issuedAtInput.disabled = false;
+	        issuedForNonResidents.style.display = 'block';
+	        issuedDateExpiryNonResident.style.display = 'block';
+	        document.getElementById('idNumberField').style.display = 'block';
+	        document.getElementById('idDetailsFields').style.display = 'block';
+	        document.getElementById('additionalIdDetails').style.display = 'block';
+	        document.getElementById('expiryAndStatusFields').style.display = 'block';
+	    } else {
+	        issuedDateExpiryNonResident.style.display = 'none';
+	        issuedForNonResidents.style.display = 'none';
+	        document.getElementById('idNumberField').style.display = 'none';
+	        document.getElementById('idDetailsFields').style.display = 'none';
+	        document.getElementById('additionalIdDetails').style.display = 'none';
+	        document.getElementById('expiryAndStatusFields').style.display = 'none';
+	    }
 	}
+
+
 	 function toggleCustomerRemarks() {
 	        const showRemarks = document.getElementById("showRemarksOnTxn").value;
 	        const remarksContainer = document.getElementById("customerRemarksContainer");
@@ -952,25 +967,49 @@ function copyAddress() {
 														</div>
 													</div>
 												</div>
-
+											</div>
+											<div id="issuedForNonResidents">
 												<div class="row">
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued Country<span
 																class="text-danger">*</span></label>
-															<form:input path="issuedCountry" class="form-control"
-																placeholder="Issued Country" />
+															<form:select path="issuedCountry" id="issuedCountry"
+																class="form-control" data-select2-selector="icon"
+																multiple="false">
+																<form:option value="" disabled="true" selected="true">Issued Country</form:option>
+																<form:options items="${countryList}" itemValue="valueId"
+																	itemLabel="description" />
+															</form:select>
 														</div>
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued at<span
 																class="text-danger">*</span></label>
-															<form:input path="issuedAt" type="text"
-																class="form-control" placeholder="Issued at" />
+															<form:select path="issuedAt" id="issuedAt"
+																class="form-control" data-select2-selector="icon"
+																multiple="false">
+																<form:option value="" disabled="true" selected="true">Issued at</form:option>
+																<form:options items="${countryList}" itemValue="valueId"
+																	itemLabel="description" />
+															</form:select>
 														</div>
 													</div>
-													<%-- <div class="col-xl-4">
+													<div class="col-xl-4">
+														<div class="mb-4">
+															<label class="form-label">Issued By<span
+																class="text-danger">*</span></label>
+															<form:input path="issuedBy" type="text"
+																class="form-control" placeholder="Issued By"
+																id="issuedBy" />
+														</div>
+													</div>
+												</div>
+											</div>
+											<div id="issuedDateExpiryNonResident">
+												<div class="row">
+													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued on<span
 																class="text-danger">*</span></label> <input type="date"
@@ -986,71 +1025,46 @@ function copyAddress() {
 														</div>
 													</div>
 												</div>
+											</div>
 
-												<div id="expiryAndStatusFields" class="row"
-													style="display: none;">
-													<div class="row">
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Default Status<span
-																	class="text-danger">*</span></label>
-																<form:select path="defaultStatus" class="form-control">
-																	<form:option value="1">True</form:option>
-																	<form:option value="0">False</form:option>
-																</form:select>
-															</div>
-														</div>--%>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Active Status<span
-																class="text-danger">*</span></label>
-															<form:select path="activeStatus" class="form-control"
-																data-select2-selector="icon" multiple="false">
-																<option value="1" selected="selected">Yes</option>
-																<option value="0">No</option>
-															</form:select>
-														</div>
+										</div>
+										<div id="idDetailsFields" class="row" style="display: none;">
+											<h5 class="fw-bold mb-0 me-4">
+												<span class="d-block mb-4">Visa Details</span>
+											</h5>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Visa Number<span
+															class="text-danger">*</span></label>
+														<form:input path="visaNumber" type="text"
+															class="form-control" placeholder="Visa Number" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Visa Expiry Date<span
+															class="text-danger">*</span></label>
+														<form:input path="visaExpiryDate" type="date"
+															class="form-control" placeholder="Visa Expiry Date" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Visa Type<span
+															class="text-danger">*</span></label>
+														<form:input path="visaType" type="text"
+															class="form-control" placeholder="Visa Type" />
 													</div>
 												</div>
 											</div>
-											<div id="idDetailsFields" class="row" style="display: none;">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-4">Visa Details</span>
-												</h5>
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Visa Number<span
-																class="text-danger">*</span></label>
-															<form:input path="visaNumber" type="text"
-																class="form-control" placeholder="Visa Number" />
-														</div>
-													</div>
-
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Visa Expiry Date<span
-																class="text-danger">*</span></label>
-															<form:input path="visaExpiryDate" type="date"
-																class="form-control" placeholder="Visa Expiry Date" />
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Visa Type<span
-																class="text-danger">*</span></label>
-															<form:input path="visaType" type="text"
-																class="form-control" placeholder="Visa Type" />
-														</div>
-													</div>
-												</div>
-											</div>
-
 										</div>
 									</div>
 								</div>
 							</div>
-							<!--<div class="card-body pass-info">
+						</div>
+					</div>
+					<!--<div class="card-body pass-info">
 									<div class="main-content">
 										<div
 											class="mb-4 d-flex align-items-center justify-content-between">
@@ -1084,8 +1098,6 @@ function copyAddress() {
 									</div>
 								</div>
 								-->
-						</div>
-					</div>
 
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">

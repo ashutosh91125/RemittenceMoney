@@ -5,6 +5,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -22,9 +23,13 @@ public class CustomerCreationService {
     private static  final Logger looger= LoggerFactory.getLogger(CustomerCreationService.class);
 
     private RestTemplate restTemplate;
+    @Value("${customer.tokenurl}")
+    private String TOKEN_URL;
+    @Value("${customer.onboardingurl}")
+    private String CUSTOMER_ONBOARDING_URL;
 
-    private static final String TOKEN_URL = "https://drap-sandbox.digitnine.com/auth/realms/cdp/protocol/openid-connect/token";
-    private static final String CUSTOMER_ONBOARDING_URL = "https://drap-sandbox.digitnine.com/caas-lcm/api/v1/CAAS/onBoarding/customer";
+//    private static final String TOKEN_URL = "https://drap-sandbox.digitnine.com/auth/realms/cdp/protocol/openid-connect/token";
+//    private static final String CUSTOMER_ONBOARDING_URL = "https://drap-sandbox.digitnine.com/caas-lcm/api/v1/CAAS/onBoarding/customer";
 
     @Autowired
     public CustomerCreationService(RestTemplate restTemplate) {

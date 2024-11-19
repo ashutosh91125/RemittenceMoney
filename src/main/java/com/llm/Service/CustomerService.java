@@ -40,8 +40,6 @@ public class CustomerService {
 
 	@Transactional
 	public String createCustomer(Customer customer) {
-		customer.setIssuedOn((LocalDate.now()).toString());
-		customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
 		customer.setChannel("WEB");
 //		customer.setAgentLocationId("Malaysia");
 		customer.setAgentLocationId("India");
@@ -132,10 +130,32 @@ public class CustomerService {
 			Map<String, Object> idData = new HashMap<>();
 
 			if(customer.getResidentTypeId() == 101) {
+				customer.setIssuedOn((LocalDate.now()).toString());
+				customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
+
 				idData.put("id_type", 28);
 				looger.info("======customer.getResidentTypeId()==="+customer.getResidentTypeId());
 
 				idData.put("id_number", customer.getIdNumber());
+				idData.put("name_as_per_id", customer.getNameAsPerId());
+
+				idData.put("issued_country", "MY");
+				idData.put("issued_by", "MYKD");
+				idData.put("issued_at", "Malaysia");
+
+				if (customer.getIssuedOn().isEmpty()) {
+					customerData.put("issued_on", null);
+				} else {
+					customerData.put("issued_on", customer.getIssuedOn());
+				}
+//				idData.put("issued_on", "2024-06-12");
+				if (customer.getDateOfExpiry().isEmpty()) {
+					customerData.put("date_of_expiry", null);
+				} else {
+					customerData.put("date_of_expiry", customer.getDateOfExpiry());
+				}
+
+				idData.put("active_status", customer.getActiveStatus());
 
 //				Map<String, Object> idFrontData = new HashMap<>();
 //				idFrontData.put("base64_data", customer.getFrontBase64Data());

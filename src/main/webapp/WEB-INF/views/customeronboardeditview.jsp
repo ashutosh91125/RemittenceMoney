@@ -367,6 +367,7 @@ function copyAddress() {
 	    }
 	// Initial check to set visibility based on the default selected value
 	document.addEventListener('DOMContentLoaded', function() {
+	const idDetailsFields = document.getElementById('idDetailsFields');
 		console.log("Page Loaded");
 		 toggleCustomerRemarks();
 			toggleFields();

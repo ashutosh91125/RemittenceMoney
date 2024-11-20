@@ -148,17 +148,9 @@ public class CustomerService {
                 idData.put("issued_by", customer.getIssuedBy());
                 idData.put("issued_at", customer.getIssuedAt());
 
-				if (customer.getIssuedOn().isEmpty()) {
-					customerData.put("issued_on", null);
-				} else {
-					customerData.put("issued_on", customer.getIssuedOn());
-				}
+                customerData.put("issued_on", customer.getIssuedOn());
+                customerData.put("date_of_expiry", customer.getDateOfExpiry());
 
-				if (customer.getDateOfExpiry().isEmpty()) {
-					customerData.put("date_of_expiry", null);
-				} else {
-					customerData.put("date_of_expiry", customer.getDateOfExpiry());
-				}
 //                idData.put("issued_on", "2024-11-19");
 //                idData.put("date_of_expiry", "2026-11-19");
 

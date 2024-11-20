@@ -5,15 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import com.llm.Service.CustomerService;
 import com.llm.common.model.EnumEntity;
@@ -211,24 +212,63 @@ public class CustomerControllerwithoutRest {
 
 	// Handle user creation form submission
 	@PostMapping("/createUser")
-	public String createUser(@ModelAttribute Customer customer) {
+	@ResponseBody
+	public ResponseEntity<?> createUser(@ModelAttribute Customer customer) throws JsonProcessingException {
 
-//		if (!frontBase64Data.isEmpty()) {
-//			String base64Image = Base64.getEncoder().encodeToString(frontBase64Data.getBytes());
-//			customer.setFrontBase64Data(base64Image);
-//			customer.setFrontContentType(frontBase64Data.getContentType());
-//		}
-//
-//		if (!backBase64Data.isEmpty()) {
-//			String base64Image = Base64.getEncoder().encodeToString(backBase64Data.getBytes());
-//			customer.setBackBase64Data(base64Image);
-//			customer.setBackContentType(backBase64Data.getContentType());
-//		}
+		String status = customerService.createCustomer(customer);  // Get the status response from the service
 
-		String status = customerService.createCustomer(customer);
-		logger.info(customer.toString());
-		return "redirect:/customer-list";
+		// Remove any leading or trailing whitespaces from the status string
+		status = status.trim();
+		logger.info("Trimmed Status: " + status);  // Print the status for debugging
+
+		// Check if the status string contains "status_code"
+		if (status.contains("status_code")) {
+
+			// Use substring to extract the "status_code" value
+			String statusCodeString = extractFieldValue(status, "\"status_code\":");
+			int statusCode = Integer.parseInt(statusCodeString.trim());
+
+			// Print out the status code for debugging
+			logger.info("Extracted Status Code: " + statusCode);
+
+			// If status code is 200, return success
+			if (statusCode == 200) {
+				return ResponseEntity.ok("Customer created successfully!");
+			}
+
+			// If status code is not 200, extract the message
+			String message = extractFieldValue(status, "\"message\":");
+			logger.info("Extracted Message: " + message);
+
+			// Return bad request with the error message
+			return ResponseEntity.badRequest().body("Error: " + message);
+		}
+
+		// If no status_code is found, return a generic error
+		return ResponseEntity.badRequest().body("Error: Invalid response format");
 	}
+
+	// Helper method to extract the value of a field
+	private String extractFieldValue(String json, String field) {
+		int startIndex = json.indexOf(field) + field.length();
+		int endIndex = json.indexOf(",", startIndex);
+
+		if (endIndex == -1) {
+			endIndex = json.indexOf("}", startIndex);  // Handle the case where it's the last field
+		}
+
+		if (startIndex != -1 && endIndex != -1) {
+			String value = json.substring(startIndex, endIndex).trim();
+			// Remove any surrounding quotes if present
+			if (value.startsWith("\"") && value.endsWith("\"")) {
+				value = value.substring(1, value.length() - 1);
+			}
+			return value;
+		}
+		return "";  // Return empty string if field is not found
+	}
+
+
 
 	@GetMapping("/customerdetails")
 	public String getDetailsEcrn(@RequestParam("ecrn") String ecrn, Model model) {

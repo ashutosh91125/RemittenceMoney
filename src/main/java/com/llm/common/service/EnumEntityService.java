@@ -54,18 +54,20 @@ public class EnumEntityService {
         return enumValueRepository.findByDependent(dependent);
     }
 
-    // Get EnumEntity by key and find specific EnumValue by valueId
-    public Optional<EnumValue> getEnumValueByKeyAndValueId(String key, String valueId) {
+    // Get EnumEntity by key and find specific EnumValue by valueId, returning only the description
+    public Optional<String> getEnumValueDescriptionByKeyAndValueId(String key, String valueId) {
         Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
         if (enumEntityOptional.isPresent()) {
             EnumEntity enumEntity = enumEntityOptional.get();
-            // Search for the EnumValue with the provided valueId
+            // Search for the EnumValue with the provided valueId and return the description
             return enumEntity.getValues().stream()
                     .filter(enumValue -> enumValue.getValueId().equals(valueId)) // Match by String valueId
+                    .map(EnumValue::getDescription) // Map to the description
                     .findFirst();
         }
-        return Optional.empty();
+        return Optional.empty(); // Return empty if no EnumEntity or EnumValue is found
     }
+
 
     // Update EnumValue by key and valueId
     @Transactional

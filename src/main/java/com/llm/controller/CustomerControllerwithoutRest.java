@@ -235,7 +235,7 @@ public class CustomerControllerwithoutRest {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get()); // Use the actual Customer object
-				model.addAttribute("nationality",enumEntityService.getEnumValueByKeyAndValueId("country",customer.get().getNationality()));
+				model.addAttribute("nationality",enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getNationality()));
 			} else {
 				model.addAttribute("error", "Customer details not found.");
 			}

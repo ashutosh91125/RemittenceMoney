@@ -347,8 +347,9 @@ function copyAddress() {
 	    const issuedAtInput = document.querySelector("[name='issuedAt']");
 	    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
 	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+	    const idDetailsFields = document.getElementById('idDetailsFields');
 
-	    if (residentType === '101') {
+	    if (residentType === '101'|| residentType === 'Resident') {
 	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
 	        issuedCountryInput.value = "MY";
 	        issuedAtInput.value = "MALAYSIA";
@@ -356,11 +357,12 @@ function copyAddress() {
 	        issuedAtInput.disabled = true;
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
+	        idDetailsFields.style.display= 'none';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	    } else if (residentType === '100') {
+	    } else if (residentType === '100'|| residentType === 'Non-Resident' ) {
 	        idTypeInput.value = "PASSPORT";
 	        issuedCountryInput.value = "";
 	        issuedAtInput.value = "";
@@ -368,17 +370,21 @@ function copyAddress() {
 	        issuedAtInput.disabled = false;
 	        issuedForNonResidents.style.display = 'block';
 	        issuedDateExpiryNonResident.style.display = 'block';
+	        idDetailsFields.style.display= 'block';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'block';
 	        document.getElementById('additionalIdDetails').style.display = 'block';
 	        document.getElementById('expiryAndStatusFields').style.display = 'block';
 	    } else {
+	    	idDetailsFields.style.display= 'none';
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
+	        
 	        document.getElementById('idNumberField').style.display = 'none';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
+	        
 	    }
 	}
 

@@ -319,7 +319,6 @@ function copyAddress() {
 	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
 	    const idDetailsFields = document.getElementById('idDetailsFields');
 
-
 	    if (residentType === '101'|| residentType === 'Resident') {
 	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
 	        issuedCountryInput.value = "MY";
@@ -328,6 +327,7 @@ function copyAddress() {
 	        issuedAtInput.disabled = true;
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
+	        idDetailsFields.style.display= 'none';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
@@ -340,17 +340,21 @@ function copyAddress() {
 	        issuedAtInput.disabled = false;
 	        issuedForNonResidents.style.display = 'block';
 	        issuedDateExpiryNonResident.style.display = 'block';
+	        idDetailsFields.style.display= 'block';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'block';
 	        document.getElementById('additionalIdDetails').style.display = 'block';
 	        document.getElementById('expiryAndStatusFields').style.display = 'block';
 	    } else {
+	    	idDetailsFields.style.display= 'none';
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
+	        
 	        document.getElementById('idNumberField').style.display = 'none';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
+	        
 	    }
 	}
 
@@ -367,7 +371,6 @@ function copyAddress() {
 	    }
 	// Initial check to set visibility based on the default selected value
 	document.addEventListener('DOMContentLoaded', function() {
-	const idDetailsFields = document.getElementById('idDetailsFields');
 		console.log("Page Loaded");
 		 toggleCustomerRemarks();
 			toggleFields();
@@ -876,7 +879,8 @@ function copyAddress() {
 																itemValue="valueId" itemLabel="description" />
 														</form:select> --%>
 														<input value="${residentType}" type="text"
-															class="form-control" placeholder="Resident Type" />
+															class="form-control" placeholder="Resident Type"
+															id="residentType" />
 
 													</div>
 												</div>

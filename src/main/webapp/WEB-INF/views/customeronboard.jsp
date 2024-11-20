@@ -958,9 +958,9 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Number<span
-																class="text-danger">*</span></label> <input id="idNumber"
+																class="text-danger">*</span></label> <form:input path="idNumber" id="idNumber"
 																name="idNumber" placeholder="Id Number" type="text"
-																class="form-control" value="">
+																class="form-control" />
 														</div>
 													</div>
 													<div class="col-xl-4">

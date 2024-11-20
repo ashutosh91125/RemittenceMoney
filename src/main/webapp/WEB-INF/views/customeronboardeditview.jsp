@@ -531,19 +531,19 @@ function copyAddress() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Nationality <span
-													class="text-danger">*</span></label>
-
-												<form:input path="nationality" type="text"
-													class="form-control" placeholder="nationality" />
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="nationality"
+													value="${nationality}">
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Secondary Nationality</label>
-												<form:input path="secondNationality" type="text"
-													class="form-control" placeholder="First Name" />
+												<label class="form-label">Secondary Nationality</label> <input
+													type="text" class="form-control"
+													placeholder="Secondary Nationality"
+													value="${secondNationality}">
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -566,10 +566,9 @@ function copyAddress() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
-													class="text-danger">*</span></label>
-
-												<form:input path="firstName" type="text"
-													class="form-control" placeholder="firstName" />
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="Secondary Nationality"
+													value="${countryOfBirth}">
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -582,9 +581,9 @@ function copyAddress() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
-													class="text-danger">*</span></label>
-												<form:input path="countryOfResidence" type="text"
-													class="form-control" placeholder="countryOfResidence" />
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="Secondary Nationality"
+													value="${countryOfResidence}">
 											</div>
 
 										</div>

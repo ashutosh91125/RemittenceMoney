@@ -226,7 +226,7 @@ public class CustomerControllerwithoutRest {
 
 		String status = customerService.createCustomer(customer);
 		logger.info(customer.toString());
-		return "redirect:/customer-list"; // Redirect to home after creating a user
+		return "redirect:/customer-list";
 	}
 
 	@GetMapping("/customerdetails")
@@ -234,8 +234,14 @@ public class CustomerControllerwithoutRest {
 		try {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
-				model.addAttribute("customer", customer.get()); // Use the actual Customer object
-				model.addAttribute("nationality",enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getNationality()));
+				model.addAttribute("customer", customer.get());
+				model.addAttribute("nationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
+						customer.get().getNationality()));
+				model.addAttribute("secondNationality", enumEntityService
+						.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getSecondNationality()));
+				model.addAttribute("countryOfBirth", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
+						customer.get().getCountryOfBirth()));
+
 			} else {
 				model.addAttribute("error", "Customer details not found.");
 			}
@@ -243,7 +249,7 @@ public class CustomerControllerwithoutRest {
 			logger.error("Error fetching customer details for ECRN: " + ecrn, e);
 			model.addAttribute("error", "An error occurred while retrieving customer details.");
 		}
-		return "customeronboardeditview"; // The view to show the details and edit
+		return "customeronboardeditview";
 	}
 
 }

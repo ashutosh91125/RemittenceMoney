@@ -84,9 +84,8 @@ public class RestEnumController {
             @PathVariable String key,
             @PathVariable String valueId) {  // valueId is still a String
 
-        Optional<String> description = enumEntityService.getEnumValueDescriptionByKeyAndValueId(key, valueId);
-        return description.map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND)); // Return 404 if not found
+        String description = enumEntityService.getEnumValueDescriptionByKeyAndValueId(key, valueId);
+        return ResponseEntity.ok(description);
     }
 
 

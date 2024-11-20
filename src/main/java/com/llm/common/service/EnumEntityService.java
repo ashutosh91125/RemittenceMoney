@@ -55,13 +55,13 @@ public class EnumEntityService {
     }
 
     // Get EnumEntity by key and find specific EnumValue by valueId
-    public Optional<EnumValue> getEnumValueByKeyAndValueId(String key, Long valueId) {
+    public Optional<EnumValue> getEnumValueByKeyAndValueId(String key, String valueId) {
         Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
         if (enumEntityOptional.isPresent()) {
             EnumEntity enumEntity = enumEntityOptional.get();
             // Search for the EnumValue with the provided valueId
             return enumEntity.getValues().stream()
-                    .filter(enumValue -> enumValue.getId().equals(valueId))
+                    .filter(enumValue -> enumValue.getValueId().equals(valueId)) // Match by String valueId
                     .findFirst();
         }
         return Optional.empty();
@@ -69,13 +69,13 @@ public class EnumEntityService {
 
     // Update EnumValue by key and valueId
     @Transactional
-    public Optional<EnumValue> updateEnumValueByKeyAndValueId(String key, Long valueId, EnumValue updatedEnumValue) {
+    public Optional<EnumValue> updateEnumValueByKeyAndValueId(String key, String valueId, EnumValue updatedEnumValue) {
         Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
         if (enumEntityOptional.isPresent()) {
             EnumEntity enumEntity = enumEntityOptional.get();
-            // Find the EnumValue by valueId
+            // Find the EnumValue by valueId (String)
             Optional<EnumValue> enumValueOptional = enumEntity.getValues().stream()
-                    .filter(enumValue -> enumValue.getId().equals(valueId))
+                    .filter(enumValue -> enumValue.getValueId().equals(valueId)) // Match by String valueId
                     .findFirst();
 
             if (enumValueOptional.isPresent()) {
@@ -86,7 +86,7 @@ public class EnumEntityService {
                 enumValue.setDependent(updatedEnumValue.getDependent());
 
                 // Save the updated EnumEntity back to the database
-                enumEntityRepository.save(enumEntity);
+                enumEntityRepository.save(enumEntity); // Persist changes to the EnumEntity and EnumValues
                 return Optional.of(enumValue); // Return updated EnumValue
             }
         }

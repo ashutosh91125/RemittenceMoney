@@ -53,4 +53,17 @@ public class EnumEntityService {
     public List<EnumValue> getDataByDependent(String dependent) {
         return enumValueRepository.findByDependent(dependent);
     }
+
+    // Get EnumEntity by key and find specific EnumValue by valueId
+    public Optional<EnumValue> getEnumValueByKeyAndValueId(String key, Long valueId) {
+        Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
+        if (enumEntityOptional.isPresent()) {
+            EnumEntity enumEntity = enumEntityOptional.get();
+            // Search for the EnumValue with the provided valueId
+            return enumEntity.getValues().stream()
+                    .filter(enumValue -> enumValue.getId().equals(valueId))
+                    .findFirst();
+        }
+        return Optional.empty();
+    }
 }

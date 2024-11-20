@@ -77,4 +77,15 @@ public class RestEnumController {
     public List<EnumValue> getStatesByCountry(@RequestParam("dependent") String dependent) {
         return enumEntityService.getDataByDependent(dependent);
     }
+
+    // Get EnumValue by key and valueId
+    @GetMapping("/{key}/values/{valueId}")
+    public ResponseEntity<EnumValue> getEnumValueByKeyAndValueId(
+            @PathVariable String key,
+            @PathVariable Long valueId) {
+
+        Optional<EnumValue> enumValue = enumEntityService.getEnumValueByKeyAndValueId(key, valueId);
+        return enumValue.map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 }

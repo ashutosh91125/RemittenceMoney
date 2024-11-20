@@ -108,6 +108,36 @@
 </style>
 
 <script>
+$(document).ready(function () {
+            // Handle form submission
+            $("#customerOnboardForm").on("submit", function (e) {
+                e.preventDefault();  // Prevent the default form submission
+
+                // Create a FormData object to send form data with the image
+                const formData = new FormData(this);
+
+                // AJAX request to submit the form data
+                $.ajax({
+                    url: "/createUser", // URL where the form will be submitted
+                    type: "POST",
+                    data: formData,
+                    processData: false, // Don't let jQuery process the data
+                    contentType: false, // Let the browser set the content type
+                    success: function (response) {
+                        // Show success message on successful creation
+                        alert("Customer Onboarded successfully!");
+
+                        // Redirect to the /customer-list page after successful creation
+                        window.location.href = "/customer-list"; // Redirects to the to-do list page
+                    },
+                    error: function (xhr) {
+                        // Show error message if creation fails
+                        alert("Error: " + xhr.responseText);
+                    }
+                });
+            });
+        });
+
 function copyAddress() {
     const checkbox = document.getElementById("sameAsCurrentAddress");
     const permanentCountryDropdown = document.getElementById("permanentCountry");
@@ -459,7 +489,7 @@ function copyAddress() {
 
 				</div>
 			</div>
-			<form:form modelAttribute="customer"
+			<form:form modelAttribute="customer" id = "customerOnboardForm"
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data">
 

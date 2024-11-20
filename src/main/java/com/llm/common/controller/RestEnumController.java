@@ -102,4 +102,21 @@ public class RestEnumController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // Controller Method to get EnumValue description based on key, userId, and dependent value
+    @GetMapping("/{key}/values/description")
+    public ResponseEntity<String> getEnumValueDescriptionByKeyUserIdAndDependent(
+            @PathVariable String key,
+            @RequestParam String userId, // userId as request parameter
+            @RequestParam String dependent) { // dependent as request parameter
+
+        String description = enumEntityService.getEnumValueDescriptionByKeyUserIdAndDependent(key, userId, dependent);
+
+        if (description != null) {
+            return ResponseEntity.ok(description); // Return description if found
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND); // Return 404 if not found
+        }
+    }
+
+
 }

@@ -94,4 +94,21 @@ public class EnumEntityService {
         }
         return Optional.empty(); // Return empty if no EnumEntity or EnumValue is found
     }
+
+    // Service Method to get EnumValue description based on key, userId, and dependent value
+    public String getEnumValueDescriptionByKeyUserIdAndDependent(String key, String userId, String dependent) {
+        // Retrieve the EnumEntity by its key
+        Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
+        if (enumEntityOptional.isPresent()) {
+            EnumEntity enumEntity = enumEntityOptional.get();
+            // Search for the EnumValue that matches the dependent value
+            return enumEntity.getValues().stream()
+                    .filter(enumValue -> enumValue.getDependent().equals(dependent)) // Filter based on dependent value
+                    .map(EnumValue::getDescription) // Map to the description
+                    .findFirst() // Return the first match
+                    .orElse(null); // Return null if not found
+        }
+        return null; // Return null if EnumEntity not found
+    }
+
 }

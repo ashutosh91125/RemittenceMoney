@@ -78,16 +78,17 @@ public class RestEnumController {
         return enumEntityService.getDataByDependent(dependent);
     }
 
-    // Get EnumValue by key and valueId
+    // Get the description of an EnumValue by key and valueId
     @GetMapping("/{key}/values/{valueId}")
-    public ResponseEntity<EnumValue> getEnumValueByKeyAndValueId(
+    public ResponseEntity<String> getEnumValueDescriptionByKeyAndValueId(
             @PathVariable String key,
-            @PathVariable String valueId) {  // valueId is now a String
+            @PathVariable String valueId) {  // valueId is still a String
 
-        Optional<EnumValue> enumValue = enumEntityService.getEnumValueByKeyAndValueId(key, valueId);
-        return enumValue.map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        Optional<String> description = enumEntityService.getEnumValueDescriptionByKeyAndValueId(key, valueId);
+        return description.map(ResponseEntity::ok)
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND)); // Return 404 if not found
     }
+
 
     // Update an EnumValue by key and valueId
     @PutMapping("/{key}/values/{valueId}")

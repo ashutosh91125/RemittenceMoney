@@ -317,8 +317,10 @@ function copyAddress() {
 	    const issuedAtInput = document.querySelector("[name='issuedAt']");
 	    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
 	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+	    const idDetailsFields = document.getElementById('idDetailsFields');
 
-	    if (residentType === '101') {
+
+	    if (residentType === '101'|| residentType === 'Resident') {
 	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
 	        issuedCountryInput.value = "MY";
 	        issuedAtInput.value = "MALAYSIA";
@@ -330,7 +332,7 @@ function copyAddress() {
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	    } else if (residentType === '100') {
+	    } else if (residentType === '100'|| residentType === 'Non-Resident' ) {
 	        idTypeInput.value = "PASSPORT";
 	        issuedCountryInput.value = "";
 	        issuedAtInput.value = "";
@@ -641,9 +643,11 @@ function copyAddress() {
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Occupation Id</label>
-												<form:input path="occupationId" type="text"
-													class="form-control" placeholder="Occupation Id" />
+												<label class="form-label">Occupation Id</label> <input
+													type="text" class="form-control"
+													placeholder="Occupation Id" value="${occupationId}">
+												<%-- 	<form:input path="occupationId" type="text"
+													class="form-control" placeholder="Occupation Id" /> --%>
 											</div>
 										</div>
 									</div>
@@ -870,8 +874,9 @@ function copyAddress() {
 															<form:options items="${residentTypeList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select> --%>
-														<form:input path="residentTypeId" type="text"
+														<input value="${residentType}" type="text"
 															class="form-control" placeholder="Resident Type" />
+
 													</div>
 												</div>
 											</div>
@@ -893,9 +898,9 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Number<span
-																class="text-danger">*</span></label> <input id="idNumber"
-																name="idNumber" placeholder="Id Number" type="text"
-																class="form-control" value="">
+																class="text-danger">*</span></label>
+															<form:input path="idNumber" id="idNumber" name="idNumber"
+																placeholder="Id Number" type="text" class="form-control" />
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -921,8 +926,10 @@ function copyAddress() {
 																<form:options items="${countryList}" itemValue="valueId"
 																	itemLabel="description" />
 															</form:select> --%>
-															<form:input path="issuedCountry" type="text"
-																class="form-control" placeholder="Issued Country" />
+															<%-- <form:input path="issuedCountry" type="text"
+																class="form-control" placeholder="Issued Country" /> --%>
+															<input type="text" class="form-control"
+																placeholder="Issued Country" value="${issuedCountry}">
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -936,8 +943,10 @@ function copyAddress() {
 																<form:options items="${countryList}"
 																	itemValue="description" itemLabel="description" />
 															</form:select> --%>
-															<form:input path="issuedAt" type="text"
-																class="form-control" placeholder="Issued at" />
+															<%-- <form:input path="issuedAt" type="text"
+																class="form-control" placeholder="Issued at" /> --%>
+															<input type="text" class="form-control"
+																placeholder="Issued at" value="${issuedAt}">
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -1048,8 +1057,9 @@ function copyAddress() {
 															<form:options items="${annualIncomeRangeList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select> --%>
-														<form:input path="annualIncomeRangeId" type="text"
-															class="form-control" placeholder="Annual Income Range" />
+														<input type="text" class="form-control"
+															placeholder="Annual Income Range"
+															value="${annualIncomeRangeId}">
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1164,8 +1174,8 @@ function copyAddress() {
 														<form:options items="${riskRatingIdList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select> --%>
-													<form:input path="riskRatingId" type="text"
-														class="form-control" placeholder="Risk Rating Id" />
+													<input type="text" class="form-control"
+														placeholder="Risk Rating Id" value="${riskRatingId}">
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1178,8 +1188,8 @@ function copyAddress() {
 														<form:options items="${incomeTypeList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select> --%>
-													<form:input path="incomeType" type="text"
-														class="form-control" placeholder="Income Type" />
+													<input type="text" class="form-control"
+														placeholder="Risk Rating Id" value="${incomeType}">
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1192,8 +1202,9 @@ function copyAddress() {
 														<form:options items="${professionCategoryList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select> --%>
-													<form:input path="professionCategory" type="text"
-														class="form-control" placeholder="Profession Catagory" />
+													<input type="text" class="form-control"
+														placeholder="Profession Catagory"
+														value="${professionCategory}">
 												</div>
 											</div>
 										</div>
@@ -1231,12 +1242,15 @@ function copyAddress() {
 													<label class="form-label">Transaction Volume Month<span
 														class="text-danger">*</span>
 													</label>
-													<form:select path="txnVolMonth" class="form-control"
+													<%-- <form:select path="txnVolMonth" class="form-control"
 														data-select2-selector="icon" multiple="false">
 														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
 														<form:options items="${transactionVolumeMonthList}"
 															itemValue="valueId" itemLabel="description" />
-													</form:select>
+													</form:select> --%>
+													<input type="text" class="form-control"
+														placeholder="Transaction Volume Month"
+														value="${txnVolMonth}">
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1249,8 +1263,9 @@ function copyAddress() {
 														<form:options items="${transactionCountMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select> --%>
-													<form:input path="txnCountMonth" type="text"
-														class="form-control" placeholder="Transaction Count Month" />
+													<input type="text" class="form-control"
+														placeholder="Transaction Count Month"
+														value="${txnCountMonth}">
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1261,8 +1276,8 @@ function copyAddress() {
 														data-select2-selector="icon">
 														<option value="en">English</option>
 													</form:select> --%>
-													<form:input path="firstLanguage" type="text"
-														class="form-control" placeholder="First Language" />
+													<input type="text" class="form-control"
+														placeholder="First Language" value="English">
 
 												</div>
 											</div>
@@ -1277,8 +1292,9 @@ function copyAddress() {
 															<option value="2">Unmarried</option>
 															<option value="1">Married</option>
 														</form:select> --%>
-														<form:input path="maritalStatus" type="text"
-															class="form-control" placeholder="Marital Status" />
+														<input type="text" class="form-control"
+															placeholder="Marital Status" value="${maritalStatus}">
+
 													</div>
 												</div>
 												<div class="col-xl-4">

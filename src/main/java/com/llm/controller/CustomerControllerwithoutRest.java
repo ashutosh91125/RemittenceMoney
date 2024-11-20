@@ -2,6 +2,7 @@ package com.llm.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -275,12 +276,34 @@ public class CustomerControllerwithoutRest {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get());
+				model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
+				model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
 				model.addAttribute("nationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
 						customer.get().getNationality()));
 				model.addAttribute("secondNationality", enumEntityService
 						.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getSecondNationality()));
 				model.addAttribute("countryOfBirth", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
 						customer.get().getCountryOfBirth()));
+				model.addAttribute("countryOfResidence", enumEntityService
+						.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getCountryOfResidence()));
+				model.addAttribute("occupationId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
+						"occupationId", String.valueOf(customer.get().getOccupationId())));
+				model.addAttribute("issuedCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
+						customer.get().getIssuedCountry()));
+				model.addAttribute("issuedAt", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
+						customer.get().getIssuedBy()));
+				model.addAttribute("annualIncomeRangeId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
+						"annualIncomeRange", String.valueOf(customer.get().getAnnualIncomeRangeId())));
+				model.addAttribute("riskRatingId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
+						"riskRatingId", String.valueOf(customer.get().getRiskRatingId())));
+				model.addAttribute("incomeType", enumEntityService.getEnumValueDescriptionByKeyAndValueId("incomeType",
+						String.valueOf(customer.get().getIncomeType())));
+				model.addAttribute("professionCategory", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
+						"professionCategory", customer.get().getProfessionCategory()));
+				model.addAttribute("txnVolMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
+						"transactionVolumeMonth", String.valueOf(customer.get().getTxnVolMonth())));
+				model.addAttribute("txnCountMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
+						"transactionCountMonth", String.valueOf(customer.get().getTxnCountMonth())));
 
 			} else {
 				model.addAttribute("error", "Customer details not found.");
@@ -290,6 +313,16 @@ public class CustomerControllerwithoutRest {
 			model.addAttribute("error", "An error occurred while retrieving customer details.");
 		}
 		return "customeronboardeditview";
+	}
+
+	private String getResidentTypeDescription(Long residentTypeId) {
+		return residentTypeId != null && residentTypeId == 101 ? "Resident"
+				: residentTypeId == 100 ? "Non-Resident" : "Unknown";
+	}
+
+	private String getMaritalStatusDescription(Integer maritalStatusId) {
+		return maritalStatusId != null && maritalStatusId == 1 ? "Married"
+				: maritalStatusId == 2 ? "Unmarried" : "Unknown";
 	}
 
 }

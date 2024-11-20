@@ -357,11 +357,6 @@ public class CustomerService {
 
     public Optional<Customer> getByEcrn(String ecrn) {
         Customer customer = customerRepository.findByEcrn(ecrn);
-
-        if (customer.getDateOfBirth().isEmpty()) {
-            customer.setDateOfBirth("");
-        }
-
         // Ensure we don't go out of bounds if the string is shorter than 10 characters
         customer.setDateOfBirth(customer.getDateOfBirth().length() <= 10 ? customer.getDateOfBirth() : customer.getDateOfBirth().substring(0, 10));
         return Optional.of(customer);

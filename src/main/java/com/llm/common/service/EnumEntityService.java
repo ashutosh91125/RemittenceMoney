@@ -66,4 +66,30 @@ public class EnumEntityService {
         }
         return Optional.empty();
     }
+
+    // Update EnumValue by key and valueId
+    @Transactional
+    public Optional<EnumValue> updateEnumValueByKeyAndValueId(String key, Long valueId, EnumValue updatedEnumValue) {
+        Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
+        if (enumEntityOptional.isPresent()) {
+            EnumEntity enumEntity = enumEntityOptional.get();
+            // Find the EnumValue by valueId
+            Optional<EnumValue> enumValueOptional = enumEntity.getValues().stream()
+                    .filter(enumValue -> enumValue.getId().equals(valueId))
+                    .findFirst();
+
+            if (enumValueOptional.isPresent()) {
+                EnumValue enumValue = enumValueOptional.get();
+                // Update the EnumValue fields
+                enumValue.setValueId(updatedEnumValue.getValueId());
+                enumValue.setDescription(updatedEnumValue.getDescription());
+                enumValue.setDependent(updatedEnumValue.getDependent());
+
+                // Save the updated EnumEntity back to the database
+                enumEntityRepository.save(enumEntity);
+                return Optional.of(enumValue); // Return updated EnumValue
+            }
+        }
+        return Optional.empty(); // Return empty if no EnumEntity or EnumValue is found
+    }
 }

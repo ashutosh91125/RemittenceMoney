@@ -176,14 +176,12 @@ public class CustomerControllerwithoutRest {
 
 		try {
 			Optional<EnumEntity> occupationIdEntity = enumEntityService.getEnumEntityByKey("occupationId");
-			occupationIdEntity
-					.ifPresent(entity -> model.addAttribute("occupationIdList", entity.getValues()));
+			occupationIdEntity.ifPresent(entity -> model.addAttribute("occupationIdList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error occupation Id list: ", e);
 			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
 		}
-		
 
 //		model.addAttribute("salutationList", salutationService.findAllRecords());
 //		model.addAttribute("countryList", countryService.fetchCountries());
@@ -198,17 +196,21 @@ public class CustomerControllerwithoutRest {
 
 	@GetMapping("/customer-list")
 	public String getCustomerList(Model model) {
-		List<Customer> customerList = customerService.getAllCustomer();
-		Collections.reverse(customerList);
-		model.addAttribute("customerList", customerList);
-		return "customerlisting";
+		try {
+			List<Customer> customerList = customerService.getAllCustomer();
+			Collections.reverse(customerList);
+			model.addAttribute("customerList", customerList);
+			return "customerlisting";
+		} catch (Exception e) {
+			logger.error("Error occurred while fetching customer list: " + e);
+			return "customerlisting";
+		}
 
 	}
 
 	// Handle user creation form submission
 	@PostMapping("/createUser")
 	public String createUser(@ModelAttribute Customer customer) {
-		logger.info("Customer" + customer);
 
 //		if (!frontBase64Data.isEmpty()) {
 //			String base64Image = Base64.getEncoder().encodeToString(frontBase64Data.getBytes());

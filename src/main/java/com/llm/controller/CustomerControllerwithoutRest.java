@@ -224,9 +224,17 @@ public class CustomerControllerwithoutRest {
 		// Check if the status string contains "status_code"
 		if (status.contains("status_code")) {
 
-			// Use substring to extract the "status_code" value
-			String statusCodeString = extractFieldValue(status, "\"status_code\":");
-			int statusCode = Integer.parseInt(statusCodeString.trim());
+			// Extract the status_code by finding the substring with "status_code="
+			String statusCodeString = extractFieldValue(status, "status_code=");
+
+			// Safely try to parse the status_code and handle invalid input
+			int statusCode = 0;
+			try {
+				statusCode = Integer.parseInt(statusCodeString.trim());
+			} catch (NumberFormatException e) {
+				logger.error("Error parsing status_code: " + statusCodeString, e);
+				return ResponseEntity.badRequest().body("Error: Invalid status code format");
+			}
 
 			// Print out the status code for debugging
 			logger.info("Extracted Status Code: " + statusCode);
@@ -237,7 +245,7 @@ public class CustomerControllerwithoutRest {
 			}
 
 			// If status code is not 200, extract the message
-			String message = extractFieldValue(status, "\"message\":");
+			String message = extractFieldValue(status, "message=");
 			logger.info("Extracted Message: " + message);
 
 			// Return bad request with the error message
@@ -248,17 +256,16 @@ public class CustomerControllerwithoutRest {
 		return ResponseEntity.badRequest().body("Error: Invalid response format");
 	}
 
-	// Helper method to extract the value of a field
-	private String extractFieldValue(String json, String field) {
-		int startIndex = json.indexOf(field) + field.length();
-		int endIndex = json.indexOf(",", startIndex);
-
+	// Helper method to extract the value of a field in the format `key=value`
+	private String extractFieldValue(String input, String field) {
+		int startIndex = input.indexOf(field) + field.length();
+		int endIndex = input.indexOf(",", startIndex);
 		if (endIndex == -1) {
-			endIndex = json.indexOf("}", startIndex);  // Handle the case where it's the last field
+			endIndex = input.indexOf("}", startIndex);  // Handle the case where it's the last field
 		}
 
 		if (startIndex != -1 && endIndex != -1) {
-			String value = json.substring(startIndex, endIndex).trim();
+			String value = input.substring(startIndex, endIndex).trim();
 			// Remove any surrounding quotes if present
 			if (value.startsWith("\"") && value.endsWith("\"")) {
 				value = value.substring(1, value.length() - 1);
@@ -267,7 +274,6 @@ public class CustomerControllerwithoutRest {
 		}
 		return "";  // Return empty string if field is not found
 	}
-
 
 
 	@GetMapping("/customerdetails")

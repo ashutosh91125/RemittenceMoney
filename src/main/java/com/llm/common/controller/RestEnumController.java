@@ -82,7 +82,7 @@ public class RestEnumController {
     @GetMapping("/{key}/values/{valueId}")
     public ResponseEntity<EnumValue> getEnumValueByKeyAndValueId(
             @PathVariable String key,
-            @PathVariable Long valueId) {
+            @PathVariable String valueId) {  // valueId is now a String
 
         Optional<EnumValue> enumValue = enumEntityService.getEnumValueByKeyAndValueId(key, valueId);
         return enumValue.map(ResponseEntity::ok)
@@ -93,11 +93,12 @@ public class RestEnumController {
     @PutMapping("/{key}/values/{valueId}")
     public ResponseEntity<EnumValue> updateEnumValue(
             @PathVariable String key,
-            @PathVariable Long valueId,
+            @PathVariable String valueId,  // valueId is now a String
             @RequestBody EnumValue updatedEnumValue) {
 
         Optional<EnumValue> updatedValue = enumEntityService.updateEnumValueByKeyAndValueId(key, valueId, updatedEnumValue);
         return updatedValue.map(ResponseEntity::ok)
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
 }

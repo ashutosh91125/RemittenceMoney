@@ -282,8 +282,13 @@ public class CustomerControllerwithoutRest {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get());
-				model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
-				model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
+				try {
+					model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
+					model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
+				} catch (Exception e){
+					logger.info(e.toString());
+				}
+
 				model.addAttribute("nationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
 						customer.get().getNationality()));
 				model.addAttribute("secondNationality", enumEntityService
@@ -311,6 +316,8 @@ public class CustomerControllerwithoutRest {
 				model.addAttribute("txnCountMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
 						"transactionCountMonth", String.valueOf(customer.get().getTxnCountMonth())));
 
+				model.addAttribute("nativeRegion",enumEntityService.getEnumValueDescriptionByKeyUserIdAndDependent("state",String.valueOf(customer.get().getNativeRegion()),customer.get().getNationality()));
+
 			} else {
 				model.addAttribute("error", "Customer details not found.");
 			}
@@ -322,13 +329,21 @@ public class CustomerControllerwithoutRest {
 	}
 
 	private String getResidentTypeDescription(Long residentTypeId) {
-		return residentTypeId != null && residentTypeId == 101 ? "Resident"
-				: residentTypeId == 100 ? "Non-Resident" : "Unknown";
+
+		if (residentTypeId == null){
+			return "Unknown";
+		}
+
+		return residentTypeId == 101 ? "Resident" : "Non-Resident";
 	}
 
 	private String getMaritalStatusDescription(Integer maritalStatusId) {
-		return maritalStatusId != null && maritalStatusId == 1 ? "Married"
-				: maritalStatusId == 2 ? "Unmarried" : "Unknown";
+
+		if(maritalStatusId == null){
+			return "Unknown";
+		}
+
+		return maritalStatusId == 1 ? "Married" :"Unmarried";
 	}
 
 }

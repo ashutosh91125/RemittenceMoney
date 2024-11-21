@@ -347,9 +347,8 @@ function copyAddress() {
 	    const issuedAtInput = document.querySelector("[name='issuedAt']");
 	    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
 	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
-	    const idDetailsFields = document.getElementById('idDetailsFields');
 
-	    if (residentType === '101'|| residentType === 'Resident') {
+	    if (residentType === '101') {
 	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
 	        issuedCountryInput.value = "MY";
 	        issuedAtInput.value = "MALAYSIA";
@@ -357,12 +356,11 @@ function copyAddress() {
 	        issuedAtInput.disabled = true;
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
-	        idDetailsFields.style.display= 'none';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	    } else if (residentType === '100'|| residentType === 'Non-Resident' ) {
+	    } else if (residentType === '100') {
 	        idTypeInput.value = "PASSPORT";
 	        issuedCountryInput.value = "";
 	        issuedAtInput.value = "";
@@ -370,21 +368,17 @@ function copyAddress() {
 	        issuedAtInput.disabled = false;
 	        issuedForNonResidents.style.display = 'block';
 	        issuedDateExpiryNonResident.style.display = 'block';
-	        idDetailsFields.style.display= 'block';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'block';
 	        document.getElementById('additionalIdDetails').style.display = 'block';
 	        document.getElementById('expiryAndStatusFields').style.display = 'block';
 	    } else {
-	    	idDetailsFields.style.display= 'none';
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
-	        
 	        document.getElementById('idNumberField').style.display = 'none';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	        
 	    }
 	}
 
@@ -495,7 +489,7 @@ function copyAddress() {
 
 				</div>
 			</div>
-			<form:form modelAttribute="customer" id = "customerOnboardForm"
+			<form:form modelAttribute="customer" id="customerOnboardForm"
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data">
 
@@ -994,15 +988,15 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Number<span
-																class="text-danger">*</span></label> <form:input path="idNumber" id="idNumber"
-																name="idNumber" placeholder="Id Number" type="text"
-																class="form-control" />
+																class="text-danger">*</span></label>
+															<form:input path="idNumber" id="idNumber" name="idNumber"
+																placeholder="Id Number" type="text" class="form-control" />
 														</div>
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Name as per Id<span
-													class="text-danger">*</span></label>
+																class="text-danger">*</span></label>
 															<form:input path="nameAsPerId" type="text"
 																class="form-control" placeholder="Name as per Id" />
 														</div>
@@ -1014,7 +1008,7 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued Country<span
-													class="text-danger">*</span></label>
+																class="text-danger">*</span></label>
 															<form:select path="issuedCountry" id="issuedCountry"
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
@@ -1027,7 +1021,7 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued at<span
-													class="text-danger">*</span></label>
+																class="text-danger">*</span></label>
 															<form:select path="issuedAt" id="issuedAt"
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
@@ -1040,7 +1034,7 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued By<span
-													class="text-danger">*</span></label>
+																class="text-danger">*</span></label>
 															<form:input path="issuedBy" type="text"
 																class="form-control" placeholder="Issued By"
 																id="issuedBy" />
@@ -1052,15 +1046,16 @@ function copyAddress() {
 												<div class="row">
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Issued on</label> <input type="date"
+															<label class="form-label">Issued on</label>
+															<form:input path="issuedOn" type="date"
 																class="form-control" />
 														</div>
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Date of Expiry<span
-													class="text-danger">*</span></label>
-															<form:input path="dateOfBirth" type="date"
+																class="text-danger">*</span></label>
+															<form:input path="dateOfExpiry" type="date"
 																class="form-control" />
 														</div>
 													</div>

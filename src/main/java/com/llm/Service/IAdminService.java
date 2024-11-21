@@ -5,10 +5,10 @@ import java.util.Optional;
 
 import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
-import com.llm.model.Customer;
 
 public interface IAdminService {
-	public String createAdmins(Admin admin);
+
+	public Admin addAdmins(Admin admin);
 
 	public Admin getByName(String adminName);
 

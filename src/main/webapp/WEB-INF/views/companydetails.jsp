@@ -57,20 +57,16 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country</label>
-									<form:select path="countries" id="nationality"
-										class="form-control" data-select2-selector="icon"
-										multiple="false">
-										<form:option value="" disabled="true" selected="true">Country</form:option>
-										<form:options items="${countryList}" itemValue="valueId"
-											itemLabel="description" />
+									<form:select path="countries" class="form-control" multiple="false">
+										<form:options items="${countrieslist}" itemValue="countryId"
+											itemLabel="countryName" />
 									</form:select>
 
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country Currency</label>
-									<form:select path="currencies" class="form-control"
-										multiple="false">
+									<form:select path="currencies" class="form-control" multiple="false">
 										<form:options items="${listCurrencies}" itemValue="currencyId"
 											itemLabel="ccyname" />
 									</form:select>
@@ -124,8 +120,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">TimeZone</label>
-									<form:select path="timeZone" class="form-control"
-										multiple="false">
+									<form:select path="timeZone" class="form-control" multiple="false">
 										<form:options items="${timezonelist}" itemValue="timeZoneId"
 											itemLabel="zone" />
 									</form:select>

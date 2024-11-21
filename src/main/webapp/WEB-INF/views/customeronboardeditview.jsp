@@ -319,6 +319,7 @@ function copyAddress() {
 	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
 	    const idDetailsFields = document.getElementById('idDetailsFields');
 
+
 	    if (residentType === '101'|| residentType === 'Resident') {
 	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
 	        issuedCountryInput.value = "MY";
@@ -327,7 +328,6 @@ function copyAddress() {
 	        issuedAtInput.disabled = true;
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
-	        idDetailsFields.style.display= 'none';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
@@ -340,21 +340,17 @@ function copyAddress() {
 	        issuedAtInput.disabled = false;
 	        issuedForNonResidents.style.display = 'block';
 	        issuedDateExpiryNonResident.style.display = 'block';
-	        idDetailsFields.style.display= 'block';
 	        document.getElementById('idNumberField').style.display = 'block';
 	        document.getElementById('idDetailsFields').style.display = 'block';
 	        document.getElementById('additionalIdDetails').style.display = 'block';
 	        document.getElementById('expiryAndStatusFields').style.display = 'block';
 	    } else {
-	    	idDetailsFields.style.display= 'none';
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
-	        
 	        document.getElementById('idNumberField').style.display = 'none';
 	        document.getElementById('idDetailsFields').style.display = 'none';
 	        document.getElementById('additionalIdDetails').style.display = 'none';
 	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	        
 	    }
 	}
 
@@ -492,7 +488,7 @@ function copyAddress() {
 
 				</div>
 			</div>
-			<form:form modelAttribute="customer" id ="customerView"
+			<form:form modelAttribute="customer" id="customerView"
 				action="${pageContext.request.contextPath}/createUser" method="post">
 				<form:hidden path="channel" value="WEB" />
 				<form:hidden path="agentLocationId" value="India" />
@@ -581,9 +577,9 @@ function copyAddress() {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Native Region</label>
-												<input type="text"  value = "${nativeRegion}"
-													class="form-control" placeholder="Native Region" >
+												<label class="form-label">Native Region</label> <input
+													type="text" value="${nativeRegion}" class="form-control"
+													placeholder="Native Region">
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -615,7 +611,7 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
 													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Secondary Nationality"
+													class="form-control" placeholder="Country of Residence"
 													value="${countryOfResidence}">
 											</div>
 
@@ -627,7 +623,7 @@ function copyAddress() {
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
 												<form:input path="gender" type="text" class="form-control"
-													placeholder="gender" />
+													placeholder="Gender" />
 											</div>
 										</div>
 
@@ -765,9 +761,9 @@ function copyAddress() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label>
-														<form:input path="country" type="text"
-															class="form-control" placeholder="Country" />
+														<label class="form-label">Country</label> <input
+															value="${country}" type="text" class="form-control"
+															placeholder="Country">
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -853,10 +849,9 @@ function copyAddress() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label>
-
-														<form:input path="parCountry" type="text"
-															class="form-control" placeholder="Country of Residence" />
+														<label class="form-label">Country</label> <input
+															value="${parCountry}" type="text" class="form-control"
+															placeholder="Country of Residence">
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -906,8 +901,7 @@ function copyAddress() {
 																itemValue="valueId" itemLabel="description" />
 														</form:select> --%>
 														<input value="${residentType}" type="text"
-															class="form-control" placeholder="Resident Type"
-															id="residentType" />
+															class="form-control" placeholder="Resident Type" />
 
 													</div>
 												</div>
@@ -1005,7 +999,7 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Date of Expiry<span
 																class="text-danger">*</span></label>
-															<form:input path="dateOfBirth" type="text"
+															<form:input path="dateOfExpiry" type="text"
 																class="form-control" />
 														</div>
 													</div>

@@ -40,15 +40,15 @@
 				</div>
 			</div>
 		</div>
-		<div class="nxl-content" style="margin-top: -89px;background: aliceblue;">
+		<div class="nxl-content" style="margin-top: -89px;">
 			<div class="main-content">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form:form  modelAttribute="adminDTO" method="post"
+					<form:form action="admin" modelAttribute="adminDTO" method="post"
 						enctype="multipart/form-data">
-						<div class="card-body lead-status" >
+						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -98,12 +98,9 @@
 									<label class="form-label">Country</label>
 
 									<form:select path="countries" class="form-control"
-										data-select2-selector="icon" multiple="false">
-										<%-- <form:options items="${countrieslist}" itemValue="countryId"
-											itemLabel="countryName" /> --%>
-										<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
-										<form:options items="${countryList}" itemValue="valueId"
-											itemLabel="description" />
+										multiple="false">
+										<form:options items="${countrieslist}" itemValue="countryId"
+											itemLabel="countryName" />
 									</form:select>
 								</div>
 							</div>

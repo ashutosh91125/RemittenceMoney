@@ -34,4 +34,6 @@ public class Country {
 
     @OneToMany(mappedBy = "countries", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private List<Currency> currency;
+    @ManyToOne
+    private Admin admins;
 }

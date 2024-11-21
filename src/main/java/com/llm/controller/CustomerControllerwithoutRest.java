@@ -215,11 +215,11 @@ public class CustomerControllerwithoutRest {
 	@ResponseBody
 	public ResponseEntity<?> createUser(@ModelAttribute Customer customer) throws JsonProcessingException {
 
-		String status = customerService.createCustomer(customer);  // Get the status response from the service
+		String status = customerService.createCustomer(customer); // Get the status response from the service
 
 		// Remove any leading or trailing whitespaces from the status string
 		status = status.trim();
-		logger.info("Trimmed Status: " + status);  // Print the status for debugging
+		logger.info("Trimmed Status: " + status); // Print the status for debugging
 
 		// Check if the status string contains "status_code"
 		if (status.contains("status_code")) {
@@ -261,7 +261,7 @@ public class CustomerControllerwithoutRest {
 		int startIndex = input.indexOf(field) + field.length();
 		int endIndex = input.indexOf(",", startIndex);
 		if (endIndex == -1) {
-			endIndex = input.indexOf("}", startIndex);  // Handle the case where it's the last field
+			endIndex = input.indexOf("}", startIndex); // Handle the case where it's the last field
 		}
 
 		if (startIndex != -1 && endIndex != -1) {
@@ -272,20 +272,20 @@ public class CustomerControllerwithoutRest {
 			}
 			return value;
 		}
-		return "";  // Return empty string if field is not found
+		return ""; // Return empty string if field is not found
 	}
-
 
 	@GetMapping("/customerdetails")
 	public String getDetailsEcrn(@RequestParam("ecrn") String ecrn, Model model) {
 		try {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
+			logger.info("customer=============="+customer.get().getIssuedAt());
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get());
 				try {
 					model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
 					model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
-				} catch (Exception e){
+				} catch (Exception e) {
 					logger.info(e.toString());
 				}
 
@@ -315,8 +315,13 @@ public class CustomerControllerwithoutRest {
 						"transactionVolumeMonth", String.valueOf(customer.get().getTxnVolMonth())));
 				model.addAttribute("txnCountMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
 						"transactionCountMonth", String.valueOf(customer.get().getTxnCountMonth())));
+				model.addAttribute("country", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
+						customer.get().getCountry()));
+				model.addAttribute("parCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
+						customer.get().getParCountry()));
 
-				model.addAttribute("nativeRegion",enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",customer.get().getNationality(),String.valueOf(customer.get().getNativeRegion())));
+				model.addAttribute("nativeRegion", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
+						customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion())));
 
 			} else {
 				model.addAttribute("error", "Customer details not found.");
@@ -330,7 +335,7 @@ public class CustomerControllerwithoutRest {
 
 	private String getResidentTypeDescription(Long residentTypeId) {
 
-		if (residentTypeId == null){
+		if (residentTypeId == null) {
 			return "Unknown";
 		}
 
@@ -339,11 +344,11 @@ public class CustomerControllerwithoutRest {
 
 	private String getMaritalStatusDescription(Integer maritalStatusId) {
 
-		if(maritalStatusId == null){
+		if (maritalStatusId == null) {
 			return "Unknown";
 		}
 
-		return maritalStatusId == 1 ? "Married" :"Unmarried";
+		return maritalStatusId == 1 ? "Married" : "Unmarried";
 	}
 
 }

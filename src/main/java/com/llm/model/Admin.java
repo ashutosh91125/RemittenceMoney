@@ -34,8 +34,10 @@ public class Admin {
 	private String confirmPassword;
 	private String userName;
 	private Boolean satus;
+	@Column(name = "Phone")
 	private Long phone;
-	private String countries;
+	@OneToMany(mappedBy = "admins", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Country> countries;
 	@Lob
 	@Basic(fetch = FetchType.LAZY)
 	private byte[] profileImage;

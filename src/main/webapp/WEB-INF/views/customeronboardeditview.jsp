@@ -901,7 +901,7 @@ function copyAddress() {
 																itemValue="valueId" itemLabel="description" />
 														</form:select> --%>
 														<input value="${residentType}" type="text"
-															class="form-control" placeholder="Resident Type" />
+															class="form-control" placeholder="Resident Type" id="residentType"/>
 
 													</div>
 												</div>

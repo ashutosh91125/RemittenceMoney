@@ -96,20 +96,33 @@ public class EnumEntityService {
         return Optional.empty(); // Return empty if no EnumEntity or EnumValue is found
     }
 
-    // Service Method to get EnumValue description based on key, userId, and dependent value
-    public String getEnumValueDescriptionByKeyUserIdAndDependent(String key, String userId, String dependent) {
+    public String getEnumValueDescriptionByKeyAndFilters(String key, String dependent, String valueId) {
         // Retrieve the EnumEntity by its key
         Optional<EnumEntity> enumEntityOptional = enumEntityRepository.findById(key);
+
         if (enumEntityOptional.isPresent()) {
             EnumEntity enumEntity = enumEntityOptional.get();
-            // Search for the EnumValue that matches the dependent value
+
+            // Check if dependent is null or empty and handle accordingly
+            if (dependent == null || dependent.trim().isEmpty()) {
+                throw new IllegalArgumentException("Dependent value cannot be null or empty");
+            }
+
+            // Check if valueId is null or empty and handle accordingly
+            if (valueId == null || valueId.trim().isEmpty()) {
+                throw new IllegalArgumentException("ValueId cannot be null or empty");
+            }
+
+            // Search for the EnumValue that matches both dependent and valueId
             return enumEntity.getValues().stream()
-                    .filter(enumValue -> enumValue.getDependent().equals(dependent)) // Filter based on dependent value
+                    .filter(enumValue -> dependent.equals(enumValue.getDependent()) && valueId.equals(enumValue.getValueId())) // Filter based on dependent and valueId
                     .map(EnumValue::getDescription) // Map to the description
                     .findFirst() // Return the first match
                     .orElse(null); // Return null if not found
         }
-        return null; // Return null if EnumEntity not found
+
+        // Return null if EnumEntity is not found
+        return null;
     }
 
 }

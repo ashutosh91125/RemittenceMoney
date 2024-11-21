@@ -398,6 +398,10 @@ function copyAddress() {
                 });
             });
         });
+
+    document.querySelectorAll('#customerView input').forEach(function(input) {
+            input.readOnly = true;
+        });
 </script>
 </head>
 
@@ -488,7 +492,7 @@ function copyAddress() {
 
 				</div>
 			</div>
-			<form:form modelAttribute="customer"
+			<form:form modelAttribute="customer" id ="customerView"
 				action="${pageContext.request.contextPath}/createUser" method="post">
 				<form:hidden path="channel" value="WEB" />
 				<form:hidden path="agentLocationId" value="India" />

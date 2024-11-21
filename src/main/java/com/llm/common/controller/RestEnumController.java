@@ -105,10 +105,10 @@ public class RestEnumController {
     @GetMapping("/{key}/values/description")
     public ResponseEntity<String> getEnumValueDescriptionByKeyUserIdAndDependent(
             @PathVariable String key,
-            @RequestParam String userId, // userId as request parameter
-            @RequestParam String dependent) { // dependent as request parameter
+            @RequestParam String dependent, // userId as request parameter
+            @RequestParam String userId) { // dependent as request parameter
 
-        String description = enumEntityService.getEnumValueDescriptionByKeyUserIdAndDependent(key, userId, dependent);
+        String description = enumEntityService.getEnumValueDescriptionByKeyAndFilters(key, dependent, userId);
 
         if (description != null) {
             return ResponseEntity.ok(description); // Return description if found

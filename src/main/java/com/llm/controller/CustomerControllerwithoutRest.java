@@ -316,7 +316,7 @@ public class CustomerControllerwithoutRest {
 				model.addAttribute("txnCountMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
 						"transactionCountMonth", String.valueOf(customer.get().getTxnCountMonth())));
 
-				model.addAttribute("nativeRegion",enumEntityService.getEnumValueDescriptionByKeyUserIdAndDependent("state",String.valueOf(customer.get().getNativeRegion()),customer.get().getNationality()));
+				model.addAttribute("nativeRegion",enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",customer.get().getNationality(),String.valueOf(customer.get().getNativeRegion())));
 
 			} else {
 				model.addAttribute("error", "Customer details not found.");

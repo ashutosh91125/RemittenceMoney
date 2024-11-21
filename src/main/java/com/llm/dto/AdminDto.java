@@ -24,7 +24,7 @@ public class AdminDto {
 	private Long phone;
 	private String userName;
 	private Boolean satus;
-	private List<Country> countries;
+	private String countries;
 	public MultipartFile profileImagePath;
 
 	public AdminDto(Long adminId, String email, String password) {

@@ -63,10 +63,11 @@
 													<td>${admin.adminName}</td>
 													<td>${admin.phone}</td>
 													<td>${admin.email}</td>
-													<td><c:forEach var="country"
+													<td>${admin.countries }
+													<%-- <td><c:forEach var="country"
 															items="${admin.countries}">
 															${country.countryName}<br />
-														</c:forEach></td>
+														</c:forEach></td> --%>
 													<td><img
 														src="data:image/jpeg;base64,${admin.profileImage}"
 														alt="Profile Image" style="width: 50px; height: 50px;">
@@ -115,5 +116,28 @@
 	<script src="assets/vendors/js/dataTables.min.js"></script>
 	<script src="assets/vendors/js/dataTables.bs5.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
+	<script>
+        $(document).ready(function () {
+            $('#adminList').DataTable({
+                "pageLength": 10,
+                "ordering": true,
+                "searching": true,
+                "paging": true,
+                "info": true,
+                "language": {
+                    "emptyTable": "No data available",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "No entries available",
+                    "paginate": {
+                        "previous": "Previous",
+                        "next": "Next"
+                    }
+                },
+                "columnDefs": [
+                    { "orderable": false, "targets": -1 }
+                ]
+            });
+        });
+    </script>
 </body>
 </html>

@@ -3,23 +3,35 @@ package com.llm.Service;
 import java.util.List;
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.llm.dto.AdminDto;
 import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
-import com.llm.model.Country;
 import com.llm.repositories.AdminRepositories;
 
 @Service
 public class AdminServiceImpl implements IAdminService {
+	private static final Logger logger = LoggerFactory.getLogger(AdminServiceImpl.class);
 	@Autowired
 	private AdminRepositories adminRepositories;
 
 	@Override
-	public Admin addAdmins(Admin admin) {
-		return adminRepositories.save(admin);
+	public String createAdmins(Admin admin) {
+		try {
+			// Save admin to the database
+			adminRepositories.save(admin);
+
+			// Return success response
+			return "status_code=200&message=Admin  successfully";
+		} catch (Exception e) {
+			logger.error("Error while saving admin: ", e);
+
+			// Return failure response
+			return "status_code=500&message=Error while  admin: " + e.getMessage();
+		}
 	}
 
 	@Override
@@ -61,22 +73,20 @@ public class AdminServiceImpl implements IAdminService {
 //		}
 //	}
 
-	private AdminDto convertToAdminDto(Admin admin) {
-		AdminDto adminDto = new AdminDto();
-
-		adminDto.setAdminName(admin.getAdminName());
-		adminDto.setConfirmPassword(admin.getConfirmPassword());
-		adminDto.setPassword(admin.getPassword());
-		adminDto.setEmail(admin.getEmail());
-		adminDto.setPhone(admin.getPhone());
-		adminDto.setUserName(admin.getUserName());
-		List<Country> validCountries = admin.getCountries();
-		adminDto.setCountries(validCountries);
-
-		
-
-		return adminDto;
-	}
+//	private AdminDto convertToAdminDto(Admin admin) {
+//		AdminDto adminDto = new AdminDto();
+//
+//		adminDto.setAdminName(admin.getAdminName());
+//		adminDto.setConfirmPassword(admin.getConfirmPassword());
+//		adminDto.setPassword(admin.getPassword());
+//		adminDto.setEmail(admin.getEmail());
+//		adminDto.setPhone(admin.getPhone());
+//		adminDto.setUserName(admin.getUserName());
+//		List<Country> validCountries = admin.getCountries();
+//		adminDto.setCountries(validCountries);
+//
+//		return adminDto;
+//	}
 
 	@Override
 	public Optional<AdminWithoutProfile> findAdminByEmailAndPassword(String email, String password) {

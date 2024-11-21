@@ -503,18 +503,17 @@ function copyAddress() {
 						</h2>
 						<div id="panelsStayOpen-collapseOne"
 							class="accordion-collapse collapse">
-							<div class="accordion-body" style="background: aliceblue;">
+							<div class="accordion-body"
+								style="background: aliceblue; margin-top: -40px;">
 
 								<div class="main-content">
-									<div
+									<!-- <div
 										class="mb-4 d-flex align-items-center justify-content-between">
 										<h5 class="fw-bold mb-0 me-4">
-											<span class="d-block mb-2">Personal Information:</span> <span
-												class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-												information is publicly displayed, be careful! </span>
+											<span class="d-block mb-2">Personal Information:</span> 
 										</h5>
-										<!-- <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a> -->
-									</div>
+										<a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a>
+									</div> -->
 
 									<div class="row">
 										<div class="col-xl-4">
@@ -694,19 +693,14 @@ function copyAddress() {
 							class="accordion-collapse collapse">
 							<hr class="my-0">
 							<div class="card-body pass-security">
-								<div class="accordion-body">
+								<div class="accordion-body" style="margin-top: -20px;">
 									<div class="card-body personal-info">
-
 										<div class="main-content">
-											<div
-												class="mb-4 d-flex align-items-center justify-content-between">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-2">Current Address</span> <span
-														class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-														information is publicly displayed, be careful! </span>
-												</h5>
+											<div class="row">
+												<h6>
+													<span class="d-block mb-2">Current Address:</span>
+												</h6>
 											</div>
-
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
@@ -751,19 +745,18 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">State</label>
-														<form:input path="state" type="text" class="form-control"
-															placeholder="State" id="currentState" />
+														<label class="form-label">Country</label> <input
+															value="${country}" type="text" class="form-control"
+															placeholder="Country">
 													</div>
 												</div>
-
 											</div>
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label> <input
-															value="${country}" type="text" class="form-control"
-															placeholder="Country">
+														<label class="form-label">State</label>
+														<form:input path="state" type="text" class="form-control"
+															placeholder="State" id="currentState" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -775,24 +768,23 @@ function copyAddress() {
 												</div>
 
 											</div>
-
-											<div
-												class="mb-4 d-flex align-items-center justify-content-between">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-2">Permanent Address:</span> <span
-														class="fs-12 fw-normal text-muted text-truncate-1-line">Keep
-														your account more secure with following preferences. </span>
-												</h5>
-
-											</div>
 											<div class="row">
-												<div class="col-xl-4">
-													<label class="form-label">Current Address Is
-														Permanent address</label> <input type="checkbox"
-														id="sameAsCurrentAddress" name="sameAsCurrentAddress"
-														onclick="copyAddress()" />
-												</div>
+												<h6>
+													<span class="d-block mb-2">Permanent Address:</span>
+												</h6>
 											</div>
+											<!-- <div class="row">
+												<div class="mb-4">
+													<div class="col-xl-4">
+														<h6>
+															Current Address Is Permanent address
+															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
+																type="checkbox" id="sameAsCurrentAddress"
+																name="sameAsCurrentAddress" onclick="copyAddress()" />
+														</h6>
+													</div>
+												</div>
+											</div> -->
 
 											<div class="row">
 												<div class="col-xl-4">
@@ -839,19 +831,19 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">State</label>
-														<form:input path="parState" type="text"
-															class="form-control" placeholder="State"
-															id="permanentState" />
+														<label class="form-label">Country</label> <input
+															value="${parCountry}" type="text" class="form-control"
+															placeholder="Country of Residence">
 													</div>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label> <input
-															value="${parCountry}" type="text" class="form-control"
-															placeholder="Country of Residence">
+														<label class="form-label">State</label>
+														<form:input path="parState" type="text"
+															class="form-control" placeholder="State"
+															id="permanentState" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -876,7 +868,8 @@ function copyAddress() {
 						</h2>
 						<div id="panelsStayOpen-collapseThree"
 							class="accordion-collapse collapse">
-							<div class="accordion-body" style="background: aliceblue;">
+							<div class="accordion-body"
+								style="background: aliceblue; margin-top: -40px;">
 								<div class="card-body pass-info">
 									<div class="main-content">
 										<div
@@ -901,7 +894,8 @@ function copyAddress() {
 																itemValue="valueId" itemLabel="description" />
 														</form:select> --%>
 														<input value="${residentType}" type="text"
-															class="form-control" placeholder="Resident Type" id="residentType"/>
+															class="form-control" placeholder="Resident Type"
+															id="residentType" />
 
 													</div>
 												</div>
@@ -971,8 +965,8 @@ function copyAddress() {
 															</form:select> --%>
 															<%-- <form:input path="issuedAt" type="text"
 																class="form-control" placeholder="Issued at" /> --%>
-															<form:input path="issuedAt" type="text" class="form-control"
-																placeholder="Issued at"/>
+															<form:input path="issuedAt" type="text"
+																class="form-control" placeholder="Issued at" />
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -1057,18 +1051,17 @@ function copyAddress() {
 						<div id="panelsStayOpen-collapseFour"
 							class="accordion-collapse collapse">
 
-							<div class="accordion-body" style="background: aliceblue;">
+							<div class="accordion-body"
+								style="background: aliceblue; margin-top: -30px;">
 								<div class="card-body personal-info">
 									<div class="main-content">
-										<div
+										<!-- <div
 											class="mb-4 d-flex align-items-center justify-content-between">
 											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Other Information </span> <span
-													class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-													information is publicly displayed, be careful! </span>
+												<span class="d-block mb-2">Other Information </span> 
 											</h5>
 
-										</div>
+										</div> -->
 
 										<div class="card-body pass-security">
 											<div class="row">

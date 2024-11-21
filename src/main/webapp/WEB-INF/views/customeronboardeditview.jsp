@@ -371,6 +371,29 @@ function copyAddress() {
 		 toggleCustomerRemarks();
 			toggleFields();
 	});
+
+
+    $(document).ready(function() {
+            // Attach a click event to the Back button
+            $("#backButton").on("click", function() {
+                // Use AJAX to send a GET request to the /customer-list endpoint
+                $.ajax({
+                    url: '/customer-list',  // The URL to send the request to
+                    type: 'GET',  // Method type (GET in this case)
+                    success: function(response) {
+                        // On success, you can manually trigger a redirect
+                        // Since it's a GET request and you want the page to navigate,
+                        // you simply change the window location.
+                        window.location.href = '/customer-list';  // Redirect to the customer list page
+                    },
+                    error: function(xhr, status, error) {
+                        // In case of an error, you can handle the failure.
+                        console.log('AJAX Error: ' + error);
+                        // Optionally, you could display an error message to the user
+                    }
+                });
+            });
+        });
 </script>
 </head>
 
@@ -551,8 +574,8 @@ function copyAddress() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Native Region</label>
-												<form:input path="nativeRegion" type="text"
-													class="form-control" placeholder="Native Region" />
+												<input type="text"  value = "${nativeRegion}"
+													class="form-control" placeholder="Native Region" >
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -1393,7 +1416,7 @@ function copyAddress() {
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
-					<button type="submit" class="btn btn-primary">Update</button>
+					<button type="button" class="btn btn-warning" id="backButton">Back</button>
 				</div>
 			</form:form>
 		</div>

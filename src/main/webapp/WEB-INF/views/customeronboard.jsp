@@ -30,6 +30,7 @@
 	href="assets/vendors/css/select2-theme.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/datepicker.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJr1X2X-0yyJ9s5ANx6kPqcp8TDCwNjdbREKxQl11jOlWEeUwzoytbDxs9yE" crossorigin="anonymous">
 <!--! END: Vendors CSS-->
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
@@ -105,6 +106,15 @@
 .accordion .accordion-item {
 	background-color: aliceblue;
 }
+ .spinner-container {
+            position: fixed;
+            top: 50%;
+            left: 60%;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+            display: none;
+        }
+
 </style>
 
 <script>
@@ -112,6 +122,12 @@ $(document).ready(function () {
             // Handle form submission
             $("#customerOnboardForm").on("submit", function (e) {
                 e.preventDefault();  // Prevent the default form submission
+
+                // Show the loader (Bootstrap spinner)
+                $('#loader').show();
+
+                // Disable the submit button to prevent multiple submissions
+                $("#customerOnboardForm button[type='submit']").prop('disabled', true);
 
                 // Create a FormData object to send form data with the image
                 const formData = new FormData(this);
@@ -124,6 +140,12 @@ $(document).ready(function () {
                     processData: false, // Don't let jQuery process the data
                     contentType: false, // Let the browser set the content type
                     success: function (response) {
+                        // Hide the loader after success
+                        $('#loader').hide();
+
+                        // Enable the submit button again
+                        $("#customerOnboardForm button[type='submit']").prop('disabled', false);
+
                         // Show success message on successful creation
                         alert("Customer Onboarded successfully!");
 
@@ -131,12 +153,19 @@ $(document).ready(function () {
                         window.location.href = "/customer-list"; // Redirects to the to-do list page
                     },
                     error: function (xhr) {
+                        // Hide the loader on error
+                        $('#loader').hide();
+
+                        // Enable the submit button again
+                        $("#customerOnboardForm button[type='submit']").prop('disabled', false);
+
                         // Show error message if creation fails
                         alert("Error: " + xhr.responseText);
                     }
                 });
             });
         });
+
 
 function copyAddress() {
     const checkbox = document.getElementById("sameAsCurrentAddress");
@@ -489,6 +518,16 @@ function copyAddress() {
 
 				</div>
 			</div>
+
+			<div class="spinner-container" id="loader">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0FB2a7oI4GvYbgPpQXqzZyoxFQsF3jyBzJrb8tO9gW0Gi7km" crossorigin="anonymous"></script>
+
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			<form:form modelAttribute="customer" id = "customerOnboardForm"
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data">
@@ -1046,7 +1085,8 @@ function copyAddress() {
 												<div class="row">
 													<div class="col-xl-4">
 														<div class="mb-4">
-															<label class="form-label">Issued on</label> <input type="date"
+															<label class="form-label">Issued on<span class="text-danger">*</span></label>
+															<form:input path="issuedOn" type="date"
 																class="form-control" />
 														</div>
 													</div>
@@ -1054,7 +1094,7 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Date of Expiry<span
 													class="text-danger">*</span></label>
-															<form:input path="dateOfBirth" type="date"
+															<form:input path="dateOfExpiry" type="date"
 																class="form-control" />
 														</div>
 													</div>

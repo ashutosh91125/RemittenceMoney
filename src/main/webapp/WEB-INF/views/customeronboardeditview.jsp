@@ -971,8 +971,8 @@ function copyAddress() {
 															</form:select> --%>
 															<%-- <form:input path="issuedAt" type="text"
 																class="form-control" placeholder="Issued at" /> --%>
-															<input type="text" class="form-control"
-																placeholder="Issued at" value="${issuedAt}">
+															<form:input path="issuedAt" type="text" class="form-control"
+																placeholder="Issued at"/>
 														</div>
 													</div>
 													<div class="col-xl-4">

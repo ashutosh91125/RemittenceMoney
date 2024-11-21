@@ -279,7 +279,6 @@ public class CustomerControllerwithoutRest {
 	public String getDetailsEcrn(@RequestParam("ecrn") String ecrn, Model model) {
 		try {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
-			logger.info("customer=============="+customer.get().getIssuedAt());
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get());
 				try {
@@ -301,8 +300,6 @@ public class CustomerControllerwithoutRest {
 						"occupationId", String.valueOf(customer.get().getOccupationId())));
 				model.addAttribute("issuedCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
 						customer.get().getIssuedCountry()));
-				model.addAttribute("issuedAt", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
-						customer.get().getIssuedBy()));
 				model.addAttribute("annualIncomeRangeId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
 						"annualIncomeRange", String.valueOf(customer.get().getAnnualIncomeRangeId())));
 				model.addAttribute("riskRatingId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(

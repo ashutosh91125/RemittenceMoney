@@ -120,7 +120,7 @@
 	display: none;
 }
 </style>
-
+<script type="text/javascript" src="js/customervalidation.js"></script>
 <script>
 $(document).ready(function () {
             // Handle form submission
@@ -537,7 +537,7 @@ function copyAddress() {
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			<form:form modelAttribute="customer" id="customerOnboardForm"
 				action="${pageContext.request.contextPath}/createUser" method="post"
-				enctype="multipart/form-data">
+				enctype="multipart/form-data" onsubmit="return validation(this)">
 
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
@@ -573,7 +573,7 @@ function copyAddress() {
 													<form:options items="${salutationList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
-
+												<span id="salutationError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -582,6 +582,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="firstName" type="text"
 													class="form-control" placeholder="First Name" />
+												<span id="firstNameError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -589,6 +590,7 @@ function copyAddress() {
 												<label class="form-label">Middle Name</label>
 												<form:input path="middleName" type="text"
 													class="form-control" placeholder="Middle Name" />
+												<span id="middleNameError" class="text-danger"></span>
 											</div>
 										</div>
 									</div>
@@ -599,6 +601,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="lastName" type="text" class="form-control"
 													placeholder="Last Name" />
+												<span id="lastNameError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -606,6 +609,7 @@ function copyAddress() {
 												<label class="form-label">Preferred Name</label>
 												<form:input path="preferredName" type="text"
 													class="form-control" placeholder="Preferred Name" />
+												<span id="preferredNameError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -619,6 +623,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
+												<span id="nationalityError" class="text-danger"></span>
 											</div>
 										</div>
 									</div>
@@ -632,6 +637,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
+												<span id="secondNationalityError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -642,6 +648,7 @@ function copyAddress() {
 													multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
 												</form:select>
+												<span id="nativeRegionError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -650,6 +657,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="dateOfBirth" type="date"
 													class="form-control" />
+												<span id="dateOfBirthError" class="text-danger"></span>
 											</div>
 										</div>
 									</div>
@@ -664,6 +672,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
+												<span id="countryOfBirthError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -671,6 +680,7 @@ function copyAddress() {
 												<label class="form-label">Place of Birth </label>
 												<form:input path="placeOfBirth" type="text"
 													class="form-control" placeholder="Place of Birth" />
+												<span id="placeOfBirthError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -683,6 +693,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
+												<span id="countryOfResidenceError" class="text-danger"></span>
 											</div>
 
 										</div>
@@ -706,6 +717,7 @@ function copyAddress() {
 												<label class="form-label">Mothers Maiden Name</label>
 												<form:input path="mothersMaidenName" type="Text"
 													class="form-control" placeholder="Mothers Maiden Name" />
+												<span id="mothersMaidenNameError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -714,6 +726,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="primaryMobileNumber" type="text"
 													class="form-control" placeholder="Primary Mobile Number" />
+												<span id="primaryMobileNumberError" class="text-danger"></span>
 											</div>
 										</div>
 									</div>
@@ -725,6 +738,7 @@ function copyAddress() {
 												<label class="form-label">Secondary Mobile Number</label>
 												<form:input path="secondaryMobileNumber" type="text"
 													class="form-control" placeholder="Secondary Mobile Number" />
+												<span id="secondaryMobileNumberError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -733,6 +747,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="emailId" type="email" class="form-control"
 													placeholder="Email" />
+												<span id="emailIdError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -740,6 +755,7 @@ function copyAddress() {
 												<label class="form-label">Phone Number</label>
 												<form:input path="phoneNumber" type="text"
 													class="form-control" placeholder="Phone Number" />
+												<span id="phoneNumberError" class="text-danger"></span>
 											</div>
 										</div>
 									</div>
@@ -775,6 +791,7 @@ function copyAddress() {
 														<form:input path="buildingName" type="text"
 															class="form-control" placeholder="Building Name"
 															id="currentBuildingName" />
+														<span id="buildingNameError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -783,6 +800,7 @@ function copyAddress() {
 														<form:input path="streetName" type="text"
 															class="form-control" placeholder="Street Name"
 															id="currentStreetName" />
+														<span id="streetNameError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -791,6 +809,7 @@ function copyAddress() {
 														<form:input path="landmark" type="text"
 															class="form-control" placeholder="Land Mark"
 															id="currentLandmark" />
+														<span id="landmarkError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
@@ -800,6 +819,7 @@ function copyAddress() {
 														<label class="form-label">City</label>
 														<form:input path="city" type="text" class="form-control"
 															placeholder="City" id="currentCity" />
+														<span id="cityError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -808,6 +828,7 @@ function copyAddress() {
 														<form:input path="district" type="text"
 															class="form-control" placeholder="District"
 															id="currentDistrict" />
+														<span id="districtError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -820,6 +841,7 @@ function copyAddress() {
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
+														<span id="countryError" class="text-danger"></span>
 													</div>
 												</div>
 
@@ -833,6 +855,7 @@ function copyAddress() {
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 														</form:select>
+														<span id="stateError" class="text-danger"></span>
 													</div>
 												</div>
 
@@ -841,6 +864,7 @@ function copyAddress() {
 														<label class="form-label">Zip</label>
 														<form:input path="zip" type="text" class="form-control"
 															placeholder="Zip" id="currentZip" />
+														<span id="zipError" class="text-danger"></span>
 													</div>
 												</div>
 												<!-- <div class="col-xl-4">
@@ -877,6 +901,7 @@ function copyAddress() {
 														<form:input path="parBuildingName" type="text"
 															class="form-control" placeholder="Building Name"
 															id="permanentBuildingName" />
+														<span id="parBuildingNameError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -885,6 +910,7 @@ function copyAddress() {
 														<form:input path="parStreetName" type="text"
 															class="form-control" placeholder="Street Name"
 															id="permanentStreetName" />
+														<span id="parStreetNameError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -893,6 +919,7 @@ function copyAddress() {
 														<form:input path="parLandmark" type="text"
 															class="form-control" placeholder="Land Mark"
 															id="permanentLandmark" />
+														<span id="parLandmarkError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
@@ -903,6 +930,7 @@ function copyAddress() {
 														<form:input path="parCity" type="text"
 															class="form-control" placeholder="City"
 															id="permanentCity" />
+														<span id="parCityError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -911,6 +939,7 @@ function copyAddress() {
 														<form:input path="parDistrict" type="text"
 															class="form-control" placeholder="District"
 															id="permanentDistrict" />
+														<span id="parDistrictError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -923,6 +952,7 @@ function copyAddress() {
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
+														<span id="parCountryError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
@@ -935,6 +965,7 @@ function copyAddress() {
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 														</form:select>
+														<span id="parStateError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -942,6 +973,7 @@ function copyAddress() {
 														<label class="form-label">Zip</label>
 														<form:input path="parZip" type="text" class="form-control"
 															placeholder="Zip" id="permanentZip" />
+														<span id="parZipError" class="text-danger"></span>
 													</div>
 												</div>
 												<!-- <div class="col-xl-4">
@@ -996,6 +1028,7 @@ function copyAddress() {
 															<form:options items="${residentTypeList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select>
+														<span id="residentTypeError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
@@ -1020,6 +1053,7 @@ function copyAddress() {
 																class="text-danger">*</span></label>
 															<form:input path="idNumber" id="idNumber" name="idNumber"
 																placeholder="Id Number" type="text" class="form-control" />
+															<span id="idNumberError" class="text-danger"></span>
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -1028,6 +1062,7 @@ function copyAddress() {
 																class="text-danger">*</span></label>
 															<form:input path="nameAsPerId" type="text"
 																class="form-control" placeholder="Name as per Id" />
+															<span id="nameAsPerIdError" class="text-danger"></span>
 														</div>
 													</div>
 												</div>
@@ -1045,6 +1080,7 @@ function copyAddress() {
 																<form:options items="${countryList}" itemValue="valueId"
 																	itemLabel="description" />
 															</form:select>
+															<span id="issuedCountryError" class="text-danger"></span>
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -1058,6 +1094,7 @@ function copyAddress() {
 																<form:options items="${countryList}"
 																	itemValue="description" itemLabel="description" />
 															</form:select>
+															<span id="issuedAtError" class="text-danger"></span>
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -1067,6 +1104,7 @@ function copyAddress() {
 															<form:input path="issuedBy" type="text"
 																class="form-control" placeholder="Issued By"
 																id="issuedBy" />
+															<span id="issuedByError" class="text-danger"></span>
 														</div>
 													</div>
 												</div>
@@ -1079,6 +1117,7 @@ function copyAddress() {
 																class="text-danger">*</span></label>
 															<form:input path="issuedOn" type="date"
 																class="form-control" />
+															<span id="issuedOnError" class="text-danger"></span>
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -1087,6 +1126,7 @@ function copyAddress() {
 																class="text-danger">*</span></label>
 															<form:input path="dateOfExpiry" type="date"
 																class="form-control" />
+															<span id="dateOfExpiryError" class="text-danger"></span>
 														</div>
 													</div>
 												</div>
@@ -1103,6 +1143,7 @@ function copyAddress() {
 														<label class="form-label">Visa Number</label>
 														<form:input path="visaNumber" type="text"
 															class="form-control" placeholder="Visa Number" />
+														<span id="visaNumberError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1110,6 +1151,7 @@ function copyAddress() {
 														<label class="form-label">Visa Expiry Date</label>
 														<form:input path="visaExpiryDate" type="date"
 															class="form-control" placeholder="Visa Expiry Date" />
+														<span id="visaExpiryDateError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1122,6 +1164,7 @@ function copyAddress() {
 															<option value="2">Visitor</option>
 															<option value="3">MyKad</option>
 														</form:select>
+														<span id="visaTypeError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
@@ -1202,6 +1245,7 @@ function copyAddress() {
 															<form:options items="${annualIncomeRangeList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select>
+														<span id="annualIncomeRangeIdError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1216,6 +1260,8 @@ function copyAddress() {
 														itemLabel="description"/> --%>
 															<form:option value="MYR">Malaysian Ringgit</form:option>
 														</form:select>
+														<span id="annualIncomeCurrencyCodeError"
+															class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1224,6 +1270,7 @@ function copyAddress() {
 														<form:input path="taxRegistrationNumber" type="text"
 															class="form-control"
 															placeholder="Tax Registration Number" />
+														<span id="taxRegistrationNumberError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
@@ -1256,32 +1303,7 @@ function copyAddress() {
 											</div> 
 										</div>--%>
 
-										<%-- <div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Name<span
-														class="text-danger">*</span></label>
-													<form:input path="employerName" type="text"
-														class="form-control" placeholder="Employer Name" />
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Address<span
-														class="text-danger">*</span></label>
-													<form:input path="employerAddress" type="text"
-														class="form-control" placeholder="Employer Address" />
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Phone<span
-														class="text-danger">*</span></label>
-													<form:input path="employerPhone" type="tel"
-														class="form-control" placeholder="Employer Phone" />
-												</div>
-											</div>
-										</div> --%>
+										<%-- --%>
 										<div class="row">
 											<%-- <div class="col-xl-4">
 												<div class="mb-4">
@@ -1312,6 +1334,7 @@ function copyAddress() {
 														<form:options items="${riskRatingIdList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
+													<span id="riskRatingIdError" class="text-danger"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1324,6 +1347,7 @@ function copyAddress() {
 														<form:options items="${incomeTypeList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
+													<span id="incomeTypeError" class="text-danger"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1336,6 +1360,7 @@ function copyAddress() {
 														<form:options items="${professionCategoryList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
+													<span id="professionCategoryError" class="text-danger"></span>
 												</div>
 											</div>
 										</div>
@@ -1358,6 +1383,32 @@ function copyAddress() {
 											</div> 
 											
 										</div>--%>
+										 <div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Name<span
+														class="text-danger">*</span></label>
+													<form:input path="employerName" type="text"
+														class="form-control" placeholder="Employer Name" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Address<span
+														class="text-danger">*</span></label>
+													<form:input path="employerAddress" type="text"
+														class="form-control" placeholder="Employer Address" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Phone<span
+														class="text-danger">*</span></label>
+													<form:input path="employerPhone" type="tel"
+														class="form-control" placeholder="Employer Phone" />
+												</div>
+											</div>
+										</div>
 										<div class="row">
 
 											<%-- <div class="col-xl-4">
@@ -1379,6 +1430,7 @@ function copyAddress() {
 														<form:options items="${transactionVolumeMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
+													<span id="txnVolMonthError" class="text-danger"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1391,6 +1443,7 @@ function copyAddress() {
 														<form:options items="${transactionCountMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
+													<span id="txnCountMonthError" class="text-danger"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1401,6 +1454,7 @@ function copyAddress() {
 														data-select2-selector="icon">
 														<option value="en">English</option>
 													</form:select>
+													<span id="firstLanguageError" class="text-danger"></span>
 
 												</div>
 											</div>
@@ -1426,6 +1480,7 @@ function copyAddress() {
 															<form:options items="${occupationIdList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select>
+														<span id="occupationIdError" class="text-danger"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1461,6 +1516,7 @@ function copyAddress() {
 														<label class="form-label">Customer Remarks</label>
 														<form:input path="customerRemarks" class="form-control"
 															placeholder="Enter your remarks here" />
+														<span id="customerRemarksError" class="text-danger"></span>
 													</div>
 												</div>
 												<!-- <div class="col-xl-4">

@@ -319,7 +319,9 @@ public class CustomerControllerwithoutRest {
 
 				model.addAttribute("nativeRegion", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
 						customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion())));
-
+//				String result=enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
+//						customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion()));
+//				logger.info("result========="+result);
 			} else {
 				model.addAttribute("error", "Customer details not found.");
 			}

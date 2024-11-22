@@ -214,7 +214,7 @@ private String dateOfBirth;
         private Integer annualIncomeRangeId;
         private String annualIncomeCurrencyCode;
         private String socialSecurityNumber;
-        private Integer taxRegistrationNumber;
+        private Long taxRegistrationNumber;
         private String txnIssuedCountry;
         private String employerName;
         private String employerAddress;

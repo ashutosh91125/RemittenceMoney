@@ -743,21 +743,6 @@ function copyAddress() {
 											</div>
 										</div>
 									</div>
-									<div class="row">
-
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Occupation</label>
-												<form:select path="occupationId" class="form-control"
-													data-select2-selector="icon" multiple="false">
-													<form:option value="" disabled="true" selected="true">Occupation</form:option>
-													<form:options items="${occupationIdList}"
-														itemValue="valueId" itemLabel="description" />
-												</form:select>
-											</div>
-										</div>
-
-									</div>
 								</div>
 							</div>
 						</div>
@@ -946,7 +931,8 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">State</label>
 														<form:select path="parState" id="parStateDropdown"
-															class="form-control" multiple="false" style="height: 46;"  title="Select State">
+															class="form-control" multiple="false" style="height: 46;"
+															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 														</form:select>
 													</div>
@@ -1433,15 +1419,38 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
+														<label class="form-label">Occupation</label>
+														<form:select path="occupationId" class="form-control"
+															data-select2-selector="icon" multiple="false">
+															<form:option value="" disabled="true" selected="true">Occupation</form:option>
+															<form:options items="${occupationIdList}"
+																itemValue="valueId" itemLabel="description" />
+														</form:select>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Political Exposed Person</label>
+														<form:select path="politicalExposedPerson"
+															class="form-select">
+															<option value="0" selected="selected">No</option>
+															<option value="1">Yes</option>
+														</form:select>
+
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
 														<label class="form-label">Show Remark on
 															Transaction<span class="text-danger">*</span>
 														</label>
 														<form:select path="showRemarksOnTxn" class="form-control"
 															data-select2-selector="icon"
 															onchange="toggleCustomerRemarks();">
-															<option value="false">No</option>
 															<option value="true">Yes</option>
-
+															<option value="false">No</option>
 														</form:select>
 													</div>
 												</div>

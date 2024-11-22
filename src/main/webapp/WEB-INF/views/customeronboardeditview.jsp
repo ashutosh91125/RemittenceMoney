@@ -666,17 +666,17 @@ function copyAddress() {
 											</div>
 										</div>
 									</div>
-									<div class="row">
+									<%-- <div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Occupation Id</label> <input
 													type="text" class="form-control"
 													placeholder="Occupation Id" value="${occupationId}">
-												<%-- 	<form:input path="occupationId" type="text"
-													class="form-control" placeholder="Occupation Id" /> --%>
+													<form:input path="occupationId" type="text"
+													class="form-control" placeholder="Occupation Id" />
 											</div>
 										</div>
-									</div>
+									</div> --%>
 								</div>
 							</div>
 						</div>
@@ -1318,29 +1318,52 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Show Remark on
-															Transaction<span class="text-danger">*</span>
-														</label>
-														<%-- <form:select path="showRemarksOnTxn" class="form-control"
+														<label class="form-label">Occupation</label>
+														<%-- <form:select path="occupationId" class="form-control"
+															data-select2-selector="icon" multiple="false">
+															<form:option value="" disabled="true" selected="true">Occupation</form:option>
+															<form:options items="${occupationIdList}"
+																itemValue="valueId" itemLabel="description" />
+														</form:select> --%>
+														<input value="${ occupationId}" class="form-control" placeholder="Occupation">
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Political Exposed Person</label>
+														<form:input path="politicalExposedPerson"
+															class="form-select"
+															placeholder="Political Exposed Person" />
+
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xl-4">
+														<div class="mb-4">
+															<label class="form-label">Show Remark on
+																Transaction<span class="text-danger">*</span>
+															</label>
+															<%-- <form:select path="showRemarksOnTxn" class="form-control"
 															data-select2-selector="icon"
 															onchange="toggleCustomerRemarks();">
 															<option value="false">No</option>
 															<option value="true">Yes</option>
 
 														</form:select> --%>
-														<form:input path="showRemarksOnTxn" type="text"
-															class="form-control"
-															placeholder="Show Remark on
+															<form:input path="showRemarksOnTxn" type="text"
+																class="form-control"
+																placeholder="Show Remark on
 															Transaction" />
 
+														</div>
 													</div>
-												</div>
-												<div id="customerRemarksContainer" class="col-xl-4"
-													style="display: none;">
-													<div class="mb-4">
-														<label class="form-label">Customer Remarks</label>
-														<form:input path="customerRemarks" class="form-control"
-															placeholder="Enter your remarks here" />
+													<div id="customerRemarksContainer" class="col-xl-4"
+														style="display: none;">
+														<div class="mb-4">
+															<label class="form-label">Customer Remarks</label>
+															<form:input path="customerRemarks" class="form-control"
+																placeholder="Enter your remarks here" />
+														</div>
 													</div>
 												</div>
 												<!-- <div class="col-xl-4">

@@ -946,8 +946,7 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">State</label>
 														<form:select path="parState" id="parStateDropdown"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
+															class="form-control" multiple="false" style="height: 46;"  title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 														</form:select>
 													</div>

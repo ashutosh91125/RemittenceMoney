@@ -816,7 +816,7 @@ function copyAddress() {
 														<form:select path="country" class="form-control"
 															data-select2-selector="icon" multiple="false"
 															id="currentCountry">
-															<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
+															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
@@ -919,7 +919,7 @@ function copyAddress() {
 														<form:select path="parCountry" class="form-control"
 															data-select2-selector="icon" multiple="false"
 															id="permanentCountry">
-															<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
+															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>

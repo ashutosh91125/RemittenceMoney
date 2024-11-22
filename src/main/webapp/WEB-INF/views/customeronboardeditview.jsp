@@ -1332,7 +1332,7 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">Political Exposed Person</label>
 														<form:input path="politicalExposedPerson"
-															class="form-select"
+															class="form-control"
 															placeholder="Political Exposed Person" />
 
 													</div>

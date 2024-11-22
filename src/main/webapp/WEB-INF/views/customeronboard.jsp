@@ -1432,11 +1432,12 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">Political Exposed Person</label>
 														<form:select path="politicalExposedPerson"
-															class="form-select">
-															<option value="0" selected="selected">No</option>
-															<option value="1">Yes</option>
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Political Exposed Person</form:option>
+															<form:option value="0" selected="selected">No</form:option>
+															<form:option value="1">Yes</form:option>
 														</form:select>
-
 													</div>
 												</div>
 											</div>

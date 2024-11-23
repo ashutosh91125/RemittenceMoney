@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.llm.dto.AdminDto;
 import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
-import com.llm.model.Country;
 import com.llm.repositories.AdminRepositories;
 
 @Service
@@ -70,11 +69,7 @@ public class AdminServiceImpl implements IAdminService {
 		adminDto.setEmail(admin.getEmail());
 		adminDto.setPhone(admin.getPhone());
 		adminDto.setUserName(admin.getUserName());
-		List<Country> validCountries = admin.getCountries();
-		adminDto.setCountries(validCountries);
-
-		
-
+		adminDto.setCountries(admin.getCountries());
 		return adminDto;
 	}
 

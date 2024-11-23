@@ -22,7 +22,7 @@
 	<div class="nxl-navigation">
 		<jsp:include page="header.jsp"></jsp:include>
 	</div>
-	<div class="nxl-container">
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content" style="background: aliceblue;">
+			<div class="main-content">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="card stretch stretch-full">
@@ -92,8 +92,9 @@
 
 			</div>
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
+
 	<script>
 		$(document).ready(function() {
 			$('#adminList').DataTable({

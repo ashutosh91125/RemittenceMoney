@@ -34,30 +34,7 @@
 <!--! END: Vendors CSS-->
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<script type="text/javascript">
-	function agentClick() {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "agentlist", true);
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && xhr.status == 200) {
-				document.getElementById("agent_Id").innerHTML = xhr.responseText;
-			}
-		};
-		xhr.send();
 
-	}
-	function subAgentClick() {
-		var xhr = new XMLHttpRequest();
-		xhr.open("GET", "show", true);
-		xhr.onreadystatechange = function() {
-			if (xhr.readyState == 4 && xhr.status == 200) {
-				document.getElementById("subAgent_Id").innerHTML = xhr.responseText;
-			}
-		};
-		xhr.send();
-
-	}
-</script>
 
 </head>
 
@@ -85,23 +62,23 @@
 						</span>
 					</a></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<li class="nxl-item nxl-hasmenu"><a href="adminlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Admin</span></i></span>
 					</a></li>
-					<li class="nxl-item nxl-hasmenu"><a onclick="agentClick()"
+					<li class="nxl-item nxl-hasmenu"><a href="agentlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Agents</span>
 					</a></li>
 					<div id="agent_Id"></div>
-					<li class="nxl-item nxl-hasmenu"><a onclick="subAgentClick()"
+					<li class="nxl-item nxl-hasmenu"><a href="subagentlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Sub
 								Agents</span>
 					</a></li>
 					<div id="subAgent_Id"></div>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<li class="nxl-item nxl-hasmenu"><a href="customer-list"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span></i></span>
 					</a></li>

@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="nxl-content" style="margin-top: -89px;">
-            <div class="main-content">
+            <div class="main-content" style="background: aliceblue;">
                 <div class="card border-top-0">
                     <div class="card-header p-0">
                         <jsp:include page="subheaderagent.jsp"></jsp:include>

@@ -45,7 +45,7 @@
 
 
 
-				<div class="main-content">
+				<div class="main-content" style="background: aliceblue;">
 					<div class="row">
 						<!-- [Mini Card] start -->
 						<div class="col-12">

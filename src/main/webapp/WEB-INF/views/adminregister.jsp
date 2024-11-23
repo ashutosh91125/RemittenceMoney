@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content">
+			<div class="main-content" style="background: aliceblue;">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
@@ -96,11 +96,11 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country</label>
-
 									<form:select path="countries" class="form-control"
-										multiple="false">
-										<form:options items="${countrieslist}" itemValue="countryId"
-											itemLabel="countryName" />
+										data-select2-selector="icon" multiple="false">
+										<form:option value="" disabled="true" selected="true">Country</form:option>
+										<form:options items="${countryList}" itemValue="valueId"
+											itemLabel="description" />
 									</form:select>
 								</div>
 							</div>

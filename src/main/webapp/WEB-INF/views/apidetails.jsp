@@ -41,7 +41,7 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content">
+			<div class="main-content" style="background: aliceblue;">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
@@ -85,9 +85,13 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-10"></div>
+								<div class="col-10">
+									<div class="col-2 text-end mb-2">
+										<button type="submit" class="btn btn-primary btn-lg">Previous</button>
+									</div>
+								</div>
 								<div class="col-2 text-end mb-2">
-									<button type="submit" onclick="submit()"
+									<button type="submit"
 										class="btn btn-primary btn-lg next-button">Next</button>
 								</div>
 							</div>

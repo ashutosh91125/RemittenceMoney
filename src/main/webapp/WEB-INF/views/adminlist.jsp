@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content">
+			<div class="main-content" style="background: aliceblue;">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="card stretch stretch-full">
@@ -63,10 +63,7 @@
 													<td>${admin.adminName}</td>
 													<td>${admin.phone}</td>
 													<td>${admin.email}</td>
-													<td><c:forEach var="country"
-															items="${admin.countries}">
-															${country.countryName}<br />
-														</c:forEach></td>
+													<td>${admin.countries }</td>
 													<td><img
 														src="data:image/jpeg;base64,${admin.profileImage}"
 														alt="Profile Image" style="width: 50px; height: 50px;">
@@ -93,22 +90,34 @@
 					</div>
 				</div>
 
-				<!-- Pagination Controls -->
-				<div class="pagination-controls">
-					<c:if test="${currentPage > 0}">
-						<a href="?page=${currentPage - 1}&size=${size}"
-							class="btn btn-secondary">Previous</a>
-					</c:if>
-					</br>
-					<c:if test="${currentPage < totalPages - 1}">
-						<a href="?page=${currentPage + 1}&size=${size}"
-							class="btn btn-secondary">Next</a>
-					</c:if>
-				</div>
 			</div>
 		</div>
 	</div>
 	<jsp:include page="footer.jsp"></jsp:include>
+	<script>
+		$(document).ready(function() {
+			$('#adminList').DataTable({
+				"pageLength" : 10,
+				"ordering" : true,
+				"searching" : true,
+				"paging" : true,
+				"info" : true,
+				"language" : {
+					"emptyTable" : "No data available",
+					"info" : "Showing _START_ to _END_ of _TOTAL_ entries",
+					"infoEmpty" : "No entries available",
+					"paginate" : {
+						"previous" : "Previous",
+						"next" : "Next"
+					}
+				},
+				"columnDefs" : [ {
+					"orderable" : false,
+					"targets" : -1
+				} ]
+			});
+		});
+	</script>
 
 	<!-- Vendor JS Files -->
 	<script src="assets/vendors/js/vendors.min.js"></script>

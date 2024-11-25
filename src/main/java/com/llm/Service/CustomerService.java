@@ -142,8 +142,8 @@ public class CustomerService {
 			if (customer.getResidentTypeId() == 101) {
 //                customer.setIssuedOn((LocalDate.now()).toString());
 //                customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
-				customer.setIssuedOn("2024-11-22");
-				customer.setDateOfExpiry("2026-11-22");
+				customer.setIssuedOn("2024-11-25");
+				customer.setDateOfExpiry("2026-11-25");
 
 				customer.setIdType(28);
 				customer.setIssuedCountry("MY");
@@ -163,21 +163,22 @@ public class CustomerService {
 				customerData.put("issued_on", customer.getIssuedOn());
 				customerData.put("date_of_expiry", customer.getDateOfExpiry());
 
-				idData.put("issued_on", "2024-11-22");
-				idData.put("date_of_expiry", "2026-11-22");
+				idData.put("issued_on", "2024-11-25");
+				idData.put("date_of_expiry", "2026-11-25");
 
 				idData.put("active_status", customer.getActiveStatus());
 
-//				Map<String, Object> idFrontData = new HashMap<>();
-//				idFrontData.put("base64_data", customer.getFrontBase64Data());
-//				idFrontData.put("content_type", customer.getFrontContentType());
-//				idData.put("id_front", idFrontData);
-//
-//
-//				Map<String, Object> idBackData = new HashMap<>();
-//				idBackData.put("base64_data", customer.getBackBase64Data());
-//				idBackData.put("content_type", customer.getBackContentType());
-//				idData.put("id_back", idBackData);
+				Map<String, Object> idFrontData = new HashMap<>();
+				idFrontData.put("base64_data", customer.getFrontBase64Data());
+				idFrontData.put("content_type", customer.getFrontContentType());
+				idData.put("id_front", idFrontData);
+
+
+				Map<String, Object> idBackData = new HashMap<>();
+				idBackData.put("base64_data", customer.getBackBase64Data());
+				idBackData.put("content_type", customer.getBackContentType());
+				idData.put("id_back", idBackData);
+
 				looger.info("======customer.getResidentTypeId()===" + idData);
 				idDetailsData.add(idData);
 

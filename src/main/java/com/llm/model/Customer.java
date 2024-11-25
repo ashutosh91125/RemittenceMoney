@@ -3,6 +3,7 @@ package com.llm.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @Entity
@@ -201,11 +202,15 @@ private String dateOfBirth;
         
 
         @Lob
-        private String frontBase64Data;
+        private byte[] frontBase64Data;
+        @Transient
+        private MultipartFile frontPictureFile;
         private String frontContentType;
 
         @Lob
-        private String backBase64Data;
+        private byte[] backBase64Data;
+        @Transient
+        private MultipartFile backPictureFile;
         private String BackContentType;
 
 

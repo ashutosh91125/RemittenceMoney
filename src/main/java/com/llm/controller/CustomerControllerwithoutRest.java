@@ -21,6 +21,7 @@ import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
 import com.llm.model.Gender;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 //@SessionAttributes({ "custDTO" })
@@ -213,7 +214,50 @@ public class CustomerControllerwithoutRest {
 	// Handle user creation form submission
 	@PostMapping("/createUser")
 	@ResponseBody
-	public ResponseEntity<?> createUser(@ModelAttribute Customer customer) throws JsonProcessingException {
+	public ResponseEntity<?> createUser(@ModelAttribute Customer customer,
+										@RequestParam MultipartFile frontPictureFile,
+										@RequestParam MultipartFile backPictureFile) throws JsonProcessingException {
+
+		try {
+			// Validate picture file if present
+			if (frontPictureFile != null && !frontPictureFile.isEmpty()) {
+				String contentType = frontPictureFile.getContentType();
+
+				// Ensure only image files are allowed
+				if (contentType == null || !contentType.startsWith("image/")) {
+					throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+				}
+
+				// Set image data in ToDo object
+				customer.setFrontBase64Data(frontPictureFile.getBytes());
+				customer.setFrontContentType(contentType);
+			}
+		} catch (Exception e) {
+			// Return error response with exception message
+			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+		}
+
+		try {
+			// Validate picture file if present
+			if (backPictureFile != null && !backPictureFile.isEmpty()) {
+				String contentType = backPictureFile.getContentType();
+
+				// Ensure only image files are allowed
+				if (contentType == null || !contentType.startsWith("image/")) {
+					throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+				}
+
+				// Set image data in ToDo object
+				customer.setBackBase64Data(backPictureFile.getBytes());
+				customer.setBackContentType(contentType);
+			}
+		} catch (Exception e) {
+			// Return error response with exception message
+			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+		}
+
+
+
 
 		String status = customerService.createCustomer(customer); // Get the status response from the service
 
@@ -241,7 +285,10 @@ public class CustomerControllerwithoutRest {
 
 			// If status code is 200, return success
 			if (statusCode == 200) {
-				return ResponseEntity.ok("Customer created successfully!");
+
+				String ecrn = extractFieldValue(status, "ecrn=");
+
+				return ResponseEntity.ok("Customer Onboarded successfully with the ECRN: "+ecrn);
 			}
 
 			// If status code is not 200, extract the message

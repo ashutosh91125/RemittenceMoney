@@ -28,8 +28,8 @@
 				<div class="page-header-right-items">
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="addAdmin" class="btn btn-primary successAlertMessage">
-							<i class="feather-user-plus me-2"></i> <span>Add Admin</span>
+						<a href="subgent" class="btn btn-primary">
+							<i class="feather-user-plus me-2"></i> <span>Sub Agent</span>
 						</a>
 					</div>
 				</div>

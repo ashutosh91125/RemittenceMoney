@@ -379,44 +379,38 @@ function copyAddress() {
 										});
 					});
 	function toggleFields() {
-        const residentType = document.getElementById('residentType').value;
-        const idTypeInput = document.getElementById("idType");
-        const issuedCountryInput = document.querySelector("[name='issuedCountry']");
-        const issuedAtInput = document.querySelector("[name='issuedAt']");
-        const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
-        const issuedForNonResidents = document.getElementById('issuedForNonResidents');
-        const idDetails = document.getElementById('idDetails');
-        const idDetailsFields = document.getElementById('idDetailsFields');
+            const residentType = document.getElementById('residentType').value;
+            const idTypeInput = document.getElementById("idType");
+            const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
+            const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+            const idDetails = document.getElementById('idDetails');
+            const idDetailsFields = document.getElementById('idDetailsFields');
+            const idNumberField = document.getElementById('idNumberField');
 
 
-        if (residentType === '101') { // Malaysian ID
-            idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
-            issuedCountryInput.value = "MY";
-            issuedAtInput.value = "MALAYSIA";
-            issuedCountryInput.disabled = true;
-            issuedAtInput.disabled = true;
-            issuedDateExpiryNonResident.style.display = 'none';
-            issuedForNonResidents.style.display = 'none';
-            idDetails.style.display = 'block';
-            idDetailsFields.style.display ='none';
-        } else if (residentType === '100') { // Passport
-            idTypeInput.value = "PASSPORT";
-            issuedCountryInput.value = "";
-            issuedAtInput.value = "";
-            issuedCountryInput.disabled = false;
-            issuedAtInput.disabled = false;
-            idDetails.style.display = 'block';
-            issuedForNonResidents.style.display = 'block';
-            issuedDateExpiryNonResident.style.display = 'block';
-            idDetailsFields.style.display ='block';
-        } else {
-            idDetails.style.display = 'none';
-            issuedDateExpiryNonResident.style.display = 'none';
-            issuedForNonResidents.style.display = 'none';
-            idDetailsFields.style.display ='none';
+            if (residentType === '101') { // Malaysian ID
+                idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
+                issuedDateExpiryNonResident.style.display = 'none';
+                issuedForNonResidents.style.display = 'none';
+                idDetails.style.display = 'block';
+                idDetailsFields.style.display ='block';
+                idNumberField.style.display ='block';
+
+            } else if (residentType === '100') { // Passport
+                idTypeInput.value = "PASSPORT";
+                idDetails.style.display = 'block';
+                issuedForNonResidents.style.display = 'block';
+                issuedDateExpiryNonResident.style.display = 'block';
+                idDetailsFields.style.display ='block';
+                idNumberField.style.display ='block';
+                document.getElementById('idNumberField').style.display = 'block';
+            } else {
+                idDetails.style.display = 'none';
+                issuedDateExpiryNonResident.style.display = 'none';
+                issuedForNonResidents.style.display = 'none';
+                idNumberField.style.display='none';
+            }
         }
-    }
-
     function toggleCustomerRemarks() {
         const showRemarks = document.getElementById("showRemarksOnTxn").value;
         const remarksContainer = document.getElementById("customerRemarksContainer");
@@ -1037,7 +1031,7 @@ function copyAddress() {
 												</div>
 											</div>
 											<hr>
-											<div id="idNumberField" class="row" style="display: block;">
+											<div id="idNumberField" class="row">
 												<h5 class="fw-bold mb-0 me-4">
 													<span class="d-block mb-2">Customer Identity</span>
 												</h5>
@@ -1077,7 +1071,7 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Issued Country<span
 																class="text-danger">*</span></label>
-															<form:select path="issuedCountry" id="issuedCountry"
+															<form:select path="issuedCountry"
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
 																<form:option value="" disabled="true" selected="true">Issued Country</form:option>
@@ -1091,7 +1085,7 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Issued at<span
 																class="text-danger">*</span></label>
-															<form:select path="issuedAt" id="issuedAt"
+															<form:select path="issuedAt"
 																class="form-control" data-select2-selector="icon"
 																multiple="false">
 																<form:option value="" disabled="true" selected="true">Issued at</form:option>

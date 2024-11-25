@@ -78,7 +78,7 @@
 					</a></li>
 					<div id="subAgent_Id"></div>
 
-					<li class="nxl-item nxl-hasmenu"><a href="customer-list"
+					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span></i></span>
 					</a></li>

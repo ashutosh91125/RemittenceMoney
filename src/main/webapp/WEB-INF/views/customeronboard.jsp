@@ -374,68 +374,62 @@ function copyAddress() {
 										});
 					});
 	function toggleFields() {
-	    const residentType = document.getElementById('residentType').value;
-	    const idTypeInput = document.getElementById("idType");
-	    const issuedCountryInput = document.querySelector("[name='issuedCountry']");
-	    const issuedAtInput = document.querySelector("[name='issuedAt']");
-	    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
-	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
-	    const idDetails = document.getElementById('idDetails');
-
-	    if (residentType === '101') {
-	        idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
-	        issuedCountryInput.value = "MY";
-	        issuedAtInput.value = "MALAYSIA";
-	        issuedCountryInput.disabled = true;
-	        issuedAtInput.disabled = true;
-	        issuedDateExpiryNonResident.style.display = 'none';
-	        issuedForNonResidents.style.display = 'none';
-	        idDetails.style.display='block';
-	        document.getElementById('idNumberField').style.display = 'block';
-	        document.getElementById('idDetailsFields').style.display = 'none';
-	        document.getElementById('additionalIdDetails').style.display = 'none';
-	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	    } else if (residentType === '100') {
-	        idTypeInput.value = "PASSPORT";
-	        issuedCountryInput.value = "";
-	        issuedAtInput.value = "";
-	        issuedCountryInput.disabled = false;
-	        issuedAtInput.disabled = false;
-	        idDetails.style.display='block';
-	        issuedForNonResidents.style.display = 'block';
-	        issuedDateExpiryNonResident.style.display = 'block';
-	        document.getElementById('idNumberField').style.display = 'block';
-	        document.getElementById('idDetailsFields').style.display = 'block';
-	        document.getElementById('additionalIdDetails').style.display = 'block';
-	        document.getElementById('expiryAndStatusFields').style.display = 'block';
-	    } else {
-	    	idDetails.style.display='none';
-	        issuedDateExpiryNonResident.style.display = 'none';
-	        issuedForNonResidents.style.display = 'none';
-	        document.getElementById('idNumberField').style.display = 'none';
-	        document.getElementById('idDetailsFields').style.display = 'none';
-	        document.getElementById('additionalIdDetails').style.display = 'none';
-	        document.getElementById('expiryAndStatusFields').style.display = 'none';
-	    }
-	}
+        const residentType = document.getElementById('residentType').value;
+        const idTypeInput = document.getElementById("idType");
+        const issuedCountryInput = document.querySelector("[name='issuedCountry']");
+        const issuedAtInput = document.querySelector("[name='issuedAt']");
+        const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
+        const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+        const idDetails = document.getElementById('idDetails');
+        const idDetailsFields = document.getElementById('idDetailsFields');
 
 
-	 function toggleCustomerRemarks() {
-	        const showRemarks = document.getElementById("showRemarksOnTxn").value;
-	        const remarksContainer = document.getElementById("customerRemarksContainer");
+        if (residentType === '101') { // Malaysian ID
+            idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
+            issuedCountryInput.value = "MY";
+            issuedAtInput.value = "MALAYSIA";
+            issuedCountryInput.disabled = true;
+            issuedAtInput.disabled = true;
+            issuedDateExpiryNonResident.style.display = 'none';
+            issuedForNonResidents.style.display = 'none';
+            idDetails.style.display = 'block';
+            idDetailsFields.style.display ='none';
+        } else if (residentType === '100') { // Passport
+            idTypeInput.value = "PASSPORT";
+            issuedCountryInput.value = "";
+            issuedAtInput.value = "";
+            issuedCountryInput.disabled = false;
+            issuedAtInput.disabled = false;
+            idDetails.style.display = 'block';
+            issuedForNonResidents.style.display = 'block';
+            issuedDateExpiryNonResident.style.display = 'block';
+            idDetailsFields.style.display ='block';
+        } else {
+            idDetails.style.display = 'none';
+            issuedDateExpiryNonResident.style.display = 'none';
+            issuedForNonResidents.style.display = 'none';
+            idDetailsFields.style.display ='none';
+        }
+    }
 
-	        if (showRemarks === "true") {
-	            remarksContainer.style.display = "block";
-	        } else {
-	            remarksContainer.style.display = "none";
-	        }
-	    }
-	// Initial check to set visibility based on the default selected value
-	document.addEventListener('DOMContentLoaded', function() {
-		console.log("Page Loaded");
-		 toggleCustomerRemarks();
-			toggleFields();
-	});
+    function toggleCustomerRemarks() {
+        const showRemarks = document.getElementById("showRemarksOnTxn").value;
+        const remarksContainer = document.getElementById("customerRemarksContainer");
+
+        if (showRemarks === "true") {
+            remarksContainer.style.display = "block";
+        } else {
+            remarksContainer.style.display = "none";
+        }
+    }
+
+    // Ensure the correct fields are toggled on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log("Page Loaded");
+        toggleFields();
+        toggleCustomerRemarks();
+    });
+
 </script>
 </head>
 
@@ -1027,7 +1021,8 @@ function copyAddress() {
 													<div class="mb-4">
 														<form:select id="residentType" path="residentTypeId"
 															class="form-control" data-select2-selector="icon"
-															multiple="false" onchange="toggleFields(); ">
+															multiple="false" onchange="toggleFields(); "
+															onblur="toggleFields();">
 															<form:option value="" disabled="true" selected="true">Select Resident Type</form:option>
 															<form:options items="${residentTypeList}"
 																itemValue="valueId" itemLabel="description" />
@@ -1155,7 +1150,7 @@ function copyAddress() {
 													</div>
 												</div>
 											</div>
-											<div id="idDetailsFields" class="row" style="display: none;">
+											<div id="idDetailsFields">
 												<h5 class="fw-bold mb-0 me-4">
 													<span class="d-block mb-4">Visa Details</span>
 												</h5>
@@ -1206,8 +1201,8 @@ function copyAddress() {
 										</div>
 
 										<div class="row mb-4 align-items-center">
-	
-							
+
+
 										</div>
 
 									</div>
@@ -1287,14 +1282,14 @@ function copyAddress() {
 													<form:input path="socialSecurityNumber" type="text"
 														class="form-control" placeholder="Social Security Number" />
 												</div>
-											</div> 
+											</div>
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Tax Registration Number</label>
 													<form:input path="taxRegistrationNumber" type="text"
 														class="form-control" placeholder="Tax Registration Number" />
 												</div>
-											</div> 
+											</div>
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Issued
@@ -1305,7 +1300,7 @@ function copyAddress() {
 														<form:options items="${countryList}" />
 													</form:select>
 												</div>
-											</div> 
+											</div>
 										</div>--%>
 
 											<%-- --%>
@@ -1378,7 +1373,7 @@ function copyAddress() {
 													<form:input path="pepCategory" type="text"
 														class="form-control" placeholder="PEP Catagory" />
 												</div>
-											</div> 
+											</div>
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Personal Mohre Id<span
@@ -1386,8 +1381,8 @@ function copyAddress() {
 													<form:input path="personalMohreId" type="text"
 														class="form-control" placeholder="Personal Mohre Id" />
 												</div>
-											</div> 
-											
+											</div>
+
 										</div>--%>
 											<div class="row">
 												<div class="col-xl-4">
@@ -1461,72 +1456,71 @@ function copyAddress() {
 															<option value="en">English</option>
 														</form:select>
 														<span id="firstLanguageError" class="text-danger"></span>
-
 													</div>
 												</div>
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Marital Status<span
-																class="text-danger">*</span></label>
-															<form:select path="maritalStatus" class="form-control"
-																data-select2-selector="icon">
-																<form:option value="" disabled="true" selected="true">Marital Status</form:option>
-																<option value="2">Unmarried</option>
-																<option value="1">Married</option>
-															</form:select>
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Occupation</label>
-															<form:select path="occupationId" class="form-control"
-																data-select2-selector="icon" multiple="false">
-																<form:option value="" disabled="true" selected="true">Occupation</form:option>
-																<form:options items="${occupationIdList}"
-																	itemValue="valueId" itemLabel="description" />
-															</form:select>
-															<span id="occupationIdError" class="text-danger"></span>
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Political Exposed
-																Person</label>
-															<form:select path="politicalExposedPerson"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Political Exposed Person</form:option>
-																<form:option value="0" selected="selected">No</form:option>
-																<form:option value="1">Yes</form:option>
-															</form:select>
-														</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Marital Status<span
+															class="text-danger">*</span></label>
+														<form:select path="maritalStatus" class="form-control"
+															data-select2-selector="icon">
+															<form:option value="" disabled="true" selected="true">Marital Status</form:option>
+															<option value="2">Unmarried</option>
+															<option value="1">Married</option>
+														</form:select>
 													</div>
 												</div>
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Show Remark on
-																Transaction<span class="text-danger">*</span>
-															</label>
-															<form:select path="showRemarksOnTxn" class="form-control"
-																data-select2-selector="icon"
-																onchange="toggleCustomerRemarks();">
-																<option value="true">Yes</option>
-																<option value="false">No</option>
-															</form:select>
-														</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Occupation</label>
+														<form:select path="occupationId" class="form-control"
+															data-select2-selector="icon" multiple="false">
+															<form:option value="" disabled="true" selected="true">Occupation</form:option>
+															<form:options items="${occupationIdList}"
+																itemValue="valueId" itemLabel="description" />
+														</form:select>
+														<span id="occupationIdError" class="text-danger"></span>
 													</div>
-													<div id="customerRemarksContainer" class="col-xl-4"
-														style="display: none;">
-														<div class="mb-4">
-															<label class="form-label">Customer Remarks</label>
-															<form:input path="customerRemarks" class="form-control"
-																placeholder="Enter your remarks here" />
-															<span id="customerRemarksError" class="text-danger"></span>
-														</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Political Exposed Person</label>
+														<form:select path="politicalExposedPerson"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Political Exposed Person</form:option>
+															<form:option value="0" selected="selected">No</form:option>
+															<form:option value="1">Yes</form:option>
+														</form:select>
 													</div>
-													<!-- <div class="col-xl-4">
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Show Remark on
+															Transaction<span class="text-danger">*</span>
+														</label>
+														<form:select path="showRemarksOnTxn" class="form-control"
+															data-select2-selector="icon"
+															onchange="toggleCustomerRemarks();">
+															<option value="true">Yes</option>
+															<option value="false">No</option>
+														</form:select>
+													</div>
+												</div>
+												<div id="customerRemarksContainer" class="col-xl-4"
+													style="display: none;">
+													<div class="mb-4">
+														<label class="form-label">Customer Remarks</label>
+														<form:input path="customerRemarks" class="form-control"
+															placeholder="Enter your remarks here" />
+														<span id="customerRemarksError" class="text-danger"></span>
+													</div>
+												</div>
+												<!-- <div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DNFBP<span
 															class="text-danger">*</span></label>
@@ -1548,8 +1542,8 @@ function copyAddress() {
 														</form:select>
 													</div>
 												</div>  -->
-												</div>
-												<%--<div class="row">
+											</div>
+											<%--<div class="row">
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Agent Referenc Number<span
@@ -1557,7 +1551,7 @@ function copyAddress() {
 													<form:input path="agentRefNo" type="text"
 														class="form-control" placeholder="Agent Referenc Number" />
 												</div>
-											</div> 
+											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Social Links<span
@@ -1567,9 +1561,9 @@ function copyAddress() {
 												</div>
 											</div>
 										</div>--%>
-												<div class="row"></div>
-												<div class="row">
-													<%-- <div class="col-xl-4">
+											<div class="row"></div>
+											<div class="row">
+												<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profile Catagory<span
 														class="text-danger">*</span></label>
@@ -1577,7 +1571,7 @@ function copyAddress() {
 														placeholder="Profile Catagory" />
 												</div>
 											</div> --%>
-													<%-- <div class="col-xl-4">
+												<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profile Photo<span
 														class="text-danger">*</span></label>
@@ -1585,7 +1579,6 @@ function copyAddress() {
 														placeholder="Profile Photo" />
 												</div>
 											</div> --%>
-												</div>
 											</div>
 										</div>
 									</div>
@@ -1593,10 +1586,11 @@ function copyAddress() {
 							</div>
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center"
-						style="display: flex; justify-content: center">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
+				</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
 			</form:form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

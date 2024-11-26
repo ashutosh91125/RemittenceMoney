@@ -24,5 +24,9 @@ public class EnumValue {
 
     private String dependent;
 
+    public String getDisplayName() {
+        return this.valueId + " - " + this.description;
+    }
+
     // No reference to EnumEntity here, making it unidirectional
 }

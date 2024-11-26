@@ -381,6 +381,65 @@ function copyAddress() {
 											}
 										});
 					});
+
+
+    $(document)
+    			.ready(
+    					function() {
+    						$('#countryOfBirth')
+    								.on(
+    										'change',
+    										function() {
+    											let dependent = $(this).val(); // Get the selected country value
+    											if(dependent == "MY"){
+    											    dependent += "R";
+    											}
+    											if (dependent) { // Check if a country is selected
+    												$
+    														.ajax({
+    															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
+    															type : 'GET',
+    															data : {
+    																dependent : dependent
+    															}, // Pass the selected country ID
+    															success : function(
+    																	data) {
+    																// Clear the state dropdown and populate with new options
+    																$(
+    																		'#placeOfBirth')
+    																		.empty()
+    																		.append(
+    																				'<option value="" disabled selected>Select Place Of Birth</option>');
+    																$
+    																		.each(
+    																				data,
+    																				function(
+    																						index,
+    																						enumValue) {
+    																					$(
+    																							'#placeOfBirth')
+    																							.append(
+    																									'<option value="' + enumValue.valueId + '">'
+    																											+ enumValue.description
+    																											+ '</option>');
+    																				});
+    															},
+    															error : function() {
+    																console
+    																		.error("Error fetching place Of Birth for the selected country.");
+    															}
+    														});
+    											} else {
+    												// Reset the state dropdown if no country is selected
+    												$('#nativeRegion')
+    														.empty()
+    														.append(
+    																'<option value="" disabled selected>Select Native Region</option>');
+    											}
+    										});
+    					});
+
+
 	function toggleFields() {
         const residentType = document.getElementById('residentType').value;
         const idTypeInput = document.getElementById("idType");
@@ -602,12 +661,12 @@ function copyAddress() {
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Salutation</label>
+												<label class="form-label">Salutation<span class="text-danger">*</span></label>
 												<form:select path="salutation" class="form-control"
 													data-select2-selector="icon" multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
 													<form:options items="${salutationList}" itemValue="valueId"
-														itemLabel="description" />
+														itemLabel="displayName" />
 												</form:select>
 												<span id="salutationError" class="text-danger"></span>
 											</div>
@@ -702,7 +761,7 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" class="form-control"
+												<form:select path="countryOfBirth" id="countryOfBirth" class="form-control"
 													data-select2-selector="icon" multiple="false">
 													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -714,9 +773,13 @@ function copyAddress() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Place of Birth </label>
-												<form:input path="placeOfBirth" type="text"
+												<form:select path="placeOfBirth" id="placeOfBirth" class="form-control" data-select2-selector="icon" multiple="false">
+												    <form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
+                                                </form:select>
+
+												<!-- <form:input path="placeOfBirth" type="text"
 													class="form-control" placeholder="Place of Birth" />
-												<span id="placeOfBirthError" class="text-danger"></span>
+												<span id="placeOfBirthError" class="text-danger"></span>  -->
 											</div>
 										</div>
 										<div class="col-xl-4">

@@ -411,11 +411,12 @@ public class CustomerControllerwithoutRest {
 		try {
 			// Use the searchByCriteria method from the service
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
+			logger.info("customers==============="+customers);
 			model.addAttribute("customerList", customers);
 		} catch (Exception e) {
 			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());
 		}
 		return "customerlisting";  // The name of the Thymeleaf template where the results will be shown
 	}
-
+	
 }

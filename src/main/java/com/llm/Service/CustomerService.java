@@ -184,7 +184,7 @@ public class CustomerService {
 
 			} else if (customer.getResidentTypeId() == 100) {
 
-				customer.setIdType(2);
+//				customer.setIdType(2);
 				customer.setActiveStatus(true);
 
 				idData.put("id_type", customer.getIdType());

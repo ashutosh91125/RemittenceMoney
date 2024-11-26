@@ -379,16 +379,16 @@ public class CustomerService {
 		return Optional.of(customer);
 	}
 
-//	public List<Customer> searchByCriteria(String criteria, String query) {
-//		return switch (criteria) {
-//		case "Customer Number:" -> customerRepository.findByEcrnContaining(query);
-//		case "Mobile Number:" -> customerRepository.findByPrimaryMobileNumberContaining(query);
-//		case "Email Id:" -> customerRepository.findByEmailIdContaining(query);
-//		case "ID No:" -> customerRepository.findByIdDetails_IdNumberContaining(query);
-//		case "Customer Name:" -> customerRepository.findByFirstNameContainingOrLastNameContaining(query, query);
-//		default -> List.of(); // Empty list if no criteria matches
-//		};
-//	}
+	public List<Customer> searchByCriteria(String criteria, String query) {
+		return switch (criteria) {
+		case "Customer Number:" -> customerRepository.findByEcrnContaining(query);
+		case "Mobile Number:" -> customerRepository.findByPrimaryMobileNumberContaining(query);
+		case "Email Id:" -> customerRepository.findByEmailIdContaining(query);
+		case "ID No:" -> customerRepository.findByIdNumberContaining(query);
+		case "Customer Name:" -> customerRepository.findByFirstNameContainingOrLastNameContaining(query, query);
+		default -> List.of(); // Empty list if no criteria matches
+		};
+	}
 
 	public Page<Customer> getCustomers(Pageable pageable) {
 		return customerRepository.findAll(pageable);

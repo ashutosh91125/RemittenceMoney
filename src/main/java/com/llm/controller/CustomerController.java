@@ -1,6 +1,7 @@
 package com.llm.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -12,13 +13,7 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.llm.Service.CustomerEcrnService;
 import com.llm.Service.CustomerService;
@@ -78,6 +73,24 @@ public class CustomerController {
 		Optional<Customer> customerData = customerService.getByEcrn(ecrn);
 		return customerData.map(customer -> new ResponseEntity<>(customer, HttpStatus.OK))
 				.orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+	}
+
+	@GetMapping("/search")
+	public ResponseEntity<List<Customer>> searchCustomers(
+			@RequestParam("criteria") String criteria,
+			@RequestParam("query") String query) {
+
+		try {
+			List<Customer> customers = customerService.searchByCriteria(criteria, query);
+			if (customers.isEmpty()) {
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(customers);  // Return empty list with no content status
+			}
+			return ResponseEntity.ok(customers);  // Return 200 OK with the customer list
+		} catch (Exception e) {
+			// In case of error, return an error response
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Collections.emptyList());  // Return empty list with internal server error
+		}
 	}
 
 	// Endpoint 2: Validate Customer

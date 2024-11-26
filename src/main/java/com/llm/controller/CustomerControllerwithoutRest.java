@@ -185,6 +185,15 @@ public class CustomerControllerwithoutRest {
 			logger.error("Error occupation Id list: ", e);
 			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
 		}
+		try {
+			Optional<EnumEntity> idTypeEntity = enumEntityService.getEnumEntityByKey("idType");
+			idTypeEntity.ifPresent(entity -> model.addAttribute("idTypeList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error idType list: ", e);
+			model.addAttribute("idTypeList", List.of()); // or set a default list if needed
+		}
+
 
 //		model.addAttribute("salutationList", salutationService.findAllRecords());
 //		model.addAttribute("countryList", countryService.fetchCountries());

@@ -381,15 +381,19 @@ function copyAddress() {
 	function toggleFields() {
             const residentType = document.getElementById('residentType').value;
             const idTypeInput = document.getElementById("idType");
+             const idTypeDropdown = document.getElementById("idTypeDropdown");
             const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
             const issuedForNonResidents = document.getElementById('issuedForNonResidents');
             const idDetails = document.getElementById('idDetails');
             const idDetailsFields = document.getElementById('idDetailsFields');
             const idNumberField = document.getElementById('idNumberField');
 
-
+                idTypeInput.value = "";
+                idTypeDropdown.style.display = "none";
             if (residentType === '101') { // Malaysian ID
                 idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
+                idTypeInput.readOnly = true; // Disable editing
+                idTypeInput.style.display = "block";
                 issuedDateExpiryNonResident.style.display = 'none';
                 issuedForNonResidents.style.display = 'none';
                 idDetails.style.display = 'block';
@@ -397,7 +401,10 @@ function copyAddress() {
                 idNumberField.style.display ='block';
 
             } else if (residentType === '100') { // Passport
-                idTypeInput.value = "PASSPORT";
+            /*    idTypeInput.value = "PASSPORT";*/
+                idTypeInput.style.display = "none"; // Hide input field
+                idTypeDropdown.style.display = "block"; // Show dropdown for non-residents
+                idTypeDropdown.removeAttribute("disabled");
                 idDetails.style.display = 'block';
                 issuedForNonResidents.style.display = 'block';
                 issuedDateExpiryNonResident.style.display = 'block';
@@ -405,6 +412,10 @@ function copyAddress() {
                 idNumberField.style.display ='block';
                 document.getElementById('idNumberField').style.display = 'block';
             } else {
+                idTypeInput.value = ""; // Reset ID Type
+                idTypeInput.readOnly = true; // Keep it disabled
+                idTypeInput.style.display = "block"; // Show input field
+                idTypeDropdown.style.display = "none";
                 idDetails.style.display = 'none';
                 issuedDateExpiryNonResident.style.display = 'none';
                 issuedForNonResidents.style.display = 'none';
@@ -1036,7 +1047,7 @@ function copyAddress() {
 													<span class="d-block mb-2">Customer Identity</span>
 												</h5>
 												<div class="row">
-													<div class="col-xl-4">
+												<!--	<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Type <span
 																class="text-danger">*</span></label> <input type="text"
@@ -1044,7 +1055,20 @@ function copyAddress() {
 																readonly>
 
 														</div>
-													</div>
+													</div>-->
+													<div class="col-xl-4">
+                                                      <div class="mb-4">
+                                                          <label class="form-label">Id Type <span class="text-danger">*</span></label>
+                                                          <!-- Input field for fixed ID type -->
+                                                          <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly>
+
+                                                          <!-- Dropdown for non-residents -->
+                                                          <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none;">
+                                                              <form:option value="" disabled="true" selected="true">Select ID Type</form:option>
+                                                              <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
+                                                          </form:select>
+                                                      </div>
+                                                    </div>
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Number<span

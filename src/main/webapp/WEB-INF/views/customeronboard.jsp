@@ -382,49 +382,59 @@ function copyAddress() {
 										});
 					});
 	function toggleFields() {
-            const residentType = document.getElementById('residentType').value;
-            const idTypeInput = document.getElementById("idType");
-             const idTypeDropdown = document.getElementById("idTypeDropdown");
-            const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
-            const issuedForNonResidents = document.getElementById('issuedForNonResidents');
-            const idDetails = document.getElementById('idDetails');
-            const idDetailsFields = document.getElementById('idDetailsFields');
-            const idNumberField = document.getElementById('idNumberField');
+        const residentType = document.getElementById('residentType').value;
+        const idTypeInput = document.getElementById("idType");
+        const idTypeDropdown = document.getElementById("idTypeDropdown");
+        const hiddenIdType = document.getElementById("hiddenIdType"); // Hidden input for dynamic value
+        const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
+        const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+        const idDetails = document.getElementById('idDetails');
+        const idDetailsFields = document.getElementById('idDetailsFields');
+        const idNumberField = document.getElementById('idNumberField');
 
-                idTypeInput.value = "";
-                idTypeDropdown.style.display = "none";
-            if (residentType === '101') { // Malaysian ID
-                idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
-                idTypeInput.readOnly = true; // Disable editing
-                idTypeInput.style.display = "block";
-                issuedDateExpiryNonResident.style.display = 'none';
-                issuedForNonResidents.style.display = 'none';
-                idDetails.style.display = 'block';
-                idDetailsFields.style.display ='block';
-                idNumberField.style.display ='block';
+        // Reset fields
+        idTypeInput.value = "";
+        hiddenIdType.value = ""; // Reset hidden field
+        idTypeDropdown.style.display = "none";
+        idTypeDropdown.setAttribute("disabled", true);
 
-            } else if (residentType === '100') { // Passport
-            /*    idTypeInput.value = "PASSPORT";*/
-                idTypeInput.style.display = "none"; // Hide input field
-                idTypeDropdown.style.display = "block"; // Show dropdown for non-residents
-                idTypeDropdown.removeAttribute("disabled");
-                idDetails.style.display = 'block';
-                issuedForNonResidents.style.display = 'block';
-                issuedDateExpiryNonResident.style.display = 'block';
-                idDetailsFields.style.display ='block';
-                idNumberField.style.display ='block';
-                document.getElementById('idNumberField').style.display = 'block';
-            } else {
-                idTypeInput.value = ""; // Reset ID Type
-                idTypeInput.readOnly = true; // Keep it disabled
-                idTypeInput.style.display = "block"; // Show input field
-                idTypeDropdown.style.display = "none";
-                idDetails.style.display = 'none';
-                issuedDateExpiryNonResident.style.display = 'none';
-                issuedForNonResidents.style.display = 'none';
-                idNumberField.style.display='none';
-            }
+        if (residentType === '101') { // Malaysian ID
+            idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
+            hiddenIdType.value = "28"; // Dynamically set the ID value for submission
+            idTypeInput.readOnly = true; // Disable editing
+            idTypeInput.style.display = "block"; // Show input field
+            issuedDateExpiryNonResident.style.display = 'none';
+            issuedForNonResidents.style.display = 'none';
+            idDetails.style.display = 'block';
+            idDetailsFields.style.display = 'none';
+            idNumberField.style.display = 'block';
+        } else if (residentType === '100') { // Non-resident
+            idTypeInput.style.display = "none"; // Hide fixed input field
+            idTypeDropdown.style.display = "block"; // Show dropdown
+            idTypeDropdown.removeAttribute("disabled");
+
+            idTypeDropdown.addEventListener('change', function () {
+                hiddenIdType.value = idTypeDropdown.value; // Dynamically update hidden field value
+            });
+
+            idDetails.style.display = 'block';
+            issuedForNonResidents.style.display = 'block';
+            issuedDateExpiryNonResident.style.display = 'block';
+            idDetailsFields.style.display = 'block';
+            idNumberField.style.display = 'block';
+        } else {
+            idTypeInput.value = ""; // Reset ID Type
+            hiddenIdType.value = ""; // Reset hidden field
+            idTypeInput.readOnly = true; // Keep it disabled
+            idTypeInput.style.display = "block"; // Show input field
+            idTypeDropdown.style.display = "none";
+            idDetails.style.display = 'none';
+            issuedDateExpiryNonResident.style.display = 'none';
+            issuedForNonResidents.style.display = 'none';
+            idNumberField.style.display = 'none';
         }
+    }
+
     function toggleCustomerRemarks() {
         const showRemarks = document.getElementById("showRemarksOnTxn").value;
         const remarksContainer = document.getElementById("customerRemarksContainer");
@@ -1065,15 +1075,19 @@ function copyAddress() {
                                                           <!-- Input field for fixed ID type -->
                                                           <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly>
 
+                                                          <!-- Hidden field to store the value -->
+                                                          <input type="hidden" id="hiddenIdType" name="idType">
+
                                                           <!-- Dropdown for non-residents -->
                                                           <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none;">
                                                               <form:option value="" disabled="true" selected="true">Select ID Type</form:option>
                                                               <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
                                                           </form:select>
                                                       </div>
+
                                                     </div>
 													<div class="col-xl-4">
-														<div class="mb-4">
+														<div class="mb-4"
 															<label class="form-label">Id Number<span
 																class="text-danger">*</span></label>
 															<form:input path="idNumber" id="idNumber" name="idNumber"
@@ -1511,31 +1525,32 @@ function copyAddress() {
 													</div>
 												</div>
 												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Political Exposed Person</label>
-														<form:select path="politicalExposedPerson"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Political Exposed Person</form:option>
-															<form:option value="0" selected="selected">No</form:option>
-															<form:option value="1">Yes</form:option>
-														</form:select>
-													</div>
-												</div>
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Political Exposed Person</label>
+                                                        <form:select path="politicalExposedPerson"
+                                                                     class="form-control"
+                                                                     data-select2-selector="icon">
+                                                            <!-- Placeholder -->
+                                                            <form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
+                                                            <form:option value="0">No</form:option>
+                                                            <form:option value="1">Yes</form:option>
+                                                        </form:select>
+                                                    </div>
+                                                </div>
+
 											</div>
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Show Remark on
-															Transaction<span class="text-danger">*</span>
-														</label>
-														<form:select path="showRemarksOnTxn" class="form-control"
-															data-select2-selector="icon"
-															onchange="toggleCustomerRemarks();">
-															<option value="true">Yes</option>
-															<option value="false">No</option>
-														</form:select>
-													</div>
+                                                            <label class="form-label">Show Remark on Transaction
+                                                                <span class="text-danger">*</span>
+                                                            </label>
+                                                            <form:select path="showRemarksOnTxn" id="showRemarksOnTxn" class="form-control"
+                                                                data-select2-selector="icon" onchange="toggleCustomerRemarks();">
+                                                                <option value="true">Yes</option>
+                                                                <option value="false">No</option>
+                                                            </form:select>
+                                                        </div>
 												</div>
 												<div id="customerRemarksContainer" class="col-xl-4"
 													style="display: none;">

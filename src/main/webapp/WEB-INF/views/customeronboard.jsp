@@ -157,12 +157,12 @@ $(document).ready(function () {
                                         } else {
                                             alert("Customer Onboarded successfully!");
                                         }
-                        //$("#customerOnboardForm")[0].reset();
+                        $("#customerOnboardForm")[0].reset();
 
                         // Optionally, clear any file input fields if necessary
-                        //$('#frontPictureFile').val('');
-                        //$('#backPictureFile').val('');
-                        window.location.reload();
+                        $('#frontPictureFile').val('');
+                        $('#backPictureFile').val('');
+                        //window.location.reload();
                     },
                     error: function (xhr) {
                         // Hide the loader on error
@@ -419,7 +419,7 @@ function copyAddress() {
     																					$(
     																							'#placeOfBirth')
     																							.append(
-    																									'<option value="' + enumValue.description + '">'
+    																									'<option value="' + enumValue.valueId + '">'
     																											+ enumValue.description
     																											+ '</option>');
     																				});
@@ -513,6 +513,14 @@ function copyAddress() {
     // Ensure the correct fields are toggled on page load
     document.addEventListener('DOMContentLoaded', function() {
         console.log("Page Loaded");
+       /*  const radioButtons = document.querySelectorAll('input[name="form-radio"]');
+        const searchHeading = document.getElementById("search-heading");
+        radioButtons.forEach(radio => {
+            radio.addEventListener("click", () => {
+                // Set the search-heading text to the value of the selected radio button
+                searchHeading.textContent = radio.value;
+            });
+        }); */
         toggleFields();
         toggleCustomerRemarks();
     });
@@ -565,27 +573,28 @@ function copyAddress() {
 			</div>
 			<!-- [ page-header ] end -->
 			<!-- [ Main Content ] start -->
-
-			<div class="container mx-0">
+	
+			<%-- <div class="container mx-0">
+			 <form  method="GET" action="/search">
 				<div class="row" style="display: flex; align-items: baseline;">
-					<div class="col-xl-2">
-						<label class=""> <input type="radio" name="form-radio"
+					<div class="col-xl-2" id="customerNumber">
+						<label> <input type="radio" name="form-radio"
 							class="form-radio" value="Customer Number:" checked>
 							Customer Number
 						</label>
 					</div>
-					<div class="col-xl-1">
-						<label class=""> <input type="radio" name="form-radio"
+					<div class="col-xl-1" id="idNo">
+						<label> <input type="radio" name="form-radio"
 							class="form-radio" value="ID No:"> ID No
 						</label>
 					</div>
-					<div class="col-xl-2">
-						<label class=""> <input type="radio" name="form-radio"
+					<div class="col-xl-2" id="mobileNumber">
+						<label> <input type="radio" name="form-radio"
 							class="form-radio" value="Mobile Number:"> Mobile Number
 						</label>
 					</div>
-					<div class="col-xl-2">
-						<label class=""> <input type="radio" name="form-radio"
+					<div class="col-xl-2" id="customerName">
+						<label> <input type="radio" name="form-radio"
 							class="form-radio" value="Customer Name:"> Customer Name
 						</label>
 					</div>
@@ -600,14 +609,15 @@ function copyAddress() {
 							style="display: flex; justify-content: space-around; align-items: center;">
 							<input type="text" class="py-2" id="radio-search"
 								placeholder="Search..." style="flex: 1;"> <span
-								class="mt-2" style="margin-left: 8px;"><i
-								class="feather-search"></i></span>
+								class="mt-2" style="margin-left: 8px;"> <i
+								class="feather-search"></i>
+							</span>
 						</div>
 					</div>
-
 				</div>
-			</div>
-
+				 </form>
+			</div> --%>
+			<jsp:include page="customersearch.jsp"></jsp:include>
 			<div class="spinner-container" id="loader">
 				<div class="spinner-border text-primary" role="status">
 					<span class="visually-hidden">Loading...</span>
@@ -1125,21 +1135,23 @@ function copyAddress() {
 											<hr>
 
 											<div id="idNumberField" class="row">
-											    <div id="nonResident" class="row" style="display: flex;justify-content: end;">
-                                            	    <a href="javascript:void(0);" class="avatar-text avatar-md bg-primary text-white">
-                                                        <i class="feather-plus"></i>
-                                                    </a>
-                                            	</div>
-											<div class="row">
-											   <div class="col-xl-4" >
-                                                   <h5 class="fw-bold mb-0 me-4">
-                                                       <span class="d-block mb-2">Customer Identity</span>
-                                                   </h5>
-                                               </div>
-
-											</div>
-												<div class="row">
-												<!--	<div class="col-xl-4">
+												<div id="nonResident" class="row"
+													style="display: flex; justify-content: end;">
+													<a href="javascript:void(0);"
+														class="avatar-text avatar-md bg-primary text-white"> <i
+														class="feather-plus"></i>
+													</a>
+												</div>
+												<div id="customerIdentityContainer" class="row">
+													<div class="row">
+														<div class="col-xl-4">
+															<h5 class="fw-bold mb-0 me-4">
+																<span class="d-block mb-2">Customer Identity</span>
+															</h5>
+														</div>
+													</div>
+													<div class="row">
+														<!--	<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Type <span
 																class="text-danger">*</span></label> <input type="text"
@@ -1148,158 +1160,161 @@ function copyAddress() {
 
 														</div>
 													</div>-->
-													<div class="col-xl-4">
-                                                      <div class="mb-4">
-                                                          <label class="form-label">Id Type <span class="text-danger">*</span></label>
-                                                          <!-- Input field for fixed ID type -->
-                                                          <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly style="width: 364px;display: block;">
-
-                                                          <!-- Hidden field to store the value -->
-                                                          <input type="hidden" id="hiddenIdType" name="idType">
-
-                                                          <!-- Dropdown for non-residents -->
-                                                          <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none; width: 364px; height: 46;">
-                                                              <form:option value="" disabled="true" selected="true">Select ID Type</form:option>
-                                                              <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
-                                                          </form:select>
-                                                      </div>
-                                                    </div>
-													<div class="col-xl-4">
-														<div class="mb-4" style="margin-left: 16px; ">
-															<label class="form-label">Id Number<span
-																class="text-danger">*</span></label>
-															<form:input path="idNumber" id="idNumber" name="idNumber"
-																placeholder="Id Number" type="text" class="form-control" style="width: 364px;"/>
-															<span id="idNumberError" class="text-danger"></span>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Id Type <span
+																	class="text-danger">*</span></label>
+																<!-- Input field for fixed ID type -->
+																<input type="text" id="idType" class="form-control"
+																	placeholder="ID Type" readonly
+																	style="width: 364px; display: block;"> <input
+																	type="hidden" id="hiddenIdType" name="idType">
+																<form:select id="idTypeDropdown" path="idType"
+																	class="form-control"
+																	style="display: none; width: 364px; height: 46;">
+																	<form:option value="" disabled="true" selected="true">Select ID Type</form:option>
+																	<form:options items="${idTypeList}" itemValue="valueId"
+																		itemLabel="description" />
+																</form:select>
+															</div>
 														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4" style="margin-left: 32px;">
-															<label class="form-label">Name as per Id<span
-																class="text-danger">*</span></label>
-															<form:input path="nameAsPerId" type="text"
-																class="form-control" placeholder="Name as per Id"  style="  width: 364px;"/>
-															<span id="nameAsPerIdError" class="text-danger"></span>
+														<div class="col-xl-4">
+															<div class="mb-4" style="margin-left: 16px;">
+																<label class="form-label">Id Number<span
+																	class="text-danger">*</span></label>
+																<form:input path="idNumber" id="idNumber"
+																	name="idNumber" placeholder="Id Number" type="text"
+																	class="form-control" style="width: 364px;" />
+																<span id="idNumberError" class="text-danger"></span>
+															</div>
 														</div>
-													</div>
-												</div>
-											</div>
-											<div id="issuedForNonResidents">
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued Country<span
-																class="text-danger">*</span></label>
-															<form:select path="issuedCountry"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Issued Country</form:option>
-																<form:options items="${countryList}" itemValue="valueId"
-																	itemLabel="description" />
-															</form:select>
-															<span id="issuedCountryError" class="text-danger"></span>
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued at<span
-																class="text-danger">*</span></label>
-															<form:select path="issuedAt"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Issued at</form:option>
-																<form:options items="${countryList}"
-																	itemValue="description" itemLabel="description" />
-															</form:select>
-															<span id="issuedAtError" class="text-danger"></span>
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued By<span
-																class="text-danger">*</span></label>
-															<form:input path="issuedBy" type="text"
-																class="form-control" placeholder="Issued By"
-																id="issuedBy" />
-															<span id="issuedByError" class="text-danger"></span>
+														<div class="col-xl-4">
+															<div class="mb-4" style="margin-left: 32px;">
+																<label class="form-label">Name as per Id<span
+																	class="text-danger">*</span></label>
+																<form:input path="nameAsPerId" type="text"
+																	class="form-control" placeholder="Name as per Id"
+																	style="  width: 364px;" />
+																<span id="nameAsPerIdError" class="text-danger"></span>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-											<div id="issuedDateExpiryNonResident">
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued on<span
-																class="text-danger">*</span></label>
-															<form:input path="issuedOn" type="date"
-																class="form-control" />
-															<span id="issuedOnError" class="text-danger"></span>
+												<div id="issuedForNonResidents">
+													<div class="row">
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Issued Country<span
+																	class="text-danger">*</span></label>
+																<form:select path="issuedCountry" class="form-control"
+																	data-select2-selector="icon" multiple="false">
+																	<form:option value="" disabled="true" selected="true">Issued Country</form:option>
+																	<form:options items="${countryList}"
+																		itemValue="valueId" itemLabel="description" />
+																</form:select>
+																<span id="issuedCountryError" class="text-danger"></span>
+															</div>
 														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Date of Expiry<span
-																class="text-danger">*</span></label>
-															<form:input path="dateOfExpiry" type="date"
-																class="form-control" />
-															<span id="dateOfExpiryError" class="text-danger"></span>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Issued at<span
+																	class="text-danger">*</span></label>
+																<form:select path="issuedAt" class="form-control"
+																	data-select2-selector="icon" multiple="false">
+																	<form:option value="" disabled="true" selected="true">Issued at</form:option>
+																	<form:options items="${countryList}"
+																		itemValue="description" itemLabel="description" />
+																</form:select>
+																<span id="issuedAtError" class="text-danger"></span>
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Issued By<span
+																	class="text-danger">*</span></label>
+																<form:input path="issuedBy" type="text"
+																	class="form-control" placeholder="Issued By"
+																	id="issuedBy" />
+																<span id="issuedByError" class="text-danger"></span>
+															</div>
 														</div>
 													</div>
 												</div>
-											</div>
-										</div>
-										<div id="idDetails">
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Id Front<span
-															class="text-danger">*</span></label>
-														<form:input path="frontPictureFile" type="file"
-															class="form-control" placeholder="Id Front" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Id Back<span
-															class="text-danger">*</span></label>
-														<form:input path="backPictureFile" type="file"
-															class="form-control" placeholder="Id Back" />
-													</div>
-												</div>
-											</div>
-											<div id="idDetailsFields">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-4">Visa Details</span>
-												</h5>
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Visa Number</label>
-															<form:input path="visaNumber" type="text"
-																class="form-control" placeholder="Visa Number" />
-															<span id="visaNumberError" class="text-danger"></span>
+												<div id="issuedDateExpiryNonResident">
+													<div class="row">
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Issued on<span
+																	class="text-danger">*</span></label>
+																<form:input path="issuedOn" type="date"
+																	class="form-control" />
+																<span id="issuedOnError" class="text-danger"></span>
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Date of Expiry<span
+																	class="text-danger">*</span></label>
+																<form:input path="dateOfExpiry" type="date"
+																	class="form-control" />
+																<span id="dateOfExpiryError" class="text-danger"></span>
+															</div>
 														</div>
 													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Visa Expiry Date</label>
-															<form:input path="visaExpiryDate" type="date"
-																class="form-control" placeholder="Visa Expiry Date" />
-															<span id="visaExpiryDateError" class="text-danger"></span>
+												</div>
+												<div id="idDetails">
+													<div class="row">
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Id Front<span
+																	class="text-danger">*</span></label>
+																<form:input path="frontPictureFile" type="file"
+																	class="form-control" placeholder="Id Front" />
+															</div>
+														</div>
+														<div class="col-xl-4">
+															<div class="mb-4">
+																<label class="form-label">Id Back<span
+																	class="text-danger">*</span></label>
+																<form:input path="backPictureFile" type="file"
+																	class="form-control" placeholder="Id Back" />
+															</div>
 														</div>
 													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Visa Type</label>
-															<form:select path="visaType" class="form-control"
-																data-select2-selector="icon">
-																<form:option value="" disabled="true" selected="true">Visa Type</form:option>
-																<option value="1">Employment</option>
-																<option value="2">Visitor</option>
-																<option value="3">MyKad</option>
-															</form:select>
-															<span id="visaTypeError" class="text-danger"></span>
+													<div id="idDetailsFields">
+														<h5 class="fw-bold mb-0 me-4">
+															<span class="d-block mb-4">Visa Details</span>
+														</h5>
+														<div class="row">
+															<div class="col-xl-4">
+																<div class="mb-4">
+																	<label class="form-label">Visa Number</label>
+																	<form:input path="visaNumber" type="text"
+																		class="form-control" placeholder="Visa Number" />
+																	<span id="visaNumberError" class="text-danger"></span>
+																</div>
+															</div>
+															<div class="col-xl-4">
+																<div class="mb-4">
+																	<label class="form-label">Visa Expiry Date</label>
+																	<form:input path="visaExpiryDate" type="date"
+																		class="form-control" placeholder="Visa Expiry Date" />
+																	<span id="visaExpiryDateError" class="text-danger"></span>
+																</div>
+															</div>
+															<div class="col-xl-4">
+																<div class="mb-4">
+																	<label class="form-label">Visa Type</label>
+																	<form:select path="visaType" class="form-control"
+																		data-select2-selector="icon">
+																		<form:option value="" disabled="true" selected="true">Visa Type</form:option>
+																		<option value="1">Employment</option>
+																		<option value="2">Visitor</option>
+																		<option value="3">MyKad</option>
+																	</form:select>
+																	<span id="visaTypeError" class="text-danger"></span>
+																</div>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -1603,32 +1618,32 @@ function copyAddress() {
 													</div>
 												</div>
 												<div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Political Exposed Person</label>
-                                                        <form:select path="politicalExposedPerson"
-                                                                     class="form-control"
-                                                                     data-select2-selector="icon">
-                                                            <!-- Placeholder -->
-                                                            <form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
-                                                            <form:option selected="true" value="0">No</form:option>
-                                                            <form:option value="1">Yes</form:option>
-                                                        </form:select>
-                                                    </div>
-                                                </div>
+													<div class="mb-4">
+														<label class="form-label">Political Exposed Person</label>
+														<form:select path="politicalExposedPerson"
+															class="form-control" data-select2-selector="icon">
+															<!-- Placeholder -->
+															<form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
+															<form:option value="0">No</form:option>
+															<form:option value="1">Yes</form:option>
+														</form:select>
+													</div>
+												</div>
 
 											</div>
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-                                                            <label class="form-label">Show Remark on Transaction
-                                                                <span class="text-danger">*</span>
-                                                            </label>
-                                                            <form:select path="showRemarksOnTxn" id="showRemarksOnTxn" class="form-control"
-                                                                data-select2-selector="icon" onchange="toggleCustomerRemarks();">
-                                                                <option value="true">Yes</option>
-                                                                <option value="false">No</option>
-                                                            </form:select>
-                                                        </div>
+														<label class="form-label">Show Remark on
+															Transaction <span class="text-danger">*</span>
+														</label>
+														<form:select path="showRemarksOnTxn" id="showRemarksOnTxn"
+															class="form-control" data-select2-selector="icon"
+															onchange="toggleCustomerRemarks();">
+															<option value="true">Yes</option>
+															<option value="false">No</option>
+														</form:select>
+													</div>
 												</div>
 												<div id="customerRemarksContainer" class="col-xl-4"
 													style="display: none;">
@@ -1705,11 +1720,10 @@ function copyAddress() {
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
 			</form:form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

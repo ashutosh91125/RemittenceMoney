@@ -1056,9 +1056,19 @@ function copyAddress() {
 											</div>
 											<hr>
 											<div id="idNumberField" class="row">
+											<div class="row">
+											    <div class="col-xl-4">
 												<h5 class="fw-bold mb-0 me-4">
 													<span class="d-block mb-2">Customer Identity</span>
 												</h5>
+												</div>
+												<div class="d-flex justify-content-end">
+												<a href="javascript:void(0);"
+                                                class="btn btn-primary"> <i
+                                                class="feather-user-plus me-2"></i> <span>Add Customer</span>
+                                                </a>
+												</div>
+											</div>
 												<div class="row">
 												<!--	<div class="col-xl-4">
 														<div class="mb-4">
@@ -1084,7 +1094,6 @@ function copyAddress() {
                                                               <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
                                                           </form:select>
                                                       </div>
-
                                                     </div>
 													<div class="col-xl-4">
 														<div class="mb-4"

@@ -140,10 +140,16 @@ public class CustomerService {
 			Map<String, Object> idData = new HashMap<>();
 
 			if (customer.getResidentTypeId() == 101) {
-//                customer.setIssuedOn((LocalDate.now()).toString());
-//                customer.setDateOfExpiry((LocalDate.now().plusYears(2)).toString());
-				customer.setIssuedOn("2024-11-26");
-				customer.setDateOfExpiry("2026-11-26");
+                customer.setIssuedOn((LocalDate.now(mytZone)).toString());
+                customer.setDateOfExpiry((LocalDate.now(mytZone).plusYears(2)).toString());
+//				customer.setIssuedOn("2024-11-26");
+//				customer.setDateOfExpiry("2026-11-26");
+
+				String issued = customer.getIssuedOn().trim();
+				issued = issued.substring(0,10);
+
+				String doe = customer.getDateOfExpiry().trim();
+				doe = doe.substring(0,10);
 
 				customer.setIdType(28);
 				customer.setIssuedCountry("MY");
@@ -160,11 +166,11 @@ public class CustomerService {
 				idData.put("issued_by", customer.getIssuedBy());
 				idData.put("issued_at", customer.getIssuedAt());
 
-				customerData.put("issued_on", customer.getIssuedOn());
-				customerData.put("date_of_expiry", customer.getDateOfExpiry());
+//				customerData.put("issued_on", customer.getIssuedOn());
+//				customerData.put("date_of_expiry", customer.getDateOfExpiry());
 
-				idData.put("issued_on", "2024-11-26");
-				idData.put("date_of_expiry", "2026-11-26");
+				idData.put("issued_on", issued);
+				idData.put("date_of_expiry", doe);
 
 				idData.put("active_status", customer.getActiveStatus());
 
@@ -247,9 +253,9 @@ public class CustomerService {
 			classificationData.put("annual_income_currency_code", customer.getAnnualIncomeCurrencyCode());
 			classificationData.put("txn_vol_month", customer.getTxnVolMonth());
 			classificationData.put("txn_count_month", customer.getTxnCountMonth());
-//			classificationData.put("employer_name", customer.getEmployerName());
-//			classificationData.put("employer_address", customer.getEmployerAddress());
-//			classificationData.put("employer_phone", customer.getEmployerPhone());
+			classificationData.put("employer_name", customer.getEmployerName());
+			classificationData.put("employer_address", customer.getEmployerAddress());
+			classificationData.put("employer_phone", customer.getEmployerPhone());
 			classificationData.put("profession_category", customer.getProfessionCategory());
 //			classificationData.put("reason_for_acc", customer.getReasonForAcc());
 //			classificationData.put("agent_ref_no", customer.getAgentRefNo());

@@ -253,9 +253,9 @@ public class CustomerService {
 			classificationData.put("annual_income_currency_code", customer.getAnnualIncomeCurrencyCode());
 			classificationData.put("txn_vol_month", customer.getTxnVolMonth());
 			classificationData.put("txn_count_month", customer.getTxnCountMonth());
-//			classificationData.put("employer_name", customer.getEmployerName());
-//			classificationData.put("employer_address", customer.getEmployerAddress());
-//			classificationData.put("employer_phone", customer.getEmployerPhone());
+			classificationData.put("employer_name", customer.getEmployerName());
+			classificationData.put("employer_address", customer.getEmployerAddress());
+			classificationData.put("employer_phone", customer.getEmployerPhone());
 			classificationData.put("profession_category", customer.getProfessionCategory());
 //			classificationData.put("reason_for_acc", customer.getReasonForAcc());
 //			classificationData.put("agent_ref_no", customer.getAgentRefNo());

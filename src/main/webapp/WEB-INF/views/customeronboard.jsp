@@ -153,13 +153,16 @@ $(document).ready(function () {
                         // Check if the response contains the ecrn value
                                         if (response && response.includes("ECRN:")) {
                                             var ecrn = response.split("ECRN:")[1].trim(); // Extract the ecrn value
-                                            alert("Customer Onboarded successfully! ECRN: " + ecrn); // Show the success alert with ecrn
+                                            alert("Customer Onboarded successfully with ECRN: " + ecrn); // Show the success alert with ecrn
                                         } else {
                                             alert("Customer Onboarded successfully!");
                                         }
+                        $("#customerOnboardForm")[0].reset();
 
-                        // Redirect to the /customer-list page after successful creation
-                        window.location.href = "/customer-list"; // Redirects to the to-do list page
+                        // Optionally, clear any file input fields if necessary
+                        $('#frontPictureFile').val('');
+                        $('#backPictureFile').val('');
+                        //window.location.reload();
                     },
                     error: function (xhr) {
                         // Hide the loader on error
@@ -169,7 +172,7 @@ $(document).ready(function () {
                         $("#customerOnboardForm button[type='submit']").prop('disabled', false);
 
                         // Show error message if creation fails
-                        alert("Error: " + xhr.responseText);
+                        alert("Something went wrong!");
                     }
                 });
             });
@@ -1142,16 +1145,16 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">Id Front<span
 															class="text-danger">*</span></label>
-														<input name="frontPictureFile" type="file"
-															class="form-control" placeholder="Id Front" >
+														<form:input path="frontPictureFile" type="file"
+															class="form-control" placeholder="Id Front" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Id Back<span
 															class="text-danger">*</span></label>
-														<input name="backPictureFile" type="file"
-															class="form-control" placeholder="Id Back" >
+														<form:input path="backPictureFile" type="file"
+															class="form-control" placeholder="Id Back" />
 													</div>
 												</div>
 											</div>

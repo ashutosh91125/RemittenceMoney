@@ -214,14 +214,12 @@ public class CustomerControllerwithoutRest {
 	// Handle user creation form submission
 	@PostMapping("/createUser")
 	@ResponseBody
-	public ResponseEntity<?> createUser(@ModelAttribute Customer customer,
-										@RequestParam MultipartFile frontPictureFile,
-										@RequestParam MultipartFile backPictureFile) throws JsonProcessingException {
+	public ResponseEntity<?> createUser(@ModelAttribute Customer customer) throws JsonProcessingException {
 
 		try {
 			// Validate picture file if present
-			if (frontPictureFile != null && !frontPictureFile.isEmpty()) {
-				String contentType = frontPictureFile.getContentType();
+			if (customer.getFrontPictureFile() != null && !customer.getFrontPictureFile().isEmpty()) {
+				String contentType = customer.getFrontPictureFile().getContentType();
 
 				// Ensure only image files are allowed
 				if (contentType == null || !contentType.startsWith("image/")) {
@@ -229,7 +227,7 @@ public class CustomerControllerwithoutRest {
 				}
 
 				// Set image data in ToDo object
-				customer.setFrontBase64Data(frontPictureFile.getBytes());
+				customer.setFrontBase64Data(customer.getFrontPictureFile().getBytes());
 				customer.setFrontContentType(contentType);
 			}
 		} catch (Exception e) {
@@ -239,8 +237,8 @@ public class CustomerControllerwithoutRest {
 
 		try {
 			// Validate picture file if present
-			if (backPictureFile != null && !backPictureFile.isEmpty()) {
-				String contentType = backPictureFile.getContentType();
+			if (customer.getBackPictureFile() != null && !customer.getBackPictureFile().isEmpty()) {
+				String contentType = customer.getBackPictureFile().getContentType();
 
 				// Ensure only image files are allowed
 				if (contentType == null || !contentType.startsWith("image/")) {
@@ -248,7 +246,7 @@ public class CustomerControllerwithoutRest {
 				}
 
 				// Set image data in ToDo object
-				customer.setBackBase64Data(backPictureFile.getBytes());
+				customer.setBackBase64Data(customer.getBackPictureFile().getBytes());
 				customer.setBackContentType(contentType);
 			}
 		} catch (Exception e) {

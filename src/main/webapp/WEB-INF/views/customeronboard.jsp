@@ -1062,21 +1062,23 @@ function copyAddress() {
 											<hr>
 
 											<div id="idNumberField" class="row">
-											    <div id="nonResident" class="row" style="display: flex;justify-content: end;">
-                                            	    <a href="javascript:void(0);" class="avatar-text avatar-md bg-primary text-white">
-                                                        <i class="feather-plus"></i>
-                                                    </a>
-                                            	</div>
-											<div class="row">
-											   <div class="col-xl-4" >
-                                                   <h5 class="fw-bold mb-0 me-4">
-                                                       <span class="d-block mb-2">Customer Identity</span>
-                                                   </h5>
-                                               </div>
+												<div id="nonResident" class="row"
+													style="display: flex; justify-content: end;">
+													<a href="javascript:void(0);"
+														class="avatar-text avatar-md bg-primary text-white"> <i
+														class="feather-plus"></i>
+													</a>
+												</div>
 
-											</div>
 												<div class="row">
-												<!--	<div class="col-xl-4">
+													<div class="col-xl-4">
+														<h5 class="fw-bold mb-0 me-4">
+															<span class="d-block mb-2">Customer Identity</span>
+														</h5>
+													</div>
+												</div>
+												<div class="row">
+													<!--	<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Type <span
 																class="text-danger">*</span></label> <input type="text"
@@ -1086,27 +1088,32 @@ function copyAddress() {
 														</div>
 													</div>-->
 													<div class="col-xl-4">
-                                                      <div class="mb-4">
-                                                          <label class="form-label">Id Type <span class="text-danger">*</span></label>
-                                                          <!-- Input field for fixed ID type -->
-                                                          <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly style="width: 364px;display: block;">
+														<div class="mb-4">
+															<label class="form-label">Id Type <span
+																class="text-danger">*</span></label>
+															<!-- Input field for fixed ID type -->
+															<input type="text" id="idType" class="form-control"
+																placeholder="ID Type" readonly
+																style="width: 364px; display: block;">
 
-                                                          <!-- Hidden field to store the value -->
-                                                          <input type="hidden" id="hiddenIdType" name="idType">
 
-                                                          <!-- Dropdown for non-residents -->
-                                                          <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none; width: 364px; height: 46;">
-                                                              <form:option value="" disabled="true" selected="true">Select ID Type</form:option>
-                                                              <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
-                                                          </form:select>
-                                                      </div>
-                                                    </div>
+															<input type="hidden" id="hiddenIdType" name="idType">
+															<form:select id="idTypeDropdown" path="idType"
+																class="form-control"
+																style="display: none; width: 364px; height: 46;">
+																<form:option value="" disabled="true" selected="true">Select ID Type</form:option>
+																<form:options items="${idTypeList}" itemValue="valueId"
+																	itemLabel="description" />
+															</form:select>
+														</div>
+													</div>
 													<div class="col-xl-4">
-														<div class="mb-4" style="margin-left: 16px; ">
+														<div class="mb-4" style="margin-left: 16px;">
 															<label class="form-label">Id Number<span
 																class="text-danger">*</span></label>
 															<form:input path="idNumber" id="idNumber" name="idNumber"
-																placeholder="Id Number" type="text" class="form-control" style="width: 364px;"/>
+																placeholder="Id Number" type="text" class="form-control"
+																style="width: 364px;" />
 															<span id="idNumberError" class="text-danger"></span>
 														</div>
 													</div>
@@ -1115,7 +1122,8 @@ function copyAddress() {
 															<label class="form-label">Name as per Id<span
 																class="text-danger">*</span></label>
 															<form:input path="nameAsPerId" type="text"
-																class="form-control" placeholder="Name as per Id"  style="  width: 364px;"/>
+																class="form-control" placeholder="Name as per Id"
+																style="  width: 364px;" />
 															<span id="nameAsPerIdError" class="text-danger"></span>
 														</div>
 													</div>
@@ -1127,9 +1135,8 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Issued Country<span
 																class="text-danger">*</span></label>
-															<form:select path="issuedCountry"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
+															<form:select path="issuedCountry" class="form-control"
+																data-select2-selector="icon" multiple="false">
 																<form:option value="" disabled="true" selected="true">Issued Country</form:option>
 																<form:options items="${countryList}" itemValue="valueId"
 																	itemLabel="description" />
@@ -1141,9 +1148,8 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Issued at<span
 																class="text-danger">*</span></label>
-															<form:select path="issuedAt"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
+															<form:select path="issuedAt" class="form-control"
+																data-select2-selector="icon" multiple="false">
 																<form:option value="" disabled="true" selected="true">Issued at</form:option>
 																<form:options items="${countryList}"
 																	itemValue="description" itemLabel="description" />
@@ -1185,7 +1191,6 @@ function copyAddress() {
 													</div>
 												</div>
 											</div>
-										</div>
 										<div id="idDetails">
 											<div class="row">
 												<div class="col-xl-4">
@@ -1246,7 +1251,8 @@ function copyAddress() {
 								</div>
 							</div>
 						</div>
-						<!--<div class="card-body pass-info">
+					</div>
+					<!--<div class="card-body pass-info">
 									<div class="main-content">
 										<div
 											class="mb-4 d-flex align-items-center justify-content-between">
@@ -1264,73 +1270,73 @@ function copyAddress() {
 								</div>
 								-->
 
-						<div class="accordion-item" style="background: aliceblue;">
-							<h2 class="accordion-header">
-								<button class="accordion-button collapsed" type="button"
-									style="background: aliceblue;"
-									onclick="toggleDiv('panelsStayOpen-collapseFour')">Other
-									Information</button>
-							</h2>
-							<div id="panelsStayOpen-collapseFour"
-								class="accordion-collapse collapse">
-								<div class="accordion-body"
-									style="background: aliceblue; margin-top: -30px;">
-									<div class="card-body personal-info">
-										<div class="main-content">
-											<div
-												class="mb-4 d-flex align-items-center justify-content-between">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-2">Other Information </span> <span
-														class="fs-12 fw-normal text-muted text-truncate-1-line">Following
-														information is publicly displayed, be careful! </span>
-												</h5>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseFour')">Other
+								Information</button>
+						</h2>
+						<div id="panelsStayOpen-collapseFour"
+							class="accordion-collapse collapse">
+							<div class="accordion-body"
+								style="background: aliceblue; margin-top: -30px;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+										<div
+											class="mb-4 d-flex align-items-center justify-content-between">
+											<h5 class="fw-bold mb-0 me-4">
+												<span class="d-block mb-2">Other Information </span> <span
+													class="fs-12 fw-normal text-muted text-truncate-1-line">Following
+													information is publicly displayed, be careful! </span>
+											</h5>
 
-											</div>
+										</div>
 
-											<div class="card-body pass-security">
-												<div class="row">
+										<div class="card-body pass-security">
+											<div class="row">
 
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Annual Income Range</label>
-															<form:select path="annualIncomeRangeId"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
-																<form:options items="${annualIncomeRangeList}"
-																	itemValue="valueId" itemLabel="description" />
-															</form:select>
-															<span id="annualIncomeRangeIdError" class="text-danger"></span>
-														</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Annual Income Range</label>
+														<form:select path="annualIncomeRangeId"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
+															<form:options items="${annualIncomeRangeList}"
+																itemValue="valueId" itemLabel="description" />
+														</form:select>
+														<span id="annualIncomeRangeIdError" class="text-danger"></span>
 													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Annual Income Currency
-																Code </label>
-															<form:select path="annualIncomeCurrencyCode"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
-																<%-- <form:options items="${currencyList}" itemValue="valueId"
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Annual Income Currency
+															Code </label>
+														<form:select path="annualIncomeCurrencyCode"
+															class="form-control" data-select2-selector="icon"
+															multiple="false">
+															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
+															<%-- <form:options items="${currencyList}" itemValue="valueId"
 														itemLabel="description"/> --%>
-																<form:option value="MYR">Malaysian Ringgit</form:option>
-															</form:select>
-															<span id="annualIncomeCurrencyCodeError"
-																class="text-danger"></span>
-														</div>
+															<form:option value="MYR">Malaysian Ringgit</form:option>
+														</form:select>
+														<span id="annualIncomeCurrencyCodeError"
+															class="text-danger"></span>
 													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Tax Registration Number</label>
-															<form:input path="taxRegistrationNumber" type="text"
-																class="form-control"
-																placeholder="Tax Registration Number" />
-															<span id="taxRegistrationNumberError" class="text-danger"></span>
-														</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Tax Registration Number</label>
+														<form:input path="taxRegistrationNumber" type="text"
+															class="form-control"
+															placeholder="Tax Registration Number" />
+														<span id="taxRegistrationNumberError" class="text-danger"></span>
 													</div>
 												</div>
 											</div>
-											<%--	<div class="row">
+										</div>
+										<%--	<div class="row">
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Social Security Number</label>
@@ -1358,9 +1364,9 @@ function copyAddress() {
 											</div>
 										</div>--%>
 
-											<%-- --%>
-											<div class="row">
-												<%-- <div class="col-xl-4">
+										<%-- --%>
+										<div class="row">
+											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Employer ecrn<span
 														class="text-danger">*</span></label>
@@ -1379,48 +1385,47 @@ function copyAddress() {
 												</div>
 											</div> --%>
 
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Risk Rating Id<span
-															class="text-danger">*</span></label>
-														<form:select path="riskRatingId" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
-															<form:options items="${riskRatingIdList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select>
-														<span id="riskRatingIdError" class="text-danger"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Income Type<span
-															class="text-danger">*</span></label>
-														<form:select path="incomeType" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:option value="" disabled="true" selected="true">Income Type</form:option>
-															<form:options items="${incomeTypeList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select>
-														<span id="incomeTypeError" class="text-danger"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Profession Catagory<span
-															class="text-danger">*</span></label>
-														<form:select path="professionCategory"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
-															<form:options items="${professionCategoryList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select>
-														<span id="professionCategoryError" class="text-danger"></span>
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Risk Rating Id<span
+														class="text-danger">*</span></label>
+													<form:select path="riskRatingId" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
+														<form:options items="${riskRatingIdList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
+													<span id="riskRatingIdError" class="text-danger"></span>
 												</div>
 											</div>
-											<%--<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Income Type<span
+														class="text-danger">*</span></label>
+													<form:select path="incomeType" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Income Type</form:option>
+														<form:options items="${incomeTypeList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
+													<span id="incomeTypeError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Profession Catagory<span
+														class="text-danger">*</span></label>
+													<form:select path="professionCategory" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
+														<form:options items="${professionCategoryList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
+													<span id="professionCategoryError" class="text-danger"></span>
+												</div>
+											</div>
+										</div>
+										<%--<div class="row">
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">PEP Catagory<span
@@ -1439,35 +1444,35 @@ function copyAddress() {
 											</div>
 
 										</div>--%>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Name<span
-															class="text-danger">*</span></label>
-														<form:input path="employerName" type="text"
-															class="form-control" placeholder="Employer Name" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Address<span
-															class="text-danger">*</span></label>
-														<form:input path="employerAddress" type="text"
-															class="form-control" placeholder="Employer Address" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Employer Phone<span
-															class="text-danger">*</span></label>
-														<form:input path="employerPhone" type="tel"
-															class="form-control" placeholder="Employer Phone" />
-													</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Name<span
+														class="text-danger">*</span></label>
+													<form:input path="employerName" type="text"
+														class="form-control" placeholder="Employer Name" />
 												</div>
 											</div>
-											<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Address<span
+														class="text-danger">*</span></label>
+													<form:input path="employerAddress" type="text"
+														class="form-control" placeholder="Employer Address" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Employer Phone<span
+														class="text-danger">*</span></label>
+													<form:input path="employerPhone" type="tel"
+														class="form-control" placeholder="Employer Phone" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
 
-												<%-- <div class="col-xl-4">
+											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Reason For Acc.<span
 														class="text-danger">*</span></label>
@@ -1475,108 +1480,108 @@ function copyAddress() {
 														class="form-control" placeholder="Reason For Acc." />
 												</div>
 											</div> --%>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Transaction Volume Month<span
-															class="text-danger">*</span>
-														</label>
-														<form:select path="txnVolMonth" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
-															<form:options items="${transactionVolumeMonthList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select>
-														<span id="txnVolMonthError" class="text-danger"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Transaction Count Month<span
-															class="text-danger">*</span></label>
-														<form:select path="txnCountMonth" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
-															<form:options items="${transactionCountMonthList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select>
-														<span id="txnCountMonthError" class="text-danger"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">First Language<span
-															class="text-danger">*</span></label>
-														<form:select path="firstLanguage" class="form-control"
-															data-select2-selector="icon">
-															<option value="en">English</option>
-														</form:select>
-														<span id="firstLanguageError" class="text-danger"></span>
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Transaction Volume Month<span
+														class="text-danger">*</span>
+													</label>
+													<form:select path="txnVolMonth" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
+														<form:options items="${transactionVolumeMonthList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
+													<span id="txnVolMonthError" class="text-danger"></span>
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Marital Status<span
-															class="text-danger">*</span></label>
-														<form:select path="maritalStatus" class="form-control"
-															data-select2-selector="icon">
-															<form:option value="" disabled="true" selected="true">Marital Status</form:option>
-															<option value="2">Unmarried</option>
-															<option value="1">Married</option>
-														</form:select>
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Transaction Count Month<span
+														class="text-danger">*</span></label>
+													<form:select path="txnCountMonth" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
+														<form:options items="${transactionCountMonthList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
+													<span id="txnCountMonthError" class="text-danger"></span>
 												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Occupation</label>
-														<form:select path="occupationId" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:option value="" disabled="true" selected="true">Occupation</form:option>
-															<form:options items="${occupationIdList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select>
-														<span id="occupationIdError" class="text-danger"></span>
-													</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">First Language<span
+														class="text-danger">*</span></label>
+													<form:select path="firstLanguage" class="form-control"
+														data-select2-selector="icon">
+														<option value="en">English</option>
+													</form:select>
+													<span id="firstLanguageError" class="text-danger"></span>
 												</div>
-												<div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Political Exposed Person</label>
-                                                        <form:select path="politicalExposedPerson"
-                                                                     class="form-control"
-                                                                     data-select2-selector="icon">
-                                                            <!-- Placeholder -->
-                                                            <form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
-                                                            <form:option value="0">No</form:option>
-                                                            <form:option value="1">Yes</form:option>
-                                                        </form:select>
-                                                    </div>
-                                                </div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Marital Status<span
+														class="text-danger">*</span></label>
+													<form:select path="maritalStatus" class="form-control"
+														data-select2-selector="icon">
+														<form:option value="" disabled="true" selected="true">Marital Status</form:option>
+														<option value="2">Unmarried</option>
+														<option value="1">Married</option>
+													</form:select>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Occupation</label>
+													<form:select path="occupationId" class="form-control"
+														data-select2-selector="icon" multiple="false">
+														<form:option value="" disabled="true" selected="true">Occupation</form:option>
+														<form:options items="${occupationIdList}"
+															itemValue="valueId" itemLabel="description" />
+													</form:select>
+													<span id="occupationIdError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Political Exposed Person</label>
+													<form:select path="politicalExposedPerson"
+														class="form-control" data-select2-selector="icon">
+														<!-- Placeholder -->
+														<form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
+														<form:option value="0">No</form:option>
+														<form:option value="1">Yes</form:option>
+													</form:select>
+												</div>
+											</div>
 
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Show Remark on
+														Transaction <span class="text-danger">*</span>
+													</label>
+													<form:select path="showRemarksOnTxn" id="showRemarksOnTxn"
+														class="form-control" data-select2-selector="icon"
+														onchange="toggleCustomerRemarks();">
+														<option value="true">Yes</option>
+														<option value="false">No</option>
+													</form:select>
+												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-                                                            <label class="form-label">Show Remark on Transaction
-                                                                <span class="text-danger">*</span>
-                                                            </label>
-                                                            <form:select path="showRemarksOnTxn" id="showRemarksOnTxn" class="form-control"
-                                                                data-select2-selector="icon" onchange="toggleCustomerRemarks();">
-                                                                <option value="true">Yes</option>
-                                                                <option value="false">No</option>
-                                                            </form:select>
-                                                        </div>
+											<div id="customerRemarksContainer" class="col-xl-4"
+												style="display: none;">
+												<div class="mb-4">
+													<label class="form-label">Customer Remarks</label>
+													<form:input path="customerRemarks" class="form-control"
+														placeholder="Enter your remarks here" />
+													<span id="customerRemarksError" class="text-danger"></span>
 												</div>
-												<div id="customerRemarksContainer" class="col-xl-4"
-													style="display: none;">
-													<div class="mb-4">
-														<label class="form-label">Customer Remarks</label>
-														<form:input path="customerRemarks" class="form-control"
-															placeholder="Enter your remarks here" />
-														<span id="customerRemarksError" class="text-danger"></span>
-													</div>
-												</div>
-												<!-- <div class="col-xl-4">
+											</div>
+											<!-- <div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DNFBP<span
 															class="text-danger">*</span></label>
@@ -1598,8 +1603,8 @@ function copyAddress() {
 														</form:select>
 													</div>
 												</div>  -->
-											</div>
-											<%--<div class="row">
+										</div>
+										<%--<div class="row">
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Agent Referenc Number<span
@@ -1617,9 +1622,9 @@ function copyAddress() {
 												</div>
 											</div>
 										</div>--%>
-											<div class="row"></div>
-											<div class="row">
-												<%-- <div class="col-xl-4">
+										<div class="row"></div>
+										<div class="row">
+											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profile Catagory<span
 														class="text-danger">*</span></label>
@@ -1627,7 +1632,7 @@ function copyAddress() {
 														placeholder="Profile Catagory" />
 												</div>
 											</div> --%>
-												<%-- <div class="col-xl-4">
+											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profile Photo<span
 														class="text-danger">*</span></label>
@@ -1635,7 +1640,6 @@ function copyAddress() {
 														placeholder="Profile Photo" />
 												</div>
 											</div> --%>
-											</div>
 										</div>
 									</div>
 								</div>

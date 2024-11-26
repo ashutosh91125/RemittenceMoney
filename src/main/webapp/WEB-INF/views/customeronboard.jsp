@@ -391,6 +391,8 @@ function copyAddress() {
         const idDetails = document.getElementById('idDetails');
         const idDetailsFields = document.getElementById('idDetailsFields');
         const idNumberField = document.getElementById('idNumberField');
+        const nonResident = document.getElementById('nonResident');
+
 
         // Reset fields
         idTypeInput.value = "";
@@ -408,6 +410,7 @@ function copyAddress() {
             idDetails.style.display = 'block';
             idDetailsFields.style.display = 'none';
             idNumberField.style.display = 'block';
+            nonResident.style.display = 'none';
         } else if (residentType === '100') { // Non-resident
             idTypeInput.style.display = "none"; // Hide fixed input field
             idTypeDropdown.style.display = "block"; // Show dropdown
@@ -422,6 +425,7 @@ function copyAddress() {
             issuedDateExpiryNonResident.style.display = 'block';
             idDetailsFields.style.display = 'block';
             idNumberField.style.display = 'block';
+            nonResident.style.display = 'flex';
         } else {
             idTypeInput.value = ""; // Reset ID Type
             hiddenIdType.value = ""; // Reset hidden field
@@ -432,6 +436,7 @@ function copyAddress() {
             issuedDateExpiryNonResident.style.display = 'none';
             issuedForNonResidents.style.display = 'none';
             idNumberField.style.display = 'none';
+            nonResident.style.display = 'none';
         }
     }
 
@@ -1055,19 +1060,20 @@ function copyAddress() {
 												</div>
 											</div>
 											<hr>
+
 											<div id="idNumberField" class="row">
+											    <div id="nonResident" class="row" style="display: flex;justify-content: end;">
+                                            	    <a href="javascript:void(0);" class="avatar-text avatar-md bg-primary text-white">
+                                                        <i class="feather-plus"></i>
+                                                    </a>
+                                            	</div>
 											<div class="row">
-											    <div class="col-xl-4">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-2">Customer Identity</span>
-												</h5>
-												</div>
-												<div class="d-flex justify-content-end">
-												<a href="javascript:void(0);"
-                                                class="btn btn-primary"> <i
-                                                class="feather-user-plus me-2"></i> <span>Add Customer</span>
-                                                </a>
-												</div>
+											   <div class="col-xl-4" >
+                                                   <h5 class="fw-bold mb-0 me-4">
+                                                       <span class="d-block mb-2">Customer Identity</span>
+                                                   </h5>
+                                               </div>
+
 											</div>
 												<div class="row">
 												<!--	<div class="col-xl-4">
@@ -1083,33 +1089,33 @@ function copyAddress() {
                                                       <div class="mb-4">
                                                           <label class="form-label">Id Type <span class="text-danger">*</span></label>
                                                           <!-- Input field for fixed ID type -->
-                                                          <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly>
+                                                          <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly style="width: 364px;display: block;">
 
                                                           <!-- Hidden field to store the value -->
                                                           <input type="hidden" id="hiddenIdType" name="idType">
 
                                                           <!-- Dropdown for non-residents -->
-                                                          <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none;">
+                                                          <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none; width: 364px; height: 46;">
                                                               <form:option value="" disabled="true" selected="true">Select ID Type</form:option>
                                                               <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
                                                           </form:select>
                                                       </div>
                                                     </div>
 													<div class="col-xl-4">
-														<div class="mb-4"
+														<div class="mb-4" style="margin-left: 16px; ">
 															<label class="form-label">Id Number<span
 																class="text-danger">*</span></label>
 															<form:input path="idNumber" id="idNumber" name="idNumber"
-																placeholder="Id Number" type="text" class="form-control" />
+																placeholder="Id Number" type="text" class="form-control" style="width: 364px;"/>
 															<span id="idNumberError" class="text-danger"></span>
 														</div>
 													</div>
 													<div class="col-xl-4">
-														<div class="mb-4">
+														<div class="mb-4" style="margin-left: 32px;">
 															<label class="form-label">Name as per Id<span
 																class="text-danger">*</span></label>
 															<form:input path="nameAsPerId" type="text"
-																class="form-control" placeholder="Name as per Id" />
+																class="form-control" placeholder="Name as per Id"  style="  width: 364px;"/>
 															<span id="nameAsPerIdError" class="text-danger"></span>
 														</div>
 													</div>

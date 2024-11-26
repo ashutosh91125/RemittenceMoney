@@ -404,4 +404,18 @@ public class CustomerControllerwithoutRest {
 		return maritalStatusId == 1 ? "Married" : "Unmarried";
 	}
 
+	@GetMapping("/searchCustomers")
+	public String searchCustomers(@RequestParam("criteria") String criteria,
+								  @RequestParam("query") String query,
+								  Model model) {
+		try {
+			// Use the searchByCriteria method from the service
+			List<Customer> customers = customerService.searchByCriteria(criteria, query);
+			model.addAttribute("customerList", customers);
+		} catch (Exception e) {
+			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());
+		}
+		return "customerlisting";  // The name of the Thymeleaf template where the results will be shown
+	}
+
 }

@@ -157,12 +157,12 @@ $(document).ready(function () {
                                         } else {
                                             alert("Customer Onboarded successfully!");
                                         }
-                        $("#customerOnboardForm")[0].reset();
+                        //$("#customerOnboardForm")[0].reset();
 
                         // Optionally, clear any file input fields if necessary
-                        $('#frontPictureFile').val('');
-                        $('#backPictureFile').val('');
-                        //window.location.reload();
+                        //$('#frontPictureFile').val('');
+                        //$('#backPictureFile').val('');
+                        window.location.reload();
                     },
                     error: function (xhr) {
                         // Hide the loader on error
@@ -419,7 +419,7 @@ function copyAddress() {
     																					$(
     																							'#placeOfBirth')
     																							.append(
-    																									'<option value="' + enumValue.valueId + '">'
+    																									'<option value="' + enumValue.description + '">'
     																											+ enumValue.description
     																											+ '</option>');
     																				});
@@ -1610,7 +1610,7 @@ function copyAddress() {
                                                                      data-select2-selector="icon">
                                                             <!-- Placeholder -->
                                                             <form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
-                                                            <form:option value="0">No</form:option>
+                                                            <form:option selected="true" value="0">No</form:option>
                                                             <form:option value="1">Yes</form:option>
                                                         </form:select>
                                                     </div>

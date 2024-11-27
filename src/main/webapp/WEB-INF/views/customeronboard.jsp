@@ -1000,9 +1000,9 @@ function copyAddress() {
 											<div class="row">
 												<div class="mb-4">
 													<div class="col-xl-4">
-														<h6><input type="checkbox" id="sameAsCurrentAddress"
+														<strong><input type="checkbox" id="sameAsCurrentAddress"
 															name="sameAsCurrentAddress" onclick="copyAddress()" />
-														Current Address Is Permanent address</h6>
+														Current Address is Permanent Address</strong>
 													</div>
 												</div>
 											</div>
@@ -1337,6 +1337,7 @@ function copyAddress() {
 									</div>
 								</div>
 							</div>
+						</div>
 						</div>
 						<!--<div class="card-body pass-info">
 									<div class="main-content">

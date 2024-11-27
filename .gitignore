@@ -23,10 +23,12 @@
 hs_err_pid*
 replay_pid*
 HELP.md
+
+# Ignore target directory (for Maven/Gradle builds)
 target/
+
+# Do not ignore the Maven wrapper jar
 !.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
 
 ### STS ###
 .apt_generated
@@ -49,7 +51,7 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-.gradle/
+/.gradle/
 bin/
 build/
 !**/src/main/**/build/

@@ -738,7 +738,7 @@ function copyAddress() {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Native Region</label>
+												<label class="form-label">Native Region<span class="text-danger">*</span></label>
 												<form:select path="nativeRegion" id="nativeRegion"
 													class="form-control" data-select2-selector="icon"
 													multiple="false">
@@ -774,16 +774,17 @@ function copyAddress() {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Place of Birth </label>
+												<label class="form-label">Place of Birth<span class="text-danger">*</span> </label>
 												<form:select path="placeOfBirth" id="placeOfBirth"
 													class="form-control" data-select2-selector="icon"
 													multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
 												</form:select>
+												<span id="placeOfBirthError" class="text-danger"></span>
 
 												<!-- <form:input path="placeOfBirth" type="text"
 													class="form-control" placeholder="Place of Birth" />
-												<span id="placeOfBirthError" class="text-danger"></span>  -->
+												  -->
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -1326,6 +1327,7 @@ function copyAddress() {
 										</div>
 									</div>
 								</div>
+							</div>
 							</div>
 						</div>
 						<!--<div class="card-body pass-info">

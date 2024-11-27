@@ -1,8 +1,13 @@
 function validation(form){
+
+    document.getElementById("salutationError").innerHTML = "";
 	document.getElementById("firstNameError").innerHTML = "";
 	document.getElementById("lastNameError").innerHTML = "";
 	document.getElementById("nationalityError").innerHTML = "";
+	document.getElementById("secondNationalityError").innerHTML = "";
 	document.getElementById("dateOfBirthError").innerHTML = "";
+	document.getElementById("placeOfBirthError").innerHTML = "";
+
 	
 	document.getElementById("buildingNameError").innerHTML = "";
 	document.getElementById("streetNameError").innerHTML = "";
@@ -11,9 +16,11 @@ function validation(form){
 	document.getElementById("districtError").innerHTML = "";
 	document.getElementById("countryError").innerHTML = "";
 	let isValid = true;
+	let salutation = form.salutation.value;
 	let firstName = form.firstName.value.trim();
 	let lastName  = form.lastName.value.trim();
-	let nationality = form.nationality.value.trim();
+	let nationality = form.nationality.value;
+	let secondNationality= form.secondNationality;
 	let dateOfBirth = form.dateOfBirth.value.trim();
 	
 	let buildingName = form.buildingName.value.trim();
@@ -22,7 +29,12 @@ function validation(form){
 	let city = form.city.value.trim();
 	let district = form.district.value.trim();
 	let country = form.country.value.trim();
+	let placeOfBirth = form.placeOfBirth.value.trim();
 
+	if(salutation == "" || salutation==null){
+    		document.getElementById("salutationError").innerHTML = "Salutation Is Required";
+    		isValid = false;
+    	}
 	if(firstName == "" || firstName==null){
 		document.getElementById("firstNameError").innerHTML = "First Name Is Required";
 		isValid = false; 
@@ -33,8 +45,12 @@ function validation(form){
 	}
 	if(nationality == ""){
 			document.getElementById("nationalityError").innerHTML = "Nationality Is Required";
-			isValid = false; 
+			isValid = false;
 		}
+	if (secondNationality && nationality === secondNationality) {
+             document.getElementById("secondNationalityError").innerHTML = "Secondary Nationality cannot be the same as Nationality.";
+             isValid = false;
+        }
 	if(dateOfBirth == ""){
 			document.getElementById("dateOfBirthError").innerHTML = "Date Of Birth Is Required";
 			isValid = false; 
@@ -54,6 +70,11 @@ function validation(form){
 						isValid = false;
 			}
 		}
+		if(placeOfBirth == "" || placeOfBirth==null){
+        		document.getElementById("placeOfBirthError").innerHTML = "Place of Birth Is Required";
+        		isValid = false;
+        	}
+
 		if(buildingName == "" || buildingName==null){
 						document.getElementById("buildingNameError").innerHTML = "Building Name Is Required";
 						isValid = false; 

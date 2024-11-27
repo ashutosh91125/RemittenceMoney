@@ -421,7 +421,7 @@ function copyAddress() {
     																					$(
     																							'#placeOfBirth')
     																							.append(
-    																									'<option value="' + enumValue.valueId + '">'
+    																									'<option value="' + enumValue.description + '">'
     																											+ enumValue.description
     																											+ '</option>');
     																				});
@@ -1190,6 +1190,7 @@ function copyAddress() {
 																	<form:options items="${idTypeList}" itemValue="valueId"
 																		itemLabel="description" />
 																</form:select>
+																	<span id="idTypeError" class="text-danger"></span>
 															</div>
 														</div>
 														<div class="col-xl-4">

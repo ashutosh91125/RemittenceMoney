@@ -573,7 +573,7 @@ function copyAddress() {
 			</div>
 			<!-- [ page-header ] end -->
 			<!-- [ Main Content ] start -->
-	
+
 			<%-- <div class="container mx-0">
 			 <form  method="GET" action="/search">
 				<div class="row" style="display: flex; align-items: baseline;">
@@ -661,7 +661,8 @@ function copyAddress() {
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Salutation<span class="text-danger">*</span></label>
+												<label class="form-label">Salutation<span
+													class="text-danger">*</span></label>
 												<form:select path="salutation" class="form-control"
 													data-select2-selector="icon" multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
@@ -761,8 +762,9 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" id="countryOfBirth" class="form-control"
-													data-select2-selector="icon" multiple="false">
+												<form:select path="countryOfBirth" id="countryOfBirth"
+													class="form-control" data-select2-selector="icon"
+													multiple="false">
 													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
@@ -773,9 +775,11 @@ function copyAddress() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Place of Birth </label>
-												<form:select path="placeOfBirth" id="placeOfBirth" class="form-control" data-select2-selector="icon" multiple="false">
-												    <form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
-                                                </form:select>
+												<form:select path="placeOfBirth" id="placeOfBirth"
+													class="form-control" data-select2-selector="icon"
+													multiple="false">
+													<form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
+												</form:select>
 
 												<!-- <form:input path="placeOfBirth" type="text"
 													class="form-control" placeholder="Place of Birth" />
@@ -1720,10 +1724,11 @@ function copyAddress() {
 							</div>
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center"
-						style="display: flex; justify-content: center">
-						<button type="submit" class="btn btn-primary">Submit</button>
-					</div>
+				</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
 			</form:form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

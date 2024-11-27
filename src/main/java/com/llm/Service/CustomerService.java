@@ -38,6 +38,8 @@ public class CustomerService {
 	public String createCustomer(Customer customer) {
 		customer.setChannel("WEB");
 		customer.setAgentLocationId("Malaysia");
+
+		customer.setPlaceOfBirth((customer.getPlaceOfBirth().substring(0,customer.getPlaceOfBirth().length() - 4)).trim());
 		// customer.setAgentLocationId("India");
 
 		ZoneId mytZone = ZoneId.of("Asia/Kuala_Lumpur");

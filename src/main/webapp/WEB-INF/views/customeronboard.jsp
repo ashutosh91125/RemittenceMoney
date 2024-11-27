@@ -160,9 +160,9 @@ $(document).ready(function () {
                         $("#customerOnboardForm")[0].reset();
 
                         // Optionally, clear any file input fields if necessary
-                        $('#frontPictureFile').val('');
-                        $('#backPictureFile').val('');
-                        //window.location.reload();
+                        //$('#frontPictureFile').val('');
+                        //$('#backPictureFile').val('');
+                        window.location.reload();
                     },
                     error: function (xhr) {
                         // Hide the loader on error

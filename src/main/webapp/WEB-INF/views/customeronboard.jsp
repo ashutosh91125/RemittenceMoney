@@ -126,7 +126,9 @@ $(document).ready(function () {
             // Handle form submission
             $("#customerOnboardForm").on("submit", function (e) {
                 e.preventDefault();  // Prevent the default form submission
-
+//                 if (!validation(this)) {
+//                     return false;  // Stop form submission if validation fails
+//                 }
                 // Show the loader (Bootstrap spinner)
                 $('#loader').show();
 
@@ -738,7 +740,8 @@ function copyAddress() {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Native Region<span class="text-danger">*</span></label>
+												<label class="form-label">Native Region<span
+													class="text-danger">*</span></label>
 												<form:select path="nativeRegion" id="nativeRegion"
 													class="form-control" data-select2-selector="icon"
 													multiple="false">
@@ -774,7 +777,7 @@ function copyAddress() {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Place of Birth<span class="text-danger">*</span> </label>
+												<label class="form-label">Place of Birth </label>
 												<form:select path="placeOfBirth" id="placeOfBirth"
 													class="form-control" data-select2-selector="icon"
 													multiple="false">
@@ -784,7 +787,7 @@ function copyAddress() {
 
 												<!-- <form:input path="placeOfBirth" type="text"
 													class="form-control" placeholder="Place of Birth" />
-												  -->
+												<span id="placeOfBirthError" class="text-danger"></span>  -->
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -813,6 +816,7 @@ function copyAddress() {
 													<form:option value="" disabled="true" selected="true">Gender</form:option>
 													<form:options items="${genderList}" />
 												</form:select>
+												<span id="genderError" class="text-danger"></span>
 											</div>
 										</div>
 
@@ -891,7 +895,8 @@ function copyAddress() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Building Name</label>
+														<label class="form-label">Building Name<span
+															class="text-danger">*</span></label>
 														<form:input path="buildingName" type="text"
 															class="form-control" placeholder="Building Name"
 															id="currentBuildingName" />
@@ -900,7 +905,8 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Street Name</label>
+														<label class="form-label">Street Name<span
+															class="text-danger">*</span></label>
 														<form:input path="streetName" type="text"
 															class="form-control" placeholder="Street Name"
 															id="currentStreetName" />
@@ -909,7 +915,8 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Land Mark</label>
+														<label class="form-label">Land Mark<span
+															class="text-danger">*</span></label>
 														<form:input path="landmark" type="text"
 															class="form-control" placeholder="Land Mark"
 															id="currentLandmark" />
@@ -920,7 +927,8 @@ function copyAddress() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">City</label>
+														<label class="form-label">City<span
+															class="text-danger">*</span></label>
 														<form:input path="city" type="text" class="form-control"
 															placeholder="City" id="currentCity" />
 														<span id="cityError" class="text-danger"></span>
@@ -928,7 +936,8 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">District</label>
+														<label class="form-label">District<span
+															class="text-danger">*</span></label>
 														<form:input path="district" type="text"
 															class="form-control" placeholder="District"
 															id="currentDistrict" />
@@ -937,7 +946,8 @@ function copyAddress() {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Country</label>
+														<label class="form-label">Country<span
+															class="text-danger">*</span></label>
 														<form:select path="country" class="form-control"
 															data-select2-selector="icon" multiple="false"
 															id="currentCountry">
@@ -953,7 +963,8 @@ function copyAddress() {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">State</label>
+														<label class="form-label">State<span
+															class="text-danger">*</span></label>
 														<form:select path="state" id="stateDropdown"
 															class="form-control" data-select2-selector="icon"
 															multiple="false">
@@ -965,7 +976,8 @@ function copyAddress() {
 
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Zip</label>
+														<label class="form-label">Zip<span
+															class="text-danger">*</span></label>
 														<form:input path="zip" type="text" class="form-control"
 															placeholder="Zip" id="currentZip" />
 														<span id="zipError" class="text-danger"></span>
@@ -988,12 +1000,9 @@ function copyAddress() {
 											<div class="row">
 												<div class="mb-4">
 													<div class="col-xl-4">
-														<h6>
-															Current Address Is Permanent address
-															&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input
-																type="checkbox" id="sameAsCurrentAddress"
-																name="sameAsCurrentAddress" onclick="copyAddress()" />
-														</h6>
+														<h6><input type="checkbox" id="sameAsCurrentAddress"
+															name="sameAsCurrentAddress" onclick="copyAddress()" />
+														Current Address Is Permanent address</h6>
 													</div>
 												</div>
 											</div>
@@ -1328,7 +1337,6 @@ function copyAddress() {
 									</div>
 								</div>
 							</div>
-							</div>
 						</div>
 						<!--<div class="card-body pass-info">
 									<div class="main-content">
@@ -1629,7 +1637,7 @@ function copyAddress() {
 														<form:select path="politicalExposedPerson"
 															class="form-control" data-select2-selector="icon">
 															<!-- Placeholder -->
-															<form:option value="" disabled="true" selected="true">Select Political Exposed Person</form:option>
+
 															<form:option value="0">No</form:option>
 															<form:option value="1">Yes</form:option>
 														</form:select>
@@ -1726,11 +1734,10 @@ function copyAddress() {
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
 			</form:form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

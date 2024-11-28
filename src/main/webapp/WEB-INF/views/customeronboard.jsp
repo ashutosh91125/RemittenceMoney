@@ -1375,7 +1375,7 @@ function copyAddress() {
 								style="background: aliceblue; margin-top: -30px;">
 								<div class="card-body personal-info">
 									<div class="main-content">
-										<div
+										<!-- <div
 											class="mb-4 d-flex align-items-center justify-content-between">
 											<h5 class="fw-bold mb-0 me-4">
 												<span class="d-block mb-2">Other Information </span> <span
@@ -1383,7 +1383,7 @@ function copyAddress() {
 													information is publicly displayed, be careful! </span>
 											</h5>
 
-										</div>
+										</div> -->
 
 										<div class="card-body pass-security">
 											<div class="row">

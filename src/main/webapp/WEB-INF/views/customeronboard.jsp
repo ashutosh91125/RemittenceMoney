@@ -119,6 +119,31 @@
 	z-index: 9999;
 	display: none;
 }
+
+/* Ensure the .form-control class applies uniformly to inputs and selects */
+.form-control {
+    width: 100%; /* Ensures input and select elements take up the full column width */
+    height: 46px; /* Set a consistent height for both input fields and selects */
+    padding: 10px; /* Adds padding for better appearance */
+    box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* Optional: Remove any internal margins/padding that could affect layout */
+.col-xl-4 {
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem; /* Maintain consistent spacing between fields */
+}
+
+/* Remove any width restrictions if there are any */
+.form-control:focus {
+    border-color: #5e72e4; /* Optional: focus effect */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Optional: focus effect */
+}
+
 </style>
 <script type="text/javascript" src="js/customervalidation.js"></script>
 <script>
@@ -1172,96 +1197,67 @@ function copyAddress() {
 														</div>
 													</div>
 													<div class="row">
-														<!--	<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Id Type <span
-																class="text-danger">*</span></label> <input type="text"
-																class="form-control" placeholder="Id Type" id="idType"
-																readonly>
+                                                        <div class="col-xl-4">
+                                                            <div class="mb-4">
+                                                                <label class="form-label">Id Type <span class="text-danger">*</span></label>
+                                                                <!-- Input field for fixed ID type -->
+                                                                <input type="text" id="idType" class="form-control" placeholder="ID Type" readonly>
+                                                                <input type="hidden" id="hiddenIdType" name="idType">
+                                                                <form:select id="idTypeDropdown" path="idType" class="form-control" style="display: none;">
+                                                                    <form:option value="" disabled="true" selected="true">Select ID Type</form:option>
+                                                                    <form:options items="${idTypeList}" itemValue="valueId" itemLabel="description" />
+                                                                </form:select>
+                                                                <span id="idTypeError" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4">
+                                                            <div class="mb-4">
+                                                                <label class="form-label">Id Number<span class="text-danger">*</span></label>
+                                                                <form:input path="idNumber" id="idNumber" name="idNumber" placeholder="Id Number" type="text" class="form-control" />
+                                                                <span id="idNumberError" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-4">
+                                                            <div class="mb-4">
+                                                                <label class="form-label">Name as per Id<span class="text-danger">*</span></label>
+                                                                <form:input path="nameAsPerId" type="text" class="form-control" placeholder="Name as per Id" />
+                                                                <span id="nameAsPerIdError" class="text-danger"></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
 
-														</div>
-													</div>-->
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Id Type <span
-																	class="text-danger">*</span></label>
-																<!-- Input field for fixed ID type -->
-																<input type="text" id="idType" class="form-control"
-																	placeholder="ID Type" readonly
-																	style="width: 364px; display: block;"> <input
-																	type="hidden" id="hiddenIdType" name="idType">
-																<form:select id="idTypeDropdown" path="idType"
-																	class="form-control"
-																	style="display: none; width: 364px; height: 46;">
-																	<form:option value="" disabled="true" selected="true">Select ID Type</form:option>
-																	<form:options items="${idTypeList}" itemValue="valueId"
-																		itemLabel="description" />
-																</form:select>
-																<span id="idTypeError" class="text-danger"></span>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4" style="margin-left: 16px;">
-																<label class="form-label">Id Number<span
-																	class="text-danger">*</span></label>
-																<form:input path="idNumber" id="idNumber"
-																	name="idNumber" placeholder="Id Number" type="text"
-																	class="form-control" style="width: 364px;" />
-																<span id="idNumberError" class="text-danger"></span>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4" style="margin-left: 32px;">
-																<label class="form-label">Name as per Id<span
-																	class="text-danger">*</span></label>
-																<form:input path="nameAsPerId" type="text"
-																	class="form-control" placeholder="Name as per Id"
-																	style="  width: 364px;" />
-																<span id="nameAsPerIdError" class="text-danger"></span>
-															</div>
-														</div>
-													</div>
-												</div>
-												<div id="issuedForNonResidents">
-													<div class="row">
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Issued Country<span
-																	class="text-danger">*</span></label>
-																<form:select path="issuedCountry" class="form-control"
-																	data-select2-selector="icon" multiple="false">
-																	<form:option value="" disabled="true" selected="true">Issued Country</form:option>
-																	<form:options items="${countryList}"
-																		itemValue="valueId" itemLabel="description" />
-																</form:select>
-																<span id="issuedCountryError" class="text-danger"></span>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Issued at<span
-																	class="text-danger">*</span></label>
-																<form:select path="issuedAt" class="form-control"
-																	data-select2-selector="icon" multiple="false">
-																	<form:option value="" disabled="true" selected="true">Issued at</form:option>
-																	<form:options items="${countryList}"
-																		itemValue="description" itemLabel="description" />
-																</form:select>
-																<span id="issuedAtError" class="text-danger"></span>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Issued By<span
-																	class="text-danger">*</span></label>
-																<form:input path="issuedBy" type="text"
-																	class="form-control" placeholder="Issued By"
-																	id="issuedBy" />
-																<span id="issuedByError" class="text-danger"></span>
-															</div>
-														</div>
-													</div>
-												</div>
+                                                    <div id="issuedForNonResidents">
+                                                        <div class="row">
+                                                            <div class="col-xl-4">
+                                                                <div class="mb-4">
+                                                                    <label class="form-label">Issued Country<span class="text-danger">*</span></label>
+                                                                    <form:select path="issuedCountry" class="form-control" data-select2-selector="icon" multiple="false">
+                                                                        <form:option value="" disabled="true" selected="true">Issued Country</form:option>
+                                                                        <form:options items="${countryList}" itemValue="valueId" itemLabel="description" />
+                                                                    </form:select>
+                                                                    <span id="issuedCountryError" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4">
+                                                                <div class="mb-4">
+                                                                    <label class="form-label">Issued at<span class="text-danger">*</span></label>
+                                                                    <form:select path="issuedAt" class="form-control" data-select2-selector="icon" multiple="false">
+                                                                        <form:option value="" disabled="true" selected="true">Issued at</form:option>
+                                                                        <form:options items="${countryList}" itemValue="description" itemLabel="description" />
+                                                                    </form:select>
+                                                                    <span id="issuedAtError" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xl-4">
+                                                                <div class="mb-4">
+                                                                    <label class="form-label">Issued By<span class="text-danger">*</span></label>
+                                                                    <form:input path="issuedBy" type="text" class="form-control" placeholder="Issued By" id="issuedBy" />
+                                                                    <span id="issuedByError" class="text-danger"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
 												<div id="issuedDateExpiryNonResident">
 													<div class="row">
 														<div class="col-xl-4">

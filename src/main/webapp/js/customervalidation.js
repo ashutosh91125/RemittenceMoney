@@ -23,6 +23,7 @@
 	    document.getElementById("cityError").innerHTML = "";
 	    document.getElementById("districtError").innerHTML = "";
 	    document.getElementById("countryError").innerHTML = "";
+		document.getElementById("stateError").innerHTML = "";
 		document.getElementById("zipError").innerHTML = "";
 		
 		document.getElementById("idTypeError").innerHTML = "";
@@ -34,6 +35,19 @@
 		document.getElementById("issuedOnError").innerHTML = "";
 		document.getElementById("dateOfExpiryError").innerHTML = "";
 		
+		document.getElementById("annualIncomeRangeIdError").innerHTML = "";
+		document.getElementById("annualIncomeCurrencyCodeError").innerHTML = "";
+		document.getElementById("riskRatingIdError").innerHTML = "";
+		document.getElementById("incomeTypeError").innerHTML = "";
+		document.getElementById("professionCategoryError").innerHTML = "";
+		document.getElementById("employerNameError").innerHTML = "";
+		document.getElementById("employerAddressError").innerHTML = "";
+		document.getElementById("employerPhoneError").innerHTML = "";
+		document.getElementById("txnVolMonthError").innerHTML = "";
+		document.getElementById("txnCountMonthError").innerHTML = "";
+		document.getElementById("firstLanguageError").innerHTML = "";
+		document.getElementById("maritalStatusError").innerHTML = "";
+		document.getElementById("occupationIdError").innerHTML = "";
 		
 		
 		issuedOnError.innerHTML = "";
@@ -49,12 +63,12 @@
         isValid = false;
     }
     if (!form.firstName.value.trim()) {
-        document.getElementById("firstNameError").innerHTML = "First name is required.";
+        document.getElementById("firstNameError").innerHTML = "First Name is required.";
         isValid = false;
     }
 	
     if (!form.lastName.value.trim()) {
-        document.getElementById("lastNameError").innerHTML = "Last name is required.";
+        document.getElementById("lastNameError").innerHTML = "Last Name is required.";
         isValid = false;
     }
     if (!form.nationality.value) {
@@ -70,7 +84,7 @@
 	     isValid = false;
 	 }
 	 if (!form.dateOfBirth.value) {
-	         document.getElementById("dateOfBirthError").innerHTML = "Date of birth is required.";
+	         document.getElementById("dateOfBirthError").innerHTML = "Date of Birth is required.";
 	         isValid = false;
 	 } else {
 	         let dob = new Date(form.dateOfBirth.value);
@@ -142,16 +156,26 @@
         document.getElementById("countryError").innerHTML = "Country is required.";
         isValid = false;
     }
+	if (!form.state.value) {
+	        document.getElementById("stateError").innerHTML = "State is required.";
+	        isValid = false;
+	    }
+	
 	if (!form.zip.value.trim()) {
 	       document.getElementById("zipError").innerHTML = "Zip is required.";
 	       isValid = false;
 	   }
-	if (!form.idType.value.trim() && hiddenIdType.value !== "28") {
-	    document.getElementById("idTypeError").innerHTML = "Id Type is required.";
-	    isValid = false;
-	} else {
-	    document.getElementById("idTypeError").innerHTML = ""; // Clear error if valid
-	}
+	if (residentType !== '101') {
+	      const idTypeValue = document.getElementById("hiddenIdType").value;
+
+	if (!idTypeValue.trim()) {
+	      document.getElementById("idTypeError").innerHTML = "Id Type is required for non-Malaysian residents.";
+	      isValid = false;
+	  } else {
+	           document.getElementById("idTypeError").innerHTML = ""; 
+	    }
+	  }
+
 	if (!form.idNumber.value.trim()) {
 	     document.getElementById("idNumberError").innerHTML = "Id Number is required.";
 	     isValid = false;
@@ -166,28 +190,87 @@
 	    }
 		
 	if (!form.issuedAt.value) {
-		      document.getElementById("issuedAt").innerHTML = "Issued At is required.";
+		      document.getElementById("issuedAtError").innerHTML = "Issued At is required.";
 		      isValid = false;
 		 }
 	 if (!form.issuedBy.value) {
 		      document.getElementById("issuedByError").innerHTML = "Issued By is required.";
 		      isValid = false;
 		 }
-	 if (issuedOn && issuedOn > today) {
-		        issuedOnError.innerHTML = "Issued date cannot be in the future.";
-		        isValid = false;
+//	 if (issuedOn && issuedOn > today) {
+//		        issuedOnError.innerHTML = "Issued date cannot be in the future.";
+//		        isValid = false;
+//		 }
+//
+//		    // Check if dateOfExpiry is later than issuedOn
+//	 if (issuedOn && dateOfExpiry && dateOfExpiry <= issuedOn) {
+//		        dateOfExpiryError.innerHTML = "Expiry date must be later than the issued date.";
+//		        isValid = false;
+//		}	
+			
+	if (!form.annualIncomeRangeId.value) {
+				document.getElementById("annualIncomeRangeIdError").innerHTML = "Annual Income is required.";
+				isValid = false;
+		}
+					
+
+	if (!form.annualIncomeCurrencyCode.value) {
+				 document.getElementById("annualIncomeCurrencyCodeError").innerHTML = "Annual Income Currency is required.";
+				 isValid = false;
 		 }
+	if (!form.riskRatingId.value) {
+		 	 document.getElementById("riskRatingIdError").innerHTML = "Risk Rating Id is required.";
+		 	 isValid = false;
+		}
+	if (!form.incomeType.value) {
+			 document.getElementById("incomeTypeError").innerHTML = "Income Type is required.";
+			isValid = false;
+		 }
+	if (!form.professionCategory.value) {
+		 	 document.getElementById("professionCategoryError").innerHTML = "Profession Category is required.";
+		 	 isValid = false;
+		  }	
+		  
+	if (!form.employerName.value.trim()) {
+		  		 document.getElementById("employerNameError").innerHTML = "Employee Name is required.";
+		  		  isValid = false;
+		  }
 
-		    // Check if dateOfExpiry is later than issuedOn
-		    if (issuedOn && dateOfExpiry && dateOfExpiry <= issuedOn) {
-		        dateOfExpiryError.innerHTML = "Expiry date must be later than the issued date.";
-		        isValid = false;
-		    }	
-	 
+	if (!form.employerAddress.value.trim()) {
+		  		   document.getElementById("employerAddressError").innerHTML = "Employee Address is required.";
+		  		   isValid = false;
+		  }
 
-    if (!isValid) {
-        alert("Please fill in all required fields.");
-    }
+	if (!form.employerPhone.value.trim()) {
+		  			document.getElementById("employerPhoneError").innerHTML = "Employee Phone No. is required.";
+		  			 isValid = false;
+		 }
+	if (!form.txnVolMonth.value.trim()) {
+		 		document.getElementById("txnVolMonthError").innerHTML = "Transaction Volume Month is required.";
+		 		 isValid = false;
+		}
+	if (!form.txnCountMonth.value.trim()) {
+		 		 document.getElementById("txnCountMonthError").innerHTML = "Transaction Count Month is required.";
+		 		 isValid = false;
+		}
+	if (!form.firstLanguage.value.trim()) {
+		 		 document.getElementById("firstLanguageError").innerHTML = "First Language is required.";
+		 		 isValid = false;
+		}
+	if (!form.maritalStatus.value) {
+				 document.getElementById("maritalStatusError").innerHTML = "Marital Status is required.";
+				 isValid = false;
+		}
+		if (!form.occupationId.value) {
+				 document.getElementById("occupationIdError").innerHTML = "Occupation Id is required.";
+				 isValid = false;
+		}
+				
+					 					 				 
+
+//    if (!isValid) {
+//        alert("Please fill in all required fields.");
+//    }
 
     return isValid;
 }

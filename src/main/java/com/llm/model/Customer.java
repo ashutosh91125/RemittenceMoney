@@ -249,4 +249,6 @@ private String dateOfBirth;
         //Profile Photo
         private String profBase64Data;
         private String profContentType;
+        
+        private Boolean isValid;
 }

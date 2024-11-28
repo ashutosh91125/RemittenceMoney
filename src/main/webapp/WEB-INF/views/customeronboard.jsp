@@ -1284,7 +1284,7 @@ function copyAddress() {
 													<div class="row">
 														<div class="col-xl-4">
 															<div class="mb-4">
-																<label class="form-label">Id Front<span
+																<label class="form-label">Id Front(Jpeg/Jpg only)<span
 																	class="text-danger">*</span></label>
 																<form:input path="frontPictureFile" type="file" accept="image/jpeg, image/jpg"
 																	class="form-control" placeholder="Id Front" />
@@ -1292,7 +1292,7 @@ function copyAddress() {
 														</div>
 														<div class="col-xl-4">
 															<div class="mb-4">
-																<label class="form-label">Id Back<span
+																<label class="form-label">Id Back(Jpeg/Jpg only)<span
 																	class="text-danger">*</span></label>
 																<form:input path="backPictureFile" type="file" accept="image/jpeg, image/jpg"
 																	class="form-control" placeholder="Id Back" />

@@ -515,6 +515,63 @@ function copyAddress() {
     // Ensure the correct fields are toggled on page load
     document.addEventListener('DOMContentLoaded', function() {
         console.log("Page Loaded");
+        document.getElementById('idNumber').addEventListener('input', function () {
+                const idNumber = this.value.trim();
+                const residentType = document.getElementById('residentType').value;
+                const dateOfBirth = document.getElementById('dateOfBirth').value;
+                const placeOfBirth = document.getElementById('placeOfBirth').value.trim();
+                const gender = document.getElementById('gender').value;
+
+                const errorSpan = document.getElementById('idNumberError');
+                errorSpan.textContent = ""; // Clear previous errors
+
+                // Only validate when residentType is "101"
+                if (residentType !== "101") {
+                    return; // Skip validation if not resident type "101"
+                }
+
+                // Extract integer value from placeOfBirth (e.g., "Cansno (20)" -> "20")
+                const placeOfBirthMatch = placeOfBirth.match(/\((\d+)\)$/); // Regex to extract digits in parentheses
+                const placeOfBirthCode = placeOfBirthMatch ? placeOfBirthMatch[1] : null;
+
+                // Validation starts here
+                if (idNumber.length < 12) {
+                    errorSpan.textContent = "ID Number must be 12 digit.";
+                    return;
+                }
+
+                // Validate first 6 characters (YY-MM-DD)
+                if (dateOfBirth) {
+                    const dobParts = dateOfBirth.split("-");
+                    const expectedDob = dobParts[0].substring(2) + dobParts[1] + dobParts[2]; // Convert YYYY-MM-DD to YYMMDD
+                    if (idNumber.substring(0, 6) !== expectedDob) {
+                        errorSpan.textContent = "First 6 characters of ID Number must match Date of Birth (YYMMDD).";
+                        return;
+                    }
+                } else {
+                    errorSpan.textContent = "Date of Birth is required for ID Number validation.";
+                    return;
+                }
+
+                // Validate next 2 characters (Place of Birth)
+                if (placeOfBirthCode && idNumber.substring(6, 8) !== placeOfBirthCode) {
+                    errorSpan.textContent = "7th and 8th digit should be same as Place of Birth code.";
+                    return;
+                } else if (!placeOfBirthCode) {
+                    errorSpan.textContent = "Please select Place of Birth";
+                    return;
+                }
+
+                // Validate last character (Gender)
+                const expectedGenderChar = gender === "Male" ? "1" : "0";
+                if (idNumber.charAt(11) !== expectedGenderChar) {
+                    errorSpan.textContent = "Last character of ID Number must be 1 for Male or 0 for Female.";
+                    return;
+                }
+
+                // If all validations pass
+                errorSpan.textContent = ""; // Clear errors
+            });
         toggleFields();
         toggleCustomerRemarks();
     });
@@ -703,7 +760,7 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Date of Birth<span
 													class="text-danger">*</span></label>
-												<form:input path="dateOfBirth" type="date"
+												<form:input path="dateOfBirth" id="dateOfBirth" type="date"
 													class="form-control" />
 												<span id="dateOfBirthError" class="text-danger"></span>
 											</div>
@@ -760,7 +817,7 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
-												<form:select path="gender" class="form-control"
+												<form:select path="gender" id="gender" class="form-control"
 													data-select2-selector="icon" multiple="false">
 													<form:option value="" disabled="true" selected="true">Gender</form:option>
 													<form:options items="${genderList}" />

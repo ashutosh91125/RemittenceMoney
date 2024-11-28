@@ -1343,6 +1343,7 @@ function copyAddress() {
 							</div>
 						</div>
 					</div>
+					</div>
 					<!--<div class="card-body pass-info">
 									<div class="main-content">
 										<div

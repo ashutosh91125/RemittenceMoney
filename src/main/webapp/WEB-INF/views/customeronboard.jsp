@@ -545,17 +545,17 @@ function copyAddress() {
                     const dobParts = dateOfBirth.split("-");
                     const expectedDob = dobParts[0].substring(2) + dobParts[1] + dobParts[2]; // Convert YYYY-MM-DD to YYMMDD
                     if (idNumber.substring(0, 6) !== expectedDob) {
-                        errorSpan.textContent = "First 6 characters of ID Number must match Date of Birth (YYMMDD).";
+                        errorSpan.textContent = "First 6 characters must match Date of Birth";
                         return;
                     }
                 } else {
-                    errorSpan.textContent = "Date of Birth is required for ID Number validation.";
+                    errorSpan.textContent = "Please select Date of Birth";
                     return;
                 }
 
                 // Validate next 2 characters (Place of Birth)
                 if (placeOfBirthCode && idNumber.substring(6, 8) !== placeOfBirthCode) {
-                    errorSpan.textContent = "7th and 8th digit should be same as Place of Birth code.";
+                    errorSpan.textContent = "7th and 8th digit must be Place of Birth code";
                     return;
                 } else if (!placeOfBirthCode) {
                     errorSpan.textContent = "Please select Place of Birth";
@@ -565,7 +565,7 @@ function copyAddress() {
                 // Validate last character (Gender)
                 const expectedGenderChar = gender === "Male" ? "1" : "0";
                 if (idNumber.charAt(11) !== expectedGenderChar) {
-                    errorSpan.textContent = "Last character of ID Number must be 1 for Male or 0 for Female.";
+                    errorSpan.textContent = "Last digit must be 1 for Male or 0 for Female";
                     return;
                 }
 
@@ -1290,7 +1290,7 @@ function copyAddress() {
 															<div class="mb-4">
 																<label class="form-label">Id Front<span
 																	class="text-danger">*</span></label>
-																<form:input path="frontPictureFile" type="file"
+																<form:input path="frontPictureFile" type="file" accept="image/jpeg, image/jpg"
 																	class="form-control" placeholder="Id Front" />
 															</div>
 														</div>
@@ -1298,7 +1298,7 @@ function copyAddress() {
 															<div class="mb-4">
 																<label class="form-label">Id Back<span
 																	class="text-danger">*</span></label>
-																<form:input path="backPictureFile" type="file"
+																<form:input path="backPictureFile" type="file" accept="image/jpeg, image/jpg"
 																	class="form-control" placeholder="Id Back" />
 															</div>
 														</div>

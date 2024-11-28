@@ -10,11 +10,15 @@
 // Ensure the correct fields are toggled on page load
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
-    const radioButtons = document.querySelectorAll('input[name="query"]');
+    const radioButtons = document.querySelectorAll('input[name="criteria"]');
     const searchHeading = document.getElementById("search-heading");
+    
+    // Set the initial value for search heading based on the default radio button
+    searchHeading.textContent = document.querySelector('input[name="criteria"]:checked').value;
+    
     radioButtons.forEach(radio => {
         radio.addEventListener("click", () => {
-            // Set the search-heading text to the value of the selected radio button
+            // Update the search-heading text when a radio button is clicked
             searchHeading.textContent = radio.value;
         });
     });
@@ -25,25 +29,25 @@ document.addEventListener('DOMContentLoaded', function() {
 		<form method="GET" action="/searchCustomers">
 			<div class="row" style="display: flex; align-items: baseline;">
 				<div class="col-xl-2" id="customerNumber">
-					<label><input type="radio" name="criteria" class="form-radio"
-						value="Customer Number:" checked> Customer Number:</label>
+					<label  class="form-label"><input type="radio" name="criteria" class="form-radio"
+						value="Customer Number:" checked> Customer No:</label>
 				</div>
 				<div class="col-xl-1" id="idNo">
-					<label><input type="radio" name="criteria" class="form-radio"
-						value="ID No:"> ID No</label>
+					<label class="form-label"><input type="radio" name="criteria" class="form-radio"
+						value="ID Number:"> ID No</label>
 				</div>
 				<div class="col-xl-2" id="mobileNumber">
-					<label><input type="radio" name="criteria" class="form-radio"
-						value="Mobile Number:"> Mobile Number</label>
+					<label class="form-label"><input type="radio" name="criteria" class="form-radio"
+						value="Mobile Number:"> Mobile No</label>
 				</div>
 				<div class="col-xl-2" id="customerName">
-					<label><input type="radio" name="criteria" class="form-radio"
+					<label class="form-label"><input type="radio" name="criteria" class="form-radio"
 						value="Customer Name:"> Customer Name</label>
 				</div>
 
-				<div class="col-xl-2" id="customerEmail">	
-				<label><input type="radio" name="criteria" class="form-radio"
-						value="Email Id:"> Customer Email</label>
+				<div class="col-xl-2" style="padding-left: 58px;">
+					<div class="form-label" id="search-heading">Customer
+						Number:</div>
 				</div>
 
 				<div class="col-xl-3 ps-0">

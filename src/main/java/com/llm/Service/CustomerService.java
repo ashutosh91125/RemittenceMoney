@@ -383,7 +383,7 @@ public class CustomerService {
 		case "Customer Number:" -> customerRepository.findByEcrnContaining(query);
 		case "Mobile Number:" -> customerRepository.findByPrimaryMobileNumberContaining(query);
 		case "Email Id:" -> customerRepository.findByEmailIdContaining(query);
-		case "ID No:" -> customerRepository.findByIdNumberContaining(query);
+		case "ID Number:" -> customerRepository.findByIdNumberContaining(query);
 		case "Customer Name:" -> customerRepository.findByFirstNameContainingOrLastNameContaining(query, query);
 		default -> List.of(); // Empty list if no criteria matches
 		};

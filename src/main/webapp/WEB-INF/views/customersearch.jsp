@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', function() {
 						value="Customer Name:"> Customer Name</label>
 				</div>
 
-				<div class="col-xl-2">
-					<div class="search-heading" id="search-heading">Customer
-						Number:</div>
+				<div class="col-xl-2" id="customerEmail">	
+				<label><input type="radio" name="criteria" class="form-radio"
+						value="Email Id:"> Customer Email</label>
 				</div>
 
 				<div class="col-xl-3 ps-0">

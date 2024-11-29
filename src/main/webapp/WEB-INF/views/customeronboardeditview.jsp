@@ -384,7 +384,7 @@ function copyAddress() {
                         // On success, you can manually trigger a redirect
                         // Since it's a GET request and you want the page to navigate,
                         // you simply change the window location.
-                        window.location.href = '/customer-list';  // Redirect to the customer list page
+                        window.location.href = '/customer';  // Redirect to the customer list page
                     },
                     error: function(xhr, status, error) {
                         // In case of an error, you can handle the failure.

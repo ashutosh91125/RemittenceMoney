@@ -560,7 +560,7 @@ function copyAddress() {
         const showRemarks = document.getElementById("showRemarksOnTxn").value;
         const remarksContainer = document.getElementById("customerRemarksContainer");
 
-        if (showRemarks === "true") {
+        if (showRemarks === "1") {
             remarksContainer.style.display = "block";
         } else {
             remarksContainer.style.display = "none";
@@ -1229,12 +1229,7 @@ function copyAddress() {
 								style="background: aliceblue; margin-top: -40px;">
 								<div class="card-body pass-info">
 									<div class="main-content">
-										<div
-											class="mb-4 d-flex align-items-center justify-content-between">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Document Details</span>
-											</h5>
-										</div>
+
 
 										<div class="row mb-4 align-items-center">
 											<div class="row">
@@ -1760,8 +1755,8 @@ function copyAddress() {
 													<form:select path="showRemarksOnTxn" id="showRemarksOnTxn"
 														class="form-control" data-select2-selector="icon"
 														onchange="toggleCustomerRemarks();">
-														<option value="true">Yes</option>
-														<option value="false">No</option>
+														<option value="0">No</option>
+														<option value="1">Yes</option>
 													</form:select>
 												</div>
 											</div>

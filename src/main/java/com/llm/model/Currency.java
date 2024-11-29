@@ -27,7 +27,6 @@ public class Currency {
 	private String ccyname;
 	@ManyToOne
 	private Country countries;
-	@ManyToOne
-	private Agent agents;
+
 
 }

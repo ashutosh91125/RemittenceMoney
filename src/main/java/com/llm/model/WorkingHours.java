@@ -20,8 +20,7 @@ public class WorkingHours {
 	private Long id;
 
 	private String timeRange;
-	@ManyToOne
-	private Agent agents;
+
 	@ManyToOne
 	private SubAgent subagents;
 

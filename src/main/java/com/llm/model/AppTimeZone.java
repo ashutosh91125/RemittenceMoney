@@ -32,8 +32,6 @@ public class AppTimeZone {
     private Double differBy;
     private String zoneType;
     private Integer zoneCode;
-    @ManyToOne
-    @JoinColumn(name = "agent_id")
-    private Agent agents;
+  
 
 }

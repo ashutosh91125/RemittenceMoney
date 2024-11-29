@@ -15,8 +15,6 @@ import lombok.Setter;
 public class SettelementType {
 	@Id
 	private Integer SettelementId;
-	@ManyToOne
-	@JoinColumn(name = "agent_id")
-	private Agent agents;
+
 
 }

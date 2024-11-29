@@ -18,8 +18,6 @@ public class SettlementMode {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer settelementId;
-	@ManyToOne
-	@JoinColumn(name = "agent_id")
-	private Agent agents;
+
 
 }

@@ -1,15 +1,10 @@
 package com.llm.model;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,8 +26,8 @@ public class Agent {
 	private Long aId;
 	@Column(name = "Agent_Id")
 	private Long companyId;
-	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<Country> countries;
+//	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
+	private String countries;
 
 	@Column(name = "Agent_Name")
 	private String companyName;
@@ -58,9 +53,9 @@ public class Agent {
 	@Column(name = "Zip/PoBox")
 	private String zip;
 
-	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
+//	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
 	
-	private List<AppTimeZone> timeZone;
+	private String timeZone;
 
 	@Column(name = "Email")
 	private String email;
@@ -86,18 +81,18 @@ public class Agent {
 	@Column(name = "TaxApplicable")
 	private Boolean taxApplicable;
 
-	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<WorkingHours> working;
+//	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
+	private String working;
 
-	@Column(name = "Daily")
+//	@Column(name = "Daily")
 	private Long daily;
 
-	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
+//	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
 	
-	private List<SettlementMode> settlementMode;
-	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
+	private String settlementMode;
+//	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
 	
-	private List<SettelementType> settlementType;
+	private String settlementType;
 
 	@Column(name = "Credit_Limit_Status")
 	private Boolean status;
@@ -153,9 +148,9 @@ public class Agent {
 	@Column(name = "AgentStatus")
 	private Boolean statusFlag;
 	
-	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
-	private List<Currency> currencies;
-	@ManyToOne
-	private SubAgent subagents;
+//	@OneToMany(mappedBy = "agents", cascade = CascadeType.ALL,orphanRemoval = true)
+	private String currencies;
+//	@ManyToOne
+//	private SubAgent subagents;
 
 }

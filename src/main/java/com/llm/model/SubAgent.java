@@ -28,8 +28,8 @@ public class SubAgent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer subAgentId;
-	@OneToMany(mappedBy = "subagents", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<Agent> agent;
+//	@OneToMany(mappedBy = "subagents", cascade = CascadeType.ALL, orphanRemoval = true)
+//	private List<Agent> agent;
 
 	@Column(name = "AgentMode")
 	private Boolean agentMode;

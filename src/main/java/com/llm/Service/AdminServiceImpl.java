@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.llm.dto.AdminDto;
 import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
 import com.llm.repositories.AdminRepositories;
@@ -60,18 +59,18 @@ public class AdminServiceImpl implements IAdminService {
 //		}
 //	}
 
-	private AdminDto convertToAdminDto(Admin admin) {
-		AdminDto adminDto = new AdminDto();
-
-		adminDto.setAdminName(admin.getAdminName());
-		adminDto.setConfirmPassword(admin.getConfirmPassword());
-		adminDto.setPassword(admin.getPassword());
-		adminDto.setEmail(admin.getEmail());
-		adminDto.setPhone(admin.getPhone());
-		adminDto.setUserName(admin.getUserName());
-		adminDto.setCountries(admin.getCountries());
-		return adminDto;
-	}
+//	private AdminDto convertToAdminDto(Admin admin) {
+//		AdminDto adminDto = new AdminDto();
+//
+//		adminDto.setAdminName(admin.getAdminName());
+//		adminDto.setConfirmPassword(admin.getConfirmPassword());
+//		adminDto.setPassword(admin.getPassword());
+//		adminDto.setEmail(admin.getEmail());
+//		adminDto.setPhone(admin.getPhone());
+//		adminDto.setUserName(admin.getUserName());
+//		adminDto.setCountries(admin.getCountries());
+//		return adminDto;
+//	}
 
 	@Override
 	public Optional<AdminWithoutProfile> findAdminByEmailAndPassword(String email, String password) {

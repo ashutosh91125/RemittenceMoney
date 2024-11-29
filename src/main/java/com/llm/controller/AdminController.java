@@ -16,10 +16,8 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.llm.Service.IAdminService;
-import com.llm.Service.ICountryService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.dto.AdminDto;
 import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
 
@@ -35,7 +33,7 @@ public class AdminController {
 
 	@GetMapping("/admin")
 	public String showAdminForm(Model model) {
-		model.addAttribute("adminDTO", new AdminDto());
+		model.addAttribute("admin", new Admin());
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
@@ -48,27 +46,19 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin")
-	public String processAdminDetails(@ModelAttribute("adminDTO") AdminDto adminDTO, MultipartFile profileImagePath,
+	public String processAdminDetails(@ModelAttribute("admin") Admin admin, MultipartFile profileImagePath,
 			Model model) {
 		try {
-			byte[] profile = profileImagePath.getBytes();
-			Admin admin = new Admin();
-			admin.setAdminName(adminDTO.getAdminName());
-			admin.setConfirmPassword(adminDTO.getConfirmPassword());
-			admin.setPassword(adminDTO.getPassword());
-			admin.setEmail(adminDTO.getEmail());
-			admin.setPhone(adminDTO.getPhone());
-			admin.setUserName(adminDTO.getUserName());
-			admin.setProfileImage(profile);
-			admin.setCountries(adminDTO.getCountries());
-			admin.setSatus(adminDTO.getSatus());
+			if (profileImagePath != null && !profileImagePath.isEmpty()) {
+				admin.setProfileImage(profileImagePath.getBytes());
+			}
 			adminService.addAdmins(admin);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return "success";
 	}
-	
+
 	@GetMapping("/adminlist")
 	public String getAdminList(Model model) {
 		List<Admin> adminList = adminService.getAllAdmins();
@@ -80,15 +70,15 @@ public class AdminController {
 
 	@GetMapping("/adminlogin")
 	public String showLoginForm(Model model) {
-		model.addAttribute("adminDTO", new AdminDto());
+		model.addAttribute("adminDTO", new Admin());
 		return "adminlogin";
 	}
 
 	@PostMapping("/adminlogin")
-	public String loginAdmin(@ModelAttribute("adminDTO") AdminDto adminDTO, Model model) {
+	public String loginAdmin(@ModelAttribute("admin") Admin admin, Model model) {
 		try {
-			Optional<AdminWithoutProfile> adminOpt = adminService.findAdminByEmailAndPassword(adminDTO.getEmail(),
-					adminDTO.getPassword());
+			Optional<AdminWithoutProfile> adminOpt = adminService.findAdminByEmailAndPassword(admin.getEmail(),
+					admin.getPassword());
 
 			if (adminOpt.isPresent()) {
 				model.addAttribute("loggedInAdmin", adminOpt.get());

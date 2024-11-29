@@ -46,7 +46,7 @@
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form:form action="admin" modelAttribute="adminDTO" method="post"
+					<form:form action="admin" modelAttribute="admin" method="post"
 						enctype="multipart/form-data">
 						<div class="card-body lead-status">
 

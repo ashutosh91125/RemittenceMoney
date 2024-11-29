@@ -25,6 +25,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <style>
+
+.search-button {
+    transition: color 0.3s ease; /* Add a smooth color transition */
+}
+
+.search-button:hover {
+    color: #3903fc; /* Change the color on hover */
+}
+
+.search-button:hover i {
+    color: #3903fc; /* Change the icon color on hover */
+}
 </style>
 <body>
 	<div class="container mx-0 mt-4">
@@ -51,10 +63,9 @@ document.addEventListener('DOMContentLoaded', function() {
 						class="form-label me-2 mb-0">Customer Name:</label> <input
 						type="text" class="py-2" id="radio-search" name="query"
 						placeholder="Search..." style="flex: 1;">
-					<button type="submit" class="mt-2"
-						style="background: none; border: none; padding: 0; margin-left: 8px;">
-						<i class="feather-search" style="font-size: 24px;"></i>
-					</button>
+					<button type="submit" class="mt-2 search-button" style="background: none; border: none; padding: 0; margin-left: 8px;">
+                        <i class="feather-search" style="font-size: 24px;"></i>
+                    </button>
 				</div>
 			</div>
 		</form>

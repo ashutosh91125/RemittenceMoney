@@ -23,7 +23,7 @@
 		<jsp:include page="header.jsp"></jsp:include>
 	</div>
 
-	<div class="nxl-container">
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -38,17 +38,19 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content" style="background: aliceblue;">
+			<div class="main-content">
 
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="contactdetails" modelAttribute="agentDTO" method="post">
+					<form:form action="contactdetails" modelAttribute="agent"
+						method="post">
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Email</label>
+									<label class="form-label">Email<span
+										class="text-danger">*</span></label>
 									<form:input path="email" type="text" class="form-control"
 										id="email" placeholder="Email" />
 								</div>
@@ -58,7 +60,8 @@
 										id="sourceInput" placeholder="Mobile" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Phone</label>
+									<label class="form-label">Phone<span
+										class="text-danger">*</span></label>
 									<form:input path="phone" type="text" class="form-control"
 										id="visibilityInput" placeholder="Phone" />
 								</div>
@@ -66,13 +69,15 @@
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Contact Person</label>
+									<label class="form-label">Contact Person<span
+										class="text-danger">*</span></label>
 									<form:input path="contactPerson" type="text"
 										class="form-control" id="statusInput"
 										placeholder="Contact Person" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Mis emailid</label>
+									<label class="form-label">Mis emailid<span
+										class="text-danger">*</span></label>
 									<form:input path="misEmailId" type="text" class="form-control"
 										id="sourceInput" placeholder="Mis emailid" />
 								</div>
@@ -93,12 +98,11 @@
 						</div>
 					</form:form>
 				</div>
-
-
 			</div>
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
+
 
 	<!-- Vendor JS Files -->
 	<script src="assets/vendors/js/vendors.min.js"></script>

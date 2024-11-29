@@ -19,11 +19,8 @@
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
-
-	<div class="nxl-container">
+	<jsp:include page="header.jsp"></jsp:include>
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -42,45 +39,48 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="regularitydetails" modelAttribute="agentDTO"
+					<form:form action="regularitydetails" modelAttribute="agent"
 						method="post">
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Tax Identification Number</label>
+									<label class="form-label">Tax Identification Number<span
+										class="text-danger">*</span></label>
 									<form:input path="taxIdentificationNumber" type="text"
 										class="form-control" id="statusInput"
 										placeholder="Tax Identification Number" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Licence No.</label>
+									<label class="form-label">Licence No.<span
+										class="text-danger">*</span></label>
 									<form:input path="licenceNo" type="text" class="form-control"
 										id="sourceInput" placeholder="Licence No." />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Tax Applicable</label>
+									<label class="form-label">Tax Applicable<span
+										class="text-danger">*</span></label>
 									<div>
-										<form:radiobutton path="taxApplicable" value="true"
-											id="taxYes" />
-										<label for="taxYes">Yes</label>
+										<form:radiobutton path="taxApplicable" value="0" />
+										<label for="taxNo">No</label>
 									</div>
 									<div>
-										<form:radiobutton path="taxApplicable" value="false"
-											id="taxNo" />
-										<label for="taxNo">No</label>
+										<form:radiobutton path="taxApplicable" value="1" />
+										<label for="taxYes">Yes</label>
 									</div>
 
 								</div>
 							</div>
-							<div class="row">								
+							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Working Hours / Time Zone</label>
-									<form:select path="working" class="form-control" multiple="false">
+									<label class="form-label">Working Hours / Time Zone<span
+										class="text-danger">*</span></label>
+									<%-- <form:select path="working" class="form-control"
+										multiple="false">
 										<form:options items="${workinghourslist}" itemValue="id"
 											itemLabel="timeRange" />
-									</form:select>
+									</form:select> --%>
 
-								</div> 
+								</div>
 							</div>
 
 							<div class="row">
@@ -99,9 +99,10 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
+
 	<script src="assets/vendors/js/vendors.min.js"></script>
 	<script src="assets/vendors/js/dataTables.min.js"></script>
 	<script src="assets/vendors/js/dataTables.bs5.min.js"></script>

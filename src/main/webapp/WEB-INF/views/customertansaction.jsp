@@ -19,11 +19,8 @@
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
-
-	<div class="nxl-container">
+	<jsp:include page="header.jsp"></jsp:include>
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -41,24 +38,31 @@
 			<div class="main-content">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
-							<jsp:include page="subheaderagent.jsp"></jsp:include>
+						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="customertransaction" modelAttribute="agentDTO" method="post">
+					<form:form action="customertransaction" modelAttribute="agent"
+						method="post">
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Per Transaction</label> <form:input path="perTransactionLimit"
-										type="text" class="form-control" id="statusInput"
-										placeholder="Per Transaction"/>
+									<label class="form-label">Per Transaction<span
+										class="text-danger">*</span></label>
+									<form:input path="perTransactionLimit" type="text"
+										class="form-control" id="statusInput"
+										placeholder="Per Transaction" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Per Day</label> <form:input path="perDayLimit" type="text"
-										class="form-control" id="sourceInput" placeholder="Per Day"/>
+									<label class="form-label">Per Day<span
+										class="text-danger">*</span></label>
+									<form:input path="perDayLimit" type="text" class="form-control"
+										id="sourceInput" placeholder="Per Day" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Per Month</label> <form:input path="perMonthLimit" type="text"
+									<label class="form-label">Per Month<span
+										class="text-danger">*</span></label>
+									<form:input path="perMonthLimit" type="text"
 										class="form-control" id="visibilityInput"
-										placeholder="Per Month"/>
+										placeholder="Per Month" />
 								</div>
 							</div>
 							<div class="row">
@@ -77,9 +81,10 @@
 				</div>
 			</div>
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
+	
 
 	<!-- Vendor JS Files -->
 	<script src="assets/vendors/js/vendors.min.js"></script>

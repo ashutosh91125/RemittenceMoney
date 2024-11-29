@@ -22,11 +22,8 @@
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
-
-	<div class="nxl-container">
+	<jsp:include page="header.jsp"></jsp:include>
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -41,47 +38,55 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content" style="background: aliceblue;">
+			<div class="main-content">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="apidetails" modelAttribute="agentDTO" method="post">
+					<form:form action="apidetails" modelAttribute="agent" method="post">
 						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Grant_Type</label>
+									<label class="form-label">Grant_Type<span
+										class="text-danger">*</span></label>
 									<form:input path="grantType" type="text" class="form-control"
 										id="grantType" placeholder="Grant Type" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Scope</label>
+									<label class="form-label">Scope<span
+										class="text-danger">*</span></label>
 									<form:input path="scope" type="text" class="form-control"
 										id="scope" placeholder="Scope" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Client_Id</label>
-									<form:input path="clientId" type="text"
-										class="form-control" id="clientId"
-										placeholder="Client Id" />
+									<label class="form-label">Client_Id<span
+										class="text-danger">*</span></label>
+									<form:input path="clientId" type="text" class="form-control"
+										id="clientId" placeholder="Client Id" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Client_Secret</label>
-									<form:input path="clientSecret" type="text" class="form-control"
-										id="clientSecret" placeholder="Client Secret" />
+									<label class="form-label">Client_Secret<span
+										class="text-danger">*</span></label>
+									<form:input path="clientSecret" type="text"
+										class="form-control" id="clientSecret"
+										placeholder="Client Secret" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin User name</label>
-									<form:input path="adminUserName" type="text" class="form-control"
-										id="adminUserName" placeholder="Admin User Name" />
+									<label class="form-label">Admin User name<span
+										class="text-danger">*</span></label>
+									<form:input path="adminUserName" type="text"
+										class="form-control" id="adminUserName"
+										placeholder="Admin User Name" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Password</label>
-									<form:input path="adminPassword" type="text" class="form-control"
-										id="adminPassword" placeholder="Admin Password" />
+									<label class="form-label">Admin Password<span
+										class="text-danger">*</span></label>
+									<form:input path="adminPassword" type="text"
+										class="form-control" id="adminPassword"
+										placeholder="Admin Password" />
 								</div>
 							</div>
 							<div class="row">
@@ -99,10 +104,10 @@
 					</form:form>
 				</div>
 			</div>
-
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
+
 
 
 	<!-- Vendor JS Files -->

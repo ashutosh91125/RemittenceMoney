@@ -26,7 +26,7 @@
 		<jsp:include page="header.jsp"></jsp:include>
 	</div>
 
-	<div class="nxl-container">
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -46,53 +46,62 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="agent" modelAttribute="agentDTO" method="post">
+					<form:form action="agent" modelAttribute="agent" method="post">
 						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Company Id</label>
+									<label class="form-label">Company Id<span
+										class="text-danger">*</span></label>
 									<form:input path="companyId" type="text" class="form-control"
 										id="statusInput" placeholder="Company Id" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Country</label>
-									<form:select path="countries" class="form-control" multiple="false">
+									<label class="form-label">Country<span
+										class="text-danger">*</span></label>
+									<%-- <form:select path="countries" class="form-control"
+										multiple="false">
 										<form:options items="${countrieslist}" itemValue="countryId"
 											itemLabel="countryName" />
-									</form:select>
+									</form:select> --%>
 
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Country Currency</label>
-									<form:select path="currencies" class="form-control" multiple="false">
+									<label class="form-label">Country Currency<span
+										class="text-danger">*</span></label>
+									<%-- <form:select path="currencies" class="form-control"
+										multiple="false">
 										<form:options items="${listCurrencies}" itemValue="currencyId"
 											itemLabel="ccyname" />
-									</form:select>
+									</form:select> --%>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Company Name</label>
+									<label class="form-label">Company Name<span
+										class="text-danger">*</span></label>
 									<form:input path="companyName" type="text" class="form-control"
 										id="statusInput" placeholder="Company Name" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Company Display Name</label>
+									<label class="form-label">Company Display Name<span
+										class="text-danger">*</span></label>
 									<form:input path="companyDisplayName" type="text"
 										class="form-control" id="sourceInput"
 										placeholder="Company Display Name" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Address1</label>
+									<label class="form-label">Address1<span
+										class="text-danger">*</span></label>
 									<form:input path="address1" type="text" class="form-control"
 										id="visibilityInput" placeholder="Address1" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Address2</label>
+									<label class="form-label">Address2<span
+										class="text-danger">*</span></label>
 									<form:input path="address2" type="text" class="form-control"
 										id="statusInput" placeholder="Address2" />
 								</div>
@@ -102,7 +111,7 @@
 										id="sourceInput" placeholder="Address3" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">City</label>
+									<label class="form-label">City<span class="text-danger">*</span></label>
 									<form:input path="city" type="text" class="form-control"
 										id="visibilityInput" placeholder="City" />
 								</div>
@@ -119,11 +128,13 @@
 										id="sourceInput" placeholder="Zip/PoBox" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">TimeZone</label>
-									<form:select path="timeZone" class="form-control" multiple="false">
+									<label class="form-label">TimeZone<span
+										class="text-danger">*</span></label>
+									<%-- <form:select path="timeZone" class="form-control"
+										multiple="false">
 										<form:options items="${timezonelist}" itemValue="timeZoneId"
 											itemLabel="zone" />
-									</form:select>
+									</form:select> --%>
 								</div>
 
 							</div>
@@ -138,10 +149,10 @@
 					</form:form>
 				</div>
 			</div>
-
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
+
 
 
 	<!-- Vendor JS Files -->

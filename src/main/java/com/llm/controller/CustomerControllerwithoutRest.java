@@ -1,27 +1,29 @@
 package com.llm.controller;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.llm.Service.CustomerService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
 import com.llm.model.Gender;
-import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 //@SessionAttributes({ "custDTO" })
@@ -37,6 +39,11 @@ public class CustomerControllerwithoutRest {
 	@GetMapping("/customer")
 	public String onboardCustomer1(Model model) {
 		Customer customer = new Customer();
+		
+		if (!model.containsAttribute("customerList")) {
+	        model.addAttribute("customerList", new ArrayList<Customer>());
+	    }
+		
 
 		logger.info("Model attributes before rendering form: " + model.asMap());
 //		IdDetail idDetail = new IdDetail();
@@ -54,6 +61,7 @@ public class CustomerControllerwithoutRest {
 //		customer.setCustomerClassification(customerClassification);
 
 		model.addAttribute("customer", customer); // Ensure custDTO is added here
+		
 
 		try {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
@@ -407,16 +415,17 @@ public class CustomerControllerwithoutRest {
 	@GetMapping("/searchCustomers")
 	public String searchCustomers(@RequestParam("criteria") String criteria,
 								  @RequestParam("query") String query,
-								  Model model) {
+								  RedirectAttributes redirectAttributes) {
 		try {
 			// Use the searchByCriteria method from the service
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
-			logger.info("customers==============="+customers);
-			model.addAttribute("customerList", customers);
+			redirectAttributes.addFlashAttribute("customerList", customers);
 		} catch (Exception e) {
-			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());
+			logger.error(e.toString());
+//			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());
 		}
-		return "customerlisting";  // The name of the Thymeleaf template where the results will be shown
+		return "redirect:/customer";  
 	}
+	
 	
 }

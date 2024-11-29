@@ -24,45 +24,41 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<style>
+</style>
 <body>
-	<div class="container mx-0">
+	<div class="container mx-0 mt-4">
 		<form method="GET" action="/searchCustomers">
-			<div class="row" style="display: flex; align-items: baseline;">
-				<div class="col-xl-2" id="customerNumber">
-					<label  class="form-label"><input type="radio" name="criteria" class="form-radio"
-						value="Customer Number:" checked> Customer No:</label>
-				</div>
-				<div class="col-xl-1" id="idNo">
-					<label class="form-label"><input type="radio" name="criteria" class="form-radio"
-						value="ID Number:"> ID No</label>
-				</div>
-				<div class="col-xl-2" id="mobileNumber">
-					<label class="form-label"><input type="radio" name="criteria" class="form-radio"
-						value="Mobile Number:"> Mobile No</label>
-				</div>
-				<div class="col-xl-2" id="customerName">
-					<label class="form-label"><input type="radio" name="criteria" class="form-radio"
-						value="Customer Name:"> Customer Name</label>
+			<div class="row align-items-center justify-content-between">
+				<!-- Heading and Radio Buttons -->
+				<div class="col-auto d-flex">
+					<h6 class="mb-0 me-3">Customer Search</h6>
+					<label class="form-label me-3"> <input type="radio"
+						name="criteria" value="Customer Number:" checked> Customer
+						No:
+					</label> <label class="form-label me-3"> <input type="radio"
+						name="criteria" value="ID Number:"> ID No
+					</label> <label class="form-label me-3"> <input type="radio"
+						name="criteria" value="Mobile Number:"> Mobile No
+					</label> <label class="form-label me-3"> <input type="radio"
+						name="criteria" value="Customer Name:"> Customer Name
+					</label>
 				</div>
 
-				<div class="col-xl-2" style="padding-left: 58px;">
-					<div class="form-label" id="search-heading">Customer
-						Number:</div>
-				</div>
-
-				<div class="col-xl-3 ps-0">
-					<div class="search-bar-container d-flex"
-						style="display: flex; justify-content: space-around; align-items: center;">
-						<input type="text" class="py-2" id="radio-search" name="query"
-							placeholder="Search..." style="flex: 1;">
-						<button type="submit" class="mt-2"
-							style="background: none; border: none; padding: 0; margin-left: 8px;">
-							<i class="feather-search" style="font-size: 24px;"></i>
-						</button>
-					</div>
+				<!-- Search Label and Fixed Input Box -->
+				<div class="col-auto d-flex align-items-center">
+					<label for="radio-search" id="search-heading"
+						class="form-label me-2 mb-0">Customer Name:</label> <input
+						type="text" class="py-2" id="radio-search" name="query"
+						placeholder="Search..." style="flex: 1;">
+					<button type="submit" class="mt-2"
+						style="background: none; border: none; padding: 0; margin-left: 8px;">
+						<i class="feather-search" style="font-size: 24px;"></i>
+					</button>
 				</div>
 			</div>
 		</form>
 	</div>
+
 </body>
 </html>

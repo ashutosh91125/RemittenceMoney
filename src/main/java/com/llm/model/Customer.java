@@ -86,7 +86,7 @@ private String dateOfBirth;
         private String mothersMaidenName;
 
 //        @JsonProperty("primary_mobile_number")
-        @Column(name = "primary_mobile_number", length = 20, nullable = false)
+        @Column(name = "primary_mobile_number", length = 20, nullable = false,unique = true)
         private String primaryMobileNumber;
 
 //        @JsonProperty("secondary_mobile_number")

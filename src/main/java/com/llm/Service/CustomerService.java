@@ -379,6 +379,9 @@ public class CustomerService {
 	}
 
 	public List<Customer> searchByCriteria(String criteria, String query) {
+		if(query.isBlank()){
+			return List.of();
+		}
 		return switch (criteria) {
 		case "Customer Number:" -> customerRepository.findByEcrnContaining(query);
 		case "Mobile Number:" -> customerRepository.findByPrimaryMobileNumberContaining(query);

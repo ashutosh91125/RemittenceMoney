@@ -19,11 +19,8 @@
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
-
-	<div class="nxl-container">
+	<jsp:include page="header.jsp"></jsp:include>
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -42,7 +39,7 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheadersubagent.jsp"></jsp:include>
 					</div>
-					<form:form action="subgent" modelAttribute="subAgentDTO"
+					<form:form action="subagent" modelAttribute="subAgent"
 						method="post">
 						<form:hidden path="step" value="3" />
 						<div class="card-body lead-status">
@@ -93,9 +90,9 @@
 
 			</div>
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 
-	<jsp:include page="footer.jsp"></jsp:include>
 	<!-- Vendor JS Files -->
 	<script src="assets/vendors/js/vendors.min.js"></script>
 	<script src="assets/vendors/js/dataTables.min.js"></script>

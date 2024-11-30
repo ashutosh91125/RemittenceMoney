@@ -21,7 +21,5 @@ public class WorkingHours {
 
 	private String timeRange;
 
-	@ManyToOne
-	private SubAgent subagents;
 
 }

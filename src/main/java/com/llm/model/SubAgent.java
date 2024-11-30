@@ -1,14 +1,10 @@
 package com.llm.model;
 
-import java.util.List;
-
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,8 +29,8 @@ public class SubAgent {
 
 	@Column(name = "AgentMode")
 	private Boolean agentMode;
-	@OneToMany(mappedBy = "subagents", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<AgentType> agentTypes;
+//	@OneToMany(mappedBy = "subagents", cascade = CascadeType.ALL, orphanRemoval = true)
+	private String agentTypes;
 
 	private String agentChannelId;
 
@@ -53,8 +49,8 @@ public class SubAgent {
 	private String state;
 
 	private String zip;
-	@OneToMany(mappedBy = "subagents", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<WorkingHours> working;
+//	@OneToMany(mappedBy = "subagents", cascade = CascadeType.ALL, orphanRemoval = true)
+	private String working;
 	
 
 	private String email;

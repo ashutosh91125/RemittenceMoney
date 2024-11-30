@@ -1,7 +1,7 @@
 package com.llm.controller;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.llm.Service.IAgentService;
+import com.llm.common.model.EnumEntity;
+import com.llm.common.service.EnumEntityService;
 import com.llm.model.Agent;
 
 @Controller
@@ -25,6 +27,9 @@ public class AgentController {
 	@Autowired
 	private IAgentService agentService;
 
+	@Autowired
+	private EnumEntityService enumEntityService;
+
 	@ModelAttribute("agent")
 	public Agent initializeSubAgent() {
 		return new Agent();
@@ -34,6 +39,24 @@ public class AgentController {
 	public String showCompanyDetailsForm(Model model) {
 		logger.info("Displaying company details form");
 		model.addAttribute("agent", new Agent());
+
+		try {
+			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
+			countriesEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of());
+		}
+		try {
+			Optional<EnumEntity> workingEntity = enumEntityService.getEnumEntityByKey("working");
+			workingEntity.ifPresent(entity -> model.addAttribute("workingList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving working list: ", e);
+			model.addAttribute("workingList", List.of());
+		}
+
 		return "companydetails";
 	}
 
@@ -43,11 +66,9 @@ public class AgentController {
 		logger.info("Processing company details: {}", agent);
 		try {
 			if (step == 1) {
-
 				model.addAttribute("step", 2);
 				model.addAttribute("agent", agent);
 				return "contactdetails";
-
 			} else if (step == 2) {
 				model.addAttribute("step", 3);
 				model.addAttribute("agent", agent);
@@ -80,8 +101,6 @@ public class AgentController {
 		}
 		return "companydetails";
 	}
-
-	
 
 	@GetMapping("/agentlist")
 	public String getAdminList(Model model) {

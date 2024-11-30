@@ -75,11 +75,12 @@
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Working Hours / Time Zone<span
 										class="text-danger">*</span></label>
-									<%-- <form:select path="working" class="form-control"
-										multiple="false">
-										<form:options items="${workinghourslist}" itemValue="id"
-											itemLabel="timeRange" />
-									</form:select> --%>
+									<form:select path="working" class="form-control"
+										data-select2-selector="icon" multiple="false" id="country">
+										<form:option value="" disabled="true" selected="true">Working Hours / Time Zone</form:option>
+										<form:options items="${workingList}" itemValue="valueId"
+											itemLabel="description" />
+									</form:select>
 									<span id="workingError" class="text-danger"></span>
 
 								</div>

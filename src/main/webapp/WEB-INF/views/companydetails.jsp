@@ -17,15 +17,64 @@
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
-	
+	$(document)
+			.ready(
+					function() {
+						$('#country')
+								.on(
+										'change',
+										function() {
+											let dependent = $(this).val(); // Get the selected country value
+											if (dependent) { // Check if a country is selected
+												$
+														.ajax({
+															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
+															type : 'GET',
+															data : {
+																dependent : dependent
+															}, // Pass the selected country ID
+															success : function(
+																	data) {
+																// Clear the state dropdown and populate with new options
+																$(
+																		'#countryCurrency')
+																		.empty()
+																		.append(
+																				'<option value="" disabled selected>Select Currency</option>');
+																$
+																		.each(
+																				data,
+																				function(
+																						index,
+																						enumValue) {
+																					$(
+																							'#countryCurrency')
+																							.append(
+																									'<option value="' + enumValue.valueId + '">'
+																											+ enumValue.description
+																											+ '</option>');
+																				});
+															},
+															error : function() {
+																console
+																		.error("Error fetching currency for the selected country.");
+															}
+														});
+											} else {
+												// Reset the state dropdown if no country is selected
+												$('#countryCurrency')
+														.empty()
+														.append(
+																'<option value="" disabled selected>Select Currency</option>');
+											}
+										});
+					});
 </script>
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
 
+	<jsp:include page="header.jsp"></jsp:include>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
@@ -46,7 +95,7 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="agent" modelAttribute="agent" method="post">
+					<form:form action="agent" modelAttribute="agent" method="post" onsubmit="return validationForm(this)">
 						<form:hidden path="step" value="1" />
 						<div class="card-body lead-status">
 
@@ -61,23 +110,24 @@
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country<span
 										class="text-danger">*</span></label>
-									<%-- <form:select path="countries" class="form-control"
-										multiple="false">
-										<form:options items="${countrieslist}" itemValue="countryId"
-											itemLabel="countryName" />
-									</form:select> --%>
+									<form:select path="countries" class="form-control"
+										data-select2-selector="icon" multiple="false"
+										id="country">
+										<form:option value="" disabled="true" selected="true">Country</form:option>
+										<form:options items="${countryList}" itemValue="valueId"
+											itemLabel="description" />
+									</form:select>
 									<span id="countriesError" class="text-danger"></span>
-
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country Currency<span
 										class="text-danger">*</span></label>
-									<%-- <form:select path="currencies" class="form-control"
+									<form:select path="currencies" id="countryCurrency"
+										class="form-control" data-select2-selector="icon"
 										multiple="false">
-										<form:options items="${listCurrencies}" itemValue="currencyId"
-											itemLabel="ccyname" />
-									</form:select> --%>
+										<form:option value="" disabled="true" selected="true">Country Currency</form:option>
+									</form:select>
 									<span id="currenciesError" class="text-danger"></span>
 								</div>
 							</div>
@@ -167,7 +217,7 @@
 	</div>
 
 
-
+	<script src="js/agent.js"></script>
 	<!-- Vendor JS Files -->
 	<script src="assets/vendors/js/vendors.min.js"></script>
 	<script src="assets/vendors/js/dataTables.min.js"></script>

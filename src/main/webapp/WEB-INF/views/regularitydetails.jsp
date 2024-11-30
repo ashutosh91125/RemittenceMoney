@@ -39,8 +39,8 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="regularitydetails" modelAttribute="agent"
-						method="post">
+					<form:form action="agent" modelAttribute="agent" method="post">
+						<form:hidden path="step" value="3" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -49,12 +49,14 @@
 									<form:input path="taxIdentificationNumber" type="text"
 										class="form-control" id="statusInput"
 										placeholder="Tax Identification Number" />
+									<span id="taxIdentificationNumberError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Licence No.<span
 										class="text-danger">*</span></label>
 									<form:input path="licenceNo" type="text" class="form-control"
 										id="sourceInput" placeholder="Licence No." />
+									<span id="licenceNoError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Tax Applicable<span
@@ -67,7 +69,6 @@
 										<form:radiobutton path="taxApplicable" value="1" />
 										<label for="taxYes">Yes</label>
 									</div>
-
 								</div>
 							</div>
 							<div class="row">
@@ -79,6 +80,7 @@
 										<form:options items="${workinghourslist}" itemValue="id"
 											itemLabel="timeRange" />
 									</form:select> --%>
+									<span id="workingError" class="text-danger"></span>
 
 								</div>
 							</div>

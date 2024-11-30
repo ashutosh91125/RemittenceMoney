@@ -1,3 +1,4 @@
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
@@ -43,7 +44,8 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="apidetails" modelAttribute="agent" method="post">
+					<form:form action="agent" modelAttribute="agent" method="post">
+						<form:hidden path="step" value="6" />
 						<div class="card-body lead-status">
 
 							<div class="row">
@@ -52,18 +54,21 @@
 										class="text-danger">*</span></label>
 									<form:input path="grantType" type="text" class="form-control"
 										id="grantType" placeholder="Grant Type" />
+									<span id="grantTypeError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Scope<span
 										class="text-danger">*</span></label>
 									<form:input path="scope" type="text" class="form-control"
 										id="scope" placeholder="Scope" />
+									<span id="scopeError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Client_Id<span
 										class="text-danger">*</span></label>
 									<form:input path="clientId" type="text" class="form-control"
 										id="clientId" placeholder="Client Id" />
+									<span id="clientIdError" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">
@@ -73,6 +78,7 @@
 									<form:input path="clientSecret" type="text"
 										class="form-control" id="clientSecret"
 										placeholder="Client Secret" />
+									<span id="clientSecretError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Admin User name<span
@@ -80,6 +86,7 @@
 									<form:input path="adminUserName" type="text"
 										class="form-control" id="adminUserName"
 										placeholder="Admin User Name" />
+									<span id="adminUserNameError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Admin Password<span
@@ -87,6 +94,7 @@
 									<form:input path="adminPassword" type="text"
 										class="form-control" id="adminPassword"
 										placeholder="Admin Password" />
+									<span id="adminPasswordError" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">

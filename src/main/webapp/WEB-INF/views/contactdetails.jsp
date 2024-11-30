@@ -19,9 +19,8 @@
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
+	<jsp:include page="header.jsp"></jsp:include>
+
 
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
@@ -44,8 +43,8 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="contactdetails" modelAttribute="agent"
-						method="post">
+					<form:form action="agent" modelAttribute="agent" method="post">
+						<form:hidden path="step" value="2" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -53,46 +52,51 @@
 										class="text-danger">*</span></label>
 									<form:input path="email" type="text" class="form-control"
 										id="email" placeholder="Email" />
+									<span id="emailError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Mobile</label>
 									<form:input path="mobile" type="text" class="form-control"
 										id="sourceInput" placeholder="Mobile" />
-								</div>
-								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Phone<span
-										class="text-danger">*</span></label>
-									<form:input path="phone" type="text" class="form-control"
-										id="visibilityInput" placeholder="Phone" />
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Contact Person<span
-										class="text-danger">*</span></label>
-									<form:input path="contactPerson" type="text"
-										class="form-control" id="statusInput"
-										placeholder="Contact Person" />
-								</div>
-								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Mis emailid<span
-										class="text-danger">*</span></label>
-									<form:input path="misEmailId" type="text" class="form-control"
-										id="sourceInput" placeholder="Mis emailid" />
-								</div>
-							</div>
-
-							<div class="row">
-								<div class="col-10">
-									<div class="col-2 text-end mb-2">
-										<form:button type="submit" class="btn btn-primary btn-lg">
-										Previous</form:button>
+									<span id="mobileError" class="text-danger"></span>
+									<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+										<label class="form-label">Phone<span
+											class="text-danger">*</span></label>
+										<form:input path="phone" type="text" class="form-control"
+											id="visibilityInput" placeholder="Phone" />
+										<span id="phoneError" class="text-danger"></span>
 									</div>
 								</div>
-								<div class="col-2 text-end mb-2">
-									<form:button type="submit"
-										class="btn btn-primary btn-lg next-button">Next</form:button>
+
+								<div class="row">
+									<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+										<label class="form-label">Contact Person<span
+											class="text-danger">*</span></label>
+										<form:input path="contactPerson" type="text"
+											class="form-control" id="statusInput"
+											placeholder="Contact Person" />
+										<span id="contactPersonError" class="text-danger"></span>
+									</div>
+									<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+										<label class="form-label">Mis emailid<span
+											class="text-danger">*</span></label>
+										<form:input path="misEmailId" type="text" class="form-control"
+											id="sourceInput" placeholder="Mis emailid" />
+										<span id="misEmailIdError" class="text-danger"></span>
+									</div>
+								</div>
+
+								<div class="row">
+									<div class="col-10">
+										<div class="col-2 text-end mb-2">
+											<form:button type="submit" class="btn btn-primary btn-lg">
+										Previous</form:button>
+										</div>
+									</div>
+									<div class="col-2 text-end mb-2">
+										<form:button type="submit"
+											class="btn btn-primary btn-lg next-button">Next</form:button>
+									</div>
 								</div>
 							</div>
 						</div>

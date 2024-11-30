@@ -47,6 +47,7 @@
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
 					<form:form action="agent" modelAttribute="agent" method="post">
+						<form:hidden path="step" value="1" />
 						<div class="card-body lead-status">
 
 							<div class="row">
@@ -55,6 +56,7 @@
 										class="text-danger">*</span></label>
 									<form:input path="companyId" type="text" class="form-control"
 										id="statusInput" placeholder="Company Id" />
+									<span id="companyIdError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country<span
@@ -64,6 +66,7 @@
 										<form:options items="${countrieslist}" itemValue="countryId"
 											itemLabel="countryName" />
 									</form:select> --%>
+									<span id="countriesError" class="text-danger"></span>
 
 								</div>
 
@@ -75,6 +78,7 @@
 										<form:options items="${listCurrencies}" itemValue="currencyId"
 											itemLabel="ccyname" />
 									</form:select> --%>
+									<span id="currenciesError" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">
@@ -83,6 +87,7 @@
 										class="text-danger">*</span></label>
 									<form:input path="companyName" type="text" class="form-control"
 										id="statusInput" placeholder="Company Name" />
+									<span id="companyNameError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Company Display Name<span
@@ -90,12 +95,14 @@
 									<form:input path="companyDisplayName" type="text"
 										class="form-control" id="sourceInput"
 										placeholder="Company Display Name" />
+									<span id="companyDisplayNameError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Address1<span
 										class="text-danger">*</span></label>
 									<form:input path="address1" type="text" class="form-control"
 										id="visibilityInput" placeholder="Address1" />
+									<span id="address1Error" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">
@@ -104,16 +111,19 @@
 										class="text-danger">*</span></label>
 									<form:input path="address2" type="text" class="form-control"
 										id="statusInput" placeholder="Address2" />
+									<span id="address2Error" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Address3</label>
 									<form:input path="address3" type="text" class="form-control"
 										id="sourceInput" placeholder="Address3" />
+									<span id="address3Error" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">City<span class="text-danger">*</span></label>
 									<form:input path="city" type="text" class="form-control"
 										id="visibilityInput" placeholder="City" />
+									<span id="cityError" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">
@@ -121,11 +131,13 @@
 									<label class="form-label">State</label>
 									<form:input path="state" type="text" class="form-control"
 										id="statusInput" placeholder="State" />
+									<span id="stateError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Zip/PoBox</label>
 									<form:input path="zip" type="text" class="form-control"
 										id="sourceInput" placeholder="Zip/PoBox" />
+									<span id="zipError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">TimeZone<span
@@ -135,6 +147,7 @@
 										<form:options items="${timezonelist}" itemValue="timeZoneId"
 											itemLabel="zone" />
 									</form:select> --%>
+									<span id="timeZoneError" class="text-danger"></span>
 								</div>
 
 							</div>

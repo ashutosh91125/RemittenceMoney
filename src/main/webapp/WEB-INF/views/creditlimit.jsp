@@ -35,13 +35,13 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content" >
+			<div class="main-content">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="creditdetails" modelAttribute="agent"
-						method="post">
+					<form:form action="agent" modelAttribute="agent" method="post">
+						<form:hidden path="step" value="4" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -49,6 +49,7 @@
 										class="text-danger">*</span></label>
 									<form:input path="daily" type="text" class="form-control"
 										id="statusInput" placeholder="Daily" />
+									<span id="dailyError" class="text-danger"></span>
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -60,6 +61,7 @@
 											itemValue="settelementId" itemLabel="SettelementId"
 											placeholder="Settlement Type" />
 									</form:select> --%>
+									<span id="settlementModeError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Setlement Type<span
@@ -70,6 +72,7 @@
 											itemValue="SettelementId" itemLabel="SettelementId"
 											placeholder="Settlement Type" />
 									</form:select> --%>
+									<span id="settlementTypeError" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">

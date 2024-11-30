@@ -40,8 +40,8 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="customertransaction" modelAttribute="agent"
-						method="post">
+					<form:form action="agent" modelAttribute="agent" method="post">
+						<form:hidden path="step" value="5" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -50,12 +50,14 @@
 									<form:input path="perTransactionLimit" type="text"
 										class="form-control" id="statusInput"
 										placeholder="Per Transaction" />
+									<span id="perTransactionLimitError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Per Day<span
 										class="text-danger">*</span></label>
 									<form:input path="perDayLimit" type="text" class="form-control"
 										id="sourceInput" placeholder="Per Day" />
+									<span id="perTransactionLimitError" class="text-danger"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Per Month<span
@@ -63,6 +65,7 @@
 									<form:input path="perMonthLimit" type="text"
 										class="form-control" id="visibilityInput"
 										placeholder="Per Month" />
+									<span id="perTransactionLimitError" class="text-danger"></span>
 								</div>
 							</div>
 							<div class="row">
@@ -84,7 +87,7 @@
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 
-	
+
 
 	<!-- Vendor JS Files -->
 	<script src="assets/vendors/js/vendors.min.js"></script>

@@ -52,8 +52,9 @@
 					<div class="card-header p-0">
 						<jsp:include page="subheaderagent.jsp"></jsp:include>
 					</div>
-					<form:form action="auditdetails" modelAttribute="agent"
-						method="post" onsubmit="return confirmSubmission();">
+					<form:form action="agent" modelAttribute="agent" method="post"
+						onsubmit="return confirmSubmission();">
+						<form:hidden path="step" value="7" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">

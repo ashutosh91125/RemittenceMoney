@@ -295,7 +295,7 @@
 		                    if (response.message === "Customer already exists with this mobile number.") {
 		                        isValid = false; // Mobile number exists, so not valid
 		                    } else {
-		                        isValid = true;  // Mobile number is available
+		                        isValid = false;  // Mobile number is available
 		                    }
 		                } else {
 		                    primaryMobileNumberError.innerHTML = "Unexpected response from the server.";

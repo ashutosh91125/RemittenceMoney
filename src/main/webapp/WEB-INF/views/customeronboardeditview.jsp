@@ -447,47 +447,7 @@ function copyAddress() {
 			<!-- [ page-header ] end -->
 			<!-- [ Main Content ] start -->
 
-			<div class="container mx-0">
-				<div class="row" style="display: flex; align-items: baseline;">
-					<div class="col-xl-2">
-						<label class=""> <input type="radio" name="form-radio"
-							class="form-radio" value="Customer Number:" checked>
-							Customer Number
-						</label>
-					</div>
-					<div class="col-xl-1">
-						<label class=""> <input type="radio" name="form-radio"
-							class="form-radio" value="ID No:"> ID No
-						</label>
-					</div>
-					<div class="col-xl-2">
-						<label class=""> <input type="radio" name="form-radio"
-							class="form-radio" value="Mobile Number:"> Mobile Number
-						</label>
-					</div>
-					<div class="col-xl-2">
-						<label class=""> <input type="radio" name="form-radio"
-							class="form-radio" value="Customer Name:"> Customer Name
-						</label>
-					</div>
-
-					<div class="col-xl-2">
-						<div class="search-heading" id="search-heading">Customer
-							Number:</div>
-					</div>
-
-					<div class="col-xl-3 ps-0">
-						<div class="search-bar-container d-flex"
-							style="display: flex; justify-content: space-around; align-items: center;">
-							<input type="text" class="py-2" id="radio-search"
-								placeholder="Search..." style="flex: 1;"> <span
-								class="mt-2" style="margin-left: 8px;"><i
-								class="feather-search"></i></span>
-						</div>
-					</div>
-
-				</div>
-			</div>
+		<jsp:include page="customersearch.jsp"></jsp:include>
 			<form:form modelAttribute="customer" id="customerView"
 				action="${pageContext.request.contextPath}/createUser" method="post">
 				<form:hidden path="channel" value="WEB" />

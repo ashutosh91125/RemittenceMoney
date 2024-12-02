@@ -37,7 +37,6 @@ public class AgentController {
 
 	@GetMapping("/agent")
 	public String showCompanyDetailsForm(Model model) {
-		logger.info("Displaying company details form");
 		model.addAttribute("agent", new Agent());
 
 		try {
@@ -56,14 +55,12 @@ public class AgentController {
 			logger.error("Error retrieving working list: ", e);
 			model.addAttribute("workingList", List.of());
 		}
-
-		return "companydetails";
+		return "agentregister";
 	}
 
 	@PostMapping("/agent")
 	public String processCompanyDetails(@RequestParam("step") int step, @ModelAttribute("agent") Agent agent,
 			Model model) {
-		logger.info("Processing company details: {}", agent);
 		try {
 			if (step == 1) {
 				model.addAttribute("step", 2);

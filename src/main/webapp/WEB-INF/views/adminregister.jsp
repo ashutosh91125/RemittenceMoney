@@ -22,11 +22,9 @@
 </head>
 
 <body>
-	<div class="nxl-navigation">
-		<jsp:include page="header.jsp"></jsp:include>
-	</div>
 
-	<div class="nxl-container">
+	<jsp:include page="header.jsp"></jsp:include>
+	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
@@ -41,7 +39,7 @@
 			</div>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
-			<div class="main-content" style="background: aliceblue;">
+			<div class="main-content">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
@@ -115,10 +113,10 @@
 					</form:form>
 				</div>
 			</div>
-
 		</div>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-	<jsp:include page="footer.jsp"></jsp:include>
+
 
 
 	<!-- Vendor JS Files -->

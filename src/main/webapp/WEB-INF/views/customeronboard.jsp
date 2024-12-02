@@ -515,6 +515,7 @@ function copyAddress() {
         hiddenIdType.value = ""; // Reset hidden field
         idTypeDropdown.style.display = "none";
         idTypeDropdown.setAttribute("disabled", true);
+       
 
         if (residentType === '101') { // Malaysian ID
             idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
@@ -534,6 +535,11 @@ function copyAddress() {
 
             idTypeDropdown.addEventListener('change', function () {
                 hiddenIdType.value = idTypeDropdown.value; // Dynamically update hidden field value
+                if (idTypeDropdown.value === '2') {
+                    idDetailsFields.style.display = 'block';
+                } else {
+                    idDetailsFields.style.display = 'none';
+                }
             });
 
             idDetails.style.display = 'block';
@@ -1279,7 +1285,7 @@ function copyAddress() {
 																	type="hidden" id="hiddenIdType" name="idType">
 																<form:select id="idTypeDropdown" path="idType"
 																	class="form-control" style="display: none;">
-																	<form:option value="" disabled="true" selected="true">Select ID Type</form:option>
+																	<form:option value="2" disabled="true" selected="true">PASSPORT</form:option>
 																	<form:options items="${idTypeList}" itemValue="valueId"
 																		itemLabel="description" />
 																</form:select>

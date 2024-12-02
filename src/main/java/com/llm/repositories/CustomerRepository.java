@@ -22,4 +22,6 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
      List<Customer> findByPrimaryMobileNumberContaining(String primaryMobileNumber);
      List<Customer> findByIdNumberContaining(String idNumber); // Assuming IdDetail has idNumber field
      List<Customer> findByFirstNameContainingOrLastNameContaining(String firstName, String lastName);
+     boolean existsByPrimaryMobileNumber(String primaryMobileNumber);
+
 }

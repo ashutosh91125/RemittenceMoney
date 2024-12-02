@@ -2,8 +2,9 @@ package com.llm.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -13,15 +14,20 @@ import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.llm.Service.CustomerEcrnService;
 import com.llm.Service.CustomerService;
 //import com.llm.Service.CustomerValidationService;
 import com.llm.Service.OnboardingService;
 import com.llm.model.Customer;
-import com.llm.model.CustomerValidationResponse;
-import com.llm.model.request.CustomerValidationRequest;
 
 @RestController
 @RequestMapping("/caas/api/v2/customer")
@@ -39,10 +45,10 @@ public class CustomerController {
 	private OnboardingService onboardingService;
 	@Autowired
 	private CustomerEcrnService customerEcrnService;
-	
+
 	@GetMapping
-	public ResponseEntity<List<Customer>> customer(){
-		
+	public ResponseEntity<List<Customer>> customer() {
+
 		return ResponseEntity.ok(customerService.getAllCustomer());
 	}
 
@@ -76,20 +82,24 @@ public class CustomerController {
 	}
 
 	@GetMapping("/search")
-	public ResponseEntity<List<Customer>> searchCustomers(
-			@RequestParam("criteria") String criteria,
+	public ResponseEntity<List<Customer>> searchCustomers(@RequestParam("criteria") String criteria,
 			@RequestParam("query") String query) {
 
 		try {
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			if (customers.isEmpty()) {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(customers);  // Return empty list with no content status
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(customers); // Return empty list with no
+																						// content status
 			}
-			return ResponseEntity.ok(customers);  // Return 200 OK with the customer list
+			return ResponseEntity.ok(customers); // Return 200 OK with the customer list
 		} catch (Exception e) {
 			// In case of error, return an error response
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Collections.emptyList());  // Return empty list with internal server error
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList()); // Return
+																											// empty
+																											// list with
+																											// internal
+																											// server
+																											// error
 		}
 	}
 
@@ -151,5 +161,24 @@ public class CustomerController {
 //		// Return the response entity with a 200 status
 //		return ResponseEntity.ok(response);
 //	}
+
+
+	@GetMapping("/verify-mobile")
+	public ResponseEntity<Map<String, String>> verifyMobile(@RequestParam String primaryMobileNumber) {
+	    logger.info("primaryMobileNumber=========" + primaryMobileNumber);
+	    Map<String, String> response = new HashMap<>();
+	    boolean isMobileExist = customerService.verifyPrimaryMobileNumber(primaryMobileNumber);
+	    logger.info("isMobileExist======"+isMobileExist);
+	    
+	    if (isMobileExist) {
+	        response.put("message", "Customer already exists with this mobile number.");
+	        return ResponseEntity.status(HttpStatus.CONFLICT).body(response); 
+	    } else {
+	        response.put("message", "Mobile number is available.");
+	        return ResponseEntity.ok(response);
+	    }
+	}
+
+
 
 }

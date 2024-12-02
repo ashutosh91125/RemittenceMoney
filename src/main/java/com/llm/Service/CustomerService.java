@@ -34,8 +34,9 @@ public class CustomerService {
 	public String createCustomer(Customer customer) {
 		customer.setChannel("WEB");
 		customer.setAgentLocationId("Malaysia");
-		if(Objects.equals(customer.getCountryOfBirth(), "MY")) {
-			customer.setPlaceOfBirth((customer.getPlaceOfBirth().substring(0, customer.getPlaceOfBirth().length() - 4)).trim());
+		if (Objects.equals(customer.getCountryOfBirth(), "MY")) {
+			customer.setPlaceOfBirth(
+					(customer.getPlaceOfBirth().substring(0, customer.getPlaceOfBirth().length() - 4)).trim());
 		}
 		// customer.setAgentLocationId("India");
 
@@ -139,16 +140,16 @@ public class CustomerService {
 			Map<String, Object> idData = new HashMap<>();
 
 			if (customer.getResidentTypeId() == 101) {
-                customer.setIssuedOn((LocalDate.now(mytZone)).toString());
-                customer.setDateOfExpiry((LocalDate.now(mytZone).plusYears(2)).toString());
+				customer.setIssuedOn((LocalDate.now(mytZone)).toString());
+				customer.setDateOfExpiry((LocalDate.now(mytZone).plusYears(2)).toString());
 //				customer.setIssuedOn("2024-11-26");
 //				customer.setDateOfExpiry("2026-11-26");
 
 				String issued = customer.getIssuedOn().trim();
-				issued = issued.substring(0,10);
+				issued = issued.substring(0, 10);
 
 				String doe = customer.getDateOfExpiry().trim();
-				doe = doe.substring(0,10);
+				doe = doe.substring(0, 10);
 
 				customer.setIdType(28);
 				customer.setIssuedCountry("MY");
@@ -177,7 +178,6 @@ public class CustomerService {
 				idFrontData.put("base64_data", customer.getFrontBase64Data());
 				idFrontData.put("content_type", customer.getFrontContentType());
 				idData.put("id_front", idFrontData);
-
 
 				Map<String, Object> idBackData = new HashMap<>();
 				idBackData.put("base64_data", customer.getBackBase64Data());
@@ -379,7 +379,7 @@ public class CustomerService {
 	}
 
 	public List<Customer> searchByCriteria(String criteria, String query) {
-		if(query.isBlank()){
+		if (query.isBlank()) {
 			return List.of();
 		}
 		return switch (criteria) {
@@ -398,5 +398,9 @@ public class CustomerService {
 
 	public List<Customer> getAllCustomer() {
 		return customerRepository.findAll();
+	}
+
+	public boolean verifyPrimaryMobileNumber(String primaryMobileNumber) {
+		return customerRepository.existsByPrimaryMobileNumber(primaryMobileNumber);
 	}
 }

@@ -13,7 +13,6 @@
 	    document.getElementById("placeOfBirthError").innerHTML = "";
 	    document.getElementById("countryOfResidenceError").innerHTML = "";
 	    document.getElementById("genderError").innerHTML = "";
-	    document.getElementById("primaryMobileNumberError").innerHTML = "";
 		document.getElementById("emailIdError").innerHTML = "";
 		
 		
@@ -53,6 +52,7 @@
 		issuedOnError.innerHTML = "";
 		dateOfExpiryError.innerHTML = "";
 		const today = new Date().toISOString().split("T")[0];
+		
 		
 
     let isValid = true;
@@ -125,9 +125,6 @@
 	 } else {
 	     document.getElementById("emailIdError").innerHTML = "";
 	 }
-	
-    
-   
 	
 	
     if (!form.buildingName.value.trim()) {
@@ -266,7 +263,55 @@
 				 isValid = false;
 		}
 				
-					 					 				 
+		var primaryMobileNumber = $("#primaryMobileNumber").val();
+		var primaryMobileNumberError = document.getElementById("primaryMobileNumberError");
+
+	
+		primaryMobileNumberError.innerHTML = ""; // Clear any previous error
+
+		if (!primaryMobileNumber) {
+		    primaryMobileNumberError.innerHTML = "Primary mobile number is required.";
+		    isValid = false;
+		} else {
+		    // Check if mobile number is in the correct format (10-15 digits)
+		    if (!/^\d{10,15}$/.test(primaryMobileNumber)) {
+		        primaryMobileNumberError.innerHTML = "Enter a valid mobile number (10-15 digits).";
+		        isValid = false;
+		    } else {
+		        // Make the AJAX call to verify if the mobile number exists
+		        $.ajax({
+		            url: "/caas/api/v2/customer/verify-mobile", 
+		            type: "GET",
+		            async: false,  // Ensure synchronous behavior for validation
+		            data: { primaryMobileNumber: primaryMobileNumber },
+		            success: function (response) {
+		                console.log("API Response: ", response);
+		                
+		                // If the response contains a message
+		                if (response && response.message) {
+		                    primaryMobileNumberError.innerHTML = response.message;  // Show the server message
+
+		                    // If customer already exists, mark as invalid
+		                    if (response.message === "Customer already exists with this mobile number.") {
+		                        isValid = false; // Mobile number exists, so not valid
+		                    } else {
+		                        isValid = true;  // Mobile number is available
+		                    }
+		                } else {
+		                    primaryMobileNumberError.innerHTML = "Unexpected response from the server.";
+		                    isValid = false;
+		                }
+		            },
+		            error: function (xhr, status, error) {
+		                console.log("AJAX Error Status: ", status);  // Log the status
+		                console.log("AJAX Error Response: ", xhr.responseText);  // Log response details
+		                primaryMobileNumberError.innerHTML = "Error verifying mobile number.";
+		                isValid = false;  // In case of error, mark as invalid
+		            }
+		        });
+		    }
+		}
+	 
 
 //    if (!isValid) {
 //        alert("Please fill in all required fields.");

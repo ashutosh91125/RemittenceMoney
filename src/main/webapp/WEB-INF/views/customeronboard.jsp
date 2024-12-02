@@ -941,7 +941,7 @@ function copyAddress() {
 												<label class="form-label">Primary Mobile Number<span
 													class="text-danger">*</span></label>
 												<form:input path="primaryMobileNumber" type="text"
-													class="form-control" placeholder="Primary Mobile Number" />
+													class="form-control" placeholder="Primary Mobile Number" id="primaryMobileNumber"/>
 												<span id="primaryMobileNumberError" class="text-danger"></span>
 											</div>
 										</div>

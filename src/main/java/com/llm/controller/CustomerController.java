@@ -162,23 +162,22 @@ public class CustomerController {
 //		return ResponseEntity.ok(response);
 //	}
 
-
 	@GetMapping("/verify-mobile")
 	public ResponseEntity<Map<String, String>> verifyMobile(@RequestParam String primaryMobileNumber) {
 	    logger.info("primaryMobileNumber=========" + primaryMobileNumber);
 	    Map<String, String> response = new HashMap<>();
 	    boolean isMobileExist = customerService.verifyPrimaryMobileNumber(primaryMobileNumber);
-	    logger.info("isMobileExist======"+isMobileExist);
-	    
+	    logger.info("isMobileExist======" + isMobileExist);
+
 	    if (isMobileExist) {
+	        // If the mobile number exists, respond that the customer already exists.
 	        response.put("message", "Customer already exists with this mobile number.");
-	        return ResponseEntity.status(HttpStatus.CONFLICT).body(response); 
 	    } else {
-	        response.put("message", "Mobile number is available.");
-	        return ResponseEntity.ok(response);
+	        // If the mobile number does not exist, respond that the customer is available.
+	        response.put("message", "Customer available with this mobile number.");
 	    }
+	    
+	    return ResponseEntity.ok(response);
 	}
-
-
 
 }

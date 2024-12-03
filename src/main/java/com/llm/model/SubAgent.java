@@ -81,5 +81,7 @@ public class SubAgent {
 	private Boolean statusFlag;
 	
 	private String password;
+	
+	private Boolean isValid;
 
 }

@@ -251,4 +251,5 @@ private String dateOfBirth;
         private String profContentType;
         
         private Boolean isValid;
+        private String phoneCode;
 }

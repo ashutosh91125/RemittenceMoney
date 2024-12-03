@@ -48,31 +48,14 @@ public class SubAgentcontroller {
 	}
 
 	@PostMapping("/subagent")
-	public String processSubAgentForm(@ModelAttribute("subAgent") SubAgent subAgent, @RequestParam("step") int step,
-			Model model) {
+	public String processSubAgentForm(@ModelAttribute("subAgent") SubAgent subAgent, Model model) {
 		try {
-			if (step == 1) {
-				model.addAttribute("step", 2);
-				model.addAttribute("subAgent", subAgent);
-				return "contactdetailssubagent";
-			} else if (step == 2) {
-				model.addAttribute("step", 3);
-				model.addAttribute("subAgent", subAgent);
-				return "regurilitysubagent";
-			} else if (step == 3) {
-				model.addAttribute("step", 4);
-				model.addAttribute("subAgent", subAgent);
-				return "auditsubagent";
-			} else if (step == 4) {
-				subAgentService.addSubAgent(subAgent);
-				return "success";
-			}
+			subAgentService.addSubAgent(subAgent);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		model.addAttribute("subAgent", subAgent);
-		model.addAttribute("step", step);
 		return "registersubagent";
 
 	}

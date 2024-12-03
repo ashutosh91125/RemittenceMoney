@@ -22,7 +22,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class CustomerService {
 
-	private static final Logger looger = LoggerFactory.getLogger(CustomerService.class);
+	private static final Logger loger = LoggerFactory.getLogger(CustomerService.class);
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -41,6 +41,8 @@ public class CustomerService {
 		// customer.setAgentLocationId("India");
 
 		ZoneId mytZone = ZoneId.of("Asia/Kuala_Lumpur");
+		String phone = "";
+		phone +=  customer.getPhoneCode().trim().toString() + customer.getPrimaryMobileNumber().trim().toString();
 
 		Map<String, Object> customerData = new HashMap<>();
 		customerData.put("channel", customer.getChannel());
@@ -65,7 +67,7 @@ public class CustomerService {
 		customerData.put("resident_type_id", customer.getResidentTypeId());
 		customerData.put("country_of_residence", customer.getCountryOfResidence());
 		customerData.put("gender", customer.getGender());
-		customerData.put("primary_mobile_number", customer.getPrimaryMobileNumber());
+		customerData.put("primary_mobile_number", phone);
 		customerData.put("secondary_mobile_number", customer.getSecondaryMobileNumber());
 		customerData.put("phone_number", customer.getPhoneNumber());
 		customerData.put("email_id", customer.getEmailId());
@@ -184,7 +186,7 @@ public class CustomerService {
 				idBackData.put("content_type", customer.getBackContentType());
 				idData.put("id_back", idBackData);
 
-				looger.info("======customer.getResidentTypeId()===" + idData);
+				loger.info("======customer.getResidentTypeId()===" + idData);
 				idDetailsData.add(idData);
 
 			} else if (customer.getResidentTypeId() == 100) {
@@ -299,7 +301,7 @@ public class CustomerService {
 		Customer saveCustomer = new Customer();
 		String status = new String();
 
-		looger.info(customerData.toString());
+		loger.info(customerData.toString());
 		try {
 			ResponseEntity<Map<String, Object>> response = customerCreationService.createCustomer(customerData);
 			Map<String, Object> responseBody = response.getBody();

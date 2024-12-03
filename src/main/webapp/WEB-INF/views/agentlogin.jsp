@@ -41,7 +41,7 @@
 					<div class="card-body p-sm-5">
 						<h2 class="fs-20 fw-bolder mb-4">Login</h2>
 						<h4 class="fs-13 fw-bold mb-2">Login to your account</h4>
-						<form:form action="agentlogin" modelAttribute="agentDTO"
+						<form:form action="agentlogin" modelAttribute="agent"
 							class="w-100 mt-4 pt-2">
 							<div class="mb-4">
 								<form:input path="email" type="email" class="form-control"

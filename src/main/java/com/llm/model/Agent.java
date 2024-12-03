@@ -153,7 +153,7 @@ public class Agent {
 	private String currencies;
 //	@ManyToOne
 //	private SubAgent subagents;
-	@Transient
-	private Integer step;
+
+	private Boolean isValid;
 
 }

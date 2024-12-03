@@ -70,6 +70,14 @@ public class AdminController {
 
 	@GetMapping("/adminlogin")
 	public String showLoginForm(Model model) {
+		try {
+			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
+			countriesEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of());
+		}
 		model.addAttribute("adminDTO", new Admin());
 		return "adminlogin";
 	}

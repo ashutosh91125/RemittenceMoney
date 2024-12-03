@@ -447,7 +447,7 @@ function copyAddress() {
 			<!-- [ page-header ] end -->
 			<!-- [ Main Content ] start -->
 
-		<jsp:include page="customersearch.jsp"></jsp:include>
+			<jsp:include page="customersearch.jsp"></jsp:include>
 			<form:form modelAttribute="customer" id="customerView"
 				action="${pageContext.request.contextPath}/createUser" method="post">
 				<form:hidden path="channel" value="WEB" />
@@ -595,11 +595,26 @@ function copyAddress() {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Primary Mobile Number</label>
-												<form:input path="primaryMobileNumber" type="tel"
-													class="form-control" placeholder="Primary Mobile Number" />
+												<label class="form-label">Primary Mobile Number<span
+													class="text-danger">*</span></label>
+												<div class="input-group">
+													<!-- Fixed Phone Code -->
+													<form:select path="phoneCode" id="phoneCode"
+														class="form-control" multiple="false"
+														style="max-width: 80px; padding: 0; text-align:center;"
+														disabled="true">
+														<form:option value="+60" selected="true">+60</form:option>
+													</form:select>
+
+													<!-- Combined Input Box -->
+													<form:input path="primaryMobileNumber" type="text"
+														class="form-control" placeholder="Primary Mobile Number"
+														id="primaryMobileNumber" />
+												</div>
+												<span id="primaryMobileNumberError" class="text-danger"></span>
 											</div>
 										</div>
+
 									</div>
 
 									<div class="row">

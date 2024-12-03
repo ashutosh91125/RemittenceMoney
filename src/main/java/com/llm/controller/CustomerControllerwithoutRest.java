@@ -39,11 +39,10 @@ public class CustomerControllerwithoutRest {
 	@GetMapping("/customer")
 	public String onboardCustomer1(Model model) {
 		Customer customer = new Customer();
-		
+
 		if (!model.containsAttribute("customerList")) {
-	        model.addAttribute("customerList", new ArrayList<Customer>());
-	    }
-		
+			model.addAttribute("customerList", new ArrayList<Customer>());
+		}
 
 		logger.info("Model attributes before rendering form: " + model.asMap());
 //		IdDetail idDetail = new IdDetail();
@@ -61,7 +60,6 @@ public class CustomerControllerwithoutRest {
 //		customer.setCustomerClassification(customerClassification);
 
 		model.addAttribute("customer", customer); // Ensure custDTO is added here
-		
 
 		try {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
@@ -202,7 +200,6 @@ public class CustomerControllerwithoutRest {
 			model.addAttribute("idTypeList", List.of()); // or set a default list if needed
 		}
 
-
 //		model.addAttribute("salutationList", salutationService.findAllRecords());
 //		model.addAttribute("countryList", countryService.fetchCountries());
 //		model.addAttribute("currencyList", currencyService.fetchCurrencies());
@@ -271,9 +268,6 @@ public class CustomerControllerwithoutRest {
 			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
 		}
 
-
-
-
 		String status = customerService.createCustomer(customer); // Get the status response from the service
 
 		// Remove any leading or trailing whitespaces from the status string
@@ -303,7 +297,7 @@ public class CustomerControllerwithoutRest {
 
 				String ecrn = extractFieldValue(status, "ecrn=");
 
-				return ResponseEntity.ok("Customer Onboarded successfully with the ECRN: "+ecrn);
+				return ResponseEntity.ok("Customer Onboarded successfully with the ECRN: " + ecrn);
 			}
 
 			// If status code is not 200, extract the message
@@ -343,12 +337,9 @@ public class CustomerControllerwithoutRest {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get());
-				try {
-					model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
-					model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
-				} catch (Exception e) {
-					logger.info(e.toString());
-				}
+
+				model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
+				model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
 
 				model.addAttribute("nationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
 						customer.get().getNationality()));
@@ -413,9 +404,8 @@ public class CustomerControllerwithoutRest {
 	}
 
 	@GetMapping("/searchCustomers")
-	public String searchCustomers(@RequestParam("criteria") String criteria,
-								  @RequestParam("query") String query,
-								  RedirectAttributes redirectAttributes) {
+	public String searchCustomers(@RequestParam("criteria") String criteria, @RequestParam("query") String query,
+			RedirectAttributes redirectAttributes) {
 		try {
 			// Use the searchByCriteria method from the service
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
@@ -424,8 +414,7 @@ public class CustomerControllerwithoutRest {
 			logger.error(e.toString());
 //			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());
 		}
-		return "redirect:/customer";  
+		return "redirect:/customer";
 	}
-	
-	
+
 }

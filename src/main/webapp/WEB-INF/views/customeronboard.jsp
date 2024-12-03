@@ -1014,10 +1014,7 @@ function copyAddress() {
 											</div>
 										</div>
 									</div>
-
-
 									<div class="row">
-
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Secondary Mobile Number</label>

@@ -375,16 +375,19 @@ function copyAddress() {
 
     $(document).ready(function() {
             // Attach a click event to the Back button
-            $("#backButton").on("click", function() {
+            $("#updateButton").on("click", function() {
+            	
+            	 var ecrn = $("input[name='ecrn']").val()
                 // Use AJAX to send a GET request to the /customer-list endpoint
                 $.ajax({
-                    url: '/customer-list',  // The URL to send the request to
+                    url: '/customer',  // The URL to send the request to
                     type: 'GET',  // Method type (GET in this case)
+                    data: { ecrn: ecrn },
                     success: function(response) {
                         // On success, you can manually trigger a redirect
                         // Since it's a GET request and you want the page to navigate,
                         // you simply change the window location.
-                        window.location.href = '/customer';  // Redirect to the customer list page
+                        window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);  // Redirect to the customer list page
                     },
                     error: function(xhr, status, error) {
                         // In case of an error, you can handle the failure.
@@ -450,8 +453,8 @@ function copyAddress() {
 			<jsp:include page="customersearch.jsp"></jsp:include>
 			<form:form modelAttribute="customer" id="customerView"
 				action="${pageContext.request.contextPath}/createUser" method="post">
-				<form:hidden path="channel" value="WEB" />
-				<form:hidden path="agentLocationId" value="India" />
+				<form:hidden path="ecrn" />
+			
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">
@@ -1403,7 +1406,7 @@ function copyAddress() {
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
-					<button type="button" class="btn btn-warning" id="backButton">Back</button>
+					<button type="button" class="btn btn-warning" id="updateButton">Update</button>
 				</div>
 			</form:form>
 		</div>

@@ -758,6 +758,7 @@ function copyAddress() {
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data" onsubmit="return validation(this)">
 				<form:hidden path="isValid" value="true" />
+				<form:hidden path="ecrn"/>
 
 
 				<div class="${not empty customerList?'main-content':'hidden' }">
@@ -1052,7 +1053,6 @@ function copyAddress() {
 								style="background: aliceblue;"
 								onclick="toggleDiv('panelsStayOpen-collapseTwo')">Address</button>
 						</h2>
-
 						<div id="panelsStayOpen-collapseTwo"
 							class="accordion-collapse collapse">
 							<hr class="my-0">

@@ -37,8 +37,19 @@ public class CustomerControllerwithoutRest {
 	private EnumEntityService enumEntityService;
 
 	@GetMapping("/customer")
-	public String onboardCustomer1(Model model) {
-		Customer customer = new Customer();
+	public String onboardCustomer1(@RequestParam(value = "ecrn", required = false) String ecrn, Model model) {
+//		Customer customer = new Customer();
+		Customer customer;
+		if (ecrn != null && !ecrn.isEmpty()) {
+			customer = customerService.getByEcrn(ecrn).orElseGet(() -> {
+				return new Customer();
+			});
+			if (customer == null) {
+				customer = new Customer();
+			}
+		} else {
+			customer = new Customer();
+		}
 
 		if (!model.containsAttribute("customerList")) {
 			model.addAttribute("customerList", new ArrayList<Customer>());

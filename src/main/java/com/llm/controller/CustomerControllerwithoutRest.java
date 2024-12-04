@@ -41,9 +41,8 @@ public class CustomerControllerwithoutRest {
 //		Customer customer = new Customer();
 		Customer customer;
 		if (ecrn != null && !ecrn.isEmpty()) {
-			customer = customerService.getByEcrn(ecrn).orElseGet(() -> {
-				return new Customer();
-			});
+			customer = customerService.getByEcrn(ecrn).orElseGet(() -> new Customer());
+			logger.info("BirthPlace======="+customer.getPlaceOfBirth());
 			if (customer == null) {
 				customer = new Customer();
 			}
@@ -54,7 +53,6 @@ public class CustomerControllerwithoutRest {
 		if (!model.containsAttribute("customerList")) {
 			model.addAttribute("customerList", new ArrayList<Customer>());
 		}
-
 		logger.info("Model attributes before rendering form: " + model.asMap());
 //		IdDetail idDetail = new IdDetail();
 //		CustomerClassification customerClassification = new CustomerClassification();
@@ -210,7 +208,32 @@ public class CustomerControllerwithoutRest {
 			logger.error("Error idType list: ", e);
 			model.addAttribute("idTypeList", List.of()); // or set a default list if needed
 		}
+		try {
+			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
+			nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
 
+		} catch (Exception e) {
+			logger.error("Error Native Region List: ", e);
+			model.addAttribute("native Region List", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
+			placeofBirthEntity.ifPresent(entity -> model.addAttribute("placeOfBirthList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error  Place Of Birth List: ", e);
+			model.addAttribute("Place Of Birth List", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
+			placeofBirthEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error State List: ", e);
+			model.addAttribute("State List", List.of()); // or set a default list if needed
+		}
+//		model.addAttribute("nativeRegion", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
+//				customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion())));
 //		model.addAttribute("salutationList", salutationService.findAllRecords());
 //		model.addAttribute("countryList", countryService.fetchCountries());
 //		model.addAttribute("currencyList", currencyService.fetchCurrencies());

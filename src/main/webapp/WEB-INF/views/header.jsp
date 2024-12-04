@@ -70,19 +70,18 @@
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Agents</span>
 					</a></li>
-					<div id="agent_Id"></div>
+					
 					<li class="nxl-item nxl-hasmenu"><a href="subagentlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Sub
 								Agents</span>
 					</a></li>
-					<div id="subAgent_Id"></div>
-
+					
 					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span></i></span>
+								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>
 					</a></li>
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<li class="nxl-item nxl-hasmenu"><a href="transfer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">All
 								Transfers </span></i></span>

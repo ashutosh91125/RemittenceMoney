@@ -483,7 +483,7 @@ function copyAddress() {
     															},
     															error : function() {
     																console
-    																		.error("Error fetching place Of Birth for the selected country.");
+    																		.error("Error fetching Place Of Birth for the selected country.");
     															}
     														});
     											} else {
@@ -491,7 +491,7 @@ function copyAddress() {
     												$('#nativeRegion')
     														.empty()
     														.append(
-    																'<option value="" disabled selected>Select Native Region</option>');
+    																'<option value="" disabled selected>Select Place Of Birth</option>');
     											}
     										});
     					});
@@ -758,7 +758,7 @@ function copyAddress() {
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data" onsubmit="return validation(this)">
 				<form:hidden path="isValid" value="true" />
-				<form:hidden path="ecrn"/>
+				<form:hidden path="ecrn" />
 
 
 				<div class="${not empty customerList?'main-content':'hidden' }">
@@ -907,18 +907,20 @@ function copyAddress() {
 												<span id="secondNationalityError" class="text-danger"></span>
 											</div>
 										</div>
-										<div class="col-xl-4">
+										<div class="col-xl-4"> 
 											<div class="mb-4">
-												<label class="form-label">Native Region<span
+												<label class="form-label">Native Region <span
 													class="text-danger">*</span></label>
 												<form:select path="nativeRegion" id="nativeRegion"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
+													class="form-control" multiple="false"  data-select2-selector="icon">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
+													<form:options items="${nativeRegionList}"
+														itemValue="valueId" itemLabel="description" />
 												</form:select>
 												<span id="nativeRegionError" class="text-danger"></span>
 											</div>
 										</div>
+
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Date of Birth<span
@@ -951,6 +953,8 @@ function copyAddress() {
 													class="form-control" data-select2-selector="icon"
 													multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
+													<form:options items="${placeOfBirthList}"
+														itemValue="description" itemLabel="description" />
 												</form:select>
 												<span id="placeOfBirthError" class="text-danger"></span>
 
@@ -1143,6 +1147,8 @@ function copyAddress() {
 															class="form-control" data-select2-selector="icon"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
+															<form:options items="${stateList}" itemValue="valueId"
+																itemLabel="description" />
 														</form:select>
 														<span id="stateError" class="text-danger"></span>
 													</div>
@@ -1252,6 +1258,8 @@ function copyAddress() {
 															class="form-control" multiple="false" style="height: 46;"
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
+																<form:options items="${stateList}" itemValue="valueId"
+																itemLabel="description" />
 														</form:select>
 														<span id="parStateError" class="text-danger"></span>
 													</div>

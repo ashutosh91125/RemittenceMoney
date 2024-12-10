@@ -4,6 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.model.enums.Role;
+import com.llm.UserIdentity.service.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,7 @@ import com.llm.model.AdminWithoutProfile;
 
 @Controller
 @SessionAttributes({ "adminDTO" })
+@RequiredArgsConstructor
 public class AdminController {
 	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	@Autowired
@@ -30,6 +35,9 @@ public class AdminController {
 
 	@Autowired
 	private EnumEntityService enumEntityService;
+
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 
 	@GetMapping("/admin")
 	public String showAdminForm(Model model) {
@@ -61,9 +69,9 @@ public class AdminController {
 
 	@GetMapping("/adminlist")
 	public String getAdminList(Model model) {
-		List<Admin> adminList = adminService.getAllAdmins();
-		Collections.reverse(adminList);
-		model.addAttribute("adminList", adminList);
+		List<User> subAdminList = customUserDetailsService.getUserByRole(Role.SUB_ADMIN);
+		Collections.reverse(subAdminList);
+		model.addAttribute("subAdminList", subAdminList);
 		return "adminlist";
 
 	}
@@ -78,7 +86,7 @@ public class AdminController {
 			logger.error("Error retrieving country list: ", e);
 			model.addAttribute("countryList", List.of());
 		}
-		model.addAttribute("adminDTO", new Admin());
+		model.addAttribute("admin", new Admin());
 		return "adminlogin";
 	}
 

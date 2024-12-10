@@ -29,7 +29,7 @@
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 						<a href="admin" class="btn btn-primary">
-							<i class="feather-user-plus me-2"></i> <span>Add Admin</span>
+							<i class="feather-user-plus me-2"></i> <span>Add Sub-Admin</span>
 						</a>
 					</div>
 				</div>
@@ -49,27 +49,27 @@
 												<th>Admin Name</th>
 												<th>Phone Number</th>
 												<th>Email</th>
-												<th>Countries</th>
-												<th>Profile Image</th>
+												<%-- <th>Countries</th>
+												<th>Profile Image</th> --%>
 												<th>Status</th>
 												<th class="text-end">Actions</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="admin" items="${adminList}"
+											<c:forEach var="admin" items="${subAdminList}"
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>
 													<td>${admin.adminName}</td>
-													<td>${admin.phone}</td>
+													<td>${admin.phoneNumber}</td>
 													<td>${admin.email}</td>
-													<td>${admin.countries }</td>
-													<td><img
+													<%-- <td>${admin.country}</td> --%>
+													<%--  <td><img
 														src="data:image/jpeg;base64,${admin.profileImage}"
 														alt="Profile Image" style="width: 50px; height: 50px;">
-													</td>
+													</td> --%>
 													<td><c:choose>
-															<c:when test="${admin.satus}">
+															<c:when test="${admin.approved}">
 																Active
 															</c:when>
 															<c:otherwise>

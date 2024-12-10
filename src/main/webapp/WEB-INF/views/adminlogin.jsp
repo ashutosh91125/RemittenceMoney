@@ -45,32 +45,27 @@
 					<div class="card-body p-sm-5">
 						<h2 class="fs-20 fw-bolder mb-4" style="text-align: center;">Admin
 							Login</h2>
-						<form:form action="adminlogin" modelAttribute="admin"
+						<form action="${pageContext.request.contextPath}/perform_login"
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
-								<form:input path="email" type="text" class="form-control"
-									placeholder="Email or Username" />
+								<input name="username" type="text" class="form-control"
+									placeholder="Username" >
 							</div>
 							<div class="row mb-2">
-								<form:input path="password" type="password" class="form-control"
-									placeholder="Password" />
+								<input name="password" type="password" class="form-control"
+									placeholder="Password" >
 							</div>
 
-							<div class="row mb-2 ">
+							    <%-- <div class="row mb-2 ">
 								<form:select path="countries" 
 									class="form-control" data-select2-selector="icon"
 									multiple="false">
 									<form:option value="" disabled="true" selected="true">Select Country</form:option>
 									<form:options items="${countryList}" itemValue="valueId"
 										itemLabel="description" />
+								    </form:select>
 								</form:select>
-								<%-- <form:select path="countries" class="form-control"
-									multiple="false">
-									<form:option value="" disabled="true" selected="true">Country</form:option>
-									<form:options items="${countrieslist}" itemValue="countryId"
-										itemLabel="countryName" />
-								</form:select> --%>
-							</div>
+							</div> --%>
 							<div class="d-flex align-items-center justify-content-between">
 								<div>
 									<div class="custom-control custom-checkbox">
@@ -86,9 +81,9 @@
 								</div>
 							</div>
 							<div class="mt-5">
-								<form:button type="submit" class="btn btn-lg btn-primary w-100">Login</form:button>
+								<button type="submit" class="btn btn-lg btn-primary w-100">Login</button>
 							</div>
-						</form:form>
+						</form>
 					</div>
 				</div>
 				<jsp:include page="footer.jsp"></jsp:include>

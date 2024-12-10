@@ -3,6 +3,10 @@ package com.llm.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.model.enums.Role;
+import com.llm.UserIdentity.service.CustomUserDetailsService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +25,7 @@ import com.llm.model.Agent;
 
 @Controller
 @SessionAttributes({ "agent" })
+@RequiredArgsConstructor
 public class AgentController {
 	private static final Logger logger = LoggerFactory.getLogger(AgentController.class);
 
@@ -29,6 +34,9 @@ public class AgentController {
 
 	@Autowired
 	private EnumEntityService enumEntityService;
+
+	@Autowired
+	private CustomUserDetailsService customUserDetailsService;
 
 	@ModelAttribute("agent")
 	public Agent initializeSubAgent() {
@@ -48,8 +56,8 @@ public class AgentController {
 			model.addAttribute("countryList", List.of());
 		}
 		try {
-			Optional<EnumEntity> workingEntity = enumEntityService.getEnumEntityByKey("working");
-			workingEntity.ifPresent(entity -> model.addAttribute("workingList", entity.getValues()));
+			Optional<EnumEntity> workingEntity = enumEntityService.getEnumEntityByKey("workingHours");
+			workingEntity.ifPresent(entity -> model.addAttribute("workingHoursList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving working list: ", e);
@@ -101,7 +109,7 @@ public class AgentController {
 
 	@GetMapping("/agentlist")
 	public String getAdminList(Model model) {
-		List<Agent> agentList = agentService.findAllAgent();
+		List<User> agentList = customUserDetailsService.getUserByRole(Role.AGENT);
 		model.addAttribute("agentList", agentList);
 		return "agentlist";
 

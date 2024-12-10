@@ -46,7 +46,7 @@
 										<thead>
 											<tr>
 												<th>S.No</th>
-												<th>Admin Name</th>
+												<th>Agent Name</th>
 												<th>Phone Number</th>
 												<th>Email</th>
 												<th>Countries
@@ -55,7 +55,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="admin" items="${adminList}"
+											<c:forEach var="agent" items="${agentList}"
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>

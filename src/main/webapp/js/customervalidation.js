@@ -289,13 +289,13 @@
 		                
 		                // If the response contains a message
 		                if (response && response.message) {
-		                    primaryMobileNumberError.innerHTML = response.message;  // Show the server message
 
 		                    // If customer already exists, mark as invalid
 		                    if (response.message === "Customer already exists with this mobile number.") {
+		                        primaryMobileNumberError.innerHTML = response.message;
 		                        isValid = false; // Mobile number exists, so not valid
 		                    } else {
-		                        isValid = false;  // Mobile number is available
+		                        isValid = true;  // Mobile number is available
 		                    }
 		                } else {
 		                    primaryMobileNumberError.innerHTML = "Unexpected response from the server.";

@@ -654,7 +654,7 @@
 													<form:select path="working" class="form-control"
 														data-select2-selector="icon" multiple="false" id="country">
 														<form:option value="" disabled="true" selected="true">Working Hours / Time Zone</form:option>
-														<form:options items="${workingList}" itemValue="valueId"
+														<form:options items="${workingHoursList}" itemValue="valueId"
 															itemLabel="description" />
 													</form:select>
 													<span id="workingError" class="text-danger"></span>

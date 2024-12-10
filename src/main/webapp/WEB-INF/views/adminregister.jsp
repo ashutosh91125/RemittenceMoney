@@ -44,42 +44,42 @@
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form:form action="admin" modelAttribute="admin" method="post"
+					<form action="/signup" method="post"
 						enctype="multipart/form-data">
 						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Admin Name</label>
-									<form:input path="adminName" type="text" class="form-control"
-										id="statusInput" placeholder="Admin Name" />
+									<input name="adminName" type="text" class="form-control"
+										id="statusInput" placeholder="Admin Name" >
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">User Name</label>
-									<form:input path="userName" type="text" class="form-control"
-										id="statusInput" placeholder="User Name" />
+									<input name="userName" type="text" class="form-control"
+										id="statusInput" placeholder="User Name" >
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Phone Number</label>
-									<form:input path="phone" type="text" class="form-control"
-										id="statusInput" placeholder="Phone Number" />
+									<input name="phoneNumber" type="text" class="form-control"
+										id="statusInput" placeholder="Phone Number" >
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Email</label>
-									<form:input path="email" type="text" class="form-control"
-										id="statusInput" placeholder="Email" />
+									<input name="email" type="text" class="form-control"
+										id="statusInput" placeholder="Email" >
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Password</label>
-									<form:input path="password" type="text" class="form-control"
-										id="statusInput" placeholder="Password" />
+									<input name="password" type="text" class="form-control"
+										id="statusInput" placeholder="Password" >
 								</div>
 
 
-								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+								<%-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Confirm Password</label>
 									<form:input path="confirmPassword" type="text"
 										class="form-control" id="statusInput"
@@ -101,7 +101,7 @@
 											itemLabel="description" />
 									</form:select>
 								</div>
-							</div>
+							</div> --%>
 							<div class="row">
 								<div class="col-10"></div>
 								<div class="col-2 text-end mb-2">
@@ -110,7 +110,7 @@
 								</div>
 							</div>
 						</div>
-					</form:form>
+					</form>
 				</div>
 			</div>
 		</div>

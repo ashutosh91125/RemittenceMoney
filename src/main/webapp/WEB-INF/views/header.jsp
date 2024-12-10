@@ -1,3 +1,4 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -51,37 +52,44 @@
 			</div>
 			<div class="navbar-content">
 				<ul class="nxl-navbar">
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<li class="nxl-item nxl-hasmenu"><a href="welcome"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-airplay"></i></span> <span class="nxl-mtext">Dashboards</span>
 					</a></li>
 
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<li class="nxl-item nxl-hasmenu"><a href="/transfer"
 						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Remittance
+								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Transfer
 						</span>
 					</a></li>
 
+                    <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
 					<li class="nxl-item nxl-hasmenu"><a href="adminlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Admin</span></i></span>
 					</a></li>
+					</c:if>
+
+                    <c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
 					<li class="nxl-item nxl-hasmenu"><a href="agentlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Agents</span>
 					</a></li>
-					
+					</c:if>
+
+					<c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
 					<li class="nxl-item nxl-hasmenu"><a href="subagentlist"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Sub
 								Agents</span>
 					</a></li>
+					</c:if>
 					
 					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>
 					</a></li>
-					<li class="nxl-item nxl-hasmenu"><a href="transfer"
+					<li class="nxl-item nxl-hasmenu"><a href="#"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">All
 								Transfers </span></i></span>
@@ -111,7 +119,7 @@
 							<li class="nxl-item"><a class="nxl-link"
 								href="settings-tags.html">Permission</a></li>
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
+					<li class="nxl-item nxl-hasmenu"><a href="${pageContext.request.contextPath}/logout"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-power"></i></span> <span class="nxl-mtext">Logout</span></i></span>
 					</a>

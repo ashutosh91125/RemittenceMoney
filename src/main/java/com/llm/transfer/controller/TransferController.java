@@ -1,4 +1,4 @@
-package com.llm.common.controller;
+package com.llm.transfer.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -6,9 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class TransferController {
 	
-	@GetMapping("transfer")
-	public String showTransfer() {
-		return "transfer";
-	}
+	@GetMapping("/transfer")
+	public String showTransfer() {return "transfer";}
 
 }

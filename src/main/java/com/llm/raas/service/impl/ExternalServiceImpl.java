@@ -100,7 +100,7 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> enquireTransaction(String transactionRefNumber) {
-        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/enquire-transaction?transaction_ref_number=" + transactionRefNumber;
+        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/enquire-transaction";
 
         // Create headers
         HttpHeaders headers = new HttpHeaders();
@@ -109,18 +109,28 @@ public class ExternalServiceImpl implements ExternalService {
         headers.set("channel", "Direct");
         headers.set("company", "784825");
         headers.set("branch", "784826");
-        headers.set("Authorization", "Bearer "+ tokenService.getAccessToken());
+        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+
+        // Build the URL with query parameters
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("transaction_ref_number", transactionRefNumber);
 
         // Create HttpEntity with headers
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-        // Make the GET request
+        // Make the GET request using exchange()
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class, requestEntity);
+        ResponseEntity<Map> response = restTemplate.exchange(
+                uriBuilder.toUriString(),
+                HttpMethod.GET,
+                requestEntity,
+                Map.class
+        );
 
         // Return the response body
         return response.getBody();
     }
+
 
     @Override
     public Map<String, Object> getTransactionReceipt(String transactionRefNumber) {

@@ -290,6 +290,46 @@ if (residentTypeId === "100") {
 }
 }
 
+
+$(document)
+.ready(
+	function() {
+		$('#payOutCountry')
+			.on(
+				'change',
+					function() {
+						let dependent = $(this).val(); // Get the selected country value
+						 dependent += "C";
+						if (dependent) { // Check if a country is selected
+						$
+						.ajax({
+						url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
+						type : 'GET',
+						data : {
+						dependent : dependent
+						}, // Pass the selected country ID
+						success : function(data) {
+						// Clear the state dropdown and populate with new options
+						$('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
+						$.each(data,function(index,enumValue) {
+											$('#currencies').append('<option value="' + enumValue.valueId + '">'
+															+ enumValue.description+ '</option>');
+															});
+												},
+												error : function() {
+													console
+															.error("Error fetching country selected Currency.");
+												}
+											});
+								} else {
+									// Reset the state dropdown if no country is selected
+									$('#currencies').empty().append('<option value="" disabled selected>Select  Currency</option>');
+								}
+							});
+		});
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
 console.log("Page Loaded");
 toggleFields();
@@ -593,22 +633,23 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 											</select>
 										</div>
 										<div class="col-12 col-md-4">
-											<label class="form-label">Payout Country</label> <select
-												class="form-control" id="payoutCountry" name="payoutCountry"
-												data-select2-selector="icon">
-												<option>Select Country</option>
-												<option value="us">United States</option>
-												<option value="uk">United Kingdom</option>
+											<label class="form-label">Payout Country</label>
+											<select name="payOutCountry" id="payOutCountry" class="form-control" data-select2-selector="icon">
+    											<option value="" disabled selected>Payout Country</option>
+    											<c:forEach var="country" items="${countryList}">
+        										<option value="${country.valueId}">${country.description}</option>
+    											</c:forEach>
+												</select>
 											</select>
 										</div>
 										<div class="col-12 col-md-4">
-											<label class="form-label">Currency</label> <select
-												class="form-control" id="payoutCurrency"
-												name="payoutCurrency" data-select2-selector="icon">
-												<option>Select Currency</option>
-												<option value="usd">USD</option>
-												<option value="gbp">GBP</option>
-											</select>
+											<label class="form-label">Currency</label>
+											<select name="currencies" id="currencies" class="form-control" data-select2-selector="icon">
+    											<option value="" disabled selected>Currency</option>
+    											<c:forEach var="currency" items="${currencyList}">
+        										<option value="${currency.valueId}">${currency.description}</option>
+    											</c:forEach>
+												</select>
 										</div>
 									</div>
 									<div class="row">
@@ -784,37 +825,6 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Payout Country</label> <select
-													class="form-control" id="payoutCountry"
-													name="payoutCountry">
-													<option>Select Country</option>
-													<option value="us">United States</option>
-													<option value="uk">United Kingdom</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Currency</label> <select
-													class="form-control" id="payoutCurrency"
-													name="payoutCurrency">
-													<option>Select Currency</option>
-													<option value="usd">USD</option>
-													<option value="gbp">GBP</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Bank</label> <input type="text"
-													class="form-control" id="bank" name="bank"
-													placeholder="Bank Name">
-											</div>
-										</div>
-									</div>
 								</div>
 							</div>
 						</div>
@@ -978,17 +988,29 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 													<table class="table table-bordered">
 														<thead>
 															<tr>
-																<th>S.No.</th>
-																<th>Mode</th>
-																<th>Amount</th>
+															<th>S.No.</th>
+															<th>Mode</th>
+															<th>Amount</th>
+															<th>Card Type</th>
+															<th>Intl No.</th>
+															<th>Product No.</th>
+															<th>Intl Code</th>
+															<th>Bank Name</th>
+															<th>Remarks</th>
 															</tr>
 														</thead>
 														<tbody>
 															<!-- Dummy Data Row 1 -->
 															<tr>
-																<td>1</td>
-																<td>Cash</td>
-																<td>$500</td>
+															<td>1</td>
+															<td>Cash</td>
+															<td>$500</td>
+															<td>Visa</td>
+															<td>12345</td>
+															<td>Prod-001</td>
+															<td>Intl-001</td>
+															<td>Bank A</td>
+															<td>Payment completed</td>
 															</tr>
 
 														</tbody>

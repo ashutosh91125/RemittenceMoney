@@ -2,6 +2,7 @@ package com.llm.transfer.controller;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.llm.Service.CustomerService;
+import com.llm.common.model.EnumEntity;
+import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
 
 @Controller
@@ -20,10 +23,27 @@ public class TransferController {
 
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private EnumEntityService enumEntityService;
 
 	@GetMapping("/transfer")
 	public String showTransfer(Model model) {
-//		model.addAttribute("customer", new Customer());
+		try {
+			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
+			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of()); 
+		}
+		try {
+			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
+			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("currencyList", List.of()); 
+		}
 		return "transfer";
 	}
 
@@ -48,6 +68,23 @@ public class TransferController {
 			model.addAttribute("customerListOnTransfer", customers);
 		} catch (Exception e) {
 			logger.error(e.toString());
+		}
+		
+		try {
+			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
+			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of()); 
+		}
+		try {
+			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
+			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("currencyList", List.of()); 
 		}
 		model.addAttribute("customer", new Customer());
 		return "transfer";

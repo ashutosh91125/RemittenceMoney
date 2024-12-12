@@ -102,7 +102,6 @@ public class ExternalServiceImpl implements ExternalService {
     public Map<String, Object> enquireTransaction(String transactionRefNumber) {
         String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/enquire-transaction";
 
-        // Create headers
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("sender", "testagentae");
@@ -111,24 +110,28 @@ public class ExternalServiceImpl implements ExternalService {
         headers.set("branch", "784826");
         headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
 
-        // Build the URL with query parameters
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("transaction_ref_number", transactionRefNumber);
 
-        // Create HttpEntity with headers
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
-        // Make the GET request using exchange()
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.exchange(
-                uriBuilder.toUriString(),
-                HttpMethod.GET,
-                requestEntity,
-                Map.class
-        );
 
-        // Return the response body
-        return response.getBody();
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    uriBuilder.toUriString(),
+                    HttpMethod.GET,
+                    requestEntity,
+                    Map.class
+            );
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("HTTP Client Error: " + e.getMessage(), e);
+        } catch (HttpServerErrorException e) {
+            throw new RuntimeException("HTTP Server Error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("An unexpected error occurred: " + e.getMessage(), e);
+        }
     }
 
 

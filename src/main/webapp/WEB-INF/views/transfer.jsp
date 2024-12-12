@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -45,6 +47,13 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
+
+<script type="text/javascript">
+	function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
+</script>
 
 
 
@@ -192,17 +201,107 @@
 .table td:last-child, .table th:last-child {
 	text-align: center;
 }
-</style>
-<script type="text/javascript"></script>
 
+.hidden {
+	display: none;
+}
+/* Reduce the height of the Select2 container */
+.custom-select2+.select2-container .select2-selection--single {
+	height: 30px; /* Adjust as needed */
+	line-height: 28px; /* Center align text */
+	font-size: 12px; /* Adjust text size */
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+
+	$("tr[data-customer-ecrn]").on("click", function() {
+		var customerEcrn = $(this).data("customer-ecrn");
+		console.log(customerEcrn);
+		$.ajax({
+			url : '/caas/api/v2/customer',
+			type : 'GET',
+			data : {
+				ecrn : customerEcrn
+			},
+			success : function(response) {
+				console.log(response);
+				 if (typeof response === "string") {
+				        try {
+				            response = JSON.parse(response);
+				        } catch (error) {
+				            console.error("Failed to parse JSON response: ", response);
+				            return;
+				        }
+				    }
+
+				 if (Array.isArray(response) && response.length > 0) {
+				        var firstObject = response[0]; 
+				        if (firstObject.ecrn || firstObject.firstName || firstObject.middleName || firstObject.lastName ||  firstObject.city || firstObject.placeOfBirth ||  
+				        	firstObject.dateOfBirth || firstObject.emailId || firstObject.primaryMobileNumber || firstObject.state  || 
+				        	firstObject.countryOfResidence || firstObject.nationality || firstObject.country || firstObject.visaType ||	
+				        	firstObject.idNumber || firstObject.idType || firstObject.issuedBy || firstObject.issuedOn || firstObject.dateOfExpiry
+				        	|| firstObject.residentTypeId || firstObject.visaType || firstObject.visaExpiryDate || firstObject.visaNumber) {
+				        	$('#ecrn').val(firstObject.ecrn.trim());
+				        	$('#firstName').val(firstObject.firstName.trim());
+	                        $('#middleName').val(firstObject.middleName.trim());
+	                        $('#lastName').val(firstObject.lastName.trim());
+	                        $('#currentCity').val(firstObject.city.trim());
+	                        $('#placeOfBirth').val(firstObject.placeOfBirth.trim());
+	                        $('#dateOfBirth').val(firstObject.dateOfBirth.trim());
+	                        $('#emailId').val(firstObject.emailId.trim());
+	                        $('#primaryMobileNumber').val(firstObject.primaryMobileNumber.trim());
+	                        $('#state').val(firstObject.state.trim());
+	                        $('#countryOfResidence').val(firstObject.countryOfResidence.trim());
+	                        $('#nationality').val(firstObject.nationality.trim());
+	                        $('#country').val(firstObject.country.trim());
+	                        $('#visaType').val(firstObject.visaType.trim());
+	                        $('#idNumber').val(firstObject.idNumber.trim());
+	                        $('#idType').val(firstObject.idType);
+	                        $('#issuedBy').val(firstObject.issuedBy.trim());
+	                        $('#issuedOn').val(firstObject.issuedOn.trim());
+	                        $('#dateOfExpiry').val(firstObject.dateOfExpiry.trim());
+	                        $('#issuedCountry').val(firstObject.issuedCountry.trim());
+	                        $('#residentTypeId').val(firstObject.residentTypeId);
+	                        $('#visaType').val(firstObject.visaType);
+	                        $('#visaExpiryDate').val(firstObject.visaExpiryDate);
+	                        $('#visaNumber').val(firstObject.visaNumber);
+	                        toggleFields();
+	                    }
+				    } else {
+				        console.error("Response is not an array or is empty: ", response);
+				    }
+			},
+			error : function(xhr, status, error) {
+				alert("An error occurred while fetching customer data.");
+			}
+		});
+	});
+});
+;
+function toggleFields() {
+const residentTypeId = document.getElementById('residentTypeId').value;
+const idDetailsFields = document.getElementById('idDetailsFields');
+
+if (residentTypeId === "100") {
+    idDetailsFields.style.display = "block"; 
+} else {
+    idDetailsFields.style.display = "none"; 
+}
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+console.log("Page Loaded");
+toggleFields();
+document.getElementById('residentTypeId').addEventListener('change', toggleFields);
+});	
+
+</script>
 </head>
 
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<!--! ================================================================ !-->
-	<!--! ================================================================ !-->
-	<!--! [Start] Main Content !-->
-	<!--! ================================================================ !-->
+
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 			<!-- [ page-header ] start -->
@@ -239,1241 +338,670 @@
 					</div>
 				</div>
 			</div>
-			<jsp:include page="customersearch.jsp"></jsp:include>
-			<div class="accordion" id="accordionPanelsStayOpenExample">
-				<div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button" type="button"
-							data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
-							aria-controls="panelsStayOpen-collapseOne"
-							style="background: aliceblue;">Customer Details</button>
-					</h2>
-					<div id="panelsStayOpen-collapseOne"
-						class="accordion-collapse collapse show">
-						<div class="accordion-body" style="padding-top: 0; margin-top: 0;">
-							<div class="card-body personal-info">
-								<!-- Name Fields Row -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-12 col-md-4">
-										<label class="form-label">First Name</label> <input
-											type="text" class="form-control" id="firstName"
-											name="firstName" placeholder="First Name">
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Middle Name</label> <input
-											type="text" class="form-control" id="middleName"
-											name="middleName" placeholder="Middle Name">
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Last Name</label> <input type="text"
-											class="form-control" id="lastName" name="lastName"
-											placeholder="Last Name">
+			<jsp:include page="customersearchontransfer.jsp"></jsp:include>
+			<form>
+				<input type="hidden" id="residentTypeId" name="residentTypeId"
+					value="">
+				<div
+					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="card stretch stretch-full">
+								<div class="card-body p-0">
+									<div class="table-responsive">
+										<table class="table table-hover" id="search-result">
+											<thead>
+												<tr>
+													<%--  id="customerRow-${customer.ecrn}"
+													data-customer-ecrn="${customer.ecrn}">
+ --%>
+													<th>Ecrn</th>
+													<th>First Name</th>
+													<th>Mobile Number</th>
+													<th>Email</th>
+													<th>Country</th>
+													<th>Gender</th>
+
+													<th class="text-end">Actions</th>
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach var="customer" items="${customerListOnTransfer}"
+													varStatus="status">
+													<tr data-customer-ecrn="${customer.ecrn}">
+														<td>${customer.ecrn}</td>
+														<td>${customer.firstName}</td>
+														<td>${customer.phoneNumber}</td>
+														<td>${customer.emailId}</td>
+														<td>${customer.countryOfResidence }</td>
+														<td>${customer.gender }</td>
+
+														<td class="text-end"><a
+															href="customerdetails?ecrn=${customer.ecrn}"
+															class="btn btn-light-brand">View</a></td>
+													</tr>
+												</c:forEach>
+											</tbody>
+										</table>
 									</div>
 								</div>
-
-								<!-- Address Fields Row -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-12 col-md-4">
-										<label class="form-label">Address 1</label> <input type="text"
-											class="form-control" id="address1" name="address1"
-											placeholder="Address 1">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion" id="accordionPanelsStayOpenExample">
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button" type="button"
+								onclick="toggleDiv('panelsStayOpen-collapseOne')"
+								style="background: aliceblue;">Customer Details</button>
+						</h2>
+						<div id="panelsStayOpen-collapseOne"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Ecrn</label> <input name="ecrn"
+												type="text" class="form-control" placeholder="Ecrn"
+												name="ecrn" id="ecrn" readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">First Name</label> <input
+												name="firstName" type="text" class="form-control"
+												placeholder="First Name" name="firstName" id="firstName"
+												readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Middle Name</label> <input
+												name="middleName" type="text" class="form-control"
+												placeholder="Middle Name" id="middleName" readonly />
+										</div>
 									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Address 2</label> <input type="text"
-											class="form-control" id="address2" name="address2"
-											placeholder="Address 2">
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">City</label> <input type="text"
-											class="form-control" id="addressCity" name="addressCity"
-											placeholder="City">
-									</div>
-								</div>
-
-								<!-- State and Date of Birth -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-12 col-md-4">
-										<label class="form-label">State</label> <input type="text"
-											class="form-control" id="addressState" name="addressState"
-											placeholder="State">
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Date of Birth</label> <input
-											type="date" class="form-control" id="dob" name="dob">
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Place of Birth</label> <input
-											type="text" class="form-control" id="placeOfBirth"
-											name="placeOfBirth" placeholder="Place of Birth">
-									</div>
-								</div>
-
-								<!-- Email and Mobile Number -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-12 col-md-4">
-										<label class="form-label">Email</label> <input type="email"
-											class="form-control" id="email" name="email"
-											placeholder="Email">
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Mobile No.</label> <input
-											type="text" class="form-control" id="mobile" name="mobile"
-											placeholder="Mobile No.">
-									</div>
-								</div>
-
-								<!-- Country Selection Fields -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-12 col-md-4">
-										<label class="form-label">Country</label> <select
-											class="form-control" id="country" name="country">
-											<option value="us">United States</option>
-											<option value="uk">United Kingdom</option>
-										</select>
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Country of Residence</label> <select
-											class="form-control" id="countryOfResidence"
-											name="countryOfResidence">
-											<option value="us">United States</option>
-											<option value="uk">United Kingdom</option>
-										</select>
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Country of Nationality</label> <select
-											class="form-control" id="countryOfNationality"
-											name="countryOfNationality">
-											<option value="us">United States</option>
-											<option value="uk">United Kingdom</option>
-										</select>
-									</div>
-								</div>
-
-								<!-- Customer Category, Type, and Visa Type -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-12 col-md-4">
-										<label class="form-label">Customer Category</label> <select
-											class="form-control" id="customerCategory"
-											name="customerCategory">
-											<option value="individual">Individual</option>
-											<option value="business">Business</option>
-										</select>
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Customer Type</label> <select
-											class="form-control" id="customerType" name="customerType">
-											<option value="premium">Premium</option>
-											<option value="standard">Standard</option>
-										</select>
-									</div>
-									<div class="col-12 col-md-4">
-										<label class="form-label">Visa Type</label> <select
-											class="form-control" id="visaType" name="visaType">
-											<option value="tourist">Tourist</option>
-											<option value="resident">Resident</option>
-										</select>
-									</div>
-								</div>
-
-								<!-- ID Details Section -->
-								<div class="row mt-5">
-									<div class="col-12">
-										<h6>ID Details</h6>
-									</div>
-									<div class="col-12">
-										<div class="row" style="margin-top: 0;">
-											<!-- ID Type -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID Type</label> <select
-													class="form-control" id="idType" name="idType">
-													<option value="nationalId">National ID</option>
-													<option value="passport">Passport</option>
-												</select>
-											</div>
-
-											<!-- ID Number -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID No.</label> <input type="text"
-													class="form-control" id="idNo" name="idNo"
-													placeholder="ID Number">
-											</div>
-
-											<!-- ID Issued By -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID Issued By</label> <input
-													type="text" class="form-control" id="idIssuedBy"
-													name="idIssuedBy" placeholder="Issued By">
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Last Name</label> <input
+												name="lastName" type="text" class="form-control"
+												placeholder="Last Name" id="lastName" readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Date of Birth</label> <input
+												name="dateOfBirth" id="dateOfBirth" type="date"
+												class="form-control" readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Mobile No.</label>
+											<div class="input-group">
+												<input name="primaryMobileNumber" type="text"
+													class="form-control" placeholder="Primary Mobile Number"
+													id="primaryMobileNumber" readonly />
 											</div>
 										</div>
-
-										<div class="row mt-2" style="margin-top: 0;">
-											<!-- ID Issue Date -->
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Email</label> <input name="emailId"
+												type="email" class="form-control" placeholder="Email"
+												id="emailId" readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Place of Birth</label> <input
+												name="placeOfBirth" type="text" class="form-control"
+												placeholder="Place of Birth" id="placeOfBirth" readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Address 1</label> <input
+												type="text" class="form-control" id="address1"
+												name="address1" placeholder="Address 1" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Address 2</label> <input
+												type="text" class="form-control" id="address2"
+												name="address2" placeholder="Address 2" readonly>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">City</label> <input name="city"
+												type="text" class="form-control" placeholder="City"
+												id="currentCity" readonly />
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">State</label> <input name="state"
+												type="text" class="form-control" placeholder="State"
+												id="state" readonly />
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Country</label> <input type="text"
+												class="form-control" name="country" placeholder="Country"
+												id="country" readonly>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Country of Residence</label> <input
+												type="text" class="form-control" name="countryOfResidence"
+												placeholder="Country of Residence" id="countryOfResidence"
+												readonly>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Country of Nationality</label> <input
+												type="text" class="form-control" placeholder="nationality"
+												name="nationality" id="nationality" readonly>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Customer Category</label> <input
+												type="text" class="form-control" placeholder="nationality"
+												name="nationality" id="nationality" value="Individual"
+												readonly>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Customer Type</label> <input
+												type="text" class="form-control" placeholder="nationality"
+												name="nationality" id="nationality" value="Standard"
+												readonly>
+										</div>
+									</div>
+									<div class="row mt-5">
+										<div class="col-12">
+											<h6>ID Details</h6>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<label class="form-label">ID Type</label><input type="text"
+													name="idType" class="form-control" placeholder="Id Type"
+													id="idType" readonly>
+											</div>
+											<div class="col-12 col-md-4">
+												<label class="form-label">ID No.</label> <input
+													name="idNumber" id="idNumber" name="idNumber"
+													placeholder="Id Number" type="text" class="form-control"
+													id="idNumber" readonly />
+											</div>
+											<div class="col-12 col-md-4">
+												<label class="form-label">ID Issued By</label> <input
+													name="issuedBy" type="text" class="form-control"
+													placeholder="Issued By" id="issuedBy" readonly />
+											</div>
+										</div>
+										<div class="row mt-2">
 											<div class="col-12 col-md-4">
 												<label class="form-label">ID Date of Issue</label> <input
-													type="date" class="form-control" id="idDateIssue"
-													name="idDateIssue">
+													name="issuedAt" type="text" class="form-control"
+													placeholder="issuedOn" id="issuedOn" readonly />
 											</div>
-
-											<!-- ID Expiry Date -->
 											<div class="col-12 col-md-4">
 												<label class="form-label">ID Date of Expiry</label> <input
-													type="date" class="form-control" id="idDateExpire"
-													name="idDateExpire">
+													name="dateOfExpiry" type="text" class="form-control"
+													placeHolder="Date of Expiry" id="dateOfExpiry" readonly />
 											</div>
-
-											<!-- Country of Issue -->
 											<div class="col-12 col-md-4">
-												<label class="form-label">Country</label> <select
-													class="form-control" id="countryOfIssue"
-													name="countryOfIssue">
+												<label class="form-label">Country</label> <input type="text"
+													class="form-control" placeholder="Issued Country"
+													name="issuedCountry" id="issuedCountry" readonly>
+											</div>
+										</div>
+										<div id="idDetailsFields" class="row mt-4"
+											style="display: none;">
+											<h5 class="fw-bold mb-0 me-4">
+												<span class="d-block mb-4">Visa Details</span>
+											</h5>
+											<div class="row">
+												<div class="col-12 col-md-4">
+													<label class="form-label">Visa Number</label> <input
+														name="visaNumber" type="text" id="visaNumber"
+														class="form-control" placeholder="Visa Number" readonly />
+												</div>
+												<div class="col-12 col-md-4">
+													<label class="form-label">Visa Expiry Date</label> <input
+														name="visaExpiryDate" type="text" class="form-control"
+														placeholder="Visa Expiry Date" id="visaExpiryDate"
+														readonly />
+												</div>
+												<div class="col-12 col-md-4">
+													<label class="form-label">Visa Type</label> <input
+														name="visaType" type="text" class="form-control"
+														placeholder="Visa Type" id="visaType" readonly />
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button" type="button"
+								onclick="toggleDiv('panelsStayOpen-collapseTwo')"
+								style="background: aliceblue;">Beneficiary Details
+								[Lulu-Remit]</button>
+						</h2>
+						<div id="panelsStayOpen-collapseTwo"
+							class="accordion-collapse collapse ">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<label class="form-label">Delivery Option</label><select
+												data-select2-selector="icon" class="form-control">
+												<option value="toBank">To Bank</option>
+												<option value="toMobile">Mobile Wallet</option>
+												<option value="tocash">Cash Pickup</option>
+											</select>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Payout Country</label> <select
+												class="form-control" id="payoutCountry" name="payoutCountry"
+												data-select2-selector="icon">
+												<option>Select Country</option>
+												<option value="us">United States</option>
+												<option value="uk">United Kingdom</option>
+											</select>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Currency</label> <select
+												class="form-control" id="payoutCurrency"
+												name="payoutCurrency" data-select2-selector="icon">
+												<option>Select Currency</option>
+												<option value="usd">USD</option>
+												<option value="gbp">GBP</option>
+											</select>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Bank</label> <input type="text"
+													class="form-control" id="bank" name="bank"
+													placeholder="Bank Name">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Branch</label> <input type="text"
+													class="form-control" id="branch" name="branch"
+													placeholder="Branch">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">IBAN</label> <input type="text"
+													class="form-control" id="iban" name="iban"
+													placeholder="IBAN">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Account Type</label> <select
+													class="form-control" id="accountType" name="accountType"
+													data-select2-selector="icon">
+													<option value="savings">Savings</option>
+													<option value="current">Current</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Account No.</label> <input
+													type="text" class="form-control" id="accountNo"
+													name="accountNo" placeholder="Account No.">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Confirm Account No.</label> <input
+													type="text" class="form-control" id="confirmAccountNo"
+													name="confirmAccountNo" placeholder="Confirm Account No.">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Beneficiary Type</label> <select
+													class="form-control" id="beneficiaryType"
+													name="beneficiaryType" data-select2-selector="icon">
+													<option value="individual">Individual</option>
+													<option value="company">Company</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Relation</label> <select
+													class="form-control" id="relation" name="relation"
+													data-select2-selector="icon">
+													<option value="spouse">Spouse</option>
+													<option value="friend">Friend</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<label class="form-label">Nick Name</label> <input
+												type="text" class="form-control" id="nickname"
+												name="nickname" placeholder="Nick Name">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">First Name</label> <input
+													type="text" class="form-control" id="firstName"
+													name="firstName" placeholder="First Name">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Middle Name</label> <input
+													type="text" class="form-control" id="middleName"
+													name="middleName" placeholder="Middle Name">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Last Name</label> <input
+													type="text" class="form-control" id="lastName"
+													name="lastName" placeholder="Last Name">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Beneficiary Address 1</label> <input
+													type="text" class="form-control" id="benfAddress1"
+													name="benfAddress1" placeholder="Address">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Beneficiary Address 2</label> <input
+													type="text" class="form-control" id="benfAddress2"
+													name="benfAddress2" placeholder="Address 2">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Beneficiary City</label> <input
+													type="text" class="form-control" id="beneficiaryCity"
+													name="beneficiaryCity" placeholder="City">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Beneficiary State</label> <input
+													type="text" class="form-control" id="beneficiaryState"
+													name="beneficiaryState" placeholder="State">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Mobile</label> <input type="text"
+													class="form-control" id="mobile" name="mobile"
+													placeholder="Mobile">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Nationality</label> <select
+													class="form-control" id="nationality" name="nationality"
+													data-select2-selector="icon">
 													<option value="us">United States</option>
 													<option value="uk">United Kingdom</option>
 												</select>
 											</div>
 										</div>
-										<div class="row mt-4" style="margin-top: 0;">
-											<div class="col-12">
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Date of Birth</label> <input
+													type="date" class="form-control" id="dob" name="dob">
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">ID Type</label> <select
+													data-select2-selector="icon" class="form-control"
+													id="idType" name="idType">
+													<option value="nationalId">National ID</option>
+													<option value="passport">Passport</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">ID No.</label> <input type="text"
+													class="form-control" id="idNo" name="idNo"
+													placeholder="ID No.">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Payout Country</label> <select
+													class="form-control" id="payoutCountry"
+													name="payoutCountry">
+													<option>Select Country</option>
+													<option value="us">United States</option>
+													<option value="uk">United Kingdom</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Currency</label> <select
+													class="form-control" id="payoutCurrency"
+													name="payoutCurrency">
+													<option>Select Currency</option>
+													<option value="usd">USD</option>
+													<option value="gbp">GBP</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Bank</label> <input type="text"
+													class="form-control" id="bank" name="bank"
+													placeholder="Bank Name">
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								onclick="toggleDiv('panelsStayOpen-collapseThree')"
+								style="background: aliceblue;">Transaction Details</button>
+						</h2>
+						<div id="panelsStayOpen-collapseThree"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">PayIn Currency<span
+														class="text-danger">*</span></label> <select class="form-control"
+														id="payInCurrency" name="payInCurrency">
+														<option value="">Select Currency</option>
+														<option value="usd">USD</option>
+														<option value="eur">EUR</option>
+														<option value="gbp">GBP</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Source of Fund<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Source of Fund"
+														id="sourceOfFund" name="sourceOfFund">
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Transaction Purpose<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Transaction Purpose"
+														id="transactionPurpose" name="transactionPurpose">
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Value Date<span
+														class="text-danger">*</span></label> <input type="date"
+														class="form-control" id="valueDate" name="valueDate">
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Remarks<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Remarks" id="remarks"
+														name="remarks">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Payout Amount<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Payout Amount"
+														id="payoutAmount" name="payoutAmount">
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Rate<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Rate" id="rate"
+														name="rate">
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">PayIn Amount<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Pay In Amount"
+														id="payInAmount" name="payInAmount">
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-xl-2">
+												<div>
+													<label class="form-label">Commission</label> <input
+														type="text" class="form-control" placeholder="Commission"
+														id="commission" name="commission" readonly>
+												</div>
+											</div>
+
+											<div class="col-xl-2">
+												<div>
+													<label class="form-label">Tax (%)</label> <input
+														type="text" class="form-control" placeholder="Tax"
+														id="tax" name="tax" readonly>
+												</div>
+											</div>
+
+											<div class="col-xl-2">
+												<div>
+													<label class="form-label">Other Charges</label> <input
+														type="text" class="form-control"
+														placeholder="Other Charges" id="otherCharges"
+														name="otherCharges" readonly>
+												</div>
+											</div>
+
+											<div class="col-xl-2">
+												<div>
+													<label class="form-label">Roundoff</label> <input
+														type="text" class="form-control" placeholder="Rate"
+														id="dynamicRate" name="dynamicRate" readonly>
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div>
+													<label class="form-label">Total Pay In Amount</label> <input
+														type="text" class="form-control"
+														placeholder="Total Pay In Amount" id="totalPayInAmount"
+														name="totalPayInAmount" readonly>
+												</div>
+											</div>
+										</div>
+										<div class="row mt-4">
+											<div class="col-xl-4">
+												<div class="mb-5">
+													<label class="form-label">Payment Mode<span
+														class="text-danger">*</span></label> <select class="form-control"
+														id="paymentMode" name="paymentMode">
+														<option value="" disabled selected>Select Payment
+															Mode</option>
+														<option value="bankTransfer">Bank Transfer</option>
+														<option value="mobileWallet">Mobile Wallet</option>
+														<option value="cash">Cash</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div class="mb-5">
+													<label class="form-label">Amount<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Enter Amount"
+														id="amount" name="amount">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-12">
 												<h6 class="mb-3">ID Details Table</h6>
 												<div class="table-responsive">
 													<table class="table table-bordered">
 														<thead>
 															<tr>
 																<th>S.No.</th>
-																<th>ID Type</th>
-																<th>Expiry Date</th>
-																<th>ID No.</th>
-																<th>Status</th>
-																<th>Edit</th>
+																<th>Mode</th>
+																<th>Amount</th>
 															</tr>
 														</thead>
 														<tbody>
 															<!-- Dummy Data Row 1 -->
 															<tr>
 																<td>1</td>
-																<td>Passport</td>
-																<td>2025-12-31</td>
-																<td>123456789</td>
-																<td>Active</td>
-																<td>
-																	<button type="button" class="btn btn-primary btn-sm">Edit</button>
-																</td>
+																<td>Cash</td>
+																<td>$500</td>
 															</tr>
+
 														</tbody>
 													</table>
 												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<!-- Accordion 2: Beneficiary Details -->
-				<div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseTwo"
-							aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo"
-							style="background: aliceblue;">Beneficiary Details
-							[Lulu-Remit]</button>
-					</h2>
-					<div id="panelsStayOpen-collapseTwo"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="padding-top: 0; margin-top: 0;">
-							<div class="card-body personal-info">
-								<!-- <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h5 class="fw-bold mb-0 me-4">
-                        <span class="d-block">Beneficiary Details</span>
-                        <span class="fs-12 fw-normal text-muted text-truncate-1-line">Following information is publicly
-                            displayed, be careful! </span>
-                    </h5>
-                </div> -->
-								<div class="row" style="margin-top: 0;">
-									<div class="col-xl-4">
-										<div class="mb-1">
-											<label class="form-label">Delivery Option</label> <select
-												class="form-control" id="deliveryOption">
-												<option value="toBank">To Bank</option>
-												<option value="toMobile">Mobile Wallet</option>
-												<option value="tocash">Cash Pickup</option>
-											</select>
-										</div>
-									</div>
-
-									<!-- Delivery from Bank -->
-									<div id="toBankForm">
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Payout Country Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Payout Country</label> <select
-																class="form-control" id="payoutCountry"
-																name="payoutCountry">
-																<option>Select Country</option>
-																<option value="us">United States</option>
-																<option value="uk">United Kingdom</option>
-															</select>
-														</div>
-
-														<!-- Currency Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Currency</label> <select
-																class="form-control" id="payoutCurrency"
-																name="payoutCurrency">
-																<option>Select Currency</option>
-																<option value="usd">USD</option>
-																<option value="gbp">GBP</option>
-															</select>
-														</div>
-
-														<div class="col-12 col-md-4">
-															<div class="mb-1">
-																<label class="form-label">Bank</label> <input
-																	type="text" class="form-control" id="bank" name="bank"
-																	placeholder="Bank Name">
-															</div>
-														</div>
+												<!-- Footer for dynamic content -->
+												<div class="row mt-3">
+													<div class="col-xl-6">
+														<strong>Amount Collected:</strong> $1800
 													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-6">
-												<div class="mb-1">
-													<label class="form-label">Branch</label> <input type="text"
-														class="form-control" id="branch" name="branch"
-														placeholder="Branch"> <a href="#">Advance
-														Search</a> | <a href="#">Bank Branch Info</a>
-												</div>
-											</div>
-
-											<div class="col-12 col-md-6">
-												<div class="mb-1">
-													<label class="form-label">IBAN</label> <input type="text"
-														class="form-control" id="iban" name="iban"
-														placeholder="IBAN">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<!-- Account Number, Type, and Confirmation -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">Account Type</label> <select
-													class="form-control" id="accountType" name="accountType">
-													<option value="savings">Savings</option>
-													<option value="current">Current</option>
-												</select>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<label class="form-label">Account No.</label> <input
-													type="text" class="form-control" id="accountNo"
-													name="accountNo" placeholder="Account No.">
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Confirm Account No.</label> <input
-														type="text" class="form-control" id="confirmAccountNo"
-														name="confirmAccountNo" placeholder="Confirm Account No.">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<div class="col-12 col-md-4">
-															<div class="mb-1">
-																<label class="form-label">Beneficiary Type</label> <select
-																	class="form-control" id="beneficiaryType"
-																	name="beneficiaryType">
-																	<option value="individual">Individual</option>
-																	<option value="company">Company</option>
-																</select>
-															</div>
-														</div>
-
-														<!-- Relation Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Relation</label> <select
-																class="form-control" id="relation" name="relation">
-																<option value="spouse">Spouse</option>
-																<option value="friend">Friend</option>
-															</select>
-														</div>
-
-														<!-- Nick Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Nick Name</label> <input
-																type="text" class="form-control" id="nickname"
-																name="nickname" placeholder="Nick Name">
-														</div>
+													<div class="col-xl-6 text-end">
+														<strong>Balance To Pay:</strong> $200
 													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- First Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">First Name</label> <input
-																type="text" class="form-control" id="firstName"
-																name="firstName" placeholder="First Name">
-														</div>
-
-														<!-- Middle Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Middle Name</label> <input
-																type="text" class="form-control" id="middleName"
-																name="middleName" placeholder="Middle Name">
-														</div>
-
-														<!-- Last Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Last Name</label> <input
-																type="text" class="form-control" id="lastName"
-																name="lastName" placeholder="Last Name">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account First
-														Name</label> <input type="text" class="form-control"
-														id="benfFirstName" name="benfFirstName"
-														placeholder="First Name">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account
-														Middle Name</label> <input type="text" class="form-control"
-														id="benfMiddleName" name="benfMiddleName"
-														placeholder="Middle Name">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account Last
-														Name</label> <input type="text" class="form-control"
-														id="benfLastName" name="benfLastName"
-														placeholder="Last Name">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Address 1</label> <input
-														type="text" class="form-control" id="benfAddress1"
-														name="benfAddress1" placeholder="Address">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Address 2</label> <input
-														type="text" class="form-control" id="benfAddress2"
-														name="benfAddress2" placeholder="Address 2">
-												</div>
-											</div>
-
-											<!-- Beneficiary City Label and Input -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">Beneficiary City</label> <input
-													type="text" class="form-control" id="beneficiaryCity"
-													name="beneficiaryCity" placeholder="City">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Beneficiary State Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Beneficiary State</label> <input
-																type="text" class="form-control" id="beneficiaryState"
-																name="beneficiaryState" placeholder="State">
-														</div>
-
-														<!-- Mobile Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Mobile</label> <input
-																type="text" class="form-control" id="mobile"
-																name="mobile" placeholder="Mobile">
-														</div>
-
-														<!-- Nationality Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Nationality</label> <select
-																class="form-control" id="nationality" name="nationality">
-																<option value="us">United States</option>
-																<option value="uk">United Kingdom</option>
-															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Date of Birth Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Date of Birth</label> <input
-																type="date" class="form-control" id="dob" name="dob">
-														</div>
-
-														<!-- ID Type Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">ID Type</label> <select
-																class="form-control" id="idType" name="idType">
-																<option value="nationalId">National ID</option>
-																<option value="passport">Passport</option>
-															</select>
-														</div>
-
-														<!-- ID No. Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">ID No.</label> <input
-																type="text" class="form-control" id="idNo" name="idNo"
-																placeholder="ID No.">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<!-- Own Account, and Nickname -->
-											<div class="col-xl-6">
-												<div class="mb-1 d-flex align-items-center">
-													<label class="form-label me-2">Own Account</label> <input
-														type="checkbox" id="ownAccount" name="ownAccount">
-												</div>
-											</div>
-										</div>
-									</div>
-									<!--Delivery from Mobile Wallet  -->
-									<div id="toMobileForm" style="display: none;">
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Payout Country Dropdown -->
-														<div class="col-md-4">
-															<label class="form-label">Payout Country</label> <select
-																class="form-control" id="payoutCountry"
-																name="payoutCountry">
-																<option>Select Country</option>
-																<option value="us">United States</option>
-																<option value="uk">United Kingdom</option>
-															</select>
-														</div>
-
-														<!-- Currency Dropdown -->
-														<div class="col-md-4">
-															<label class="form-label">Currency</label> <select
-																class="form-control" id="payoutCurrency"
-																name="payoutCurrency">
-																<option>Select Currency</option>
-																<option value="usd">USD</option>
-																<option value="gbp">GBP</option>
-															</select>
-														</div>
-
-														<!-- Bank Input -->
-														<div class="col-md-4">
-															<label class="form-label">Bank</label> <input type="text"
-																class="form-control" id="bank" name="bank"
-																placeholder="Bank Name">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<!-- Branch Input -->
-											<div class="col-md-4">
-												<label class="form-label">Branch</label> <input type="text"
-													class="form-control" id="branch" name="branch"
-													placeholder="Branch">
-												<div>
-													<a href="#">Advance Search</a> | <a href="#">Bank
-														Branch Info</a>
-												</div>
-											</div>
-
-											<!-- Mobile No. -->
-											<div class="col-md-4">
-												<label class="form-label">Mobile No.</label>
-												<div class="d-flex">
-													<select class="form-control me-2" id="countryCode"
-														name="countryCode" style="width: auto;">
-														<option value="+1">+1 (US)</option>
-														<option value="+44">+44 (UK)</option>
-													</select> <input type="text" class="form-control" id="mobileNo"
-														name="mobileNo" placeholder="Mobile Number">
-												</div>
-											</div>
-
-											<!-- IBAN -->
-											<div class="col-md-4">
-												<label class="form-label">IBAN</label> <input type="text"
-													class="form-control" id="iban" name="iban"
-													placeholder="IBAN">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Type</label> <select
-														class="form-control" id="beneficiaryType"
-														name="beneficiaryType">
-														<option value="individual">Individual</option>
-														<option value="company">Company</option>
-													</select>
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Relation</label> <select
-														class="form-control" id="relation" name="relation">
-														<option value="spouse">Spouse</option>
-														<option value="friend">Friend</option>
-													</select>
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Nick Name</label> <input
-														type="text" class="form-control" id="nickname"
-														name="nickname" placeholder="Nick Name">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- First Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">First Name</label> <input
-																type="text" class="form-control" id="firstName"
-																name="firstName" placeholder="First Name">
-														</div>
-
-														<!-- Middle Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Middle Name</label> <input
-																type="text" class="form-control" id="middleName"
-																name="middleName" placeholder="Middle Name">
-														</div>
-
-														<!-- Last Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Last Name</label> <input
-																type="text" class="form-control" id="lastName"
-																name="lastName" placeholder="Last Name">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account First
-														Name</label> <input type="text" class="form-control"
-														id="benfFirstName" name="benfFirstName"
-														placeholder="First Name">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account
-														Middle Name</label> <input type="text" class="form-control"
-														id="benfMiddleName" name="benfMiddleName"
-														placeholder="Middle Name">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account Last
-														Name</label> <input type="text" class="form-control"
-														id="benfLastName" name="benfLastName"
-														placeholder="Last Name">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Address 1</label> <input
-														type="text" class="form-control" id="benfAddress1"
-														name="benfAddress1" placeholder="Address">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Address 2</label> <input
-														type="text" class="form-control" id="benfAddress2"
-														name="benfAddress2" placeholder="Address 2">
-												</div>
-											</div>
-
-											<!-- Beneficiary City Label and Input -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">Beneficiary City</label> <input
-													type="text" class="form-control" id="beneficiaryCity"
-													name="beneficiaryCity" placeholder="City">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Beneficiary State Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Beneficiary State</label> <input
-																type="text" class="form-control" id="beneficiaryState"
-																name="beneficiaryState" placeholder="State">
-														</div>
-														<!-- Mobile Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Mobile</label> <input
-																type="text" class="form-control" id="mobile"
-																name="mobile" placeholder="Mobile">
-														</div>
-														<!-- Nationality Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Nationality</label> <select
-																class="form-control" id="nationality" name="nationality">
-																<option value="us">United States</option>
-																<option value="uk">United Kingdom</option>
-															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Date of Birth Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Date of Birth</label> <input
-																type="date" class="form-control" id="dob" name="dob">
-														</div>
-														<!-- ID Type Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">ID Type</label> <select
-																class="form-control" id="idType" name="idType">
-																<option value="nationalId">National ID</option>
-																<option value="passport">Passport</option>
-															</select>
-														</div>
-														<!-- ID No. Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">ID No.</label> <input
-																type="text" class="form-control" id="idNo" name="idNo"
-																placeholder="ID No.">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<!-- Beneficiary Type, Own Account, and Nickname -->
-											<div class="col-xl-6">
-												<div class="mb-1 d-flex align-items-center">
-													<label class="form-label me-2">Own Account</label> <input
-														type="checkbox" id="ownAccount" name="ownAccount">
-												</div>
-											</div>
-										</div>
-									</div>
-
-
-									<!--Delivery from Cash  -->
-									<div id="tocashForm" style="display: none;">
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Payout Country Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Payout Country</label> <select
-																class="form-control" id="payoutCountry"
-																name="payoutCountry">
-																<option>Select Country</option>
-																<option value="us">United States</option>
-																<option value="uk">United Kingdom</option>
-															</select>
-														</div>
-
-														<!-- Currency Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Currency</label> <select
-																class="form-control" id="payoutCurrency"
-																name="payoutCurrency">
-																<option>Select Currency</option>
-																<option value="usd">USD</option>
-																<option value="gbp">GBP</option>
-															</select>
-														</div>
-														<div class="col-12 col-md-4">
-															<div class="mb-1">
-																<label class="form-label">Bank</label> <input
-																	type="text" class="form-control" id="bank" name="bank"
-																	placeholder="Bank Name">
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Branch</label> <input type="text"
-														class="form-control" id="branch" name="branch"
-														placeholder="Branch">
-													<div>
-														<a href="#">Advance Search</a> | <a href="#">Bank
-															Branch Info</a>
-													</div>
-												</div>
-											</div>
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">IBAN</label> <input type="text"
-														class="form-control" id="iban" name="iban"
-														placeholder="IBAN">
-												</div>
-											</div>
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Type</label> <select
-														class="form-control" id="beneficiaryType"
-														name="beneficiaryType">
-														<option value="individual">Individual</option>
-														<option value="company">Company</option>
-													</select>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-6">
-												<div class="mb-1">
-													<label class="form-label">Relation</label> <select
-														class="form-control" id="relation" name="relation">
-														<option value="spouse">Spouse</option>
-														<option value="friend">Friend</option>
-													</select>
-												</div>
-											</div>
-
-											<div class="col-12 col-md-6">
-												<div class="mb-1">
-													<label class="form-label">Nick Name</label> <input
-														type="text" class="form-control" id="nickname"
-														name="nickname" placeholder="Nick Name">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- First Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">First Name</label> <input
-																type="text" class="form-control" id="firstName"
-																name="firstName" placeholder="First Name">
-														</div>
-
-														<!-- Middle Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Middle Name</label> <input
-																type="text" class="form-control" id="middleName"
-																name="middleName" placeholder="Middle Name">
-														</div>
-
-														<!-- Last Name Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Last Name</label> <input
-																type="text" class="form-control" id="lastName"
-																name="lastName" placeholder="Last Name">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account First
-														Name</label> <input type="text" class="form-control"
-														id="benfFirstName" name="benfFirstName"
-														placeholder="First Name">
-												</div>
-											</div>
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account
-														Middle Name</label> <input type="text" class="form-control"
-														id="benfMiddleName" name="benfMiddleName"
-														placeholder="Middle Name">
-												</div>
-											</div>
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Account Last
-														Name</label> <input type="text" class="form-control"
-														id="benfLastName" name="benfLastName"
-														placeholder="Last Name">
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Address 1</label> <input
-														type="text" class="form-control" id="benfAddress1"
-														name="benfAddress1" placeholder="Address">
-												</div>
-											</div>
-
-											<div class="col-12 col-md-4">
-												<div class="mb-1">
-													<label class="form-label">Beneficiary Address 2</label> <input
-														type="text" class="form-control" id="benfAddress2"
-														name="benfAddress2" placeholder="Address 2">
-												</div>
-											</div>
-
-											<!-- Beneficiary City Label and Input -->
-											<div class="col-12 col-md-4">
-												<label class="form-label">Beneficiary City</label> <input
-													type="text" class="form-control" id="beneficiaryCity"
-													name="beneficiaryCity" placeholder="City">
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Beneficiary State Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Beneficiary State</label> <input
-																type="text" class="form-control" id="beneficiaryState"
-																name="beneficiaryState" placeholder="State">
-														</div>
-														<!-- Mobile Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Mobile</label> <input
-																type="text" class="form-control" id="mobile"
-																name="mobile" placeholder="Mobile">
-														</div>
-														<!-- Nationality Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Nationality</label> <select
-																class="form-control" id="nationality" name="nationality">
-																<option value="us">United States</option>
-																<option value="uk">United Kingdom</option>
-															</select>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<div class="col-xl-12">
-												<div class="mb-1">
-													<div class="row">
-														<!-- Date of Birth Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">Date of Birth</label> <input
-																type="date" class="form-control" id="dob" name="dob">
-														</div>
-														<!-- ID Type Label and Dropdown -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">ID Type</label> <select
-																class="form-control" id="idType" name="idType">
-																<option value="nationalId">National ID</option>
-																<option value="passport">Passport</option>
-															</select>
-														</div>
-														<!-- ID No. Label and Input -->
-														<div class="col-12 col-md-4">
-															<label class="form-label">ID No.</label> <input
-																type="text" class="form-control" id="idNo" name="idNo"
-																placeholder="ID No.">
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-
-										<div class="row">
-											<!-- Own Account Checkbox -->
-											<div class="col-xl-6">
-												<div class="mb-1 d-flex align-items-center">
-													<label class="form-label me-2">Own Account</label> <input
-														type="checkbox" id="ownAccount" name="ownAccount">
-												</div>
-											</div>
-										</div>
-									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="accordion-item">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							data-bs-toggle="collapse"
-							data-bs-target="#panelsStayOpen-collapseThree"
-							aria-expanded="false"
-							aria-controls="panelsStayOpen-collapseThree"
-							style="background: aliceblue;">Transaction Details</button>
-					</h2>
-					<div id="panelsStayOpen-collapseThree"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="padding-top: 0; margin-top: 0;">
-							<div class="card-body personal-info">
-								<div class="card-body pass-security">
-									<div class="row">
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">PayIn Currency<span
-													class="text-danger">*</span></label> <select class="form-control"
-													id="payInCurrency" name="payInCurrency">
-													<option value="">Select Currency</option>
-													<option value="usd">USD</option>
-													<option value="eur">EUR</option>
-													<option value="gbp">GBP</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Source of Fund<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Source of Fund"
-													id="sourceOfFund" name="sourceOfFund">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Transaction Purpose<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Transaction Purpose"
-													id="transactionPurpose" name="transactionPurpose">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Value Date<span
-													class="text-danger">*</span></label> <input type="date"
-													class="form-control" id="valueDate" name="valueDate">
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Remarks<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Remarks" id="remarks"
-													name="remarks">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Payout Amount<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Payout Amount"
-													id="payoutAmount" name="payoutAmount">
-											</div>
-										</div>
-
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Rate<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Rate" id="rate"
-													name="rate">
-											</div>
-										</div>
-
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">PayIn Amount<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Pay In Amount"
-													id="payInAmount" name="payInAmount">
-											</div>
-										</div>
-									</div>
-
-									<div class="row">
-										<div class="col-xl-2">
-											<div>
-												<label class="form-label">Commission</label> <input
-													type="text" class="form-control" placeholder="Commission"
-													id="commission" name="commission" readonly>
-											</div>
-										</div>
-
-										<div class="col-xl-2">
-											<div>
-												<label class="form-label">Tax (%)</label> <input type="text"
-													class="form-control" placeholder="Tax" id="tax" name="tax"
-													readonly>
-											</div>
-										</div>
-
-										<div class="col-xl-2">
-											<div>
-												<label class="form-label">Other Charges</label> <input
-													type="text" class="form-control"
-													placeholder="Other Charges" id="otherCharges"
-													name="otherCharges" readonly>
-											</div>
-										</div>
-
-										<div class="col-xl-2">
-											<div>
-												<label class="form-label">Roundoff</label> <input
-													type="text" class="form-control" placeholder="Rate"
-													id="dynamicRate" name="dynamicRate" readonly>
-											</div>
-										</div>
-
-										<div class="col-xl-4">
-											<div>
-												<label class="form-label">Total Pay In Amount</label> <input
-													type="text" class="form-control"
-													placeholder="Total Pay In Amount" id="totalPayInAmount"
-													name="totalPayInAmount" readonly>
-											</div>
-										</div>
-									</div>
-									<div class="row mt-4">
-										<div class="col-xl-4">
-											<div class="mb-5">
-												<label class="form-label">Payment Mode<span
-													class="text-danger">*</span></label> <select class="form-control"
-													id="paymentMode" name="paymentMode">
-													<option value="" disabled selected>Select Payment
-														Mode</option>
-													<option value="bankTransfer">Bank Transfer</option>
-													<option value="mobileWallet">Mobile Wallet</option>
-													<option value="cash">Cash</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="col-xl-4">
-											<div class="mb-5">
-												<label class="form-label">Amount<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Enter Amount" id="amount"
-													name="amount">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12 col-md-12">
-											<h6 class="mb-3">ID Details Table</h6>
-											<div class="table-responsive">
-												<table class="table table-bordered">
-													<thead>
-														<tr>
-															<th>S.No.</th>
-															<th>Mode</th>
-															<th>Amount</th>
-															<th>Card Type</th>
-															<th>Intl No.</th>
-															<th>Product No.</th>
-															<th>Intl Code</th>
-															<th>Bank Name</th>
-															<th>Remarks</th>
-														</tr>
-													</thead>
-													<tbody>
-														<!-- Dummy Data Row 1 -->
-														<tr>
-															<td>1</td>
-															<td>Cash</td>
-															<td>$500</td>
-															<td>Visa</td>
-															<td>12345</td>
-															<td>Prod-001</td>
-															<td>Intl-001</td>
-															<td>Bank A</td>
-															<td>Payment completed</td>
-														</tr>
-
-													</tbody>
-												</table>
-											</div>
-											<!-- Footer for dynamic content -->
-											<div class="row mt-3">
-												<div class="col-xl-6">
-													<strong>Amount Collected:</strong> $1800
-												</div>
-												<div class="col-xl-6 text-end">
-													<strong>Balance To Pay:</strong> $200
 												</div>
 											</div>
 										</div>
@@ -1482,32 +1010,20 @@
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div class="mt-5 mb-5 text-center">
-				<button type="button" class="btn btn-primary btn-sm">Submit</button>
-			</div>
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
+			</form>
 		</div>
-		<!-- [ Footer ] start -->
 		<footer class="footer" style="background: aliceblue;"> </footer>
-		<!-- [ Footer ] end -->
 	</div>
-
-	<!--! ================================================================ !-->
-	<!--! [End] Theme Customizer !-->
-	<!--! ================================================================ !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
 	<script src="assets/vendors/js/lslstrength.min.js"></script>
-	<!--! END: Vendors JS !-->
-	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>
 	<script src="assets/js/customers-create-init.min.js"></script>
-	<!--! END: Apps Init !-->
-	<!--! BEGIN: Theme Customizer  !-->
 	<script src="assets/js/theme-customizer-init.min.js"></script>
-	<!--! END: Theme Customizer !-->
 </body>
 </html>

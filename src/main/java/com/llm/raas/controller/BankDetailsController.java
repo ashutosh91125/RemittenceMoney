@@ -1,5 +1,7 @@
 package com.llm.raas.controller;
 
+import com.llm.raas.model.Bank;
+import com.llm.raas.model.Branch;
 import com.llm.raas.service.BankDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,6 +11,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,6 +20,47 @@ public class BankDetailsController {
 
     @Autowired
     private BankDetailsService bankService;
+
+    @GetMapping("get-all-bank")
+    public ResponseEntity getAllBanks(){
+        return ResponseEntity.ok(bankService.getAllBanks());
+    }
+
+    @GetMapping("get-all-branch")
+    public ResponseEntity getAllBranch(){
+        return ResponseEntity.ok(bankService.getAllBranch());
+    }
+
+    @GetMapping("/banks/{id}")
+    public ResponseEntity<Bank> getBankById(@PathVariable("id") String bankId) {
+        try {
+            Bank bank = bankService.getBankById(bankId);
+            return new ResponseEntity<>(bank, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/branches/{id}")
+    public ResponseEntity<Branch> getBranchById(@PathVariable("id") String branchId) {
+        try {
+            Branch branch = bankService.getBranchById(branchId);
+            return new ResponseEntity<>(branch, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/branches/by-bank/{bankId}")
+    public ResponseEntity<List<Branch>> getBranchesByBankId(@PathVariable("bankId") String bankId) {
+
+        try {
+            List<Branch> branches = bankService.getBranchesByBankId(bankId);
+            return new ResponseEntity<>(branches, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
 
     /**
      * Endpoint to fetch and store banks.

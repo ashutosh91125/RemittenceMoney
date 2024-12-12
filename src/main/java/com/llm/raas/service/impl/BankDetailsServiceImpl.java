@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,39 @@ public class BankDetailsServiceImpl implements BankDetailsService {
 
     @Autowired
     private ExternalService externalService;
+
+    @Override
+    public List<Bank> getAllBanks() {
+
+        return bankRepository.findAll();
+    }
+
+    @Override
+    public List<Branch> getAllBranch() {
+        return branchRepository.findAll();
+    }
+
+    public Bank getBankById(String bankId) {
+        Optional<Bank> bank = bankRepository.findById(bankId);
+        if (bank.isPresent()) {
+            return bank.get();
+        } else {
+            throw new RuntimeException("Bank not found with id: " + bankId); // You can customize the exception handling
+        }
+    }
+
+    public Branch getBranchById(String branchId) {
+        return branchRepository.findById(branchId)
+                .orElseThrow(() -> new RuntimeException("Bank not found with id: " + branchId));
+    }
+
+    public List<Branch> getBranchesByBankId(String bankId) {
+        List<Branch> branches = branchRepository.findByBankId(bankId);
+        if (branches.isEmpty()) {
+            throw new RuntimeException("Branch not found with bank Id: " + bankId);
+        }
+        return branches;
+    }
 
     @Override
     public void fetchAndStoreBanks(String receivingCountryCode,String receivingMode) {

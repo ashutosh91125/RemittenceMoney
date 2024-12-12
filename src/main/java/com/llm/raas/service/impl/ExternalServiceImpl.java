@@ -11,6 +11,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -122,27 +124,40 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> getTransactionReceipt(String transactionRefNumber) {
-        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/transaction-receipt?transaction_ref_number=" + transactionRefNumber;
+        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/transaction-receipt";
 
-        // Create headers
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("sender", "testagentae");
         headers.set("channel", "Direct");
         headers.set("company", "784825");
         headers.set("branch", "784826");
-        headers.set("Authorization", "Bearer "+ tokenService.getAccessToken()); // Replace with the actual token
+        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
 
-        // Create HttpEntity with headers
-        HttpEntity<String> requestEntity = new HttpEntity<>(headers);
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("transaction_ref_number", transactionRefNumber);
 
-        // Make the GET request
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.getForEntity(url, Map.class, requestEntity);
 
-        // Return the response body
-        return response.getBody();
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    uriBuilder.toUriString(),
+                    HttpMethod.GET,
+                    requestEntity,
+                    Map.class
+            );
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("HTTP Client Error: " + e.getMessage(), e);
+        } catch (HttpServerErrorException e) {
+            throw new RuntimeException("HTTP Server Error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("An unexpected error occurred: " + e.getMessage(), e);
+        }
     }
+
 
     @Override
     public Map<String, Object> cancelTransaction(Map<String, Object> requestBody) {

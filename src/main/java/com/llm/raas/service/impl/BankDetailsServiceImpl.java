@@ -83,6 +83,7 @@ public class BankDetailsServiceImpl implements BankDetailsService {
                     if (!bankRepository.existsById(bankId)) {
                         Bank newBank = new Bank();
                         newBank.setBankId(bankId);
+                        newBank.setCountryCode(receivingCountryCode);
                         newBank.setBankName(bankName);
                         bankRepository.save(newBank);
                     }

@@ -10,6 +10,7 @@ public class Bank {
 
     @Id
     private String bankId;
+    private String countryCode;
     private String bankName;
 
 }

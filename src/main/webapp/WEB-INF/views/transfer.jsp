@@ -213,82 +213,71 @@
 }
 </style>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).ready(function () {
+    $("tr[data-customer-ecrn]").on("click", function () {
+        var customerEcrn = $(this).data("customer-ecrn");
+        console.log("Fetching customer for ECRN:", customerEcrn);
 
-	$("tr[data-customer-ecrn]").on("click", function() {
-		var customerEcrn = $(this).data("customer-ecrn");
-		console.log(customerEcrn);
-		$.ajax({
-			url : '/caas/api/v2/customer',
-			type : 'GET',
-			data : {
-				ecrn : customerEcrn
-			},
-			success : function(response) {
-				console.log(response);
-				 if (typeof response === "string") {
-				        try {
-				            response = JSON.parse(response);
-				        } catch (error) {
-				            console.error("Failed to parse JSON response: ", response);
-				            return;
-				        }
-				    }
+        $.ajax({
+            url: '/caas/api/v2/customer/' + customerEcrn, // Include ECRN in path
+            type: 'GET',
+            success: function (response) {
+                console.log(response);
+                if (response) {
+                    $('#ecrn').val(response.ecrn?.trim() || '');
+                    $('#firstName').val(response.firstName?.trim() || '');
+                    $('#middleName').val(response.middleName?.trim() || '');
+                    $('#lastName').val(response.lastName?.trim() || '');
+                    $('#currentCity').val(response.city?.trim() || '');
+                    $('#placeOfBirth').val(response.placeOfBirth?.trim() || '');
+                    $('#dateOfBirth').val(response.dateOfBirth?.trim() || '');
+                    $('#emailId').val(response.emailId?.trim() || '');
+                    $('#primaryMobileNumber').val(response.primaryMobileNumber?.trim() || '');
+                    $('#state').val(response.state?.trim() || '');
+                    $('#countryOfResidence').val(response.countryOfResidence?.trim() || '');
+                    $('#nationality').val(response.nationality?.trim() || '');
+                    $('#country').val(response.country?.trim() || '');
+                    $('#residentTypeId').val(response.residentTypeId || '');
+                    $('#visaType').val(response.visaType?.trim() || '');
+                    $('#idNumber').val(response.idNumber?.trim() || '');
+                    $('#idType').val(response.idType || '');
+                    $('#issuedBy').val(response.issuedBy?.trim() || '');
+                    $('#issuedOn').val(response.issuedOn?.trim() || '');
+                    $('#dateOfExpiry').val(response.dateOfExpiry?.trim() || '');
+                    $('#issuedCountry').val(response.issuedCountry?.trim() || '');
+                    $('#visaExpiryDate').val(response.visaExpiryDate?.trim() || '');
+                    $('#visaNumber').val(response.visaNumber?.trim() || '');
 
-				 if (Array.isArray(response) && response.length > 0) {
-				        var firstObject = response[0]; 
-				        if (firstObject.ecrn || firstObject.firstName || firstObject.middleName || firstObject.lastName ||  firstObject.city || firstObject.placeOfBirth ||  
-				        	firstObject.dateOfBirth || firstObject.emailId || firstObject.primaryMobileNumber || firstObject.state  || 
-				        	firstObject.countryOfResidence || firstObject.nationality || firstObject.country || firstObject.visaType ||	
-				        	firstObject.idNumber || firstObject.idType || firstObject.issuedBy || firstObject.issuedOn || firstObject.dateOfExpiry
-				        	|| firstObject.residentTypeId || firstObject.visaType || firstObject.visaExpiryDate || firstObject.visaNumber) {
-				        	$('#ecrn').val(firstObject.ecrn.trim());
-				        	$('#firstName').val(firstObject.firstName.trim());
-	                        $('#middleName').val(firstObject.middleName.trim());
-	                        $('#lastName').val(firstObject.lastName.trim());
-	                        $('#currentCity').val(firstObject.city.trim());
-	                        $('#placeOfBirth').val(firstObject.placeOfBirth.trim());
-	                        $('#dateOfBirth').val(firstObject.dateOfBirth.trim());
-	                        $('#emailId').val(firstObject.emailId.trim());
-	                        $('#primaryMobileNumber').val(firstObject.primaryMobileNumber.trim());
-	                        $('#state').val(firstObject.state.trim());
-	                        $('#countryOfResidence').val(firstObject.countryOfResidence.trim());
-	                        $('#nationality').val(firstObject.nationality.trim());
-	                        $('#country').val(firstObject.country.trim());
-	                        $('#visaType').val(firstObject.visaType.trim());
-	                        $('#idNumber').val(firstObject.idNumber.trim());
-	                        $('#idType').val(firstObject.idType);
-	                        $('#issuedBy').val(firstObject.issuedBy.trim());
-	                        $('#issuedOn').val(firstObject.issuedOn.trim());
-	                        $('#dateOfExpiry').val(firstObject.dateOfExpiry.trim());
-	                        $('#issuedCountry').val(firstObject.issuedCountry.trim());
-	                        $('#residentTypeId').val(firstObject.residentTypeId);
-	                        $('#visaType').val(firstObject.visaType);
-	                        $('#visaExpiryDate').val(firstObject.visaExpiryDate);
-	                        $('#visaNumber').val(firstObject.visaNumber);
-	                        toggleFields();
-	                    }
-				    } else {
-				        console.error("Response is not an array or is empty: ", response);
-				    }
-			},
-			error : function(xhr, status, error) {
-				alert("An error occurred while fetching customer data.");
-			}
-		});
-	});
+                    toggleFields();
+                } else {
+                    console.error("No customer data found for the provided ECRN.");
+                }
+            },
+            error: function (xhr, status, error) {
+                if (xhr.status === 404) {
+                    alert("Customer not found for the provided ECRN.");
+                } else {
+                    alert("An error occurred while fetching customer data.");
+                }
+            }
+        });
+    });
 });
-;
-function toggleFields() {
-const residentTypeId = document.getElementById('residentTypeId').value;
-const idDetailsFields = document.getElementById('idDetailsFields');
 
-if (residentTypeId === "100") {
-    idDetailsFields.style.display = "block"; 
-} else {
-    idDetailsFields.style.display = "none"; 
+function toggleFields() {
+    const residentTypeId = document.getElementById('residentTypeId').value;
+    const idType = document.getElementById('idType').value;
+    const idDetailsFields = document.getElementById('idDetailsFields');
+    const idDetails = document.getElementById('idDetails');
+    
+    idDetails.style.display = "block";
+    if (residentTypeId === "100") {
+        idDetailsFields.style.display = "block";
+    } else {
+        idDetailsFields.style.display = "none";
+    }
 }
-}
+
 
 
 $(document)
@@ -548,7 +537,8 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										<div class="col-12">
 											<h6>ID Details</h6>
 										</div>
-										<div class="row">
+										<div id="idDetails">
+											<div class="row">
 											<div class="col-12 col-md-4">
 												<label class="form-label">ID Type</label><input type="text"
 													name="idType" class="form-control" placeholder="Id Type"
@@ -606,6 +596,7 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 														placeholder="Visa Type" id="visaType" readonly />
 												</div>
 											</div>
+										</div>
 										</div>
 									</div>
 								</div>

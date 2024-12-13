@@ -750,7 +750,7 @@ function copyAddress() {
 			<form:form modelAttribute="customer" id="customerOnboardForm"
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data" onsubmit="return validation(this)">
-				<form:hidden path="isValid" value="true" />
+				<form:hidden path="isValid" value="true" /> 
 				<form:hidden path="ecrn" />
 
 

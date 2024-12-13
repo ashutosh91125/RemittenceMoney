@@ -2,6 +2,8 @@ package com.llm.raas.controller;
 
 import com.llm.raas.service.ExternalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -14,13 +16,33 @@ public class ExternalApiController {
     private ExternalService externalApiService;
 
     @PostMapping("/quote")
-    public Map<String, Object> getQuote(@RequestBody Map<String, Object> requestBody) {
-        return externalApiService.callExternalApi(requestBody);
+    public ResponseEntity<?> getQuote(@RequestBody Map<String, Object> requestBody) {
+        // Call external service
+        Map<String, Object> response = externalApiService.callExternalApi(requestBody);
+
+        if (response.containsKey("data")) {
+            Map<String, Object> data = (Map<String, Object>) response.get("data");
+            String quoteId = (String) data.get("quote_id");
+
+            return ResponseEntity.ok(Map.of("quote_id", quoteId, "status", 200));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Failed to get quote"));
+        }
     }
 
     @PostMapping("/create-transaction")
-    public Map<String, Object> createTransaction(@RequestBody Map<String, Object> requestBody) {
-        return externalApiService.createTransaction(requestBody);
+    public ResponseEntity<?> createTransaction(@RequestBody Map<String, Object> requestBody) {
+        // Call external service
+        Map<String, Object> response = externalApiService.createTransaction(requestBody);
+
+        if (response.containsKey("data")) {
+            Map<String, Object> data = (Map<String, Object>) response.get("data");
+            String transactionRefNumber = (String) data.get("transaction_ref_number");
+
+            return ResponseEntity.ok(Map.of("transaction_ref_number", transactionRefNumber, "status", 200));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Failed to create transaction"));
+        }
     }
 
     @PostMapping("/confirm-transaction")

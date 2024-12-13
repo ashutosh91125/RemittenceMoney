@@ -320,10 +320,34 @@ $(document)
 
 
 document.addEventListener('DOMContentLoaded', function() {
-console.log("Page Loaded");
-toggleFields();
-document.getElementById('residentTypeId').addEventListener('change', toggleFields);
-});	
+    console.log("Page Loaded");
+    toggleFields();
+
+    const accountNumber = document.getElementById("accountNo");
+    const confirmAccountNumber = document.getElementById("confirmAccountNo");
+    const messageElement = document.getElementById("validationMessage");
+
+    function validateRealTime() {
+        const accountNumberValue = accountNumber.value.trim();
+        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
+
+        if (confirmAccountNumberValue === "") {
+            messageElement.textContent = ""; 
+            return;
+        }
+        if (accountNumberValue !== confirmAccountNumberValue) {
+            messageElement.textContent = "Account numbers do not match!";
+            messageElement.style.color = "red";
+        } else {
+            messageElement.textContent = "Account numbers match.";
+            messageElement.style.color = "green";
+        }
+    }
+
+    accountNumber.addEventListener('input', validateRealTime);
+    confirmAccountNumber.addEventListener('input', validateRealTime);
+    document.getElementById('residentTypeId').addEventListener('change', toggleFields);
+});
 
 </script>
 </head>
@@ -539,64 +563,65 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										</div>
 										<div id="idDetails">
 											<div class="row">
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID Type</label><input type="text"
-													name="idType" class="form-control" placeholder="Id Type"
-													id="idType" readonly>
-											</div>
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID No.</label> <input
-													name="idNumber" id="idNumber" name="idNumber"
-													placeholder="Id Number" type="text" class="form-control"
-													id="idNumber" readonly />
-											</div>
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID Issued By</label> <input
-													name="issuedBy" type="text" class="form-control"
-													placeholder="Issued By" id="issuedBy" readonly />
-											</div>
-										</div>
-										<div class="row mt-2">
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID Date of Issue</label> <input
-													name="issuedAt" type="text" class="form-control"
-													placeholder="issuedOn" id="issuedOn" readonly />
-											</div>
-											<div class="col-12 col-md-4">
-												<label class="form-label">ID Date of Expiry</label> <input
-													name="dateOfExpiry" type="text" class="form-control"
-													placeHolder="Date of Expiry" id="dateOfExpiry" readonly />
-											</div>
-											<div class="col-12 col-md-4">
-												<label class="form-label">Country</label> <input type="text"
-													class="form-control" placeholder="Issued Country"
-													name="issuedCountry" id="issuedCountry" readonly>
-											</div>
-										</div>
-										<div id="idDetailsFields" class="row mt-4"
-											style="display: none;">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-4">Visa Details</span>
-											</h5>
-											<div class="row">
 												<div class="col-12 col-md-4">
-													<label class="form-label">Visa Number</label> <input
-														name="visaNumber" type="text" id="visaNumber"
-														class="form-control" placeholder="Visa Number" readonly />
+													<label class="form-label">ID Type</label><input type="text"
+														name="idType" class="form-control" placeholder="Id Type"
+														id="idType" readonly>
 												</div>
 												<div class="col-12 col-md-4">
-													<label class="form-label">Visa Expiry Date</label> <input
-														name="visaExpiryDate" type="text" class="form-control"
-														placeholder="Visa Expiry Date" id="visaExpiryDate"
-														readonly />
+													<label class="form-label">ID No.</label> <input
+														name="idNumber" id="idNumber" name="idNumber"
+														placeholder="Id Number" type="text" class="form-control"
+														id="idNumber" readonly />
 												</div>
 												<div class="col-12 col-md-4">
-													<label class="form-label">Visa Type</label> <input
-														name="visaType" type="text" class="form-control"
-														placeholder="Visa Type" id="visaType" readonly />
+													<label class="form-label">ID Issued By</label> <input
+														name="issuedBy" type="text" class="form-control"
+														placeholder="Issued By" id="issuedBy" readonly />
 												</div>
 											</div>
-										</div>
+											<div class="row mt-2">
+												<div class="col-12 col-md-4">
+													<label class="form-label">ID Date of Issue</label> <input
+														name="issuedAt" type="text" class="form-control"
+														placeholder="issuedOn" id="issuedOn" readonly />
+												</div>
+												<div class="col-12 col-md-4">
+													<label class="form-label">ID Date of Expiry</label> <input
+														name="dateOfExpiry" type="text" class="form-control"
+														placeHolder="Date of Expiry" id="dateOfExpiry" readonly />
+												</div>
+												<div class="col-12 col-md-4">
+													<label class="form-label">Country</label> <input
+														type="text" class="form-control"
+														placeholder="Issued Country" name="issuedCountry"
+														id="issuedCountry" readonly>
+												</div>
+											</div>
+											<div id="idDetailsFields" class="row mt-4"
+												style="display: none;">
+												<h5 class="fw-bold mb-0 me-4">
+													<span class="d-block mb-4">Visa Details</span>
+												</h5>
+												<div class="row">
+													<div class="col-12 col-md-4">
+														<label class="form-label">Visa Number</label> <input
+															name="visaNumber" type="text" id="visaNumber"
+															class="form-control" placeholder="Visa Number" readonly />
+													</div>
+													<div class="col-12 col-md-4">
+														<label class="form-label">Visa Expiry Date</label> <input
+															name="visaExpiryDate" type="text" class="form-control"
+															placeholder="Visa Expiry Date" id="visaExpiryDate"
+															readonly />
+													</div>
+													<div class="col-12 col-md-4">
+														<label class="form-label">Visa Type</label> <input
+															name="visaType" type="text" class="form-control"
+															placeholder="Visa Type" id="visaType" readonly />
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
@@ -624,23 +649,24 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 											</select>
 										</div>
 										<div class="col-12 col-md-4">
-											<label class="form-label">Payout Country</label>
-											<select name="payOutCountry" id="payOutCountry" class="form-control" data-select2-selector="icon">
-    											<option value="" disabled selected>Payout Country</option>
-    											<c:forEach var="country" items="${countryList}">
-        										<option value="${country.valueId}">${country.description}</option>
-    											</c:forEach>
-												</select>
-											</select>
+											<label class="form-label">Payout Country</label> <select
+												name="payOutCountry" id="payOutCountry" class="form-control"
+												data-select2-selector="icon">
+												<option value="" disabled selected>Payout Country</option>
+												<c:forEach var="country" items="${countryList}">
+													<option value="${country.valueId}">${country.description}</option>
+												</c:forEach>
+											</select> </select>
 										</div>
 										<div class="col-12 col-md-4">
-											<label class="form-label">Currency</label>
-											<select name="currencies" id="currencies" class="form-control" data-select2-selector="icon">
-    											<option value="" disabled selected>Currency</option>
-    											<c:forEach var="currency" items="${currencyList}">
-        										<option value="${currency.valueId}">${currency.description}</option>
-    											</c:forEach>
-												</select>
+											<label class="form-label">Currency</label> <select
+												name="currencies" id="currencies" class="form-control"
+												data-select2-selector="icon">
+												<option value="" disabled selected>Currency</option>
+												<c:forEach var="currency" items="${currencyList}">
+													<option value="${currency.valueId}">${currency.description}</option>
+												</c:forEach>
+											</select>
 										</div>
 									</div>
 									<div class="row">
@@ -690,6 +716,7 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 													type="text" class="form-control" id="confirmAccountNo"
 													name="confirmAccountNo" placeholder="Confirm Account No.">
 											</div>
+											<span id="validationMessage"></span>
 										</div>
 									</div>
 									<div class="row">
@@ -715,7 +742,7 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										</div>
 										<div class="col-12 col-md-4">
 											<label class="form-label">Nick Name</label> <input
-												type="text" class="form-control" id="nickname"
+												type="text" class="form-control" id="nickName"
 												name="nickname" placeholder="Nick Name">
 										</div>
 									</div>
@@ -723,21 +750,21 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">First Name</label> <input
-													type="text" class="form-control" id="firstName"
+													type="text" class="form-control" id="benificiryfirstName"
 													name="firstName" placeholder="First Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Middle Name</label> <input
-													type="text" class="form-control" id="middleName"
+													type="text" class="form-control" id="benificiryMiddleName"
 													name="middleName" placeholder="Middle Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Last Name</label> <input
-													type="text" class="form-control" id="lastName"
+													type="text" class="form-control" id="benificirylastName"
 													name="lastName" placeholder="Last Name">
 											</div>
 										</div>
@@ -746,21 +773,21 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 1</label> <input
-													type="text" class="form-control" id="benfAddress1"
+													type="text" class="form-control" id="benificiryAddress1"
 													name="benfAddress1" placeholder="Address">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 2</label> <input
-													type="text" class="form-control" id="benfAddress2"
+													type="text" class="form-control" id="benificiryAddress2"
 													name="benfAddress2" placeholder="Address 2">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary City</label> <input
-													type="text" class="form-control" id="beneficiaryCity"
+													type="text" class="form-control" id="benificiryCity"
 													name="beneficiaryCity" placeholder="City">
 											</div>
 										</div>
@@ -783,8 +810,8 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Nationality</label> <select
-													class="form-control" id="nationality" name="nationality"
-													data-select2-selector="icon">
+													class="form-control" id="nationality"
+													name="benificiryNationality" data-select2-selector="icon">
 													<option value="us">United States</option>
 													<option value="uk">United Kingdom</option>
 												</select>
@@ -795,14 +822,15 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Date of Birth</label> <input
-													type="date" class="form-control" id="dob" name="dob">
+													type="date" class="form-control" id="benificiryDob"
+													name="dob">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID Type</label> <select
 													data-select2-selector="icon" class="form-control"
-													id="idType" name="idType">
+													id="idType" name="benificiryIdType">
 													<option value="nationalId">National ID</option>
 													<option value="passport">Passport</option>
 												</select>
@@ -811,7 +839,7 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID No.</label> <input type="text"
-													class="form-control" id="idNo" name="idNo"
+													class="form-control" id="benificiryIdNo" name="idNo"
 													placeholder="ID No.">
 											</div>
 										</div>
@@ -836,7 +864,8 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 												<div>
 													<label class="form-label">PayIn Currency<span
 														class="text-danger">*</span></label> <select class="form-control"
-														id="payInCurrency" name="payInCurrency">
+														id="payInCurrency" name="payInCurrency"
+														data-select2-selector="icon">
 														<option value="">Select Currency</option>
 														<option value="usd">USD</option>
 														<option value="eur">EUR</option>
@@ -953,7 +982,8 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 												<div class="mb-5">
 													<label class="form-label">Payment Mode<span
 														class="text-danger">*</span></label> <select class="form-control"
-														id="paymentMode" name="paymentMode">
+														id="paymentMode" name="paymentMode"
+														data-select2-selector="icon">
 														<option value="" disabled selected>Select Payment
 															Mode</option>
 														<option value="bankTransfer">Bank Transfer</option>
@@ -979,29 +1009,29 @@ document.getElementById('residentTypeId').addEventListener('change', toggleField
 													<table class="table table-bordered">
 														<thead>
 															<tr>
-															<th>S.No.</th>
-															<th>Mode</th>
-															<th>Amount</th>
-															<th>Card Type</th>
-															<th>Intl No.</th>
-															<th>Product No.</th>
-															<th>Intl Code</th>
-															<th>Bank Name</th>
-															<th>Remarks</th>
+																<th>S.No.</th>
+																<th>Mode</th>
+																<th>Amount</th>
+																<th>Card Type</th>
+																<th>Intl No.</th>
+																<th>Product No.</th>
+																<th>Intl Code</th>
+																<th>Bank Name</th>
+																<th>Remarks</th>
 															</tr>
 														</thead>
 														<tbody>
 															<!-- Dummy Data Row 1 -->
 															<tr>
-															<td>1</td>
-															<td>Cash</td>
-															<td>$500</td>
-															<td>Visa</td>
-															<td>12345</td>
-															<td>Prod-001</td>
-															<td>Intl-001</td>
-															<td>Bank A</td>
-															<td>Payment completed</td>
+																<td>1</td>
+																<td>Cash</td>
+																<td>$500</td>
+																<td>Visa</td>
+																<td>12345</td>
+																<td>Prod-001</td>
+																<td>Intl-001</td>
+																<td>Bank A</td>
+																<td>Payment completed</td>
 															</tr>
 
 														</tbody>

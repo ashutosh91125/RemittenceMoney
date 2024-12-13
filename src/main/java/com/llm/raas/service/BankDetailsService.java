@@ -17,7 +17,9 @@ public interface BankDetailsService {
 
     List<Branch> getBranchesByBankId(String bankId);
 
-    void fetchAndStoreBanks(String receivingCountryCode,String receivingMode);
+    List<Bank> getBankByCountryCode(String countryCode);
+
+    void fetchAndStoreBanks(String receivingCountryCode, String receivingMode);
 
     void fetchAndStoreBranches(String fetchBankId,String receivingCountryCode, String correspondent, String receivingMode);
 }

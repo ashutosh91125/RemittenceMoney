@@ -2,6 +2,7 @@ package com.llm.raas.controller;
 
 import com.llm.raas.model.Bank;
 import com.llm.raas.model.Branch;
+import com.llm.raas.repository.BankRepository;
 import com.llm.raas.service.BankDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +14,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/banks")
@@ -20,6 +22,9 @@ public class BankDetailsController {
 
     @Autowired
     private BankDetailsService bankService;
+
+    @Autowired
+    private BankRepository bankRepository;
 
     @GetMapping("get-all-bank")
     public ResponseEntity getAllBanks(){
@@ -49,6 +54,11 @@ public class BankDetailsController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/country-code/{countryCode}")
+    public ResponseEntity getBankByCountryCode(@PathVariable String countryCode){
+        return ResponseEntity.ok(bankService.getBankByCountryCode(countryCode));
     }
 
     @GetMapping("/branches/by-bank/{bankId}")

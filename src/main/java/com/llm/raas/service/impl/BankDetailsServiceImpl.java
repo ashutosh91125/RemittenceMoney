@@ -61,6 +61,11 @@ public class BankDetailsServiceImpl implements BankDetailsService {
     }
 
     @Override
+    public List<Bank> getBankByCountryCode(String countryCode){
+        return bankRepository.findByCountryCode(countryCode);
+    }
+
+    @Override
     public void fetchAndStoreBanks(String receivingCountryCode,String receivingMode) {
         // Parameters for the API
 //        receivingCountryCode = "IN";

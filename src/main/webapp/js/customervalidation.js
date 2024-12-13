@@ -293,9 +293,9 @@
 		                    // If customer already exists, mark as invalid
 		                    if (response.message === "Customer already exists with this mobile number.") {
 		                        primaryMobileNumberError.innerHTML = response.message;
-		                        isValid = false; // Mobile number exists, so not valid
+		                        isValid = false; 
 		                    } else {
-		                        isValid = true;  // Mobile number is available
+		                        isValid = false; 
 		                    }
 		                } else {
 		                    primaryMobileNumberError.innerHTML = "Unexpected response from the server.";

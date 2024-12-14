@@ -211,6 +211,23 @@
 	line-height: 28px; /* Center align text */
 	font-size: 12px; /* Adjust text size */
 }
+
+.loader {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 2px solid #3498db;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+            visibility: hidden;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 </style>
 <script type="text/javascript">
 $(document).ready(function () {
@@ -278,91 +295,149 @@ function toggleFields() {
     }
 }
 
-$(document).ready(function() {
-	 $('#payOutCountry').select2({
-	        placeholder: "Select Payout Country",
-	        allowClear: true,
-	    });
-	 
-    
-    $('#payOutCountry').on('change', function() {
-        let dependent = $(this).val(); 
-
-      
-        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
-        $('#beneficryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
-        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>'); 
-
-        if (dependent) {
-            let currencyDependent = dependent + "C"; 
-
-            // Fetch Currencies
-            $.ajax({
-                url: '/api/enumEntities/dependent', 
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-
-            $.ajax({
-                url: '/api/v1/banks/country-code/' + dependent,
-                type: 'GET',
-                success: function(data) {
-                    console.log(data);
-                    
-                    $('#beneficryBank').empty();
-
-                    
-                    $('#beneficryBank').append('<option value="">Select  Bank</option>');
-
-                    
-                    $.each(data, function(index, bank) {
-                        $('#beneficryBank').append('<option value="' + bank.bankId + '">' + bank.bankName + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching banks for the selected country.");
-                }
-            })
-        }
-    });
 
 
-    $('#beneficryBank').on('change', function() {
-        let bankId = $(this).val(); 
+$(document)
+.ready(
+	function() {
+		$('#payOutCountry')
+			.on(
+				'change',
+					function() {
+						let dependent = $(this).val(); // Get the selected country value
+						 dependent += "C";
+						if (dependent) { // Check if a country is selected
+						$
+						.ajax({
+						url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
+						type : 'GET',
+						data : {
+						dependent : dependent
+						}, // Pass the selected country ID
+						success : function(data) {
+						// Clear the state dropdown and populate with new options
+						$('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
+						$.each(data,function(index,enumValue) {
+											$('#currencies').append('<option value="' + enumValue.valueId + '">'
+															+ enumValue.description+ '</option>');
+															});
+												},
+												error : function() {
+													console
+															.error("Error fetching country selected Currency.");
+												}
+											});
+								} else {
+									// Reset the state dropdown if no country is selected
+									$('#currencies').empty().append('<option value="" disabled selected>Select  Currency</option>');
+								}
+							});
+		});
 
-        // Clear previous values in the branches dropdown
-        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
+    // Function to call the quote service
+            function getQuote() {
+                const payload = {
+                    sending_country_code: "MY",
+                    sending_currency_code: $('#payInCurrency').val(),
+                    receiving_country_code: $('#payOutCountry').val(),
+                    receiving_currency_code: $('#currencies').val(),
+                    sending_amount: $('#amount').val(),
+                    receiving_mode: $('#paymentMode').val(),
+                    type: "SEND",
+                    instrument: "REMITTANCE"
+                };
+                console.log(payload);
 
-        if (bankId) {
-     
-            $.ajax({
-                url: '/api/v1/banks/branches/by-bank/'+bankId, 
-                type: 'GET',
-//                 data: { bankId: bankId },
-                success: function(data) {
-                	console.log(data);
-                	 $('#bankBranches').empty();
-                	 $('#bankBranches').append('<option value="">Select  Branch</option>');
-                    $.each(data, function(index, branch) {
-                        $('#bankBranches').append('<option value="' + branch.branchId + '">' + branch.branchName + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching branches for the selected bank.");
-                }
-            });
-        }
-    });
-});
+                // Show loader and disable button
+                $('#quoteLoader').css('visibility', 'visible');
+                $('#quoteButton').prop('disabled', true);
 
+                $.ajax({
+                    url: '/api/v1/raas/quote',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    success: function(response) {
+                        if (response.status === 200) {
+                            const quoteId = response.quote_id;
+
+                            $('#quoteId').val(response.quote_id); // Store the quote ID
+                            $('#quoteMessage').text(`Quote ID: ${quoteId}`);
+                            $('#quoteButton').hide();
+                            $('#createTransactionSection').show(); // Show the transaction section
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to generate quote. Please try again.');
+                    },
+                    complete: function() {
+                        // Hide loader and enable button
+                        $('#quoteLoader').css('visibility', 'hidden');
+                        $('#quoteButton').prop('disabled', false);
+                    }
+                });
+            }
+
+            // Function to call the create-transaction service
+            function createTransaction() {
+                const payload = {
+                    type: "SEND",
+                    source_of_income: $('#sourceOfIncome').val(),
+                    purpose_of_txn: $('#purposeOfTxn').val(),
+                    instrument: "REMITTANCE",
+                    message: $('#message').val(),
+                    sender: {
+                        customer_number: $('#customerNumber').val()
+                    },
+                    receiver: {
+                        mobile_number: $('#receiverMobile').val(),
+                        first_name: $('#receiverFirstName').val(),
+                        last_name: $('#receiverLastName').val(),
+                        relation_code: $('#relationCode').val(),
+                        nationality: $('#receiverNationality').val(),
+                        receiver_address: [
+                            {
+                                address_type: "PRESENT",
+                                address_line: $('#receiverAddressLine').val(),
+                                town_name: $('#receiverTown').val(),
+                                country_code: $('#receiverCountryCode').val()
+                            }
+                        ],
+                        bank_details: {
+                            account_type_code: $('#accountTypeCode').val(),
+                            account_number: $('#accountNumber').val(),
+                            routing_code: $('#routingCode').val()
+                        }
+                    },
+                    transaction: {
+                        quote_id: $('#quoteId').val() // Use stored quote ID
+                    }
+                };
+
+                // Show loader and disable button
+                $('#transactionLoader').css('visibility', 'visible');
+                $('#transactionButton').prop('disabled', true);
+
+                $.ajax({
+                    url: '/api/service/create-transaction',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    success: function(response) {
+                        if (response.status === 200) {
+                            $('#transactionMessage').text(`Transaction created successfully. Reference Number: ${response.transaction_ref_number}`);
+                        }
+                    },
+                    error: function() {
+                        alert('Failed to create transaction. Please try again.');
+                    },
+                    complete: function() {
+                        // Hide loader and enable button
+                        $('#transactionLoader').css('visibility', 'hidden');
+                        $('#transactionButton').prop('disabled', false);
+                    }
+                });
+            }
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
@@ -695,20 +770,19 @@ document.addEventListener('DOMContentLoaded', function() {
 										</div>
 										<div class="col-12 col-md-4">
 											<label class="form-label">Payout Country</label> <select
-												data-select2-selector="icon" name="payOutCountry"
-												id="payOutCountry" class="form-control">
-												<option value="" disabled selected>Select Payout
-													Country</option>
+												name="payOutCountry" id="payOutCountry" class="form-control"
+												data-select2-selector="icon">
+												<option value="" disabled selected>Payout Country</option>
 												<c:forEach var="country" items="${countryList}">
 													<option value="${country.valueId}">${country.description}</option>
 												</c:forEach>
-											</select>
+											</select> </select>
 										</div>
 										<div class="col-12 col-md-4">
 											<label class="form-label">Currency</label> <select
 												name="currencies" id="currencies" class="form-control"
 												data-select2-selector="icon">
-												<option value="" disabled selected>Select Currency</option>
+												<option value="" disabled selected>Currency</option>
 												<c:forEach var="currency" items="${currencyList}">
 													<option value="${currency.valueId}">${currency.description}</option>
 												</c:forEach>
@@ -718,23 +792,16 @@ document.addEventListener('DOMContentLoaded', function() {
 									<div class="row">
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
-												<label class="form-label">Bank</label> <select
-													class="form-control" id="beneficryBank" name="bank"
-													data-select2-selector="icon">
-													<option value="" disabled selected>Select Bank</option>
-												</select>
-
+												<label class="form-label">Bank</label> <input type="text"
+													class="form-control" id="bank" name="bank"
+													placeholder="Bank Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
-												<label class="form-label">Branch</label> <select
-													class="form-control" id="bankBranches" name="branch"
-													data-select2-selector="icon">
-													<option value="" disabled selected>Select Branch</option>
-												</select>
-												<!-- <input type="text" class="form-control" id="branch"
-													name="branch" placeholder=""> -->
+												<label class="form-label">Branch</label> <input type="text"
+													class="form-control" id="branch" name="branch"
+													placeholder="Branch">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
@@ -863,12 +930,10 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Nationality</label> <select
-													name="payOutCountry" id="payOutCountry"
-													class="form-control" data-select2-selector="icon">
-													<option value="" disabled selected>Nationality</option>
-													<c:forEach var="country" items="${countryList}">
-														<option value="${country.valueId}">${country.description}</option>
-													</c:forEach>
+													class="form-control" id="nationality"
+													name="benificiryNationality" data-select2-selector="icon">
+													<option value="us">United States</option>
+													<option value="uk">United Kingdom</option>
 												</select>
 											</div>
 										</div>
@@ -922,7 +987,7 @@ document.addEventListener('DOMContentLoaded', function() {
 														id="payInCurrency" name="payInCurrency"
 														data-select2-selector="icon">
 														<option value="">Select Currency</option>
-														<option value="usd">USD</option>
+														<option value="MYR">MYR</option>
 														<option value="eur">EUR</option>
 														<option value="gbp">GBP</option>
 													</select>
@@ -1041,9 +1106,9 @@ document.addEventListener('DOMContentLoaded', function() {
 														data-select2-selector="icon">
 														<option value="" disabled selected>Select Payment
 															Mode</option>
-														<option value="bankTransfer">Bank Transfer</option>
-														<option value="mobileWallet">Mobile Wallet</option>
-														<option value="cash">Cash</option>
+														<option value="BANK">Bank Transfer</option>
+														<%-- <option value="mobileWallet">Mobile Wallet</option>
+														<option value="cash">Cash</option> --%>
 													</select>
 												</div>
 											</div>
@@ -1110,8 +1175,18 @@ document.addEventListener('DOMContentLoaded', function() {
 					</div>
 					<div class="mt-5 mb-5 text-center"
 						style="display: flex; justify-content: center">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="button" id="quoteButton" onclick="getQuote()" class="btn btn-warning">Submit</button>
+						<div>
+						    <div id="quoteMessage" style="margin-top: 20px; font-weight: bold;"></div>
+                            <input type="hidden" id="quoteId" />
+                        </div>
 					</div>
+
+					<div id="createTransactionSection" style="display:none; justify-content: center"
+					    class="mt-5 mb-5 text-center" >
+                        <button type="button" onclick="createTransaction()" class="btn btn-primary">Create Transaction</button>
+                        <div id="transactionMessage" style="margin-top: 20px; font-weight: bold;"></div>
+                    </div>
 			</form>
 		</div>
 		<footer class="footer" style="background: aliceblue;"> </footer>

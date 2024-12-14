@@ -237,9 +237,29 @@ keyframes spin { 0% {
 
 
 
+
+
+
+
+
+
+
+
+
+
 %
 {
 transform
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -257,6 +277,16 @@ transform
 
 
 
+
+
+
+
+
+
+
+
+
+
 rotate
 
 
@@ -264,7 +294,27 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
+
+
 (
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -282,7 +332,27 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
+
+
 )
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -362,11 +432,7 @@ function toggleFields() {
 
 
 $(document).ready(function() {
-	 $('#payOutCountry').select2({
-	        placeholder: "Select Payout Country",
-	    });
-	 
-   
+	
    $('#payOutCountry').on('change', function() {
        let dependent = $(this).val(); 
 
@@ -434,7 +500,7 @@ $(document).ready(function() {
                	 $('#bankBranches').empty();
                	 $('#bankBranches').append('<option value="">Select  Branch</option>');
                    $.each(data, function(index, branch) {
-                       $('#bankBranches').append('<option value="' + branch.branchId + '">' + branch.branchName + '</option>');
+                       $('#bankBranches').append('<option value="' + branch.routingCode + '">' + branch.branchName + '</option>');
                    });
                },
                error: function() {
@@ -492,31 +558,32 @@ $(document).ready(function() {
             function createTransaction() {
                 const payload = {
                     type: "SEND",
-                    source_of_income: $('#sourceOfIncome').val(),
-                    purpose_of_txn: $('#purposeOfTxn').val(),
+                    source_of_income: $('#sourceOfFund').val(),
+                    purpose_of_txn: $('#transactionPurpose').val(),
                     instrument: "REMITTANCE",
-                    message: $('#message').val(),
+                    message: "Agency transaction",
                     sender: {
-                        customer_number: $('#customerNumber').val()
+                    	 customer_number:"4582433857738986"
+//                         customer_number: $('#ecrn').val()
                     },
                     receiver: {
-                        mobile_number: $('#receiverMobile').val(),
-                        first_name: $('#receiverFirstName').val(),
-                        last_name: $('#receiverLastName').val(),
-                        relation_code: $('#relationCode').val(),
-                        nationality: $('#receiverNationality').val(),
+                        mobile_number: $('#mobile').val(),
+                        first_name: $('#benificiryfirstName').val(),
+                        last_name: $('#benificirylastName').val(),
+                        relation_code: "32",
+                        nationality: $('#beneficiaryNationality').val(),
                         receiver_address: [
                             {
                                 address_type: "PRESENT",
-                                address_line: $('#receiverAddressLine').val(),
-                                town_name: $('#receiverTown').val(),
-                                country_code: $('#receiverCountryCode').val()
+                                address_line: $('#benificiryAddress1').val(),
+                                town_name: $('#benificiryCity').val(),
+                                country_code: $('#beneficiaryNationality').val()
                             }
                         ],
                         bank_details: {
-                            account_type_code: $('#accountTypeCode').val(),
-                            account_number: $('#accountNumber').val(),
-                            routing_code: $('#routingCode').val()
+                            account_type_code: $('#accountType').val(),
+                            account_number: $('#confirmAccountNo').val(),
+                            routing_code: $('#bankBranches').val()
                         }
                     },
                     transaction: {
@@ -529,7 +596,7 @@ $(document).ready(function() {
                 $('#transactionButton').prop('disabled', true);
 
                 $.ajax({
-                    url: '/api/service/create-transaction',
+                    url: '/api/v1/raas/create-transaction',
                     method: 'POST',
                     contentType: 'application/json',
                     data: JSON.stringify(payload),
@@ -935,8 +1002,8 @@ document.addEventListener('DOMContentLoaded', function() {
 												<label class="form-label">Account Type</label> <select
 													class="form-control" id="accountType" name="accountType"
 													data-select2-selector="icon">
-													<option value="savings">Savings</option>
-													<option value="current">Current</option>
+													<option value="1">Savings</option>
+													<option value="2">Current</option>
 												</select>
 											</div>
 										</div>
@@ -1047,7 +1114,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Nationality</label> <select
-													name="payOutCountry" id="payOutCountry"
+													name="beneficiaryNationality" id="beneficiaryNationality"
 													class="form-control" data-select2-selector="icon">
 													<option value="" disabled selected>Nationality</option>
 													<c:forEach var="country" items="${countryList}">
@@ -1102,13 +1169,13 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="col-xl-4">
 												<div>
 													<label class="form-label">PayIn Currency<span
-														class="text-danger">*</span></label> <select class="form-control"
-														id="payInCurrency" name="payInCurrency"
+														class="text-danger">*</span></label> <select name="payInCurrency"
+														id="payInCurrency" class="form-control"
 														data-select2-selector="icon">
-														<option value="">Select Currency</option>
-														<option value="MYR">MYR</option>
-														<option value="eur">EUR</option>
-														<option value="gbp">GBP</option>
+														<option value="" disabled selected>Currency</option>
+														<c:forEach var="currency" items="${currencyList}">
+															<option value="${currency.valueId}">${currency.description}</option>
+														</c:forEach>
 													</select>
 												</div>
 											</div>

@@ -228,8 +228,474 @@
 keyframes spin { 0% {
 	transform: rotate(0deg);
 }
-100%{
-transform: rotate(360deg);
+100
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%
+{
+transform
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+rotate
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+360deg
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+;
 }
 }
 </style>
@@ -387,8 +853,8 @@ $(document).ready(function() {
                     sending_currency_code: $('#payInCurrency').val(),
                     receiving_country_code: $('#payOutCountry').val(),
                     receiving_currency_code: $('#currencies').val(),
-                    sending_amount: $('#amount').val(),
-                    receiving_mode: $('#paymentMode').val(),
+                    sending_amount: $('#totalPayInAmount').val(),
+                    receiving_mode: $('#beneficryDeleiveryOption').val(),
                     type: "SEND",
                     instrument: "REMITTANCE"
                 };
@@ -449,7 +915,7 @@ $(document).ready(function() {
                          customer_number: $('#ecrn').val()
                     },
                     receiver: {
-                        mobile_number: $('#mobile').val(),
+                        mobile_number: $('#beneficiarymobile').val(),
                         first_name: $('#benificiryfirstName').val(),
                         last_name: $('#benificirylastName').val(),
                         relation_code: "32",
@@ -463,7 +929,7 @@ $(document).ready(function() {
                             }
                         ],
                         bank_details: {
-                            account_type_code: $('#accountType').val(),
+                            account_type_code: $('#beneficryAccountType').val(),
                             account_number: $('#confirmAccountNo').val(),
                             routing_code: $('#bankBranches').val()
                         }
@@ -726,13 +1192,13 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<label class="form-label">Customer Category</label> <input
 												type="text" class="form-control" placeholder="nationality"
-												name="nationality" id="nationality" value="Individual"
-												readonly>
+												name="customerCategory" id="customerCategory"
+												value="Individual" readonly>
 										</div>
 										<div class="col-12 col-md-4">
 											<label class="form-label">Customer Type</label> <input
 												type="text" class="form-control" placeholder="nationality"
-												name="nationality" id="nationality" value="Standard"
+												name="customerType" id="customerType" value="Standard"
 												readonly>
 										</div>
 									</div>
@@ -821,10 +1287,13 @@ document.addEventListener('DOMContentLoaded', function() {
 									<div class="row">
 										<div class="col-12 col-md-4">
 											<label class="form-label">Delivery Option</label><select
-												data-select2-selector="icon" class="form-control">
-												<option value="toBank">To Bank</option>
-												<option value="toMobile">Mobile Wallet</option>
-												<option value="tocash">Cash Pickup</option>
+												data-select2-selector="icon" class="form-control"
+												name="beneficryDeleiveryOption"
+												id="beneficryDeleiveryOption">
+												<option value="">Select Delivery Option</option>
+												<option value="CASHPICKUP">Cash Pickup</option>
+												<option value="MOBILEWALLET">Mobile Wallet</option>
+												<option value="BANK">BANK</option>
 											</select>
 										</div>
 										<div class="col-12 col-md-4">
@@ -853,8 +1322,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Bank</label> <select
-													class="form-control" id="beneficryBank" name="bank"
-													data-select2-selector="icon">
+													class="form-control" id="beneficryBank"
+													name="beneficryBank" data-select2-selector="icon">
 													<option value="" disabled selected>Select Bank</option>
 												</select>
 											</div>
@@ -862,8 +1331,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Branch</label> <select
-													class="form-control" id="bankBranches" name="branch"
-													data-select2-selector="icon">
+													class="form-control" id="bankBranches"
+													name="beneficrybranch" data-select2-selector="icon">
 													<option value="" disabled selected>Select Branch</option>
 												</select>
 												<!-- <input type="text" class="form-control" id="branch"
@@ -873,8 +1342,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">IBAN</label> <input type="text"
-													class="form-control" id="iban" name="iban"
-													placeholder="IBAN">
+													class="form-control" id="beneficryIban"
+													name="beneficryIban" placeholder="IBAN">
 											</div>
 										</div>
 									</div>
@@ -882,8 +1351,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Account Type</label> <select
-													class="form-control" id="accountType" name="accountType"
-													data-select2-selector="icon">
+													class="form-control" id="beneficryAccountType"
+													name="beneficryAccountType" data-select2-selector="icon">
 													<option value="1">Savings</option>
 													<option value="2">Current</option>
 												</select>
@@ -893,14 +1362,15 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="mb-1">
 												<label class="form-label">Account No.</label> <input
 													type="text" class="form-control" id="accountNo"
-													name="accountNo" placeholder="Account No.">
+													name="beneficryAccountNo" placeholder="Account No.">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Confirm Account No.</label> <input
 													type="text" class="form-control" id="confirmAccountNo"
-													name="confirmAccountNo" placeholder="Confirm Account No.">
+													name="beneficryConfirmAccountNo"
+													placeholder="Confirm Account No.">
 											</div>
 											<span id="validationMessage"></span>
 										</div>
@@ -919,8 +1389,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Relation</label> <select
-													class="form-control" id="relation" name="relation"
-													data-select2-selector="icon">
+													class="form-control" id="beneficiaryRelation"
+													name="beneficiaryRelation" data-select2-selector="icon">
 													<option value="spouse">Spouse</option>
 													<option value="friend">Friend</option>
 												</select>
@@ -928,8 +1398,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										</div>
 										<div class="col-12 col-md-4">
 											<label class="form-label">Nick Name</label> <input
-												type="text" class="form-control" id="nickName"
-												name="nickname" placeholder="Nick Name">
+												type="text" class="form-control" id="beneficiaryNickname"
+												name="beneficiaryNickname" placeholder="Nick Name">
 										</div>
 									</div>
 									<div class="row">
@@ -937,21 +1407,21 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="mb-1">
 												<label class="form-label">First Name</label> <input
 													type="text" class="form-control" id="benificiryfirstName"
-													name="firstName" placeholder="First Name">
+													name="benificiryfirstName" placeholder="First Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Middle Name</label> <input
 													type="text" class="form-control" id="benificiryMiddleName"
-													name="middleName" placeholder="Middle Name">
+													name="benificirymiddleName" placeholder="Middle Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Last Name</label> <input
 													type="text" class="form-control" id="benificirylastName"
-													name="lastName" placeholder="Last Name">
+													name="benificirylastName" placeholder="Last Name">
 											</div>
 										</div>
 									</div>
@@ -960,20 +1430,20 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 1</label> <input
 													type="text" class="form-control" id="benificiryAddress1"
-													name="benfAddress1" placeholder="Address">
+													name="benificiryAddress1" placeholder="Address">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 2</label> <input
 													type="text" class="form-control" id="benificiryAddress2"
-													name="benfAddress2" placeholder="Address 2">
+													name="benificiryAddress2" placeholder="Address 2">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary City</label> <input
-													type="text" class="form-control" id="benificiryCity"
+													type="text" class="form-control" id="beneficiaryCity"
 													name="beneficiaryCity" placeholder="City">
 											</div>
 										</div>
@@ -989,8 +1459,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Mobile</label> <input type="text"
-													class="form-control" id="mobile" name="mobile"
-													placeholder="Mobile">
+													class="form-control" id="beneficiarymobile"
+													name="beneficiarymobile" placeholder="Mobile">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
@@ -1011,14 +1481,14 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="mb-1">
 												<label class="form-label">Date of Birth</label> <input
 													type="date" class="form-control" id="benificiryDob"
-													name="dob">
+													name="benificiryDob">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID Type</label> <select
 													data-select2-selector="icon" class="form-control"
-													id="idType" name="benificiryIdType">
+													id="benificiryIdType" name="benificiryIdType">
 													<option value="nationalId">National ID</option>
 													<option value="passport">Passport</option>
 												</select>
@@ -1027,8 +1497,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID No.</label> <input type="text"
-													class="form-control" id="benificiryIdNo" name="idNo"
-													placeholder="ID No.">
+													class="form-control" id="benificiryIdNo"
+													name="benificiryIdNo" placeholder="ID No.">
 											</div>
 										</div>
 									</div>
@@ -1049,96 +1519,101 @@ document.addEventListener('DOMContentLoaded', function() {
 									<div class="card-body pass-security">
 										<div class="row">
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">PayIn Currency<span
-														class="text-danger">*</span></label> <select name="payInCurrency"
-														id="payInCurrency" class="form-control"
-														data-select2-selector="icon">
-														<option value="" disabled selected>Currency</option>
-														<c:forEach var="currency" items="${currencyList}">
-															<option value="${currency.valueId}">${currency.description}</option>
-														</c:forEach>
-													</select>
-												</div>
+
+												<label class="form-label">PayIn Currency<span
+													class="text-danger">*</span></label> <select name="payInCurrency"
+													id="payInCurrency" class="form-control"
+													data-select2-selector="icon">
+													<option value="" disabled selected>Currency</option>
+													<c:forEach var="currency" items="${currencyList}">
+														<option value="${currency.valueId}">${currency.description}</option>
+													</c:forEach>
+												</select>
 											</div>
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Source of Fund<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Source of Fund"
-														id="sourceOfFund" name="sourceOfFund">
-												</div>
+												<label class="form-label">Source of Fund<span
+													class="text-danger">*</span></label> <select
+													data-select2-selector="icon" class="form-control"
+													id="sourceOfFund" name="sourceOfFund">
+													<option value="">Select Source of Fund</option>
+													<option value="BUSINESS">Business</option>
+													<option value="LOAN">Loan</option>
+													<option value="LOTTERY">Lottery Income</option>
+													<option value="SLRY">Salary</option>
+													<option value="SVGS">Savings</option>
+												</select>
 											</div>
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Transaction Purpose<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Transaction Purpose"
-														id="transactionPurpose" name="transactionPurpose">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Value Date<span
-														class="text-danger">*</span></label> <input type="date"
-														class="form-control" id="valueDate" name="valueDate">
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Remarks<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Remarks" id="remarks"
-														name="remarks">
-												</div>
+												<label class="form-label">Transaction Purpose<span
+													class="text-danger">*</span></label> <select
+													data-select2-selector="icon" class="form-control"
+													id="transactionPurpose" name="transactionPurpose">
+													<option value="">Select Transaction Purpose</option>
+													<option value="P52">Business travel</option>
+													<option value="P147">Education services</option>
+													<option value="FAMA">Family Maintenance</option>
+													<option value="P18">Gift</option>
+													<option value="MDCS">Medical Expenses</option>
+												</select>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Payout Amount<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Payout Amount"
-														id="payoutAmount" name="payoutAmount">
-												</div>
+												<label class="form-label">Value Date<span
+													class="text-danger">*</span></label> <input type="date"
+													class="form-control" id="valueDate" name="valueDate">
 											</div>
-
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Rate<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Rate" id="rate"
-														name="rate">
-												</div>
+												<label class="form-label">Payment Mode<span
+													class="text-danger">*</span></label> <select class="form-control"
+													id="paymentMode" name="paymentMode"
+													data-select2-selector="icon">
+													<option value="" disabled selected>Select Payment Mode</option>
+													<option value="BANK">Bank Transfer</option>
+												
+												</select>
 											</div>
-
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">PayIn Amount<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Pay In Amount"
-														id="payInAmount" name="payInAmount">
-												</div>
+												<label class="form-label">Remarks<span
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="Remarks" id="remarks"
+													name="remarks">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<label class="form-label">PayIn Amount<span
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="PayIn Amount" id="amount"
+													name="amount">
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label">Rate<span
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="Rate" id="rate"
+													name="rate">
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label">Payout Amount<span
+													class="text-danger">*</span></label> <input type="text"
+													class="form-control" placeholder="Payout Amount"
+													id="payoutAmount" name="payoutAmount">
 											</div>
 										</div>
 
 										<div class="row">
 											<div class="col-xl-2">
-												<div>
-													<label class="form-label">Commission</label> <input
-														type="text" class="form-control" placeholder="Commission"
-														id="commission" name="commission" readonly>
-												</div>
+												<label class="form-label">Commission</label> <input
+													type="text" class="form-control" placeholder="Commission"
+													id="commission" name="commission" readonly>
 											</div>
-
-											<div class="col-xl-2">
+											<!-- <div class="col-xl-2">
 												<div>
 													<label class="form-label">Tax (%)</label> <input
 														type="text" class="form-control" placeholder="Tax"
 														id="tax" name="tax" readonly>
 												</div>
 											</div>
-
 											<div class="col-xl-2">
 												<div>
 													<label class="form-label">Other Charges</label> <input
@@ -1146,50 +1621,28 @@ document.addEventListener('DOMContentLoaded', function() {
 														placeholder="Other Charges" id="otherCharges"
 														name="otherCharges" readonly>
 												</div>
-											</div>
-
+											</div> -->
 											<div class="col-xl-2">
-												<div>
-													<label class="form-label">Roundoff</label> <input
-														type="text" class="form-control" placeholder="Rate"
-														id="dynamicRate" name="dynamicRate" readonly>
-												</div>
+												<label class="form-label">Roundoff</label> <input
+													type="text" class="form-control" placeholder="Rate"
+													id="dynamicRate" name="dynamicRate" readonly>
 											</div>
 
 											<div class="col-xl-4">
-												<div>
-													<label class="form-label">Total Pay In Amount</label> <input
-														type="text" class="form-control"
-														placeholder="Total Pay In Amount" id="totalPayInAmount"
-														name="totalPayInAmount" readonly>
-												</div>
+												<label class="form-label">Total Pay In Amount</label> <input
+													type="text" class="form-control"
+													placeholder="Total Pay In Amount" id="totalPayInAmount"
+													name="totalPayInAmount" readonly>
 											</div>
 										</div>
-										<div class="row mt-4">
-											<div class="col-xl-4">
-												<div class="mb-5">
-													<label class="form-label">Payment Mode<span
-														class="text-danger">*</span></label> <select class="form-control"
-														id="paymentMode" name="paymentMode"
-														data-select2-selector="icon">
-														<option value="" disabled selected>Select Payment
-															Mode</option>
-														<option value="BANK">Bank Transfer</option>
-														<%-- <option value="mobileWallet">Mobile Wallet</option>
-														<option value="cash">Cash</option> --%>
-													</select>
-												</div>
-											</div>
-
+										<!-- <div class="row mt-4">
 											<div class="col-xl-4">
 												<div class="mb-5">
 													<label class="form-label">Amount<span
-														class="text-danger">*</span></label> <input type="text"
-														class="form-control" placeholder="Enter Amount"
-														id="amount" name="amount">
+														class="text-danger">*</span></label>
 												</div>
 											</div>
-										</div>
+										</div> -->
 										<!-- <div class="row">
 											<div class="col-12 col-md-12">
 												<h6 class="mb-3">ID Details Table</h6>
@@ -1250,13 +1703,13 @@ document.addEventListener('DOMContentLoaded', function() {
 							<input type="hidden" id="quoteId" />
 						</div>
 						<div class="mt-5 mb-5 text-center"
-							style="display: none; justify-content: center; margin-left: -156px;">
-							<div id="createTransactionSection">
-								<button type="button" onclick="createTransaction()"
-									class="btn btn-primary">Create Transaction</button>
-								<div id="transactionMessage"
-									style="color: green; font-weight: bold;"></div>
-							</div>
+							style="justify-content: center;">
+							<button type="button" onclick="createTransaction()"
+								class="btn btn-primary" id="createTransactionSection"
+								style="display: none; margin-left: -169px;">Create
+								Transaction</button>
+							<div id="transactionMessage"
+								style="color: green; font-weight: bold;"></div>
 						</div>
 					</div>
 			</form>

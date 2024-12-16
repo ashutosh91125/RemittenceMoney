@@ -247,9 +247,93 @@ keyframes spin { 0% {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 %
 {
 transform
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -287,6 +371,48 @@ transform
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 rotate
 
 
@@ -304,7 +430,91 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -342,7 +552,91 @@ rotate
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 )
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -538,13 +832,19 @@ $(document).ready(function() {
                             const quoteId = response.quote_id;
 
                             $('#quoteId').val(response.quote_id); // Store the quote ID
-                            $('#quoteMessage').text(`Quote ID: ${quoteId}`);
+                            $('#quoteMessage').text(`Quote Created Successfully`);
                             $('#quoteButton').hide();
-                            $('#createTransactionSection').show(); // Show the transaction section
+                            $('#createTransactionSection').show(); // Show the transaction section 
+                        }
+                        else {
+                            $('#quoteMessage').text('Failed to generate quote. Please try again.').css('color', 'red');
+                             $('#createTransactionSection').hide(); // Ensure it remains hidden 
                         }
                     },
                     error: function() {
                         alert('Failed to generate quote. Please try again.');
+                        $('#createTransactionSection').hide();
+                        
                     },
                     complete: function() {
                         // Hide loader and enable button
@@ -563,8 +863,8 @@ $(document).ready(function() {
                     instrument: "REMITTANCE",
                     message: "Agency transaction",
                     sender: {
-                    	 customer_number:"4582433857738986"
-//                         customer_number: $('#ecrn').val()
+//                     	 customer_number:"4582433857738986"
+                         customer_number: $('#ecrn').val()
                     },
                     receiver: {
                         mobile_number: $('#mobile').val(),
@@ -1308,7 +1608,7 @@ document.addEventListener('DOMContentLoaded', function() {
 												</div>
 											</div>
 										</div>
-										<div class="row">
+										<!-- <div class="row">
 											<div class="col-12 col-md-12">
 												<h6 class="mb-3">ID Details Table</h6>
 												<div class="table-responsive">
@@ -1327,7 +1627,7 @@ document.addEventListener('DOMContentLoaded', function() {
 															</tr>
 														</thead>
 														<tbody>
-															<!-- Dummy Data Row 1 -->
+															Dummy Data Row 1
 															<tr>
 																<td>1</td>
 																<td>Cash</td>
@@ -1343,7 +1643,7 @@ document.addEventListener('DOMContentLoaded', function() {
 														</tbody>
 													</table>
 												</div>
-												<!-- Footer for dynamic content -->
+												Footer for dynamic content
 												<div class="row mt-3">
 													<div class="col-xl-6">
 														<strong>Amount Collected:</strong> $1800
@@ -1353,7 +1653,7 @@ document.addEventListener('DOMContentLoaded', function() {
 													</div>
 												</div>
 											</div>
-										</div>
+										</div> -->
 									</div>
 								</div>
 							</div>
@@ -1361,22 +1661,21 @@ document.addEventListener('DOMContentLoaded', function() {
 					</div>
 					<div class="mt-5 mb-5 text-center"
 						style="display: flex; justify-content: center">
-						<button type="button" id="quoteButton" onclick="getQuote()"
-							class="btn btn-warning">Submit</button>
-						<div>
-							<div id="quoteMessage"
-								style="margin-top: 20px; font-weight: bold;"></div>
+						<div id="createQuote">
+							<button type="button" id="quoteButton" onclick="getQuote()"
+								class="btn btn-warning">Submit</button>
+							<div id="quoteMessage" style="font-weight: bold; color: green;"></div>
 							<input type="hidden" id="quoteId" />
 						</div>
-					</div>
-
-					<div id="createTransactionSection"
-						style="display: none; justify-content: center"
-						class="mt-5 mb-5 text-center">
-						<button type="button" onclick="createTransaction()"
-							class="btn btn-primary">Create Transaction</button>
-						<div id="transactionMessage"
-							style="margin-top: 20px; font-weight: bold;"></div>
+						<div class="mt-5 mb-5 text-center"
+							style="display: none; justify-content: center; margin-left: -156px;">
+							<div id="createTransactionSection">
+								<button type="button" onclick="createTransaction()"
+									class="btn btn-primary">Create Transaction</button>
+								<div id="transactionMessage"
+									style="color: green; font-weight: bold;"></div>
+							</div>
+						</div>
 					</div>
 			</form>
 		</div>

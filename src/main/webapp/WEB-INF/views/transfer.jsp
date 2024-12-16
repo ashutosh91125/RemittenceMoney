@@ -443,58 +443,65 @@ $(document).ready(function() {
                     instrument: "REMITTANCE",
                     message: "Agency transaction",
                     sender: {
-//                     	 customer_number:"4582433857738986"
-                         customer_number: $('#ecrn').val()
-                    },
-                    receiver: {
-                        mobile_number: $('#beneficiarymobile').val(),
-                        first_name: $('#benificiryfirstName').val(),
-                        last_name: $('#benificirylastName').val(),
-                        relation_code: "32",
-                        nationality: $('#beneficiaryNationality').val(),
-                        receiver_address: [
-                            {
-                                address_type: "PRESENT",
-                                address_line: $('#benificiryAddress1').val(),
-                                town_name: $('#benificiryCity').val(),
-                                country_code: $('#beneficiaryNationality').val()
-                            }
-                        ],
-                        bank_details: {
-                            account_type_code: $('#beneficryAccountType').val(),
-                            account_number: $('#confirmAccountNo').val(),
-                            routing_code: $('#bankBranches').val()
-                        }
-                    },
-                    transaction: {
-                        quote_id: $('#quoteId').val() // Use stored quote ID
-                    }
-                };
+            //                     	 customer_number:"4582433857738986"
+                                     customer_number: $('#ecrn').val()
+                                },
+                                receiver: {
+                                    mobile_number: $('#mobile').val(),
+                                    first_name: $('#benificiryfirstName').val(),
+                                    last_name: $('#benificirylastName').val(),
+                                    relation_code: "32",
+                                    nationality: $('#beneficiaryNationality').val(),
+                                    receiver_address: [
+                                        {
+                                            address_type: "PRESENT",
+                                            address_line: $('#benificiryAddress1').val(),
+                                            town_name: $('#benificiryCity').val(),
+                                            country_code: $('#beneficiaryNationality').val()
+                                        }
+                                    ],
+                                    bank_details: {
+                                        account_type_code: $('#accountType').val(),
+                                        account_number: $('#confirmAccountNo').val(),
+                                        routing_code: $('#bankBranches').val()
+                                    }
+                                },
+                                transaction: {
+                                    quote_id: $('#quoteId').val() // Use stored quote ID
+                                }
+                            };
 
-                // Show loader and disable button
-                $('#transactionLoader').css('visibility', 'visible');
-                $('#transactionButton').prop('disabled', true);
+                            // Show loader and disable button
+                            $('#transactionLoader').css('visibility', 'visible');
+                            $('#transactionButton').prop('disabled', true);
 
-                $.ajax({
-                    url: '/api/v1/raas/create-transaction',
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify(payload),
-                    success: function(response) {
-                        if (response.status === 200) {
-                            $('#transactionMessage').text(`Transaction created successfully. Reference Number: ${response.transaction_ref_number}`);
+                            $.ajax({
+                                url: '/api/v1/raas/create-transaction',
+                                method: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify(payload),
+                                success: function(response) {
+                                    if (response.status === 200) {
+                                        const state = response.state;
+                                        const transactionRefNumber = response.transaction_ref_number;
+
+                                        $('#transactionState').val(state);
+
+                                        alert(`Transaction created successfully with Reference Number: ${transactionRefNumber} and State: ${state}`);
+
+                                        $('#transactionMessage').text(`Transaction created successfully.`);
+                                    }
+                                },
+                                error: function() {
+                                    alert('Failed to create transaction. Please try again.');
+                                },
+                                complete: function() {
+                                    // Hide loader and enable button
+                                    $('#transactionLoader').css('visibility', 'hidden');
+                                    $('#transactionButton').prop('disabled', false);
+                                }
+                            });
                         }
-                    },
-                    error: function() {
-                        alert('Failed to create transaction. Please try again.');
-                    },
-                    complete: function() {
-                        // Hide loader and enable button
-                        $('#transactionLoader').css('visibility', 'hidden');
-                        $('#transactionButton').prop('disabled', false);
-                    }
-                });
-            }
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");

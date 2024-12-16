@@ -113,8 +113,13 @@ public class ExternalApiController {
 		if (response.containsKey("data")) {
 			Map<String, Object> data = (Map<String, Object>) response.get("data");
 			String transactionRefNumber = (String) data.get("transaction_ref_number");
+			String state = (String) data.get("state");
 
-			return ResponseEntity.ok(Map.of("transaction_ref_number", transactionRefNumber, "status", 200));
+			return ResponseEntity.ok(Map.of(
+					"transaction_ref_number", transactionRefNumber,
+					"state", state,
+					"status", 200
+			));
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Failed to create transaction"));
 		}

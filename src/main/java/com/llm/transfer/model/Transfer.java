@@ -12,7 +12,7 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "Transferd")
+@Table(name = "Transfer")
 public class Transfer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,8 +88,8 @@ public class Transfer {
 	private String beneficrybranch;
 	private String beneficryIban;
 	private String beneficryAccountType;
-	private Long beneficryAccountNo;
-	private Long beneficryConfirmAccountNo;
+	private String beneficryAccountNo;
+	private String beneficryConfirmAccountNo;
 	private String beneficiaryType;
 	private String beneficiaryRelation;
 	private String beneficiaryNickname;
@@ -113,15 +113,15 @@ public class Transfer {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String valueDate;
 	private String remarks;
-	private Long payoutAmount;
-	private String rate;
-	private Long payInAmount;
-	private Long commission;
-	private Long tax;
-	private Long otherCharges;
-	private Long dynamicRate;
-	private Long totalPayInAmount;
+	private Double payoutAmount;
+	private Double rate;
+	private Double payInAmount;
+	private Double commission;
+	private Double tax;
+//	private Double otherCharges;
+//	private Double dynamicRate;
+	private Double totalPayInAmount;
 	private String paymentMode;
-	private Long amount;
+	private Double amount;
 
 }

@@ -1,12 +1,11 @@
 package com.llm.config;
 
-import com.llm.UserIdentity.model.enums.Role;
-import com.llm.UserIdentity.service.CustomUserDetailsService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -14,8 +13,10 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.authentication.AuthenticationProvider;
+
+import com.llm.UserIdentity.service.CustomUserDetailsService;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @RequiredArgsConstructor
@@ -44,7 +45,7 @@ public class MyConfig {
         http
                 .authorizeHttpRequests(authz -> authz
 //                        .requestMatchers("/login","/adminlogin", "/adminregister", "/signup", "/static/**","/WEB-INF/views/**").permitAll()
-                        .requestMatchers("/login", "/token", "/api/v1/raas/**","/api/v1/banks/**", "/api/enumEntities/**","/caas/api/v2/customer/verify-mobile" , "/static/**", "/assets/**" ,"/WEB-INF/views/**").permitAll()
+                        .requestMatchers("/login", "/token", "/api/v1/raas/**","/api/v1/banks/**", "/api/enumEntities/**","/caas/api/v2/customer/verify-mobile" ,"/api/v1/transfer/**", "/static/**", "/assets/**" ,"/WEB-INF/views/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/vendors/**", "/scss/**").permitAll()
                         .requestMatchers("/adminList").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/agentList").hasAnyAuthority("ROLE_ADMIN","ROLE_SUB_ADMIN")

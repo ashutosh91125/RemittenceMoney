@@ -1,5 +1,7 @@
 package com.llm.raas.controller;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -31,12 +33,75 @@ public class ExternalApiController {
 
 		if (response.containsKey("data")) {
 			Map<String, Object> data = (Map<String, Object>) response.get("data");
-			String quoteId = (String) data.get("quote_id");
 
-			return ResponseEntity.ok(Map.of("quote_id", quoteId, "status", 200));
+			// Extract required fields
+			String quoteId = (String) data.get("quote_id");
+			Double totalPayinAmount = getAsDouble(data.get("total_payin_amount"));
+			Double receivingAmount = getAsDouble(data.get("receiving_amount"));
+
+			// Extract country and currency codes from requestBody for dynamic processing
+			String sendingCountryCode = (String) requestBody.get("sending_country_code");
+			String sendingCurrencyCode = (String) requestBody.get("sending_currency_code");
+			String receivingCountryCode = (String) requestBody.get("receiving_country_code");
+			String receivingCurrencyCode = (String) requestBody.get("receiving_currency_code");
+
+			// Extract rates dynamically based on sending/receiving currency
+			List<Map<String, Object>> fxRates = (List<Map<String, Object>>) data.get("fx_rates");
+			Double exchangeRate = null;
+			if (fxRates != null) {
+				for (Map<String, Object> rate : fxRates) {
+					if (sendingCurrencyCode.equals(rate.get("base_currency_code"))
+							&& receivingCurrencyCode.equals(rate.get("counter_currency_code"))) {
+						exchangeRate = getAsDouble(rate.get("rate"));
+						break;
+					}
+				}
+			}
+
+			// Extract commission and tax amounts dynamically
+			List<Map<String, Object>> feeDetails = (List<Map<String, Object>>) data.get("fee_details");
+			Double commissionAmount = null;
+			Double taxAmount = null;
+			if (feeDetails != null) {
+				for (Map<String, Object> fee : feeDetails) {
+					if ("COMMISSION".equals(fee.get("type"))) {
+						commissionAmount = getAsDouble(fee.get("amount"));
+					} else if ("TAX".equals(fee.get("type"))) {
+						taxAmount = getAsDouble(fee.get("amount"));
+					}
+				}
+			}
+
+			// Build response dynamically
+			Map<String, Object> result = new HashMap<>();
+			result.put("quote_id", quoteId);
+			result.put("status", 200);
+			result.put("total_payin_amount", totalPayinAmount);
+			result.put("receiving_amount", receivingAmount);
+			result.put("exchange_rate", exchangeRate);
+			result.put("commission_amount", commissionAmount);
+			result.put("tax_amount", taxAmount);
+			result.put("sending_country_code", sendingCountryCode);
+			result.put("receiving_country_code", receivingCountryCode);
+			result.put("sending_currency_code", sendingCurrencyCode);
+			result.put("receiving_currency_code", receivingCurrencyCode);
+
+			return ResponseEntity.ok(result);
 		} else {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Failed to get quote"));
 		}
+	}
+
+	// Helper method to handle conversion of numeric values to Double
+	private Double getAsDouble(Object value) {
+		if (value instanceof Integer) {
+			return ((Integer) value).doubleValue();
+		} else if (value instanceof Double) {
+			return (Double) value;
+		} else if (value instanceof Long) {
+			return ((Long) value).doubleValue();
+		}
+		return null; // or throw an exception if required
 	}
 
 	@PostMapping("/create-transaction")

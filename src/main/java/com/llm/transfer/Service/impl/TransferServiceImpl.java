@@ -9,6 +9,8 @@ import com.llm.transfer.repository.TransferRepository;
 
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
@@ -18,6 +20,11 @@ public class TransferServiceImpl implements TransferService {
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
 		return transferRepository.save(transfer);
+	}
+
+	@Override
+	public List<Transfer> getAllTransfers() {
+		return transferRepository.findAll();
 	}
 
 }

@@ -308,7 +308,7 @@ $(document).ready(function() {
 
      
        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
-       $('#beneficryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
+       $('#beneficiaryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>'); 
 
        if (dependent) {
@@ -335,14 +335,14 @@ $(document).ready(function() {
                success: function(data) {
                    console.log(data);
                    
-                   $('#beneficryBank').empty();
+                   $('#beneficiaryBank').empty();
 
                    
-                   $('#beneficryBank').append('<option value="">Select  Bank</option>');
+                   $('#beneficiaryBank').append('<option value="">Select  Bank</option>');
 
                    
                    $.each(data, function(index, bank) {
-                       $('#beneficryBank').append('<option value="' + bank.bankId + '">' + bank.bankName + '</option>');
+                       $('#beneficiaryBank').append('<option value="' + bank.bankId + '">' + bank.bankName + '</option>');
                    });
                },
                error: function() {
@@ -353,7 +353,7 @@ $(document).ready(function() {
    });
 
 
-   $('#beneficryBank').on('change', function() {
+   $('#beneficiaryBank').on('change', function() {
        let bankId = $(this).val(); 
 
        // Clear previous values in the branches dropdown
@@ -388,7 +388,7 @@ $(document).ready(function() {
                     receiving_country_code: $('#payOutCountry').val(),
                     receiving_currency_code: $('#currencies').val(),
                     sending_amount: $('#amount').val(),
-                    receiving_mode: $('#beneficryDeleiveryOption').val(),
+                    receiving_mode: $('#beneficiaryDeliveryOption').val(),
                     type: "SEND",
                     instrument: "REMITTANCE"
                 };
@@ -453,20 +453,20 @@ $(document).ready(function() {
                                 },
                                 receiver: {
                                     mobile_number: $('#beneficiarymobile').val(),
-                                    first_name: $('#benificiryfirstName').val(),
-                                    last_name: $('#benificirylastName').val(),
+                                    first_name: $('#beneficiaryfirstName').val(),
+                                    last_name: $('#beneficiarylastName').val(),
                                     relation_code: "32",
                                     nationality: $('#beneficiaryNationality').val(),
                                     receiver_address: [
                                         {
                                             address_type: "PRESENT",
-                                            address_line: $('#benificiryAddress1').val(),
-                                            town_name: $('#benificiryCity').val(),
+                                            address_line: $('#beneficiaryAddress1').val(),
+                                            town_name: $('#beneficiaryCity').val(),
                                             country_code: $('#beneficiaryNationality').val()
                                         }
                                     ],
                                     bank_details: {
-                                        account_type_code: $('#beneficryAccountType').val(),
+                                        account_type_code: $('#beneficiaryAccountType').val(),
                                         account_number: $('#confirmAccountNo').val(),
                                         routing_code: $('#bankBranches').val()
                                     }
@@ -487,10 +487,84 @@ $(document).ready(function() {
                                 data: JSON.stringify(payload),
                                 success: function(response) {
                                     if (response.status === 200) {
-                                        $('#loader').hide();
-                                        $('#createTransactionSection').hide();
                                         var state = response.state;
                                         var transactionRefNumber = response.transaction_ref_number;
+
+                                        const transactionData = {
+                                                           
+                                                            ecrn: $('#ecrn').val(),
+                                                              firstName: $('#firstName').val(),
+                                                              middleName: $('#middleName').val(),
+                                                              lastName: $('#lastName').val(),
+                                                              dateOfBirth: $('#dateOfBirth').val(),
+                                                              primaryMobileNumber: $('#primaryMobileNumber').val(),
+                                                              emailId: $('#emailId').val(),
+                                                              placeOfBirth: $('#placeOfBirth').val(),
+                                                              address1: $('#address1').val(),
+                                                              address2: $('#address2').val(),
+                                                              city: $('#city').val(),
+                                                              state: $('#state').val(),
+                                                              country: $('#country').val(),
+                                                              countryOfResidence: $('#countryOfResidence').val(),
+                                                              nationality: $('#nationality').val(),
+                                                              customerCategory: $('#customerCategory').val(),
+                                                              customerType: $('#customerType').val(),
+                                                              idType: $('#idType').val(),
+                                                              idNumber: $('#idNumber').val(),
+                                                              issuedBy: $('#issuedBy').val(),
+                                                              issuedOn: $('#issuedOn').val(),
+                                                              dateOfExpiry: $('#dateOfExpiry').val(),
+                                                              visaNumber: $('#visaNumber').val(),
+                                                              visaExpiryDate: $('#visaExpiryDate').val(),
+                                                              visaType: $('#visaType').val(),
+                                                              issuedCountry: $('#issuedCountry').val(),
+
+                                                              // Beneficiary Details
+                                                              beneficiaryDeliveryOption: $('#beneficiaryDeliveryOption').val(),
+                                                              payOutCountry: $('#payOutCountry').val(),
+                                                              currencies: $('#currencies').val(),
+                                                              beneficiaryBank: $('#beneficiaryBank').val(),
+                                                              beneficiaryBranch: $('#bankBranches').val(),
+                                                              beneficiaryIban: $('#beneficiaryIban').val(),
+                                                              beneficiaryAccountType: $('#beneficiaryAccountType').val(),
+                                                              beneficiaryAccountNo: $('#beneficiaryAccountNo').val(),
+                                                              beneficiaryType: $('#beneficiaryType').val(),
+                                                              beneficiaryRelation: $('#beneficiaryRelation').val(),
+                                                              beneficiaryNickname: $('#beneficiaryNickname').val(),
+                                                              beneficiaryFirstName: $('#beneficiaryFirstName').val(),
+                                                              beneficiaryMiddleName: $('#beneficiaryMiddleName').val(),
+                                                              beneficiaryLastName: $('#beneficiaryLastName').val(),
+                                                              beneficiaryAddress1: $('#beneficiaryAddress1').val(),
+                                                              beneficiaryAddress2: $('#beneficiaryAddress2').val(),
+                                                              beneficiaryCity: $('#beneficiaryCity').val(),
+                                                              beneficiaryState: $('#beneficiaryState').val(),
+                                                              beneficiaryMobile: $('#beneficiaryMobile').val(),
+                                                              beneficiaryNationality: $('#beneficiaryNationality').val(),
+                                                              beneficiaryDob: $('#beneficiaryDob').val(),
+                                                              beneficiaryIdType: $('#beneficiaryIdType').val(),
+                                                              beneficiaryIdNo: $('#beneficiaryIdNo').val(),
+
+                                                              payInCurrency: $('#payInCurrency').val(),
+                                                              sourceOfFund: $('#sourceOfFund').val(),
+                                                              transactionPurpose: $('#transactionPurpose').val(),
+                                                              valueDate: $('#valueDate').val(),
+                                                              remarks: $('#remarks').val(),
+                                                              payoutAmount: $('#payoutAmount').val(),
+                                                              rate: $('#rate').val(),
+                                                              payInAmount: $('#payInAmount').val(),
+                                                              commission: $('#commission').val(),
+                                                              tax: $('#tax').val(),
+                                                              totalPayInAmount: $('#totalPayInAmount').val(),
+                                                              paymentMode: $('#paymentMode').val(),
+                                                              transactionReferenceNumber: transactionRefNumber,
+                                                              transactionState: state
+                                        };
+
+                                        // Save transaction data to the database
+                                        saveTransaction(transactionData);
+
+                                        $('#loader').hide();
+                                        $('#createTransactionSection').hide();
 
                                         $('#transactionState').val(state);
                                         alert("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
@@ -508,6 +582,21 @@ $(document).ready(function() {
                                 }
                             });
                         }
+            function saveTransaction(data) {
+                $.ajax({
+                    url: '/api/v1/transfer',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function(response) {
+                        console.log('Transaction saved:', response);
+                    },
+                    error: function(error) {
+                        console.error('Failed to save transaction:', error);
+                        alert('Failed to save transaction to the database.');
+                    }
+                });
+            }
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
@@ -612,7 +701,7 @@ document.addEventListener('DOMContentLoaded', function() {
 												<c:forEach var="customer" items="${customerListOnTransfer}"
 													varStatus="status">
 													<tr data-customer-ecrn="${customer.ecrn}">
-														<td>${customer.ecrn}</td>
+														<td onmouseover="this.style.cursor='pointer';this.style.color='#263cab'" onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
 														<td>${customer.firstName}</td>
 														<td>${customer.phoneNumber}</td>
 														<td>${customer.emailId}</td>
@@ -838,8 +927,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<label class="form-label">Delivery Option</label><select
 												data-select2-selector="icon" class="form-control"
-												name="beneficryDeleiveryOption"
-												id="beneficryDeleiveryOption">
+												name="beneficiaryDeliveryOption"
+												id="beneficiaryDeliveryOption">
 												<option value="">Select Delivery Option</option>
 												<option value="CASHPICKUP">Cash Pickup</option>
 												<option value="MOBILEWALLET">Mobile Wallet</option>
@@ -872,8 +961,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Bank</label> <select
-													class="form-control" id="beneficryBank"
-													name="beneficryBank" data-select2-selector="icon">
+													class="form-control" id="beneficiaryBank"
+													name="beneficiaryBank" data-select2-selector="icon">
 													<option value="" disabled selected>Select Bank</option>
 												</select>
 											</div>
@@ -882,7 +971,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="mb-1">
 												<label class="form-label">Branch</label> <select
 													class="form-control" id="bankBranches"
-													name="beneficrybranch" data-select2-selector="icon">
+													name="beneficiaryBranch" data-select2-selector="icon">
 													<option value="" disabled selected>Select Branch</option>
 												</select>
 												<!-- <input type="text" class="form-control" id="branch"
@@ -892,8 +981,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">IBAN</label> <input type="text"
-													class="form-control" id="beneficryIban"
-													name="beneficryIban" placeholder="IBAN">
+													class="form-control" id="beneficiaryIban"
+													name="beneficiaryIban" placeholder="IBAN">
 											</div>
 										</div>
 									</div>
@@ -901,8 +990,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Account Type</label> <select
-													class="form-control" id="beneficryAccountType"
-													name="beneficryAccountType" data-select2-selector="icon">
+													class="form-control" id="beneficiaryAccountType"
+													name="beneficiaryAccountType" data-select2-selector="icon">
 													<option value="1">Savings</option>
 													<option value="2">Current</option>
 												</select>
@@ -911,15 +1000,15 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Account No.</label> <input
-													type="text" class="form-control" id="accountNo"
-													name="beneficryAccountNo" placeholder="Account No.">
+													type="password" class="form-control" id="accountNo"
+													name="beneficiaryAccountNo" placeholder="Account No.">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Confirm Account No.</label> <input
 													type="text" class="form-control" id="confirmAccountNo"
-													name="beneficryConfirmAccountNo"
+													name="beneficiaryConfirmAccountNo"
 													placeholder="Confirm Account No.">
 											</div>
 											<span id="validationMessage"></span>
@@ -956,22 +1045,22 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">First Name</label> <input
-													type="text" class="form-control" id="benificiryfirstName"
-													name="benificiryfirstName" placeholder="First Name">
+													type="text" class="form-control" id="beneficiaryfirstName"
+													name="beneficiaryfirstName" placeholder="First Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Middle Name</label> <input
-													type="text" class="form-control" id="benificiryMiddleName"
-													name="benificirymiddleName" placeholder="Middle Name">
+													type="text" class="form-control" id="beneficiaryMiddleName"
+													name="beneficiarymiddleName" placeholder="Middle Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Last Name</label> <input
-													type="text" class="form-control" id="benificirylastName"
-													name="benificirylastName" placeholder="Last Name">
+													type="text" class="form-control" id="beneficiaryLastName"
+													name="beneficiarylastName" placeholder="Last Name">
 											</div>
 										</div>
 									</div>
@@ -979,15 +1068,15 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 1</label> <input
-													type="text" class="form-control" id="benificiryAddress1"
-													name="benificiryAddress1" placeholder="Address">
+													type="text" class="form-control" id="beneficiaryAddress1"
+													name="beneficiaryAddress1" placeholder="Address">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 2</label> <input
-													type="text" class="form-control" id="benificiryAddress2"
-													name="benificiryAddress2" placeholder="Address 2">
+													type="text" class="form-control" id="beneficiaryAddress2"
+													name="beneficiaryAddress2" placeholder="Address 2">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
@@ -1009,8 +1098,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Mobile</label> <input type="text"
-													class="form-control" id="beneficiarymobile"
-													name="beneficiarymobile" placeholder="Mobile">
+													class="form-control" id="beneficiaryMobile"
+													name="beneficiaryMobile" placeholder="Mobile">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
@@ -1030,15 +1119,15 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Date of Birth</label> <input
-													type="date" class="form-control" id="benificiryDob"
-													name="benificiryDob">
+													type="date" class="form-control" id="beneficiaryDob"
+													name="beneficiaryDob">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID Type</label> <select
 													data-select2-selector="icon" class="form-control"
-													id="benificiryIdType" name="benificiryIdType">
+													id="beneficiaryIdType" name="beneficiaryIdType">
 													<option value="nationalId">National ID</option>
 													<option value="passport">Passport</option>
 												</select>
@@ -1047,8 +1136,8 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID No.</label> <input type="text"
-													class="form-control" id="benificiryIdNo"
-													name="benificiryIdNo" placeholder="ID No.">
+													class="form-control" id="beneficiaryIdNo"
+													name="beneficiaryIdNo" placeholder="ID No.">
 											</div>
 										</div>
 									</div>

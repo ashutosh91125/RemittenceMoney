@@ -16,7 +16,8 @@ import lombok.Data;
 public class Transfer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer transferdId;
+	private Long transferId;
+
 
 	@Column(name = "ecrn")
 	private String ecrn;
@@ -27,7 +28,6 @@ public class Transfer {
 	@Column(name = "middle_name", length = 60)
 	private String middleName;
 
-//     @JsonProperty("last_name")
 	@Column(name = "last_name", length = 60, nullable = false)
 	private String lastName;
 
@@ -49,10 +49,10 @@ public class Transfer {
 	@Column(name = "address2")
 	private String address2;
 
-	@Column(name = "city", length = 255)
+	@Column(name = "city")
 	private String city;
 
-	@Column(name = "state", length = 255)
+	@Column(name = "state")
 	private String state;
 
 	@Column(name = "country", length = 2)
@@ -75,37 +75,38 @@ public class Transfer {
 	private String issuedOn;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String dateOfExpiry;
+	private String issuedCountry;
 
 	private String visaNumber;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String visaExpiryDate;
 	private String visaType;
 
-	private String beneficryDeleiveryOption;
+	//Beneficiary Details
+	private String beneficiaryDeliveryOption;
 	private String payOutCountry;
 	private String currencies;
-	private String beneficryBank;
-	private String beneficrybranch;
-	private String beneficryIban;
-	private String beneficryAccountType;
-	private String beneficryAccountNo;
-	private String beneficryConfirmAccountNo;
+	private String beneficiaryBank;
+	private String beneficiaryBranch;
+	private String beneficiaryIban;
+	private String beneficiaryAccountType;
+	private String beneficiaryAccountNo;
 	private String beneficiaryType;
 	private String beneficiaryRelation;
 	private String beneficiaryNickname;
-	private String benificiryfirstName;
-	private String benificirymiddleName;
-	private String benificirylastName;
-	private String benificiryAddress1;
-	private String benificiryAddress2;
+	private String beneficiaryFirstName;
+	private String beneficiaryMiddleName;
+	private String beneficiaryLastName;
+	private String beneficiaryAddress1;
+	private String beneficiaryAddress2;
 	private String beneficiaryCity;
 	private String beneficiaryState;
-	private String beneficiarymobile;
+	private String beneficiaryMobile;
 	private String beneficiaryNationality;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	private String benificiryDob;
-	private String benificiryIdType;
-	private String benificiryIdNo;
+	private String beneficiaryDob;
+	private String beneficiaryIdType;
+	private String beneficiaryIdNo;
 
 	private String payInCurrency;
 	private String sourceOfFund;
@@ -122,6 +123,8 @@ public class Transfer {
 //	private Double dynamicRate;
 	private Double totalPayInAmount;
 	private String paymentMode;
-	private Double amount;
+
+	private String transactionState;
+	private String transactionReferenceNumber;
 
 }

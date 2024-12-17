@@ -2,7 +2,12 @@ package com.llm.transfer.Service;
 
 import com.llm.transfer.model.Transfer;
 
+import java.util.List;
+
 public interface TransferService {
-	public Transfer createTransfer(Transfer transfer);
+	Transfer createTransfer(Transfer transfer);
+
+	List<Transfer> getAllTransfers();
+
 
 }

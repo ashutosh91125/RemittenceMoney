@@ -602,6 +602,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
     toggleFields();
 
+    const submitButton = document.getElementById("quoteButton");
+
     const accountNumber = document.getElementById("accountNo");
     const confirmAccountNumber = document.getElementById("confirmAccountNo");
     const messageElement = document.getElementById("validationMessage");
@@ -611,21 +613,38 @@ document.addEventListener('DOMContentLoaded', function() {
         const confirmAccountNumberValue = confirmAccountNumber.value.trim();
 
         if (confirmAccountNumberValue === "") {
-            messageElement.textContent = ""; 
+            messageElement.textContent = "";
             return;
         }
         if (accountNumberValue !== confirmAccountNumberValue) {
             messageElement.textContent = "Account numbers do not match!";
             messageElement.style.color = "red";
+            submitButton.disabled = true;
         } else {
             messageElement.textContent = "Account numbers match.";
             messageElement.style.color = "green";
+            submitButton.disabled = false;
         }
     }
 
     accountNumber.addEventListener('input', validateRealTime);
     confirmAccountNumber.addEventListener('input', validateRealTime);
     document.getElementById('residentTypeId').addEventListener('change', toggleFields);
+
+    document.getElementById("amount").addEventListener("input", function(event) {
+        var value = event.target.value;
+        var errorMessage = document.getElementById("error-message");
+
+        // Hide the error message by default
+        errorMessage.style.display = "none";
+        submitButton.disabled = false;
+
+        // Check if the value is valid
+        if (value < 5 || value > 50000) {
+            errorMessage.style.display = "block";  // Show error message
+            submitButton.disabled = true;
+        }
+    });
 });
 
 </script>
@@ -1222,11 +1241,11 @@ document.addEventListener('DOMContentLoaded', function() {
 										</div>
 										<div class="row">
 											<div class="col-xl-4">
-												<label class="form-label">PayIn Amount<span
-													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="PayIn Amount" id="amount"
-													name="amount">
-											</div>
+                                                <label class="form-label">PayIn Amount<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" placeholder="PayIn Amount" id="amount" name="amount" min="5" max="50000" required >
+                                                <div id="error-message" style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount must be between 5 and 50,000!</div>
+                                            </div>
+
 											<div class="col-xl-4">
 												<label class="form-label">Rate<span
 													class="text-danger">*</span></label> <input type="text"

@@ -568,6 +568,7 @@ function copyAddress() {
         idTypeDropdown.value = ""; // Reset dropdown value
 
         if (residentType === '101') { // Malaysian ID
+        	console.log(residentType);
             idTypeDropdown.style.display = "block"; // Show dropdown
             idTypeDropdown.value = "28"; // Set value to 28
             idTypeDropdown.setAttribute("disabled", true); // Disable the dropdown
@@ -688,6 +689,33 @@ function copyAddress() {
                 // If all validations pass
                 errorSpan.textContent = ""; // Clear errors
             });
+        document.getElementById('primaryMobileNumber').addEventListener('input', function () {
+            const mobileNumber = this.value.trim();
+            const errorSpan = document.getElementById('primaryMobileNumberError');
+            errorSpan.textContent = ""; // Clear error
+
+            if (mobileNumber.length >= 10 && /^\d{10,15}$/.test(mobileNumber)) {
+                $.ajax({
+                    url: '/caas/api/v2/customer/verify-mobile',
+                    type: 'GET',
+                    data: { primaryMobileNumber: mobileNumber },
+                    success: function (response) {
+                        if (response && response.message === "Customer already exists with this mobile number.") {
+                            errorSpan.textContent = response.message; // Display error
+                        } else {
+                            errorSpan.textContent = ""; // Clear if mobile number is available
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                        errorSpan.textContent = "Error checking mobile number. Please try again.";
+                    }
+                });
+            } else {
+                errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
+            }
+        });
+
         toggleFields();
         toggleCustomerRemarks();
     });

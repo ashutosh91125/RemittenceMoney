@@ -30,7 +30,11 @@
 	href="assets/vendors/css/select2-theme.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/datepicker.min.css">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+	crossorigin="anonymous">
 <!--! END: Vendors CSS-->
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
@@ -547,11 +551,9 @@ function copyAddress() {
 								});
 			});
 
-	function toggleFields() {
+    function toggleFields() {
         const residentType = document.getElementById('residentType').value;
-        const idTypeInput = document.getElementById("idType");
         const idTypeDropdown = document.getElementById("idTypeDropdown");
-        const hiddenIdType = document.getElementById("hiddenIdType"); // Hidden input for dynamic value
         const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
         const issuedForNonResidents = document.getElementById('issuedForNonResidents');
         const idDetails = document.getElementById('idDetails');
@@ -559,19 +561,17 @@ function copyAddress() {
         const idNumberField = document.getElementById('idNumberField');
         const nonResident = document.getElementById('nonResident');
 
-
-        // Reset fields
-        idTypeInput.value = "";
-        hiddenIdType.value = ""; // Reset hidden field
+        // Reset dropdown and fields
         idTypeDropdown.style.display = "none";
-        idTypeDropdown.setAttribute("disabled", true);
-       
+        idTypeDropdown.removeAttribute("disabled");
+        idDetailsFields.style.display = 'none'; // Hide details fields initially
+        idTypeDropdown.value = ""; // Reset dropdown value
 
         if (residentType === '101') { // Malaysian ID
-            idTypeInput.value = "MALAYSIA ID CARD(MYKAD)";
-            hiddenIdType.value = "28"; // Dynamically set the ID value for submission
-            idTypeInput.readOnly = true; // Disable editing
-            idTypeInput.style.display = "block"; // Show input field
+            idTypeDropdown.style.display = "block"; // Show dropdown
+            idTypeDropdown.value = "28"; // Set value to 28
+            idTypeDropdown.setAttribute("disabled", true); // Disable the dropdown
+
             issuedDateExpiryNonResident.style.display = 'none';
             issuedForNonResidents.style.display = 'none';
             idDetails.style.display = 'block';
@@ -579,38 +579,43 @@ function copyAddress() {
             idNumberField.style.display = 'block';
             nonResident.style.display = 'none';
         } else if (residentType === '100') { // Non-resident
-            idTypeInput.style.display = "none"; // Hide fixed input field
             idTypeDropdown.style.display = "block"; // Show dropdown
-            idTypeDropdown.removeAttribute("disabled");
+            idTypeDropdown.removeAttribute("disabled"); // Enable dropdown for selection
+            idTypeDropdown.value = "2"; // Set default value to 2
+
+            // Show fields relevant to value '2' by default
+            idDetails.style.display = 'block';
+            idDetailsFields.style.display = 'block';
+            idNumberField.style.display = 'block';
+            issuedForNonResidents.style.display = 'block';
+            issuedDateExpiryNonResident.style.display = 'block';
+            nonResident.style.display = 'flex';
 
             idTypeDropdown.addEventListener('change', function () {
-                hiddenIdType.value = idTypeDropdown.value; // Dynamically update hidden field value
-                if (idTypeDropdown.value === '2') {
+                if (idTypeDropdown.value === '28') {
+                    // Hide fields if value 28 is selected for non-resident
+                    idDetails.style.display = 'none';
+                    idDetailsFields.style.display = 'none';
+                    idNumberField.style.display = 'none';
+                } else if (idTypeDropdown.value === '2') {
                     idDetailsFields.style.display = 'block';
                 } else {
                     idDetailsFields.style.display = 'none';
                 }
             });
-
-            idDetails.style.display = 'block';
-            issuedForNonResidents.style.display = 'block';
-            issuedDateExpiryNonResident.style.display = 'block';
-            idDetailsFields.style.display = 'block';
-            idNumberField.style.display = 'block';
-            nonResident.style.display = 'flex';
-        } else {
-            idTypeInput.value = ""; // Reset ID Type
-            hiddenIdType.value = ""; // Reset hidden field
-            idTypeInput.readOnly = true; // Keep it disabled
-            idTypeInput.style.display = "block"; // Show input field
+        } else { // Default case
             idTypeDropdown.style.display = "none";
-            idDetails.style.display = 'none';
+            idTypeDropdown.removeAttribute("disabled");
+
             issuedDateExpiryNonResident.style.display = 'none';
             issuedForNonResidents.style.display = 'none';
+            idDetails.style.display = 'none';
+            idDetailsFields.style.display = 'none';
             idNumberField.style.display = 'none';
             nonResident.style.display = 'none';
         }
     }
+
 
     function toggleCustomerRemarks() {
         const showRemarks = document.getElementById("showRemarksOnTxn").value;
@@ -744,13 +749,16 @@ function copyAddress() {
 				</div>
 			</div>
 
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+			<script
+				src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+				integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+				crossorigin="anonymous"></script>
 
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			<form:form modelAttribute="customer" id="customerOnboardForm"
 				action="${pageContext.request.contextPath}/createUser" method="post"
 				enctype="multipart/form-data" onsubmit="return validation(this)">
-				<form:hidden path="isValid" value="true" /> 
+				<form:hidden path="isValid" value="true" />
 				<form:hidden path="ecrn" />
 
 
@@ -900,12 +908,13 @@ function copyAddress() {
 												<span id="secondNationalityError" class="text-danger"></span>
 											</div>
 										</div>
-										<div class="col-xl-4"> 
+										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Native Region <span
 													class="text-danger">*</span></label>
 												<form:select path="nativeRegion" id="nativeRegion"
-													class="form-control" multiple="false"  data-select2-selector="icon">
+													class="form-control" multiple="false"
+													data-select2-selector="icon">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
 													<form:options items="${nativeRegionList}"
 														itemValue="valueId" itemLabel="description" />
@@ -1251,7 +1260,7 @@ function copyAddress() {
 															class="form-control" multiple="false" style="height: 46;"
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
-																<form:options items="${stateList}" itemValue="valueId"
+															<form:options items="${stateList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
 														<span id="parStateError" class="text-danger"></span>
@@ -1340,15 +1349,15 @@ function copyAddress() {
 															<div class="mb-4">
 																<label class="form-label">Id Type <span
 																	class="text-danger">*</span></label>
-																<!-- Input field for fixed ID type -->
-																<input type="text" id="idType" class="form-control"
+																<!-- 	<!-- Input field for fixed ID type -->
+																<!-- 		<input type="text" id="idType" class="form-control"
 																	placeholder="ID Type" readonly> <input
-																	type="hidden" id="hiddenIdType" name="idType">
+																	type="hidden" id="hiddenIdType" name="idType">  -->
 																<form:select id="idTypeDropdown" path="idType"
 																	class="form-control" style="display: none;">
-																	<form:option value="2" disabled="true" selected="true">PASSPORT</form:option>
-																	<form:options items="${idTypeList}" itemValue="valueId"
-																		itemLabel="description" />
+																	<form:option value="" disabled="true" selected="true">Select Id Type</form:option>
+																	<form:options items="${idTypesList}"
+																		itemValue="valueId" itemLabel="description" />
 																</form:select>
 																<span id="idTypeError" class="text-danger"></span>
 															</div>

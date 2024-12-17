@@ -1141,21 +1141,21 @@ document.addEventListener('DOMContentLoaded', function() {
 											<div class="col-xl-4">
 												<label class="form-label">Rate<span
 													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Rate" id="rate"
-													name="rate">
+													class="form-control" placeholder="Rate" id="rate" style="color: green;"
+													name="rate" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payout Amount<span
 													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Payout Amount"
-													id="payoutAmount" name="payoutAmount">
+													class="form-control" placeholder="Payout Amount" style=" color: green;"
+													id="payoutAmount" name="payoutAmount" readonly>
 											</div>
 										</div>
 
 										<div class="row">
 											<div class="col-xl-2">
 												<label class="form-label">Commission</label> <input
-													type="text" class="form-control" placeholder="Commission"
+													type="text" class="form-control" placeholder="Commission" style=" color: green;"
 													id="commission" name="commission" readonly>
 											</div>
 											<!-- <div class="col-xl-2">
@@ -1175,14 +1175,14 @@ document.addEventListener('DOMContentLoaded', function() {
 											</div> -->
 											<div class="col-xl-2">
 												<label class="form-label">Tax (%)</label> <input
-														type="text" class="form-control" placeholder="Tax"
+														type="text" class="form-control" placeholder="Tax" style=" color: green;"
 														id="tax" name="tax" readonly>
 											</div>
 
 											<div class="col-xl-4">
 												<label class="form-label">Total Pay In Amount</label> <input
 													type="text" class="form-control"
-													placeholder="Total Pay In Amount" id="totalPayInAmount"
+													placeholder="Total Pay In Amount" id="totalPayInAmount" style=" color: green;"
 													name="totalPayInAmount" readonly>
 											</div>
 										</div>

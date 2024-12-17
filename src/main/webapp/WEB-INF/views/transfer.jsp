@@ -224,11 +224,13 @@
 	visibility: hidden;
 }
 
-@
-keyframes spin { 0% {
-	transform: rotate(0deg);
-}
-100%{transform:rotate(360deg);}
+.spinner-container {
+	position: fixed;
+	top: 50%;
+	left: 60%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	display: none;
 }
 </style>
 <script type="text/javascript">
@@ -393,7 +395,7 @@ $(document).ready(function() {
                 console.log(payload);
 
                 // Show loader and disable button
-                $('#quoteLoader').css('visibility', 'visible');
+                $('#loader').show();
                 $('#quoteButton').prop('disabled', true);
 
                 $.ajax({
@@ -403,7 +405,7 @@ $(document).ready(function() {
                     data: JSON.stringify(payload),
                     success: function(response) {
                         if (response.status === 200) {
-                            const quoteId = response.quote_id;
+                            var quoteId = response.quote_id;
 
                             $('#quoteId').val(response.quote_id); // Store the quote ID
                             $('#totalPayInAmount').val(response.total_payin_amount);
@@ -412,8 +414,9 @@ $(document).ready(function() {
                             $('#payoutAmount').val(response.receiving_amount);
                             $('#tax').val(response.tax_amount);
 
-                            $('#quoteMessage').text(`Quote Created Successfully`);
+                            $('#quoteMessage').text("Quote Created Successfully: " + quoteId);
                             $('#quoteButton').hide();
+                            //alert("Quote Created Successfully :" + quoteId);
                             $('#createTransactionSection').show(); // Show the transaction section 
                         }
                         else {
@@ -422,13 +425,15 @@ $(document).ready(function() {
                         }
                     },
                     error: function() {
-                        alert('Failed to generate quote. Please try again.');
+                        $('#loader').hide();
                         $('#createTransactionSection').hide();
+                        alert('Failed to generate quote. Please try again.');
+
                         
                     },
                     complete: function() {
                         // Hide loader and enable button
-                        $('#quoteLoader').css('visibility', 'hidden');
+                        $('#loader').hide();
                         $('#quoteButton').prop('disabled', false);
                     }
                 });
@@ -472,7 +477,7 @@ $(document).ready(function() {
                             };
 
                             // Show loader and disable button
-                            $('#transactionLoader').css('visibility', 'visible');
+                            $('#loader').show();
                             $('#transactionButton').prop('disabled', true);
 
                             $.ajax({
@@ -482,22 +487,23 @@ $(document).ready(function() {
                                 data: JSON.stringify(payload),
                                 success: function(response) {
                                     if (response.status === 200) {
-                                        const state = response.state;
-                                        const transactionRefNumber = response.transaction_ref_number;
+                                        $('#loader').hide();
+                                        $('#createTransactionSection').hide();
+                                        var state = response.state;
+                                        var transactionRefNumber = response.transaction_ref_number;
 
                                         $('#transactionState').val(state);
-
-                                        alert(`Transaction created successfully with Reference Number: ${transactionRefNumber} and State: ${state}`);
-
-                                        $('#transactionMessage').text(`Transaction created successfully.`);
+                                        alert("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
+                                        $('#transactionMessage').text("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
                                     }
                                 },
                                 error: function() {
+                                    $('#loader').hide();
                                     alert('Failed to create transaction. Please try again.');
                                 },
                                 complete: function() {
                                     // Hide loader and enable button
-                                    $('#transactionLoader').css('visibility', 'hidden');
+                                    $('#loader').hide();
                                     $('#transactionButton').prop('disabled', false);
                                 }
                             });
@@ -626,6 +632,11 @@ document.addEventListener('DOMContentLoaded', function() {
 						</div>
 					</div>
 				</div>
+				<div class="spinner-container" id="loader">
+                				<div class="spinner-border text-primary" role="status">
+                					<span class="visually-hidden">Loading...</span>
+                				</div>
+                			</div>
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
@@ -1246,7 +1257,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							style="justify-content: center;">
 							<button type="button" onclick="createTransaction()"
 								class="btn btn-primary" id="createTransactionSection"
-								style="display: none; margin-left: -169px;">Create
+								style="display: none; align-text: center; margin-left: -225px;">Create
 								Transaction</button>
 							<div id="transactionMessage"
 								style="color: green; font-weight: bold;"></div>

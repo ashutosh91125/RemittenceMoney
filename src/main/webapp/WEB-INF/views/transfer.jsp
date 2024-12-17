@@ -1163,9 +1163,9 @@ document.addEventListener('DOMContentLoaded', function() {
 												</div>
 											</div> -->
 											<div class="col-xl-2">
-												<label class="form-label">Roundoff</label> <input
-													type="text" class="form-control" placeholder="Rate"
-													id="dynamicRate" name="dynamicRate" readonly>
+												<label class="form-label">Tax (%)</label> <input
+														type="text" class="form-control" placeholder="Tax"
+														id="tax" name="tax" readonly>
 											</div>
 
 											<div class="col-xl-4">

@@ -385,7 +385,7 @@ $(document).ready(function() {
                     sending_currency_code: $('#payInCurrency').val(),
                     receiving_country_code: $('#payOutCountry').val(),
                     receiving_currency_code: $('#currencies').val(),
-                    sending_amount: $('#totalPayInAmount').val(),
+                    sending_amount: $('#amount').val(),
                     receiving_mode: $('#beneficryDeleiveryOption').val(),
                     type: "SEND",
                     instrument: "REMITTANCE"
@@ -443,11 +443,11 @@ $(document).ready(function() {
                     instrument: "REMITTANCE",
                     message: "Agency transaction",
                     sender: {
-            //                     	 customer_number:"4582433857738986"
+//                                  	 customer_number:"4582433857738986"
                                      customer_number: $('#ecrn').val()
                                 },
                                 receiver: {
-                                    mobile_number: $('#mobile').val(),
+                                    mobile_number: $('#beneficiarymobile').val(),
                                     first_name: $('#benificiryfirstName').val(),
                                     last_name: $('#benificirylastName').val(),
                                     relation_code: "32",
@@ -461,7 +461,7 @@ $(document).ready(function() {
                                         }
                                     ],
                                     bank_details: {
-                                        account_type_code: $('#accountType').val(),
+                                        account_type_code: $('#beneficryAccountType').val(),
                                         account_number: $('#confirmAccountNo').val(),
                                         routing_code: $('#bankBranches').val()
                                     }
@@ -1093,6 +1093,7 @@ document.addEventListener('DOMContentLoaded', function() {
 													<option value="FAMA">Family Maintenance</option>
 													<option value="P18">Gift</option>
 													<option value="MDCS">Medical Expenses</option>
+													<option value="SAVG">Savings</option>
 												</select>
 											</div>
 										</div>

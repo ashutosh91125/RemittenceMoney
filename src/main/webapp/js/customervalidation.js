@@ -25,14 +25,13 @@
 		document.getElementById("stateError").innerHTML = "";
 		document.getElementById("zipError").innerHTML = "";
 		
-		document.getElementById("idTypeError").innerHTML = "";
+
 		document.getElementById("idNumberError").innerHTML = "";
 		document.getElementById("nameAsPerIdError").innerHTML = "";
 		document.getElementById("issuedCountryError").innerHTML = "";
 		document.getElementById("issuedAtError").innerHTML = "";
 		document.getElementById("issuedByError").innerHTML = "";
-		document.getElementById("issuedOnError").innerHTML = "";
-		document.getElementById("dateOfExpiryError").innerHTML = "";
+
 		
 		document.getElementById("annualIncomeRangeIdError").innerHTML = "";
 		document.getElementById("annualIncomeCurrencyCodeError").innerHTML = "";
@@ -46,8 +45,7 @@
 		document.getElementById("txnCountMonthError").innerHTML = "";
 		document.getElementById("firstLanguageError").innerHTML = "";
 		document.getElementById("maritalStatusError").innerHTML = "";
-		document.getElementById("occupationIdError").innerHTML = "";
-		
+		document.getElementById("occupationIdError").innerHTML = "";	
 		
 		issuedOnError.innerHTML = "";
 		dateOfExpiryError.innerHTML = "";
@@ -162,17 +160,7 @@
 	       document.getElementById("zipError").innerHTML = "Zip is required.";
 	       isValid = false;
 	   }
-	if (residentType !== '101') {
-	      const idTypeValue = document.getElementById("hiddenIdType").value;
-
-	if (!idTypeValue.trim()) {
-	      document.getElementById("idTypeError").innerHTML = "Id Type is required for non-Malaysian residents.";
-	      isValid = false;
-	  } else {
-	           document.getElementById("idTypeError").innerHTML = ""; 
-	    }
-	  }
-
+	   
 	if (!form.idNumber.value.trim()) {
 	     document.getElementById("idNumberError").innerHTML = "Id Number is required.";
 	     isValid = false;
@@ -181,36 +169,33 @@
 	 	  document.getElementById("nameAsPerIdError").innerHTML = "Name AS Per Id is required.";
 	 	  isValid = false;
 	 }
-	 if (!form.issuedCountry.value) {
-	        document.getElementById("issuedCountryError").innerHTML = "Issued Country is required.";
-	        isValid = false;
-	    }
-		
-	if (!form.issuedAt.value) {
+	 if (!form.residentType.value.trim() == "100") { 
+	     if (!form.issuedCountry.value) {
+	         document.getElementById("issuedCountryError").innerHTML = "Issued Country is required.";
+	         isValid = false;
+	     } 
+	 }
+	 if (!form.residentType.value.trim()  == "100") { 
+		if (!form.issuedAt.value) {
 		      document.getElementById("issuedAtError").innerHTML = "Issued At is required.";
 		      isValid = false;
 		 }
+	 }
+	 if (form.residentType.value.trim()  == "100") { 
 	 if (!form.issuedBy.value) {
 		      document.getElementById("issuedByError").innerHTML = "Issued By is required.";
 		      isValid = false;
 		 }
-//	 if (issuedOn && issuedOn > today) {
-//		        issuedOnError.innerHTML = "Issued date cannot be in the future.";
-//		        isValid = false;
-//		 }
-//
-//		    // Check if dateOfExpiry is later than issuedOn
-//	 if (issuedOn && dateOfExpiry && dateOfExpiry <= issuedOn) {
-//		        dateOfExpiryError.innerHTML = "Expiry date must be later than the issued date.";
-//		        isValid = false;
-//		}	
+		 else {
+		 	 	   document.getElementById("issuedCountryError").innerHTML = ""; // Clear the error if field is valid
+		 	 }
+		  }
 			
 	if (!form.annualIncomeRangeId.value) {
 				document.getElementById("annualIncomeRangeIdError").innerHTML = "Annual Income is required.";
 				isValid = false;
 		}
 					
-
 	if (!form.annualIncomeCurrencyCode.value) {
 				 document.getElementById("annualIncomeCurrencyCodeError").innerHTML = "Annual Income Currency is required.";
 				 isValid = false;
@@ -258,60 +243,13 @@
 				 document.getElementById("maritalStatusError").innerHTML = "Marital Status is required.";
 				 isValid = false;
 		}
-		if (!form.occupationId.value) {
+	if (!form.occupationId.value) {
 				 document.getElementById("occupationIdError").innerHTML = "Occupation Id is required.";
 				 isValid = false;
 		}
-				
-		var primaryMobileNumber = $("#primaryMobileNumber").val();
-		var primaryMobileNumberError = document.getElementById("primaryMobileNumberError");
-
-	
-		primaryMobileNumberError.innerHTML = ""; // Clear any previous error
-
-		if (!primaryMobileNumber) {
-		    primaryMobileNumberError.innerHTML = "Primary mobile number is required.";
-		    isValid = false;
-		} else {
-		    // Check if mobile number is in the correct format (10-15 digits)
-		    if (!/^\d{10,15}$/.test(primaryMobileNumber)) {
-		        primaryMobileNumberError.innerHTML = "Enter a valid mobile number (10-15 digits).";
-		        isValid = false;
-		    } else {
-		        // Make the AJAX call to verify if the mobile number exists
-		        $.ajax({
-		            url: "/caas/api/v2/customer/verify-mobile", 
-		            type: "GET",
-		            async: false,  // Ensure synchronous behavior for validation
-		            data: { primaryMobileNumber: primaryMobileNumber },
-		            success: function (response) {
-		                console.log("API Response: ", response);
-		                
-		                // If the response contains a message
-		                if (response && response.message) {
-
-		                    // If customer already exists, mark as invalid
-		                    if (response.message === "Customer already exists with this mobile number.") {
-		                        primaryMobileNumberError.innerHTML = response.message;
-		                        isValid = false; 
-		                    } else {
-		                        isValid = false; 
-		                    }
-		                } else {
-		                    primaryMobileNumberError.innerHTML = "Unexpected response from the server.";
-		                    isValid = false;
-		                }
-		            },
-		            error: function (xhr, status, error) {
-		                console.log("AJAX Error Status: ", status);  // Log the status
-		                console.log("AJAX Error Response: ", xhr.responseText);  // Log response details
-		                primaryMobileNumberError.innerHTML = "Error verifying mobile number.";
-		                isValid = false;  // In case of error, mark as invalid
-		            }
-		        });
-		    }
-		}
-	 
+		
+		
+		
 
 //    if (!isValid) {
 //        alert("Please fill in all required fields.");

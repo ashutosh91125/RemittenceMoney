@@ -715,6 +715,16 @@ function copyAddress() {
                 errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
             }
         });
+        const today = new Date().toISOString().split("T")[0]; // Today's date in yyyy-mm-dd format
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1); // Tomorrow's date
+        const tomorrowString = tomorrow.toISOString().split("T")[0];
+
+        // Set the max date for "Issued On" to today's date
+        document.querySelector('input[name="issuedOn"]').setAttribute("max", today);
+        
+        // Set the min date for "Date of Expiry" to tomorrow's date
+        document.querySelector('input[name="dateOfExpiry"]').setAttribute("min", tomorrowString);
 
         toggleFields();
         toggleCustomerRemarks();
@@ -1459,7 +1469,7 @@ function copyAddress() {
 																	<label class="form-label">Issued on<span
 																		class="text-danger">*</span></label>
 																	<form:input path="issuedOn" type="date"
-																		class="form-control" />
+																		class="form-control" min="1900-01-01" max="${today}" />
 																	<span id="issuedOnError" class="text-danger"></span>
 																</div>
 															</div>
@@ -1468,7 +1478,7 @@ function copyAddress() {
 																	<label class="form-label">Date of Expiry<span
 																		class="text-danger">*</span></label>
 																	<form:input path="dateOfExpiry" type="date"
-																		class="form-control" />
+																		class="form-control"  min="${tomorrow}"  />
 																	<span id="dateOfExpiryError" class="text-danger"></span>
 																</div>
 															</div>

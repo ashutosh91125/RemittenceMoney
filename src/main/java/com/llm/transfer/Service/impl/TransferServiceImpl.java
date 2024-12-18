@@ -1,5 +1,8 @@
 package com.llm.transfer.Service.impl;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +12,6 @@ import com.llm.transfer.repository.TransferRepository;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
@@ -19,6 +20,7 @@ public class TransferServiceImpl implements TransferService {
 
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
+		transfer.setTransactionDate(LocalDate.now());
 		return transferRepository.save(transfer);
 	}
 

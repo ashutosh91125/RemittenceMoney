@@ -1,5 +1,7 @@
 package com.llm.transfer.model;
 
+import java.time.LocalDate;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.persistence.Column;
@@ -127,5 +129,5 @@ public class Transfer {
 	private String transactionState;
 	private String transactionSubState;
 	private String transactionReferenceNumber;
-
+	private LocalDate transactionDate;
 }

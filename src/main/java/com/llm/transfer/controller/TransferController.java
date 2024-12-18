@@ -16,6 +16,8 @@ import com.llm.Service.CustomerService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
+import com.llm.transfer.Service.TransferService;
+import com.llm.transfer.model.Transfer;
 
 @Controller
 public class TransferController {
@@ -25,6 +27,8 @@ public class TransferController {
 	private CustomerService customerService;
 	@Autowired
 	private EnumEntityService enumEntityService;
+	@Autowired
+	private TransferService transferService;
 
 	@GetMapping("/transfer")
 	public String showTransfer(Model model) {
@@ -34,7 +38,7 @@ public class TransferController {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
-			model.addAttribute("countryList", List.of()); 
+			model.addAttribute("countryList", List.of());
 		}
 		try {
 			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
@@ -42,7 +46,7 @@ public class TransferController {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving currency list: ", e);
-			model.addAttribute("currencyList", List.of()); 
+			model.addAttribute("currencyList", List.of());
 		}
 		return "transfer";
 	}
@@ -69,14 +73,14 @@ public class TransferController {
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}
-		
+
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
-			model.addAttribute("countryList", List.of()); 
+			model.addAttribute("countryList", List.of());
 		}
 		try {
 			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
@@ -84,9 +88,30 @@ public class TransferController {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving currency list: ", e);
-			model.addAttribute("currencyList", List.of()); 
+			model.addAttribute("currencyList", List.of());
 		}
 		model.addAttribute("customer", new Customer());
 		return "transfer";
 	}
+
+	@GetMapping("/transfer-list")
+	public String getTransferList(Model model) {
+		try {
+			List<Transfer> transferList = transferService.getAllTransfers();
+			Collections.reverse(transferList);
+			model.addAttribute("transferList", transferList);
+			return "transferlisting";
+		} catch (Exception e) {
+			logger.error("Error occurred while fetching customer list: " + e);
+			return "transferlisting";
+		}
+
+	}
+
+	@GetMapping("/transfer-details")
+	public String detailsOfTransfer(@RequestParam("transactionReferenceNumber") String transactionReferenceNumber) {
+		return "transferdetails";
+
+	}
+
 }

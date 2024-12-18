@@ -36,13 +36,9 @@
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 
-
 </head>
 
 <body>
-	<!--! ================================================================ !-->
-	<!--! [Start] Navigation Manu !-->
-	<!--! ================================================================ !-->
 	<div class="nxl-navigation" id="navBar_Id">
 		<div class="navbar-wrapper">
 			<div class="m-header">
@@ -63,53 +59,55 @@
 						</span>
 					</a></li>
 
-                    <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
-					<li class="nxl-item nxl-hasmenu"><a href="adminlist"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-users"></i></span> <span class="nxl-mtext">Admin</span></i></span>
-					</a></li>
+					<c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+						<li class="nxl-item nxl-hasmenu"><a href="adminlist"
+							class="nxl-link"> <span class="nxl-micon"><i
+									class="feather-users"></i></span> <span class="nxl-mtext">Admin</span></i></span>
+						</a></li>
 					</c:if>
 
-                    <c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
-					<li class="nxl-item nxl-hasmenu"><a href="agentlist"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-users"></i></span> <span class="nxl-mtext">Agents</span>
-					</a></li>
+					<c:if
+						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
+						<li class="nxl-item nxl-hasmenu"><a href="agentlist"
+							class="nxl-link"> <span class="nxl-micon"><i
+									class="feather-users"></i></span> <span class="nxl-mtext">Agents</span>
+						</a></li>
 					</c:if>
 
-					<c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
-					<li class="nxl-item nxl-hasmenu"><a href="subagentlist"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-users"></i></span> <span class="nxl-mtext">Sub
-								Agents</span>
-					</a></li>
+					<c:if
+						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
+						<li class="nxl-item nxl-hasmenu"><a href="subagentlist"
+							class="nxl-link"> <span class="nxl-micon"><i
+									class="feather-users"></i></span> <span class="nxl-mtext">Sub
+									Agents</span>
+						</a></li>
 					</c:if>
-					
+
 					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>
 					</a></li>
-					<li class="nxl-item nxl-hasmenu"><a href="#"
+					<li class="nxl-item nxl-hasmenu"><a href="transfer-list"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">All
-								Transfers </span></i></span>
+								Transfers </span>
 					</a></li>
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-cast"></i></span> <span class="nxl-mtext">Reports</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
 					</a>
-						<ul class="nxl-submenu">
+						<ul class="nxl-submenu collapse">
 							<li class="nxl-item"><a class="nxl-link"
 								href="reports-sales.html">Transactions Reports</a></li>
 
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-settings"></i></span> <span class="nxl-mtext">Settings</span><span
-							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+					<li class="nxl-item nxl-hasmenu"><a href="" class="nxl-link">
+							<span class="nxl-micon"><i class="feather-settings"></i></span> <span
+							class="nxl-mtext">Settings</span><span class="nxl-arrow"><i
+								class="feather-chevron-right"></i></span>
 					</a>
-						<ul class="nxl-submenu">
+						<ul class="nxl-submenu show">
 							<li class="nxl-item"><a class="nxl-link"
 								href="settings-general.html">General</a></li>
 							<li class="nxl-item"><a class="nxl-link"
@@ -119,9 +117,10 @@
 							<li class="nxl-item"><a class="nxl-link"
 								href="settings-tags.html">Permission</a></li>
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="${pageContext.request.contextPath}/logout"
-						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-power"></i></span> <span class="nxl-mtext">Logout</span></i></span>
+					<li class="nxl-item nxl-hasmenu"><a
+						href="${pageContext.request.contextPath}/logout" class="nxl-link">
+							<span class="nxl-micon"><i class="feather-power"></i></span> <span
+							class="nxl-mtext">Logout</span>
 					</a>
 				</ul>
 
@@ -131,49 +130,7 @@
 
 	<header class="nxl-header">
 		<div class="header-wrapper">
-			<!--! [Start] Header Left !-->
-			<div class="header-left d-flex align-items-center gap-4">
-				<!--! [Start] nxl-head-mobile-toggler !-->
-				<a href="javascript:void(0);" class="nxl-head-mobile-toggler"
-					id="mobile-collapse">
-					<div class="hamburger hamburger--arrowturn">
-						<div class="hamburger-box">
-							<div class="hamburger-inner"></div>
-						</div>
-					</div>
-				</a>
-				<!--! [Start] nxl-head-mobile-toggler !-->
-				<!--! [Start] nxl-navigation-toggle !-->
-				<div class="nxl-navigation-toggle">
-					<a href="javascript:void(0);" id="menu-mini-button"> <i
-						class="feather-align-left"></i>
-					</a> <a href="javascript:void(0);" id="menu-expend-button"
-						style="display: none"> <i class="feather-arrow-right"></i>
-					</a>
-				</div>
-				<!--! [End] nxl-navigation-toggle !-->
-				<!--! [Start] nxl-lavel-mega-menu-toggle !-->
-				<div class="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
-					<a href="javascript:void(0);" id="nxl-lavel-mega-menu-open"> <i
-						class="feather-align-left"></i>
-					</a>
-				</div>
 
-				<div class="nxl-drp-link nxl-lavel-mega-menu">
-					<!--! [Start] nxl-lavel-mega-menu-wrapper !-->
-					<div class="nxl-lavel-mega-menu-wrapper d-flex gap-3">
-
-						<div class="dropdown nxl-h-item nxl-lavel-menu"></div>
-						<!--! [End] nxl-lavel-menu !-->
-						<!-- neeraj -->
-						<!--! [End] nxl-h-item nxl-mega-menu !-->
-					</div>
-					<!--! [End] nxl-lavel-mega-menu-wrapper !-->
-				</div>
-				<!--! [End] nxl-lavel-mega-menu !-->
-			</div>
-			<!--! [End] Header Left !-->
-			<!--! [Start] Header Right !-->
 			<div class="header-right ms-auto">
 				<div class="d-flex align-items-center">
 					<div class="nxl-h-item d-none d-sm-flex"></div>
@@ -201,18 +158,10 @@
 
 	<!--! BEGIN: Vendors JS !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/tui-code-snippet.min.js"></script>
 	<script src="assets/vendors/js/moment.min.js"></script>
 
-	<!--! END: Vendors JS !-->
-	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>
-	<script src="assets/js/apps-calendar-init.min.js"></script>
-	<!--! END: Apps Init !-->
-	<!--! BEGIN: Theme Customizer  !-->
-	<script src="assets/js/theme-customizer-init.min.js"></script>
-	<!--! END: Theme Customizer !-->
 </body>
 
 </html>

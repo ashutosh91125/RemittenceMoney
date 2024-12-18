@@ -35,7 +35,7 @@ public class Transfer {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String dateOfBirth;
 
-	@Column(name = "primary_mobile_number", length = 20, nullable = false, unique = true)
+	@Column(name = "primary_mobile_number", length = 20, nullable = false)
 	private String primaryMobileNumber;
 
 	@Column(name = "email_id", length = 255, nullable = false)
@@ -116,7 +116,7 @@ public class Transfer {
 	private String remarks;
 	private Double payoutAmount;
 	private Double rate;
-	private Double payInAmount;
+//	private Double payInAmount;
 	private Double commission;
 	private Double tax;
 //	private Double otherCharges;
@@ -125,6 +125,7 @@ public class Transfer {
 	private String paymentMode;
 
 	private String transactionState;
+	private String transactionSubState;
 	private String transactionReferenceNumber;
 
 }

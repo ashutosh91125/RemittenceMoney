@@ -268,7 +268,22 @@ $(document).ready(function () {
                     $('#issuedCountry').val(response.issuedCountry?.trim() || '');
                     $('#visaExpiryDate').val(response.visaExpiryDate?.trim() || '');
                     $('#visaNumber').val(response.visaNumber?.trim() || '');
-
+                    var mergedAddress1 = [
+                        response.buildingName?.trim(),
+                        response.streetName?.trim(),
+                        response.landmark?.trim(),
+                        response.district?.trim(),
+                        response.zip ? ', Zip - ' + response.zip.trim() : ''
+                    ].filter(Boolean).join(' ');
+                    $('#address1').val(mergedAddress1);
+                    var mergedAddress2 = [
+                        response.parBuildingName?.trim(),
+                        response.parStreetName?.trim(),
+                        response.parLandmark?.trim(),
+                        response.parDistrict?.trim(),	
+                        response.parZip ? ', Zip - ' + response.parZip.trim() : '' 
+                    ].filter(Boolean).join(' ');
+                    $('#address2').val(mergedAddress2);
                     toggleFields();
                 } else {
                     console.error("No customer data found for the provided ECRN.");
@@ -453,8 +468,8 @@ $(document).ready(function() {
                                 },
                                 receiver: {
                                     mobile_number: $('#beneficiarymobile').val(),
-                                    first_name: $('#beneficiaryfirstName').val(),
-                                    last_name: $('#beneficiarylastName').val(),
+                                    first_name: $('#beneficiaryFirstName').val(),
+                                    last_name: $('#beneficiaryLastName').val(),
                                     relation_code: "32",
                                     nationality: $('#beneficiaryNationality').val(),
                                     receiver_address: [
@@ -502,7 +517,7 @@ $(document).ready(function() {
                                                               placeOfBirth: $('#placeOfBirth').val(),
                                                               address1: $('#address1').val(),
                                                               address2: $('#address2').val(),
-                                                              city: $('#city').val(),
+                                                              city: $('#currentCity').val(),
                                                               state: $('#state').val(),
                                                               country: $('#country').val(),
                                                               countryOfResidence: $('#countryOfResidence').val(),
@@ -527,7 +542,7 @@ $(document).ready(function() {
                                                               beneficiaryBranch: $('#bankBranches').val(),
                                                               beneficiaryIban: $('#beneficiaryIban').val(),
                                                               beneficiaryAccountType: $('#beneficiaryAccountType').val(),
-                                                              beneficiaryAccountNo: $('#beneficiaryAccountNo').val(),
+                                                              beneficiaryAccountNo: $('#accountNo').val(),
                                                               beneficiaryType: $('#beneficiaryType').val(),
                                                               beneficiaryRelation: $('#beneficiaryRelation').val(),
                                                               beneficiaryNickname: $('#beneficiaryNickname').val(),
@@ -543,7 +558,6 @@ $(document).ready(function() {
                                                               beneficiaryDob: $('#beneficiaryDob').val(),
                                                               beneficiaryIdType: $('#beneficiaryIdType').val(),
                                                               beneficiaryIdNo: $('#beneficiaryIdNo').val(),
-
                                                               payInCurrency: $('#payInCurrency').val(),
                                                               sourceOfFund: $('#sourceOfFund').val(),
                                                               transactionPurpose: $('#transactionPurpose').val(),
@@ -551,7 +565,6 @@ $(document).ready(function() {
                                                               remarks: $('#remarks').val(),
                                                               payoutAmount: $('#payoutAmount').val(),
                                                               rate: $('#rate').val(),
-                                                              payInAmount: $('#payInAmount').val(),
                                                               commission: $('#commission').val(),
                                                               tax: $('#tax').val(),
                                                               totalPayInAmount: $('#totalPayInAmount').val(),
@@ -598,55 +611,103 @@ $(document).ready(function() {
                 });
             }
 
-document.addEventListener('DOMContentLoaded', function() {
-    console.log("Page Loaded");
-    toggleFields();
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log("Page Loaded");
+                toggleFields();
 
-    const submitButton = document.getElementById("quoteButton");
+                const idNumber = document.getElementById('idNumber');
+                const submitButton = document.getElementById("quoteButton");
+                const accountNumber = document.getElementById("accountNo");
+                const confirmAccountNumber = document.getElementById("confirmAccountNo");
+                const messageElement = document.getElementById("validationMessage");
+                const errorMessage = document.getElementById("error-message");
+                const amountField = document.getElementById("amount");
+                const residentTypeField = document.getElementById('residentTypeId');
 
-    const accountNumber = document.getElementById("accountNo");
-    const confirmAccountNumber = document.getElementById("confirmAccountNo");
-    const messageElement = document.getElementById("validationMessage");
+                // Function to validate real-time account numbers
+                function validateRealTime() {
+                    const accountNumberValue = accountNumber.value.trim();
+                    const confirmAccountNumberValue = confirmAccountNumber.value.trim();
 
-    function validateRealTime() {
-        const accountNumberValue = accountNumber.value.trim();
-        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
+                    if (confirmAccountNumberValue === "") {
+                        messageElement.textContent = "";
+                        return;
+                    }
+                    if (accountNumberValue !== confirmAccountNumberValue) {
+                        messageElement.textContent = "Account numbers do not match!";
+                        messageElement.style.color = "red";
+                        submitButton.disabled = true;
+                    } else {
+                        messageElement.textContent = "Account numbers match.";
+                        messageElement.style.color = "green";
+                        validateSubmitButton(); // Check other conditions before enabling
+                    }
+                }
 
-        if (confirmAccountNumberValue === "") {
-            messageElement.textContent = "";
-            return;
-        }
-        if (accountNumberValue !== confirmAccountNumberValue) {
-            messageElement.textContent = "Account numbers do not match!";
-            messageElement.style.color = "red";
-            submitButton.disabled = true;
-        } else {
-            messageElement.textContent = "Account numbers match.";
-            messageElement.style.color = "green";
-            submitButton.disabled = false;
-        }
-    }
+                // Function to validate the amount field
+                function validateAmount() {
+                    const value = parseFloat(amountField.value);
+                    errorMessage.style.display = "none";
+                    if (value < 5 || value > 50000 || isNaN(value)) {
+                        errorMessage.style.display = "block";
+                        submitButton.disabled = true;
+                    } else {
+                        validateSubmitButton(); // Check other conditions before enabling
+                    }
+                }
 
-    accountNumber.addEventListener('input', validateRealTime);
-    confirmAccountNumber.addEventListener('input', validateRealTime);
-    document.getElementById('residentTypeId').addEventListener('change', toggleFields);
+                // Function to validate all fields for submit button enablement
+                function validateSubmitButton() {
+                    const idNumberValue = idNumber.value.trim();
 
-    document.getElementById("amount").addEventListener("input", function(event) {
-        var value = event.target.value;
-        var errorMessage = document.getElementById("error-message");
+                    // Check all conditions: idNumber, amount, and account numbers
+                    const isIdNumberValid = idNumberValue !== "";
+                    const isAmountValid = !isNaN(parseFloat(amountField.value)) && amountField.value >= 5 && amountField.value <= 50000;
+                    const isAccountNumbersMatch = accountNumber.value.trim() === confirmAccountNumber.value.trim();
 
-        // Hide the error message by default
-        errorMessage.style.display = "none";
-        submitButton.disabled = false;
+                    // Enable or disable the submit button based on conditions
+                    submitButton.disabled = !(isIdNumberValid && isAmountValid && isAccountNumbersMatch);
+                }
 
-        // Check if the value is valid
-        if (value < 5 || value > 50000) {
-            errorMessage.style.display = "block";  // Show error message
-            submitButton.disabled = true;
-        }
-    });
-});
+                // Add event listeners for validations
+                accountNumber.addEventListener('input', validateRealTime);
+                confirmAccountNumber.addEventListener('input', validateRealTime);
+                residentTypeField.addEventListener('change', toggleFields);
+                amountField.addEventListener('input', validateAmount);
+                idNumber.addEventListener('input', validateSubmitButton); // Check idNumber on input
 
+                // Initial validation on page load
+                validateSubmitButton();
+            });
+
+$(document)
+.ready(
+		function() {
+			$('#beneficiaryNationality')
+			.on('change',function() {
+					let dependent = $(this).val(); 
+					if (dependent) { 
+						$.ajax({url :'/api/enumEntities/dependent', 
+							type : 'GET',data : {
+									dependent : dependent
+									}, 
+									success : function(data) {
+													
+									$('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
+									$.each(data,function(index,enumValue) {
+									$('#beneficiaryState').append('<option value="' + enumValue.description + '">'+ enumValue.description+ '</option>');
+																	});
+												},
+												error : function() {
+													console
+															.error("Error fetching states for the selected Natinality.");
+												}
+											});
+								} else {
+									$('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
+								}
+							});
+		});
 </script>
 </head>
 
@@ -969,7 +1030,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											<label class="form-label">Currency</label> <select
 												name="currencies" id="currencies" class="form-control"
 												data-select2-selector="icon">
-												<option value="" disabled selected>Currency</option>
+												<option value="" disabled selected>Selected Currency</option>
 												<c:forEach var="currency" items="${currencyList}">
 													<option value="${currency.valueId}">${currency.description}</option>
 												</c:forEach>
@@ -1064,22 +1125,22 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">First Name</label> <input
-													type="text" class="form-control" id="beneficiaryfirstName"
-													name="beneficiaryfirstName" placeholder="First Name">
+													type="text" class="form-control" id="beneficiaryFirstName"
+													name="beneficiaryFirstName" placeholder="First Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Middle Name</label> <input
 													type="text" class="form-control" id="beneficiaryMiddleName"
-													name="beneficiarymiddleName" placeholder="Middle Name">
+													name="beneficiaryMiddleName" placeholder="Middle Name">
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Last Name</label> <input
 													type="text" class="form-control" id="beneficiaryLastName"
-													name="beneficiarylastName" placeholder="Last Name">
+													name="beneficiaryLastName" placeholder="Last Name">
 											</div>
 										</div>
 									</div>
@@ -1107,21 +1168,7 @@ document.addEventListener('DOMContentLoaded', function() {
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Beneficiary State</label> <input
-													type="text" class="form-control" id="beneficiaryState"
-													name="beneficiaryState" placeholder="State">
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Mobile</label> <input type="text"
-													class="form-control" id="beneficiaryMobile"
-													name="beneficiaryMobile" placeholder="Mobile">
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
+									<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Nationality</label> <select
 													name="beneficiaryNationality" id="beneficiaryNationality"
@@ -1131,6 +1178,26 @@ document.addEventListener('DOMContentLoaded', function() {
 														<option value="${country.valueId}">${country.description}</option>
 													</c:forEach>
 												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Beneficiary State</label>
+												<select
+													name="beneficiaryState" id="beneficiaryState"
+													class="form-control" data-select2-selector="icon">
+													<option value="" disabled selected>Select Beneficiary State</option>
+													<c:forEach var="states" items="${stateList}">
+														<option value="${states.valueId}">${states.description}</option>
+													</c:forEach>
+												</select>
+											</div>
+										</div>
+										<div class="col-12 col-md-4">
+											<div class="mb-1">
+												<label class="form-label">Mobile</label> <input type="text"
+													class="form-control" id="beneficiaryMobile"
+													name="beneficiaryMobile" placeholder="Mobile">
 											</div>
 										</div>
 									</div>
@@ -1178,11 +1245,11 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="row">
 											<div class="col-xl-4">
 
-												<label class="form-label">PayIn Currency<span
+												<label class="form-label">Pay In Currency<span
 													class="text-danger">*</span></label> <select name="payInCurrency"
 													id="payInCurrency" class="form-control"
 													data-select2-selector="icon">
-													<option value="" disabled selected>Currency</option>
+													<option value="" disabled selected>Select Pay In Currency</option>
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
@@ -1371,9 +1438,10 @@ document.addEventListener('DOMContentLoaded', function() {
 								style="color: green; font-weight: bold;"></div>
 						</div>
 					</div>
+				</div>
 			</form>
 		</div>
-		<footer class="footer" style="background: aliceblue;"> </footer>
+		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 	<script src="assets/vendors/js/vendors.min.js"></script>
 	<script src="assets/vendors/js/select2.min.js"></script>

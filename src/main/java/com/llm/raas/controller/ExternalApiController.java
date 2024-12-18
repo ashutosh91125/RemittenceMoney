@@ -114,10 +114,12 @@ public class ExternalApiController {
 			Map<String, Object> data = (Map<String, Object>) response.get("data");
 			String transactionRefNumber = (String) data.get("transaction_ref_number");
 			String state = (String) data.get("state");
+			String subState = (String) data.get("sub_state");
 
 			return ResponseEntity.ok(Map.of(
 					"transaction_ref_number", transactionRefNumber,
 					"state", state,
+					"sub_state", subState,
 					"status", 200
 			));
 		} else {
@@ -131,8 +133,25 @@ public class ExternalApiController {
 	}
 
 	@GetMapping("/enquire-transaction")
-	public Map<String, Object> enquireTransaction(@RequestParam("transaction_ref_number") String transactionRefNumber) {
-		return externalApiService.enquireTransaction(transactionRefNumber);
+	public ResponseEntity<?> enquireTransaction(@RequestParam("transaction_ref_number") String transactionRefNumber) {
+
+		Map<String, Object> response = externalApiService.enquireTransaction(transactionRefNumber);
+
+		if (response.containsKey("data")) {
+			Map<String, Object> data = (Map<String, Object>) response.get("data");
+//			String transactionRefNumber = (String) data.get("transaction_ref_number");
+			String state = (String) data.get("state");
+			String subState = (String) data.get("sub_state");
+
+			return ResponseEntity.ok(Map.of(
+					"transaction_ref_number", transactionRefNumber,
+					"state", state,
+					"sub_state", subState,
+					"status", 200
+			));
+		} else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Enquiry Failed!"));
+		}
 	}
 
 	@GetMapping("/transaction-receipt")

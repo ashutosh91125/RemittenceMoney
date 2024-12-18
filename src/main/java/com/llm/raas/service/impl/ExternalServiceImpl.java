@@ -76,15 +76,15 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> confirmTransaction(Map<String, Object> requestBody) {
-        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/confirmtransaction";
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/confirmtransaction";
 
         // Create headers
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-        headers.set("sender", "testagentae");
+        headers.set("sender", "VITCOMEX");
         headers.set("channel", "Direct");
-        headers.set("company", "784825");
-        headers.set("branch", "784826");
+        headers.set("company", "458100");
+        headers.set("branch", "458302");
         headers.set("Authorization", "Bearer "+ tokenService.getAccessToken());
 
         // Wrap headers and body
@@ -100,14 +100,14 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> enquireTransaction(String transactionRefNumber) {
-        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/enquire-transaction";
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/enquire-transaction";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-        headers.set("sender", "testagentae");
+        headers.set("sender", "VITCOMEX");
         headers.set("channel", "Direct");
-        headers.set("company", "784825");
-        headers.set("branch", "784826");
+        headers.set("company", "458100");
+        headers.set("branch", "458302");
         headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
@@ -137,14 +137,14 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> getTransactionReceipt(String transactionRefNumber) {
-        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/transaction-receipt";
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/transaction-receipt";
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-        headers.set("sender", "testagentae");
+        headers.set("sender", "VITCOMEX");
         headers.set("channel", "Direct");
-        headers.set("company", "784825");
-        headers.set("branch", "784826");
+        headers.set("company", "458100");
+        headers.set("branch", "458302");
         headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
@@ -174,15 +174,15 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> cancelTransaction(Map<String, Object> requestBody) {
-        String url = "https://drap-sandbox.digitnine.com/api/v1_0/ras/canceltransaction";
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/canceltransaction";
 
         // Create headers
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-        headers.set("sender", "testagentae");
+        headers.set("sender", "VITCOMEX");
         headers.set("channel", "Direct");
-        headers.set("company", "784825");
-        headers.set("branch", "784826");
+        headers.set("company", "458100");
+        headers.set("branch", "458302");
         headers.set("Authorization", "Bearer "+ tokenService.getAccessToken());
 
         // Create HttpEntity with headers and body

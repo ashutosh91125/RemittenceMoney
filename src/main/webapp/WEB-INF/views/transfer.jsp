@@ -503,6 +503,7 @@ $(document).ready(function() {
                                 success: function(response) {
                                     if (response.status === 200) {
                                         var state = response.state;
+                                        var subState = response.sub_state;
                                         var transactionRefNumber = response.transaction_ref_number;
 
                                         const transactionData = {
@@ -570,7 +571,8 @@ $(document).ready(function() {
                                                               totalPayInAmount: $('#totalPayInAmount').val(),
                                                               paymentMode: $('#paymentMode').val(),
                                                               transactionReferenceNumber: transactionRefNumber,
-                                                              transactionState: state
+                                                              transactionState: state,
+                                                              transactionSubState: subState
                                         };
 
                                         // Save transaction data to the database
@@ -581,7 +583,7 @@ $(document).ready(function() {
 
                                         $('#transactionState').val(state);
                                         alert("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
-                                        $('#transactionMessage').text("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
+                                        //$('#transactionMessage').text("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
                                     }
                                 },
                                 error: function() {

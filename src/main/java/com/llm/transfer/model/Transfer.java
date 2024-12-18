@@ -20,6 +20,7 @@ public class Transfer {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long transferId;
 
+	private String username;
 
 	@Column(name = "ecrn")
 	private String ecrn;
@@ -37,7 +38,7 @@ public class Transfer {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String dateOfBirth;
 
-	@Column(name = "primary_mobile_number", length = 20, nullable = false)
+	@Column(name = "primary_mobile_number", length = 20)
 	private String primaryMobileNumber;
 
 	@Column(name = "email_id", length = 255, nullable = false)

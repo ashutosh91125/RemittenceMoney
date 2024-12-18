@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.llm.transfer.Service.TransferService;
@@ -20,13 +22,18 @@ public class TransferServiceImpl implements TransferService {
 
 	@Override
 	public Transfer createTransfer(Transfer transfer) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		transfer.setUsername(username);
 		transfer.setTransactionDate(LocalDate.now());
 		return transferRepository.save(transfer);
 	}
 
 	@Override
 	public List<Transfer> getAllTransfers() {
-		return transferRepository.findAll();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		return transferRepository.findByUsername(username);
 	}
 
 }

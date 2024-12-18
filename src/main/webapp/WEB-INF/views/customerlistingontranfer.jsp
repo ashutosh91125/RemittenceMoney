@@ -32,7 +32,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="nxl-content" style="margin-top: -89px;">
+		<div class="nxl-content p-3" >
 			<div class="main-content">
 				<div class="row">
 					<div class="col-lg-12">

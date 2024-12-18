@@ -2,6 +2,7 @@ package com.llm.transfer.Service.impl;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -35,5 +36,14 @@ public class TransferServiceImpl implements TransferService {
 		String username = authentication.getName();
 		return transferRepository.findByUsername(username);
 	}
+	@Override
+	public Transfer getTransactionByTransactionReferenceNumber(String transactionReferenceNumber) {
+		Optional<Transfer> transfer = transferRepository.findTransactionByTransactionReferenceNumber(transactionReferenceNumber);
+		if(transfer.isEmpty()) {
+			 throw new IllegalArgumentException("Transaction Reference Number Not Found");
+		}
+		return transfer.get();
+	}
+
 
 }

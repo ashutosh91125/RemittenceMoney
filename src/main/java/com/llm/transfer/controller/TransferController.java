@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 
 import com.llm.Service.CustomerService;
 import com.llm.common.model.EnumEntity;
@@ -29,6 +30,8 @@ public class TransferController {
 	private EnumEntityService enumEntityService;
 	@Autowired
 	private TransferService transferService;
+	@Autowired
+	private RestTemplate restTemplate;
 
 	@GetMapping("/transfer")
 	public String showTransfer(Model model) {
@@ -109,8 +112,10 @@ public class TransferController {
 	}
 
 	@GetMapping("/transfer-details")
-	public String detailsOfTransfer(@RequestParam("transactionReferenceNumber") String transactionReferenceNumber) {
-		return "transferdetails";
+	public String detailsOfTransfer(@RequestParam("transactionReferenceNumber") String transactionReferenceNumber,Model model) {
+	Transfer transferDetails = transferService.getTransactionByTransactionReferenceNumber(transactionReferenceNumber);
+	model.addAttribute("transferDetails", transferDetails);
+	return "transferdetails";
 
 	}
 

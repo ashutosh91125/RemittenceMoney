@@ -8,6 +8,8 @@ public interface TransferService {
 	Transfer createTransfer(Transfer transfer);
 
 	List<Transfer> getAllTransfers();
+	
+	Transfer getTransactionByTransactionReferenceNumber(String transactionReferenceNumber);
 
 
 }

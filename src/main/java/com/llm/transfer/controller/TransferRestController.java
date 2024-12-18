@@ -44,9 +44,8 @@ public class TransferRestController {
 		}
 	}
 
-
 	@GetMapping
-	public ResponseEntity<List<Transfer>> getAllTransfers(){
+	public ResponseEntity<List<Transfer>> getAllTransfers() {
 		return ResponseEntity.ok(transferService.getAllTransfers());
 	}
 
@@ -73,6 +72,17 @@ public class TransferRestController {
 
 		// Default fallback to the full message or a portion
 		return exceptionMessage.split(":")[0]; // Get only the first part if no markers are found
+	}
+
+	@GetMapping("/transfer-details")
+	public ResponseEntity<?> getTransferDetails(@RequestParam("transactionReferenceNumber") String transactionReferenceNumber) {
+	    try {
+	        Transfer transferDetails = transferService.getTransactionByTransactionReferenceNumber(transactionReferenceNumber);
+	        return ResponseEntity.ok(transferDetails); // Return 200 OK with the transfer details
+	    } catch (IllegalArgumentException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                             .body("No transfer details found for the given reference number: " + transactionReferenceNumber); // Return 404 Not Found with an error message
+	    }
 	}
 
 

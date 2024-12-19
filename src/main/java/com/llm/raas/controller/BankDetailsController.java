@@ -56,6 +56,16 @@ public class BankDetailsController {
         }
     }
 
+    @GetMapping("/routing-code/{routingCode}")
+    public ResponseEntity<Branch> getBranchByRoutingCode(@PathVariable String routingCode) {
+        try {
+            Branch branch = bankService.getBranchByRoutingCode(routingCode);
+            return new ResponseEntity<>(branch, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/country-code/{countryCode}")
     public ResponseEntity getBankByCountryCode(@PathVariable String countryCode){
         return ResponseEntity.ok(bankService.getBankByCountryCode(countryCode));

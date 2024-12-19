@@ -60,6 +60,10 @@ public class BankDetailsServiceImpl implements BankDetailsService {
         return branches;
     }
 
+    public Branch getBranchByRoutingCode(String routingCode){
+        return branchRepository.findByRoutingCode(routingCode);
+    }
+
     @Override
     public List<Bank> getBankByCountryCode(String countryCode){
         return bankRepository.findByCountryCode(countryCode);

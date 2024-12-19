@@ -15,6 +15,8 @@ public interface BankDetailsService {
 
     Branch getBranchById(String branchId);
 
+    Branch getBranchByRoutingCode(String routingCode);
+
     List<Branch> getBranchesByBankId(String bankId);
 
     List<Bank> getBankByCountryCode(String countryCode);

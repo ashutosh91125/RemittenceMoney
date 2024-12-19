@@ -1,4 +1,4 @@
-package com.llm.controller;
+package com.llm.agent.controller;
 
 import java.util.List;
 import java.util.Optional;
@@ -64,47 +64,6 @@ public class AgentController {
 			model.addAttribute("workingList", List.of());
 		}
 		return "agentregister";
-	}
-
-	@PostMapping("/agent")
-	public String processCompanyDetails(@RequestParam("step") int step, @ModelAttribute("agent") Agent agent,
-			Model model) {
-		try {
-			if (step == 1) {
-				model.addAttribute("step", 2);
-				model.addAttribute("agent", agent);
-				return "contactdetails";
-			} else if (step == 2) {
-				model.addAttribute("step", 3);
-				model.addAttribute("agent", agent);
-				return "regularitydetails";
-			} else if (step == 3) {
-				model.addAttribute("step", 4);
-				model.addAttribute("agent", agent);
-				return "creditlimit";
-			} else if (step == 4) {
-				model.addAttribute("step", 5);
-				model.addAttribute("agent", agent);
-				return "customertansaction";
-			} else if (step == 5) {
-				model.addAttribute("step", 6);
-				model.addAttribute("agent", agent);
-				return "apidetails";
-			} else if (step == 6) {
-				model.addAttribute("step", 7);
-				model.addAttribute("agent", agent);
-				return "auditdetails";
-			} else if (step == 7) {
-				agentService.addAgent(agent);
-				return "success";
-			}
-		} catch (
-
-		Exception e) {
-			logger.error("Error processing company details: ", e);
-			return "error";
-		}
-		return "companydetails";
 	}
 
 	@GetMapping("/agentlist")

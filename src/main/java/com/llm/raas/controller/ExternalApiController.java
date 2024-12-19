@@ -3,7 +3,10 @@ package com.llm.raas.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import com.llm.transfer.model.Transfer;
+import com.llm.transfer.repository.TransferRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,9 @@ public class ExternalApiController {
 
 	@Autowired
 	private ExternalService externalApiService;
+
+	@Autowired
+	private TransferRepository transferRepository;
 
 	@PostMapping("/quote")
 	public ResponseEntity<?> getQuote(@RequestBody Map<String, Object> requestBody) {
@@ -139,9 +145,17 @@ public class ExternalApiController {
 
 		if (response.containsKey("data")) {
 			Map<String, Object> data = (Map<String, Object>) response.get("data");
-//			String transactionRefNumber = (String) data.get("transaction_ref_number");
+//			String transRefNumber = (String) data.get("transaction_ref_number");
 			String state = (String) data.get("state");
 			String subState = (String) data.get("sub_state");
+
+			Optional<Transfer> transfer = transferRepository.findTransactionByTransactionReferenceNumber(transactionRefNumber);
+			if (transfer.isPresent()){
+				transfer.get().setTransactionState(state);
+				transfer.get().setTransactionSubState(subState);
+
+				transferRepository.save(transfer.get());
+			}
 
 			return ResponseEntity.ok(Map.of(
 					"transaction_ref_number", transactionRefNumber,

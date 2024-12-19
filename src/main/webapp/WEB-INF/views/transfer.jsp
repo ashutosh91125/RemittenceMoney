@@ -597,7 +597,7 @@ $(document).ready(function() {
                                         alert("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
                                      // Change the current page to "https://example.com"
                                         window.location.href = "transfer-list";
-
+ 
                                         //$('#transactionMessage').text("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
                                     }
                                 },

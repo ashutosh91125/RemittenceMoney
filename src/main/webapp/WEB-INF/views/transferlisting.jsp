@@ -27,8 +27,8 @@
             <div class="page-header-right ms-auto">
                 <div class="page-header-right-items">
                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                        <a href="customer" class="btn btn-primary">
-                            <i class="feather-user-plus me-2"></i> <span>Add Customer</span>
+                        <a href="transfer" class="btn btn-primary">
+                            <i class="feather-user-plus me-2"></i> <span>Transfer</span>
                         </a>
                     </div>
                 </div>
@@ -63,8 +63,8 @@
                                                     <td>${status.index + 1}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
                                                     <td>${transfer.transactionDate}</td>
-                                                    <td>${transfer.payInCurrency}   ${transfer.totalPayInAmount}</td>
-                                                    <td>${transfer.payInCurrency}   ${transfer.currencies}</td>
+                                                    <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
+                                                    <td>${transfer.currencies} ${transfer.payoutAmount}</td>
                                                     <td>${transfer.transactionState}</td>
                                                     <td class="text-end">
                                                         <img class="transactionLogo" title="Check Status"

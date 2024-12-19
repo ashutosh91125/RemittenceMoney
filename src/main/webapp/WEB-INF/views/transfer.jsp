@@ -402,7 +402,7 @@ $(document).ready(function() {
                     sending_currency_code: $('#payInCurrency').val(),
                     receiving_country_code: $('#payOutCountry').val(),
                     receiving_currency_code: $('#currencies').val(),
-                    sending_amount: $('#amount').val(),
+                    sending_amount: $('#payInAmount').val(),
                     receiving_mode: $('#beneficiaryDeliveryOption').val(),
                     type: "SEND",
                     instrument: "REMITTANCE"
@@ -624,7 +624,7 @@ $(document).ready(function() {
                 const confirmAccountNumber = document.getElementById("confirmAccountNo");
                 const messageElement = document.getElementById("validationMessage");
                 const errorMessage = document.getElementById("error-message");
-                const amountField = document.getElementById("amount");
+                const amountField = document.getElementById("payInAmount");
                 const residentTypeField = document.getElementById('residentTypeId');
 
                 // Function to validate real-time account numbers

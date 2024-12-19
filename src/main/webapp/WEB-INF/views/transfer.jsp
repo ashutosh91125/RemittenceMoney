@@ -429,7 +429,7 @@ $(document).ready(function() {
                             $('#payoutAmount').val(response.receiving_amount);
                             $('#tax').val(response.tax_amount);
                             let remainingTime = 60; 
-                            $('#quoteMessage').html(`Quote Created Successfully , Expires in <span id="countdown" style="color: red; font-weight: bold;">${remainingTime}</span> seconds:`);
+                            $('#quoteMessage').html(`Quote Created Successfully , Expires in <span id="countdown" style="color: red; font-weight: bold;">${remainingTime}</span> seconds!`);
                             $('#quoteButton').hide();
                             $('#createTransactionSection').show();
                             const interval = setInterval(() => {

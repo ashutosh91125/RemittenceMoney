@@ -3,6 +3,8 @@ package com.llm.raas.service.impl;
 
 import com.llm.common.service.TokenService;
 import com.llm.raas.service.ExternalService;
+import com.llm.transfer.model.Transfer;
+import com.llm.transfer.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +12,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +30,9 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    TransferRepository transferRepository;
 
     @Override
     public Map<String, Object> callExternalApi(Map<String, Object> requestBody) {
@@ -291,6 +299,35 @@ public class ExternalServiceImpl implements ExternalService {
 
         // Return the response body
         return response.getBody();
+    }
+
+    @Scheduled(cron = "0 0/30 * * * *") // Runs every 30 minutes
+    public void scheduledStateUpdate() {
+
+        List<Transfer> transfers = transferRepository.findAll();
+
+        for (Transfer transfer : transfers) {
+
+            Map<String, Object> response = enquireTransaction(transfer.getTransactionReferenceNumber());
+
+            if (response.containsKey("data")) {
+                Map<String, Object> data = (Map<String, Object>) response.get("data");
+                String state = (String) data.get("state");
+                String subState = (String) data.get("sub_state");
+
+                // Find and update the transfer in the repository
+                Optional<Transfer> fetchedTransfer = transferRepository
+                        .findTransactionByTransactionReferenceNumber(transfer.getTransactionReferenceNumber());
+
+                if (fetchedTransfer.isPresent()) {
+                    fetchedTransfer.get().setTransactionState(state);
+                    fetchedTransfer.get().setTransactionSubState(subState);
+
+                    transferRepository.save(fetchedTransfer.get());
+                }
+
+            }
+        }
     }
 
 }

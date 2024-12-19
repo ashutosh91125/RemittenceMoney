@@ -78,8 +78,8 @@
 														</c:choose></td>
 													<td class="text-end"><a href="#"
 														class="btn btn-light-brand">View</a> <a href="#"
-														class="btn btn-light-brand">Edit</a> <a href="#"
-														class="btn btn-light-brand">Delete</a></td>
+														<%--    class="btn btn-light-brand">Edit</a> <a href="#"
+														class="btn btn-light-brand">Delete</a></td> --%>
 												</tr>
 											</c:forEach>
 										</tbody>

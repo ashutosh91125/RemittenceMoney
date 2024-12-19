@@ -505,6 +505,7 @@ $(document).ready(function() {
                             // Show loader and disable button
                             $('#loader').show();
                             $('#transactionButton').prop('disabled', true);
+                            $('#quoteMessage').html(`Quote Created Successfully!`);
 
                             $.ajax({
                                 url: '/api/v1/raas/create-transaction',

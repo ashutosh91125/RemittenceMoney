@@ -442,7 +442,7 @@ document.addEventListener("DOMContentLoaded", function() {
 														id="idNumber" value="${transferDetails.idNumber}" readonly />
 												</div>
 												<div class="col-12 col-md-4">
-													<label class="form-label">ID Issued By</label> <input
+													<label class="form-label">Issued By</label> <input
 														name="issuedBy" type="text" class="form-control"
 														placeholder="Issued By" id="issuedBy"
 														value="${transferDetails.issuedBy}" readonly />
@@ -450,13 +450,13 @@ document.addEventListener("DOMContentLoaded", function() {
 											</div>
 											<div class="row mt-2">
 												<div class="col-12 col-md-4">
-													<label class="form-label">ID Date of Issue</label> <input
+													<label class="form-label">Date of Issue</label> <input
 														name="issuedOn" type="text" class="form-control"
 														placeholder="issuedOn" id="issuedOn"
 														value="${transferDetails.issuedOn}" readonly />
 												</div>
 												<div class="col-12 col-md-4">
-													<label class="form-label">ID Date of Expiry</label> <input
+													<label class="form-label">Date of Expiry</label> <input
 														name="dateOfExpiry" type="text" class="form-control"
 														placeHolder="Date of Expiry" id="dateOfExpiry"
 														value="${transferDetails.dateOfExpiry}" readonly />

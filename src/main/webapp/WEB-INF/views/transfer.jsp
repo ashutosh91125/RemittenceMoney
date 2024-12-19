@@ -428,11 +428,22 @@ $(document).ready(function() {
                             $('#commission').val(response.commission_amount);
                             $('#payoutAmount').val(response.receiving_amount);
                             $('#tax').val(response.tax_amount);
-
-                            $('#quoteMessage').text("Quote Created Successfully: " + quoteId);
+                            let remainingTime = 60; 
+                            $('#quoteMessage').html(`Quote Created Successfully , Expires in <span id="countdown" style="color: red; font-weight: bold;">${remainingTime}</span> seconds:`);
                             $('#quoteButton').hide();
-                            //alert("Quote Created Successfully :" + quoteId);
-                            $('#createTransactionSection').show(); // Show the transaction section 
+                            $('#createTransactionSection').show();
+                            const interval = setInterval(() => {
+                            	remainingTime--;
+                                $('#countdown').text(remainingTime);
+                                if (remainingTime < 0) {
+                                    clearInterval(interval);
+                                    clearInterval(interval);
+                                    $('#quoteMessage').text(""); // Clear message
+                                    $('#quoteButton').show(); // Show quote button
+                                    $('#createTransactionSection').hide();
+                                }
+                            }, 1000);
+                            console.log(remainingTime);
                         }
                         else {
                             $('#quoteMessage').text('Failed to generate quote. Please try again.').css('color', 'red');
@@ -584,6 +595,9 @@ $(document).ready(function() {
 
                                         $('#transactionState').val(state);
                                         alert("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
+                                     // Change the current page to "https://example.com"
+                                        window.location.href = "transfer-list";
+
                                         //$('#transactionMessage').text("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
                                     }
                                 },
@@ -1428,14 +1442,14 @@ $(document)
 						<div id="createQuote">
 							<button type="button" id="quoteButton" onclick="getQuote()"
 								class="btn btn-warning">Submit</button>
-							<div id="quoteMessage" style="font-weight: bold; color: green;"></div>
+							<div id="quoteMessage" style="font-weight: bold; color: #10181166;"></div>
 							<input type="hidden" id="quoteId" />
 						</div>
 						<div class="mt-5 mb-5 text-center"
 							style="justify-content: center;">
 							<button type="button" onclick="createTransaction()"
 								class="btn btn-primary" id="createTransactionSection"
-								style="display: none; align-text: center; margin-left: -225px;">Create
+								style="display: none; align-text: center; margin-left: -255px;">Create
 								Transaction</button>
 							<div id="transactionMessage"
 								style="color: green; font-weight: bold;"></div>

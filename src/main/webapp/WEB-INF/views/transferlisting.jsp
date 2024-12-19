@@ -63,8 +63,8 @@
                                                     <td>${status.index + 1}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
                                                     <td>${transfer.transactionDate}</td>
-                                                    <td>${transfer.totalPayInAmount}</td>
-                                                    <td>${transfer.payoutAmount}</td>
+                                                    <td>${transfer.payInCurrency}   ${transfer.totalPayInAmount}</td>
+                                                    <td>${transfer.payInCurrency}   ${transfer.currencies}</td>
                                                     <td>${transfer.transactionState}</td>
                                                     <td class="text-end">
                                                         <img class="transactionLogo" title="Check Status"

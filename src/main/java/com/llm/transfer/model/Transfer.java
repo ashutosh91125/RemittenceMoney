@@ -74,6 +74,7 @@ public class Transfer {
 	private Integer idType;
 	private String idNumber;
 	private String issuedBy;
+//	private String issuedAt;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private String issuedOn;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -119,7 +120,7 @@ public class Transfer {
 	private String remarks;
 	private Double payoutAmount;
 	private Double rate;
-//	private Double payInAmount;
+	private Double payInAmount;
 	private Double commission;
 	private Double tax;
 //	private Double otherCharges;

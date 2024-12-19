@@ -17,6 +17,7 @@ import com.llm.Service.CustomerService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
+import com.llm.raas.service.BankDetailsService;
 import com.llm.transfer.Service.TransferService;
 import com.llm.transfer.model.Transfer;
 
@@ -31,7 +32,8 @@ public class TransferController {
 	@Autowired
 	private TransferService transferService;
 	@Autowired
-	private RestTemplate restTemplate;
+	private BankDetailsService bankService;
+
 
 	@GetMapping("/transfer")
 	public String showTransfer(Model model) {
@@ -114,9 +116,22 @@ public class TransferController {
 	@GetMapping("/transfer-details")
 	public String detailsOfTransfer(@RequestParam("transactionReferenceNumber") String transactionReferenceNumber,Model model) {
 	Transfer transferDetails = transferService.getTransactionByTransactionReferenceNumber(transactionReferenceNumber);
+	
+	Optional<Customer> customer = customerService.getByEcrn(transferDetails.getEcrn());
+	model.addAttribute("country", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getCountry()));
+	model.addAttribute("countryOfResidence", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getCountryOfResidence()));
+	model.addAttribute("countryOfNatinality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getNationality()));
+	model.addAttribute("issuedCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getIssuedCountry()));
+	model.addAttribute("idType",enumEntityService.getEnumValueDescriptionByKeyAndValueId("idTypes", String.valueOf(customer.get().getIdType())));
+	model.addAttribute("payOutCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",transferDetails.getPayOutCountry()));
+	model.addAttribute("currency", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",transferDetails.getCurrencies()));
+	model.addAttribute("bank",bankService.getBankById(transferDetails.getBeneficiaryBank()));
+	model.addAttribute("baranch",bankService.getBranchByRoutingCode(transferDetails.getBeneficiaryBranch()));	
+	model.addAttribute("benificeryNatinality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",transferDetails.getBeneficiaryNationality()));
+	model.addAttribute("payInCurrency", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",transferDetails.getPayInCurrency()));
+	model.addAttribute("residentType", customer.get().getResidentTypeId());	
 	model.addAttribute("transferDetails", transferDetails);
 	return "transferdetails";
-
 	}
 
 }

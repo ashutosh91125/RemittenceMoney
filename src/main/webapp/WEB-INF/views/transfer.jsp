@@ -568,6 +568,7 @@ $(document).ready(function() {
                                                               rate: $('#rate').val(),
                                                               commission: $('#commission').val(),
                                                               tax: $('#tax').val(),
+                                                              payInAmount: $('#payInAmount').val(),
                                                               totalPayInAmount: $('#totalPayInAmount').val(),
                                                               paymentMode: $('#paymentMode').val(),
                                                               transactionReferenceNumber: transactionRefNumber,
@@ -1311,7 +1312,7 @@ $(document)
 										<div class="row">
 											<div class="col-xl-4">
                                                 <label class="form-label">PayIn Amount<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" placeholder="PayIn Amount" id="amount" name="amount" min="5" max="50000" required >
+                                                <input type="number" class="form-control" placeholder="PayIn Amount" id="payInAmount" name="payInAmount" min="5" max="50000" required >
                                                 <div id="error-message" style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount must be between 5 and 50,000!</div>
                                             </div>
 

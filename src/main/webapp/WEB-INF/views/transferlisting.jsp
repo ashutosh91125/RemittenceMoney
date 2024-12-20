@@ -68,11 +68,11 @@
                                                     <td>${transfer.transactionState}</td>
                                                     <td class="text-end">
                                                         <img class="transactionLogo" title="Check Status"
-                                                             src="assets/images/status.png"
+                                                             src="assets/images/transferList/refreshState.svg"
                                                              class="img-fluid" style="width: 24px; cursor: pointer;"
                                                              alt="Check State" />
                                                         <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" class="ms-2">
-                                                            <img src="assets/images/receipt.png" class="img-fluid" style="width: 24px;" title="View Transaction" />
+                                                            <img src="assets/images/transferList/viewTransfer.svg" class="img-fluid" style="width: 24px;" title="View Transaction" />
                                                         </a>
                                                     </td>
                                                 </tr>

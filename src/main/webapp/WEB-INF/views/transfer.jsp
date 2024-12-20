@@ -1105,24 +1105,18 @@ $(document)
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">IBAN</label> <input type="text"
-													class="form-control" id="beneficiaryIban"
-													name="beneficiaryIban" placeholder="IBAN">
-											</div>
-										</div>
+                                        											<div class="mb-1">
+                                        												<label class="form-label">Account Type</label> <select
+                                        													class="form-control" id="beneficiaryAccountType"
+                                        													name="beneficiaryAccountType" data-select2-selector="icon">
+                                        													<option value="1">Savings</option>
+                                        													<option value="2">Current</option>
+                                        												</select>
+                                        											</div>
+                                        										</div>
+
 									</div>
 									<div class="row">
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Account Type</label> <select
-													class="form-control" id="beneficiaryAccountType"
-													name="beneficiaryAccountType" data-select2-selector="icon">
-													<option value="1">Savings</option>
-													<option value="2">Current</option>
-												</select>
-											</div>
-										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Account No.</label> <input
@@ -1139,6 +1133,11 @@ $(document)
 											</div>
 											<span id="validationMessage"></span>
 										</div>
+										<div class="col-12 col-md-4">
+                                            <div class="mb-1"><label class="form-label">IBAN</label> <input type="text"
+                                            class="form-control" id="beneficiaryIban" name="beneficiaryIban" placeholder="IBAN">
+                                            </div>
+                                        </div>
 									</div>
 									<div class="row">
 										<div class="col-12 col-md-4">
@@ -1330,11 +1329,18 @@ $(document)
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-xl-4">
+											<%-- <div class="col-xl-4">
 												<label class="form-label">Value Date<span
 													class="text-danger">*</span></label> <input type="date"
 													class="form-control" id="valueDate" name="valueDate">
-											</div>
+											</div> --%>
+
+											<div class="col-xl-4">
+                                                <label class="form-label">PayIn Amount<span class="text-danger">*</span></label>
+                                                <input type="number" class="form-control" placeholder="PayIn Amount" id="payInAmount" name="payInAmount" min="5" max="50000" required >
+                                                <div id="error-message" style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount must be between 5 and 50,000!</div>
+                                            </div>
+
 											<div class="col-xl-4">
 												<label class="form-label">Payment Mode<span
 													class="text-danger">*</span></label> <select class="form-control"
@@ -1353,11 +1359,7 @@ $(document)
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-xl-4">
-                                                <label class="form-label">PayIn Amount<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" placeholder="PayIn Amount" id="payInAmount" name="payInAmount" min="5" max="50000" required >
-                                                <div id="error-message" style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount must be between 5 and 50,000!</div>
-                                            </div>
+
 
 											<div class="col-xl-4">
 												<label class="form-label">Rate<span
@@ -1371,17 +1373,27 @@ $(document)
 													class="form-control" placeholder="Payout Amount" style=" color: green;"
 													id="payoutAmount" name="payoutAmount" readonly>
 											</div>
+
+											<div class="col-xl-2">
+                                            	<label class="form-label">Commission</label> <input
+                                            	type="text" class="form-control" placeholder="Commission" style=" color: green;"
+                                            	id="commission" name="commission" readonly>
+                                            </div>
+
+                                            <div class="col-xl-2">
+                                            	<label class="form-label">Tax</label> <input
+                                            	type="text" class="form-control" placeholder="Tax" style=" color: green;"
+                                            	id="tax" name="tax" readonly>
+                                            </div>
+
+
 										</div>
 
 										<div class="row">
-											<div class="col-xl-2">
-												<label class="form-label">Commission</label> <input
-													type="text" class="form-control" placeholder="Commission" style=" color: green;"
-													id="commission" name="commission" readonly>
-											</div>
+
 											<!-- <div class="col-xl-2">
 												<div>
-													<label class="form-label">Tax (%)</label> <input
+													<label class="form-label">Tax</label> <input
 														type="text" class="form-control" placeholder="Tax"
 														id="tax" name="tax" readonly>
 												</div>
@@ -1394,11 +1406,7 @@ $(document)
 														name="otherCharges" readonly>
 												</div>
 											</div> -->
-											<div class="col-xl-2">
-												<label class="form-label">Tax (%)</label> <input
-														type="text" class="form-control" placeholder="Tax" style=" color: green;"
-														id="tax" name="tax" readonly>
-											</div>
+
 
 											<div class="col-xl-4">
 												<label class="form-label">Total Pay In Amount</label> <input

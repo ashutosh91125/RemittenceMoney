@@ -1,6 +1,7 @@
 package com.llm.beneficiary.controller;
 
-import com.llm.beneficiary.model.BeneficiaryDetails;
+import com.llm.beneficiary.model.dto.BeneficiaryListDTO;
+import com.llm.beneficiary.model.entity.BeneficiaryDetails;
 import com.llm.beneficiary.service.BeneficiaryService;
 import com.llm.beneficiary.util.ApiResponse;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,19 @@ public class BeneficiaryController {
     public ResponseEntity<ApiResponse> getBeneficiariesByEcrn(@PathVariable String ecrn) {
         try {
             List<BeneficiaryDetails> beneficiaries = beneficiaryService.getBeneficiariesByEcrn(ecrn);
+            if (beneficiaries.isEmpty()) {
+                return ResponseEntity.ok(new ApiResponse(true, "No beneficiaries found with the provided ECRN"));
+            }
+            return ResponseEntity.ok(new ApiResponse(true, "Beneficiaries fetched successfully", beneficiaries));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ApiResponse(false, "Error fetching beneficiaries: " + e.getMessage()));
+        }
+    }
+
+    @GetMapping("/get-list-by-ecrn/{ecrn}")
+    public ResponseEntity<ApiResponse> getBeneficiaryListByEcrn(@PathVariable String ecrn) {
+        try {
+            List<BeneficiaryListDTO> beneficiaries = beneficiaryService.getBeneficiaryListByEcrn(ecrn);
             if (beneficiaries.isEmpty()) {
                 return ResponseEntity.ok(new ApiResponse(true, "No beneficiaries found with the provided ECRN"));
             }

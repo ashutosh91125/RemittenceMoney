@@ -1,6 +1,6 @@
 package com.llm.beneficiary.repository;
 
-import com.llm.beneficiary.model.BeneficiaryDetails;
+import com.llm.beneficiary.model.entity.BeneficiaryDetails;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

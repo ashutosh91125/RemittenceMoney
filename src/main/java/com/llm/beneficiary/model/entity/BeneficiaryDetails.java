@@ -1,4 +1,4 @@
-package com.llm.beneficiary.model;
+package com.llm.beneficiary.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

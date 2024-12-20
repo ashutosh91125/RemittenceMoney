@@ -1,21 +1,24 @@
 package com.llm.beneficiary.service;
 
-import com.llm.beneficiary.model.BeneficiaryDetails;
+import com.llm.beneficiary.model.dto.BeneficiaryListDTO;
+import com.llm.beneficiary.model.entity.BeneficiaryDetails;
 
 import java.util.List;
 
 
 public interface BeneficiaryService {
 
-    public BeneficiaryDetails saveBeneficiary(BeneficiaryDetails beneficiaryDetails);
+    BeneficiaryDetails saveBeneficiary(BeneficiaryDetails beneficiaryDetails);
 
-    public BeneficiaryDetails getBeneficiaryById(Long id);
+    BeneficiaryDetails getBeneficiaryById(Long id);
 
-    public List<BeneficiaryDetails> getBeneficiariesByEcrn(String ecrn);
+    List<BeneficiaryDetails> getBeneficiariesByEcrn(String ecrn);
 
-    public List<BeneficiaryDetails> getAllBeneficiaries();
+    List<BeneficiaryListDTO> getBeneficiaryListByEcrn(String ecrn);
 
-    public BeneficiaryDetails updateBeneficiary(Long id, BeneficiaryDetails beneficiaryDetails);
+    List<BeneficiaryDetails> getAllBeneficiaries();
 
-    public void deleteBeneficiary(Long id);
+    BeneficiaryDetails updateBeneficiary(Long id, BeneficiaryDetails beneficiaryDetails);
+
+    void deleteBeneficiary(Long id);
 }

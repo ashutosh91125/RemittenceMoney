@@ -1,6 +1,7 @@
 package com.llm.beneficiary.service.impl;
 
-import com.llm.beneficiary.model.BeneficiaryDetails;
+import com.llm.beneficiary.model.dto.BeneficiaryListDTO;
+import com.llm.beneficiary.model.entity.BeneficiaryDetails;
 import com.llm.beneficiary.repository.BeneficiaryDetailsRepository;
 import com.llm.beneficiary.service.BeneficiaryService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +42,28 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
     public void deleteBeneficiary(Long id) {
         BeneficiaryDetails existingBeneficiary = getBeneficiaryById(id);
         beneficiaryRepository.delete(existingBeneficiary);
+    }
+
+    public List<BeneficiaryListDTO> getBeneficiaryListByEcrn(String ecrn) {
+        List<BeneficiaryDetails> beneficiaries = beneficiaryRepository.findByEcrn(ecrn);
+
+        return beneficiaries.stream()
+                .map(this::convertToBeneficiaryResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public BeneficiaryListDTO convertToBeneficiaryResponseDTO(BeneficiaryDetails beneficiary) {
+        String fullName = beneficiary.getBeneficiaryFirstName();
+        if (beneficiary.getBeneficiaryMiddleName() != null && !beneficiary.getBeneficiaryMiddleName().isEmpty()) {
+            fullName += " " + beneficiary.getBeneficiaryMiddleName();
+        }
+        fullName += " " + beneficiary.getBeneficiaryLastName();
+
+        return new BeneficiaryListDTO(
+                beneficiary.getId(),
+                beneficiary.getEcrn(),
+                fullName
+        );
     }
 
 }

@@ -4,9 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.beneficiary.model.BeneficiaryDetails;
+import com.llm.beneficiary.model.entity.BeneficiaryDetails;
 import com.llm.beneficiary.repository.BeneficiaryDetailsRepository;
-import com.llm.beneficiary.service.BeneficiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

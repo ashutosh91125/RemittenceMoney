@@ -165,10 +165,99 @@
 </style>
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
+$(document).ready(function () {
+    
+    $("#agentForm").on("submit", function (e) {
+        e.preventDefault();  // Prevent the default form submission
+
+      
+        $('#loader').show();
+
+       
+        $("#agentForm button[type='submit']").prop('disabled', true);
+
+      
+        var formData = {};
+        $(this).serializeArray().map(function (field) {
+            formData[field.name] = field.value;
+        });
+
+        $.ajax({
+            url: "/api/v1/agent", 
+            type: "POST",
+            data: JSON.stringify(formData), // Convert the object to a JSON string
+            processData: false, // Don't let jQuery process the data
+            contentType: "application/json", // Set content type to JSON
+            success: function (response) {
+                // Hide the loader after success
+                $('#loader').hide();
+
+                // Enable the submit button again
+                $("#agentForm button[type='submit']").prop('disabled', false);
+                alert("Agent created successfully!");
+                // Reload the page or show a success message
+              /*   window.location.reload(); */
+                window.location.href = "/agentlist";
+            },
+            error: function (xhr) {
+                // Hide the loader on error
+                $('#loader').hide();
+
+                // Enable the submit button again
+                $("#agentForm button[type='submit']").prop('disabled', false);
+
+                // Show error message if creation fails
+                alert("Something went wrong!");
+            }
+        });
+    });
+});
+
+
+function toggleDiv(divId) {
+	const element = document.getElementById(divId);
+	element.classList.toggle("show");
+}
+$(document).ready(function() {
+    $('#countries').on('change', function() {
+        let countryDependent = $(this).val();
+        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
+        
+        if (countryDependent) {
+            let currencyDependent = countryDependent + "C";
+            $.ajax({
+                url: '/api/enumEntities/dependent',
+                type: 'GET',
+                data: { dependent: currencyDependent },
+                success: function(data) {
+                    $.each(data, function(index, enumValue) {
+                        $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching currencies for the selected country.");
+                }
+            });
+        }
+$('#state').empty().append('<option value="" disabled selected>Select State</option>');     
+        if (countryDependent) {
+            let currencyDependent = countryDependent;
+            $.ajax({
+                url: '/api/enumEntities/dependent',
+                type: 'GET',
+                data: { dependent: currencyDependent },
+                success: function(data) {
+                    $.each(data, function(index, enumValue) {
+                        $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching currencies for the selected country.");
+                }
+            });
+        }
+    });
+});
 </script>
 </head>
 
@@ -221,11 +310,11 @@
 
 		<%-- 			<jsp:include page="customersearch.jsp"></jsp:include> --%>
 
-		<!-- <div class="spinner-container" id="loader">
+		 <div class="spinner-container" id="loader">
 			<div class="spinner-border text-primary" role="status">
 				<span class="visually-hidden">Loading...</span>
 			</div>
-		</div> -->
+		</div> 
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -234,7 +323,7 @@
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form modelAttribute="agent" action="/agent" method="post"
-			enctype="multipart/form-data">
+			id="agentForm">
 			<form:hidden path="isValid" value="true" />
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
@@ -371,11 +460,7 @@
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
-											<%-- <form:select path="timeZone" class="form-control"
-										multiple="false">
-										<form:options items="${timezonelist}" itemValue="timeZoneId"
-											itemLabel="zone" />
-									</form:select> --%>
+											 <form:input path="timeZone" class="form-control" id="timeZone" placeholder="TimeZone"/>
 											<span id="timeZoneError" class="text-danger"></span>
 										</div>
 									</div>
@@ -502,8 +587,8 @@
 														class="text-danger">*</span></label>
 													<form:select path="taxApplicable" class="form-control"
 														data-select2-selector="icon" id="taxApplicable">
-														<form:option value="0">No</form:option>
-														<form:option value="1">Yes</form:option>
+														<form:option value="false">No</form:option>
+														<form:option value="true">Yes</form:option>
 													</form:select>
 												</div>
 											</div>
@@ -557,25 +642,15 @@
 												<div class="mb-4">
 													<label class="form-label">Settlement Mode<span
 														class="text-danger">*</span></label>
-													<%-- <form:select path="settlementMode" class="form-control"
-															multiple="false">
-															<form:options items="${setteleMentModeList}"
-																itemValue="settelementId" itemLabel="SettelementId"
-																placeholder="Settlement Type" />
-															</form:select> --%>
+														<form:input path="settlementMode" class="form-control" id="settlementMode" placeholder="Settlement Mode"/>
 													<span id="settlementModeError" class="text-danger"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Setlement Type<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="settlementType" class="form-control"
-													multiple="false">
-												<form:options items="${setteleMentTypeList}"
-													itemValue="SettelementId" itemLabel="SettelementId"
-												placeholder="Settlement Type" />
-												</form:select> --%>
+														class="text-danger">*</span></label>	
+												 <form:input path="settlementType" class="form-control" id="settlementType" placeholder="Setlement Type" />
 													<span id="settlementTypeError" class="text-danger"></span>
 												</div>
 											</div>
@@ -585,10 +660,10 @@
 												<div class="mb-4">
 													<label class="form-label">Status<span
 														class="text-danger">*</span></label>
-													<form:select path="taxApplicable" class="form-control"
-														data-select2-selector="icon" id="taxApplicable">
-														<form:option value="0">Deactive</form:option>
-														<form:option value="1">Active</form:option>
+													<form:select path="status" class="form-control"
+														data-select2-selector="icon" id="status">
+														<form:option value="false">Deactive</form:option>
+														<form:option value="true">Active</form:option>
 													</form:select>
 												</div>
 											</div>
@@ -759,8 +834,8 @@
 														class="text-danger">*</span></label>
 													<form:select path="statusFlag" class="form-control"
 														data-select2-selector="icon" id="statusFlag">
-														<form:option value="0">Inactive</form:option>
-														<form:option value="1">Active</form:option>
+														<form:option value="false">Inactive</form:option>
+														<form:option value="true">Active</form:option>
 													</form:select>
 												</div>
 											</div>

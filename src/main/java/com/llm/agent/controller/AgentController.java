@@ -24,7 +24,7 @@ import com.llm.common.service.EnumEntityService;
 import com.llm.model.Agent;
 
 @Controller
-@SessionAttributes({ "agent" })
+//@SessionAttributes({ "agent" })
 @RequiredArgsConstructor
 public class AgentController {
 	private static final Logger logger = LoggerFactory.getLogger(AgentController.class);
@@ -38,10 +38,10 @@ public class AgentController {
 	@Autowired
 	private CustomUserDetailsService customUserDetailsService;
 
-	@ModelAttribute("agent")
-	public Agent initializeSubAgent() {
-		return new Agent();
-	}
+//	@ModelAttribute("agent")
+//	public Agent initializeSubAgent() {
+//		return new Agent();
+//	}
 
 	@GetMapping("/agent")
 	public String showCompanyDetailsForm(Model model) {
@@ -54,6 +54,22 @@ public class AgentController {
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
 			model.addAttribute("countryList", List.of());
+		}
+		try {
+			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
+			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("currencyList", List.of());
+		}
+		try {
+			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
+			nativeRegionEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error Native Region List: ", e);
+			model.addAttribute("native Region List", List.of()); // or set a default list if needed
 		}
 		try {
 			Optional<EnumEntity> workingEntity = enumEntityService.getEnumEntityByKey("workingHours");

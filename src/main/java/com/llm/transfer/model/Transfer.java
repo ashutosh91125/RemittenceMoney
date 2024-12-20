@@ -95,6 +95,7 @@ public class Transfer {
 	private String beneficiaryIban;
 	private String beneficiaryAccountType;
 	private String beneficiaryAccountNo;
+	private String beneficiaryAccountName;
 	private String beneficiaryType;
 	private String beneficiaryRelation;
 	private String beneficiaryNickname;

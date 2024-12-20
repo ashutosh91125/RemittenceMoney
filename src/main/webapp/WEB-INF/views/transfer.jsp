@@ -299,6 +299,7 @@ $(document).ready(function () {
                     ].filter(Boolean).join(' ');
                     $('#address2').val(mergedAddress2);
                     toggleFields();
+                    fetchBeneficiaries(customerEcrn);
                 } else {
                     console.error("No customer data found for the provided ECRN.");
                 }
@@ -311,7 +312,31 @@ $(document).ready(function () {
                 }
             }
         });
-    });
+     // Fetch Beneficiaries Function
+        function fetchBeneficiaries(ecrn) {
+            $.ajax({
+                url: '/api/v1/beneficiaries/get-list-by-ecrn/' + ecrn,
+                type: 'GET',
+                success: function (response) {
+                    if (response.success && response.data?.length > 0) {
+                        console.log("Beneficiaries fetched successfully:", response.data);
+                        response.data.forEach(function (beneficiary) {
+                        	 $('#searchBenficery').append('<option value="' + beneficiary.id + '">' + beneficiary.fullName + '</option>');
+                        });
+
+                    } else {
+                        console.warn(response.message || "No beneficiaries found for the provided ECRN.");
+                        $('#searchBenficery').html('<option value="">No beneficiaries found</option>');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error fetching beneficiaries:", error);
+                    alert("An error occurred while fetching beneficiaries.");
+                }
+            });
+        }
+
+    })
     function fetchEnumValue(key, valueId, callback) {
         $.ajax({
             url: '/api/enumEntities/' + key + '/values/' + valueId,
@@ -1049,6 +1074,14 @@ $(document)
 							class="accordion-collapse collapse ">
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body personal-info">
+								<div class="row" style="justify-content: end; align-items: baseline; background: aliceblue;">
+										<div class="col-12 col-md-2">
+											<select data-select2-selector="icon" class="form-control p-2"
+												id="searchBenficery">
+												<option value="">Select Benficery</option>
+											</select>
+										</div>
+									</div>
 									<div class="row">
 										<div class="col-12 col-md-4">
 											<label class="form-label">Delivery Option</label><select

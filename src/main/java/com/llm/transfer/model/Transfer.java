@@ -58,20 +58,20 @@ public class Transfer {
 	@Column(name = "state")
 	private String state;
 
-	@Column(name = "country", length = 2)
+	@Column(name = "country", length = 25)
 	private String country;
 
-	@Column(name = "country_of_residence", length = 2, nullable = false)
+	@Column(name = "country_of_residence", length = 25, nullable = false)
 	private String countryOfResidence;
 
-	@Column(name = "nationality", length = 2, nullable = false)
+	@Column(name = "nationality", length = 25, nullable = false)
 	private String nationality;
 
 	private String customerCategory;
 
 	private String customerType;
-
-	private Integer idType;
+	@Column(name = "idType", length = 30)
+	private String idType;
 	private String idNumber;
 	private String issuedBy;
 //	private String issuedAt;

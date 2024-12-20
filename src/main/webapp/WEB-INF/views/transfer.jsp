@@ -255,19 +255,33 @@ $(document).ready(function () {
                     $('#emailId').val(response.emailId?.trim() || '');
                     $('#primaryMobileNumber').val(response.primaryMobileNumber?.trim() || '');
                     $('#state').val(response.state?.trim() || '');
-                    $('#countryOfResidence').val(response.countryOfResidence?.trim() || '');
-                    $('#nationality').val(response.nationality?.trim() || '');
-                    $('#country').val(response.country?.trim() || '');
                     $('#residentTypeId').val(response.residentTypeId || '');
                     $('#visaType').val(response.visaType?.trim() || '');
                     $('#idNumber').val(response.idNumber?.trim() || '');
-                    $('#idType').val(response.idType || '');
+//                     $('#idType').val(response.idType || '');
                     $('#issuedBy').val(response.issuedBy?.trim() || '');
                     $('#issuedOn').val(response.issuedOn?.trim() || '');
                     $('#dateOfExpiry').val(response.dateOfExpiry?.trim() || '');
-                    $('#issuedCountry').val(response.issuedCountry?.trim() || '');
                     $('#visaExpiryDate').val(response.visaExpiryDate?.trim() || '');
                     $('#visaNumber').val(response.visaNumber?.trim() || '');
+                    // Map country code to country name
+                    if (response.country) {
+                        fetchEnumValue('country', response.country, function (country) {
+                            $('#country').val(country || response.country);
+                        });
+                        fetchEnumValue('country', response.countryOfResidence, function (country) {
+                            $('#countryOfResidence').val(country || response.countryOfResidence);
+                        });
+                        fetchEnumValue('country', response.nationality, function (country) {
+                            $('#nationality').val(country || response.nationality);
+                        });
+                        fetchEnumValue('country', response.issuedCountry, function (country) {
+                            $('#issuedCountry').val(country || response.issuedCountry);
+                        });
+                        fetchEnumValue('idTypes', response.idType, function (idTypes) {
+                            $('#idType').val(idTypes || response.idType);
+                        });
+                    }
                     var mergedAddress1 = [
                         response.buildingName?.trim(),
                         response.streetName?.trim(),
@@ -298,6 +312,20 @@ $(document).ready(function () {
             }
         });
     });
+    function fetchEnumValue(key, valueId, callback) {
+        $.ajax({
+            url: '/api/enumEntities/' + key + '/values/' + valueId,
+            type: 'GET',
+            success: function (description) {
+            	console.log(description);
+                callback(description);
+            },
+            error: function () {
+                console.error("Error fetching enum value for key:", key, "valueId:", valueId);
+                callback(null);
+            }
+        });
+    }
 });
 
 function toggleFields() {
@@ -467,6 +495,7 @@ $(document).ready(function() {
 
             // Function to call the create-transaction service
             function createTransaction() {
+            	$('#quoteMessage').hide();
                 const payload = {
                     type: "SEND",
                     source_of_income: $('#sourceOfFund').val(),
@@ -505,7 +534,6 @@ $(document).ready(function() {
                             // Show loader and disable button
                             $('#loader').show();
                             $('#transactionButton').prop('disabled', true);
-                            $('#quoteMessage').html(`Quote Created Successfully!`);
 
                             $.ajax({
                                 url: '/api/v1/raas/create-transaction',

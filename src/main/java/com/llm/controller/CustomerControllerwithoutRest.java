@@ -201,14 +201,6 @@ public class CustomerControllerwithoutRest {
 			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
 		}
 		try {
-			Optional<EnumEntity> idTypeEntity = enumEntityService.getEnumEntityByKey("idType");
-			idTypeEntity.ifPresent(entity -> model.addAttribute("idTypeList", entity.getValues()));
-
-		} catch (Exception e) {
-			logger.error("Error idType list: ", e);
-			model.addAttribute("idTypeList", List.of()); // or set a default list if needed
-		}
-		try {
 			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
 			nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
 

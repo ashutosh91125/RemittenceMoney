@@ -6,6 +6,6 @@ import com.llm.model.Agent;
 
 public interface AgentRepositories extends JpaRepository<Agent, Long> {
 	Agent findByEmail(String email);
-	Agent findByCompanyId(Long companyId);
+	/* Agent findByCompanyId(Long companyId); */
 
 }

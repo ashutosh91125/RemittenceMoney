@@ -100,7 +100,7 @@ public class AgentController {
 	public String loginAgent(@ModelAttribute("agent") Agent agent, Model model) {
 		Agent agent1 = agentService.getByEmail(agent.getEmail());
 
-		if (agent1 != null && agent1.getAdminPassword().equals(agent.getAdminPassword())) {
+		if (agent1 != null && agent1.getPassword().equals(agent.getPassword())) {
 			return "redirect:/agentlist";
 		} else {
 			model.addAttribute("error", "Invalid email or password");

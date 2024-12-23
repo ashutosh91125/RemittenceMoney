@@ -23,10 +23,10 @@ public class Agent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long agentId;
-	private Long companyId;
 	private String countries;
-	private String companyName;
-	private String companyDisplayName;
+	private String currencies;
+	private String agentName;
+	private String agentDisplayName;
 	private String address1;
 	private String address2;
 	private String address3;
@@ -42,20 +42,20 @@ public class Agent {
 	private String taxIdentificationNumber;
 	private String licenceNo;
 	private Boolean taxApplicable;
-	private String working;
+	private String workingHours;
 	private Long daily;
 	private String settlementMode;
 	private String settlementType;
 	private Boolean status;
-	private Long perTransactionLimit;
-	private Long perDayLimit;
-	private Long perMonthLimit;
+	private Long perTransaction;
+	private Long perDay;
+	private Long perMonth;
 	private String grantType;
 	private String scope;
 	private String clientId;
 	private String clientSecret;
-	private String adminUserName;
-	private String adminPassword;
+	private String userName;
+	private String password;
 	private String createdBy;
 	private String createdOn;
 	private String modifiedBy;
@@ -64,7 +64,6 @@ public class Agent {
 	private String disabledOn;
 	private String remarks;
 	private Boolean statusFlag;
-	private String currencies;
 	private Boolean isValid;
 
 }

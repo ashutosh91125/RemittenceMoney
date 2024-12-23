@@ -5,9 +5,9 @@ import java.util.List;
 import com.llm.model.Agent;
 
 public interface IAgentService {
-	public Agent addAgent(Agent agent);
-	public List<Agent> findAllAgent();
-	public Agent getByEmail(String email);
-	public Agent getAgentByCompanyId(Long companyId);
+	 Agent addAgent(Agent agent);
+	 List<Agent> findAllAgent();
+	 Agent getByEmail(String email);
+//	 Agent getAgentByCompanyId(Long companyId);
 
 }

@@ -28,10 +28,10 @@ public class AgentServiceImpl implements IAgentService {
 		return agentRepositories.findByEmail(email);
 	}
 
-	@Override
-	public Agent getAgentByCompanyId(Long companyId) {
-		
-		return agentRepositories.findByCompanyId(companyId);
-	}
+//	@Override
+//	public Agent getAgentByCompanyId(Long companyId) {
+//		
+//		return agentRepositories.findByCompanyId(companyId);
+//	}
 
 }

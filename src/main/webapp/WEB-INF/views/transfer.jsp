@@ -423,7 +423,32 @@ $(document).ready(function () {
                     $('#beneficiaryAddress2').val(beneficiary.beneficiaryAddress2?.trim() || '');
                     $('#beneficiaryCity').val(beneficiary.beneficiaryCity?.trim() || '');
                     $('#beneficiaryNationality').val(beneficiary.beneficiaryNationality?.trim() || '').change();
+//                     $('#beneficiaryState').val(beneficiary.beneficiaryState?.trim() || '').change();
+					if (beneficiary.beneficiaryNationality) {
+    				$.ajax({
+      				  url: '/api/enumEntities/dependent',
+       				  type: 'GET',
+                      data: { dependent: beneficiary.beneficiaryNationality },
+                      success: function (states) {
+                      // Clear existing state options and add default
+                      $('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
+
+                     // Populate with new state options
+                    $.each(states, function (index, state) {
+                    $('#beneficiaryState').append(new Option(state.description, state.description));
+                    });
+
+                    // Set selected state value after populating options
                     $('#beneficiaryState').val(beneficiary.beneficiaryState?.trim() || '').change();
+                    }, 
+        			error: function () {
+            		console.error("Error fetching states for nationality.");
+        			}
+    				});
+					} else {
+   					 $('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
+					}
+
                     $('#beneficiaryMobile').val(beneficiary.beneficiaryMobile?.trim() || '');
                     $('#beneficiaryDob').val(beneficiary.beneficiaryDob?.trim() || '');
                     $('#beneficiaryIdType').val(beneficiary.beneficiaryIdType?.trim() || '').change();

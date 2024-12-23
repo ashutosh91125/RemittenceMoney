@@ -233,6 +233,7 @@
 	display: none;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
     const accountTypeInput = document.getElementById("beneficiaryAccountType");
@@ -245,6 +246,48 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     }
 });
+    function viewReceipt() {
+        var transactionRefNumber = $('#transactionRefNumber').val();
+        var url = '/api/v1/raas/transaction-receipt?transaction_ref_number=' + transactionRefNumber;
+        $('#loader').show();
+        $('#viewReceiptButton').prop('disabled', true);
+        $.ajax({
+            url: url,
+            type: 'GET',
+            success: function (response) {
+                if (response.status === "success" && response.status_code === 200) {
+                    // Decode the Base64 data and create a Blob
+                    const base64Data = response.data;
+                    const binaryString = atob(base64Data);
+                    const len = binaryString.length;
+                    const bytes = new Uint8Array(len);
+
+                    for (let i = 0; i < len; i++) {
+                        bytes[i] = binaryString.charCodeAt(i);
+                    }
+
+                    const blob = new Blob([bytes], { type: 'application/pdf' });
+
+                    // Create a URL for the Blob and open in a new tab
+                    const blobUrl = URL.createObjectURL(blob);
+
+                    $('#loader').hide();
+                    $('#viewReceiptButton').prop('disabled', false);
+
+                    window.open(blobUrl, '_blank');
+                } else {
+                    alert('Failed to fetch receipt: ' + response.message);
+                    $('#loader').hide();
+                    $('#viewReceiptButton').prop('disabled', false);
+                }
+            },
+            error: function (xhr, status, error) {
+                alert('Error occurred: ' + error);
+                $('#loader').hide();
+                $('#viewReceiptButton').prop('disabled', false);
+            }
+        });
+    }
 
 	function toggleDiv(divId) {
 		const element = document.getElementById(divId);
@@ -812,6 +855,14 @@ document.addEventListener("DOMContentLoaded", function() {
 													style="color: green;" name="totalPayInAmount"
 													value="${transferDetails.totalPayInAmount}" readonly>
 											</div>
+
+											<div class="col-xl-4">
+                                                <label class="form-label">Transaction Number</label> <input
+                                                    type="text" class="form-control"
+                                                    placeholder="Transaction Number" id="transactionRefNumber"
+                                                    style="color: green;" name="transactionRefNumber"
+                                                    value="${transferDetails.transactionReferenceNumber}" readonly>
+                                            </div>
 										</div>
 									</div>
 								</div>
@@ -819,6 +870,13 @@ document.addEventListener("DOMContentLoaded", function() {
 						</div>
 					</div>
 				</div>
+				<div class="mt-5 mb-5 text-center"
+                    style="display: flex; justify-content: center">
+                    <div>
+                        <button type="button" id="viewReceiptButton" onclick="viewReceipt()"
+                            class="btn btn-warning">View Receipt</button>
+                    </div>
+                </div>
 			</form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

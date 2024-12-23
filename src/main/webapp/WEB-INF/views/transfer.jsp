@@ -349,43 +349,85 @@ $(document).ready(function () {
             url: '/api/v1/beneficiaries/' + beneficiaryId,
             type: 'GET',
             success: function (response) {
+            	console.log(response);
                 if (response && response.data) { // Ensure `response.data` exists
                     var beneficiary = response.data;
-                     $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
-                     $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
-                     $('#currencies').val(beneficiary.currencies?.trim() || '').change();
-                   /*   $('#beneficiaryBank').val(beneficiary.beneficiaryBank?.trim() || '').change(); */
-                     if (beneficiary.beneficiaryBank) {
-                         fetchBankById(beneficiary.beneficiaryBank, function (bankName) {
-                             if (bankName) {
-                                 // Clear existing bank options and add the new bank
-                                 $('#beneficiaryBank').empty(); // Clear the dropdown
-                                 $('#beneficiaryBank').append(new Option(bankName, bankName)); // Add the bank name as the option
-                                 $('#beneficiaryBank').val(bankName).change(); // Set the bank name and trigger change
-                             } else {
-                                 $('#beneficiaryBank').val('').change(); // Clear the field if no bank name found
-                             }
-                         });
-                     }
-                     $('#bankBranches').val(beneficiary.bankBranches?.trim() || '').change();
-                     $('#beneficiaryAccountType').val(beneficiary.beneficiaryAccountType?.trim() || '').change();
-               		 $('#accountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
-                   	 $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
-                   	 $('#beneficiaryIban').val(beneficiary.beneficiaryIban?.trim() || '');
-                     $('#beneficiaryType').val(beneficiary.beneficiaryType?.trim() || '').change();
-                   	 $('#beneficiaryNickname').val(beneficiary.beneficiaryNickname?.trim() || '');
-                	 $('#beneficiaryFirstName').val(beneficiary.beneficiaryFirstName?.trim() || '');
-                   	 $('#beneficiaryMiddleName').val(beneficiary.beneficiaryMiddleName?.trim() || '');
-                 	 $('#beneficiaryLastName').val(beneficiary.beneficiaryLastName?.trim() || '');
-                 	 $('#beneficiaryAddress1').val(beneficiary.beneficiaryAddress1?.trim() || '');
-                   	 $('#beneficiaryAddress2').val(beneficiary.beneficiaryAddress2?.trim() || '');
-                   	 $('#beneficiaryCity').val(beneficiary.beneficiaryCity?.trim() || '');
-                   	 $('#beneficiaryNationality').val(beneficiary.beneficiaryNationality?.trim() || '').change();
-                   	 $('#beneficiaryState').val(beneficiary.beneficiaryState?.trim() || '').change();
-                   	 $('#beneficiaryMobile').val(beneficiary.beneficiaryMobile?.trim() || '');
-                   	 $('#beneficiaryDob').val(beneficiary.beneficiaryDob?.trim() || '');
-                   	 $('#beneficiaryIdType').val(beneficiary.beneficiaryIdType?.trim() || '').change();
-                   	 $('#beneficiaryIdNo').val(beneficiary.beneficiaryIdNo?.trim() || '');
+                    $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
+                    $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
+                    $('#currencies').val(beneficiary.currencies?.trim() || '').change();
+                    
+                    if (beneficiary.beneficiaryBank) {
+                        fetchBankById(beneficiary.beneficiaryBank, function (bankName) {
+                            if (bankName) {
+                                // Clear existing bank options and add the new bank
+                                $('#beneficiaryBank').empty(); // Clear the dropdown
+                                $('#beneficiaryBank').append(new Option(bankName, bankName)); // Add the bank name as the option
+                                $('#beneficiaryBank').val(bankName).change(); // Set the bank name and trigger change
+                            } else {
+                                $('#beneficiaryBank').val('').change(); // Clear the field if no bank name found
+                            }
+                        });
+                    }
+                    if (beneficiary.beneficiaryBranch) {
+                        // If beneficiaryBranch is available
+                        $.ajax({
+                            url: '/api/v1/banks/routing-code/' + beneficiary.beneficiaryBranch,
+                            type: 'GET',
+                            success: function (branchResponse) {
+                                console.log(branchResponse);
+                                if (branchResponse) {
+                                    $('#bankBranches').empty(); // Clear existing options
+                                    $('#bankBranches').append( new Option(branchResponse.branchName, branchResponse.routingCode)); // Add the branch name
+                                    $('#bankBranches').val(branchResponse.routingCode).change(); // Set and trigger change
+                                } else {
+                                	$('#bankBranches').val('').change(); // Clear if no branch found
+                                }
+                            },
+                            error: function () {
+                                console.error("Error fetching branch details.");
+                                $('#bankBranches').val('').change(); // Clear on error
+                            }
+                        });
+                    } 
+                   /*  else {
+                        // Fallback action when beneficiaryBranch is not available
+                        $.ajax({
+                            url: '/api/v1/banks/default-branches', // Example fallback URL
+                            type: 'GET',
+                            success: function (defaultBranches) {
+                                console.log(defaultBranches);
+                                $('#bankBranches').empty(); // Clear existing options
+                                $('#bankBranches').append('<option value="" disabled selected>Select Branch</option>');
+                                $.each(defaultBranches, function (index, branch) {
+                                    $('#bankBranches').append(new Option(branch.branchName, branch.routingCode));
+                                });
+                                $('#bankBranches').val('').change(); // Trigger change
+                            },
+                            error: function () {
+                                console.error("Error fetching default branches.");
+                                $('#bankBranches').val('').change(); // Clear on error
+                            }
+                        });
+                    } */
+	
+                    $('#beneficiaryAccountType').val(beneficiary.beneficiaryAccountType?.trim() || '').change();
+                    $('#accountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
+                    $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
+                    $('#beneficiaryIban').val(beneficiary.beneficiaryIban?.trim() || '');
+                    $('#beneficiaryType').val(beneficiary.beneficiaryType?.trim() || '').change();
+                    $('#beneficiaryNickname').val(beneficiary.beneficiaryNickname?.trim() || '');
+                    $('#beneficiaryFirstName').val(beneficiary.beneficiaryFirstName?.trim() || '');
+                    $('#beneficiaryMiddleName').val(beneficiary.beneficiaryMiddleName?.trim() || '');
+                    $('#beneficiaryLastName').val(beneficiary.beneficiaryLastName?.trim() || '');
+                    $('#beneficiaryAddress1').val(beneficiary.beneficiaryAddress1?.trim() || '');
+                    $('#beneficiaryAddress2').val(beneficiary.beneficiaryAddress2?.trim() || '');
+                    $('#beneficiaryCity').val(beneficiary.beneficiaryCity?.trim() || '');
+                    $('#beneficiaryNationality').val(beneficiary.beneficiaryNationality?.trim() || '').change();
+                    $('#beneficiaryState').val(beneficiary.beneficiaryState?.trim() || '').change();
+                    $('#beneficiaryMobile').val(beneficiary.beneficiaryMobile?.trim() || '');
+                    $('#beneficiaryDob').val(beneficiary.beneficiaryDob?.trim() || '');
+                    $('#beneficiaryIdType').val(beneficiary.beneficiaryIdType?.trim() || '').change();
+                    $('#beneficiaryIdNo').val(beneficiary.beneficiaryIdNo?.trim() || '');
                 } else {
                     console.warn(response.message || "No details found for the selected beneficiary.");
                     alert("No details found for the selected beneficiary.");

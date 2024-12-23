@@ -337,6 +337,59 @@ $(document).ready(function () {
         }
 
     })
+     $('#searchBenficery').on('change', function () {
+                    var selectedId = $(this).val(); // Get the selected value (beneficiary ID)
+                    if (selectedId) {
+                        fetchBeneficiaryDetails(selectedId); // Fetch the details of the selected beneficiary
+                    }
+                });
+    
+    function fetchBeneficiaryDetails(beneficiaryId) {
+        $.ajax({
+            url: '/api/v1/beneficiaries/' + beneficiaryId,
+            type: 'GET',
+            success: function (response) {
+                if (response && response.data) { // Ensure `response.data` exists
+                    var beneficiary = response.data;
+                     $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
+                     $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
+                     $('#currencies').val(beneficiary.currencies?.trim() || '').change();
+                     $('#beneficiaryBank').val(beneficiary.beneficiaryBank?.trim() || '').change();
+                     $('#bankBranches').val(beneficiary.bankBranches?.trim() || '').change();
+                     $('#beneficiaryAccountType').val(beneficiary.beneficiaryAccountType?.trim() || '').change();
+               		 $('#accountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
+                   	 $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || ''); 
+                   	 $('#beneficiaryIban').val(beneficiary.beneficiaryIban?.trim() || '');
+                     $('#beneficiaryType').val(beneficiary.beneficiaryType?.trim() || '').change();
+                   	 $('#beneficiaryNickname').val(beneficiary.beneficiaryNickname?.trim() || '');
+                	 $('#beneficiaryFirstName').val(beneficiary.beneficiaryFirstName?.trim() || '');
+                   	 $('#beneficiaryMiddleName').val(beneficiary.beneficiaryMiddleName?.trim() || '');
+                 	 $('#beneficiaryLastName').val(beneficiary.beneficiaryLastName?.trim() || '');
+                 	 $('#beneficiaryAddress1').val(beneficiary.beneficiaryAddress1?.trim() || '');
+                   	 $('#beneficiaryAddress2').val(beneficiary.beneficiaryAddress2?.trim() || '');
+                   	 $('#beneficiaryCity').val(beneficiary.beneficiaryCity?.trim() || '');
+                   	 $('#beneficiaryNationality').val(beneficiary.beneficiaryNationality?.trim() || '').change();
+                   	 $('#beneficiaryState').val(beneficiary.beneficiaryState?.trim() || '').change();
+                   	 $('#beneficiaryMobile').val(beneficiary.beneficiaryMobile?.trim() || '');
+                   	 $('#beneficiaryDob').val(beneficiary.beneficiaryDob?.trim() || '');
+                   	 $('#beneficiaryIdType').val(beneficiary.beneficiaryIdType?.trim() || '').change();
+                   	 $('#beneficiaryIdNo').val(beneficiary.beneficiaryIdNo?.trim() || '');	
+                } else {
+                    console.warn(response.message || "No details found for the selected beneficiary.");
+                    alert("No details found for the selected beneficiary.");
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Error fetching beneficiary details:", {
+                    status: xhr.status,
+                    statusText: xhr.statusText,
+                    responseText: xhr.responseText
+                });
+                alert("An error occurred while fetching beneficiary details.");
+            }
+        });
+    }
+
     function fetchEnumValue(key, valueId, callback) {
         $.ajax({
             url: '/api/enumEntities/' + key + '/values/' + valueId,
@@ -749,6 +802,7 @@ $(document).ready(function() {
 
                 // Initial validation on page load
                 validateSubmitButton();
+               
             });
 
 $(document)
@@ -852,7 +906,9 @@ $(document)
 												<c:forEach var="customer" items="${customerListOnTransfer}"
 													varStatus="status">
 													<tr data-customer-ecrn="${customer.ecrn}">
-														<td onmouseover="this.style.cursor='pointer';this.style.color='#263cab'" onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
+														<td
+															onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+															onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
 														<td>${customer.firstName}</td>
 														<td>${customer.phoneNumber}</td>
 														<td>${customer.emailId}</td>
@@ -873,10 +929,10 @@ $(document)
 					</div>
 				</div>
 				<div class="spinner-container" id="loader">
-                				<div class="spinner-border text-primary" role="status">
-                					<span class="visually-hidden">Loading...</span>
-                				</div>
-                			</div>
+					<div class="spinner-border text-primary" role="status">
+						<span class="visually-hidden">Loading...</span>
+					</div>
+				</div>
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
@@ -1074,7 +1130,8 @@ $(document)
 							class="accordion-collapse collapse ">
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body personal-info">
-								<div class="row" style="justify-content: end; align-items: baseline; background: aliceblue;">
+									<div class="row"
+										style="justify-content: end; align-items: baseline; background: aliceblue;">
 										<div class="col-12 col-md-2">
 											<select data-select2-selector="icon" class="form-control p-2"
 												id="searchBenficery">
@@ -1109,7 +1166,8 @@ $(document)
 											<label class="form-label">Currency</label> <select
 												name="currencies" id="currencies" class="form-control"
 												data-select2-selector="icon">
-												<option value="" disabled selected>Selected Currency</option>
+												<option value="" disabled selected>Selected
+													Currency</option>
 												<c:forEach var="currency" items="${currencyList}">
 													<option value="${currency.valueId}">${currency.description}</option>
 												</c:forEach>
@@ -1138,15 +1196,15 @@ $(document)
 											</div>
 										</div>
 										<div class="col-12 col-md-4">
-                                        											<div class="mb-1">
-                                        												<label class="form-label">Account Type</label> <select
-                                        													class="form-control" id="beneficiaryAccountType"
-                                        													name="beneficiaryAccountType" data-select2-selector="icon">
-                                        													<option value="1">Savings</option>
-                                        													<option value="2">Current</option>
-                                        												</select>
-                                        											</div>
-                                        										</div>
+											<div class="mb-1">
+												<label class="form-label">Account Type</label> <select
+													class="form-control" id="beneficiaryAccountType"
+													name="beneficiaryAccountType" data-select2-selector="icon">
+													<option value="1">Savings</option>
+													<option value="2">Current</option>
+												</select>
+											</div>
+										</div>
 
 									</div>
 									<div class="row">
@@ -1167,10 +1225,12 @@ $(document)
 											<span id="validationMessage"></span>
 										</div>
 										<div class="col-12 col-md-4">
-                                            <div class="mb-1"><label class="form-label">IBAN</label> <input type="text"
-                                            class="form-control" id="beneficiaryIban" name="beneficiaryIban" placeholder="IBAN">
-                                            </div>
-                                        </div>
+											<div class="mb-1">
+												<label class="form-label">IBAN</label> <input type="text"
+													class="form-control" id="beneficiaryIban"
+													name="beneficiaryIban" placeholder="IBAN">
+											</div>
+										</div>
 									</div>
 									<div class="row">
 										<div class="col-12 col-md-4">
@@ -1246,7 +1306,7 @@ $(document)
 										</div>
 									</div>
 									<div class="row">
-									<div class="col-12 col-md-4">
+										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Nationality</label> <select
 													name="beneficiaryNationality" id="beneficiaryNationality"
@@ -1260,11 +1320,11 @@ $(document)
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
-												<label class="form-label">Beneficiary State</label>
-												<select
+												<label class="form-label">Beneficiary State</label> <select
 													name="beneficiaryState" id="beneficiaryState"
 													class="form-control" data-select2-selector="icon">
-													<option value="" disabled selected>Select Beneficiary State</option>
+													<option value="" disabled selected>Select
+														Beneficiary State</option>
 													<c:forEach var="states" items="${stateList}">
 														<option value="${states.valueId}">${states.description}</option>
 													</c:forEach>
@@ -1327,7 +1387,8 @@ $(document)
 													class="text-danger">*</span></label> <select name="payInCurrency"
 													id="payInCurrency" class="form-control"
 													data-select2-selector="icon">
-													<option value="" disabled selected>Select Pay In Currency</option>
+													<option value="" disabled selected>Select Pay In
+														Currency</option>
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
@@ -1369,19 +1430,25 @@ $(document)
 											</div> --%>
 
 											<div class="col-xl-4">
-                                                <label class="form-label">PayIn Amount<span class="text-danger">*</span></label>
-                                                <input type="number" class="form-control" placeholder="PayIn Amount" id="payInAmount" name="payInAmount" min="5" max="50000" required >
-                                                <div id="error-message" style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount must be between 5 and 50,000!</div>
-                                            </div>
+												<label class="form-label">PayIn Amount<span
+													class="text-danger">*</span></label> <input type="number"
+													class="form-control" placeholder="PayIn Amount"
+													id="payInAmount" name="payInAmount" min="5" max="50000"
+													required>
+												<div id="error-message"
+													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount
+													must be between 5 and 50,000!</div>
+											</div>
 
 											<div class="col-xl-4">
 												<label class="form-label">Payment Mode<span
 													class="text-danger">*</span></label> <select class="form-control"
 													id="paymentMode" name="paymentMode"
 													data-select2-selector="icon">
-													<option value="" disabled selected>Select Payment Mode</option>
+													<option value="" disabled selected>Select Payment
+														Mode</option>
 													<option value="BANK">Bank Transfer</option>
-												
+
 												</select>
 											</div>
 											<div class="col-xl-4">
@@ -1397,27 +1464,29 @@ $(document)
 											<div class="col-xl-4">
 												<label class="form-label">Rate<span
 													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Rate" id="rate" style="color: green;"
-													name="rate" readonly>
+													class="form-control" placeholder="Rate" id="rate"
+													style="color: green;" name="rate" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payout Amount<span
 													class="text-danger">*</span></label> <input type="text"
-													class="form-control" placeholder="Payout Amount" style=" color: green;"
-													id="payoutAmount" name="payoutAmount" readonly>
+													class="form-control" placeholder="Payout Amount"
+													style="color: green;" id="payoutAmount" name="payoutAmount"
+													readonly>
 											</div>
 
 											<div class="col-xl-2">
-                                            	<label class="form-label">Commission</label> <input
-                                            	type="text" class="form-control" placeholder="Commission" style=" color: green;"
-                                            	id="commission" name="commission" readonly>
-                                            </div>
+												<label class="form-label">Commission</label> <input
+													type="text" class="form-control" placeholder="Commission"
+													style="color: green;" id="commission" name="commission"
+													readonly>
+											</div>
 
-                                            <div class="col-xl-2">
-                                            	<label class="form-label">Tax</label> <input
-                                            	type="text" class="form-control" placeholder="Tax" style=" color: green;"
-                                            	id="tax" name="tax" readonly>
-                                            </div>
+											<div class="col-xl-2">
+												<label class="form-label">Tax</label> <input type="text"
+													class="form-control" placeholder="Tax"
+													style="color: green;" id="tax" name="tax" readonly>
+											</div>
 
 
 										</div>
@@ -1444,8 +1513,8 @@ $(document)
 											<div class="col-xl-4">
 												<label class="form-label">Total Pay In Amount</label> <input
 													type="text" class="form-control"
-													placeholder="Total Pay In Amount" id="totalPayInAmount" style=" color: green;"
-													name="totalPayInAmount" readonly>
+													placeholder="Total Pay In Amount" id="totalPayInAmount"
+													style="color: green;" name="totalPayInAmount" readonly>
 											</div>
 										</div>
 										<!-- <div class="row mt-4">
@@ -1512,7 +1581,8 @@ $(document)
 						<div id="createQuote">
 							<button type="button" id="quoteButton" onclick="getQuote()"
 								class="btn btn-warning">Submit</button>
-							<div id="quoteMessage" style="font-weight: bold; color: #10181166;"></div>
+							<div id="quoteMessage"
+								style="font-weight: bold; color: #10181166;"></div>
 							<input type="hidden" id="quoteId" />
 						</div>
 						<div class="mt-5 mb-5 text-center"

@@ -315,6 +315,9 @@ public class ExternalServiceImpl implements ExternalService {
                 String state = (String) data.get("state");
                 String subState = (String) data.get("sub_state");
 
+                state = state.replace("_", " ");
+                subState = subState.replace("_", " ");
+
                 // Find and update the transfer in the repository
                 Optional<Transfer> fetchedTransfer = transferRepository
                         .findTransactionByTransactionReferenceNumber(transfer.getTransactionReferenceNumber());

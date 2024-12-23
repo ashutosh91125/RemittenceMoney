@@ -149,6 +149,9 @@ public class ExternalApiController {
 			String state = (String) data.get("state");
 			String subState = (String) data.get("sub_state");
 
+			state = state.replace("_", " ");
+			subState = subState.replace("_", " ");
+
 			Optional<Transfer> transfer = transferRepository.findTransactionByTransactionReferenceNumber(transactionRefNumber);
 			if (transfer.isPresent()){
 				transfer.get().setTransactionState(state);

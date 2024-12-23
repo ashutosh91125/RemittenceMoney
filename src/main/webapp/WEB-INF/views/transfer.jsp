@@ -1778,7 +1778,7 @@ $(document)
 						style="display: flex; justify-content: center">
 						<div id="createQuote">
 							<button type="button" id="quoteButton" onclick="getQuote()"
-								class="btn btn-warning">Submit</button>
+								class="btn btn-warning">Proceed</button>
 							<div id="quoteMessage"
 								style="font-weight: bold; color: #10181166;"></div>
 							<input type="hidden" id="quoteId" />
@@ -1787,8 +1787,7 @@ $(document)
 							style="justify-content: center;">
 							<button type="button" onclick="createTransaction()"
 								class="btn btn-primary" id="createTransactionSection"
-								style="display: none; align-text: center; margin-left: -255px;">Create
-								Transaction</button>
+								style="display: none; align-text: center; margin-left: -255px;">Submit</button>
 							<div id="transactionMessage"
 								style="color: green; font-weight: bold;"></div>
 						</div>

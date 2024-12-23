@@ -102,16 +102,23 @@ public class TransferController {
 	@GetMapping("/transfer-list")
 	public String getTransferList(Model model) {
 		try {
+			// Fetching the list of transfers
 			List<Transfer> transferList = transferService.getAllTransfers();
-			Collections.reverse(transferList);
-			model.addAttribute("transferList", transferList);
-			return "transferlisting";
-		} catch (Exception e) {
-			logger.error("Error occurred while fetching customer list: " + e);
-			return "transferlisting";
-		}
 
+			// Sorting the transferList by date in descending order
+			transferList.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate())); // Date is sorted in descending order
+
+			// Adding the sorted list to the model
+			model.addAttribute("transferList", transferList);
+
+			return "transferlisting";  // Return the name of the view (JSP page)
+		} catch (Exception e) {
+			// Log the error if any exception occurs
+			logger.error("Error occurred while fetching customer list: " + e);
+			return "transferlisting";  // Return to the same view in case of error
+		}
 	}
+
 
 	@GetMapping("/transfer-details")
 	public String detailsOfTransfer(@RequestParam("transactionReferenceNumber") String transactionReferenceNumber,Model model) {

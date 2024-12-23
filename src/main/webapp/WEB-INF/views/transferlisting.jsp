@@ -53,7 +53,7 @@
                                                 <th>PayIn Amount</th>
                                                 <th>PayOut Amount</th>
                                                 <th>Transaction State</th>
-                                                <!-- <th>Transaction SubState</th> -->
+                                                <th>Sub State</th>
                                                 <th class="text-end">Actions</th>
                                             </tr>
                                         </thead>
@@ -66,6 +66,7 @@
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
                                                     <td>${transfer.currencies} ${transfer.payoutAmount}</td>
                                                     <td>${transfer.transactionState}</td>
+                                                    <td>${transfer.transactionSubState}</td>
                                                     <td class="text-end">
                                                         <img class="transactionLogo" title="Check Status"
                                                              src="assets/images/transferList/refreshState.svg"

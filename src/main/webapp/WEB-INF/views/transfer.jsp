@@ -1783,14 +1783,13 @@ $(document)
 								style="font-weight: bold; color: #10181166;"></div>
 							<input type="hidden" id="quoteId" />
 						</div>
-						<div class="mt-5 mb-5 text-center"
-							style="justify-content: center;">
-							<button type="button" onclick="createTransaction()"
-								class="btn btn-primary" id="createTransactionSection"
-								style="display: none; align-text: center; margin-left: -255px;">Submit</button>
-							<div id="transactionMessage"
-								style="color: green; font-weight: bold;"></div>
-						</div>
+					</div>
+					<div class="mt-5 mb-5 text-center" style="display: flex; justify-content: center">
+						<button type="button" onclick="createTransaction()"
+							class="btn btn-primary" id="createTransactionSection"
+							style="display: none; ">Submit</button>
+						<div id="transactionMessage"
+							style="color: green; font-weight: bold;"></div>
 					</div>
 				</div>
 			</form>

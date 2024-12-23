@@ -18,6 +18,9 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
     private final BeneficiaryDetailsRepository beneficiaryRepository;
 
     public BeneficiaryDetails saveBeneficiary(BeneficiaryDetails beneficiaryDetails) {
+        if(beneficiaryRepository.findByBeneficiaryAccountNo(beneficiaryDetails.getBeneficiaryAccountNo()).isPresent()){
+           throw new IllegalArgumentException("Beneficiary already available with this account number");
+        }
         return beneficiaryRepository.save(beneficiaryDetails);
     }
 

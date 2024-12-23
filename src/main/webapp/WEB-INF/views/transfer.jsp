@@ -343,7 +343,7 @@ $(document).ready(function () {
                         fetchBeneficiaryDetails(selectedId); // Fetch the details of the selected beneficiary
                     }
                 });
-    
+
     function fetchBeneficiaryDetails(beneficiaryId) {
         $.ajax({
             url: '/api/v1/beneficiaries/' + beneficiaryId,
@@ -358,7 +358,7 @@ $(document).ready(function () {
                      $('#bankBranches').val(beneficiary.bankBranches?.trim() || '').change();
                      $('#beneficiaryAccountType').val(beneficiary.beneficiaryAccountType?.trim() || '').change();
                		 $('#accountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
-                   	 $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || ''); 
+                   	 $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
                    	 $('#beneficiaryIban').val(beneficiary.beneficiaryIban?.trim() || '');
                      $('#beneficiaryType').val(beneficiary.beneficiaryType?.trim() || '').change();
                    	 $('#beneficiaryNickname').val(beneficiary.beneficiaryNickname?.trim() || '');
@@ -373,7 +373,7 @@ $(document).ready(function () {
                    	 $('#beneficiaryMobile').val(beneficiary.beneficiaryMobile?.trim() || '');
                    	 $('#beneficiaryDob').val(beneficiary.beneficiaryDob?.trim() || '');
                    	 $('#beneficiaryIdType').val(beneficiary.beneficiaryIdType?.trim() || '').change();
-                   	 $('#beneficiaryIdNo').val(beneficiary.beneficiaryIdNo?.trim() || '');	
+                   	 $('#beneficiaryIdNo').val(beneficiary.beneficiaryIdNo?.trim() || '');
                 } else {
                     console.warn(response.message || "No details found for the selected beneficiary.");
                     alert("No details found for the selected beneficiary.");
@@ -411,7 +411,7 @@ function toggleFields() {
     const idType = document.getElementById('idType').value;
     const idDetailsFields = document.getElementById('idDetailsFields');
     const idDetails = document.getElementById('idDetails');
-    
+
     idDetails.style.display = "block";
     if (residentTypeId === "100") {
         idDetailsFields.style.display = "block";
@@ -423,21 +423,21 @@ function toggleFields() {
 
 
 $(document).ready(function() {
-	
-   $('#payOutCountry').on('change', function() {
-       let dependent = $(this).val(); 
 
-     
+   $('#payOutCountry').on('change', function() {
+       let dependent = $(this).val();
+
+
        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
        $('#beneficiaryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
-       $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>'); 
+       $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
 
        if (dependent) {
-           let currencyDependent = dependent + "C"; 
+           let currencyDependent = dependent + "C";
 
            // Fetch Currencies
            $.ajax({
-               url: '/api/enumEntities/dependent', 
+               url: '/api/enumEntities/dependent',
                type: 'GET',
                data: { dependent: currencyDependent },
                success: function(data) {
@@ -455,13 +455,13 @@ $(document).ready(function() {
                type: 'GET',
                success: function(data) {
                    console.log(data);
-                   
+
                    $('#beneficiaryBank').empty();
 
-                   
+
                    $('#beneficiaryBank').append('<option value="">Select  Bank</option>');
 
-                   
+
                    $.each(data, function(index, bank) {
                        $('#beneficiaryBank').append('<option value="' + bank.bankId + '">' + bank.bankName + '</option>');
                    });
@@ -475,15 +475,15 @@ $(document).ready(function() {
 
 
    $('#beneficiaryBank').on('change', function() {
-       let bankId = $(this).val(); 
+       let bankId = $(this).val();
 
        // Clear previous values in the branches dropdown
        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
 
        if (bankId) {
-    
+
            $.ajax({
-               url: '/api/v1/banks/branches/by-bank/'+bankId, 
+               url: '/api/v1/banks/branches/by-bank/'+bankId,
                type: 'GET',
 //                data: { bankId: bankId },
                success: function(data) {
@@ -534,7 +534,7 @@ $(document).ready(function() {
                             $('#commission').val(response.commission_amount);
                             $('#payoutAmount').val(response.receiving_amount);
                             $('#tax').val(response.tax_amount);
-                            let remainingTime = 60; 
+                            let remainingTime = 60;
                             $('#quoteMessage').html(`Quote Created Successfully , Expires in <span id="countdown" style="color: red; font-weight: bold;">${remainingTime}</span> seconds!`);
                             $('#quoteButton').hide();
                             $('#createTransactionSection').show();
@@ -553,7 +553,7 @@ $(document).ready(function() {
                         }
                         else {
                             $('#quoteMessage').text('Failed to generate quote. Please try again.').css('color', 'red');
-                             $('#createTransactionSection').hide(); // Ensure it remains hidden 
+                             $('#createTransactionSection').hide(); // Ensure it remains hidden
                         }
                     },
                     error: function() {
@@ -561,7 +561,7 @@ $(document).ready(function() {
                         $('#createTransactionSection').hide();
                         alert('Failed to generate quote. Please try again.');
 
-                        
+
                     },
                     complete: function() {
                         // Hide loader and enable button
@@ -571,9 +571,8 @@ $(document).ready(function() {
                 });
             }
 
-            // Function to call the create-transaction service
             function createTransaction() {
-            	$('#quoteMessage').hide();
+                $('#quoteMessage').hide();
                 const payload = {
                     type: "SEND",
                     source_of_income: $('#sourceOfFund').val(),
@@ -581,144 +580,240 @@ $(document).ready(function() {
                     instrument: "REMITTANCE",
                     message: "Agency transaction",
                     sender: {
-//                                  	 customer_number:"4582433857738986"
-                                     customer_number: $('#ecrn').val()
-                                },
-                                receiver: {
-                                    mobile_number: $('#beneficiarymobile').val(),
-                                    first_name: $('#beneficiaryFirstName').val(),
-                                    last_name: $('#beneficiaryLastName').val(),
-                                    relation_code: "32",
-                                    nationality: $('#beneficiaryNationality').val(),
-                                    receiver_address: [
-                                        {
-                                            address_type: "PRESENT",
-                                            address_line: $('#beneficiaryAddress1').val(),
-                                            town_name: $('#beneficiaryCity').val(),
-                                            country_code: $('#beneficiaryNationality').val()
-                                        }
-                                    ],
-                                    bank_details: {
-                                        account_type_code: $('#beneficiaryAccountType').val(),
-                                        account_number: $('#confirmAccountNo').val(),
-                                        routing_code: $('#bankBranches').val()
-                                    }
-                                },
-                                transaction: {
-                                    quote_id: $('#quoteId').val() // Use stored quote ID
-                                }
-                            };
-
-                            // Show loader and disable button
-                            $('#loader').show();
-                            $('#transactionButton').prop('disabled', true);
-
-                            $.ajax({
-                                url: '/api/v1/raas/create-transaction',
-                                method: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify(payload),
-                                success: function(response) {
-                                    if (response.status === 200) {
-                                        var state = response.state;
-                                        var subState = response.sub_state;
-                                        var transactionRefNumber = response.transaction_ref_number;
-
-                                        const transactionData = {
-                                                           
-                                                            ecrn: $('#ecrn').val(),
-                                                              firstName: $('#firstName').val(),
-                                                              middleName: $('#middleName').val(),
-                                                              lastName: $('#lastName').val(),
-                                                              dateOfBirth: $('#dateOfBirth').val(),
-                                                              primaryMobileNumber: $('#primaryMobileNumber').val(),
-                                                              emailId: $('#emailId').val(),
-                                                              placeOfBirth: $('#placeOfBirth').val(),
-                                                              address1: $('#address1').val(),
-                                                              address2: $('#address2').val(),
-                                                              city: $('#currentCity').val(),
-                                                              state: $('#state').val(),
-                                                              country: $('#country').val(),
-                                                              countryOfResidence: $('#countryOfResidence').val(),
-                                                              nationality: $('#nationality').val(),
-                                                              customerCategory: $('#customerCategory').val(),
-                                                              customerType: $('#customerType').val(),
-                                                              idType: $('#idType').val(),
-                                                              idNumber: $('#idNumber').val(),
-                                                              issuedBy: $('#issuedBy').val(),
-                                                              issuedOn: $('#issuedOn').val(),
-                                                              dateOfExpiry: $('#dateOfExpiry').val(),
-                                                              visaNumber: $('#visaNumber').val(),
-                                                              visaExpiryDate: $('#visaExpiryDate').val(),
-                                                              visaType: $('#visaType').val(),
-                                                              issuedCountry: $('#issuedCountry').val(),
-
-                                                              // Beneficiary Details
-                                                              beneficiaryDeliveryOption: $('#beneficiaryDeliveryOption').val(),
-                                                              payOutCountry: $('#payOutCountry').val(),
-                                                              currencies: $('#currencies').val(),
-                                                              beneficiaryBank: $('#beneficiaryBank').val(),
-                                                              beneficiaryBranch: $('#bankBranches').val(),
-                                                              beneficiaryIban: $('#beneficiaryIban').val(),
-                                                              beneficiaryAccountType: $('#beneficiaryAccountType').val(),
-                                                              beneficiaryAccountNo: $('#accountNo').val(),
-                                                              beneficiaryType: $('#beneficiaryType').val(),
-                                                              beneficiaryRelation: $('#beneficiaryRelation').val(),
-                                                              beneficiaryNickname: $('#beneficiaryNickname').val(),
-                                                              beneficiaryFirstName: $('#beneficiaryFirstName').val(),
-                                                              beneficiaryMiddleName: $('#beneficiaryMiddleName').val(),
-                                                              beneficiaryLastName: $('#beneficiaryLastName').val(),
-                                                              beneficiaryAddress1: $('#beneficiaryAddress1').val(),
-                                                              beneficiaryAddress2: $('#beneficiaryAddress2').val(),
-                                                              beneficiaryCity: $('#beneficiaryCity').val(),
-                                                              beneficiaryState: $('#beneficiaryState').val(),
-                                                              beneficiaryMobile: $('#beneficiaryMobile').val(),
-                                                              beneficiaryNationality: $('#beneficiaryNationality').val(),
-                                                              beneficiaryDob: $('#beneficiaryDob').val(),
-                                                              beneficiaryIdType: $('#beneficiaryIdType').val(),
-                                                              beneficiaryIdNo: $('#beneficiaryIdNo').val(),
-                                                              payInCurrency: $('#payInCurrency').val(),
-                                                              sourceOfFund: $('#sourceOfFund').val(),
-                                                              transactionPurpose: $('#transactionPurpose').val(),
-                                                              valueDate: $('#valueDate').val(),
-                                                              remarks: $('#remarks').val(),
-                                                              payoutAmount: $('#payoutAmount').val(),
-                                                              rate: $('#rate').val(),
-                                                              commission: $('#commission').val(),
-                                                              tax: $('#tax').val(),
-                                                              payInAmount: $('#payInAmount').val(),
-                                                              totalPayInAmount: $('#totalPayInAmount').val(),
-                                                              paymentMode: $('#paymentMode').val(),
-                                                              transactionReferenceNumber: transactionRefNumber,
-                                                              transactionState: state,
-                                                              transactionSubState: subState
-                                        };
-
-                                        // Save transaction data to the database
-                                        saveTransaction(transactionData);
-
-                                        $('#loader').hide();
-                                        $('#createTransactionSection').hide();
-
-                                        $('#transactionState').val(state);
-                                        alert("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
-                                     // Change the current page to "https://example.com"
-                                        window.location.href = "transfer-list";
- 
-                                        //$('#transactionMessage').text("Transaction created successfully with Reference Number: " + transactionRefNumber + " and Status: " + state);
-                                    }
-                                },
-                                error: function() {
-                                    $('#loader').hide();
-                                    alert('Failed to create transaction. Please try again.');
-                                },
-                                complete: function() {
-                                    // Hide loader and enable button
-                                    $('#loader').hide();
-                                    $('#transactionButton').prop('disabled', false);
-                                }
-                            });
+                        customer_number: $('#ecrn').val()
+                    },
+                    receiver: {
+                        mobile_number: $('#beneficiarymobile').val(),
+                        first_name: $('#beneficiaryFirstName').val(),
+                        last_name: $('#beneficiaryLastName').val(),
+                        relation_code: "32",
+                        nationality: $('#beneficiaryNationality').val(),
+                        receiver_address: [
+                            {
+                                address_type: "PRESENT",
+                                address_line: $('#beneficiaryAddress1').val(),
+                                town_name: $('#beneficiaryCity').val(),
+                                country_code: $('#beneficiaryNationality').val()
+                            }
+                        ],
+                        bank_details: {
+                            account_type_code: $('#beneficiaryAccountType').val(),
+                            account_number: $('#confirmAccountNo').val(),
+                            routing_code: $('#bankBranches').val()
                         }
+                    },
+                    transaction: {
+                        quote_id: $('#quoteId').val()
+                    }
+                };
+
+                // Show loader and disable button
+                $('#loader').show();
+                $('#transactionButton').prop('disabled', true);
+
+                $.ajax({
+                    url: '/api/v1/raas/create-transaction',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(payload),
+                    success: function(response) {
+                        if (response.status === 200) {
+                            var transactionRefNumber = response.transaction_ref_number;
+                            var state                = response.state;
+                            var subState             = response.sub_state;
+
+                            // Call confirm-transaction service
+                            confirmTransaction(transactionRefNumber, state, subState);
+                        }
+                    },
+                    error: function() {
+                        $('#loader').hide();
+                        alert('Failed to create transaction. Please try again.');
+                    },
+                    complete: function() {
+                        $('#loader').hide();
+                        $('#transactionButton').prop('disabled', false);
+                    }
+                });
+            }
+
+            // Function to call the confirm-transaction service
+            function confirmTransaction(transactionRefNumber, state, subState) {
+                const confirmPayload = {
+                    transaction_ref_number: transactionRefNumber
+                };
+
+                $.ajax({
+                    url: '/api/v1/raas/confirm-transaction',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(confirmPayload),
+                    success: function(confirmResponse) {
+                        const transactionData = {
+                            ecrn: $('#ecrn').val(),
+                            transactionReferenceNumber: transactionRefNumber,
+                            paymentStatus: confirmResponse.status,
+                            transactionState: confirmResponse.data ? confirmResponse.data.state : state,
+                            transactionSubState: confirmResponse.data ? confirmResponse.data.sub_state : subState,
+
+                            firstName: $('#firstName').val(),
+                             middleName: $('#middleName').val(),
+                             lastName: $('#lastName').val(),
+                             dateOfBirth: $('#dateOfBirth').val(),
+                             primaryMobileNumber: $('#primaryMobileNumber').val(),
+                             emailId: $('#emailId').val(),
+                             placeOfBirth: $('#placeOfBirth').val(),
+                             address1: $('#address1').val(),
+                             address2: $('#address2').val(),
+                             city: $('#currentCity').val(),
+                             state: $('#state').val(),
+                             country: $('#country').val(),
+                             countryOfResidence: $('#countryOfResidence').val(),
+                             nationality: $('#nationality').val(),
+                             customerCategory: $('#customerCategory').val(),
+                             customerType: $('#customerType').val(),
+                             idType: $('#idType').val(),
+                             idNumber: $('#idNumber').val(),
+                             issuedBy: $('#issuedBy').val(),
+                             issuedOn: $('#issuedOn').val(),
+                             dateOfExpiry: $('#dateOfExpiry').val(),
+                             visaNumber: $('#visaNumber').val(),
+                             visaExpiryDate: $('#visaExpiryDate').val(),
+                             visaType: $('#visaType').val(),
+                             issuedCountry: $('#issuedCountry').val(),
+
+                             // Beneficiary Details
+                             beneficiaryDeliveryOption: $('#beneficiaryDeliveryOption').val(),
+                             payOutCountry: $('#payOutCountry').val(),
+                             currencies: $('#currencies').val(),
+                             beneficiaryBank: $('#beneficiaryBank').val(),
+                             beneficiaryBranch: $('#bankBranches').val(),
+                             beneficiaryIban: $('#beneficiaryIban').val(),
+                             beneficiaryAccountType: $('#beneficiaryAccountType').val(),
+                             beneficiaryAccountNo: $('#accountNo').val(),
+                             beneficiaryType: $('#beneficiaryType').val(),
+                             beneficiaryRelation: $('#beneficiaryRelation').val(),
+                             beneficiaryNickname: $('#beneficiaryNickname').val(),
+                             beneficiaryFirstName: $('#beneficiaryFirstName').val(),
+                             beneficiaryMiddleName: $('#beneficiaryMiddleName').val(),
+                             beneficiaryLastName: $('#beneficiaryLastName').val(),
+                             beneficiaryAddress1: $('#beneficiaryAddress1').val(),
+                             beneficiaryAddress2: $('#beneficiaryAddress2').val(),
+                             beneficiaryCity: $('#beneficiaryCity').val(),
+                             beneficiaryState: $('#beneficiaryState').val(),
+                             beneficiaryMobile: $('#beneficiaryMobile').val(),
+                             beneficiaryNationality: $('#beneficiaryNationality').val(),
+                             beneficiaryDob: $('#beneficiaryDob').val(),
+                             beneficiaryIdType: $('#beneficiaryIdType').val(),
+                             beneficiaryIdNo: $('#beneficiaryIdNo').val(),
+                             payInCurrency: $('#payInCurrency').val(),
+                             sourceOfFund: $('#sourceOfFund').val(),
+                             transactionPurpose: $('#transactionPurpose').val(),
+                             valueDate: $('#valueDate').val(),
+                             remarks: $('#remarks').val(),
+                             payoutAmount: $('#payoutAmount').val(),
+                             rate: $('#rate').val(),
+                             commission: $('#commission').val(),
+                             tax: $('#tax').val(),
+                             payInAmount: $('#payInAmount').val(),
+                             totalPayInAmount: $('#totalPayInAmount').val(),
+                             paymentMode: $('#paymentMode').val()
+
+                            // Include other fields as required
+                        };
+
+                        // Save transaction data
+                        saveTransaction(transactionData);
+
+                        if (confirmResponse.status === 'success') {
+                            alert("Transaction confirmed successfully with Reference Number: " + transactionRefNumber);
+                            window.location.href = "transfer-list";
+                        }
+                    },
+                    error: function(errorResponse) {
+                        const errorData = errorResponse.responseJSON || {};
+                        const transactionData = {
+                            ecrn: $('#ecrn').val(),
+                            transactionReferenceNumber: transactionRefNumber,
+                            paymentStatus: errorData.status,
+                            transactionState: state,
+                            transactionSubState: subState,
+
+                            firstName: $('#firstName').val(),
+                             middleName: $('#middleName').val(),
+                             lastName: $('#lastName').val(),
+                             dateOfBirth: $('#dateOfBirth').val(),
+                             primaryMobileNumber: $('#primaryMobileNumber').val(),
+                             emailId: $('#emailId').val(),
+                             placeOfBirth: $('#placeOfBirth').val(),
+                             address1: $('#address1').val(),
+                             address2: $('#address2').val(),
+                             city: $('#currentCity').val(),
+                             state: $('#state').val(),
+                             country: $('#country').val(),
+                             countryOfResidence: $('#countryOfResidence').val(),
+                             nationality: $('#nationality').val(),
+                             customerCategory: $('#customerCategory').val(),
+                             customerType: $('#customerType').val(),
+                             idType: $('#idType').val(),
+                             idNumber: $('#idNumber').val(),
+                             issuedBy: $('#issuedBy').val(),
+                             issuedOn: $('#issuedOn').val(),
+                             dateOfExpiry: $('#dateOfExpiry').val(),
+                             visaNumber: $('#visaNumber').val(),
+                             visaExpiryDate: $('#visaExpiryDate').val(),
+                             visaType: $('#visaType').val(),
+                             issuedCountry: $('#issuedCountry').val(),
+
+                             // Beneficiary Details
+                             beneficiaryDeliveryOption: $('#beneficiaryDeliveryOption').val(),
+                             payOutCountry: $('#payOutCountry').val(),
+                             currencies: $('#currencies').val(),
+                             beneficiaryBank: $('#beneficiaryBank').val(),
+                             beneficiaryBranch: $('#bankBranches').val(),
+                             beneficiaryIban: $('#beneficiaryIban').val(),
+                             beneficiaryAccountType: $('#beneficiaryAccountType').val(),
+                             beneficiaryAccountNo: $('#accountNo').val(),
+                             beneficiaryType: $('#beneficiaryType').val(),
+                             beneficiaryRelation: $('#beneficiaryRelation').val(),
+                             beneficiaryNickname: $('#beneficiaryNickname').val(),
+                             beneficiaryFirstName: $('#beneficiaryFirstName').val(),
+                             beneficiaryMiddleName: $('#beneficiaryMiddleName').val(),
+                             beneficiaryLastName: $('#beneficiaryLastName').val(),
+                             beneficiaryAddress1: $('#beneficiaryAddress1').val(),
+                             beneficiaryAddress2: $('#beneficiaryAddress2').val(),
+                             beneficiaryCity: $('#beneficiaryCity').val(),
+                             beneficiaryState: $('#beneficiaryState').val(),
+                             beneficiaryMobile: $('#beneficiaryMobile').val(),
+                             beneficiaryNationality: $('#beneficiaryNationality').val(),
+                             beneficiaryDob: $('#beneficiaryDob').val(),
+                             beneficiaryIdType: $('#beneficiaryIdType').val(),
+                             beneficiaryIdNo: $('#beneficiaryIdNo').val(),
+                             payInCurrency: $('#payInCurrency').val(),
+                             sourceOfFund: $('#sourceOfFund').val(),
+                             transactionPurpose: $('#transactionPurpose').val(),
+                             valueDate: $('#valueDate').val(),
+                             remarks: $('#remarks').val(),
+                             payoutAmount: $('#payoutAmount').val(),
+                             rate: $('#rate').val(),
+                             commission: $('#commission').val(),
+                             tax: $('#tax').val(),
+                             payInAmount: $('#payInAmount').val(),
+                             totalPayInAmount: $('#totalPayInAmount').val(),
+                             paymentMode: $('#paymentMode').val()
+
+                            // Include other fields as required
+                        };
+
+                        // Save transaction data
+                        saveTransaction(transactionData);
+
+                        alert('Transaction confirmation failed: ' + (errorData.message || 'Unknown error'));
+                    }
+                });
+            }
+
+            // Function to save the transaction data
             function saveTransaction(data) {
                 $.ajax({
                     url: '/api/v1/transfer',
@@ -802,7 +897,7 @@ $(document).ready(function() {
 
                 // Initial validation on page load
                 validateSubmitButton();
-               
+
             });
 
 $(document)
@@ -810,14 +905,14 @@ $(document)
 		function() {
 			$('#beneficiaryNationality')
 			.on('change',function() {
-					let dependent = $(this).val(); 
-					if (dependent) { 
-						$.ajax({url :'/api/enumEntities/dependent', 
+					let dependent = $(this).val();
+					if (dependent) {
+						$.ajax({url :'/api/enumEntities/dependent',
 							type : 'GET',data : {
 									dependent : dependent
-									}, 
+									},
 									success : function(data) {
-													
+
 									$('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
 									$.each(data,function(index,enumValue) {
 									$('#beneficiaryState').append('<option value="' + enumValue.description + '">'+ enumValue.description+ '</option>');

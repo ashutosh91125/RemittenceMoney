@@ -23,6 +23,7 @@ public class TransferServiceImpl implements TransferService {
 	@Autowired
 	private TransferRepository transferRepository;
 
+	@Autowired
 	private BeneficiaryDetailsRepository beneficiaryRepository;
 
 	@Override

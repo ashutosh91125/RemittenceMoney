@@ -235,29 +235,18 @@
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
 <script>
-	function toggleBeneficiaryDivs() {
-		const beneficiarySelect = document.getElementById("beneficiarySelect");
-		const createBeneficiaryDiv = document
-				.getElementById("createBeneficiaryDiv");
-		const selectBeneficiaryDiv = document
-				.getElementById("selectBeneficiaryDiv");
-
-		// Hide both divs by default
-		createBeneficiaryDiv.style.display = "none";
-		selectBeneficiaryDiv.style.display = "none";
-
-		// Show the appropriate div based on the selected value
-		if (beneficiarySelect.value === "0") {
-			createBeneficiaryDiv.style.display = "block";
-		} else if (beneficiarySelect.value === "1") {
-			selectBeneficiaryDiv.style.display = "block";
+	function showSelectBeneficiaryDiv() {
+		const beneficiaryDiv = document.getElementById("selectBeneficiaryDiv");
+		if (beneficiaryDiv.style.display === "none" || beneficiaryDiv.style.display === "") {
+			beneficiaryDiv.style.display = "block"; 
+		} else {
+			beneficiaryDiv.style.display = "none"; 
 		}
 	}
 </script>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 			<!-- [ page-header ] start -->
@@ -550,28 +539,52 @@
 							class="accordion-collapse collapse ">
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body personal-info">
-									<!-- <div class="row"
+									<div class="row"
 										style="justify-content: end; align-items: baseline; background: aliceblue;">
 										<div class="col-12 col-md-2">
-											<select data-select2-selector="icon" class="form-control p-2"
-												id="searchBenficery">
-												<option value="">Select Benficery</option>
-											</select>
+											<button onclick="showSelectBeneficiaryDiv()"
+												class="btn btn-primary">select Beneficiry</button>
 										</div>
-									</div> -->
+									</div>
 									<div class="row">
 										<div class="col-lg-3">
-											<div class="mb-4">
+											<!-- <div class="mb-4">
 												<select class="form-control" data-select2-selector="icon"
 													onchange="toggleBeneficiaryDivs()" id="beneficiarySelect">
 													<option value="" disabled="true" selected="true">Beneficiary</option>
 													<option value="0">Create Beneficiary</option>
 													<option value="1">Select Beneficiary</option>
 												</select> <span id="residentTypeError" class="text-danger"></span>
-											</div>
+											</div> -->
 										</div>
 									</div>
-									<div id="createBeneficiaryDiv" style="display: none;">
+									<div id="selectBeneficiaryDiv" style="display: none;">
+										<div class="row" id="benficeryTable"
+											style="display: flex; justify-content: center;">
+											<div class="col-lg-8 p-4">
+												<div class="card stretch stretch-full">
+													<div class="card-body p-0">
+														<div class="table-responsive">
+															<table class="table table-hover" id="search-result1">
+																<thead>
+																	<tr>
+																		<th>Beneficiary Full Name</th>
+																		<th>Bank Name</th>
+																		<th>Account Number</th>
+																	</tr>
+																</thead>
+																<tbody id="search-result1-body">
+																	<!-- Dynamic rows will be added here -->
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+									</div>
+									<div id="createBeneficiaryDiv">
 										<div class="row">
 											<div class="col-12 col-md-4">
 												<label class="form-label">Delivery Option<span
@@ -828,31 +841,7 @@
 											</div>
 										</div>
 									</div>
-									<div id="selectBeneficiaryDiv" style="display: none;">
-										<div class="row">
-											<div class="col-lg-8">
-												<div class="card stretch stretch-full">
-													<div class="card-body p-0">
-														<div class="table-responsive">
-															<table class="table table-hover" id="search-result1">
-																<thead>
-																	<tr>
-																		<th>Beneficiary Full Name</th>
-																		<th>Bank Name</th>
-																		<th>Account Number</th>
-																	</tr>
-																</thead>
-																<tbody id="search-result1-body">
-																	<!-- Dynamic rows will be added here -->
-																</tbody>
-															</table>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
 
-									</div>
 								</div>
 							</div>
 						</div>

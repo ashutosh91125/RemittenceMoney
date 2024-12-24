@@ -117,24 +117,30 @@ $(document).ready(function () {
 		                        success: function (bankResponse) {
 		                            let bankName = bankResponse?.bankName || "Unknown Bank"; // Use the bank name or a fallback value
 									console.log(bankName);
-		                            let row = `<tr>
-		                                <td>${beneficiary.fullName}</td>
-		                                <td>${bankName}</td>
-		                                <td>${beneficiary.beneficiaryAccountNo}</td>
-		                            </tr>`;
+									let row = `<tr data-beneficiary-id="${beneficiary.id}">
+									                                <td class="clickable">${beneficiary.fullName}</td>
+									                                <td>${bankName}</td>
+									                                <td>${beneficiary.beneficiaryAccountNo}</td>
+									                            </tr>`;
 		                            tableBody.append(row);
 		                        },
 		                        error: function () {
 		                            console.error("Error fetching bank name for bank ID:", beneficiary.beneficiaryBank);
-		                            let row = `<tr>
-		                                <td>${beneficiary.fullName}</td>
-		                                <td>Unknown Bank</td>
-		                                <td>${beneficiary.beneficiaryAccountNo}</td>
-		                            </tr>`;
+									let row = `<tr data-beneficiary-id="${beneficiary.id}">
+									                               <td class="clickable">${beneficiary.fullName}</td>
+									                               <td>Unknown Bank</td>
+									                               <td>${beneficiary.beneficiaryAccountNo}</td>
+									                           </tr>`;
 		                            tableBody.append(row);
 		                        }
 		                    });
 		                });
+						tableBody.on('click', '.clickable', function () {
+						                    let beneficiaryId = $(this).closest('tr').data('beneficiary-id');
+						                    if (beneficiaryId) {
+						                        fetchBeneficiaryDetails(beneficiaryId);
+						                    }
+						                });
 		            } else {
 		                console.warn(response.message || "No beneficiaries found for the provided ECRN.");
 		                let tableBody = $('#search-result1 tbody');
@@ -148,7 +154,6 @@ $(document).ready(function () {
 		        }
 		    });
 		}
-
     })
      $('#searchBenficery').on('change', function () {
                     var selectedId = $(this).val(); // Get the selected value (beneficiary ID)

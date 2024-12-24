@@ -413,6 +413,7 @@ $(document).ready(function () {
                     $('#beneficiaryAccountType').val(beneficiary.beneficiaryAccountType?.trim() || '').change();
                     $('#accountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
                     $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
+                    $('#beneficiaryAccountName').val(beneficiary.beneficiaryAccountName?.trim() || '');
                     $('#beneficiaryIban').val(beneficiary.beneficiaryIban?.trim() || '');
                     $('#beneficiaryType').val(beneficiary.beneficiaryType?.trim() || '').change();
                     $('#beneficiaryNickname').val(beneficiary.beneficiaryNickname?.trim() || '');
@@ -794,6 +795,7 @@ $(document).ready(function() {
                              beneficiaryIban: $('#beneficiaryIban').val(),
                              beneficiaryAccountType: $('#beneficiaryAccountType').val(),
                              beneficiaryAccountNo: $('#accountNo').val(),
+                             beneficiaryAccountName: $('#beneficiaryAccountName').val(),
                              beneficiaryType: $('#beneficiaryType').val(),
                              beneficiaryRelation: $('#beneficiaryRelation').val(),
                              beneficiaryNickname: $('#beneficiaryNickname').val(),
@@ -877,6 +879,7 @@ $(document).ready(function() {
                              beneficiaryIban: $('#beneficiaryIban').val(),
                              beneficiaryAccountType: $('#beneficiaryAccountType').val(),
                              beneficiaryAccountNo: $('#accountNo').val(),
+                             beneficiaryAccountName: $('#beneficiaryAccountName').val(),
                              beneficiaryType: $('#beneficiaryType').val(),
                              beneficiaryRelation: $('#beneficiaryRelation').val(),
                              beneficiaryNickname: $('#beneficiaryNickname').val(),
@@ -1424,13 +1427,20 @@ $(document)
 										</div>
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
+												<label class="form-label">Account Name</label> <input type="text"
+													class="form-control" id="beneficiaryAccountName"
+													name="beneficiaryAccountName" placeholder="Account Name">
+											</div>
+										</div>
+									</div>
+									<div class="row">
+									<div class="col-12 col-md-4">
+											<div class="mb-1">
 												<label class="form-label">IBAN</label> <input type="text"
 													class="form-control" id="beneficiaryIban"
 													name="beneficiaryIban" placeholder="IBAN">
 											</div>
 										</div>
-									</div>
-									<div class="row">
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Type</label> <select
@@ -1451,13 +1461,13 @@ $(document)
 												</select>
 											</div>
 										</div>
-										<div class="col-12 col-md-4">
+									</div>
+									<div class="row">
+									<div class="col-12 col-md-4">
 											<label class="form-label">Nick Name</label> <input
 												type="text" class="form-control" id="beneficiaryNickname"
 												name="beneficiaryNickname" placeholder="Nick Name">
 										</div>
-									</div>
-									<div class="row">
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">First Name</label> <input
@@ -1472,15 +1482,15 @@ $(document)
 													name="beneficiaryMiddleName" placeholder="Middle Name">
 											</div>
 										</div>
-										<div class="col-12 col-md-4">
+									</div>
+									<div class="row">
+									<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Last Name</label> <input
 													type="text" class="form-control" id="beneficiaryLastName"
 													name="beneficiaryLastName" placeholder="Last Name">
 											</div>
 										</div>
-									</div>
-									<div class="row">
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary Address 1</label> <input
@@ -1495,15 +1505,15 @@ $(document)
 													name="beneficiaryAddress2" placeholder="Address 2">
 											</div>
 										</div>
-										<div class="col-12 col-md-4">
+									</div>
+									<div class="row">
+									<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Beneficiary City</label> <input
 													type="text" class="form-control" id="beneficiaryCity"
 													name="beneficiaryCity" placeholder="City">
 											</div>
 										</div>
-									</div>
-									<div class="row">
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Nationality</label> <select
@@ -1529,15 +1539,15 @@ $(document)
 												</select>
 											</div>
 										</div>
-										<div class="col-12 col-md-4">
+									</div>
+									<div class="row">
+									<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Mobile</label> <input type="text"
 													class="form-control" id="beneficiaryMobile"
 													name="beneficiaryMobile" placeholder="Mobile">
 											</div>
 										</div>
-									</div>
-									<div class="row">
 										<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">Date of Birth</label> <input
@@ -1555,7 +1565,9 @@ $(document)
 												</select>
 											</div>
 										</div>
-										<div class="col-12 col-md-4">
+									</div>
+									<div class="row">
+									<div class="col-12 col-md-4">
 											<div class="mb-1">
 												<label class="form-label">ID No.</label> <input type="text"
 													class="form-control" id="beneficiaryIdNo"

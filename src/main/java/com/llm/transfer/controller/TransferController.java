@@ -11,12 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 
 import com.llm.Service.CustomerService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
+import com.llm.raas.model.Bank;
 import com.llm.raas.service.BankDetailsService;
 import com.llm.transfer.Service.TransferService;
 import com.llm.transfer.model.Transfer;
@@ -104,6 +104,10 @@ public class TransferController {
 		try {
 			// Fetching the list of transfers
 			List<Transfer> transferList = transferService.getAllTransfers();
+			for (Transfer transfer : transferList) {
+		        Bank bank = bankService.getBankById(transfer.getBeneficiaryBank());
+		        transfer.setBeneficiaryBank(bank.getBankName());  // Set the bank name in the transfer object
+		    }
 
 			// Sorting the transferList by date in descending order
 			transferList.sort((t1, t2) -> t2.getTransactionDate().compareTo(t1.getTransactionDate())); // Date is sorted in descending order

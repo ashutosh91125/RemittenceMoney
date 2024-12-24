@@ -13,13 +13,22 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="assets/vendors/css/dataTables.bs5.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+    <style type="text/css">
+   .truncate-text {
+        display: inline-block;
+        max-width: 150px; /* Set the maximum width for the text */
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        vertical-align: middle;
+    }
+</style>
+
 </head>
 
 <body>
     <!-- Header Include -->
-    <div class="nxl-navigation">
         <jsp:include page="header.jsp"></jsp:include>
-    </div>
 
     <!-- Page Content -->
     <div class="nxl-container" style="background: aliceblue;">
@@ -52,8 +61,8 @@
                                                 <th>Date</th>
                                                 <th>PayIn Amount</th>
                                                 <th>PayOut Amount</th>
+                                                <th>Beneficiary Details</th>
                                                 <th>Transaction State</th>
-                                                <th>Sub State</th>
                                                 <th class="text-end">Actions</th>
                                             </tr>
                                         </thead>
@@ -65,8 +74,14 @@
                                                     <td>${transfer.transactionDate}</td>
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
                                                     <td>${transfer.currencies} ${transfer.payoutAmount}</td>
-                                                    <td>${transfer.transactionState}</td>
-                                                    <td>${transfer.transactionSubState}</td>
+                                                    <td>
+                                                    <div>${transfer.beneficiaryFirstName}${transfer.beneficiaryMiddleName} ${transfer.beneficiaryLastName}</div>
+                                                    <div><span class="truncate-text" title="${transfer.beneficiaryBank}">${transfer.beneficiaryBank} </span></div>
+                                                    <div>${transfer.beneficiaryAccountNo}</div>
+                                                    </td>
+                                                    <td>
+                                                    <div>${transfer.transactionState} </div>
+                                                    <div>(${transfer.transactionSubState})</div></td>
                                                     <td class="text-end">
                                                         <img class="transactionLogo" title="Check Status"
                                                              src="assets/images/transferList/refreshState.svg"

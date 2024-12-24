@@ -232,7 +232,28 @@
 	z-index: 9999;
 	display: none;
 }
-</style><script type="text/javascript" src="js/transfer.js"></script>
+</style>
+<script type="text/javascript" src="js/transfer.js"></script>
+<script>
+	function toggleBeneficiaryDivs() {
+		const beneficiarySelect = document.getElementById("beneficiarySelect");
+		const createBeneficiaryDiv = document
+				.getElementById("createBeneficiaryDiv");
+		const selectBeneficiaryDiv = document
+				.getElementById("selectBeneficiaryDiv");
+
+		// Hide both divs by default
+		createBeneficiaryDiv.style.display = "none";
+		selectBeneficiaryDiv.style.display = "none";
+
+		// Show the appropriate div based on the selected value
+		if (beneficiarySelect.value === "0") {
+			createBeneficiaryDiv.style.display = "block";
+		} else if (beneficiarySelect.value === "1") {
+			selectBeneficiaryDiv.style.display = "block";
+		}
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -356,9 +377,9 @@
 										</div>
 										<div class="col-12 col-md-4">
 											<label class="form-label">Middle Name<span
-													class="text-danger">*</span></label> <input
-												name="middleName" type="text" class="form-control"
-												placeholder="Middle Name" id="middleName" readonly />
+												class="text-danger">*</span></label> <input name="middleName"
+												type="text" class="form-control" placeholder="Middle Name"
+												id="middleName" readonly />
 										</div>
 									</div>
 									<div class="row">
@@ -529,7 +550,7 @@
 							class="accordion-collapse collapse ">
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body personal-info">
-									<div class="row"
+									<!-- <div class="row"
 										style="justify-content: end; align-items: baseline; background: aliceblue;">
 										<div class="col-12 col-md-2">
 											<select data-select2-selector="icon" class="form-control p-2"
@@ -537,266 +558,300 @@
 												<option value="">Select Benficery</option>
 											</select>
 										</div>
-									</div>
+									</div> -->
 									<div class="row">
-										<div class="col-12 col-md-4">
-											<label class="form-label">Delivery Option<span
+										<div class="col-lg-3">
+											<div class="mb-4">
+												<select class="form-control" data-select2-selector="icon"
+													onchange="toggleBeneficiaryDivs()" id="beneficiarySelect">
+													<option value="" disabled="true" selected="true">Beneficiary</option>
+													<option value="0">Create Beneficiary</option>
+													<option value="1">Select Beneficiary</option>
+												</select> <span id="residentTypeError" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+									<div id="createBeneficiaryDiv" style="display: none;">
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<label class="form-label">Delivery Option<span
 													class="text-danger">*</span></label><select
-												data-select2-selector="icon" class="form-control"
-												name="beneficiaryDeliveryOption"
-												id="beneficiaryDeliveryOption">
-												<option value="">Select Delivery Option</option>
-												<option value="CASHPICKUP">Cash Pickup</option>
-												<option value="MOBILEWALLET">Mobile Wallet</option>
-												<option value="BANK">BANK</option>
-											</select>
-											<span id="beneficiaryDeliveryOptionError" class="text-danger"></span>
-										</div>
-										<div class="col-12 col-md-4">
-											<label class="form-label">Payout Country<span
+													data-select2-selector="icon" class="form-control"
+													name="beneficiaryDeliveryOption"
+													id="beneficiaryDeliveryOption">
+													<option value="">Select Delivery Option</option>
+													<option value="CASHPICKUP">Cash Pickup</option>
+													<option value="MOBILEWALLET">Mobile Wallet</option>
+													<option value="BANK">BANK</option>
+												</select> <span id="beneficiaryDeliveryOptionError"
+													class="text-danger"></span>
+											</div>
+											<div class="col-12 col-md-4">
+												<label class="form-label">Payout Country<span
 													class="text-danger">*</span></label> <select
-												data-select2-selector="icon" name="payOutCountry"
-												id="payOutCountry" class="form-control">
-												<option value="" disabled selected>Select Payout
-													Country</option>
-												<c:forEach var="country" items="${countryList}">
-													<option value="${country.valueId}">${country.description}</option>
-												</c:forEach>
-											</select>
-											<span id="payOutCountryError" class="text-danger"></span>
-										</div>
-										<div class="col-12 col-md-4">
-											<label class="form-label">Currency<span
-													class="text-danger">*</span></label> <select
-												name="currencies" id="currencies" class="form-control"
-												data-select2-selector="icon">
-												<option value="" disabled selected>Selected
-													Currency</option>
-												<c:forEach var="currency" items="${currencyList}">
-													<option value="${currency.valueId}">${currency.description}</option>
-												</c:forEach>
-											</select>
-											<span id="currenciesError" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Bank<span
-													class="text-danger">*</span></label> <select
-													class="form-control" id="beneficiaryBank"
-													name="beneficiaryBank" data-select2-selector="icon">
-													<option value="" disabled selected>Select Bank</option>
-												</select>
-												<span id="beneficiaryBankError" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Branch<span
-													class="text-danger">*</span></label> <select
-													class="form-control" id="bankBranches"
-													name="beneficiaryBranch" data-select2-selector="icon">
-													<option value="" disabled selected>Select Branch</option>
-												</select>
-												<span id="bankBranchesError" class="text-danger"></span>
-												<!-- <input type="text" class="form-control" id="branch"
-													name="branch" placeholder=""> -->
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Account Type<span
-													class="text-danger">*</span></label> <select
-													class="form-control" id="beneficiaryAccountType"
-													name="beneficiaryAccountType" data-select2-selector="icon">
-													<option value="1">Savings</option>
-													<option value="2">Current</option>
-												</select>
-												<span id="beneficiaryAccountTypeError" class="text-danger"></span>
-											</div>
-										</div>
-
-									</div>
-									<div class="row">
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Account No.<span
-													class="text-danger">*</span></label> <input
-													type="password" class="form-control" id="accountNo"
-													name="beneficiaryAccountNo" placeholder="Account No.">
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Confirm Account No.<span
-													class="text-danger">*</span></label> <input
-													type="text" class="form-control" id="confirmAccountNo"
-													name="beneficiaryConfirmAccountNo"
-													placeholder="Confirm Account No.">
-											</div>
-											<span id="validationMessage"></span>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Account Name</label> <input type="text"
-													class="form-control" id="beneficiaryAccountName"
-													name="beneficiaryAccountName" placeholder="Account Name">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-									<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">IBAN</label> <input type="text"
-													class="form-control" id="beneficiaryIban"
-													name="beneficiaryIban" placeholder="IBAN">
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Beneficiary Type</label> <select
-													class="form-control" id="beneficiaryType"
-													name="beneficiaryType" data-select2-selector="icon">
-													<option value="Individual">Individual</option>
-													<option value="Company">Company</option>
-												</select>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Relation</label> <select
-													class="form-control" id="beneficiaryRelation"
-													name="beneficiaryRelation" data-select2-selector="icon">
-													<option value="Spouse">Spouse</option>
-													<option value="Friend">Friend</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-									<div class="col-12 col-md-4">
-											<label class="form-label">Nick Name</label> <input
-												type="text" class="form-control" id="beneficiaryNickname"
-												name="beneficiaryNickname" placeholder="Nick Name">
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">First Name<span
-													class="text-danger">*</span></label> <input
-													type="text" class="form-control" id="beneficiaryFirstName"
-													name="beneficiaryFirstName" placeholder="First Name">
-													<span id="beneficiaryFirstNameError" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Middle Name</label> <input
-													type="text" class="form-control" id="beneficiaryMiddleName"
-													name="beneficiaryMiddleName" placeholder="Middle Name">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-									<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Last Name<span
-													class="text-danger">*</span></label> <input
-													type="text" class="form-control" id="beneficiaryLastName"
-													name="beneficiaryLastName" placeholder="Last Name">
-													<span id="beneficiaryLastNameError" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Beneficiary Address 1<span
-													class="text-danger">*</span></label> <input
-													type="text" class="form-control" id="beneficiaryAddress1"
-													name="beneficiaryAddress1" placeholder="Address">
-													<span id="beneficiaryAddress1Error" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Beneficiary Address 2</label> <input
-													type="text" class="form-control" id="beneficiaryAddress2"
-													name="beneficiaryAddress2" placeholder="Address 2">
-											</div>
-										</div>
-									</div>
-									<div class="row">
-									<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Beneficiary City<span
-													class="text-danger">*</span></label> <input
-													type="text" class="form-control" id="beneficiaryCity"
-													name="beneficiaryCity" placeholder="City">
-													<span id="beneficiaryCityError" class="text-danger"></span>
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Nationality<span
-													class="text-danger">*</span></label> <select
-													name="beneficiaryNationality" id="beneficiaryNationality"
-													class="form-control" data-select2-selector="icon">
-													<option value="" disabled selected>Nationality</option>
+													data-select2-selector="icon" name="payOutCountry"
+													id="payOutCountry" class="form-control">
+													<option value="" disabled selected>Select Payout
+														Country</option>
 													<c:forEach var="country" items="${countryList}">
 														<option value="${country.valueId}">${country.description}</option>
 													</c:forEach>
-												</select>
-												<span id="beneficiaryNationalityError" class="text-danger"></span>
+												</select> <span id="payOutCountryError" class="text-danger"></span>
 											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Beneficiary State</label> <select
-													name="beneficiaryState" id="beneficiaryState"
-													class="form-control" data-select2-selector="icon">
-													<option value="" disabled selected>Select
-														Beneficiary State</option>
-													<c:forEach var="states" items="${stateList}">
-														<option value="${states.valueId}">${states.description}</option>
+											<div class="col-12 col-md-4">
+												<label class="form-label">Currency<span
+													class="text-danger">*</span></label> <select name="currencies"
+													id="currencies" class="form-control"
+													data-select2-selector="icon">
+													<option value="" disabled selected>Selected
+														Currency</option>
+													<c:forEach var="currency" items="${currencyList}">
+														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
-												</select>
-												<span id="beneficiaryStateError" class="text-danger"></span>
+												</select> <span id="currenciesError" class="text-danger"></span>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Bank<span
+														class="text-danger">*</span></label> <select class="form-control"
+														id="beneficiaryBank" name="beneficiaryBank"
+														data-select2-selector="icon">
+														<option value="" disabled selected>Select Bank</option>
+													</select> <span id="beneficiaryBankError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Branch<span
+														class="text-danger">*</span></label> <select class="form-control"
+														id="bankBranches" name="beneficiaryBranch"
+														data-select2-selector="icon">
+														<option value="" disabled selected>Select Branch</option>
+													</select> <span id="bankBranchesError" class="text-danger"></span>
+													<!-- <input type="text" class="form-control" id="branch"
+													name="branch" placeholder=""> -->
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Account Type<span
+														class="text-danger">*</span></label> <select class="form-control"
+														id="beneficiaryAccountType" name="beneficiaryAccountType"
+														data-select2-selector="icon">
+														<option value="1">Savings</option>
+														<option value="2">Current</option>
+													</select> <span id="beneficiaryAccountTypeError" class="text-danger"></span>
+												</div>
+											</div>
+
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Account No.<span
+														class="text-danger">*</span></label> <input type="password"
+														class="form-control" id="accountNo"
+														name="beneficiaryAccountNo" placeholder="Account No.">
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Confirm Account No.<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" id="confirmAccountNo"
+														name="beneficiaryConfirmAccountNo"
+														placeholder="Confirm Account No.">
+												</div>
+												<span id="validationMessage"></span>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Account Name</label> <input
+														type="text" class="form-control"
+														id="beneficiaryAccountName" name="beneficiaryAccountName"
+														placeholder="Account Name">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">IBAN</label> <input type="text"
+														class="form-control" id="beneficiaryIban"
+														name="beneficiaryIban" placeholder="IBAN">
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Beneficiary Type</label> <select
+														class="form-control" id="beneficiaryType"
+														name="beneficiaryType" data-select2-selector="icon">
+														<option value="Individual">Individual</option>
+														<option value="Company">Company</option>
+													</select>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Relation</label> <select
+														class="form-control" id="beneficiaryRelation"
+														name="beneficiaryRelation" data-select2-selector="icon">
+														<option value="Spouse">Spouse</option>
+														<option value="Friend">Friend</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<label class="form-label">Nick Name</label> <input
+													type="text" class="form-control" id="beneficiaryNickname"
+													name="beneficiaryNickname" placeholder="Nick Name">
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">First Name<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" id="beneficiaryFirstName"
+														name="beneficiaryFirstName" placeholder="First Name">
+													<span id="beneficiaryFirstNameError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Middle Name</label> <input
+														type="text" class="form-control"
+														id="beneficiaryMiddleName" name="beneficiaryMiddleName"
+														placeholder="Middle Name">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Last Name<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" id="beneficiaryLastName"
+														name="beneficiaryLastName" placeholder="Last Name">
+													<span id="beneficiaryLastNameError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Beneficiary Address 1<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" id="beneficiaryAddress1"
+														name="beneficiaryAddress1" placeholder="Address">
+													<span id="beneficiaryAddress1Error" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Beneficiary Address 2</label> <input
+														type="text" class="form-control" id="beneficiaryAddress2"
+														name="beneficiaryAddress2" placeholder="Address 2">
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Beneficiary City<span
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" id="beneficiaryCity"
+														name="beneficiaryCity" placeholder="City"> <span
+														id="beneficiaryCityError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Nationality<span
+														class="text-danger">*</span></label> <select
+														name="beneficiaryNationality" id="beneficiaryNationality"
+														class="form-control" data-select2-selector="icon">
+														<option value="" disabled selected>Nationality</option>
+														<c:forEach var="country" items="${countryList}">
+															<option value="${country.valueId}">${country.description}</option>
+														</c:forEach>
+													</select> <span id="beneficiaryNationalityError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Beneficiary State</label> <select
+														name="beneficiaryState" id="beneficiaryState"
+														class="form-control" data-select2-selector="icon">
+														<option value="" disabled selected>Select
+															Beneficiary State</option>
+														<c:forEach var="states" items="${stateList}">
+															<option value="${states.valueId}">${states.description}</option>
+														</c:forEach>
+													</select> <span id="beneficiaryStateError" class="text-danger"></span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Mobile</label> <input type="text"
+														class="form-control" id="beneficiaryMobile"
+														name="beneficiaryMobile" placeholder="Mobile">
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">Date of Birth</label> <input
+														type="date" class="form-control" id="beneficiaryDob"
+														name="beneficiaryDob">
+												</div>
+											</div>
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">ID Type</label> <select
+														data-select2-selector="icon" class="form-control"
+														id="beneficiaryIdType" name="beneficiaryIdType">
+														<option value="NationalId">National ID</option>
+														<option value="Passport">Passport</option>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 col-md-4">
+												<div class="mb-1">
+													<label class="form-label">ID No.</label> <input type="text"
+														class="form-control" id="beneficiaryIdNo"
+														name="beneficiaryIdNo" placeholder="ID No.">
+												</div>
 											</div>
 										</div>
 									</div>
-									<div class="row">
-									<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Mobile</label> <input type="text"
-													class="form-control" id="beneficiaryMobile"
-													name="beneficiaryMobile" placeholder="Mobile">
+									<div id="selectBeneficiaryDiv" style="display: none;">
+										<div class="row">
+											<div class="col-lg-8">
+												<div class="card stretch stretch-full">
+													<div class="card-body p-0">
+														<div class="table-responsive">
+															<table class="table table-hover" id="search-result1">
+																<thead>
+																	<tr>
+																		<th>Beneficiary Full Name</th>
+																		<th>Bank Name</th>
+																		<th>Account Number</th>
+																	</tr>
+																</thead>
+																<tbody id="search-result1-body">
+																	<!-- Dynamic rows will be added here -->
+																</tbody>
+															</table>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">Date of Birth</label> <input
-													type="date" class="form-control" id="beneficiaryDob"
-													name="beneficiaryDob">
-											</div>
-										</div>
-										<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">ID Type</label> <select
-													data-select2-selector="icon" class="form-control"
-													id="beneficiaryIdType" name="beneficiaryIdType">
-													<option value="NationalId">National ID</option>
-													<option value="Passport">Passport</option>
-												</select>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-									<div class="col-12 col-md-4">
-											<div class="mb-1">
-												<label class="form-label">ID No.</label> <input type="text"
-													class="form-control" id="beneficiaryIdNo"
-													name="beneficiaryIdNo" placeholder="ID No.">
-											</div>
-										</div>
+
 									</div>
 								</div>
 							</div>
@@ -825,8 +880,7 @@
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
-												</select>
-												<span id="payInCurrencyError" class="text-danger"></span>
+												</select> <span id="payInCurrencyError" class="text-danger"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
@@ -839,8 +893,7 @@
 													<option value="LOTTERY">Lottery Income</option>
 													<option value="SLRY">Salary</option>
 													<option value="SVGS">Savings</option>
-												</select>
-												<span id="sourceOfFundError" class="text-danger"></span>
+												</select> <span id="sourceOfFundError" class="text-danger"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Transaction Purpose<span
@@ -854,8 +907,7 @@
 													<option value="P18">Gift</option>
 													<option value="MDCS">Medical Expenses</option>
 													<option value="SAVG">Savings</option>
-												</select>
-												<span id="transactionPurposeError" class="text-danger"></span>
+												</select> <span id="transactionPurposeError" class="text-danger"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -884,8 +936,7 @@
 													<option value="" disabled selected>Select Payment
 														Mode</option>
 													<option value="BANK">Bank Transfer</option>
-												</select>
-												<span id="paymentModeError" class="text-danger"></span>
+												</select> <span id="paymentModeError" class="text-danger"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Remarks</label> <input type="text"
@@ -902,10 +953,10 @@
 													style="color: green;" name="rate" readonly>
 											</div>
 											<div class="col-xl-4">
-												<label class="form-label">Payout Amount</label> <input type="text"
-													class="form-control" placeholder="Payout Amount"
-													style="color: green;" id="payoutAmount" name="payoutAmount"
-													readonly>
+												<label class="form-label">Payout Amount</label> <input
+													type="text" class="form-control"
+													placeholder="Payout Amount" style="color: green;"
+													id="payoutAmount" name="payoutAmount" readonly>
 											</div>
 
 											<div class="col-xl-2">
@@ -1019,10 +1070,11 @@
 							<input type="hidden" id="quoteId" />
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center" style="display: flex; justify-content: center">
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
 						<button type="button" onclick="createTransaction()"
 							class="btn btn-primary" id="createTransactionSection"
-							style="display: none; ">Submit</button>
+							style="display: none;">Submit</button>
 						<div id="transactionMessage"
 							style="color: green; font-weight: bold;"></div>
 					</div>

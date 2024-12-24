@@ -65,7 +65,8 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
         return new BeneficiaryListDTO(
                 beneficiary.getId(),
                 beneficiary.getEcrn(),
-                fullName
+                fullName,beneficiary.getBeneficiaryAccountNo(), // Assuming this field exists in BeneficiaryDetails
+                beneficiary.getBeneficiaryBank()
         );
     }
 

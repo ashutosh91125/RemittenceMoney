@@ -77,7 +77,7 @@ $(document).ready(function () {
             }
         });
      // Fetch Beneficiaries Function
-        function fetchBeneficiaries(ecrn) {
+       /* function fetchBeneficiaries(ecrn) {
             $.ajax({
                 url: '/api/v1/beneficiaries/get-list-by-ecrn/' + ecrn,
                 type: 'GET',
@@ -98,7 +98,56 @@ $(document).ready(function () {
                     alert("An error occurred while fetching beneficiaries.");
                 }
             });
-        }
+        }*/
+		function fetchBeneficiaries(ecrn) {
+		    $.ajax({
+		        url: '/api/v1/beneficiaries/get-list-by-ecrn/' + ecrn,
+		        type: 'GET',
+		        success: function (response) {
+		            if (response.success && response.data?.length > 0) {
+		                console.log("Beneficiaries fetched successfully:", response.data);
+		                let tableBody = $('#search-result1 tbody');
+		                tableBody.empty(); // Clear any existing rows in the table body
+
+		                // For each beneficiary, fetch the bank name using the bank ID
+		                response.data.forEach(function (beneficiary) {
+		                    $.ajax({
+		                        url: '/api/v1/banks/' + beneficiary.beneficiaryBank, // Call the bank API with the bank ID
+		                        type: 'GET',
+		                        success: function (bankResponse) {
+		                            let bankName = bankResponse?.bankName || "Unknown Bank"; // Use the bank name or a fallback value
+									console.log(bankName);
+		                            let row = `<tr>
+		                                <td>${beneficiary.fullName}</td>
+		                                <td>${bankName}</td>
+		                                <td>${beneficiary.beneficiaryAccountNo}</td>
+		                            </tr>`;
+		                            tableBody.append(row);
+		                        },
+		                        error: function () {
+		                            console.error("Error fetching bank name for bank ID:", beneficiary.beneficiaryBank);
+		                            let row = `<tr>
+		                                <td>${beneficiary.fullName}</td>
+		                                <td>Unknown Bank</td>
+		                                <td>${beneficiary.beneficiaryAccountNo}</td>
+		                            </tr>`;
+		                            tableBody.append(row);
+		                        }
+		                    });
+		                });
+		            } else {
+		                console.warn(response.message || "No beneficiaries found for the provided ECRN.");
+		                let tableBody = $('#search-result1 tbody');
+		                tableBody.empty(); // Clear any existing rows
+		                tableBody.append('<tr><td colspan="3">No beneficiaries found</td></tr>');
+		            }
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("Error fetching beneficiaries:", error);
+		            alert("An error occurred while fetching beneficiaries.");
+		        }
+		    });
+		}
 
     })
      $('#searchBenficery').on('change', function () {

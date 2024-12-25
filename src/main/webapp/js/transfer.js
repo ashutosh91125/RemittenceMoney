@@ -173,69 +173,117 @@ $(document).ready(function () {
                     $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
                     $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
                     $('#currencies').val(beneficiary.currencies?.trim() || '').change();
-					if (beneficiary.beneficiaryBank) {
-					                        // If beneficiaryBranch is available
-					                        $.ajax({
-					                            url: '/api/v1/banks/' + beneficiary.beneficiaryBank,
-					                            type: 'GET',
-					                            success: function (bankResponse) {
-					                                console.log(bankResponse);
-					                                if (bankResponse) {
-					                                    $('#beneficiaryBank').empty(); // Clear existing options
-					                                    $('#beneficiaryBank').append( new Option(bankResponse.bankName, bankResponse.bankId)); // Add the branch name
-					                                    $('#beneficiaryBank').val(bankResponse.bankId).change(); // Set and trigger change
-					                                } else {
-					                                	$('#beneficiaryBank').val('').change(); // Clear if no branch found
-					                                }
-					                            },
-					                            error: function () {
-					                                console.error("Error fetching branch details.");
-					                                $('#beneficiaryBank').val('').change(); // Clear on error
+					if (beneficiary.beneficiaryBank && beneficiary.beneficiaryBranch) {
+					                    // Parallel AJAX calls for bank and branch details
+					                    const bankRequest = $.ajax({
+					                        url: '/api/v1/banks/' + beneficiary.beneficiaryBank,
+					                        type: 'GET',
+					                    });
+
+					                    const branchRequest = $.ajax({
+					                        url: '/api/v1/banks/routing-code/' + beneficiary.beneficiaryBranch,
+					                        type: 'GET',
+					                    });
+
+					                    // Wait for both requests to complete
+					                    $.when(bankRequest, branchRequest)
+					                        .done(function (bankResponse, branchResponse) {
+					                            console.log("Bank Response:", bankResponse[0]);
+					                            console.log("Branch Response:", branchResponse[0]);
+
+					                            // Handle bank response
+					                            if (bankResponse[0]) {
+					                                $('#beneficiaryBank').empty();
+					                                $('#beneficiaryBank').append(
+					                                    new Option(bankResponse[0].bankName, bankResponse[0].bankId)
+					                                );
+					                                $('#beneficiaryBank').val(bankResponse[0].bankId).change();
+					                            } else {
+					                                $('#beneficiaryBank').empty();
+					                                $('#beneficiaryBank').append(new Option('Select Bank', '')).change();
 					                            }
+
+					                            // Handle branch response
+					                            if (branchResponse[0]) {
+					                                $('#bankBranches').empty();
+					                                $('#bankBranches').append(
+					                                    new Option(branchResponse[0].branchName, branchResponse[0].routingCode)
+					                                );
+					                                $('#bankBranches').val(branchResponse[0].routingCode).change();
+					                            } else {
+					                                $('#bankBranches').empty();
+					                                $('#bankBranches').append(new Option('Select Branch', '')).change();
+					                            }
+					                        })
+					                        .fail(function () {
+					                            console.error('Error fetching bank or branch details.');
+					                            $('#beneficiaryBank').empty();
+					                            $('#beneficiaryBank').append(new Option('Select Bank', '')).change();
+					                            $('#bankBranches').empty();
+					                            $('#bankBranches').append(new Option('Select Branch', '')).change();
 					                        });
-					                    } 
-                    if (beneficiary.beneficiaryBranch) {
-                        // If beneficiaryBranch is available
-                        $.ajax({
-                            url: '/api/v1/banks/routing-code/' + beneficiary.beneficiaryBranch,
-                            type: 'GET',
-                            success: function (branchResponse) {
-                                console.log(branchResponse);
-                                if (branchResponse) {
-                                    $('#bankBranches').empty(); // Clear existing options
-                                    $('#bankBranches').append( new Option(branchResponse.branchName, branchResponse.routingCode)); // Add the branch name
-                                    $('#bankBranches').val(branchResponse.routingCode).change(); // Set and trigger change
-                                } else {
-                                	$('#bankBranches').val('').change(); // Clear if no branch found
-                                }
-                            },
-                            error: function () {
-                                console.error("Error fetching branch details.");
-                                $('#bankBranches').val('').change(); // Clear on error
-                            }
-                        });
-                    } 
-                   /*  else {
-                        // Fallback action when beneficiaryBranch is not available
-                        $.ajax({
-                            url: '/api/v1/banks/default-branches', // Example fallback URL
-                            type: 'GET',
-                            success: function (defaultBranches) {
-                                console.log(defaultBranches);
-                                $('#bankBranches').empty(); // Clear existing options
-                                $('#bankBranches').append('<option value="" disabled selected>Select Branch</option>');
-                                $.each(defaultBranches, function (index, branch) {
-                                    $('#bankBranches').append(new Option(branch.branchName, branch.routingCode));
-                                });
-                                $('#bankBranches').val('').change(); // Trigger change
-                            },
-                            error: function () {
-                                console.error("Error fetching default branches.");
-                                $('#bankBranches').val('').change(); // Clear on error
-                            }
-                        });
-                    } */
-	
+					                } else {
+					                    // Fetch individually if only one is present
+					                    if (beneficiary.beneficiaryBank) {
+					                        fetchBankDetails(beneficiary.beneficiaryBank);
+					                    }
+					                    if (beneficiary.beneficiaryBranch) {
+					                        fetchBranchDetails(beneficiary.beneficiaryBranch);
+					                    }
+					                }
+
+					                function fetchBankDetails(bankId) {
+					                    $.ajax({
+					                        url: '/api/v1/banks/' + bankId,
+					                        type: 'GET',
+					                        success: function (bankResponse) {
+					                            console.log("Bank Response:", bankResponse);
+					                            if (bankResponse) {
+					                                $('#beneficiaryBank').empty();
+					                                $('#beneficiaryBank').append(
+					                                    new Option(bankResponse.bankName, bankResponse.bankId)
+					                                );
+					                                $('#beneficiaryBank').val(bankResponse.bankId).change();
+					                            } else {
+					                                $('#beneficiaryBank').val('').change();
+					                            }
+					                        },
+					                        error: function () {
+					                            console.error('Error fetching bank details.');
+					                            $('#beneficiaryBank').val('').change();
+					                        },
+					                    });
+					                }
+
+					                function fetchBranchDetails(branch) {
+					                    $.ajax({
+					                        url: '/api/v1/banks/routing-code/' + branch,
+					                        type: 'GET',
+					                        success: function (branchResponse) {
+					                            console.log("Branch Response:", branchResponse);
+					                            if (branchResponse) {
+					                                $('#bankBranches').empty();
+					                                $('#bankBranches').append(
+					                                    new Option(branchResponse.branchName, branchResponse.routingCode)
+					                                );
+					                                $('#bankBranches').val(branchResponse.routingCode).change();
+					                            } else {
+					                                $('#bankBranches').val('').change();
+					                            }
+					                        },
+					                        error: function () {
+					                            console.error('Error fetching branch details.');
+					                            $('#bankBranches').val('').change();
+					                        },
+					                    });
+					                }
+					            }
+					        },
+					        error: function () {
+					            console.error('Error fetching beneficiary details.');
+					        }
+					    });
+					}	
                     $('#beneficiaryAccountType').val(beneficiary.beneficiaryAccountType?.trim() || '').change();
                     $('#accountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
                     $('#confirmAccountNo').val(beneficiary.beneficiaryAccountNo?.trim() || '');
@@ -296,7 +344,7 @@ $(document).ready(function () {
         });
     }
 
-    function fetchBankById(beneficiaryBank, callback) {
+    /*function fetchBankById(beneficiaryBank, callback) {
         $.ajax({
             url: '/api/v1/banks/' + beneficiaryBank, // Ensure the correct endpoint format
             type: 'GET',
@@ -319,7 +367,7 @@ $(document).ready(function () {
                 callback(null);  // Return null on error
             }
         });
-    }
+    }*/
     function fetchEnumValue(key, valueId, callback) {
         $.ajax({
             url: '/api/enumEntities/' + key + '/values/' + valueId,

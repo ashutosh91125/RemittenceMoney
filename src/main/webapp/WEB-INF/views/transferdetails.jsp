@@ -864,6 +864,14 @@ document.addEventListener("DOMContentLoaded", function() {
                                                     value="${transferDetails.transactionReferenceNumber}" readonly>
                                             </div>
 										</div>
+										<div class="row">
+                                            <div class="col-xl-4">
+                                                <label class="form-label">Payment Status<span
+                                                    class="text-danger">*</span></label> <input type="text"
+                                                    class="form-control" id="paymentStatus" name="paymentStatus"
+                                                    placeholder="Payment Status"
+                                                    value="${transferDetails.paymentStatus}" readonly>
+                                            </div>
 									</div>
 								</div>
 							</div>

@@ -35,7 +35,12 @@ public class TransferServiceImpl implements TransferService {
 
 		transfer.setTransactionState(transfer.getTransactionState().replace("_"," "));
 		transfer.setTransactionSubState(transfer.getTransactionSubState().replace("_"," "));
-		transfer.setPaymentStatus(transfer.getPaymentStatus().toUpperCase());
+		if(transfer.getPaymentStatus() != null){
+			transfer.setPaymentStatus(transfer.getPaymentStatus().toUpperCase());
+		}else {
+			transfer.setPaymentStatus("FAILED");
+		}
+
 
 		if(beneficiaryRepository.findByBeneficiaryAccountNo(transfer.getBeneficiaryAccountNo()).isEmpty()){
 			BeneficiaryDetails beneficiaryDetails = new BeneficiaryDetails();

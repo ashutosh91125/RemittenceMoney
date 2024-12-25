@@ -173,19 +173,27 @@ $(document).ready(function () {
                     $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
                     $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
                     $('#currencies').val(beneficiary.currencies?.trim() || '').change();
-                    
-                    if (beneficiary.beneficiaryBank) {
-                        fetchBankById(beneficiary.beneficiaryBank, function (bankName) {
-                            if (bankName) {
-                                // Clear existing bank options and add the new bank
-                                $('#beneficiaryBank').empty(); // Clear the dropdown
-                                $('#beneficiaryBank').append(new Option(bankName, bankName)); // Add the bank name as the option
-                                $('#beneficiaryBank').val(bankName).change(); // Set the bank name and trigger change
-                            } else {
-                                $('#beneficiaryBank').val('').change(); // Clear the field if no bank name found
-                            }
-                        });
-                    }
+					if (beneficiary.beneficiaryBank) {
+					                        // If beneficiaryBranch is available
+					                        $.ajax({
+					                            url: '/api/v1/banks/' + beneficiary.beneficiaryBank,
+					                            type: 'GET',
+					                            success: function (bankResponse) {
+					                                console.log(bankResponse);
+					                                if (bankResponse) {
+					                                    $('#beneficiaryBank').empty(); // Clear existing options
+					                                    $('#beneficiaryBank').append( new Option(bankResponse.bankName, bankResponse.bankId)); // Add the branch name
+					                                    $('#beneficiaryBank').val(bankResponse.bankId).change(); // Set and trigger change
+					                                } else {
+					                                	$('#beneficiaryBank').val('').change(); // Clear if no branch found
+					                                }
+					                            },
+					                            error: function () {
+					                                console.error("Error fetching branch details.");
+					                                $('#beneficiaryBank').val('').change(); // Clear on error
+					                            }
+					                        });
+					                    } 
                     if (beneficiary.beneficiaryBranch) {
                         // If beneficiaryBranch is available
                         $.ajax({

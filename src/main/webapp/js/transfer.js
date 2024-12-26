@@ -371,7 +371,7 @@ $(document).ready(function() {
 
    $('#payOutCountry').on('change', function() {
        let dependent = $(this).val();
-
+	
 
        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
        $('#beneficiaryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
@@ -418,30 +418,31 @@ $(document).ready(function() {
        }
    });
    $('#beneficiaryBank').on('change', function() {
-       let bankId = $(this).val();
-		
-       // Clear previous values in the branches dropdown
+       let bankId = $(this).val();  
        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
 
        if (bankId) {
-           $.ajax({
-               url: '/api/v1/banks/branches/by-bank/'+bankId,
-               type: 'GET',
-//                data: { bankId: bankId },
-               success: function(data) {
-               	console.log(data);
-               	 $('#bankBranches').empty();
-               	 $('#bankBranches').append('<option value="">Select  Branch</option>');
-                   $.each(data, function(index, branch) {
-                       $('#bankBranches').append('<option value="' + branch.routingCode + '">' + branch.branchName + '</option>');
-                   });
-               },
-               error: function() {
-                   console.error("Error fetching branches for the selected bank.");
-               }
-           });
+		$.ajax({
+		    url: '/api/v1/banks/branches/by-bank/' + bankId,
+		    type: 'GET',
+		    success: function(data) {
+		        if (!data || data.length === 0) {
+		            $('#bankBranches').append(new Option('No Branches Available', '')).change();
+		            console.warn("No branches found for the selected bank.");
+		            return;
+		        }
+		        $.each(data, function(index, branch) {
+		            $('#bankBranches').append(new Option(branch.branchName, branch.routingCode));
+		        });
+		    },
+		    error: function() {
+		        console.error("Error fetching branches for the selected bank.");
+		    }
+		});
+
        }
    });
+
 });
     // Function to call the quote service
            function getQuote() {

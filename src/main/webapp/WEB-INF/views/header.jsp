@@ -76,7 +76,7 @@
 
 					<c:if
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
-						<li class="nxl-item nxl-hasmenu"><a href="subagentlist"
+						<li class="nxl-item nxl-hasmenu"><a href="branch-list"
 							class="nxl-link"> <span class="nxl-micon"><i
 									class="feather-users"></i></span> <span class="nxl-mtext">Branch</span>
 						</a></li>

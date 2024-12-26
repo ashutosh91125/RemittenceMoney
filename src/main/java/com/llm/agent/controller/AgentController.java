@@ -84,7 +84,7 @@ public class AgentController {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving working list: ", e);
-			model.addAttribute("workingList", List.of());
+			model.addAttribute("workingHoursList", List.of());
 		}
 		return "agentregister";
 	}

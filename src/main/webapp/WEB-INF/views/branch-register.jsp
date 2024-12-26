@@ -192,46 +192,6 @@ function toggleDiv(divId) {
 	const element = document.getElementById(divId);
 	element.classList.toggle("show");
 }
-$(document).ready(function() {
-    $('#countries').on('change', function() {
-        let countryDependent = $(this).val();
-        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
-
-        if (countryDependent) {
-            let currencyDependent = countryDependent + "C";
-            $.ajax({
-                url: '/api/enumEntities/dependent',
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-        }
-$('#state').empty().append('<option value="" disabled selected>Select State</option>');
-        if (countryDependent) {
-            let currencyDependent = countryDependent;
-            $.ajax({
-                url: '/api/enumEntities/dependent',
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-        }
-    });
-});
 </script>
 </head>
 

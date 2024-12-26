@@ -47,7 +47,7 @@
 											<tr>
 												<th>S.No</th>
 												<th>Branch Name</th>
-												<th>Agent</th>
+												<th>Agent ID</th>
 												<th>Branch Type</th>
 												<th>Branch Mode</th>
 												<th>Email</th>
@@ -59,7 +59,7 @@
 											<c:forEach var="branchDetails" items="${branchDetailsList}"
 												varStatus="status">
 												<tr>
-													<td>${branchDetails.index + 1}</td>
+													<td>${status.index + 1}</td>
 													<td>${branchDetails.branchName}</td>
 													<td>${branchDetails.agent}</td>
 													<td>${branchDetails.branchType}</td>
@@ -67,9 +67,7 @@
 													<td>${branchDetails.email}</td>
 													<td>${branchDetails.state }</td>
 													<td class="text-end"><a href="#"
-														class="btn btn-light-brand">View</a> <a href="#"
-														class="btn btn-light-brand">Edit</a> <a href="#"
-														class="btn btn-light-brand">Delete</a></td>
+														class="btn btn-light-brand">View</a></td>
 												</tr>
 											</c:forEach>
 										</tbody>

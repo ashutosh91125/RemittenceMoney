@@ -6,9 +6,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.llm.admin.model.Admin;
 import com.llm.admin.repositories.AdminRepositories;
 import com.llm.admin.service.IAdminService;
-import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
 
 @Service

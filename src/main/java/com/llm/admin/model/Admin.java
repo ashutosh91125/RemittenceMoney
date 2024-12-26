@@ -1,4 +1,4 @@
-package com.llm.model;
+package com.llm.admin.model;
 
 import org.springframework.web.multipart.MultipartFile;
 

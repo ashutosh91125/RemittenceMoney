@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.service.CustomUserDetailsService;
+import com.llm.admin.model.Admin;
 import com.llm.admin.service.IAdminService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
 
 @Controller

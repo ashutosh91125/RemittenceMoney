@@ -20,10 +20,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.llm.Service.CustomerService;
+import com.llm.common.enums.Gender;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Customer;
-import com.llm.model.Gender;
 
 @Controller
 //@SessionAttributes({ "custDTO" })

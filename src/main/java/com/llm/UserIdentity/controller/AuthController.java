@@ -4,7 +4,8 @@ import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.dto.SignUp;
 import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.repository.UserRepository;
-import com.llm.model.Admin;
+import com.llm.admin.model.Admin;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

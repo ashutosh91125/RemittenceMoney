@@ -3,7 +3,7 @@ package com.llm.admin.service;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.model.Admin;
+import com.llm.admin.model.Admin;
 import com.llm.model.AdminWithoutProfile;
 
 public interface IAdminService {

@@ -978,41 +978,46 @@ $(document).ready(function() {
 
             });
 
-$(document)
-.ready(
-		function() {
-			$('#beneficiaryNationality')
-			.on('change',function() {
-					let dependent = $(this).val();
-					if (dependent) {
-						$.ajax({url :'/api/enumEntities/dependent',
-							type : 'GET',data : {
-									dependent : dependent
-									},
-									success : function(data) {
+			$(document).ready(function () {
+				    $('#beneficiaryNationality').on('change', function () {
+				        let dependent = $(this).val();
+				        if (dependent) {
+				            $.ajax({
+				                url: '/api/enumEntities/dependent',
+				                type: 'GET',
+				                data: {
+				                    dependent: dependent
+				                },
+				                success: function (data) {
+				                    $('#beneficiaryState')
+				                        .empty()
+				                        .append('<option value="" disabled selected>Select Beneficiary State</option>');
+				                    
+				                    $.each(data, function (index, enumValue) {
+				                        $('#beneficiaryState').append(
+				                            '<option value="' + enumValue.description + '">' + enumValue.description + '</option>'
+				                        );
+				                    });
+				                },
+				                error: function () {
+				                    console.error("Error fetching states for the selected Nationality.");
+				                }
+				            });
+				        } else {
+				            $('#beneficiaryState')
+				                .empty()
+				                .append('<option value="" disabled selected>Select Beneficiary State</option>');
+				        }
+				    });
+				});
 
-									$('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
-									$.each(data,function(index,enumValue) {
-									$('#beneficiaryState').append('<option value="' + enumValue.description + '">'+ enumValue.description+ '</option>');
-																	});
-												},
-												error : function() {
-													console
-															.error("Error fetching states for the selected Natinality.");
-												}
-											});
-								} else {
-									$('#beneficiaryState').empty().append('<option value="" disabled selected>Select Beneficiary State</option>');
-								}
-							});
-		});
 		
-		function showSelectBeneficiaryDiv() {
-				const beneficiaryDiv = document.getElementById("selectBeneficiaryDiv");
-				if (beneficiaryDiv.style.display === "none" || beneficiaryDiv.style.display === "") {
-					beneficiaryDiv.style.display = "block"; 
-				} else {
-					beneficiaryDiv.style.display = "none"; 
-				}
+function showSelectBeneficiaryDiv() {
+	const beneficiaryDiv = document.getElementById("selectBeneficiaryDiv");
+	if (beneficiaryDiv.style.display === "none" || beneficiaryDiv.style.display === "") {
+			beneficiaryDiv.style.display = "block"; 
+			} else {
+				beneficiaryDiv.style.display = "none"; 
 			}
+		}
 		

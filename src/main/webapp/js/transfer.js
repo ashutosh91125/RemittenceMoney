@@ -1007,3 +1007,12 @@ $(document)
 							});
 		});
 		
+		function showSelectBeneficiaryDiv() {
+				const beneficiaryDiv = document.getElementById("selectBeneficiaryDiv");
+				if (beneficiaryDiv.style.display === "none" || beneficiaryDiv.style.display === "") {
+					beneficiaryDiv.style.display = "block"; 
+				} else {
+					beneficiaryDiv.style.display = "none"; 
+				}
+			}
+		

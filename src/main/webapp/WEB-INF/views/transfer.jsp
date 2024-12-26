@@ -234,16 +234,6 @@
 }
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
-<script>
-	function showSelectBeneficiaryDiv() {
-		const beneficiaryDiv = document.getElementById("selectBeneficiaryDiv");
-		if (beneficiaryDiv.style.display === "none" || beneficiaryDiv.style.display === "") {
-			beneficiaryDiv.style.display = "block"; 
-		} else {
-			beneficiaryDiv.style.display = "none"; 
-		}
-	}
-</script>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -564,7 +554,7 @@
 											<div class="col-lg-8 p-4">
 												<div class="card stretch stretch-full">
 													<div class="card-body p-0">
-														<div class="table-responsive">
+														<div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
 															<table class="table table-hover" id="search-result1">
 																<thead>
 																	<tr>

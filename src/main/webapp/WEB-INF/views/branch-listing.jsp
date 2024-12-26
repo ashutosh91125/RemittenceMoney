@@ -28,8 +28,8 @@
 				<div class="page-header-right-items">
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="subagent" class="btn btn-primary">
-							<i class="feather-user-plus me-2"></i> <span>Sub Agent</span>
+						<a href="branch" class="btn btn-primary">
+							<i class="feather-user-plus me-2"></i> <span>Add Branch</span>
 						</a>
 					</div>
 				</div>
@@ -42,27 +42,30 @@
 						<div class="card stretch stretch-full">
 							<div class="card-body p-0">
 								<div class="table-responsive">
-									<table class="table table-hover" id="subAgentList">
+									<table class="table table-hover" id="branchDetailsList">
 										<thead>
 											<tr>
 												<th>S.No</th>
-												<th>Agent Id</th>
-												<th>Sub Agent Name</th>
-												<th>Sub Agent Mode</th>
-												<th>Sub Agent Type</th>
+												<th>Branch Name</th>
+												<th>Agent</th>
+												<th>Branch Type</th>
+												<th>Branch Mode</th>
+												<th>Email</th>
+												<th>State</th>
 												<th class="text-end">Actions</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:forEach var="subAagent" items="${adminList}"
+											<c:forEach var="branchDetails" items="${branchDetailsList}"
 												varStatus="status">
 												<tr>
-													<td>${subAagent.index + 1}</td>
-													<td>${subagent.companyId}</td>
-													<td>${subAagent.companyName}</td>
-													<td>${subAagent.agentMode}</td>
-													<td>${subAagent.email}</td>
-													<td>${subAagent.countries }</td>
+													<td>${branchDetails.index + 1}</td>
+													<td>${branchDetails.branchName}</td>
+													<td>${branchDetails.agent}</td>
+													<td>${branchDetails.branchType}</td>
+													<td>${branchDetails.branchMode}</td>
+													<td>${branchDetails.email}</td>
+													<td>${branchDetails.state }</td>
 													<td class="text-end"><a href="#"
 														class="btn btn-light-brand">View</a> <a href="#"
 														class="btn btn-light-brand">Edit</a> <a href="#"
@@ -83,7 +86,7 @@
 	</div>
 	<script>
 		$(document).ready(function() {
-			$('#subAgentList').DataTable({
+			$('#branchDetailsList').DataTable({
 				"pageLength" : 10,
 				"ordering" : true,
 				"searching" : true,

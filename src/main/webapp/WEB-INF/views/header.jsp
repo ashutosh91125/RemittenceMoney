@@ -82,6 +82,11 @@
 						</a></li>
 					</c:if>
 
+					<li class="nxl-item nxl-hasmenu"><a href="#"
+                        class="nxl-link"> <span class="nxl-micon"><i
+                                class="feather-users"></i></span> <span class="nxl-mtext">Staff</span>
+                    </a></li>
+
 					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>

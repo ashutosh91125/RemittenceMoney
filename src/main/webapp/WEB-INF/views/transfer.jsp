@@ -546,18 +546,18 @@
 												class="btn btn-primary">select Beneficiry</button>
 										</div>
 									</div>
-									<div class="row">
+									<!-- <div class="row">
 										<div class="col-lg-3">
-											<!-- <div class="mb-4">
+											<div class="mb-4">
 												<select class="form-control" data-select2-selector="icon"
 													onchange="toggleBeneficiaryDivs()" id="beneficiarySelect">
 													<option value="" disabled="true" selected="true">Beneficiary</option>
 													<option value="0">Create Beneficiary</option>
 													<option value="1">Select Beneficiary</option>
 												</select> <span id="residentTypeError" class="text-danger"></span>
-											</div> -->
+											</div>
 										</div>
-									</div>
+									</div> -->
 									<div id="selectBeneficiaryDiv" style="display: none;">
 										<div class="row" id="benficeryTable"
 											style="display: flex; justify-content: center;">

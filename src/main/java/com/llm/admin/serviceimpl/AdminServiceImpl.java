@@ -1,4 +1,4 @@
-package com.llm.Service;
+package com.llm.admin.serviceimpl;
 
 import java.util.List;
 import java.util.Optional;
@@ -6,9 +6,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.llm.admin.repositories.AdminRepositories;
+import com.llm.admin.service.IAdminService;
 import com.llm.model.Admin;
 import com.llm.model.AdminWithoutProfile;
-import com.llm.repositories.AdminRepositories;
 
 @Service
 public class AdminServiceImpl implements IAdminService {

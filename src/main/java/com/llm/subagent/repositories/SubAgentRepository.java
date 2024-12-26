@@ -1,4 +1,4 @@
-package com.llm.repositories;
+package com.llm.subagent.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

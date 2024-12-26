@@ -1,4 +1,4 @@
-package com.llm.controller;
+package com.llm.customer.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;

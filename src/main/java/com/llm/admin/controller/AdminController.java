@@ -1,4 +1,4 @@
-package com.llm.controller;
+package com.llm.admin.controller;
 
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +7,8 @@ import java.util.Optional;
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.service.CustomUserDetailsService;
+import com.llm.admin.service.IAdminService;
+
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.llm.Service.IAdminService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
 import com.llm.model.Admin;

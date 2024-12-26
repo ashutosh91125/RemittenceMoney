@@ -1,4 +1,4 @@
-package com.llm.controller;
+package com.llm.customer.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

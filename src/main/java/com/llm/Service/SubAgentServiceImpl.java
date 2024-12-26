@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.llm.model.SubAgent;
-import com.llm.repositories.SubAgentRepository;
+import com.llm.subagent.repositories.SubAgentRepository;
 
 @Service
 public class SubAgentServiceImpl implements ISubAgentService {

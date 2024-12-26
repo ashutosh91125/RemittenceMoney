@@ -71,7 +71,7 @@
                                                 <tr>
                                                     <td>${status.index + 1}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
-                                                    <td>${transfer.transactionDate}</td>
+                                                    <td>${transfer.transactionDateFormatted}</td>
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
                                                     <td>${transfer.currencies} ${transfer.payoutAmount}</td>
                                                     <td>

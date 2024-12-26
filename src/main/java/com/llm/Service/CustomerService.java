@@ -381,7 +381,8 @@ public class CustomerService {
 	}
 
 	public List<Customer> searchByCriteria(String criteria, String query) {
-		if (query.isBlank()) {
+		query.trim().replaceAll("[^0-9]", "");
+		if (query.trim().isBlank()) {
 			return List.of();
 		}
 		return switch (criteria) {

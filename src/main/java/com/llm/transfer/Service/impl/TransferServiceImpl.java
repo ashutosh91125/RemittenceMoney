@@ -1,16 +1,16 @@
 package com.llm.transfer.Service.impl;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.beneficiary.model.entity.BeneficiaryDetails;
-import com.llm.beneficiary.repository.BeneficiaryDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.llm.beneficiary.model.entity.BeneficiaryDetails;
+import com.llm.beneficiary.repository.BeneficiaryDetailsRepository;
 import com.llm.transfer.Service.TransferService;
 import com.llm.transfer.model.Transfer;
 import com.llm.transfer.repository.TransferRepository;
@@ -31,7 +31,7 @@ public class TransferServiceImpl implements TransferService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		transfer.setUsername(username);
-		transfer.setTransactionDate(LocalDate.now());
+		transfer.setTransactionDate(LocalDateTime.now());
 
 		transfer.setTransactionState(transfer.getTransactionState().replace("_"," "));
 		transfer.setTransactionSubState(transfer.getTransactionSubState().replace("_"," "));

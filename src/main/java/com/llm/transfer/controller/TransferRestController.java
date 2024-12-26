@@ -29,7 +29,7 @@ public class TransferRestController {
 			transferService.createTransfer(transfer);
 			response.put("status", "CREATED");
 			response.put("message", "Transaction details saved successfully");
-			return ResponseEntity.ok(response);
+			return new ResponseEntity<>(response, HttpStatus.CREATED);
 		} catch (Exception e) {
 			logger.error("Error while registering transfer details: ", e);
 

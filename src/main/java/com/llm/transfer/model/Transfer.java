@@ -1,6 +1,6 @@
 package com.llm.transfer.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.Data;
 
 @Data
@@ -133,5 +134,8 @@ public class Transfer {
 	private String transactionState;
 	private String transactionSubState;
 	private String transactionReferenceNumber;
-	private LocalDate transactionDate;
+	private LocalDateTime transactionDate;
+	@Transient
+	private String transactionDateFormatted;
+   
 }

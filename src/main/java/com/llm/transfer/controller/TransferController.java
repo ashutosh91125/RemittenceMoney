@@ -1,5 +1,6 @@
 package com.llm.transfer.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -102,11 +103,14 @@ public class TransferController {
 	@GetMapping("/transfer-list")
 	public String getTransferList(Model model) {
 		try {
+			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			// Fetching the list of transfers
 			List<Transfer> transferList = transferService.getAllTransfers();
 			for (Transfer transfer : transferList) {
 		        Bank bank = bankService.getBankById(transfer.getBeneficiaryBank());
 		        transfer.setBeneficiaryBank(bank.getBankName());  // Set the bank name in the transfer object
+		        String formattedDate = transfer.getTransactionDate().format(dateFormatter);
+	            transfer.setTransactionDateFormatted(formattedDate);
 		    }
 
 			// Sorting the transferList by date in descending order

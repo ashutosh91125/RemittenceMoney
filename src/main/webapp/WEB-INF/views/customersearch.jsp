@@ -12,17 +12,25 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
     const radioButtons = document.querySelectorAll('input[name="criteria"]');
     const searchHeading = document.getElementById("search-heading");
-    
+    const searchInput = document.getElementById("radio-search");
+    const form = document.querySelector('form');
+
     // Set the initial value for search heading based on the default radio button
     searchHeading.textContent = document.querySelector('input[name="criteria"]:checked').value;
-    
+
+    // Update search heading when a radio button is clicked
     radioButtons.forEach(radio => {
         radio.addEventListener("click", () => {
-            // Update the search-heading text when a radio button is clicked
             searchHeading.textContent = radio.value;
         });
     });
+
+    // Trim the query and store it back in the input before form submission
+    form.addEventListener('submit', function(event) {
+        searchInput.value = searchInput.value.trim(); // Trim the value and store it back
+    });
 });
+
 </script>
 <style>
 

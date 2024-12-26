@@ -18,7 +18,6 @@ public interface AdminWithoutProfile {
 
 	Boolean satus();
 
-	List<Country> countries();
 
 	Long phone();
 

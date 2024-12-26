@@ -1,10 +1,6 @@
 package com.llm.dto;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
-
-import com.llm.model.Country;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

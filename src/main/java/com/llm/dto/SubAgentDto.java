@@ -1,11 +1,5 @@
 package com.llm.dto;
 
-import java.util.List;
-
-import com.llm.agent.model.Agent;
-import com.llm.model.AgentType;
-import com.llm.model.WorkingHours;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -26,12 +20,7 @@ public class SubAgentDto {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer subAgentId;
 
-	private List<Agent> agent;
-
-
 	private Boolean agentMode;
-	
-	private List<AgentType> agentTypes;
 
 	private String agentChannelId;
 
@@ -51,17 +40,11 @@ public class SubAgentDto {
 
 	private String zip;
 
-	private List<WorkingHours> working;
-	
-
 	private String email;
-
 	
 	private Long mobile;
 
-
 	private Long phone;
-
 
 	private String contactPerson;
 
@@ -73,9 +56,7 @@ public class SubAgentDto {
 	
 	private String outlateCode;
 	
-	
 	private String remarks;
-
 
 	private Boolean statusFlag;
 	

@@ -118,7 +118,8 @@ $(document).ready(function () {
 		                            let bankName = bankResponse?.bankName || "Unknown Bank"; // Use the bank name or a fallback value
 									console.log(bankName);
 									let row = `<tr data-beneficiary-id="${beneficiary.id}">
-									                                <td class="clickable">${beneficiary.fullName}</td>
+									                                <td class="clickable" 									onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+																								onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
 									                                <td>${bankName}</td>
 									                                <td>${beneficiary.beneficiaryAccountNo}</td>
 									                            </tr>`;
@@ -127,7 +128,8 @@ $(document).ready(function () {
 		                        error: function () {
 		                            console.error("Error fetching bank name for bank ID:", beneficiary.beneficiaryBank);
 									let row = `<tr data-beneficiary-id="${beneficiary.id}">
-									                               <td class="clickable">${beneficiary.fullName}</td>
+									                               <td class="clickable" 									onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+																								onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
 									                               <td>Unknown Bank</td>
 									                               <td>${beneficiary.beneficiaryAccountNo}</td>
 									                           </tr>`;

@@ -1,4 +1,4 @@
-package com.llm.admin.serviceimpl;
+package com.llm.admin.service.impl;
 
 import java.util.List;
 import java.util.Optional;

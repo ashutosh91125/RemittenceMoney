@@ -1,5 +1,7 @@
 package com.llm.branch.controller;
 
+import com.llm.agent.projection.AgentProjection;
+import com.llm.agent.service.IAgentService;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.service.BranchDetailsService;
 import com.llm.common.model.EnumEntity;
@@ -25,6 +27,9 @@ public class BranchDetailsController {
     @Autowired
     private EnumEntityService enumEntityService;
 
+    @Autowired
+    private IAgentService agentService;
+
     @GetMapping("/branch")
     public String branchRegister(Model model) {
         model.addAttribute("branch", new BranchDetails());
@@ -35,8 +40,18 @@ public class BranchDetailsController {
 
         } catch (Exception e) {
             log.error("Error Native Region List: ", e);
-            model.addAttribute("native Region List", List.of()); // or set a default list if needed
+            model.addAttribute("stateList", List.of()); // or set a default list if needed
         }
+
+        try {
+            List<AgentProjection> agentProjections = agentService.getAllAgentByProjection();
+            model.addAttribute("agentList", agentProjections);
+
+        } catch (Exception e) {
+            log.error("Error Native Region List: ", e);
+            model.addAttribute("agentList", List.of()); // or set a default list if needed
+        }
+
         try {
             Optional<EnumEntity> workingEntity = enumEntityService.getEnumEntityByKey("workingHours");
             workingEntity.ifPresent(entity -> model.addAttribute("workingHoursList", entity.getValues()));

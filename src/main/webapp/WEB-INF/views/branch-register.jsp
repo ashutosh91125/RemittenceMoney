@@ -324,16 +324,12 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Agent<span
                                             class="text-danger">*</span></label>
-                                            <form:input path="agent" type="text" class="form-control" id="agent"
-                                            placeholder="Agent" required='true' />
-
-											<%-- <form:select path="countries" class="form-control"
-												data-select2-selector="icon" multiple="false" id="countries" required='true' >
-												<form:option value="" disabled="true" selected="true">Select Country</form:option>
-												<form:options items="${countryList}" itemValue="valueId"
-													itemLabel="description" />
-											</form:select> --%>
-
+                                            <form:select path="agent" class="form-control"
+                                                data-select2-selector="icon" multiple="false" id="agent" required='true' >
+                                                <form:option value="" disabled="true" selected="true">Select Agent</form:option>
+                                                <form:options items="${agentList}"
+                                                    itemValue="agentId" itemLabel="agentName" />
+											</form:select>
 											<span id="agentError" class="text-danger"></span>
 										</div>
 									</div>

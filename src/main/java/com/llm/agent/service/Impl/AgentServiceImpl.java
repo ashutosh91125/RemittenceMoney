@@ -2,6 +2,7 @@ package com.llm.agent.service.Impl;
 
 import java.util.List;
 
+import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.service.IAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,11 @@ public class AgentServiceImpl implements IAgentService {
 	@Override
 	public Agent getByEmail(String email) {
 		return agentRepositories.findByEmail(email);
+	}
+
+	@Override
+	public List<AgentProjection> getAllAgentByProjection() {
+		return agentRepositories.findAllProjectedBy();
 	}
 
 }

@@ -46,11 +46,11 @@
 										<thead>
 											<tr>
 												<th>S.No</th>
+												<th>Agent ID</th>
 												<th>Agent Name</th>
 												<th>Phone Number</th>
 												<th>Email</th>
-												<th>Countries
-												</td>
+												<th>Country</th>
 												<th class="text-end">Actions</th>
 											</tr>
 										</thead>
@@ -59,15 +59,13 @@
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>
-													<td>${agent.companyId}</td>
-													<td>${agent.companyName}</td>
-													<td>${agent.mobile}</td>
+													<td>${agent.agentId}</td>
+													<td>${agent.agentName}</td>
+													<td>${agent.phone}</td>
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
 													<td class="text-end"><a href="#"
-														class="btn btn-light-brand">View</a> <a href="#"
-														class="btn btn-light-brand">Edit</a> <a href="#"
-														class="btn btn-light-brand">Delete</a></td>
+														class="btn btn-light-brand">View</a>
 												</tr>
 											</c:forEach>
 										</tbody>

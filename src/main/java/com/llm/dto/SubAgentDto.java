@@ -2,16 +2,13 @@ package com.llm.dto;
 
 import java.util.List;
 
-import com.llm.model.Agent;
+import com.llm.agent.model.Agent;
 import com.llm.model.AgentType;
 import com.llm.model.WorkingHours;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

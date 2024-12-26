@@ -1,12 +1,13 @@
-package com.llm.Service;
+package com.llm.agent.service.Impl;
 
 import java.util.List;
 
+import com.llm.agent.service.IAgentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.llm.model.Agent;
-import com.llm.repositories.AgentRepositories;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 
 @Service
 public class AgentServiceImpl implements IAgentService {
@@ -14,8 +15,8 @@ public class AgentServiceImpl implements IAgentService {
 	private AgentRepositories agentRepositories;
 
 	@Override
-	public Agent addAgent(Agent agent) {
-		return agentRepositories.save(agent);
+	public void addAgent(Agent agent) {
+		agentRepositories.save(agent);
 	}
 
 	@Override
@@ -27,11 +28,5 @@ public class AgentServiceImpl implements IAgentService {
 	public Agent getByEmail(String email) {
 		return agentRepositories.findByEmail(email);
 	}
-
-//	@Override
-//	public Agent getAgentByCompanyId(Long companyId) {
-//		
-//		return agentRepositories.findByCompanyId(companyId);
-//	}
 
 }

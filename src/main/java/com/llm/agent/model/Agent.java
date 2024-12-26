@@ -1,4 +1,4 @@
-package com.llm.model;
+package com.llm.agent.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Agent")
+@Table(name = "agent")
 public class Agent {
 
 	@Id
@@ -35,8 +35,8 @@ public class Agent {
 	private String zip;
 	private String timeZone;
 	private String email;
-	private Long mobile;
-	private Long phone;
+	private String mobile;
+	private String phone;
 	private String contactPerson;
 	private String misEmailId;
 	private String taxIdentificationNumber;
@@ -50,12 +50,11 @@ public class Agent {
 	private Long perTransaction;
 	private Long perDay;
 	private Long perMonth;
-	private String grantType;
-	private String scope;
-	private String clientId;
-	private String clientSecret;
-	private String userName;
-	private String password;
+//	private String grantType;
+//	private String scope;
+//	private String clientId;
+//	private String clientSecret;
+	private String username;
 	private String createdBy;
 	private String createdOn;
 	private String modifiedBy;
@@ -65,5 +64,9 @@ public class Agent {
 	private String remarks;
 	private Boolean statusFlag;
 	private Boolean isValid;
+
+	private String perTransactionLimit;
+	private String perDayLimit;
+	private String perMonthLimit;
 
 }

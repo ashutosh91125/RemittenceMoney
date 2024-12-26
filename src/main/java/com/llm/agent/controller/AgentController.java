@@ -6,6 +6,7 @@ import java.util.Optional;
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.service.CustomUserDetailsService;
+import com.llm.agent.model.dto.AgentDTO;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,13 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.llm.Service.IAgentService;
+import com.llm.agent.service.IAgentService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.model.Agent;
+import com.llm.agent.model.Agent;
 
 @Controller
 //@SessionAttributes({ "agent" })
@@ -45,11 +44,19 @@ public class AgentController {
 
 	@GetMapping("/agent")
 	public String showCompanyDetailsForm(Model model) {
-		model.addAttribute("agent", new Agent());
+		model.addAttribute("agent", new AgentDTO());
 
 		try {
 			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
 			countriesEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of());
+		}
+		try {
+			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("timezone");
+			countriesEntity.ifPresent(entity -> model.addAttribute("timezoneList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
@@ -82,9 +89,16 @@ public class AgentController {
 		return "agentregister";
 	}
 
+	@PostMapping("/agent")
+	public String saveAgent(@ModelAttribute Agent agent) {
+		agentService.addAgent(agent);
+
+		return "agentlist";
+	}
+
 	@GetMapping("/agentlist")
 	public String getAdminList(Model model) {
-		List<User> agentList = customUserDetailsService.getUserByRole(Role.AGENT);
+		List<Agent> agentList = agentService.findAllAgent();
 		model.addAttribute("agentList", agentList);
 		return "agentlist";
 
@@ -96,48 +110,16 @@ public class AgentController {
 		return "agentlogin";
 	}
 
-	@PostMapping("/agentlogin")
-	public String loginAgent(@ModelAttribute("agent") Agent agent, Model model) {
-		Agent agent1 = agentService.getByEmail(agent.getEmail());
-
-		if (agent1 != null && agent1.getPassword().equals(agent.getPassword())) {
-			return "redirect:/agentlist";
-		} else {
-			model.addAttribute("error", "Invalid email or password");
-			return "agentlogin";
-		}
-	}
-
-	private Long getLongValue(Object value) {
-		if (value instanceof Long) {
-			return (Long) value;
-		} else if (value instanceof String) {
-			String strValue = (String) value;
-			if (strValue != null && !strValue.isEmpty()) {
-				try {
-					return Long.parseLong(strValue);
-				} catch (NumberFormatException e) {
-					logger.error("Invalid number format for value: {}", strValue);
-				}
-			}
-		}
-		return null;
-	}
-
-	private Long parseLong(Object value) {
-		if (value instanceof Long) {
-			return (Long) value;
-		} else if (value instanceof String) {
-			String strValue = (String) value;
-			if (strValue != null && !strValue.isEmpty()) {
-				try {
-					return Long.parseLong(strValue);
-				} catch (NumberFormatException e) {
-					logger.error("Invalid number format for value: {}", strValue);
-				}
-			}
-		}
-		return null;
-	}
+//	@PostMapping("/agentlogin")
+//	public String loginAgent(@ModelAttribute("agent") Agent agent, Model model) {
+//		Agent agent1 = agentService.getByEmail(agent.getEmail());
+//
+//		if (agent1 != null && agent1.getPassword().equals(agent.getPassword())) {
+//			return "redirect:/agentlist";
+//		} else {
+//			model.addAttribute("error", "Invalid email or password");
+//			return "agentlogin";
+//		}
+//	}
 
 }

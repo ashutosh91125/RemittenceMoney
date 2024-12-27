@@ -4,8 +4,11 @@ import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.dto.SignUp;
 import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.UserIdentity.service.CustomUserDetailsService;
 import com.llm.admin.model.Admin;
 
+import com.llm.branch.repository.BranchDetailsRepository;
+import com.llm.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +34,15 @@ public class AuthController {
 
     @Autowired
     private final AuthenticationManager authenticationManager;
+
+    @Autowired
+    private final CustomUserDetailsService customUserDetailsService;
+
+    @Autowired
+    private final BranchDetailsRepository branchDetailsRepository;
+
+    @Autowired
+    private final CustomerRepository customerRepository;
 
     // Login Page
     @GetMapping("/login")
@@ -84,6 +96,10 @@ public class AuthController {
     @GetMapping("/welcome")
     public String welcome(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("subAdminCount", customUserDetailsService.getUserCountByRole(Role.SUB_ADMIN));
+        model.addAttribute("agentCount", customUserDetailsService.getUserCountByRole(Role.SUB_ADMIN));
+        model.addAttribute("customerCount", customerRepository.count());
+        model.addAttribute("branchCount", branchDetailsRepository.count());
         return "superadmindasbord";
     }
 }

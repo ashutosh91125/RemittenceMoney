@@ -40,4 +40,9 @@ public class CustomUserDetailsService implements UserDetailsService {
     public List<User> getUserByRole(Role role) {
         return userRepository.findByRole(role);
     }
+
+    // Method to get the count of users with a specific role
+    public long getUserCountByRole(Role role) {
+        return userRepository.countByRole(role);
+    }
 }

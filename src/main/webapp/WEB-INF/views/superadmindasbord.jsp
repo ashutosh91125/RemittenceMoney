@@ -65,7 +65,7 @@
             <div class="col-half">
               <div class="card stretch stretch-full border border-dashed border-gray-5">
                 <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1">10</div>
+                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${subAdminCount}</span></div>
                   <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Admin</p>
                 </div>
               </div>
@@ -73,7 +73,7 @@
             <div class="col-half">
               <div class="card stretch stretch-full border border-dashed border-gray-5">
                 <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1">50</div>
+                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${agentCount}</span></div>
                   <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Agent</p>
                 </div>
               </div>
@@ -85,7 +85,7 @@
             <div class="col-half">
               <div class="card stretch stretch-full border border-dashed border-gray-5">
                 <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1">80</div>
+                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${branchCount}</span></div>
                   <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Branch</p>
                 </div>
               </div>
@@ -93,7 +93,7 @@
             <div class="col-half">
               <div class="card stretch stretch-full border border-dashed border-gray-5">
                 <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1">200</div>
+                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${customerCount}</span></div>
                   <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Customer</p>
                 </div>
               </div>

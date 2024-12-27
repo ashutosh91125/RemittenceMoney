@@ -274,9 +274,9 @@ function toggleDiv(divId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="branch" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="branch" required='true' >
-                                                <form:option value="" disabled="true" selected="true">Select Agent</form:option>
+                                            <form:select path="branches" class="form-control"
+                                                data-select2-selector="icon" multiple="true" id="branch" required='true' >
+                                               <%-- <form:option value="" disabled="true" selected="false">Select Branch</form:option> --%>
                                                 <form:options items="${branchList}"
                                                     itemValue="id" itemLabel="branchName" />
                                             </form:select>

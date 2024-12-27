@@ -43,7 +43,7 @@ public class StaffDetailsRestController {
         try {
             // Map StaffDTO to StaffDetails
             StaffDetails staff = new StaffDetails();
-            staff.setBranch(staffDTO.getBranch());
+            staff.setBranches(staffDTO.getBranches());
             if (staffDTO.getStaffGroup() == Role.STAFF_TR){
                 staff.setStaffGroup("Transfer");
             }else {
@@ -58,6 +58,8 @@ public class StaffDetailsRestController {
             staff.setStatus(true);
             staff.setCreatedOn(LocalDateTime.now());
             staff.setCreatedBy(username);
+
+            log.info("Staff===+++++=======" + staff);
 
             // Save StaffDetails
             staffDetailsService.createStaff(staff);

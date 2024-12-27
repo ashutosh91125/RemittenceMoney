@@ -2,14 +2,13 @@ package com.llm.staff.model.dto;
 
 import com.llm.UserIdentity.model.enums.Role;
 import lombok.Data;
-
-import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class StaffDTO {
 
-    private String branch;
+    private List<String> branches;
     private Role staffGroup;
     private String firstName;
     private String middleName;

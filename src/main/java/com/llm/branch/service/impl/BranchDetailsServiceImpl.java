@@ -1,6 +1,7 @@
 package com.llm.branch.service.impl;
 
 import com.llm.branch.model.BranchDetails;
+import com.llm.branch.projection.BranchProjection;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.branch.service.BranchDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +24,10 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     public List<BranchDetails> getAllBranches(){
         return branchDetailsRepository.findAll();
     }
+
+    @Override
+    public List<BranchProjection> getAllBranchesByProjection() {
+        return branchDetailsRepository.findAllProjectedBy();
+    }
+
 }

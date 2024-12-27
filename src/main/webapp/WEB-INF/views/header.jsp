@@ -53,11 +53,14 @@
 								class="feather-airplay"></i></span> <span class="nxl-mtext">Dashboards</span>
 					</a></li>
 
+                    <c:if
+                        test="${pageContext.request.isUserInRole('STAFF_TR')}">
 					<li class="nxl-item nxl-hasmenu"><a href="/transfer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Transfer
 						</span>
 					</a></li>
+					</c:if>
 
 					<c:if test="${pageContext.request.isUserInRole('ADMIN')}">
 						<li class="nxl-item nxl-hasmenu"><a href="adminlist"
@@ -81,16 +84,21 @@
 									class="feather-users"></i></span> <span class="nxl-mtext">Branch</span>
 						</a></li>
 					</c:if>
-
-					<li class="nxl-item nxl-hasmenu"><a href="#"
+                    <c:if
+                        test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
+					<li class="nxl-item nxl-hasmenu"><a href="/staff-list"
                         class="nxl-link"> <span class="nxl-micon"><i
                                 class="feather-users"></i></span> <span class="nxl-mtext">Staff</span>
                     </a></li>
+                    </c:if>
 
+                    <c:if test="${pageContext.request.isUserInRole('STAFF_TR')}">
 					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>
 					</a></li>
+					</c:if>
+
 					<li class="nxl-item nxl-hasmenu"><a href="transfer-list"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">All
@@ -106,7 +114,7 @@
 								href="reports-sales.html">Transactions Reports</a></li>
 
 						</ul></li>
-					<li class="nxl-item nxl-hasmenu"><a href="" class="nxl-link">
+					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);" class="nxl-link">
 							<span class="nxl-micon"><i class="feather-settings"></i></span> <span
 							class="nxl-mtext">Settings</span><span class="nxl-arrow"><i
 								class="feather-chevron-right"></i></span>

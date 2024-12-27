@@ -1,6 +1,8 @@
 package com.llm.staff.model;
 
+import com.llm.UserIdentity.model.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +21,8 @@ public class StaffDetails {
     private Long id;
 
     private String branch;
-    private String group;
+
+    private String staffGroup;
 
     @Column(name = "first_name")
     private String firstName;

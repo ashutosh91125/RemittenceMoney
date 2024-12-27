@@ -274,9 +274,12 @@ function toggleDiv(divId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger">*</span></label>
-                                            <form:input path="branch" type="text"
-                                                class="form-control" id="branch"
-                                                placeholder="Branch" required='true' />
+                                            <form:select path="branch" class="form-control"
+                                                data-select2-selector="icon" multiple="false" id="branch" required='true' >
+                                                <form:option value="" disabled="true" selected="true">Select Agent</form:option>
+                                                <form:options items="${branchList}"
+                                                    itemValue="id" itemLabel="branchName" />
+                                            </form:select>
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -284,137 +287,80 @@ function toggleDiv(divId) {
 										<div class="mb-4">
 											<label class="form-label">Group<span
                                             class="text-danger">*</span></label>
-                                            <form:select path="agent" class="form-control"
+                                            <form:select path="staffGroup" class="form-control"
+                                                data-select2-selector="icon" id="staffGroup" required='true'>
+                                                <form:option value="STAFF_TR">Transaction</form:option>
+                                                <form:option value="STAFF_HO">Head Office</form:option>
+                                            </form:select>
+                                            <%-- <form:select path="agent" class="form-control"
                                                 data-select2-selector="icon" multiple="false" id="agent" required='true' >
                                                 <form:option value="" disabled="true" selected="true">Select Agent</form:option>
                                                 <form:options items="${agentList}"
                                                     itemValue="agentId" itemLabel="agentName" />
-											</form:select>
-											<span id="agentError" class="text-danger"></span>
+											</form:select> --%>
+
+											<span id="staffGroupError" class="text-danger"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Staff Type<span
+											<label class="form-label">First Name<span
 												class="text-danger">*</span></label>
-											<form:select path="staffType" class="form-control"
-                                                data-select2-selector="icon" id="staffType" required='true'>
-                                                <form:option value="Remittance">Remittance</form:option>
-                                                <form:option value="FC">FC</form:option>
-                                                <form:option value="Both">Both</form:option>
-                                            </form:select>
-											<span id="staffTypeError" class="text-danger"></span>
+											<form:input path="firstName" type="text"
+                                                class="form-control" id="firstName"
+                                                placeholder="Enter your First Name" required='true' />
+
+											<span id="firstNameError" class="text-danger"></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
                                     <div class="col-xl-4">
                                         <div class="mb-4">
-                                            <label class="form-label">Staff Channel</label>
-                                            <form:select path="staffChannel" class="form-control"
-                                                data-select2-selector="icon" id="staffChannel" required='true'>
-                                                <form:option value="Web">Web</form:option>
-                                                <form:option value="Digital">Digital</form:option>
-                                                <form:option value="Mobile">mobile</form:option>
-                                                <form:option value="FC Wholesale Staff">FC Wholesale Staff</form:option>
-                                            </form:select>
-                                            <span id="staffChannelError" class="text-danger"></span>
-                                        </div>
-                                    </div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Staff Display Name<span
-												class="text-danger">*</span></label>
-											<form:input path="staffDisplayName" type="text"
-												class="form-control" id="staffDisplayName"
-												placeholder="Staff Display Name" required='true' />
-											<span id="staffDisplayNameError" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Address 1<span
-												class="text-danger">*</span></label>
-											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" required='true' />
-											<span id="address1Error" class="text-danger"></span>
-										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Address 2<span
-												class="text-danger">*</span></label>
-											<form:input path="address2" type="text" class="form-control"
-												id="address2" placeholder="Address2" />
-											<span id="address2Error" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Address 3</label>
-											<form:input path="address3" type="text" class="form-control"
-												id="address3" placeholder="Address3" />
-											<span id="address3Error" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">City<span
-												class="text-danger">*</span></label>
-											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" required='true' />
-											<span id="cityError" class="text-danger"></span>
-										</div>
-									</div>
-								</div>
-								<div class="row">
+                                            <label class="form-label">Middle Name<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="middleName" type="text"
+                                                class="form-control" id="middleName"
+                                                placeholder="Enter your Middle Name" required='true' />
 
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Zip/PoBox</label>
-											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" required='true' />
-											<span id="zipError" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Staff Channel Id<span
-												class="text-danger">*</span></label>
-											<form:input path="staffChannelId" type="text" class="form-control" id="staffChannelId"
-                                            placeholder="Staff Channel Id" required='true' />
-											<span id="staffChannelIdError" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Staff Mode<span
-                                                class="text-danger">*</span></label>
-                                            <form:select path="staffMode" class="form-control"
-                                                data-select2-selector="icon" id="staffMode" required='true'>
-                                                <form:option value="Head Office">Head Office</form:option>
-                                                <form:option value="Transaction">Transaction</form:option>
-                                            </form:select>
-                                            <span id="staffModeError" class="text-danger"></span>
+                                            <span id="firstNameError" class="text-danger"></span>
                                         </div>
                                     </div>
+									<div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Last Name<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="lastName" type="text"
+                                                class="form-control" id="lastName"
+                                                placeholder="Enter your Last Name" required='true' />
+
+                                            <span id="lastNameError" class="text-danger"></span>
+                                        </div>
+                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Username<span
+                                            class="text-danger">*</span></label>
+                                            <form:input path="username" type="text"
+                                            class="form-control" id="username"
+                                            placeholder="Set your Username" required='true' />
+
+                                            <span id="usernameError" class="text-danger"></span>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">State<span
-                                                class="text-danger">*</span></label>
-                                            <form:select path="state" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="state" required='true' >
-                                                <form:option value="" disabled="true" selected="true">Select Country</form:option>
-                                                <form:options items="${stateList}" itemValue="valueId"
-                                                    itemLabel="description" />
-                                            </form:select>
-                                            <span id="staffChannelIdError" class="text-danger"></span>
+										<div class="mb-4">
+                                            <label class="form-label">Password<span
+                                            class="text-danger">*</span></label>
+                                            <form:input path="password" type="password"
+                                            class="form-control" id="password"
+                                            placeholder="Set your password" required='true' />
+
+                                            <span id="passwordError" class="text-danger"></span>
                                         </div>
-                                    </div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -434,7 +380,6 @@ function toggleDiv(divId) {
 						<div class="card-body pass-security">
 							<div class="accordion-body mt-3">
 								<div class="card-body personal-info">
-
 									<div class="main-content">
 										<div class="row">
 											<div class="col-xl-4">
@@ -452,114 +397,10 @@ function toggleDiv(divId) {
 													<form:input path="mobile" type="tel" class="form-control"
 														id="mobile" placeholder="Mobile" required='true' />
 													<span id="mobileError" class="text-danger"></span>
-
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Phone<span
-														class="text-danger">*</span></label>
-													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone" required='true' />
-													<span id="phoneError" class="text-danger"></span>
-												</div>
-											</div>
-										</div>
-
-
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Contact Person<span
-														class="text-danger">*</span></label>
-													<form:input path="contactPerson" type="tel"
-														class="form-control" id="contactPerson"
-														placeholder="Contact Person" required='true' />
-													<span id="contactPersonError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Mis Email Id<span
-														class="text-danger">*</span></label>
-													<form:input path="misEmailId" type="email"
-														class="form-control" id="misEmailId"
-														placeholder="Mis Email Id" required='true' />
-													<span id="misEmailIdError" class="text-danger"></span>
 												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-				<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseThree')">Regulatory
-							Details</button>
-					</h2>
-					<div id="panelsStayOpen-collapseThree"
-						class="accordion-collapse collapse">
-						<div class="accordion-body mt-3" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-										<div class="row">
-
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Staff Location Id<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="staffLocationId" type="number"
-														class="form-control" id="staffLocationId"
-														placeholder="Staff Location Id" required='true' />
-													<span id="staffLocationIdError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Licence Number<span
-														class="text-danger">*</span></label>
-													<form:input path="licenceNo" type="text"
-														class="form-control" id="licenceNo"
-														placeholder="Licence Number" required='true' />
-													<span id="licenceNoError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Outlet Code<span
-														class="text-danger">*</span></label>
-													<form:input path="outletCode" type="text"
-                                                        class="form-control" id="outletCode"
-                                                        placeholder="Outlet Code" required='true' />
-                                                    <span id="outletCodeError" class="text-danger"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Working Hours<span
-													class="text-danger">*</span></label>
-												<form:select path="workingHours" class="form-control"
-													data-select2-selector="icon" multiple="false" id="working" required='true' >
-													<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
-													<form:options items="${workingHoursList}"
-														itemValue="valueId" itemLabel="description" />
-												</form:select>
-												<span id="workingError" class="text-danger"></span>
-											</div>
-										</div>
-									</div>
-
 								</div>
 							</div>
 						</div>

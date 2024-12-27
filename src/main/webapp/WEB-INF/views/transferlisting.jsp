@@ -33,6 +33,7 @@
     <!-- Page Content -->
     <div class="nxl-container" style="background: aliceblue;">
         <div class="page-header">
+            <c:if test="${pageContext.request.isUserInRole('STAFF_TR')}">
             <div class="page-header-right ms-auto">
                 <div class="page-header-right-items">
                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
@@ -42,6 +43,7 @@
                     </div>
                 </div>
             </div>
+            </c:if>
         </div>
 
         <!-- Table Section -->

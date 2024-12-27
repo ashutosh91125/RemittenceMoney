@@ -1,5 +1,6 @@
 package com.llm.staff.model.dto;
 
+import com.llm.UserIdentity.model.enums.Role;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -9,7 +10,7 @@ import java.time.LocalDateTime;
 public class StaffDTO {
 
     private String branch;
-    private String group;
+    private Role staffGroup;
     private String firstName;
     private String middleName;
     private String lastName;

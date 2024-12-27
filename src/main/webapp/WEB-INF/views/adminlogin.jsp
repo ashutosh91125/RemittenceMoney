@@ -11,7 +11,7 @@
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
 
-<title>Admin Login</title>
+<title>Login</title>
 
 <link rel="shortcut icon" type="image/x-icon"
 	href="assets/images/favicon.ico">
@@ -43,8 +43,7 @@
 						<img src="assets/images/LuluMoney.png" class="img-fluid">
 					</div>
 					<div class="card-body p-sm-5">
-						<h2 class="fs-20 fw-bolder mb-4" style="text-align: center;">Admin
-							Login</h2>
+						<h2 class="fs-20 fw-bolder mb-4" style="text-align: center;">Login</h2>
 						<form action="${pageContext.request.contextPath}/perform_login"
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">

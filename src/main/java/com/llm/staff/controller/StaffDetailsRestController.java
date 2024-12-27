@@ -16,12 +16,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
 @RestController
 @Slf4j
+@RequestMapping("/api/v1/staff")
 public class StaffDetailsRestController {
     
     @Autowired
@@ -42,15 +44,18 @@ public class StaffDetailsRestController {
             // Map StaffDTO to StaffDetails
             StaffDetails staff = new StaffDetails();
             staff.setBranch(staffDTO.getBranch());
-            staff.setGroup(staffDTO.getGroup());
+            if (staffDTO.getStaffGroup() == Role.STAFF_TR){
+                staff.setStaffGroup("Transfer");
+            }else {
+                staff.setStaffGroup("Head Office");
+            }
             staff.setFirstName(staffDTO.getFirstName());
             staff.setMiddleName(staffDTO.getMiddleName());
             staff.setLastName(staffDTO.getLastName());
             staff.setUsername(staffDTO.getUsername());
             staff.setEmail(staffDTO.getEmail());
             staff.setMobile(staffDTO.getMobile());
-            staff.setStatus(staffDTO.isStatus());
-
+            staff.setStatus(true);
             staff.setCreatedOn(LocalDateTime.now());
             staff.setCreatedBy(username);
 
@@ -64,7 +69,7 @@ public class StaffDetailsRestController {
             user.setAdminName(staffDTO.getFirstName() + " " + staffDTO.getLastName());
             user.setUsername(staffDTO.getUsername());
             user.setPhoneNumber(staffDTO.getMobile());
-            user.setRole(Role.AGENT);
+            user.setRole(staffDTO.getStaffGroup());
             user.setApproved(true);
             userRepository.save(user);
 

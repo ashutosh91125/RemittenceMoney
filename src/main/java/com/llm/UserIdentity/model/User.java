@@ -3,6 +3,7 @@ package com.llm.UserIdentity.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.llm.UserIdentity.model.enums.Role;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.eclipse.tags.shaded.org.apache.xpath.operations.Bool;

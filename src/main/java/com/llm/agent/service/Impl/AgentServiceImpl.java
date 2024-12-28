@@ -1,6 +1,7 @@
 package com.llm.agent.service.Impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.service.IAgentService;
@@ -33,6 +34,11 @@ public class AgentServiceImpl implements IAgentService {
 	@Override
 	public List<AgentProjection> getAllAgentByProjection() {
 		return agentRepositories.findAllProjectedBy();
+	}
+
+	@Override
+	public Optional<Agent> getById(Long agentId) {
+		return agentRepositories.findById(agentId);
 	}
 
 }

@@ -3,11 +3,6 @@ package com.llm.agent.controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.model.enums.Role;
-import com.llm.UserIdentity.service.CustomUserDetailsService;
-import com.llm.agent.model.dto.AgentDTO;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.llm.agent.model.Agent;
+import com.llm.agent.model.dto.AgentDTO;
 import com.llm.agent.service.IAgentService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.agent.model.Agent;
+import com.llm.staff.model.StaffDetails;
+
+import lombok.RequiredArgsConstructor;
 
 @Controller
 //@SessionAttributes({ "agent" })
@@ -33,9 +33,6 @@ public class AgentController {
 
 	@Autowired
 	private EnumEntityService enumEntityService;
-
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
 
 //	@ModelAttribute("agent")
 //	public Agent initializeSubAgent() {
@@ -92,12 +89,11 @@ public class AgentController {
 	@PostMapping("/agent")
 	public String saveAgent(@ModelAttribute Agent agent) {
 		agentService.addAgent(agent);
-
 		return "agentlist";
 	}
 
 	@GetMapping("/agentlist")
-	public String getAdminList(Model model) {
+	public String getAgentList(Model model) {
 		List<Agent> agentList = agentService.findAllAgent();
 		model.addAttribute("agentList", agentList);
 		return "agentlist";
@@ -121,5 +117,18 @@ public class AgentController {
 //			return "agentlogin";
 //		}
 //	}
+	 	@GetMapping("/agent-detail")  
+	    public String getAgentDetails(@RequestParam("agentId") Long agentId,Model model) {
+	 		Optional<Agent> agent = agentService.getById(agentId);
+	    	if(agent.isPresent()) {
+	    		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.get().getCountries()));
+	    		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.get().getCurrencies()));
+	    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.get().getState()));
+	    		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.get().getTimeZone()));
+	    		model.addAttribute("agent",agent);
+	    	}
+	    	return "agent-details";
+	    }
+
 
 }

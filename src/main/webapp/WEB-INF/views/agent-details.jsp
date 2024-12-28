@@ -327,7 +327,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label>
-											<form:input path="countries" class="form-control" id="countries" required='true' />
+											<input value="${countries}" class="form-control" id="countries" required='true' />
 											<span id="countriesError" class="text-danger"></span>
 										</div>
 									</div>
@@ -335,7 +335,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label>
-											<form:input path="currencies" id="currencies"
+											<input value="${currencies}" id="currencies"
 												class="form-control"  required='true' />
 											<span id="currenciesError" class="text-danger"></span>
 										</div>
@@ -345,7 +345,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
                                     <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">State</label>
-                                            <form:input path="state" id="state" class="form-control"  required='true' />   
+                                            <input value="${states}" id="state" class="form-control"   />   
                                             <span id="stateError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -411,7 +411,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
-											<form:input path="timeZone" class="form-control" required='true' id="timeZone"/>
+											<input value="${timezones }" class="form-control" required='true' id="timeZone"/>
 											<span id="timeZoneError" class="text-danger"></span>
 										</div>
 									</div>

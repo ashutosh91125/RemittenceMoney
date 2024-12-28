@@ -64,7 +64,7 @@
 													<td>${staffDetails.mobile}</td>
 													<td>${staffDetails.createdOn}</td>
 													<td>${staffDetails.staffGroup}</td>
-													<td class="text-end"><a href="#"
+													<td class="text-end"><a href="staff-deatils?id=${staffDetails.id }"
 														class="btn btn-light-brand">View</a></td>
 												</tr>
 											</c:forEach>

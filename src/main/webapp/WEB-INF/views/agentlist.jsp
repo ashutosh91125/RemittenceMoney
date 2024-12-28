@@ -64,7 +64,7 @@
 													<td>${agent.phone}</td>
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
-													<td class="text-end"><a href="#"
+													<td class="text-end"><a href="agent-detail?agentId=${agent.agentId }"
 														class="btn btn-light-brand">View</a>
 												</tr>
 											</c:forEach>

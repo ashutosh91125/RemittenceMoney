@@ -274,12 +274,7 @@ function toggleDiv(divId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="branches" class="form-control" data-select2-selector="icon"
-                                                 multiple="false" id="branch" required='true' >
-                                                <form:option value="" disabled="true" selected="false">Select Branch</form:option>
-                                                <form:options items="${branchList}"
-                                                    itemValue="id" itemLabel="branchName" />
-                                            </form:select>
+                                             <form:input path="branches" class="form-control" id="branch" required='true' /> 
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -287,18 +282,7 @@ function toggleDiv(divId) {
 										<div class="mb-4">
 											<label class="form-label">Group<span
                                             class="text-danger">*</span></label>
-                                            <form:select path="staffGroup" class="form-control"
-                                                data-select2-selector="icon" id="staffGroup" required='true'>
-                                                <form:option value="STAFF_TR">Transaction</form:option>
-                                                <form:option value="STAFF_HO">Head Office</form:option>
-                                            </form:select>
-                                            <%-- <form:select path="agent" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="agent" required='true' >
-                                                <form:option value="" disabled="true" selected="true">Select Agent</form:option>
-                                                <form:options items="${agentList}"
-                                                    itemValue="agentId" itemLabel="agentName" />
-											</form:select> --%>
-
+                                            <form:input path="staffGroup" class="form-control"  id="staffGroup" required='true'/>
 											<span id="staffGroupError" class="text-danger"></span>
 										</div>
 									</div>

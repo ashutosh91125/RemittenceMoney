@@ -11,7 +11,7 @@
 <meta name="author" content="theme_ocean">
 <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
 <!--! BEGIN: Apps Title-->
-<title>LuLu Money || Staff Register</title>
+<title>LuLu Money || Branch Register</title>
 <!--! END:  Apps Title-->
 <!--! BEGIN: Favicon-->
 <link rel="shortcut icon" type="image/x-icon"
@@ -164,34 +164,32 @@
 }
 </style>
 <script>
+	function registerBranch() {
+		const formData = $("#branchForm").serialize(); // Serialize form data for submission
+		$('#loader').show();
+		$('#submitButton').prop('disabled', true);
+		$.ajax({
+			url : "/api/v1/branch",
+			type : "POST",
+			contentType : "application/x-www-form-urlencoded",
+			data : formData,
+			success : function(response) {
+				$('#loader').hide();
+				$('#submitButton').prop('disabled', false);
+				alert(response);
+			},
+			error : function(xhr) {
+				$('#loader').hide();
+				$('#submitButton').prop('disabled', false);
+				alert("Error: " + xhr.responseText);
+			}
+		});
+	}
 
-    function registerStaff() {
-        const formData = $("#staffForm").serialize(); // Serialize form data for submission
-        $('#loader').show();
-        $('#submitButton').prop('disabled', true);
-        $.ajax({
-            url: "/api/v1/staff",
-            type: "POST",
-            contentType: "application/x-www-form-urlencoded",
-            data: formData,
-            success: function(response) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert(response);
-            },
-            error: function(xhr) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert("Error: " + xhr.responseText);
-            }
-        });
-    }
-
-
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
+	function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
 </script>
 </head>
 
@@ -205,11 +203,11 @@ function toggleDiv(divId) {
 			<div class="page-header" style="background: aliceblue;">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
-						<h5 class="m-b-10">Staff</h5>
+						<h5 class="m-b-10">Branch</h5>
 					</div>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-						<li class="breadcrumb-item">Add Staff</li>
+						<li class="breadcrumb-item">Add Branch</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">
@@ -228,7 +226,7 @@ function toggleDiv(divId) {
                             </a> -->
 							<a href="javascript:void(0);"
 								class="btn btn-primary successAlertMessage"> <i
-								class="feather-user-plus me-2"></i> <span>Add Staff</span>
+								class="feather-user-plus me-2"></i> <span>Add Branch</span>
 							</a>
 						</div>
 					</div>
@@ -242,7 +240,7 @@ function toggleDiv(divId) {
 		</div>
 		<!-- [ page-header ] end -->
 
-		 <div class="spinner-container" id="loader">
+		<div class="spinner-container" id="loader">
 			<div class="spinner-border text-primary" role="status">
 				<span class="visually-hidden">Loading...</span>
 			</div>
@@ -254,14 +252,15 @@ function toggleDiv(divId) {
 			crossorigin="anonymous"></script>
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<form:form id="staffForm" modelAttribute="staff" onsubmit="event.preventDefault(); registerStaff();">
+		<form:form id="branchForm" modelAttribute="branch"
+			onsubmit="event.preventDefault(); registerBranch();">
 
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button" type="button"
 							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseOne')">Staff
+							onclick="toggleDiv('panelsStayOpen-collapseOne')">Branch
 							Details</button>
 					</h2>
 					<div id="panelsStayOpen-collapseOne"
@@ -270,96 +269,131 @@ function toggleDiv(divId) {
 							style="background: aliceblue; margin-top: -40px;">
 							<div class="main-content">
 								<div class="row">
-								    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Branch<span
-                                                class="text-danger">*</span></label>
-                                            <form:select path="branches" class="form-control" data-select2-selector="icon"
-                                                 multiple="false" id="branch" required='true' >
-                                                <form:option value="" disabled="true" selected="false">Select Branch</form:option>
-                                                <form:options items="${branchList}"
-                                                    itemValue="id" itemLabel="branchName" />
-                                            </form:select>
-                                            <span id="branchError" class="text-danger"></span>
-                                        </div>
-                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Group<span
-                                            class="text-danger">*</span></label>
-                                            <form:select path="staffGroup" class="form-control"
-                                                data-select2-selector="icon" id="staffGroup" required='true'>
-                                                <form:option value="STAFF_TR">Transaction</form:option>
-                                                <form:option value="STAFF_HO">Head Office</form:option>
-                                            </form:select>
-                                            <%-- <form:select path="agent" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="agent" required='true' >
-                                                <form:option value="" disabled="true" selected="true">Select Agent</form:option>
-                                                <form:options items="${agentList}"
-                                                    itemValue="agentId" itemLabel="agentName" />
-											</form:select> --%>
-
-											<span id="staffGroupError" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">First Name<span
+											<label class="form-label">Branch Name<span
 												class="text-danger">*</span></label>
-											<form:input path="firstName" type="text"
-                                                class="form-control" id="firstName"
-                                                placeholder="Enter your First Name" required='true' />
-
-											<span id="firstNameError" class="text-danger"></span>
+											<form:input path="branchName" type="text"
+												class="form-control" id="branchName"
+												placeholder="Branch Name" required='true' />
+											<span id="branchNameError" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-                                    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Middle Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="middleName" type="text"
-                                                class="form-control" id="middleName"
-                                                placeholder="Enter your Middle Name" required='true' />
-
-                                            <span id="firstNameError" class="text-danger"></span>
-                                        </div>
-                                    </div>
-									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Last Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="lastName" type="text"
-                                                class="form-control" id="lastName"
-                                                placeholder="Enter your Last Name" required='true' />
-
-                                            <span id="lastNameError" class="text-danger"></span>
-                                        </div>
-                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Username<span
-                                            class="text-danger">*</span></label>
-                                            <form:input path="username" type="text"
-                                            class="form-control" id="username"
-                                            placeholder="Set your Username" required='true' />
-
-                                            <span id="usernameError" class="text-danger"></span>
+											<label class="form-label">Agent<span
+												class="text-danger">*</span></label>
+											<form:input path="agent" class="form-control" id="agent"
+												required='true' />
+											<span id="agentError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Branch Type<span
+												class="text-danger">*</span></label>
+											<form:input path="branchType" class="form-control"
+												id="branchType" required='true' />
+											<span id="branchTypeError" class="text-danger"></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
-                                            <label class="form-label">Password<span
-                                            class="text-danger">*</span></label>
-                                            <form:input path="password" type="password"
-                                            class="form-control" id="password"
-                                            placeholder="Set your password" required='true' />
+											<label class="form-label">Branch Channel</label>
+											<form:input path="branchChannel" class="form-control"
+												id="branchChannel" required='true' />
+											<span id="branchChannelError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Branch Display Name<span
+												class="text-danger">*</span></label>
+											<form:input path="branchDisplayName" type="text"
+												class="form-control" id="branchDisplayName"
+												placeholder="Branch Display Name" required='true' />
+											<span id="branchDisplayNameError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Address 1<span
+												class="text-danger">*</span></label>
+											<form:input path="address1" type="text" class="form-control"
+												id="address1" placeholder="Address1" required='true' />
+											<span id="address1Error" class="text-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Address 2<span
+												class="text-danger">*</span></label>
+											<form:input path="address2" type="text" class="form-control"
+												id="address2" placeholder="Address2" />
+											<span id="address2Error" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Address 3</label>
+											<form:input path="address3" type="text" class="form-control"
+												id="address3" placeholder="Address3" />
+											<span id="address3Error" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">City<span
+												class="text-danger">*</span></label>
+											<form:input path="city" type="text" class="form-control"
+												id="city" placeholder="City" required='true' />
+											<span id="cityError" class="text-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
 
-                                            <span id="passwordError" class="text-danger"></span>
-                                        </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Zip/PoBox</label>
+											<form:input path="zip" type="text" class="form-control"
+												id="zip" placeholder="Zip/PoBox" required='true' />
+											<span id="zipError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Branch Channel Id<span
+												class="text-danger">*</span></label>
+											<form:input path="branchChannelId" type="text"
+												class="form-control" id="branchChannelId"
+												placeholder="Branch Channel Id" required='true' />
+											<span id="branchChannelIdError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Branch Mode<span
+												class="text-danger">*</span></label>
+											<form:input path="branchMode" class="form-control"
+												id="branchMode" required='true' />
+											<span id="branchModeError" class="text-danger"></span>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">State<span
+												class="text-danger">*</span></label>
+											<form:input path="state" class="form-control" id="state"
+												required='true' />
+											<span id="branchChannelIdError" class="text-danger"></span>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -380,6 +414,7 @@ function toggleDiv(divId) {
 						<div class="card-body pass-security">
 							<div class="accordion-body mt-3">
 								<div class="card-body personal-info">
+
 									<div class="main-content">
 										<div class="row">
 											<div class="col-xl-4">
@@ -397,10 +432,110 @@ function toggleDiv(divId) {
 													<form:input path="mobile" type="tel" class="form-control"
 														id="mobile" placeholder="Mobile" required='true' />
 													<span id="mobileError" class="text-danger"></span>
+
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Phone<span
+														class="text-danger">*</span></label>
+													<form:input path="phone" type="tel" class="form-control"
+														id="phone" placeholder="Phone" required='true' />
+													<span id="phoneError" class="text-danger"></span>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Contact Person<span
+														class="text-danger">*</span></label>
+													<form:input path="contactPerson" type="tel"
+														class="form-control" id="contactPerson"
+														placeholder="Contact Person" required='true' />
+													<span id="contactPersonError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Mis Email Id<span
+														class="text-danger">*</span></label>
+													<form:input path="misEmailId" type="email"
+														class="form-control" id="misEmailId"
+														placeholder="Mis Email Id" required='true' />
+													<span id="misEmailIdError" class="text-danger"></span>
 												</div>
 											</div>
 										</div>
 									</div>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseThree')">Regulatory
+							Details</button>
+					</h2>
+					<div id="panelsStayOpen-collapseThree"
+						class="accordion-collapse collapse">
+						<div class="accordion-body mt-3" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Branch Location Id<span
+														class="text-danger">*</span>
+													</label>
+													<form:input path="branchLocationId" type="number"
+														class="form-control" id="branchLocationId"
+														placeholder="Branch Location Id" required='true' />
+													<span id="branchLocationIdError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Licence Number<span
+														class="text-danger">*</span></label>
+													<form:input path="licenceNo" type="text"
+														class="form-control" id="licenceNo"
+														placeholder="Licence Number" required='true' />
+													<span id="licenceNoError" class="text-danger"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Outlet Code<span
+														class="text-danger">*</span></label>
+													<form:input path="outletCode" type="text"
+														class="form-control" id="outletCode"
+														placeholder="Outlet Code" required='true' />
+													<span id="outletCodeError" class="text-danger"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl-4">
+											<div class="mb-4">
+												<label class="form-label">Working Hours<span
+													class="text-danger">*</span></label>
+												<form:input path="workingHours" class="form-control"
+													id="working" required='true' />
+												<span id="workingError" class="text-danger"></span>
+											</div>
+										</div>
+									</div>
+
 								</div>
 							</div>
 						</div>
@@ -409,7 +544,7 @@ function toggleDiv(divId) {
 			</div>
 			<div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
-				<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
 			</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>

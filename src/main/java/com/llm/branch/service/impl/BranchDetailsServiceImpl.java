@@ -1,13 +1,15 @@
 package com.llm.branch.service.impl;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.projection.BranchProjection;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.branch.service.BranchDetailsService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class BranchDetailsServiceImpl implements BranchDetailsService {
@@ -29,5 +31,12 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     public List<BranchProjection> getAllBranchesByProjection() {
         return branchDetailsRepository.findAllProjectedBy();
     }
+
+    @Override
+    public Optional<BranchDetails> getById(Long id) {
+        return branchDetailsRepository.findById(id);
+    }
+
+	
 
 }

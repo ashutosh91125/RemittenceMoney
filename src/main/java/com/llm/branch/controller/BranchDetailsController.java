@@ -1,5 +1,14 @@
 package com.llm.branch.controller;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.service.IAgentService;
 import com.llm.branch.model.BranchDetails;
@@ -7,15 +16,8 @@ import com.llm.branch.service.BranchDetailsService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.model.EnumValue;
 import com.llm.common.service.EnumEntityService;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
@@ -70,5 +72,13 @@ public class BranchDetailsController {
         model.addAttribute("branchDetailsList", branchDetailsList);
         return "branch-listing";
 
+    }
+    @GetMapping("/branch-detail")
+    public String getAdminDetails(@RequestParam("id") Long id,Model model) {
+    	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
+    	if(branchDetails.isPresent()) {
+    		model.addAttribute("branch",branchDetails);
+    	}
+    	return "branch-details";
     }
 }

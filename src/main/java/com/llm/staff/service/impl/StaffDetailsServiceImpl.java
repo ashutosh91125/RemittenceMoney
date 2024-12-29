@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class StaffDetailsServiceImpl implements StaffDetailsService {
@@ -23,5 +24,10 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
     public List<StaffDetails> getAllStaff() {
         return staffDetailsRepository.findAll();
     }
+
+	@Override
+	public Optional<StaffDetails> getById(Long id) {
+		return staffDetailsRepository.findById(id);
+	}
 
 }

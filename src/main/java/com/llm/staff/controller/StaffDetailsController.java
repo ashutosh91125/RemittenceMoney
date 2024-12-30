@@ -56,6 +56,7 @@ public class StaffDetailsController {
     public String getStaffDetails(@RequestParam("id") Long id,Model model) {
     	Optional<StaffDetails> staffDetils = staffDetailsService.getById(id);
     	if(staffDetils.isPresent()) {
+    		model.addAttribute("branches",branchDetailsService.getById(id).get().getBranchName());
     		model.addAttribute("staff",staffDetils);
     	}
     	return "staff-details";

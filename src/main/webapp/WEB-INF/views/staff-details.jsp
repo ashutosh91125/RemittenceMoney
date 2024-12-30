@@ -274,7 +274,7 @@ function toggleDiv(divId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger">*</span></label>
-                                             <form:input path="branches" class="form-control" id="branch" required='true' /> 
+                                             <form:input path="branches" class="form-control" id="branch"  readonly="true"  required='true' value="${branches }"/> 
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -282,7 +282,7 @@ function toggleDiv(divId) {
 										<div class="mb-4">
 											<label class="form-label">Group<span
                                             class="text-danger">*</span></label>
-                                            <form:input path="staffGroup" class="form-control"  id="staffGroup" required='true'/>
+                                            <form:input path="staffGroup" class="form-control"  id="staffGroup" required='true' readonly="true"/>
 											<span id="staffGroupError" class="text-danger"></span>
 										</div>
 									</div>
@@ -292,7 +292,7 @@ function toggleDiv(divId) {
 												class="text-danger">*</span></label>
 											<form:input path="firstName" type="text"
                                                 class="form-control" id="firstName"
-                                                placeholder="Enter your First Name" required='true' />
+                                                placeholder="Enter your First Name" required='true' readonly="true" />
 
 											<span id="firstNameError" class="text-danger"></span>
 										</div>
@@ -305,7 +305,7 @@ function toggleDiv(divId) {
                                                 class="text-danger">*</span></label>
                                             <form:input path="middleName" type="text"
                                                 class="form-control" id="middleName"
-                                                placeholder="Enter your Middle Name" required='true' />
+                                                placeholder="Enter your Middle Name" required='true' readonly="true" />
 
                                             <span id="firstNameError" class="text-danger"></span>
                                         </div>
@@ -316,7 +316,7 @@ function toggleDiv(divId) {
                                                 class="text-danger">*</span></label>
                                             <form:input path="lastName" type="text"
                                                 class="form-control" id="lastName"
-                                                placeholder="Enter your Last Name" required='true' />
+                                                placeholder="Enter your Last Name" required='true' readonly="true" />
 
                                             <span id="lastNameError" class="text-danger"></span>
                                         </div>
@@ -327,23 +327,10 @@ function toggleDiv(divId) {
                                             class="text-danger">*</span></label>
                                             <form:input path="username" type="text"
                                             class="form-control" id="username"
-                                            placeholder="Set your Username" required='true' />
+                                            placeholder="Set your Username" required='true' readonly="true" />
 
                                             <span id="usernameError" class="text-danger"></span>
 										</div>
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-xl-4">
-										<div class="mb-4">
-                                            <label class="form-label">Password<span
-                                            class="text-danger">*</span></label>
-                                            <form:input path="password" type="password"
-                                            class="form-control" id="password"
-                                            placeholder="Set your password" required='true' />
-
-                                            <span id="passwordError" class="text-danger"></span>
-                                        </div>
 									</div>
 								</div>
 							</div>
@@ -371,7 +358,7 @@ function toggleDiv(divId) {
 													<label class="form-label">Email<span
 														class="text-danger">*</span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" required='true' />
+														id="email" placeholder="Email" required='true' readonly="true" />
 													<span id="emailError" class="text-danger"></span>
 												</div>
 											</div>
@@ -379,7 +366,7 @@ function toggleDiv(divId) {
 												<div class="mb-4">
 													<label class="form-label">Mobile</label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" required='true' />
+														id="mobile" placeholder="Mobile" required='true' readonly="true" />
 													<span id="mobileError" class="text-danger"></span>
 												</div>
 											</div>

@@ -9,6 +9,7 @@ import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.service.CustomUserDetailsService;
 import com.llm.admin.model.Admin;
 import com.llm.admin.service.IAdminService;
+import com.llm.agent.model.Agent;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -110,5 +112,25 @@ public class AdminController {
 			return "adminlogin";
 		}
 	}
+	
+	@GetMapping("/admin-detail")  
+    public String getAgentDetails(@RequestParam("id") Long id,Model model) {
+ 		Optional<User> userOptional = customUserDetailsService.getById(id);
+ 		
+    	if(userOptional.isPresent()) {
+    		User user = userOptional.get();
+            
+            // Create and populate the Admin object with the user's data
+            Admin admin = new Admin();
+            admin.setAdminName(user.getAdminName()); // Assuming `getFullName` is a method in `User`
+            admin.setUserName(user.getUsername()); // Map the username
+            admin.setPhone(Long.valueOf(user.getPhoneNumber())); // Map the phone number
+            admin.setEmail(user.getEmail());
+            admin.setPassword(user.getPassword());
+            admin.setCountries(enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",user.getCountry()));
+    		model.addAttribute("admin",admin);
+    	}
+    	return "admin-details";
+    }
 
 }

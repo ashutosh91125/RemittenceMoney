@@ -79,12 +79,13 @@ public class AuthController {
 
     // Handle Signup Form Submission
     @PostMapping("/signup")
-    public String handleSignup(@RequestParam String adminName, @RequestParam String userName,@RequestParam String email, @RequestParam String password, @RequestParam String phoneNumber) {
+    public String handleSignup(@RequestParam String adminName, @RequestParam String userName,@RequestParam String email, @RequestParam String password, @RequestParam String phoneNumber, @RequestParam String country) {
         User user = new User();
         user.setEmail(email);
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setAdminName(adminName);
         user.setUsername(userName);
+        user.setCountry(country);
         user.setPhoneNumber(phoneNumber);
         user.setRole(Role.SUB_ADMIN);
         user.setApproved(true);

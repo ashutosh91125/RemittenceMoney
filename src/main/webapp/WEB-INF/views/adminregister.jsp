@@ -73,7 +73,7 @@
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Password</label> <input
-										name="password" type="text" class="form-control"
+										name="password" type="password" class="form-control"
 										id="statusInput" placeholder="Password">
 								</div>
 

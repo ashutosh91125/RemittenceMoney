@@ -85,7 +85,7 @@ public class AuthController {
         user.setPassword(new BCryptPasswordEncoder().encode(password));
         user.setAdminName(adminName);
         user.setUsername(userName);
-        user.setCountry(country);
+        user.setCountry(country); 
         user.setPhoneNumber(phoneNumber);
         user.setRole(Role.SUB_ADMIN);
         user.setApproved(true);

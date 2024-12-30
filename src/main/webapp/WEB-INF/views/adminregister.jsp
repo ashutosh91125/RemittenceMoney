@@ -84,7 +84,7 @@
 										class="form-control" id="statusInput"
 										placeholder="Confirm Password" />
 								</div> --%>
-							</div>
+							</div> 
 							<div class="row">
 								<%-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Profile Image</label>

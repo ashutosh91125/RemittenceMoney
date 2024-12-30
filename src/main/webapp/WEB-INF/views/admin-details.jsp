@@ -51,24 +51,24 @@
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Admin Name</label> <input
 										name="adminName" type="text" class="form-control"
-										id="statusInput" placeholder="Admin Name" value="${admin.adminName}">
+										id="adminName" placeholder="Admin Name" value="${admin.adminName}" readonly="true">
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">User Name</label> <input
 										name="userName" type="text" class="form-control"
-										id="statusInput" placeholder="User Name" value="${admin.userName}">
+										id="userName" placeholder="User Name" value="${admin.userName}" readonly="true">
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Phone Number</label> <input
 										name="phoneNumber" type="text" class="form-control"
-										id="statusInput" placeholder="Phone Number" value="${admin.phone}">
+										id="phoneNumber" placeholder="Phone Number" value="${admin.phone}" readonly="true">
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Email</label> <input name="email"
-										type="text" class="form-control" id="statusInput"
-										placeholder="Email" value="${admin.email}">
+										type="text" class="form-control" id="email"
+										placeholder="Email" value="${admin.email}" readonly="true">
 								</div>
 
 							<%-- 	<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -93,7 +93,7 @@
 								</div> --%>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country</label> 
-									<input name="countries" class="form-control" id="currentCountry" value="${admin.countries }" placeholder="Country">
+									<input name="countries" id="countries" class="form-control" id="currentCountry" value="${admin.countries }" placeholder="Country" readonly="true">
 								</div>
 							</div>
 							<div class="row">

@@ -275,7 +275,7 @@
 												class="text-danger">*</span></label>
 											<form:input path="branchName" type="text"
 												class="form-control" id="branchName"
-												placeholder="Branch Name" required='true' />
+												placeholder="Branch Name"  readonly="true" required='true' />
 											<span id="branchNameError" class="text-danger"></span>
 										</div>
 									</div>
@@ -284,8 +284,8 @@
 											<label class="form-label">Agent<span
 												class="text-danger">*</span></label>
 											<form:input path="agent" class="form-control" id="agent"
-												required='true' />
-											<span id="agentError" class="text-danger"></span>
+												readonly="true" required='true' value="${agent}"/>
+											<span id="agentError" class="text-danger" ></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -293,7 +293,7 @@
 											<label class="form-label">Branch Type<span
 												class="text-danger">*</span></label>
 											<form:input path="branchType" class="form-control"
-												id="branchType" required='true' />
+												id="branchType" readonly="true" required='true' />
 											<span id="branchTypeError" class="text-danger"></span>
 										</div>
 									</div>
@@ -303,7 +303,7 @@
 										<div class="mb-4">
 											<label class="form-label">Branch Channel</label>
 											<form:input path="branchChannel" class="form-control"
-												id="branchChannel" required='true' />
+												id="branchChannel" readonly="true" required='true' />
 											<span id="branchChannelError" class="text-danger"></span>
 										</div>
 									</div>
@@ -313,7 +313,7 @@
 												class="text-danger">*</span></label>
 											<form:input path="branchDisplayName" type="text"
 												class="form-control" id="branchDisplayName"
-												placeholder="Branch Display Name" required='true' />
+												placeholder="Branch Display Name" readonly="true" required='true' />
 											<span id="branchDisplayNameError" class="text-danger"></span>
 										</div>
 									</div>
@@ -322,7 +322,7 @@
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" required='true' />
+												id="address1" placeholder="Address1" readonly="true" required='true' />
 											<span id="address1Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -333,7 +333,7 @@
 											<label class="form-label">Address 2<span
 												class="text-danger">*</span></label>
 											<form:input path="address2" type="text" class="form-control"
-												id="address2" placeholder="Address2" />
+												id="address2" placeholder="Address2"  readonly="true" required='true'/>
 											<span id="address2Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -341,7 +341,7 @@
 										<div class="mb-4">
 											<label class="form-label">Address 3</label>
 											<form:input path="address3" type="text" class="form-control"
-												id="address3" placeholder="Address3" />
+												id="address3" placeholder="Address3" readonly="true" required='true' />
 											<span id="address3Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -350,7 +350,7 @@
 											<label class="form-label">City<span
 												class="text-danger">*</span></label>
 											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" required='true' />
+												id="city" placeholder="City" readonly="true" required='true' />
 											<span id="cityError" class="text-danger"></span>
 										</div>
 									</div>
@@ -361,7 +361,7 @@
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" required='true' />
+												id="zip" placeholder="Zip/PoBox" readonly="true" required='true' />
 											<span id="zipError" class="text-danger"></span>
 										</div>
 									</div>
@@ -371,7 +371,7 @@
 												class="text-danger">*</span></label>
 											<form:input path="branchChannelId" type="text"
 												class="form-control" id="branchChannelId"
-												placeholder="Branch Channel Id" required='true' />
+												placeholder="Branch Channel Id" readonly="true" required='true' />
 											<span id="branchChannelIdError" class="text-danger"></span>
 										</div>
 									</div>
@@ -380,7 +380,7 @@
 											<label class="form-label">Branch Mode<span
 												class="text-danger">*</span></label>
 											<form:input path="branchMode" class="form-control"
-												id="branchMode" required='true' />
+												id="branchMode" readonly="true" required='true' />
 											<span id="branchModeError" class="text-danger"></span>
 										</div>
 									</div>
@@ -391,7 +391,7 @@
 											<label class="form-label">State<span
 												class="text-danger">*</span></label>
 											<form:input path="state" class="form-control" id="state"
-												required='true' />
+												readonly="true" required='true' value="${states}" />
 											<span id="branchChannelIdError" class="text-danger"></span>
 										</div>
 									</div>
@@ -422,7 +422,7 @@
 													<label class="form-label">Email<span
 														class="text-danger">*</span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" required='true' />
+														id="email" placeholder="Email" readonly="true" required='true' />
 													<span id="emailError" class="text-danger"></span>
 												</div>
 											</div>
@@ -430,7 +430,7 @@
 												<div class="mb-4">
 													<label class="form-label">Mobile</label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" required='true' />
+														id="mobile" placeholder="Mobile" readonly="true" required='true' />
 													<span id="mobileError" class="text-danger"></span>
 
 												</div>
@@ -440,7 +440,7 @@
 													<label class="form-label">Phone<span
 														class="text-danger">*</span></label>
 													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone" required='true' />
+														id="phone" placeholder="Phone" readonly="true" required='true' />
 													<span id="phoneError" class="text-danger"></span>
 												</div>
 											</div>
@@ -454,7 +454,7 @@
 														class="text-danger">*</span></label>
 													<form:input path="contactPerson" type="tel"
 														class="form-control" id="contactPerson"
-														placeholder="Contact Person" required='true' />
+														placeholder="Contact Person" readonly="true" required='true' />
 													<span id="contactPersonError" class="text-danger"></span>
 												</div>
 											</div>
@@ -464,7 +464,7 @@
 														class="text-danger">*</span></label>
 													<form:input path="misEmailId" type="email"
 														class="form-control" id="misEmailId"
-														placeholder="Mis Email Id" required='true' />
+														placeholder="Mis Email Id" readonly="true" required='true' />
 													<span id="misEmailIdError" class="text-danger"></span>
 												</div>
 											</div>
@@ -498,7 +498,7 @@
 													</label>
 													<form:input path="branchLocationId" type="number"
 														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" required='true' />
+														placeholder="Branch Location Id" readonly="true" required='true' />
 													<span id="branchLocationIdError" class="text-danger"></span>
 												</div>
 											</div>
@@ -508,7 +508,7 @@
 														class="text-danger">*</span></label>
 													<form:input path="licenceNo" type="text"
 														class="form-control" id="licenceNo"
-														placeholder="Licence Number" required='true' />
+														placeholder="Licence Number" readonly="true" required='true' />
 													<span id="licenceNoError" class="text-danger"></span>
 												</div>
 											</div>
@@ -518,7 +518,7 @@
 														class="text-danger">*</span></label>
 													<form:input path="outletCode" type="text"
 														class="form-control" id="outletCode"
-														placeholder="Outlet Code" required='true' />
+														placeholder="Outlet Code" readonly="true" required='true' />
 													<span id="outletCodeError" class="text-danger"></span>
 												</div>
 											</div>
@@ -530,11 +530,11 @@
 												<label class="form-label">Working Hours<span
 													class="text-danger">*</span></label>
 												<form:input path="workingHours" class="form-control"
-													id="working" required='true' />
+													id="working" readonly="true" required='true' />
 												<span id="workingError" class="text-danger"></span>
 											</div>
 										</div>
-									</div>
+									</div>	
 
 								</div>
 							</div>

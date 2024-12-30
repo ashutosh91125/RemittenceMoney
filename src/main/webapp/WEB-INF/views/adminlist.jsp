@@ -49,8 +49,8 @@
 												<th>Admin Name</th>
 												<th>Phone Number</th>
 												<th>Email</th>
-												<%-- <th>Countries</th>
-												<th>Profile Image</th> --%>
+												 <th>Countries</th>
+											<%--	<th>Profile Image</th> --%>
 												<th>Status</th>
 												<th class="text-end">Actions</th>
 											</tr>
@@ -63,7 +63,7 @@
 													<td>${admin.adminName}</td>
 													<td>${admin.phoneNumber}</td>
 													<td>${admin.email}</td>
-													<%-- <td>${admin.country}</td> --%>
+													 <td>${admin.country}</td> 
 													<%--  <td><img
 														src="data:image/jpeg;base64,${admin.profileImage}"
 														alt="Profile Image" style="width: 50px; height: 50px;">
@@ -76,7 +76,7 @@
 																Inactive
 															</c:otherwise>
 														</c:choose></td>
-													<td class="text-end"><a href="#"
+													<td class="text-end"><a href="admin-detail?id=${admin.id}"
 														class="btn btn-light-brand">View</a><%-- <a href="#"
 														    class="btn btn-light-brand">Edit</a> <a href="#"
 														class="btn btn-light-brand">Delete</a></td> --%>

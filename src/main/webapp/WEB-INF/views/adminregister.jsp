@@ -44,38 +44,37 @@
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form action="/signup" method="post"
-						enctype="multipart/form-data">
+					<form action="/signup" method="post" enctype="multipart/form-data">
 						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Name</label>
-									<input name="adminName" type="text" class="form-control"
-										id="statusInput" placeholder="Admin Name" >
+									<label class="form-label">Admin Name</label> <input
+										name="adminName" type="text" class="form-control"
+										id="statusInput" placeholder="Admin Name">
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">User Name</label>
-									<input name="userName" type="text" class="form-control"
-										id="statusInput" placeholder="User Name" >
+									<label class="form-label">User Name</label> <input
+										name="userName" type="text" class="form-control"
+										id="statusInput" placeholder="User Name">
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Phone Number</label>
-									<input name="phoneNumber" type="text" class="form-control"
-										id="statusInput" placeholder="Phone Number" >
+									<label class="form-label">Phone Number</label> <input
+										name="phoneNumber" type="text" class="form-control"
+										id="statusInput" placeholder="Phone Number">
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Email</label>
-									<input name="email" type="text" class="form-control"
-										id="statusInput" placeholder="Email" >
+									<label class="form-label">Email</label> <input name="email"
+										type="text" class="form-control" id="statusInput"
+										placeholder="Email">
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Password</label>
-									<input name="password" type="text" class="form-control"
-										id="statusInput" placeholder="Password" >
+									<label class="form-label">Password</label> <input
+										name="password" type="text" class="form-control"
+										id="statusInput" placeholder="Password">
 								</div>
 
 
@@ -84,24 +83,26 @@
 									<form:input path="confirmPassword" type="text"
 										class="form-control" id="statusInput"
 										placeholder="Confirm Password" />
-								</div>
+								</div> --%>
 							</div>
 							<div class="row">
-								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+								<%-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Profile Image</label>
 									<form:input path="profileImagePath" type="file"
 										class="form-control" placeholder="Profile Image" />
-								</div>
+								</div> --%>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Country</label>
-									<form:select path="countries" class="form-control"
-										data-select2-selector="icon" multiple="false">
-										<form:option value="" disabled="true" selected="true">Country</form:option>
-										<form:options items="${countryList}" itemValue="valueId"
-											itemLabel="description" />
-									</form:select>
+									<label class="form-label">Country</label> <select
+										name="country" class="form-control" id="currentCountry">
+										<option value="" disabled="true" selected="true">Select
+											Country</option>
+										<c:forEach items="${countryList}" var="country">
+											<option value="${country.valueId}">${country.description}</option>
+										</c:forEach>
+									</select>
+
 								</div>
-							</div> --%>
+							</div>
 							<div class="row">
 								<div class="col-10"></div>
 								<div class="col-2 text-end mb-2">

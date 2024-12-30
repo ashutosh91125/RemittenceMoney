@@ -45,4 +45,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     public long getUserCountByRole(Role role) {
         return userRepository.countByRole(role);
     }
+    
+    public Optional<User> getById(Long id){
+    	return userRepository.findById(id);
+    }
 }

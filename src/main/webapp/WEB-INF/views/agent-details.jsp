@@ -319,7 +319,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
                                                 class="text-danger">*</span></label>
                                             <form:input path="agentName" type="text"
                                                 class="form-control" id="agentName"
-                                                placeholder="Agent Name" required='true' />
+                                                placeholder="Agent Name" readonly="true" required='true' />
                                             <span id="agentNameError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -327,7 +327,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label>
-											<input value="${countries}" class="form-control" id="countries" required='true' />
+											<input value="${countries}" class="form-control" id="countries" readonly="true" required='true' />
 											<span id="countriesError" class="text-danger"></span>
 										</div>
 									</div>
@@ -336,7 +336,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label>
 											<input value="${currencies}" id="currencies"
-												class="form-control"  required='true' />
+												class="form-control"  readonly="true" required='true' />
 											<span id="currenciesError" class="text-danger"></span>
 										</div>
 									</div>
@@ -345,7 +345,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
                                     <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">State</label>
-                                            <input value="${states}" id="state" class="form-control"   />   
+                                            <input value="${states}" id="state" class="form-control"  readonly="true" required='true' />   
                                             <span id="stateError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -355,7 +355,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												class="text-danger">*</span></label>
 											<form:input path="agentDisplayName" type="text"
 												class="form-control" id="agentDisplayName"
-												placeholder="Agent Display Name" required='true' />
+												placeholder="Agent Display Name" readonly="true" required='true' />
 											<span id="agentDisplayNameError" class="text-danger"></span>
 										</div>
 									</div>
@@ -364,7 +364,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" required='true' />
+												id="address1" placeholder="Address1" readonly="true" required='true' />
 											<span id="address1Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -375,7 +375,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<label class="form-label">Address 2<span
 												class="text-danger">*</span></label>
 											<form:input path="address2" type="text" class="form-control"
-												id="address2" placeholder="Address2" />
+												id="address2" placeholder="Address2" readonly="true" required='true'/>
 											<span id="address2Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -383,7 +383,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Address 3</label>
 											<form:input path="address3" type="text" class="form-control"
-												id="address3" placeholder="Address3" />
+												id="address3" placeholder="Address3" readonly="true" required='true'/>
 											<span id="address3Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -392,7 +392,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<label class="form-label">City<span
 												class="text-danger">*</span></label>
 											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" required='true' />
+												id="city" placeholder="City" readonly="true" required='true' />
 											<span id="cityError" class="text-danger"></span>
 										</div>
 									</div>
@@ -403,7 +403,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" required='true' />
+												id="zip" placeholder="Zip/PoBox" readonly="true" required='true' />
 											<span id="zipError" class="text-danger"></span>
 										</div>
 									</div>
@@ -411,7 +411,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
-											<input value="${timezones }" class="form-control" required='true' id="timeZone"/>
+											<input value="${timezones }" class="form-control" readonly="true" required='true' id="timeZone"/>
 											<span id="timeZoneError" class="text-danger"></span>
 										</div>
 									</div>
@@ -442,7 +442,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													<label class="form-label">Email<span
 														class="text-danger">*</span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" required='true' />
+														id="email" placeholder="Email" readonly="true" required='true' />
 													<span id="emailError" class="text-danger"></span>
 												</div>
 											</div>
@@ -450,7 +450,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												<div class="mb-4">
 													<label class="form-label">Mobile</label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" required='true' />
+														id="mobile" placeholder="Mobile" readonly="true" required='true' />
 													<span id="mobileError" class="text-danger"></span>
 
 												</div>
@@ -460,7 +460,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													<label class="form-label">Phone<span
 														class="text-danger">*</span></label>
 													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone" required='true' />
+														id="phone" placeholder="Phone" readonly="true" required='true' />
 													<span id="phoneError" class="text-danger"></span>
 												</div>
 											</div>
@@ -474,7 +474,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														class="text-danger">*</span></label>
 													<form:input path="contactPerson" type="tel"
 														class="form-control" id="contactPerson"
-														placeholder="Contact Person" required='true' />
+														placeholder="Contact Person" readonly="true" required='true' />
 													<span id="contactPersonError" class="text-danger"></span>
 												</div>
 											</div>
@@ -484,7 +484,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														class="text-danger">*</span></label>
 													<form:input path="misEmailId" type="email"
 														class="form-control" id="misEmailId"
-														placeholder="Mis Email Id" required='true' />
+														placeholder="Mis Email Id" readonly="true" required='true' />
 													<span id="misEmailIdError" class="text-danger"></span>
 												</div>
 											</div>
@@ -518,7 +518,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													</label>
 													<form:input path="taxIdentificationNumber" type="text"
 														class="form-control" id="taxIdentificationNumber"
-														placeholder="Tax Identification Number" required='true' />
+														placeholder="Tax Identification Number" readonly="true" required='true' />
 													<span id="taxIdentificationNumberError" class="text-danger"></span>
 												</div>
 											</div>
@@ -528,7 +528,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														class="text-danger">*</span></label>
 													<form:input path="licenceNo" type="text"
 														class="form-control" id="licenceNo"
-														placeholder="Licence No." required='true' />
+														placeholder="Licence No." readonly="true" required='true' />
 													<span id="licenceNoError" class="text-danger"></span>
 												</div>
 											</div>
@@ -536,7 +536,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												<div class="mb-4">
 													<label class="form-label">Tax Applicable<span
 														class="text-danger">*</span></label>
-													<form:input path="taxApplicable" class="form-control" id="taxApplicable" required='true'/>
+													<form:input path="taxApplicable" class="form-control" id="taxApplicable" readonly="true" required='true'/>
 												</div>
 											</div>
 										</div>
@@ -546,7 +546,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span
 													class="text-danger">*</span></label>
-												<form:input path="workingHours" class="form-control"  id="working" required='true'/>
+												<form:input path="workingHours" class="form-control"  id="working" readonly="true" required='true'/>
 												<span id="workingError" class="text-danger"></span>
 											</div>
 										</div>
@@ -576,7 +576,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													<label class="form-label">Daily<span
 														class="text-danger">*</span></label>
 													<form:input path="daily" type="number" class="form-control"
-														id="daily" placeholder="Daily" required='true' />
+														id="daily" placeholder="Daily" readonly="true" required='true' />
 													<span id="dailyError" class="text-danger"></span>
 												</div>
 											</div>
@@ -584,7 +584,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												<div class="mb-4">
 													<label class="form-label">Settlement Mode<span
 														class="text-danger">*</span></label>
-													    <form:input path="settlementMode" class="form-control"  id="settlementMode" required='true'/>
+													    <form:input path="settlementMode" class="form-control"  id="settlementMode" readonly="true" required='true'/>
 													    <span id="settlementModeError" class="text-danger"></span>
 												</div>
 											</div>
@@ -592,7 +592,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												<div class="mb-4">
 													<label class="form-label">Settlement Type<span
 														class="text-danger">*</span></label>	
-												    <form:input path="settlementType" class="form-control"  id="settlementType" required='true'/>
+												    <form:input path="settlementType" class="form-control"  id="settlementType" readonly="true" required='true'/>
 													<span id="settlementTypeError" class="text-danger"></span>
 												</div>
 											</div>
@@ -602,7 +602,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												<div class="mb-4">
 													<label class="form-label">Status<span
 														class="text-danger">*</span></label>
-													<form:input path="status" class="form-control"  id="status"/>
+													<form:input path="status" class="form-control"  id="status" readonly="true" required='true'/>
 												</div>
 											</div>
 										</div>
@@ -632,7 +632,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														class="text-danger">*</span></label>
 													<form:input path="perTransactionLimit" type="number"
 														class="form-control" id="perTransactionLimit"
-														placeholder="Per Transaction" required='true' />
+														placeholder="Per Transaction" readonly="true" required='true' />
 													<span id="perTransactionLimitError" class="text-danger"></span>
 												</div>
 											</div>
@@ -642,7 +642,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														class="text-danger">*</span></label>
 													<form:input path="perDayLimit" type="number"
 														class="form-control" id="perDayLimit"
-														placeholder="Per Day" required='true' />
+														placeholder="Per Day" readonly="true" required='true' />
 													<span id="perTransactionLimitError" class="text-danger"></span>
 												</div>
 											</div>
@@ -652,7 +652,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														class="text-danger">*</span></label>
 													<form:input path="perMonthLimit" type="number"
 														class="form-control" id="perMonthLimit"
-														placeholder="Per Month" required='true' />
+														placeholder="Per Month" readonly="true" required='true' />
 													<span id="perTransactionLimitError" class="text-danger"></span>
 												</div>
 											</div>
@@ -740,7 +740,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
                                                 <div class="mb-4">
                                                     <label class="form-label">Username<span
                                                         class="text-danger">*</span></label>
-                                                    <form:input path="username" required='true' type="text"
+                                                    <form:input path="username" readonly="true" required='true' type="text"
                                                         class="form-control" id="adminUserName"
                                                         placeholder="Set Username" />
                                                     <span id="adminUserNameError" class="text-danger"></span>
@@ -752,7 +752,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
                                                         class="text-danger">*</span></label>
                                                     <form:input path="password" type="password"
                                                         class="form-control" id="adminPassword"
-                                                        placeholder="Set Password" required='true' />
+                                                        placeholder="Set Password" readonly="true" required='true' />
                                                     <span id="adminPasswordError" class="text-danger"></span>
                                                 </div>
                                             </div> --%>

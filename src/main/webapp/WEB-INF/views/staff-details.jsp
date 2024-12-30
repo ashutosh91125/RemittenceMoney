@@ -380,7 +380,7 @@ function toggleDiv(divId) {
 			</div>
 			<div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
-				<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
 			</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>

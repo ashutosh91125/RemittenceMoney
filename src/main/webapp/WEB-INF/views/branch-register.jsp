@@ -166,6 +166,9 @@
 <script>
 
     function registerBranch() {
+    	if(!validation($("#branchForm")))  {
+             return false;  
+         }
         const formData = $("#branchForm").serialize(); // Serialize form data for submission
         $('#loader').show();
         $('#submitButton').prop('disabled', true);
@@ -276,8 +279,8 @@ function toggleDiv(divId) {
                                                 class="text-danger">*</span></label>
                                             <form:input path="branchName" type="text"
                                                 class="form-control" id="branchName"
-                                                placeholder="Branch Name" required='true' />
-                                            <span id="branchNameError" class="text-danger"></span>
+                                                placeholder="Branch Name"  />
+                                            <span id="branchNameError" class="text-danger1"></span>
                                         </div>
                                     </div>
 									<div class="col-xl-4">
@@ -285,12 +288,12 @@ function toggleDiv(divId) {
 											<label class="form-label">Agent<span
                                             class="text-danger">*</span></label>
                                             <form:select path="agent" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="agent" required='true' >
+                                                data-select2-selector="icon" multiple="false" id="agent"  >
                                                 <form:option value="" disabled="true" selected="true">Select Agent</form:option>
                                                 <form:options items="${agentList}"
                                                     itemValue="agentId" itemLabel="agentName" />
 											</form:select>
-											<span id="agentError" class="text-danger"></span>
+											<span id="agentError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -298,27 +301,30 @@ function toggleDiv(divId) {
 											<label class="form-label">Branch Type<span
 												class="text-danger">*</span></label>
 											<form:select path="branchType" class="form-control"
-                                                data-select2-selector="icon" id="branchType" required='true'>
+                                                data-select2-selector="icon" id="branchType" >
+                                                <form:option value="" disabled="true" selected="true">Select Branch Type</form:option>
                                                 <form:option value="Remittance">Remittance</form:option>
                                                 <form:option value="FC">FC</form:option>
                                                 <form:option value="Both">Both</form:option>
                                             </form:select>
-											<span id="branchTypeError" class="text-danger"></span>
+											<span id="branchTypeError" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
                                     <div class="col-xl-4">
                                         <div class="mb-4">
-                                            <label class="form-label">Branch Channel</label>
+                                            <label class="form-label">Branch Channel<span
+													class="text-danger">*</span></label>
                                             <form:select path="branchChannel" class="form-control"
-                                                data-select2-selector="icon" id="branchChannel" required='true'>
+                                                data-select2-selector="icon" id="branchChannel" >
+                                                <form:option value="" disabled="true" selected="true">Select Branch Chhanel</form:option>
                                                 <form:option value="Web">Web</form:option>
                                                 <form:option value="Digital">Digital</form:option>
                                                 <form:option value="Mobile">mobile</form:option>
                                                 <form:option value="FC Wholesale Branch">FC Wholesale Branch</form:option>
                                             </form:select>
-                                            <span id="branchChannelError" class="text-danger"></span>
+                                            <span id="branchChannelError" class="text-danger1"></span>
                                         </div>
                                     </div>
 									<div class="col-xl-4">
@@ -327,8 +333,8 @@ function toggleDiv(divId) {
 												class="text-danger">*</span></label>
 											<form:input path="branchDisplayName" type="text"
 												class="form-control" id="branchDisplayName"
-												placeholder="Branch Display Name" required='true' />
-											<span id="branchDisplayNameError" class="text-danger"></span>
+												placeholder="Branch Display Name"  />
+											<span id="branchDisplayNameError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -336,8 +342,8 @@ function toggleDiv(divId) {
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" required='true' />
-											<span id="address1Error" class="text-danger"></span>
+												id="address1" placeholder="Address1"  />
+											<span id="address1Error" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>
@@ -348,7 +354,7 @@ function toggleDiv(divId) {
 												class="text-danger">*</span></label>
 											<form:input path="address2" type="text" class="form-control"
 												id="address2" placeholder="Address2" />
-											<span id="address2Error" class="text-danger"></span>
+											<span id="address2Error" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -356,7 +362,7 @@ function toggleDiv(divId) {
 											<label class="form-label">Address 3</label>
 											<form:input path="address3" type="text" class="form-control"
 												id="address3" placeholder="Address3" />
-											<span id="address3Error" class="text-danger"></span>
+											<span id="address3Error" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -364,8 +370,8 @@ function toggleDiv(divId) {
 											<label class="form-label">City<span
 												class="text-danger">*</span></label>
 											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" required='true' />
-											<span id="cityError" class="text-danger"></span>
+												id="city" placeholder="City"  />
+											<span id="cityError" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>
@@ -375,17 +381,16 @@ function toggleDiv(divId) {
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" required='true' />
-											<span id="zipError" class="text-danger"></span>
+												id="zip" placeholder="Zip/PoBox"  />
+											<span id="zipError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Branch Channel Id<span
-												class="text-danger">*</span></label>
+											<label class="form-label">Branch Channel Id</label>
 											<form:input path="branchChannelId" type="text" class="form-control" id="branchChannelId"
-                                            placeholder="Branch Channel Id" required='true' />
-											<span id="branchChannelIdError" class="text-danger"></span>
+                                            placeholder="Branch Channel Id"  />
+											<span id="branchChannelIdError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -393,11 +398,11 @@ function toggleDiv(divId) {
                                             <label class="form-label">Branch Mode<span
                                                 class="text-danger">*</span></label>
                                             <form:select path="branchMode" class="form-control"
-                                                data-select2-selector="icon" id="branchMode" required='true'>
+                                                data-select2-selector="icon" id="branchMode">
                                                 <form:option value="Head Office">Head Office</form:option>
                                                 <form:option value="Transaction">Transaction</form:option>
                                             </form:select>
-                                            <span id="branchModeError" class="text-danger"></span>
+                                            <span id="branchModeError" class="text-danger1"></span>
                                         </div>
                                     </div>
 								</div>
@@ -407,12 +412,12 @@ function toggleDiv(divId) {
                                             <label class="form-label">State<span
                                                 class="text-danger">*</span></label>
                                             <form:select path="state" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="state" required='true' >
-                                                <form:option value="" disabled="true" selected="true">Select Country</form:option>
+                                                data-select2-selector="icon" multiple="false" id="state"  >
+                                                <form:option value="" disabled="true" selected="true">Select State</form:option>
                                                 <form:options items="${stateList}" itemValue="valueId"
                                                     itemLabel="description" />
                                             </form:select>
-                                            <span id="branchChannelIdError" class="text-danger"></span>
+                                            <span id="stateError" class="text-danger1"></span>
                                         </div>
                                     </div>
 								</div>
@@ -442,16 +447,16 @@ function toggleDiv(divId) {
 													<label class="form-label">Email<span
 														class="text-danger">*</span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" required='true' />
-													<span id="emailError" class="text-danger"></span>
+														id="email" placeholder="Email"  />
+													<span id="emailError" class="text-danger1"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Mobile</label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" required='true' />
-													<span id="mobileError" class="text-danger"></span>
+														id="mobile" placeholder="Mobile"  />
+													<span id="mobileError" class="text-danger1"></span>
 
 												</div>
 											</div>
@@ -460,8 +465,8 @@ function toggleDiv(divId) {
 													<label class="form-label">Phone<span
 														class="text-danger">*</span></label>
 													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone" required='true' />
-													<span id="phoneError" class="text-danger"></span>
+														id="phone" placeholder="Phone"  />
+													<span id="phoneError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
@@ -474,8 +479,8 @@ function toggleDiv(divId) {
 														class="text-danger">*</span></label>
 													<form:input path="contactPerson" type="tel"
 														class="form-control" id="contactPerson"
-														placeholder="Contact Person" required='true' />
-													<span id="contactPersonError" class="text-danger"></span>
+														placeholder="Contact Person" />
+													<span id="contactPersonError" class="text-danger1"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -484,8 +489,8 @@ function toggleDiv(divId) {
 														class="text-danger">*</span></label>
 													<form:input path="misEmailId" type="email"
 														class="form-control" id="misEmailId"
-														placeholder="Mis Email Id" required='true' />
-													<span id="misEmailIdError" class="text-danger"></span>
+														placeholder="Mis Email Id"  />
+													<span id="misEmailIdError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
@@ -518,8 +523,8 @@ function toggleDiv(divId) {
 													</label>
 													<form:input path="branchLocationId" type="number"
 														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" required='true' />
-													<span id="branchLocationIdError" class="text-danger"></span>
+														placeholder="Branch Location Id" />
+													<span id="branchLocationIdError" class="text-danger1"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -528,8 +533,8 @@ function toggleDiv(divId) {
 														class="text-danger">*</span></label>
 													<form:input path="licenceNo" type="text"
 														class="form-control" id="licenceNo"
-														placeholder="Licence Number" required='true' />
-													<span id="licenceNoError" class="text-danger"></span>
+														placeholder="Licence Number"  />
+													<span id="licenceNoError" class="text-danger1"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -538,8 +543,8 @@ function toggleDiv(divId) {
 														class="text-danger">*</span></label>
 													<form:input path="outletCode" type="text"
                                                         class="form-control" id="outletCode"
-                                                        placeholder="Outlet Code" required='true' />
-                                                    <span id="outletCodeError" class="text-danger"></span>
+                                                        placeholder="Outlet Code"  />
+                                                    <span id="outletCodeError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
@@ -550,12 +555,12 @@ function toggleDiv(divId) {
 												<label class="form-label">Working Hours<span
 													class="text-danger">*</span></label>
 												<form:select path="workingHours" class="form-control"
-													data-select2-selector="icon" multiple="false" id="working" required='true' >
+													data-select2-selector="icon" multiple="false" id="workingHours"  >
 													<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
 													<form:options items="${workingHoursList}"
 														itemValue="valueId" itemLabel="description" />
 												</form:select>
-												<span id="workingError" class="text-danger"></span>
+												<span id="workingHoursError" class="text-danger1"></span>
 											</div>
 										</div>
 									</div>
@@ -575,23 +580,13 @@ function toggleDiv(divId) {
 	</div>
 
 
-
-
-	<!--! ================================================================ !-->
-	<!--! [End] Theme Customizer !-->
-	<!--! ================================================================ !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
-	<!--! END: Vendors JS !-->
-	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>
 	<script src="assets/js/customers-create-init.min.js"></script>
-	<!--! END: Apps Init !-->
-	<!--! BEGIN: Theme Customizer  !-->
 	<script src="assets/js/theme-customizer-init.min.js"></script>
-	<!--! END: Theme Customizer !-->
+	<script type="text/javascript" src="js/branchRegister.js"></script>
 </body>
 
 </html>

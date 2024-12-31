@@ -38,43 +38,53 @@
 				</div>
 			</div>
 		</div>
-		<div class="nxl-content" style="margin-top: -89px;">
+		<div class="nxl-content p-3">
 			<div class="main-content">
 				<div class="card border-top-0">
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form action="/signup" method="post" enctype="multipart/form-data">
+					<form action="/signup" method="post" enctype="multipart/form-data"
+						onsubmit="return validation(this)">
 						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Name</label> <input
-										name="adminName" type="text" class="form-control"
-										id="statusInput" placeholder="Admin Name">
+									<label class="form-label">Admin Name<span
+										class="text-danger">*</span></label> <input name="adminName"
+										type="text" class="form-control" id="adminName"
+										placeholder="Admin Name"> <span id="adminNameError"
+										style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">User Name</label> <input
-										name="userName" type="text" class="form-control"
-										id="statusInput" placeholder="User Name">
+									<label class="form-label">User Name<span
+										class="text-danger">*</span></label> <input name="userName"
+										type="text" class="form-control" id="userName"
+										placeholder="User Name"> <span id="userNameError"
+										style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Phone Number</label> <input
-										name="phoneNumber" type="text" class="form-control"
-										id="statusInput" placeholder="Phone Number">
+									<label class="form-label">Phone Number <span
+										class="text-danger">*</span></label> <input name="phoneNumber"
+										type="text" class="form-control" id="phoneNumber"
+										placeholder="Phone Number"> <span
+										id="phoneNumberError" style="color: red;"></span>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Email</label> <input name="email"
-										type="text" class="form-control" id="statusInput"
-										placeholder="Email">
+									<label class="form-label">Email<span
+										class="text-danger">*</span></label> <input name="email" type="text"
+										class="form-control" id="email" placeholder="Email"> <span
+										id="emailError" style="color: red;"></span>
 								</div>
 
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Password</label> <input
-										name="password" type="password" class="form-control"
-										id="statusInput" placeholder="Password">
+									<label class="form-label">Password<span
+										class="text-danger">*</span></label> <input name="password"
+										type="password" class="form-control" id="password"
+										placeholder="Password"> <span id="passwordError"
+										style="color: red;"></span>
 								</div>
 
 
@@ -84,7 +94,7 @@
 										class="form-control" id="statusInput"
 										placeholder="Confirm Password" />
 								</div> --%>
-							</div> 
+							</div>
 							<div class="row">
 								<%-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Profile Image</label>
@@ -92,21 +102,21 @@
 										class="form-control" placeholder="Profile Image" />
 								</div> --%>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Country</label> <select
-										name="country" class="form-control" id="currentCountry">
+									<label class="form-label">Country<span
+										class="text-danger">*</span></label> <select name="country"
+										class="form-control" id="country">
 										<option value="" disabled="true" selected="true">Select
 											Country</option>
 										<c:forEach items="${countryList}" var="country">
 											<option value="${country.valueId}">${country.description}</option>
 										</c:forEach>
-									</select>
-
+									</select> <span id="countryError" style="color: red;"></span>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-10"></div>
 								<div class="col-2 text-end mb-2">
-									<button type="submit" onclick="submit()"
+									<button type="submit"
 										class="btn btn-primary btn-lg next-button">Submit</button>
 								</div>
 							</div>
@@ -125,5 +135,7 @@
 	<script src="assets/vendors/js/dataTables.min.js"></script>
 	<script src="assets/vendors/js/dataTables.bs5.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
+	<script type="text/javascript" src="js/adminSignUp.js"></script>
+
 </body>
 </html>

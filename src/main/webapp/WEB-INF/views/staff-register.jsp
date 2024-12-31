@@ -164,34 +164,36 @@
 }
 </style>
 <script>
+	function registerStaff() {
+		if (!validation($("#staffForm"))) {
+			return false;
+		}
+		const formData = $("#staffForm").serialize(); // Serialize form data for submission
+		$('#loader').show();
+		$('#submitButton').prop('disabled', true);
+		$.ajax({
+			url : "/api/v1/staff",
+			type : "POST",
+			contentType : "application/x-www-form-urlencoded",
+			data : formData,
+			success : function(response) {
+				$('#loader').hide();
+				$('#submitButton').prop('disabled', false);
+				alert(response);
+			},
+			error : function(xhr) {
+				$('#loader').hide();
+				$('#submitButton').prop('disabled', false);
+				alert("Error: " + xhr.responseText);
+			}
+		});
+	}
 
-    function registerStaff() {
-        const formData = $("#staffForm").serialize(); // Serialize form data for submission
-        $('#loader').show();
-        $('#submitButton').prop('disabled', true);
-        $.ajax({
-            url: "/api/v1/staff",
-            type: "POST",
-            contentType: "application/x-www-form-urlencoded",
-            data: formData,
-            success: function(response) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert(response);
-            },
-            error: function(xhr) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert("Error: " + xhr.responseText);
-            }
-        });
-    }
-
-
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
+	function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
+	
 </script>
 </head>
 
@@ -242,7 +244,7 @@ function toggleDiv(divId) {
 		</div>
 		<!-- [ page-header ] end -->
 
-		 <div class="spinner-container" id="loader">
+		<div class="spinner-container" id="loader">
 			<div class="spinner-border text-primary" role="status">
 				<span class="visually-hidden">Loading...</span>
 			</div>
@@ -254,7 +256,8 @@ function toggleDiv(divId) {
 			crossorigin="anonymous"></script>
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<form:form id="staffForm" modelAttribute="staff" onsubmit="event.preventDefault(); registerStaff();">
+		<form:form id="staffForm" modelAttribute="staff"
+			onsubmit="event.preventDefault(); registerStaff();">
 
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
@@ -270,96 +273,83 @@ function toggleDiv(divId) {
 							style="background: aliceblue; margin-top: -40px;">
 							<div class="main-content">
 								<div class="row">
-								    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Branch<span
-                                                class="text-danger">*</span></label>
-                                            <form:select path="branches" class="form-control" data-select2-selector="icon"
-                                                 multiple="false" id="branch" required='true' >
-                                                <form:option value="" disabled="true" selected="false">Select Branch</form:option>
-                                                <form:options items="${branchList}"
-                                                    itemValue="id" itemLabel="branchName" />
-                                            </form:select>
-                                            <span id="branchError" class="text-danger"></span>
-                                        </div>
-                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Branch<span
+												class="text-danger">*</span></label>
+											<form:select path="branches" data-select2-selector="icon"
+												id="branches" onchange="enableSelectOption(this)">
+												<form:option value="" disabled="true" selected="false">Select Branch</form:option>
+												<form:options items="${branchList}" itemValue="id"
+													itemLabel="branchName" />
+											</form:select>
+											<span id="branchError" class="text-danger1"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Group<span
-                                            class="text-danger">*</span></label>
-                                            <form:select path="staffGroup" class="form-control"
-                                                data-select2-selector="icon" id="staffGroup" required='true'>
-                                                <form:option value="STAFF_TR">Transaction</form:option>
-                                                <form:option value="STAFF_HO">Head Office</form:option>
-                                            </form:select>
-                                            <%-- <form:select path="agent" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="agent" required='true' >
-                                                <form:option value="" disabled="true" selected="true">Select Agent</form:option>
-                                                <form:options items="${agentList}"
-                                                    itemValue="agentId" itemLabel="agentName" />
-											</form:select> --%>
-
-											<span id="staffGroupError" class="text-danger"></span>
+												class="text-danger">*</span></label>
+											<form:select path="staffGroup" class="form-control"
+												data-select2-selector="icon" id="staffGroup">
+												<form:option value="" disabled="true" selected="true">Select Group</form:option>
+												<form:option value="STAFF_TR">Transaction</form:option>
+												<form:option value="STAFF_HO">Head Office</form:option>
+											</form:select>
+											<span id="staffGroupError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">First Name<span
 												class="text-danger">*</span></label>
-											<form:input path="firstName" type="text"
-                                                class="form-control" id="firstName"
-                                                placeholder="Enter your First Name" required='true' />
+											<form:input path="firstName" type="text" class="form-control"
+												id="firstName" placeholder="Enter your First Name" />
 
-											<span id="firstNameError" class="text-danger"></span>
+											<span id="firstNameError" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-                                    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Middle Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="middleName" type="text"
-                                                class="form-control" id="middleName"
-                                                placeholder="Enter your Middle Name" required='true' />
-
-                                            <span id="firstNameError" class="text-danger"></span>
-                                        </div>
-                                    </div>
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Last Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="lastName" type="text"
-                                                class="form-control" id="lastName"
-                                                placeholder="Enter your Last Name" required='true' />
+										<div class="mb-4">
+											<label class="form-label">Middle Name</label>
+											<form:input path="middleName" type="text"
+												class="form-control" id="middleName"
+												placeholder="Enter your Middle Name" />
 
-                                            <span id="lastNameError" class="text-danger"></span>
-                                        </div>
-                                    </div>
+											<span id="firstNameError" class="text-danger1"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Last Name<span
+												class="text-danger">*</span></label>
+											<form:input path="lastName" type="text" class="form-control"
+												id="lastName" placeholder="Enter your Last Name" />
+											<span id="lastNameError" class="text-danger1"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Username<span
-                                            class="text-danger">*</span></label>
-                                            <form:input path="username" type="text"
-                                            class="form-control" id="username"
-                                            placeholder="Set your Username" required='true' />
-
-                                            <span id="usernameError" class="text-danger"></span>
+												class="text-danger">*</span></label>
+											<form:input path="username" type="text" class="form-control"
+												id="username" placeholder="Set your Username" />
+											<span id="usernameError" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
-                                            <label class="form-label">Password<span
-                                            class="text-danger">*</span></label>
-                                            <form:input path="password" type="password"
-                                            class="form-control" id="password"
-                                            placeholder="Set your password" required='true' />
-
-                                            <span id="passwordError" class="text-danger"></span>
-                                        </div>
+											<label class="form-label">Password<span
+												class="text-danger">*</span></label>
+											<form:input path="password" type="password"
+												class="form-control" id="password"
+												placeholder="Set your password" />
+											<span id="passwordError" class="text-danger1"></span>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -387,16 +377,17 @@ function toggleDiv(divId) {
 													<label class="form-label">Email<span
 														class="text-danger">*</span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" required='true' />
-													<span id="emailError" class="text-danger"></span>
+														id="email" placeholder="Email" />
+													<span id="emailError" class="text-danger1"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Mobile</label>
+													<label class="form-label">Mobile<span
+														class="text-danger">*</span></label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" required='true' />
-													<span id="mobileError" class="text-danger"></span>
+														id="mobile" placeholder="Mobile" />
+													<span id="mobileError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
@@ -414,25 +405,13 @@ function toggleDiv(divId) {
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-
-
-
-
-	<!--! ================================================================ !-->
-	<!--! [End] Theme Customizer !-->
-	<!--! ================================================================ !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
-	<!--! END: Vendors JS !-->
-	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>
 	<script src="assets/js/customers-create-init.min.js"></script>
-	<!--! END: Apps Init !-->
-	<!--! BEGIN: Theme Customizer  !-->
 	<script src="assets/js/theme-customizer-init.min.js"></script>
-	<!--! END: Theme Customizer !-->
+	<script type="text/javascript" src="js/staffRegister.js"></script>
 </body>
 
 </html>

@@ -49,7 +49,7 @@ public class MyConfig {
         http
                 .authorizeHttpRequests(authz -> authz
 //                        .requestMatchers("/login","/adminlogin", "/adminregister", "/signup", "/static/**","/WEB-INF/views/**").permitAll()
-                        .requestMatchers("/login", "/token", "/api/v1/raas/**","/api/v1/banks/**", "/api/enumEntities/**","/caas/api/v2/customer/verify-mobile" ,"/api/v1/transfer/**","/api/v1/agent/**","/api/v1/beneficiaries/**", "/static/**", "/assets/**" ,"/WEB-INF/views/**").permitAll()
+                        .requestMatchers("/login", "/staff-login", "/token", "/api/v1/raas/**","/api/v1/banks/**", "/api/enumEntities/**","/caas/api/v2/customer/verify-mobile" ,"/api/v1/transfer/**","/api/v1/agent/**","/api/v1/beneficiaries/**", "/static/**", "/assets/**" ,"/WEB-INF/views/**").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/vendors/**", "/scss/**").permitAll()
                         .requestMatchers("/adminList").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/agentList").hasAnyAuthority("ROLE_ADMIN","ROLE_SUB_ADMIN")

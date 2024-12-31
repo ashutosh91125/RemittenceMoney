@@ -14,7 +14,6 @@ import org.springframework.web.client.HttpServerErrorException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/banks")
@@ -123,7 +122,6 @@ public class BankDetailsController {
 
     @GetMapping("/fetch-branches")
     public ResponseEntity<Map<String, Object>> fetchAndStoreBranches(
-            @RequestParam String fetchBankId,
             @RequestParam String receivingCountryCode,
             @RequestParam String correspondent,
             @RequestParam String receivingMode) {
@@ -132,7 +130,7 @@ public class BankDetailsController {
 
         try {
             // Call the service to fetch and store branches
-            bankService.fetchAndStoreBranches(fetchBankId, receivingCountryCode, correspondent, receivingMode);
+            bankService.fetchAndStoreBranches(receivingCountryCode, correspondent, receivingMode);
 
             // Prepare success response
             response.put("message", "Branches fetched and stored successfully.");

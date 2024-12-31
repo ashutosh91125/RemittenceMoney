@@ -104,39 +104,49 @@ public class BankDetailsServiceImpl implements BankDetailsService {
     }
 
     @Override
-    public void fetchAndStoreBranches(String fetchBankId,String receivingCountryCode, String correspondent, String receivingMode) {
-        // Call getBranches() to fetch data from the external service
-        Map<String, Object> response = externalService.getBankBranches(fetchBankId,receivingCountryCode, correspondent,receivingMode);
+    public void fetchAndStoreBranches(String receivingCountryCode, String correspondent, String receivingMode) {
 
-        // Validate response and extract data
-        if (response != null && response.containsKey("data")) {
-            Map<String, Object> data = (Map<String, Object>) response.get("data");
-            List<Map<String, String>> branchList = (List<Map<String, String>>) data.get("list");
+        List<Bank> banks = getBankByCountryCode(receivingCountryCode);
 
-            if (branchList != null) {
-                for (Map<String, String> branch : branchList) {
-                    String bankId = branch.get("bank_id");
-                    String branchId = branch.get("branch_id");
-                    String branchName = branch.get("branch_name");
+        for (Bank bank: banks) {
+            try {
+                // Call getBranches() to fetch data from the external service
+                Map<String, Object> response = externalService.getBankBranches(bank.getBankId(), receivingCountryCode, correspondent, receivingMode);
 
-                    // Check if the branch already exists, and save it if it doesn't
-                    if (!branchRepository.existsByBankIdAndBranchId(bankId, branchId)) {
-                        Branch newBranch = new Branch();
-                        newBranch.setBankId(bankId);
-                        newBranch.setBranchId(branchId);
-                        newBranch.setBranchName(branchName);
-                        newBranch.setRoutingCode(branch.get("routing_code"));
-                        newBranch.setIsoCode(branch.get("iso_code"));
-                        newBranch.setSort(branch.get("sort"));
+                // Validate response and extract data
+                if (response != null && response.containsKey("data")) {
+                    Map<String, Object> data = (Map<String, Object>) response.get("data");
+                    List<Map<String, String>> branchList = (List<Map<String, String>>) data.get("list");
 
-                        branchRepository.save(newBranch);
+                    if (branchList != null) {
+                        for (Map<String, String> branch : branchList) {
+                            String bankId = branch.get("bank_id");
+                            String branchId = branch.get("branch_id");
+                            String branchName = branch.get("branch_name");
+
+                            // Check if the branch already exists, and save it if it doesn't
+                            if (!branchRepository.existsByBankIdAndBranchId(bankId, branchId)) {
+                                Branch newBranch = new Branch();
+                                newBranch.setBankId(bankId);
+                                newBranch.setBranchId(branchId);
+                                newBranch.setBranchName(branchName);
+                                newBranch.setRoutingCode(branch.get("routing_code"));
+                                newBranch.setIsoCode(branch.get("iso_code"));
+                                newBranch.setSort(branch.get("sort"));
+
+                                branchRepository.save(newBranch);
+                            }
+                        }
+                    } else {
+                        System.out.println("Branch list is empty in the response.");
                     }
+                } else {
+                    System.out.println("No valid data received from the API.");
                 }
-            } else {
-                System.out.println("Branch list is empty in the response.");
+
+            } catch (Exception e){
+                System.out.println("No valid data received from the API.");
             }
-        } else {
-            System.out.println("No valid data received from the API.");
         }
     }
 
@@ -148,11 +158,10 @@ public class BankDetailsServiceImpl implements BankDetailsService {
 
     @Scheduled(cron = "0 0 0 * * SUN") // Runs every Sunday at midnight
     public void updateBranches() {
-        String fetchBankId = "11478";
         String receivingCountryCode = "IN";
         String correspondent = "LR";
         String receivingMode = "BANK";
-        fetchAndStoreBranches(fetchBankId,receivingCountryCode, correspondent, receivingMode);
+        fetchAndStoreBranches(receivingCountryCode, correspondent, receivingMode);
     }
 }
 

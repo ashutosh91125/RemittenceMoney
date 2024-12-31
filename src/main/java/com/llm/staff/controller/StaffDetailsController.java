@@ -29,6 +29,11 @@ public class StaffDetailsController {
     @Autowired
     private final BranchDetailsService branchDetailsService;
 
+    @GetMapping("/staff-login")
+    public String staffLogin(Model model) {
+        return "staff-login";
+    }
+
     @GetMapping("/staff")
     public String showCompanyDetailsForm(Model model) {
         model.addAttribute("staff", new StaffDTO());

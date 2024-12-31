@@ -24,6 +24,7 @@
 	</div>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
+		<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
 					<div
@@ -34,6 +35,7 @@
 					</div>
 				</div>
 			</div>
+		</c:if>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
 			<div class="main-content">

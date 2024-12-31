@@ -449,7 +449,7 @@ $(document).ready(function() {
     // Function to call the quote service
            function getQuote() {
     // Get the values from the form
-    const sendingCountryCode = "MY";
+    const sendingCountryCode = $('#userCountry').val();
     const sendingCurrencyCode = $('#payInCurrency').val();
     const receivingCountryCode = $('#payOutCountry').val();
     const receivingCurrencyCode = $('#currencies').val();

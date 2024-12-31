@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @Slf4j
@@ -37,6 +38,9 @@ public class StaffDetailsRestController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        Optional<User> byUsername = userRepository.findByUsername(username);
+        String country = byUsername.get().getCountry();
+
 
         log.info("Registering staff: {}", staffDTO);
 
@@ -70,6 +74,7 @@ public class StaffDetailsRestController {
             user.setPassword(new BCryptPasswordEncoder().encode(staffDTO.getPassword()));
             user.setAdminName(staffDTO.getFirstName() + " " + staffDTO.getLastName());
             user.setUsername(staffDTO.getUsername());
+            user.setCountry(country);
             user.setPhoneNumber(staffDTO.getMobile());
             user.setRole(staffDTO.getStaffGroup());
             user.setApproved(true);

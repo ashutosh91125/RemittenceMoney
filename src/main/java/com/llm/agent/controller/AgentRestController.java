@@ -9,11 +9,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.llm.agent.service.IAgentService;
 import com.llm.agent.model.Agent;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/v1/agent")
@@ -27,6 +31,8 @@ public class AgentRestController {
 
 	@PostMapping
 	public ResponseEntity<String> registerAgent(@ModelAttribute AgentDTO agentDTO) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
 		logger.info(agentDTO.toString());
 		try {
 			if (agentDTO.getAgentName().isEmpty()){
@@ -60,8 +66,8 @@ public class AgentRestController {
 			agent.setPerTransaction(agentDTO.getPerTransaction());
 			agent.setPerDay(agentDTO.getPerDay());
 			agent.setPerMonth(agentDTO.getPerMonth());
-//			agent.setCreatedBy(agentDTO.getCreatedBy());
-//			agent.setCreatedOn(agentDTO.getCreatedOn());
+			agent.setCreatedBy(username);
+			agent.setCreatedOn(LocalDateTime.now());
 //			agent.setModifiedBy(agentDTO.getModifiedBy());
 //			agent.setModifiedOn(agentDTO.getModifiedOn());
 //			agent.setDisabledBy(agentDTO.getDisabledBy());
@@ -82,6 +88,7 @@ public class AgentRestController {
 			user.setAdminName(agentDTO.getAgentName());
 			user.setUsername(agentDTO.getUsername());
 			user.setPhoneNumber(agentDTO.getPhone());
+			user.setCountry(agentDTO.getCountries());
 			user.setRole(Role.AGENT);
 			user.setApproved(true);
 			userRepository.save(user);

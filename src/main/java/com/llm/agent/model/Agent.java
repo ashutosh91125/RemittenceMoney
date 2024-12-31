@@ -1,15 +1,13 @@
 package com.llm.agent.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -56,11 +54,11 @@ public class Agent {
 //	private String clientSecret;
 	private String username;
 	private String createdBy;
-	private String createdOn;
+	private LocalDateTime createdOn;
 	private String modifiedBy;
-	private String modifiedOn;
+	private LocalDateTime modifiedOn;
 	private String disabledBy;
-	private String disabledOn;
+	private LocalDateTime disabledOn;
 	private String remarks;
 	private Boolean statusFlag;
 	private Boolean isValid;

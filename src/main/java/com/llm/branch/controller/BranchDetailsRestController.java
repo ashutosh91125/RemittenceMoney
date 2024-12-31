@@ -1,12 +1,19 @@
 package com.llm.branch.controller;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.service.BranchDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/branch")
@@ -16,10 +23,21 @@ public class BranchDetailsRestController {
     @Autowired
     private BranchDetailsService branchDetailsService;
 
+    @Autowired
+    private UserRepository userRepository;
+
     @PostMapping
     public ResponseEntity<String> registerBranch(@ModelAttribute BranchDetails branchDetails) {
         log.info(branchDetails.toString());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         try {
+            Optional<User> byUsername = userRepository.findByUsername(username);
+
+            branchDetails.setCounty(byUsername.get().getCountry());
+            branchDetails.setCreatedBy(username);
+            branchDetails.setCreatedOn(LocalDateTime.now());
             branchDetailsService.createBranch(branchDetails);
 
             return new ResponseEntity<>("Branch create successfully!", HttpStatus.CREATED);

@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import com.llm.UserIdentity.service.CustomUserDetailsService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @RequiredArgsConstructor
@@ -41,7 +42,10 @@ public class MyConfig {
 //    }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
+        customAuthenticationFilter.setAuthenticationManager(authenticationManager);
+
         http
                 .authorizeHttpRequests(authz -> authz
 //                        .requestMatchers("/login","/adminlogin", "/adminregister", "/signup", "/static/**","/WEB-INF/views/**").permitAll()
@@ -51,6 +55,7 @@ public class MyConfig {
                         .requestMatchers("/agentList").hasAnyAuthority("ROLE_ADMIN","ROLE_SUB_ADMIN")
                         .requestMatchers("/customerList","/subAgentList").hasAnyAuthority("ROLE_ADMIN","ROLE_SUB_ADMIN","ROLE_AGENT")
                         .anyRequest().authenticated())
+                .addFilterAt(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login") // Maps to your `login.jsp`
                         .loginProcessingUrl("/perform_login") // Where Spring processes login

@@ -5,9 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,13 +38,22 @@ public class TransferController {
 	private TransferService transferService;
 	@Autowired
 	private BankDetailsService bankService;
+	@Autowired
+	private UserRepository userRepository;
 
 
 	@GetMapping("/transfer")
 	public String showTransfer(Model model) {
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<User> byUsername = userRepository.findByUsername(username);
+
+
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+			model.addAttribute("userCountry", byUsername.get().getCountry());
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);

@@ -3,7 +3,11 @@ package com.llm.branch.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,10 +34,21 @@ public class BranchDetailsController {
     private EnumEntityService enumEntityService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private IAgentService agentService;
 
     @GetMapping("/branch")
     public String branchRegister(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Optional<User> byUsername = userRepository.findByUsername(username);
+
+        String country = byUsername.get().getCountry();
+        log.info("+++++++++===Country====++++ :" + country);
+
         model.addAttribute("branch", new BranchDetails());
 
         try {

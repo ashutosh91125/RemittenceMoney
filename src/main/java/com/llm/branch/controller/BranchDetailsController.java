@@ -3,17 +3,18 @@ package com.llm.branch.controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
 import com.llm.agent.projection.AgentProjection;
+import com.llm.agent.repository.AgentRepositories;
 import com.llm.agent.service.IAgentService;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.service.BranchDetailsService;
@@ -38,6 +39,9 @@ public class BranchDetailsController {
 
     @Autowired
     private IAgentService agentService;
+    
+    @Autowired
+    private AgentRepositories agentRepositories;
 
     @GetMapping("/branch")
     public String branchRegister(Model model) {
@@ -88,14 +92,16 @@ public class BranchDetailsController {
         return "branch-listing";
 
     }
-    @GetMapping("/branch-detail")
-    public String getAdminDetails(@RequestParam("id") Long id,Model model) {
-    	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
-    	if(branchDetails.isPresent()) {
-    		model.addAttribute("agent",agentService.getById(id).get().getAgentName());
-    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",branchDetails.get().getState()));
-    		model.addAttribute("branch",branchDetails);
-    	}
-    	return "branch-details";
+    @GetMapping("/branch-list")
+    public String getBranchDetailsList(Model model) {
+    	
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+    	
+        Agent agent = agentRepositories.findByUsername(username);
+        List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranchesByAgent(String.valueOf(agent.getAgentId()));
+        model.addAttribute("branchDetailsList", branchDetailsList);
+        return "branch-listing";
+
     }
-}
+}  

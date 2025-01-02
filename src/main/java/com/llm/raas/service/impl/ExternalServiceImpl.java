@@ -1,8 +1,12 @@
 package com.llm.raas.service.impl;
 
 
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 import com.llm.common.service.TokenService;
 import com.llm.raas.service.ExternalService;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import com.llm.transfer.model.Transfer;
 import com.llm.transfer.repository.TransferRepository;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +17,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -34,21 +40,37 @@ public class ExternalServiceImpl implements ExternalService {
     @Autowired
     TransferRepository transferRepository;
 
-    @Override
-    public Map<String, Object> callExternalApi(Map<String, Object> requestBody) {
-        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/quote";
+    @Autowired
+    StaffDetailsRepository staffDetailsRepository;
 
-        // Create headers
+    @Autowired
+    AgentRepositories agentRepositories;
+
+    private HttpHeaders createHeaders() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(username);
+
+        Agent byAgentId = agentRepositories.findByAgentId(Long.valueOf((staffDetails.get().getAgent())));
+
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
-        headers.set("sender", "VITCOMEX");
+        headers.set("sender", byAgentId.getAgentName());
         headers.set("channel", "Direct");
-        headers.set("company", "458100");
-        headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer "+ tokenService.getAccessToken());
+        headers.set("company", staffDetails.get().getAgent());
+        headers.set("branch", (String) authentication.getDetails());
+        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        return headers;
+    }
+
+    @Override
+    public Map<String, Object> callExternalApi(Map<String, Object> requestBody) {
+
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/quote";
 
         // Wrap headers and body
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
@@ -60,19 +82,11 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> createTransaction(Map<String, Object> requestBody) {
+
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/createtransaction";
 
-        // Create headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("sender", "VITCOMEX");
-        headers.set("channel", "Direct");
-        headers.set("company", "458100");
-        headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer "+tokenService.getAccessToken());
-
         // Wrap headers and body
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
@@ -84,19 +98,11 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> confirmTransaction(Map<String, Object> requestBody) {
+
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/confirmtransaction";
 
-        // Create headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("sender", "VITCOMEX");
-        headers.set("channel", "Direct");
-        headers.set("company", "458100");
-        headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer "+ tokenService.getAccessToken());
-
         // Wrap headers and body
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
@@ -108,20 +114,13 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> enquireTransaction(String transactionRefNumber) {
-        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/enquire-transaction";
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("sender", "VITCOMEX");
-        headers.set("channel", "Direct");
-        headers.set("company", "458100");
-        headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/enquire-transaction";
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("transaction_ref_number", transactionRefNumber);
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(createHeaders());
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -145,20 +144,13 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> getTransactionReceipt(String transactionRefNumber) {
-        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/transaction-receipt";
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("sender", "VITCOMEX");
-        headers.set("channel", "Direct");
-        headers.set("company", "458100");
-        headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/transaction-receipt";
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("transaction_ref_number", transactionRefNumber);
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+        HttpEntity<Void> requestEntity = new HttpEntity<>(createHeaders());
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -182,19 +174,11 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Override
     public Map<String, Object> cancelTransaction(Map<String, Object> requestBody) {
+
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/canceltransaction";
 
-        // Create headers
-        HttpHeaders headers = new HttpHeaders();
-        headers.set("Content-Type", "application/json");
-        headers.set("sender", "VITCOMEX");
-        headers.set("channel", "Direct");
-        headers.set("company", "458100");
-        headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer "+ tokenService.getAccessToken());
-
         // Create HttpEntity with headers and body
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, createHeaders());
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Map> response = restTemplate.postForEntity(url, requestEntity, Map.class);

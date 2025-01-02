@@ -1,5 +1,10 @@
 package com.llm.common.service;
 
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,16 +13,28 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.FormHttpMessageConverter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class TokenService {
+
+    @Autowired
+    private AgentRepositories agentRepositories;
+
+    @Autowired
+    private StaffDetailsRepository staffDetailsRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     private RestTemplate restTemplate;
     @Value("${customer.tokenurl}")
@@ -38,11 +55,21 @@ public class TokenService {
 
     private MultiValueMap<String, String> getTokenRequestBody() {
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("username", "vitcomex");
-        body.add("password", "Vml0Y29tYXhANzg28");
-        body.add("grant_type", "password");
-        body.add("client_id", "cdp_app");
-        body.add("client_secret", "mSh18BPiMZeQqFfOvWhgv8wzvnNVbj3Y");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(username);
+
+        Agent byAgentId = agentRepositories.findByAgentId(Long.valueOf((staffDetails.get().getAgent())));
+
+
+        body.add("username", byAgentId.getUsername());
+        body.add("password", byAgentId.getPassword());
+//        body.add("password", "Vml0Y29tYXhANzg28");
+        body.add("grant_type", byAgentId.getGrantType());
+        body.add("client_id", byAgentId.getClientId());
+        body.add("client_secret", byAgentId.getClientSecret());
         return body;
     }
 

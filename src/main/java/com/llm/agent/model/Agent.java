@@ -64,6 +64,7 @@ public class Agent {
 	private String remarks;
 	private Boolean statusFlag;
 	private Boolean isValid;
+	private String password;
 
 	private String perTransactionLimit;
 	private String perDayLimit;

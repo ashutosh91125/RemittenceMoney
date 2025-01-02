@@ -84,6 +84,7 @@ public class AgentRestController {
 			agent.setPerDayLimit(agentDTO.getPerDayLimit());
 			agent.setPerMonthLimit(agentDTO.getPerMonthLimit());
 			agent.setUsername(agentDTO.getUsername());
+			agent.setPassword(agentDTO.getPassword());
 
 			agentService.addAgent(agent);
 

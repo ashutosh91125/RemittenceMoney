@@ -26,21 +26,6 @@ public class MyConfig {
     @Autowired
     private final CustomUserDetailsService userDetailsService;
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        http
-//                .authorizeHttpRequests(authz -> authz
-//                        .requestMatchers("/login", "/signup", "/static/**").permitAll()
-//                        .anyRequest().authenticated())
-//                .formLogin(form -> form
-//                        .loginPage("/login")
-//                        .permitAll())
-//                .logout(LogoutConfigurer::permitAll)
-//                .csrf(AbstractHttpConfigurer::disable);  // Disable CSRF for simplicity (you may want to enable it in production)
-//
-//        return http.build();
-//    }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();

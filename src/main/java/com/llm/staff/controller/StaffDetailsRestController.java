@@ -3,6 +3,8 @@ package com.llm.staff.controller;
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.model.dto.StaffDTO;
 import com.llm.staff.model.dto.StaffDTO;
@@ -29,6 +31,9 @@ public class StaffDetailsRestController {
     
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AgentRepositories agentRepositories;
     
     @Autowired
     private StaffDetailsService staffDetailsService;
@@ -38,8 +43,8 @@ public class StaffDetailsRestController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Optional<User> byUsername = userRepository.findByUsername(username);
-        String country = byUsername.get().getCountry();
+        Agent byUsername = agentRepositories.findByUsername(username);
+        String country = byUsername.getCountries();
 
 
         log.info("Registering staff: {}", staffDTO);
@@ -60,6 +65,7 @@ public class StaffDetailsRestController {
             staff.setUsername(staffDTO.getUsername());
             staff.setEmail(staffDTO.getEmail());
             staff.setMobile(staffDTO.getMobile());
+            staff.setAgent(byUsername.getAgentId());
             staff.setStatus(true);
             staff.setCreatedOn(LocalDateTime.now());
             staff.setCreatedBy(username);

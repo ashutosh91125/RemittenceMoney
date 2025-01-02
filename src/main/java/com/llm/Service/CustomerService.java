@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+import com.llm.common.service.EnumEntityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +31,17 @@ public class CustomerService {
 	@Autowired
 	private CustomerCreationService customerCreationService;
 
+	@Autowired
+	private EnumEntityService enumEntityService;
+
 	@Transactional
 	public String createCustomer(Customer customer) {
+		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("Country", customer.getNationality());
+
+		String formattedCountry = country.substring(0, 1).toUpperCase() + country.substring(1).toLowerCase();
+
 		customer.setChannel("WEB");
-		customer.setAgentLocationId("Malaysia");
+		customer.setAgentLocationId(formattedCountry);
 		if (Objects.equals(customer.getCountryOfBirth(), "MY")) {
 			customer.setPlaceOfBirth(
 					(customer.getPlaceOfBirth().substring(0, customer.getPlaceOfBirth().length() - 4)).trim());

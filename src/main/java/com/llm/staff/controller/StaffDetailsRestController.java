@@ -7,7 +7,6 @@ import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.model.dto.StaffDTO;
-import com.llm.staff.model.dto.StaffDTO;
 import com.llm.staff.service.StaffDetailsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,8 +68,6 @@ public class StaffDetailsRestController {
             staff.setStatus(true);
             staff.setCreatedOn(LocalDateTime.now());
             staff.setCreatedBy(username);
-
-            log.info("Staff===+++++=======" + staff);
 
             // Save StaffDetails
             staffDetailsService.createStaff(staff);

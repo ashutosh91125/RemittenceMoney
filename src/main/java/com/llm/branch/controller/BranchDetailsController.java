@@ -52,12 +52,10 @@ public class BranchDetailsController {
         Optional<User> byUsername = userRepository.findByUsername(username);
 
         String country = byUsername.get().getCountry();
-        log.info("+++++++++===Country====++++ :" + country);
-
         model.addAttribute("branch", new BranchDetails());
 
         try {
-            List<EnumValue> nativeRegionEntity = enumEntityService.getDataByDependent("MY");
+            List<EnumValue> nativeRegionEntity = enumEntityService.getDataByDependent(country);
             model.addAttribute("stateList", nativeRegionEntity);
 
         } catch (Exception e) {

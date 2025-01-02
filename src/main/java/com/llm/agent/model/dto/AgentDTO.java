@@ -34,6 +34,11 @@ public class AgentDTO {
     private Long perDay;
     private Long perMonth;
 
+    private String grantType;
+    private String scope;
+    private String clientId;
+    private String clientSecret;
+
     private String createdBy;
     private String createdOn;
     private String modifiedBy;

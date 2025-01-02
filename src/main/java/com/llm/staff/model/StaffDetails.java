@@ -26,6 +26,8 @@ public class StaffDetails {
 
     private List<String> branches;
 
+    private String agent;
+
     private String staffGroup;
 
     @Column(name = "first_name")

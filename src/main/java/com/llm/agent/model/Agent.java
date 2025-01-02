@@ -20,6 +20,8 @@ public class Agent {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(unique = true)
 	private Long agentId;
 	private String countries;
 	private String currencies;
@@ -48,10 +50,10 @@ public class Agent {
 	private Long perTransaction;
 	private Long perDay;
 	private Long perMonth;
-//	private String grantType;
-//	private String scope;
-//	private String clientId;
-//	private String clientSecret;
+	private String grantType;
+	private String scope;
+	private String clientId;
+	private String clientSecret;
 	private String username;
 	private String createdBy;
 	private LocalDateTime createdOn;

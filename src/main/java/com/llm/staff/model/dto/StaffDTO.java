@@ -7,7 +7,7 @@ import java.util.List;
 
 @Data
 public class StaffDTO {
-
+    private String agent;
     private List<String> branches;
     private Role staffGroup;
     private String firstName;

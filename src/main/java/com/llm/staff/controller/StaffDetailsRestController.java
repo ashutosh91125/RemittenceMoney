@@ -53,6 +53,7 @@ public class StaffDetailsRestController {
             }else {
                 staff.setStaffGroup("Head Office");
             }
+            staff.setAgent(staffDTO.getAgent());
             staff.setFirstName(staffDTO.getFirstName());
             staff.setMiddleName(staffDTO.getMiddleName());
             staff.setLastName(staffDTO.getLastName());

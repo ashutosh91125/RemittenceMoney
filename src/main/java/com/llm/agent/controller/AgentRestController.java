@@ -39,6 +39,7 @@ public class AgentRestController {
 				return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
 			}
 			Agent agent = new Agent();
+			agent.setAgentId(agentDTO.getAgentId());
 			agent.setCountries(agentDTO.getCountries());
 			agent.setCurrencies(agentDTO.getCurrencies());
 			agent.setAgentName(agentDTO.getAgentName());
@@ -68,6 +69,10 @@ public class AgentRestController {
 			agent.setPerMonth(agentDTO.getPerMonth());
 			agent.setCreatedBy(username);
 			agent.setCreatedOn(LocalDateTime.now());
+			agent.setGrantType(agentDTO.getGrantType());
+			agent.setScope(agentDTO.getScope());
+			agent.setClientId(agentDTO.getClientId());
+			agent.setClientSecret(agentDTO.getClientSecret());
 //			agent.setModifiedBy(agentDTO.getModifiedBy());
 //			agent.setModifiedOn(agentDTO.getModifiedOn());
 //			agent.setDisabledBy(agentDTO.getDisabledBy());

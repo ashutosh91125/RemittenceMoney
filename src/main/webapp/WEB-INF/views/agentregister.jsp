@@ -165,77 +165,77 @@
 </style>
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
-    
-    function registerAgent() {
-    	if(!validation($("#agentForm")))  {
-            return false;  
-        }
-        const formData = $("#agentForm").serialize(); // Serialize form data for submission
-        $('#loader').show();
-        $('#submitButton').prop('disabled', true);
-        $.ajax({
-            url: "/api/v1/agent",
-            type: "POST",
-            contentType: "application/x-www-form-urlencoded",
-            data: formData,
-            success: function(response) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert(response);
-            },
-            error: function(xhr) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert("Error: " + xhr.responseText);
-            }
-        });
+
+function registerAgent() {
+	if(!validation($("#agentForm")))  {
+        return false;  
     }
+    const formData = $("#agentForm").serialize(); // Serialize form data for submission
+    $('#loader').show();
+    $('#submitButton').prop('disabled', true);
+    $.ajax({
+        url: "/api/v1/agent",
+        type: "POST",
+        contentType: "application/x-www-form-urlencoded",
+        data: formData,
+        success: function(response) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            alert(response);
+        },
+        error: function(xhr) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            alert("Error: " + xhr.responseText);
+        }
+    });
+}
 
 
 function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
+const element = document.getElementById(divId);
+element.classList.toggle("show");
 }
 $(document).ready(function() {
-    $('#countries').on('change', function() {
-        let countryDependent = $(this).val();
-        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
-        
-        if (countryDependent) {
-            let currencyDependent = countryDependent + "C";
-            $.ajax({
-                url: '/api/enumEntities/dependent',
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-        }
+$('#countries').on('change', function() {
+    let countryDependent = $(this).val();
+    $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
+    
+    if (countryDependent) {
+        let currencyDependent = countryDependent + "C";
+        $.ajax({
+            url: '/api/enumEntities/dependent',
+            type: 'GET',
+            data: { dependent: currencyDependent },
+            success: function(data) {
+                $.each(data, function(index, enumValue) {
+                    $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+                });
+            },
+            error: function() {
+                console.error("Error fetching currencies for the selected country.");
+            }
+        });
+    }
 $('#state').empty().append('<option value="" disabled selected>Select State</option>');     
-        if (countryDependent) {
-            let currencyDependent = countryDependent;
-            $.ajax({
-                url: '/api/enumEntities/dependent',
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-        }
-    });
+    if (countryDependent) {
+        let currencyDependent = countryDependent;
+        $.ajax({
+            url: '/api/enumEntities/dependent',
+            type: 'GET',
+            data: { dependent: currencyDependent },
+            success: function(data) {
+                $.each(data, function(index, enumValue) {
+                    $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+                });
+            },
+            error: function() {
+                console.error("Error fetching currencies for the selected country.");
+            }
+        });
+    }
 });
+});		
 </script>
 </head>
 
@@ -288,11 +288,11 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 
 		<%-- 			<jsp:include page="customersearch.jsp"></jsp:include> --%>
 
-		 <div class="spinner-container" id="loader">
+		<div class="spinner-container" id="loader">
 			<div class="spinner-border text-primary" role="status">
 				<span class="visually-hidden">Loading...</span>
 			</div>
-		</div> 
+		</div>
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -300,7 +300,8 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 			crossorigin="anonymous"></script>
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<form:form id="agentForm" modelAttribute="agent" onsubmit="event.preventDefault(); registerAgent();">
+		<form:form id="agentForm" modelAttribute="agent"
+			onsubmit="event.preventDefault(); registerAgent();">
 			<form:hidden path="isValid" value="true" />
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
@@ -316,22 +317,30 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							style="background: aliceblue; margin-top: -40px;">
 							<div class="main-content">
 								<div class="row">
-								    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Agent Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="agentName" type="text"
-                                                class="form-control" id="agentName"
-                                                placeholder="Agent Name"  />
-                                            <span id="agentNameError" class="text-danger1"></span>
-                                        </div>
-                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Agent Id<span
+												class="text-danger">*</span></label>
+											<form:input path="agentId" type="text" class="form-control"
+												id="agentId" placeholder="Agent Id" />
+											<span id="agentIdError" class="text-danger1"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Agent Name<span
+												class="text-danger">*</span></label>
+											<form:input path="agentName" type="text" class="form-control"
+												id="agentName" placeholder="Agent Name" />
+											<span id="agentNameError" class="text-danger1"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label>
 											<form:select path="countries" class="form-control"
-												data-select2-selector="icon" multiple="false" id="countries"  >
+												data-select2-selector="icon" multiple="false" id="countries">
 												<form:option value="" disabled="true" selected="true">Select Country</form:option>
 												<form:options items="${countryList}" itemValue="valueId"
 													itemLabel="description" />
@@ -339,13 +348,15 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<span id="countriesError" class="text-danger1"></span>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label>
 											<form:select path="currencies" id="currencies"
 												class="form-control" data-select2-selector="icon"
-												multiple="false" >
+												multiple="false">
 												<form:option value="" disabled="true" selected="true">Select Currency</form:option>
 												<form:options items="${currencyList}" itemValue="valueId"
 													itemLabel="description" />
@@ -353,41 +364,39 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<span id="currenciesError" class="text-danger1"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-                                    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">State</label>
-                                            <form:select path="state" id="state" class="form-control"
-                                                data-select2-selector="icon" multiple="false" >
-                                                <form:option value="" disabled="true" selected="true">Select State</form:option>
-                                                <form:options items="${stateList}" itemValue="valueId"
-                                                    itemLabel="description" />
-                                            </form:select>
-                                            <span id="stateError" class="text-danger1"></span>
-                                        </div>
-                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">State</label>
+											<form:select path="state" id="state" class="form-control"
+												data-select2-selector="icon" multiple="false">
+												<form:option value="" disabled="true" selected="true">Select State</form:option>
+												<form:options items="${stateList}" itemValue="valueId"
+													itemLabel="description" />
+											</form:select>
+											<span id="stateError" class="text-danger1"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Agent Display Name<span
 												class="text-danger">*</span></label>
 											<form:input path="agentDisplayName" type="text"
 												class="form-control" id="agentDisplayName"
-												placeholder="Agent Display Name"  />
+												placeholder="Agent Display Name" />
 											<span id="agentDisplayNameError" class="text-danger1"></span>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1"  />
+												id="address1" placeholder="Address1" />
 											<span id="address1Error" class="text-danger1"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 2<span
@@ -405,23 +414,22 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<span id="address3Error" class="text-danger1"></span>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">City<span
 												class="text-danger">*</span></label>
 											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City"/>
+												id="city" placeholder="City" />
 											<span id="cityError" class="text-danger1"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox"  />
+												id="zip" placeholder="Zip/PoBox" />
 											<span id="zipError" class="text-danger1"></span>
 										</div>
 									</div>
@@ -430,12 +438,11 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
 											<form:select path="timeZone" class="form-control"
-                                                data-select2-selector="icon" multiple="false"   id="timeZone">
-                                                <form:option value="" disabled="true" selected="true">Select Timezone</form:option>
-                                                <form:options items="${timezoneList}" itemValue="valueId"
-                                                    itemLabel="description" />
-                                            </form:select>
-
+												data-select2-selector="icon" multiple="false" id="timeZone">
+												<form:option value="" disabled="true" selected="true">Select Timezone</form:option>
+												<form:options items="${timezoneList}" itemValue="valueId"
+													itemLabel="description" />
+											</form:select>
 											<span id="timeZoneError" class="text-danger1"></span>
 										</div>
 									</div>
@@ -443,267 +450,217 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseTwo')">Contact
-							Details</button>
-					</h2>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseTwo')">Contact
+								Details</button>
+						</h2>
 
-					<div id="panelsStayOpen-collapseTwo"
-						class="accordion-collapse collapse">
-						<hr class="my-0">
-						<div class="card-body pass-security">
-							<div class="accordion-body mt-3">
+						<div id="panelsStayOpen-collapseTwo"
+							class="accordion-collapse collapse">
+							<hr class="my-0">
+							<div class="card-body pass-security">
+								<div class="accordion-body mt-3">
+									<div class="card-body personal-info">
+
+										<div class="main-content">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Email<span
+															class="text-danger">*</span></label>
+														<form:input path="email" type="email" class="form-control"
+															id="email" placeholder="Email" />
+														<span id="emailError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Mobile</label>
+														<form:input path="mobile" type="tel" class="form-control"
+															id="mobile" placeholder="Mobile" />
+														<span id="mobileError" class="text-danger1"></span>
+
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Phone<span
+															class="text-danger">*</span></label>
+														<form:input path="phone" type="tel" class="form-control"
+															id="phone" placeholder="Phone" />
+														<span id="phoneError" class="text-danger1"></span>
+													</div>
+												</div>
+											</div>
+
+
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Contact Person<span
+															class="text-danger">*</span></label>
+														<form:input path="contactPerson" type="tel"
+															class="form-control" id="contactPerson"
+															placeholder="Contact Person" />
+														<span id="contactPersonError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Mis Email Id<span
+															class="text-danger">*</span></label>
+														<form:input path="misEmailId" type="email"
+															class="form-control" id="misEmailId"
+															placeholder="Mis Email Id" />
+														<span id="misEmailIdError" class="text-danger1"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseThree')">Regulatory
+								Details</button>
+						</h2>
+						<div id="panelsStayOpen-collapseThree"
+							class="accordion-collapse collapse">
+							<div class="accordion-body mt-3" style="background: aliceblue;">
 								<div class="card-body personal-info">
-
 									<div class="main-content">
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Email<span
-														class="text-danger">*</span></label>
-													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email"   />
-													<span id="emailError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Mobile</label>
-													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile"   />
-													<span id="mobileError" class="text-danger1"></span>
+										<div class="card-body pass-security">
+											<div class="row">
 
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Tax Identification
+															Number<span class="text-danger">*</span>
+														</label>
+														<form:input path="taxIdentificationNumber" type="text"
+															class="form-control" id="taxIdentificationNumber"
+															placeholder="Tax Identification Number" />
+														<span id="taxIdentificationNumberError"
+															class="text-danger1"></span>
+													</div>
 												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Phone<span
-														class="text-danger">*</span></label>
-													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone"   />
-													<span id="phoneError" class="text-danger1"></span>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Licence No.<span
+															class="text-danger">*</span></label>
+														<form:input path="licenceNo" type="text"
+															class="form-control" id="licenceNo"
+															placeholder="Licence No." />
+														<span id="licenceNoError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Tax Applicable<span
+															class="text-danger">*</span></label>
+														<form:select path="taxApplicable" class="form-control"
+															data-select2-selector="icon" id="taxApplicable">
+															<form:option value="0">No</form:option>
+															<form:option value="1">Yes</form:option>
+														</form:select>
+													</div>
 												</div>
 											</div>
 										</div>
-
-
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Contact Person<span
+													<label class="form-label">Working Hours<span
 														class="text-danger">*</span></label>
-													<form:input path="contactPerson" type="tel"
-														class="form-control" id="contactPerson"
-														placeholder="Contact Person"   />
-													<span id="contactPersonError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Mis Email Id<span
-														class="text-danger">*</span></label>
-													<form:input path="misEmailId" type="email"
-														class="form-control" id="misEmailId"
-														placeholder="Mis Email Id"   />
-													<span id="misEmailIdError" class="text-danger1"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-				<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseThree')">Regulatory
-							Details</button>
-					</h2>
-					<div id="panelsStayOpen-collapseThree"
-						class="accordion-collapse collapse">
-						<div class="accordion-body mt-3" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-										<div class="row">
-
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Identification Number<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="taxIdentificationNumber" type="text"
-														class="form-control" id="taxIdentificationNumber"
-														placeholder="Tax Identification Number"   />
-													<span id="taxIdentificationNumberError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Licence No.<span
-														class="text-danger">*</span></label>
-													<form:input path="licenceNo" type="text"
-														class="form-control" id="licenceNo"
-														placeholder="Licence No."   />
-													<span id="licenceNoError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Applicable<span
-														class="text-danger">*</span></label>
-													<form:select path="taxApplicable" class="form-control"
-														data-select2-selector="icon" id="taxApplicable"  >
-														<form:option value="0">No</form:option>
-														<form:option value="1">Yes</form:option>
+													<form:select path="workingHours" class="form-control"
+														data-select2-selector="icon" multiple="false" id="working">
+														<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
+														<form:options items="${workingHoursList}"
+															itemValue="valueId" itemLabel="description" />
 													</form:select>
+													<span id="workingError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Working Hours<span
-													class="text-danger">*</span></label>
-												<form:select path="workingHours" class="form-control"
-													data-select2-selector="icon" multiple="false" id="working"   >
-													<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
-													<form:options items="${workingHoursList}"
-														itemValue="valueId" itemLabel="description" />
-												</form:select>
-												<span id="workingError" class="text-danger1"></span>
-											</div>
-										</div>
-									</div>
 
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseFour')">Credit
-							Limit</button>
-					</h2>
-					<div id="panelsStayOpen-collapseFour"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Daily<span
-														class="text-danger">*</span></label>
-													<form:input path="daily" type="number" class="form-control"
-														id="daily" placeholder="Daily"   />
-													<span id="dailyError" class="text-danger1"></span>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseFour')">Credit
+								Limit</button>
+						</h2>
+						<div id="panelsStayOpen-collapseFour"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Daily<span
+															class="text-danger">*</span></label>
+														<form:input path="daily" type="number"
+															class="form-control" id="daily" placeholder="Daily" />
+														<span id="dailyError" class="text-danger1"></span>
+													</div>
 												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Settlement Mode<span
-														class="text-danger">*</span></label>
-													    <form:select path="settlementMode" class="form-control"
-                                                            data-select2-selector="icon" id="settlementMode"  >
-                                                             <form:option value="" disabled="true" selected="true">Select Settlement Mode</form:option>
-                                                            <form:option value="Rolling">Rolling</form:option>
-                                                            <form:option value="Expire Everyday">Expire Everyday</form:option>
-                                                        </form:select>
-													    <span id="settlementModeError" class="text-danger1"></span>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Settlement Mode<span
+															class="text-danger">*</span></label>
+														<form:select path="settlementMode" class="form-control"
+															data-select2-selector="icon" id="settlementMode">
+															<form:option value="" disabled="true" selected="true">Select Settlement Mode</form:option>
+															<form:option value="Rolling">Rolling</form:option>
+															<form:option value="Expire Everyday">Expire Everyday</form:option>
+														</form:select>
+														<span id="settlementModeError" class="text-danger1"></span>
+													</div>
 												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Settlement Type<span
-														class="text-danger">*</span></label>	
-												    <form:select path="settlementType" class="form-control"
-                                                        data-select2-selector="icon" id="settlementType"  >
-                                                        <form:option value="" disabled="true" selected="true">Select Settlement Type</form:option>
-                                                        <form:option value="Pre-Funding">Pre-Funding</form:option>
-                                                        <form:option value="Post-Funding">Post-Funding</form:option>
-                                                    </form:select>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Settlement Type<span
+															class="text-danger">*</span></label>
+														<form:select path="settlementType" class="form-control"
+															data-select2-selector="icon" id="settlementType">
+															<form:option value="" disabled="true" selected="true">Select Settlement Type</form:option>
+															<form:option value="Pre-Funding">Pre-Funding</form:option>
+															<form:option value="Post-Funding">Post-Funding</form:option>
+														</form:select>
 
-													<span id="settlementTypeError" class="text-danger1"></span>
+														<span id="settlementTypeError" class="text-danger1"></span>
+													</div>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Status<span
-														class="text-danger">*</span></label>
-													<form:select path="status" class="form-control"
-														data-select2-selector="icon" id="status">
-														 <form:option value="" disabled="true" selected="true">Select Status</form:option>
-														<form:option value="0">Inactive</form:option>
-														<form:option value="1">Active</form:option>
-													</form:select>
-													<span id="statusError" class="text-danger1"></span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseFive')">Customer
-							Txn Limit</button>
-					</h2>
-					<div id="panelsStayOpen-collapseFive"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Per Transaction<span
-														class="text-danger">*</span></label>
-													<form:input path="perTransactionLimit" type="number"
-														class="form-control" id="perTransactionLimit"
-														placeholder="Per Transaction"   />
-													<span id="perTransactionLimitError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Per Day<span
-														class="text-danger">*</span></label>
-													<form:input path="perDayLimit" type="number"
-														class="form-control" id="perDayLimit"
-														placeholder="Per Day"   />
-													<span id="perDayLimitError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Per Month<span
-														class="text-danger">*</span></label>
-													<form:input path="perMonthLimit" type="number"
-														class="form-control" id="perMonthLimit"
-														placeholder="Per Month"   />
-													<span id="perMonthLimitError" class="text-danger1"></span>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Status<span
+															class="text-danger">*</span></label>
+														<form:select path="status" class="form-control"
+															data-select2-selector="icon" id="status">
+															<form:option value="" disabled="true" selected="true">Select Status</form:option>
+															<form:option value="0">Inactive</form:option>
+															<form:option value="1">Active</form:option>
+														</form:select>
+														<span id="statusError" class="text-danger1"></span>
+													</div>
 												</div>
 											</div>
 										</div>
@@ -712,108 +669,140 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseSix')">Credentials</button>
-					</h2>
-					<div id="panelsStayOpen-collapseSix"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-										<div class="row">
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Grant_Type<span
-														class="text-danger">*</span></label>
-													<form:input path="grantType" type="text"
-														class="form-control" id="grantType"
-														placeholder="Grant Type" />
-													<span id="grantTypeError" class="text-danger"></span>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseFive')">Customer
+								Txn Limit</button>
+						</h2>
+						<div id="panelsStayOpen-collapseFive"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Per Transaction<span
+															class="text-danger">*</span></label>
+														<form:input path="perTransactionLimit" type="number"
+															class="form-control" id="perTransactionLimit"
+															placeholder="Per Transaction" />
+														<span id="perTransactionLimitError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Per Day<span
+															class="text-danger">*</span></label>
+														<form:input path="perDayLimit" type="number"
+															class="form-control" id="perDayLimit"
+															placeholder="Per Day" />
+														<span id="perDayLimitError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Per Month<span
+															class="text-danger">*</span></label>
+														<form:input path="perMonthLimit" type="number"
+															class="form-control" id="perMonthLimit"
+															placeholder="Per Month" />
+														<span id="perMonthLimitError" class="text-danger1"></span>
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Scope<span
-														class="text-danger">*</span></label>
-													<form:input path="scope" type="text" class="form-control"
-														id="scope" placeholder="Scope" />
-													<span id="scopeError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Client_Id<span
-														class="text-danger">*</span></label>
-													<form:input path="clientId" type="text"
-														class="form-control" id="clientId" placeholder="Client Id" />
-													<span id="clientIdError" class="text-danger"></span>
-												</div>
-											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Client_Secret<span
-														class="text-danger">*</span></label>
-													<form:input path="clientSecret" type="text"
-														class="form-control" id="clientSecret"
-														placeholder="Client Secret" />
-													<span id="clientSecretError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Admin User name<span
-														class="text-danger">*</span></label>
-													<form:input path="adminUserName" type="text"
-														class="form-control" id="adminUserName"
-														placeholder="Admin User Name" />
-													<span id="adminUserNameError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Admin Password<span
-														class="text-danger">*</span></label>
-													<form:input path="adminPassword" type="text"
-														class="form-control" id="adminPassword"
-														placeholder="Admin Password" />
-													<span id="adminPasswordError" class="text-danger"></span>
-												</div>
-											</div> --%>
-											<div class="col-xl-4">
-                                                <div class="mb-4">
-                                                    <label class="form-label">Username<span
-                                                        class="text-danger">*</span></label>
-                                                    <form:input path="username"   type="text"
-                                                        class="form-control" id="adminUserName"
-                                                        placeholder="Set Username" />
-                                                    <span id="adminUserNameError" class="text-danger1"></span>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <div class="mb-4">
-                                                    <label class="form-label">Password<span
-                                                        class="text-danger">*</span></label>
-                                                    <form:input path="password" type="password"
-                                                        class="form-control" id="adminPassword"
-                                                        placeholder="Set Password"   />
-                                                    <span id="adminPasswordError" class="text-danger1"></span>
-                                                </div>
-                                            </div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<%-- <div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseSix')">Api
+								Details</button>
+						</h2>
+						<div id="panelsStayOpen-collapseSix"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Grant_Type<span
+															class="text-danger">*</span></label>
+														<form:input path="grantType" type="text"
+															class="form-control" id="grantType"
+															placeholder="Grant Type" />
+														<span id="grantTypeError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Scope<span
+															class="text-danger">*</span></label>
+														<form:input path="scope" type="text" class="form-control"
+															id="scope" placeholder="Scope" />
+														<span id="scopeError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Client_Id<span
+															class="text-danger">*</span></label>
+														<form:input path="clientId" type="text"
+															class="form-control" id="clientId"
+															placeholder="Client Id" />
+														<span id="clientIdError" class="text-danger1"></span>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Client_Secret<span
+															class="text-danger">*</span></label>
+														<form:input path="clientSecret" type="text"
+															class="form-control" id="clientSecret"
+															placeholder="Client Secret" />
+														<span id="clientSecretError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Username<span
+															class="text-danger">*</span></label>
+														<form:input path="username" type="text"
+															class="form-control" id="adminUserName"
+															placeholder="Set Username" />
+														<span id="adminUserNameError" class="text-danger1"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Password<span
+															class="text-danger">*</span></label>
+														<form:input path="password" type="password"
+															class="form-control" id="adminPassword"
+															placeholder="Set Password" />
+														<span id="adminPasswordError" class="text-danger1"></span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<%-- <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -853,11 +842,11 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 						</div>
 					</div>
 				</div> --%>
-			</div>
-			<div class="mt-5 mb-5 text-center"
-				style="display: flex; justify-content: center">
-				<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
-			</div>
+				</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+				</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
@@ -869,7 +858,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 	<script src="assets/js/customers-create-init.min.js"></script>
 	<script src="assets/js/theme-customizer-init.min.js"></script>
 	<script type="text/javascript" src="js/agentRegister.js"></script>
-	
+
 </body>
 
 </html>

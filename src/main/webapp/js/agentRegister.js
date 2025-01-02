@@ -1,6 +1,6 @@
 function validation(form) {
     	let isValid = true; 
-		
+		const agentId = $(form).find("#agentId").val().trim();
 		const agentName = $(form).find("#agentName").val().trim();
 		const countries = $(form).find("#countries").val();
 		const currencies = $(form).find("#currencies").val();
@@ -23,6 +23,10 @@ function validation(form) {
 		const settlementMode = $(form).find("#settlementMode").val();
 		const settlementType = $(form).find("#settlementType").val();
 		const perTransactionLimit = $(form).find("#perTransactionLimit").val().trim();
+		const clientSecret = $(form).find("#clientSecret").val().trim();
+		const clientId = $(form).find("#clientId").val().trim();
+		const scope = $(form).find("#scope").val().trim();
+		const grantType = $(form).find("#grantType").val().trim();
 		const perDayLimit = $(form).find("#perDayLimit").val().trim();
 		const perMonthLimit = $(form).find("#perMonthLimit").val().trim();
 		const adminUserName = $(form).find("#adminUserName").val().trim();
@@ -32,7 +36,11 @@ function validation(form) {
 		// Clear all previous error messages and set text color to red
 		$(".text-danger1").text("").css("color", "red");
 
-
+	if (agentId === "") {
+		$("#agentIdError").text("Agent Id is required.");
+//        $("#branchName").after('<span class="error" style="color:red;">Branch Name is required.</span>');
+		 isValid = false;
+    }
     if (agentName === "") {
 		$("#agentNameError").text("Agent Name is required.");
 //        $("#branchName").after('<span class="error" style="color:red;">Branch Name is required.</span>');
@@ -131,6 +139,22 @@ function validation(form) {
 	 if (!perMonthLimit || perMonthLimit === "" || perMonthLimit === "Select") {
 		 $("#perMonthLimitError").text("Per Month Limit  is required.");
 		  isValid = false;
+	  }
+	 if (clientSecret === "") {
+	  	 $("#clientSecretError").text("Client Secret is required.");
+	  	  isValid = false;
+	  }
+	 if (clientId === "") {
+	  	 $("#clientIdError").text("Client Id is required.");
+	  	  isValid = false;
+	  }
+	 if (scope === "") {
+	  	 $("#scopeError").text("Scope is required.");
+	  	  isValid = false;
+	  }
+	 if (grantType === "") {
+	  	 $("#grantTypeError").text("Grant Type is required.");
+	  	  isValid = false;
 	  }
 	  if (adminUserName === "") {
 	  	 $("#adminUserNameError").text("User Name is required.");

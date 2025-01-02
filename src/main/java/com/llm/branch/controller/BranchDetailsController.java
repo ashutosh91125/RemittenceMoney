@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.repository.UserRepository;
@@ -84,14 +85,7 @@ public class BranchDetailsController {
 
         return "branch-register";
     }
-
-    @GetMapping("/branch-list")
-    public String getAdminList(Model model) {
-        List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranches();
-        model.addAttribute("branchDetailsList", branchDetailsList);
-        return "branch-listing";
-
-    }
+    
     @GetMapping("/branch-list")
     public String getBranchDetailsList(Model model) {
     	
@@ -103,5 +97,17 @@ public class BranchDetailsController {
         model.addAttribute("branchDetailsList", branchDetailsList);
         return "branch-listing";
 
+    }
+    @GetMapping("/branch-detail")
+    public String getAdminDetails(@RequestParam("id") Long id,Model model) {
+    	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
+    	if(branchDetails.isPresent()) {
+    		Agent agents = agentService.getByAgentId(Long.valueOf(branchDetails.get().getAgent()));
+    		model.addAttribute("agent", agents.getAgentName());
+    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",branchDetails.get().getState()));
+    		model.addAttribute("branch", branchDetails);
+    	}
+    	
+    	return "branch-details";
     }
 }  

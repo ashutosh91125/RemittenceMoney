@@ -26,6 +26,11 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     public List<BranchDetails> getAllBranches(){
         return branchDetailsRepository.findAll();
     }
+    
+    @Override
+    public List<BranchDetails> getAllBranchesByAgent(String agent){
+        return branchDetailsRepository.findByAgent(agent);
+    }
 
     @Override
     public List<BranchProjection> getAllBranchesByProjection() {

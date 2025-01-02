@@ -118,15 +118,16 @@ public class AgentController {
 //		}
 //	}
 	 	@GetMapping("/agent-detail")  
-	    public String getAgentDetails(@RequestParam("agentId") Long agentId,Model model) {
-	 		Optional<Agent> agent = agentService.getById(agentId);
-	    	if(agent.isPresent()) {
-	    		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.get().getCountries()));
-	    		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.get().getCurrencies()));
-	    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.get().getState()));
-	    		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.get().getTimeZone()));
+	    public String getAgentDetails(@RequestParam("agentId") Long agentId, Model model) {
+	 		Agent agent = agentService.getByAgentId(agentId);
+	    
+	    		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
+	    		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
+	    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.getState()));
+	    		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.getTimeZone()));
 	    		model.addAttribute("agent",agent);
-	    	}
+	   
+			/* model.addAttribute("agent",new Agent()); */
 	    	return "agent-details";
 	    }
 

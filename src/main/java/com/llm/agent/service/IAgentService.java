@@ -17,4 +17,6 @@ public interface IAgentService {
 
 	Optional<Agent> getById(Long id);
 
+	Agent getByAgentId(Long agentId);
+
 }

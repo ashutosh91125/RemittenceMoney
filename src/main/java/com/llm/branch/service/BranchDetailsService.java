@@ -15,4 +15,6 @@ public interface BranchDetailsService {
     List<BranchProjection> getAllBranchesByProjection();
     
     Optional<BranchDetails> getById(Long id);
+
+	List<BranchDetails> getAllBranchesByAgent(String agent);
 }

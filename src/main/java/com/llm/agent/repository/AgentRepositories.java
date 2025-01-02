@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AgentRepositories extends JpaRepository<Agent, Long> {
 	Agent findByEmail(String email);
-	Agent findByAgentId(Long agentId);
+	Agent findByAgentId(String agentId);
 
 	// Custom query that fetches only specific fields (projection)
 	List<AgentProjection> findAllProjectedBy();

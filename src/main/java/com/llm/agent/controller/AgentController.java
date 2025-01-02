@@ -118,7 +118,7 @@ public class AgentController {
 //		}
 //	}
 	 	@GetMapping("/agent-detail")  
-	    public String getAgentDetails(@RequestParam("agentId") Long agentId, Model model) {
+	    public String getAgentDetails(@RequestParam("agentId") String agentId, Model model) {
 	 		Agent agent = agentService.getByAgentId(agentId);
 	    
 	    		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));

@@ -3,7 +3,13 @@ package com.llm.staff.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
+import com.llm.agent.service.IAgentService;
+import com.llm.branch.model.dto.BranchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +35,9 @@ public class StaffDetailsController {
     @Autowired
     private final BranchDetailsService branchDetailsService;
 
+    @Autowired
+    private final AgentRepositories agentRepositories;
+
     @GetMapping("/staff-login")
     public String staffLogin(Model model) {
         return "staff-login";
@@ -36,11 +45,16 @@ public class StaffDetailsController {
 
     @GetMapping("/staff")
     public String showCompanyDetailsForm(Model model) {
-        model.addAttribute("staff", new StaffDTO());
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Agent byUsername = agentRepositories.findByUsername(username);
+
+        model.addAttribute("staff", new StaffDTO());
         try {
-            List<BranchProjection> branchProjections = branchDetailsService.getAllBranchesByProjection();
-            model.addAttribute("branchList", branchProjections);
+            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByAgent(byUsername.getAgentId());
+            model.addAttribute("branchList", branchDTOS);
 
         } catch (Exception e) {
             log.error("Error Branch List: ", e);

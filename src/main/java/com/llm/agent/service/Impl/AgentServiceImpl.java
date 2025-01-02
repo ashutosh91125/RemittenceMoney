@@ -32,7 +32,7 @@ public class AgentServiceImpl implements IAgentService {
 	}
 	
 	@Override
-	public Agent getByAgentId(Long agentId) {
+	public Agent getByAgentId(String agentId) {
 		return agentRepositories.findByAgentId(agentId);
 	}
 

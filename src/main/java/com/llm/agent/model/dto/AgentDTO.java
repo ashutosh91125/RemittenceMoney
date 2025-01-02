@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 public class AgentDTO {
 
-    private Long agentId;
+    private String agentId;
     private String countries;
     private String currencies;
     private String agentName;

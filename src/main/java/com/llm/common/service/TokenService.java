@@ -61,7 +61,7 @@ public class TokenService {
 
         Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(username);
 
-        Agent byAgentId = agentRepositories.findByAgentId(Long.valueOf((staffDetails.get().getAgent())));
+        Agent byAgentId = agentRepositories.findByAgentId((staffDetails.get().getAgent()));
 
 
         body.add("username", byAgentId.getUsername());

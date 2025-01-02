@@ -22,7 +22,7 @@ public class Agent {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique = true)
-	private Long agentId;
+	private String agentId;
 	private String countries;
 	private String currencies;
 	private String agentName;

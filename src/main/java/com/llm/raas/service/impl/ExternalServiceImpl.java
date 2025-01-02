@@ -52,7 +52,7 @@ public class ExternalServiceImpl implements ExternalService {
 
         Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(username);
 
-        Agent byAgentId = agentRepositories.findByAgentId(Long.valueOf((staffDetails.get().getAgent())));
+        Agent byAgentId = agentRepositories.findByAgentId((staffDetails.get().getAgent()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.llm.branch.model.BranchDetails;
+import com.llm.branch.model.dto.BranchDTO;
 import com.llm.branch.projection.BranchProjection;
 
 public interface BranchDetailsService {
@@ -12,8 +13,8 @@ public interface BranchDetailsService {
 
     List<BranchDetails> getAllBranches();
 
-    List<BranchProjection> getAllBranchesByProjection();
-    
+    List<BranchDTO> getAllBranchDTOByAgent(String agent);
+
     Optional<BranchDetails> getById(Long id);
 
 	List<BranchDetails> getAllBranchesByAgent(String agent);

@@ -10,7 +10,6 @@ import com.llm.branch.projection.BranchProjection;
 
 @Repository
 public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Long> {
-    List<BranchProjection> findAllProjectedBy();
     
     List<BranchDetails> findByAgent(String agent);
 }

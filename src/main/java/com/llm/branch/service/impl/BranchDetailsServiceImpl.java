@@ -2,12 +2,13 @@ package com.llm.branch.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.llm.branch.model.dto.BranchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.llm.branch.model.BranchDetails;
-import com.llm.branch.projection.BranchProjection;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.branch.service.BranchDetailsService;
 
@@ -33,8 +34,21 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     }
 
     @Override
-    public List<BranchProjection> getAllBranchesByProjection() {
-        return branchDetailsRepository.findAllProjectedBy();
+    public List<BranchDTO> getAllBranchDTOByAgent(String agent) {
+        // Fetch the list of BranchDetails from the repository
+        List<BranchDetails> branchDetailsList = branchDetailsRepository.findByAgent(agent);
+
+        // Map the list of BranchDetails to BranchDTO
+        return branchDetailsList.stream()
+                .map(branch -> {
+                    BranchDTO branchDTO = new BranchDTO();
+                    branchDTO.setAgent(branch.getAgent());
+                    branchDTO.setBranchLocationId(branch.getBranchLocationId());
+                    branchDTO.setBranchName(branch.getBranchName());
+                    // Set other fields from BranchDetails to BranchDTO
+                    return branchDTO;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

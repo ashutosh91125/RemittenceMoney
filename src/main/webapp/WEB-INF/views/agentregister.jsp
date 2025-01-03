@@ -166,12 +166,11 @@
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
 
- function registerAgent() {
+function registerAgent() {
 	if(!validation($("#agentForm")))  {
         return false;  
     }
     const formData = $("#agentForm").serialize(); // Serialize form data for submission
-    const agentId = $("#agentId").val();
     $('#loader').show();
     $('#submitButton').prop('disabled', true);
     $.ajax({
@@ -183,6 +182,7 @@
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
             alert(response);
+            $('#body').html(response.body.html);
         },
         error: function(xhr) {
             $('#loader').hide();
@@ -190,7 +190,7 @@
             alert("Error: " + xhr.responseText);
         }
     });
-} 
+}
 
 
 
@@ -743,7 +743,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-						<c:if test="${!isUpdate}">
+<%-- 						<c:if test="${!isUpdate}"> --%>
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
@@ -828,8 +828,8 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-					</c:if>
-					<c:if test="${isUpdate}">
+<%-- 					</c:if> --%>
+<%-- 					<c:if test="${isUpdate}"> --%>
 					 <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
@@ -904,7 +904,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 						</div>
 					</div>
 				</div> 
-				</c:if>
+<%-- 				</c:if> --%>
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">

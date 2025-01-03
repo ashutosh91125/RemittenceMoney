@@ -581,12 +581,12 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="row">
 										<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Licence Number<span
+													<label class="form-label">Outlet Code<span
 														class="text-danger">*</span></label>
-													<form:input path="licenceNo" type="text"
-														class="form-control" id="licenceNo"
-														placeholder="Licence Number"  />
-													<span id="licenceNoError" class="text-danger1"></span>
+													<form:input path="outletCode" type="text"
+                                                        class="form-control" id="outletCode"
+                                                        placeholder="Outlet Code"  /> 
+                                                    <span id="outletCodeError" class="text-danger1"></span>
 												</div>
 											</div>
 										<div class="col-xl-4">

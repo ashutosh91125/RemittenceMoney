@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
+import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.common.service.EnumEntityService;
+import com.llm.staff.model.StaffDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
@@ -29,6 +33,9 @@ public class CustomerService {
 	private CustomerRepository customerRepository;
 
 	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
 	private CustomerCreationService customerCreationService;
 
 	@Autowired
@@ -36,7 +43,13 @@ public class CustomerService {
 
 	@Transactional
 	public String createCustomer(Customer customer) {
-		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("Country", customer.getNationality());
+
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+
+		var byUsername = userRepository.findByUsername(username);
+
+		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("Country", byUsername.get().getCountry());
 
 		String formattedCountry = country.substring(0, 1).toUpperCase() + country.substring(1).toLowerCase();
 

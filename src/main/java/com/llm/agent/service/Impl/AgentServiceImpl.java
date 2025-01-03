@@ -30,7 +30,7 @@ public class AgentServiceImpl implements IAgentService {
 	public Agent getByEmail(String email) {
 		return agentRepositories.findByEmail(email);
 	}
-	
+
 	@Override
 	public Agent getByAgentId(String agentId) {
 		return agentRepositories.findByAgentId(agentId);
@@ -44,6 +44,12 @@ public class AgentServiceImpl implements IAgentService {
 	@Override
 	public Optional<Agent> getById(Long id) {
 		return agentRepositories.findById(id);
+	}
+
+	@Override
+	public Agent updateAgent(Long agentId, Agent agent) {
+		Agent existingAgent = agentRepositories.findByAgentId(String.valueOf(agentId));
+		return agentRepositories.save(existingAgent);
 	}
 
 }

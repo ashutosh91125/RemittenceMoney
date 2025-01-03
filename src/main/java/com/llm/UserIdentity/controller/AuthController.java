@@ -98,7 +98,7 @@ public class AuthController {
     public String welcome(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
         model.addAttribute("subAdminCount", customUserDetailsService.getUserCountByRole(Role.SUB_ADMIN));
-        model.addAttribute("agentCount", customUserDetailsService.getUserCountByRole(Role.SUB_ADMIN));
+        model.addAttribute("agentCount", customUserDetailsService.getUserCountByRole(Role.AGENT));
         model.addAttribute("customerCount", customerRepository.count());
         model.addAttribute("branchCount", branchDetailsRepository.count());
         return "superadmindasbord";

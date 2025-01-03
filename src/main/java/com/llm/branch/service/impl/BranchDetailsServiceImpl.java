@@ -34,6 +34,11 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     }
 
     @Override
+    public List<BranchDetails> getAllBranchesByCountry(String country){
+        return branchDetailsRepository.findByCounty(country);
+    }
+
+    @Override
     public List<BranchDTO> getAllBranchDTOByAgent(String agent) {
         // Fetch the list of BranchDetails from the repository
         List<BranchDetails> branchDetailsList = branchDetailsRepository.findByAgent(agent);

@@ -3,6 +3,8 @@ package com.llm.staff.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.agent.service.IAgentService;
@@ -38,6 +40,9 @@ public class StaffDetailsController {
     @Autowired
     private final AgentRepositories agentRepositories;
 
+    @Autowired
+    private final UserRepository userRepository;
+
     @GetMapping("/staff-login")
     public String staffLogin(Model model) {
         return "staff-login";
@@ -66,11 +71,36 @@ public class StaffDetailsController {
 
     @GetMapping("/staff-list")
     public String getStaffList(Model model) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+
+        // Extract the user's role
+        String role = authentication.getAuthorities().stream()
+                .map(authority -> authority.getAuthority())
+                .findFirst() // Assuming a single role per user
+                .orElse("");
+
+        if (role.equals("ROLE_AGENT")) {
+            Agent byUsername = agentRepositories.findByUsername(username);
+            List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByAgent(byUsername.getAgentId());
+            model.addAttribute("staffDetailsList", staffDetailsList);
+            return "staff-listing";
+        }
+
+        if (role.equals("ROLE_SUB_ADMIN")) {
+            Optional<User> byUsername = userRepository.findByUsername(username);
+            List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByCountry(byUsername.get().getCountry());
+            model.addAttribute("staffDetailsList", staffDetailsList);
+        }
+
         List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff();
         model.addAttribute("staffDetailsList", staffDetailsList);
         return "staff-listing";
 
     }
+
     @GetMapping("/staff-deatils")
     public String getStaffDetails(@RequestParam("id") Long id,Model model) {
     	Optional<StaffDetails> staffDetils = staffDetailsService.getById(id);

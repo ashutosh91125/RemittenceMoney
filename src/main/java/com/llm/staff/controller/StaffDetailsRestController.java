@@ -68,6 +68,7 @@ public class StaffDetailsRestController {
             staff.setStatus(true);
             staff.setCreatedOn(LocalDateTime.now());
             staff.setCreatedBy(username);
+            staff.setCountry(country);
 
             // Save StaffDetails
             staffDetailsService.createStaff(staff);

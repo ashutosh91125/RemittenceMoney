@@ -54,6 +54,7 @@ public class Agent {
 	private String scope;
 	private String clientId;
 	private String clientSecret;
+	@Column(unique = true)
 	private String username;
 	private String createdBy;
 	private LocalDateTime createdOn;

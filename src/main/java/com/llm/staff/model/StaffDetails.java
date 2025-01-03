@@ -28,6 +28,8 @@ public class StaffDetails {
 
     private String agent;
 
+    private String country;
+
     private String staffGroup;
 
     @Column(name = "first_name")
@@ -39,7 +41,7 @@ public class StaffDetails {
     @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
     private String username;
 
     private String email;

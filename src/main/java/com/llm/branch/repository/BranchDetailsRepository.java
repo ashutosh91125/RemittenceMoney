@@ -12,4 +12,7 @@ import com.llm.branch.projection.BranchProjection;
 public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Long> {
     
     List<BranchDetails> findByAgent(String agent);
+
+    List<BranchDetails> findByCounty(String country);
 }
+

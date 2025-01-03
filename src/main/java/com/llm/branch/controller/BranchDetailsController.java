@@ -3,8 +3,10 @@ package com.llm.branch.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.enums.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -83,19 +85,38 @@ public class BranchDetailsController {
 
         return "branch-register";
     }
-    
+
     @GetMapping("/branch-list")
     public String getBranchDetailsList(Model model) {
-    	
-    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-    	
-        Agent agent = agentRepositories.findByUsername(username);
-        List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranchesByAgent(String.valueOf(agent.getAgentId()));
+
+        // Extract the user's role
+        String role = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst() // Assuming a single role per user
+                .orElse("");
+
+        // Check role and fetch data accordingly
+        if (role.equals("ROLE_AGENT")) { // Ensure you check against the correct role string
+            Agent agent = agentRepositories.findByUsername(username);
+            List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranchesByAgent(agent.getAgentId());
+            model.addAttribute("branchDetailsList", branchDetailsList);
+            return "branch-listing";
+        }
+
+        if (role.equals("ROLE_SUB_ADMIN")) { // Ensure you check against the correct role string
+            Optional<User> byUsername = userRepository.findByUsername(username);
+            List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranchesByCountry(byUsername.get().getCountry());
+            model.addAttribute("branchDetailsList", branchDetailsList);
+            return "branch-listing";
+        }
+
+        List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranches();
         model.addAttribute("branchDetailsList", branchDetailsList);
         return "branch-listing";
-
     }
+
     @GetMapping("/branch-detail")
     public String getAdminDetails(@RequestParam("id") Long id,Model model) {
     	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);

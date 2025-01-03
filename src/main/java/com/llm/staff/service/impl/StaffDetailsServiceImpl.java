@@ -25,7 +25,17 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
         return staffDetailsRepository.findAll();
     }
 
-	@Override
+    @Override
+    public List<StaffDetails> getAllStaffByAgent(String agent) {
+        return staffDetailsRepository.findByAgent(agent);
+    }
+
+    @Override
+    public List<StaffDetails> getAllStaffByCountry(String county) {
+        return staffDetailsRepository.findByCountry(county);
+    }
+
+    @Override
 	public Optional<StaffDetails> getById(Long id) {
 		return staffDetailsRepository.findById(id);
 	}

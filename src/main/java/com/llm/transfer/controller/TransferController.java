@@ -86,6 +86,9 @@ public class TransferController {
 	@GetMapping("/searchCustomersOnTransfer")
 	public String searchCustomers(@RequestParam("criteria") String criteria, @RequestParam("query") String query,
 			Model model) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		Optional<User> byUsername = userRepository.findByUsername(username);
 		try {
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			model.addAttribute("customerListOnTransfer", customers);
@@ -93,9 +96,11 @@ public class TransferController {
 			logger.error(e.toString());
 		}
 
+
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+			model.addAttribute("userCountry", byUsername.get().getCountry());
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);

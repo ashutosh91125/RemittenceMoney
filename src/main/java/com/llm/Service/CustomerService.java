@@ -49,7 +49,7 @@ public class CustomerService {
 
 		var byUsername = userRepository.findByUsername(username);
 
-		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("Country", byUsername.get().getCountry());
+		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", byUsername.get().getCountry());
 
 		String formattedCountry = country.substring(0, 1).toUpperCase() + country.substring(1).toLowerCase();
 

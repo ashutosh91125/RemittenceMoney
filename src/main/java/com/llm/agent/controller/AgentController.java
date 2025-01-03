@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.llm.agent.model.Agent;
 import com.llm.agent.model.dto.AgentDTO;
 import com.llm.agent.service.IAgentService;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.staff.model.StaffDetails;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,8 +40,17 @@ public class AgentController {
 //	}
 
 	@GetMapping("/agent")
-	public String showCompanyDetailsForm(Model model) {
-		model.addAttribute("agent", new AgentDTO());
+	public String showCompanyDetailsForm(@RequestParam(value="agentId" , required = false)Long agentId, Model model) {
+		logger.info("agentId========="+agentId);
+		if(agentId != null) {
+			Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
+			model.addAttribute("agent",existingAgent);
+			model.addAttribute("isUpdate", true);
+		}
+		else {
+			model.addAttribute("agent", new AgentDTO());
+			model.addAttribute("isUpdate", false);
+		}
 
 		try {
 			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
@@ -131,5 +140,17 @@ public class AgentController {
 	    	return "agent-details";
 	    }
 
+	 	@PostMapping("/view-agent-update")
+	 	public String submitViewForm(@ModelAttribute("agent") Agent agent, RedirectAttributes redirectAttributes) {
+	 	    Long agentId = Long.valueOf(agent.getAgentId());
+	 	    logger.info("Submitted agentId: " + agentId);
+
+	 	    if (agentId == null) {
+	 	        return "redirect:/error";
+	 	    }
+	 	    redirectAttributes.addFlashAttribute(agent);
+//	 	    redirectAttributes.addAttribute("agentId", agentId);
+	 	    return "redirect:/agent?agentId=" + agentId;
+	 	}
 
 }

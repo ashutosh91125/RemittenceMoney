@@ -23,14 +23,14 @@ function validation(form) {
 		const settlementMode = $(form).find("#settlementMode").val();
 		const settlementType = $(form).find("#settlementType").val();
 		const perTransactionLimit = $(form).find("#perTransactionLimit").val().trim();
-		const clientSecret = $(form).find("#clientSecret").val().trim();
-		const clientId = $(form).find("#clientId").val().trim();
-		const scope = $(form).find("#scope").val().trim();
-		const grantType = $(form).find("#grantType").val().trim();
+		const clientSecret = $(form).find("#clientSecret").val();
+		const clientId = $(form).find("#clientId").val();
+		const scope = $(form).find("#scope").val();
+		const grantType = $(form).find("#grantType").val();
 		const perDayLimit = $(form).find("#perDayLimit").val().trim();
 		const perMonthLimit = $(form).find("#perMonthLimit").val().trim();
-		const adminUserName = $(form).find("#adminUserName").val().trim();
-		const adminPassword = $(form).find("#adminPassword").val().trim();
+		const adminUserName = $(form).find("#adminUserName").val();
+		const adminPassword = $(form).find("#adminPassword").val();
 				
 		
 		// Clear all previous error messages and set text color to red
@@ -140,6 +140,7 @@ function validation(form) {
 		 $("#perMonthLimitError").text("Per Month Limit  is required.");
 		  isValid = false;
 	  }
+
 	 if (clientSecret === "") {
 	  	 $("#clientSecretError").text("Client Secret is required.");
 	  	  isValid = false;
@@ -164,5 +165,6 @@ function validation(form) {
 		 $("#adminPasswordError").text("Password is required.");
 		  isValid = false;
 	  }
+	
     return isValid;
 }

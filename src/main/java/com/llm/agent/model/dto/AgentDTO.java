@@ -55,4 +55,8 @@ public class AgentDTO {
 
     private String username;
     private String password;
+    
+
+    private String outletCode;
+    private String branchLocationId;
 }

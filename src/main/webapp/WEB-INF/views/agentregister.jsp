@@ -166,11 +166,12 @@
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
 
-function registerAgent() {
+ function registerAgent() {
 	if(!validation($("#agentForm")))  {
         return false;  
     }
     const formData = $("#agentForm").serialize(); // Serialize form data for submission
+    const agentId = $("#agentId").val();
     $('#loader').show();
     $('#submitButton').prop('disabled', true);
     $.ajax({
@@ -189,7 +190,8 @@ function registerAgent() {
             alert("Error: " + xhr.responseText);
         }
     });
-}
+} 
+
 
 
 function toggleDiv(divId) {
@@ -564,6 +566,30 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													</div>
 												</div>
 												<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Branch Location Id<span
+														class="text-danger">*</span>
+													</label>
+													<form:input path="branchLocationId" type="number"
+														class="form-control" id="branchLocationId"
+														placeholder="Branch Location Id" />
+													<span id="branchLocationIdError" class="text-danger1"></span>
+												</div>
+											</div>
+											</div>
+										</div>
+										<div class="row">
+										<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Licence Number<span
+														class="text-danger">*</span></label>
+													<form:input path="licenceNo" type="text"
+														class="form-control" id="licenceNo"
+														placeholder="Licence Number"  />
+													<span id="licenceNoError" class="text-danger1"></span>
+												</div>
+											</div>
+										<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Tax Applicable<span
 															class="text-danger">*</span></label>
@@ -574,9 +600,6 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														</form:select>
 													</div>
 												</div>
-											</div>
-										</div>
-										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Working Hours<span
@@ -720,6 +743,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
+						<c:if test="${!isUpdate}">
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
@@ -785,6 +809,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														<span id="adminUserNameError" class="text-danger1"></span>
 													</div>
 												</div>
+											
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Password<span
@@ -795,6 +820,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														<span id="adminPasswordError" class="text-danger1"></span>
 													</div>
 												</div>
+												
 											</div>
 										</div>
 									</div>
@@ -802,7 +828,9 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-					<%-- <div class="accordion-item" style="background: aliceblue;">
+					</c:if>
+					<c:if test="${isUpdate}">
+					 <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -815,7 +843,41 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							<div class="card-body personal-info">
 								<div class="main-content">
 									<div class="card-body pass-security">
+									<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created By<span
+														class="text-danger">*</span></label>
+													<form:input path="createdBy" type="text" class="form-control"
+														id="createdBy" placeholder="Created By" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created On<span
+														class="text-danger">*</span></label>
+													<form:input path="createdOn" type="text" class="form-control"
+														id="createdOn" placeholder="Created On" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified By<span
+														class="text-danger">*</span></label>
+													<form:input path="modifiedBy" type="text" class="form-control"
+														id="modifiedBy" placeholder="Modified By" />
+												</div>
+											</div>
+										</div>
 										<div class="row">
+										<%-- <div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified On<span
+														class="text-danger">*</span></label>
+													<form:input path="modifiedOn" type="text" class="form-control"
+														id="modifiedOn" placeholder="Modified On" />
+												</div>
+											</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Remarks<span
@@ -841,7 +903,8 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-				</div> --%>
+				</div> 
+				</c:if>
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">

@@ -1,9 +1,7 @@
 package com.llm.agent.controller;
 
-import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.model.enums.Role;
-import com.llm.UserIdentity.repository.UserRepository;
-import com.llm.agent.model.dto.AgentDTO;
+import java.time.LocalDateTime;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +10,21 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.view.RedirectView;
 
-import com.llm.agent.service.IAgentService;
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.model.enums.Role;
+import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
-
-import java.time.LocalDateTime;
+import com.llm.agent.model.dto.AgentDTO;
+import com.llm.agent.service.IAgentService;
 
 @RestController
 @RequestMapping("/api/v1/agent")
@@ -35,7 +42,7 @@ public class AgentRestController {
 		String username = authentication.getName();
 		logger.info(agentDTO.toString());
 		try {
-			if (agentDTO.getAgentName().isEmpty()){
+			if (agentDTO.getAgentName().isEmpty()) {
 				return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
 			}
 			Agent agent = new Agent();
@@ -85,6 +92,8 @@ public class AgentRestController {
 			agent.setPerMonthLimit(agentDTO.getPerMonthLimit());
 			agent.setUsername(agentDTO.getUsername());
 			agent.setPassword(agentDTO.getPassword());
+			agent.setOutletCode(agentDTO.getOutletCode());
+			agent.setBranchLocationId(agentDTO.getBranchLocationId());
 
 			agentService.addAgent(agent);
 
@@ -105,6 +114,72 @@ public class AgentRestController {
 			return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
 		}
 
+	}
+
+//	 @PostMapping("/view-update")
+//	    public RedirectView submitForm(@ModelAttribute("agent") Agent agent, Model model) {
+//		 Long agentId = Long.valueOf(agent.getAgentId());
+//		 return new RedirectView("/agent?agentId=" + agentId, true);
+//
+//	    }
+	@PutMapping("{agentId}")
+	public ResponseEntity<String> updateAgent(@PathVariable Long agentId, @ModelAttribute Agent agent) {
+		try {
+			Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
+	        if (existingAgent != null) {
+	        	existingAgent.setAgentId(existingAgent.getAgentId());
+				existingAgent.setCountries(existingAgent.getCountries());
+				existingAgent.setCurrencies(existingAgent.getCurrencies());
+				existingAgent.setAgentName(existingAgent.getAgentName());
+				existingAgent.setAgentDisplayName(existingAgent.getAgentDisplayName());
+				existingAgent.setAddress1(existingAgent.getAddress1());
+				existingAgent.setAddress2(existingAgent.getAddress2());
+				existingAgent.setAddress3(existingAgent.getAddress3());
+				existingAgent.setCity(existingAgent.getCity());
+				existingAgent.setState(existingAgent.getState());
+				existingAgent.setZip(existingAgent.getZip());
+				existingAgent.setTimeZone(existingAgent.getTimeZone());
+				existingAgent.setEmail(existingAgent.getEmail());
+				existingAgent.setMobile(existingAgent.getMobile());
+				existingAgent.setPhone(existingAgent.getPhone());
+				existingAgent.setContactPerson(existingAgent.getContactPerson());
+				existingAgent.setMisEmailId(existingAgent.getMisEmailId());
+				existingAgent.setTaxIdentificationNumber(existingAgent.getTaxIdentificationNumber());
+				existingAgent.setLicenceNo(existingAgent.getLicenceNo());
+				existingAgent.setTaxApplicable(existingAgent.getTaxApplicable());
+				existingAgent.setWorkingHours(existingAgent.getWorkingHours());
+				existingAgent.setDaily(existingAgent.getDaily());
+				existingAgent.setSettlementMode(existingAgent.getSettlementMode());
+				existingAgent.setSettlementType(existingAgent.getSettlementType());
+				existingAgent.setStatus(existingAgent.getStatus());
+				existingAgent.setPerTransaction(existingAgent.getPerTransaction());
+				existingAgent.setPerDay(existingAgent.getPerDay());
+				existingAgent.setPerMonth(existingAgent.getPerMonth());
+//				existingAgent.setGrantType(existingAgent.getGrantType());
+//				existingAgent.setScope(existingAgent.getScope());
+//				existingAgent.setClientId(existingAgent.getClientId());
+//				existingAgent.setClientSecret(existingAgent.getClientSecret());
+//				existingAgent.setUsername(existingAgent.getUsername());
+//				existingAgent.setPassword(existingAgent.getPassword());
+				existingAgent.setModifiedOn(LocalDateTime.now());
+				existingAgent.setDisabledBy(existingAgent.getDisabledBy());
+				existingAgent.setDisabledOn(existingAgent.getDisabledOn());
+				existingAgent.setRemarks(existingAgent.getRemarks());
+				existingAgent.setStatusFlag(existingAgent.getStatusFlag());
+				existingAgent.setIsValid(existingAgent.getIsValid());
+				existingAgent.setPerTransactionLimit(existingAgent.getPerTransactionLimit());
+				existingAgent.setPerDayLimit(existingAgent.getPerDayLimit());
+				existingAgent.setPerMonthLimit(existingAgent.getPerMonthLimit());
+				existingAgent.setUsername(existingAgent.getUsername());
+			
+				agentService.updateAgent(agentId,existingAgent);
+//	            agentService.addAgent(existingAgent);
+	        }
+			return new ResponseEntity<>("agent update successfully!", HttpStatus.CREATED);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }

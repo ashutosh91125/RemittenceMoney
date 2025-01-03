@@ -70,5 +70,10 @@ public class Agent {
 	private String perTransactionLimit;
 	private String perDayLimit;
 	private String perMonthLimit;
+	@Column(name = "branch_location_id", unique = true)
+	private String branchLocationId;
+
+	@Column(name = "outlet_code", unique = true)
+	private String outletCode;
 
 }

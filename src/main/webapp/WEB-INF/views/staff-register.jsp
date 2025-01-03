@@ -280,7 +280,7 @@
 											<form:select path="branches" data-select2-selector="icon"
 												id="branches" onchange="enableSelectOption(this)">
 												<form:option value="" disabled="true" selected="false">Select Branch</form:option>
-												<form:options items="${branchList}" itemValue="id"
+												<form:options items="${branchList}" itemValue="branchLocationId"
 													itemLabel="branchName" />
 											</form:select>
 											<span id="branchError" class="text-danger1"></span>

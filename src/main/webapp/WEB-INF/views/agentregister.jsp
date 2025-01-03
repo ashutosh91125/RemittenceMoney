@@ -828,7 +828,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-<%-- 					</c:if> --%>
+<%-- 					</c:if> --%> 
 <%-- 					<c:if test="${isUpdate}"> --%>
 					 <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">

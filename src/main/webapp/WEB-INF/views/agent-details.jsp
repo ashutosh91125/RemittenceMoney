@@ -165,30 +165,30 @@
 </style>
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
-    
-    function registerAgent() {
-        const formData = $("#agentForm").serialize(); // Serialize form data for submission
-        $('#loader').show();
-        $('#submitButton').prop('disabled', true);
-        $.ajax({
-            url: "/api/v1/agent",
-            type: "POST",
-            contentType: "application/x-www-form-urlencoded",
-            data: formData,
-            success: function(response) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert(response);
-            },
-            error: function(xhr) {
-                $('#loader').hide();
-                $('#submitButton').prop('disabled', false);
-                alert("Error: " + xhr.responseText);
-            }
-        });
-    }
-
-
+function updateAgent() {
+	
+    const formData = $("#agentForm").serialize(); // Serialize form data for submission
+    const id= $("#id").val();
+    $('#loader').show();
+    $('#submitButton').prop('disabled', true);
+    $.ajax({
+        url: "/view-agent-update?id=" + id,
+        type: "POST",
+        contentType: "application/x-www-form-urlencoded",
+        data: formData,
+        success: function(response) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            $('body').html(response);
+//             alert(response);
+        },
+        error: function(xhr) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            alert("Error: " + xhr.responseText);
+        }
+    });
+}
 function toggleDiv(divId) {
 	const element = document.getElementById(divId);
 	element.classList.toggle("show");
@@ -233,6 +233,41 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
         }
     });
 });
+function fetchEnumValue(key, valueId, callback) {
+    $.ajax({
+        url: '/api/enumEntities/' + key + '/values/' + valueId,
+        type: 'GET',
+        success: function (description) {
+            console.log(`Fetched ${key}:`, description);
+            callback(description);
+        },
+        error: function () {
+            console.error(`Error fetching enum value for key: ${key}, valueId: ${valueId}`);
+            callback(null);
+        }
+    });
+}
+
+$(document).ready(function () {
+    // Utility function to fetch and update values
+    function updateValue(elementId, key, valueId) {
+        if (valueId != null && valueId !== '') {
+            fetchEnumValue(key, valueId, function (description) {
+                if (description) {
+                    $(`#${elementId}`).val(description);
+                } else {
+                    console.warn(`No description found for ${key} with ID ${valueId}`);
+                }
+            });
+        }
+    }
+
+    // Fetch and update the country, timezone, and state
+    updateValue('country', 'country', $("#countries").val());
+    updateValue('timeZone', 'timeZone', $("#timeZone").val());
+    updateValue('state', 'state', $("#state").val());
+});
+
 </script>
 </head>
 
@@ -297,8 +332,9 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 			crossorigin="anonymous"></script>
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<form:form id="agentForm" modelAttribute="agent" onsubmit="event.preventDefault(); registerAgent();">
+		<form:form id="agentForm" modelAttribute="agent" onsubmit="event.preventDefault(); updateAgent();">
 			<form:hidden path="isValid" value="true" />
+			<form:hidden path="id" value="" id="id"/>
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -327,7 +363,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label>
-											<input value="${countries}" class="form-control" id="countries" readonly="true" required='true' />
+											<input value="${agent.countries }" class="form-control" id="countries" readonly="true" required='true' />
 											<span id="countriesError" class="text-danger"></span>
 										</div>
 									</div>
@@ -335,7 +371,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label>
-											<input value="${currencies}" id="currencies"
+											<input value="${agent.currencies}" id="currencies"
 												class="form-control"  readonly="true" required='true' />
 											<span id="currenciesError" class="text-danger"></span>
 										</div>
@@ -345,7 +381,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
                                     <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">State</label>
-                                            <input value="${states}" id="state" class="form-control"  readonly="true" required='true' />   
+                                            <input value="${agent.state}" id="state" class="form-control"  readonly="true" required='true' />   
                                             <span id="stateError" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -411,7 +447,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
-											<input value="${timezones }" class="form-control" readonly="true" required='true' id="timeZone"/>
+											<input value="${agent.timeZone }" class="form-control" readonly="true" required='true' id="timeZone"/>
 											<span id="timeZoneError" class="text-danger"></span>
 										</div>
 									</div>

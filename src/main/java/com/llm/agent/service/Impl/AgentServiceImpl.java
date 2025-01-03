@@ -47,9 +47,9 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
-	public Agent updateAgent(Long agentId, Agent agent) {
-		Agent existingAgent = agentRepositories.findByAgentId(String.valueOf(agentId));
-		return agentRepositories.save(existingAgent);
+	public Agent updateAgent(Long id, Agent agent) {
+		Optional<Agent> existingAgent = agentRepositories.findById(id);
+		return agentRepositories.save(existingAgent.get());
 	}
 
 }

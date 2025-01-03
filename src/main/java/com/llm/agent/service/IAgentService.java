@@ -19,6 +19,6 @@ public interface IAgentService {
 
 	Agent getByAgentId(String agentId);
 
-	Agent updateAgent(Long agentId, Agent agent);
+	Agent updateAgent(Long id, Agent agent);
 
 }

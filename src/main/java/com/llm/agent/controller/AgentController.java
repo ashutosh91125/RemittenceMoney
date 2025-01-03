@@ -40,17 +40,8 @@ public class AgentController {
 //	}
 
 	@GetMapping("/agent")
-	public String showCompanyDetailsForm(@RequestParam(value="agentId" , required = false)Long agentId, Model model) {
-		logger.info("agentId========="+agentId);
-		if(agentId != null) {
-			Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
-			model.addAttribute("agent",existingAgent);
-			model.addAttribute("isUpdate", true);
-		}
-		else {
+	public String showCompanyDetailsForm(Model model) {
 			model.addAttribute("agent", new AgentDTO());
-			model.addAttribute("isUpdate", false);
-		}
 
 		try {
 			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
@@ -128,29 +119,33 @@ public class AgentController {
 //	}
 	 	@GetMapping("/agent-detail")  
 	    public String getAgentDetails(@RequestParam("agentId") String agentId, Model model) {
+	 		
 	 		Agent agent = agentService.getByAgentId(agentId);
 	    
-	    		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
-	    		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
-	    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.getState()));
-	    		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.getTimeZone()));
-	    		model.addAttribute("agent",agent);
+//	    		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
+//	    		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
+//	    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.getState()));
+//	    		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.getTimeZone()));
+	    		model.addAttribute("agent", agent);
 	   
 			/* model.addAttribute("agent",new Agent()); */
 	    	return "agent-details";
 	    }
 
 	 	@PostMapping("/view-agent-update")
-	 	public String submitViewForm(@ModelAttribute("agent") Agent agent, RedirectAttributes redirectAttributes) {
-	 	    Long agentId = Long.valueOf(agent.getAgentId());
-	 	    logger.info("Submitted agentId: " + agentId);
-
-	 	    if (agentId == null) {
-	 	        return "redirect:/error";
-	 	    }
-	 	    redirectAttributes.addFlashAttribute(agent);
-//	 	    redirectAttributes.addAttribute("agentId", agentId);
-	 	    return "redirect:/agent?agentId=" + agentId;
+	 	public String submitViewForm(@RequestParam("id") Long id, Model model) {
+	 		Optional<Agent> agentId =	agentService.getById(id);
+	 		model.addAttribute("agent",new Agent());
+	 	    return "redirect:/agent-update-form?id=" + id;
 	 	}
-
+	 	
+	 	@GetMapping("/agent-update-form")
+	 	public String showUpdateForm(@RequestParam("id") Long id, Model model) {
+	 		Optional<Agent> existingAgent = agentService.getById(id);
+	 		if(existingAgent.isPresent()) {
+	 			model.addAttribute("agent",existingAgent);
+	 		}
+	 		return "agent-view-update";
+	 	}
+	 	
 }

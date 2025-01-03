@@ -166,23 +166,23 @@
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
 
-function registerAgent() {
-	if(!validation($("#agentForm")))  {
+function updateAgent() {
+	/* if(!validation($("#agentForm")))  {
         return false;  
-    }
+    } */
     const formData = $("#agentForm").serialize(); // Serialize form data for submission
+    const id = $('#id').val();
     $('#loader').show();
     $('#submitButton').prop('disabled', true);
     $.ajax({
-        url: "/api/v1/agent",
-        type: "POST",
+        url: "/api/v1/agent/"+id,
+        type: "PUT",
         contentType: "application/x-www-form-urlencoded",
         data: formData,
         success: function(response) {
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
             alert(response);
-            $('#body').html(response.body.html);
         },
         error: function(xhr) {
             $('#loader').hide();
@@ -192,6 +192,42 @@ function registerAgent() {
     });
 }
 
+
+ /* function registerAgent() {
+	    if (!validation($("#agentForm"))) {
+	        return false;
+	    }
+	    
+	    const formData = $("#agentForm").serialize(); 
+	    const id = $("#id").val(); 
+	    $('#loader').show();
+	    $('#submitButton').prop('disabled', true);
+
+	    let url = "/api/v1/agent";
+	    let method = "POST";
+
+	    if (id) { 
+	        url = '/api/v1/agent/'+id;
+	        method = "PUT"; 
+	    }
+
+	    $.ajax({
+	        url: url,
+	        type: method,
+	        contentType: "application/x-www-form-urlencoded",
+	        data: formData,
+	        success: function(response) {
+	            $('#loader').hide();
+	            $('#submitButton').prop('disabled', false);
+	            alert(response);
+	        },
+	        error: function(xhr) {
+	            $('#loader').hide();
+	            $('#submitButton').prop('disabled', false);
+	            alert("Error: " + xhr.responseText);
+	        }
+	    });
+	} */
 
 
 function toggleDiv(divId) {
@@ -303,8 +339,9 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form id="agentForm" modelAttribute="agent"
-			onsubmit="event.preventDefault(); registerAgent();">
+			onsubmit="event.preventDefault(); updateAgent();">
 			<form:hidden path="isValid" value="true" />
+			<form:hidden path="id" value="" id="id"/>
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -614,7 +651,6 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 												</div>
 											</div>
 										</div>
-
 									</div>
 								</div>
 							</div>
@@ -743,8 +779,8 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-
-					<div class="accordion-item" style="background: aliceblue;">
+<%-- 						<c:if test="${!isUpdate}"> --%>
+					<%-- <div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
@@ -826,10 +862,11 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 									</div>
 								</div>
 							</div>
-						</div>
+						</div> --%>
 					</div>
-
-				<%-- 	 <div class="accordion-item" style="background: aliceblue;">
+<%-- 					</c:if> --%>
+<%-- 					<c:if test="${isUpdate}"> --%>
+					 <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -869,14 +906,14 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 											</div>
 										</div>
 										<div class="row">
-										<div class="col-xl-4">
+										<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Modified On<span
 														class="text-danger">*</span></label>
 													<form:input path="modifiedOn" type="text" class="form-control"
 														id="modifiedOn" placeholder="Modified On" />
 												</div>
-											</div>
+											</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Remarks<span
@@ -902,8 +939,9 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-				</div> --%> 
-
+				</div> 
+<%-- 				</c:if> --%>
+				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
 					<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>

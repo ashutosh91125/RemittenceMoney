@@ -193,43 +193,6 @@ function updateAgent() {
 }
 
 
- /* function registerAgent() {
-	    if (!validation($("#agentForm"))) {
-	        return false;
-	    }
-	    
-	    const formData = $("#agentForm").serialize(); 
-	    const id = $("#id").val(); 
-	    $('#loader').show();
-	    $('#submitButton').prop('disabled', true);
-
-	    let url = "/api/v1/agent";
-	    let method = "POST";
-
-	    if (id) { 
-	        url = '/api/v1/agent/'+id;
-	        method = "PUT"; 
-	    }
-
-	    $.ajax({
-	        url: url,
-	        type: method,
-	        contentType: "application/x-www-form-urlencoded",
-	        data: formData,
-	        success: function(response) {
-	            $('#loader').hide();
-	            $('#submitButton').prop('disabled', false);
-	            alert(response);
-	        },
-	        error: function(xhr) {
-	            $('#loader').hide();
-	            $('#submitButton').prop('disabled', false);
-	            alert("Error: " + xhr.responseText);
-	        }
-	    });
-	} */
-
-
 function toggleDiv(divId) {
 const element = document.getElementById(divId);
 element.classList.toggle("show");
@@ -338,7 +301,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 			crossorigin="anonymous"></script>
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<form:form id="agentForm" modelAttribute="agent"
+		<form:form id="agentForm" modelAttribute="agents"
 			onsubmit="event.preventDefault(); updateAgent();">
 			<form:hidden path="isValid" value="true" />
 			<form:hidden path="id" value="" id="id"/>

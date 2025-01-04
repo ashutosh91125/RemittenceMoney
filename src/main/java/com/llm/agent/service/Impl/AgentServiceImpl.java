@@ -1,5 +1,6 @@
 package com.llm.agent.service.Impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,8 @@ import com.llm.agent.model.Agent;
 import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.agent.service.IAgentService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class AgentServiceImpl implements IAgentService {
@@ -47,9 +50,59 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
-	public Agent updateAgent(Long id, Agent agent) {
-		Optional<Agent> existingAgent = agentRepositories.findById(id);
-		return agentRepositories.save(existingAgent.get());
+	public Agent updateAgent(Long id, Agent updatedAgent) {
+	    Optional<Agent> existingAgentOptional = agentRepositories.findById(id);
+	    if (existingAgentOptional.isPresent()) {
+	        Agent existingAgent = existingAgentOptional.get();
+
+	        // Update the fields of the existing agent with the new data
+	        existingAgent.setCountries(updatedAgent.getCountries());
+	        existingAgent.setCurrencies(updatedAgent.getCurrencies());
+	        existingAgent.setAgentName(updatedAgent.getAgentName());
+	        existingAgent.setAgentDisplayName(updatedAgent.getAgentDisplayName());
+	        existingAgent.setAddress1(updatedAgent.getAddress1());
+	        existingAgent.setAddress2(updatedAgent.getAddress2());
+	        existingAgent.setAddress3(updatedAgent.getAddress3());
+	        existingAgent.setCity(updatedAgent.getCity());
+	        existingAgent.setState(updatedAgent.getState());
+	        existingAgent.setZip(updatedAgent.getZip());
+	        existingAgent.setTimeZone(updatedAgent.getTimeZone());
+	        existingAgent.setEmail(updatedAgent.getEmail());
+	        existingAgent.setMobile(updatedAgent.getMobile());
+	        existingAgent.setPhone(updatedAgent.getPhone());
+	        existingAgent.setContactPerson(updatedAgent.getContactPerson());
+	        existingAgent.setMisEmailId(updatedAgent.getMisEmailId());
+	        existingAgent.setTaxIdentificationNumber(updatedAgent.getTaxIdentificationNumber());
+	        existingAgent.setLicenceNo(updatedAgent.getLicenceNo());
+	        existingAgent.setTaxApplicable(updatedAgent.getTaxApplicable());
+	        existingAgent.setWorkingHours(updatedAgent.getWorkingHours());
+	        existingAgent.setDaily(updatedAgent.getDaily());
+	        existingAgent.setSettlementMode(updatedAgent.getSettlementMode());
+	        existingAgent.setSettlementType(updatedAgent.getSettlementType());
+	        existingAgent.setStatus(updatedAgent.getStatus());
+	        existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
+	        existingAgent.setPerDay(updatedAgent.getPerDay());
+	        existingAgent.setPerMonth(updatedAgent.getPerMonth());
+	        existingAgent.setModifiedBy(updatedAgent.getModifiedBy());
+	        existingAgent.setModifiedOn(LocalDateTime.now());
+	        existingAgent.setDisabledBy(updatedAgent.getDisabledBy());
+	        existingAgent.setDisabledOn(updatedAgent.getDisabledOn());
+	        existingAgent.setRemarks(updatedAgent.getRemarks());
+	        existingAgent.setStatusFlag(updatedAgent.getStatusFlag());
+	        existingAgent.setIsValid(updatedAgent.getIsValid());
+	        existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
+	        existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());
+	        existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
+	        existingAgent.setUsername(updatedAgent.getUsername());
+	        existingAgent.setOutletCode(updatedAgent.getOutletCode());
+	        existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
+
+	        // Save the updated agent
+	        return agentRepositories.save(existingAgent);
+	    } else {
+	        throw new EntityNotFoundException("Agent not found with ID: " + id);
+	    }
 	}
+	
 
 }

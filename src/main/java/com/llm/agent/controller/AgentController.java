@@ -136,7 +136,7 @@ public class AgentController {
 	public String showUpdateForm(@RequestParam("id") Long id, Model model) {
 		Optional<Agent> existingAgent = agentService.getById(id);
 		if (existingAgent.isPresent()) {
-			model.addAttribute("agent", existingAgent);
+			model.addAttribute("agents", existingAgent);
 		}
 		return "agent-view-update";
 	}

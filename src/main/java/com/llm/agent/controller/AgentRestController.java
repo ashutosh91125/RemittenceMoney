@@ -1,6 +1,7 @@
 package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,14 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.model.enums.Role;
@@ -122,64 +121,71 @@ public class AgentRestController {
 //		 return new RedirectView("/agent?agentId=" + agentId, true);
 //
 //	    }
-	@PutMapping("{agentId}")
-	public ResponseEntity<String> updateAgent(@PathVariable Long agentId, @ModelAttribute Agent agent) {
-		try {
-			Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
-	        if (existingAgent != null) {
-	        	existingAgent.setAgentId(existingAgent.getAgentId());
-				existingAgent.setCountries(existingAgent.getCountries());
-				existingAgent.setCurrencies(existingAgent.getCurrencies());
-				existingAgent.setAgentName(existingAgent.getAgentName());
-				existingAgent.setAgentDisplayName(existingAgent.getAgentDisplayName());
-				existingAgent.setAddress1(existingAgent.getAddress1());
-				existingAgent.setAddress2(existingAgent.getAddress2());
-				existingAgent.setAddress3(existingAgent.getAddress3());
-				existingAgent.setCity(existingAgent.getCity());
-				existingAgent.setState(existingAgent.getState());
-				existingAgent.setZip(existingAgent.getZip());
-				existingAgent.setTimeZone(existingAgent.getTimeZone());
-				existingAgent.setEmail(existingAgent.getEmail());
-				existingAgent.setMobile(existingAgent.getMobile());
-				existingAgent.setPhone(existingAgent.getPhone());
-				existingAgent.setContactPerson(existingAgent.getContactPerson());
-				existingAgent.setMisEmailId(existingAgent.getMisEmailId());
-				existingAgent.setTaxIdentificationNumber(existingAgent.getTaxIdentificationNumber());
-				existingAgent.setLicenceNo(existingAgent.getLicenceNo());
-				existingAgent.setTaxApplicable(existingAgent.getTaxApplicable());
-				existingAgent.setWorkingHours(existingAgent.getWorkingHours());
-				existingAgent.setDaily(existingAgent.getDaily());
-				existingAgent.setSettlementMode(existingAgent.getSettlementMode());
-				existingAgent.setSettlementType(existingAgent.getSettlementType());
-				existingAgent.setStatus(existingAgent.getStatus());
-				existingAgent.setPerTransaction(existingAgent.getPerTransaction());
-				existingAgent.setPerDay(existingAgent.getPerDay());
-				existingAgent.setPerMonth(existingAgent.getPerMonth());
-//				existingAgent.setGrantType(existingAgent.getGrantType());
-//				existingAgent.setScope(existingAgent.getScope());
-//				existingAgent.setClientId(existingAgent.getClientId());
-//				existingAgent.setClientSecret(existingAgent.getClientSecret());
-//				existingAgent.setUsername(existingAgent.getUsername());
-//				existingAgent.setPassword(existingAgent.getPassword());
-				existingAgent.setModifiedOn(LocalDateTime.now());
-				existingAgent.setDisabledBy(existingAgent.getDisabledBy());
-				existingAgent.setDisabledOn(existingAgent.getDisabledOn());
-				existingAgent.setRemarks(existingAgent.getRemarks());
-				existingAgent.setStatusFlag(existingAgent.getStatusFlag());
-				existingAgent.setIsValid(existingAgent.getIsValid());
-				existingAgent.setPerTransactionLimit(existingAgent.getPerTransactionLimit());
-				existingAgent.setPerDayLimit(existingAgent.getPerDayLimit());
-				existingAgent.setPerMonthLimit(existingAgent.getPerMonthLimit());
-				existingAgent.setUsername(existingAgent.getUsername());
-			
-				agentService.updateAgent(agentId,existingAgent);
-//	            agentService.addAgent(existingAgent);
+	
+
+	@PutMapping("{id}")
+	public ResponseEntity<String> updateAgent(@PathVariable Long id, @ModelAttribute Agent agents) {
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName();
+	    try {
+	        Optional<Agent> optionalAgent = agentService.getById(id);
+	        if (optionalAgent.isPresent()) {
+	            Agent existingAgent = optionalAgent.get();
+
+	            // Update fields
+	            existingAgent.setCountries(agents.getCountries());
+	            existingAgent.setCurrencies(agents.getCurrencies());
+	            existingAgent.setAgentName(agents.getAgentName());
+	            existingAgent.setAgentDisplayName(agents.getAgentDisplayName());
+	            existingAgent.setAddress1(agents.getAddress1());
+	            existingAgent.setAddress2(agents.getAddress2());
+	            existingAgent.setAddress3(agents.getAddress3());
+	            existingAgent.setCity(agents.getCity());
+	            existingAgent.setState(agents.getState());
+	            existingAgent.setZip(agents.getZip());
+	            existingAgent.setTimeZone(agents.getTimeZone());
+	            existingAgent.setEmail(agents.getEmail());
+	            existingAgent.setMobile(agents.getMobile());
+	            existingAgent.setPhone(agents.getPhone());
+	            existingAgent.setContactPerson(agents.getContactPerson());
+	            existingAgent.setMisEmailId(agents.getMisEmailId());
+	            existingAgent.setTaxIdentificationNumber(agents.getTaxIdentificationNumber());
+	            existingAgent.setLicenceNo(agents.getLicenceNo());
+	            existingAgent.setTaxApplicable(agents.getTaxApplicable());
+	            existingAgent.setWorkingHours(agents.getWorkingHours());
+	            existingAgent.setDaily(agents.getDaily());
+	            existingAgent.setSettlementMode(agents.getSettlementMode());
+	            existingAgent.setSettlementType(agents.getSettlementType());
+	            existingAgent.setStatus(agents.getStatus());
+	            existingAgent.setPerTransaction(agents.getPerTransaction());
+	            existingAgent.setPerDay(agents.getPerDay());
+	            existingAgent.setPerMonth(agents.getPerMonth());
+	            existingAgent.setModifiedBy(username);
+	            existingAgent.setModifiedOn(LocalDateTime.now());
+	            existingAgent.setDisabledBy(agents.getDisabledBy());
+	            existingAgent.setDisabledOn(agents.getDisabledOn());
+	            existingAgent.setRemarks(agents.getRemarks());
+	            existingAgent.setStatusFlag(agents.getStatusFlag());
+	            existingAgent.setIsValid(agents.getIsValid());
+	            existingAgent.setPerTransactionLimit(agents.getPerTransactionLimit());
+	            existingAgent.setPerDayLimit(agents.getPerDayLimit());
+	            existingAgent.setPerMonthLimit(agents.getPerMonthLimit());
+	            existingAgent.setUsername(agents.getUsername());
+	            existingAgent.setOutletCode(agents.getOutletCode());
+	            existingAgent.setBranchLocationId(agents.getBranchLocationId());
+
+	            // Save updated agent
+	            agentService.updateAgent(id, existingAgent);
+
+	            return new ResponseEntity<>("Agent updated successfully!", HttpStatus.OK);
+	        } else {
+	            return new ResponseEntity<>("Agent not found!", HttpStatus.NOT_FOUND);
 	        }
-			return new ResponseEntity<>("agent update successfully!", HttpStatus.CREATED);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
-		}
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return new ResponseEntity<>("Failed to update agent!", HttpStatus.BAD_REQUEST);
+	    }
 	}
+
 
 }

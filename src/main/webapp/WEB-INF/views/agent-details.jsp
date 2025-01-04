@@ -193,79 +193,58 @@ function toggleDiv(divId) {
 	const element = document.getElementById(divId);
 	element.classList.toggle("show");
 }
-$(document).ready(function() {
-    $('#countries').on('change', function() {
-        let countryDependent = $(this).val();
-        $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
-        
-        if (countryDependent) {
-            let currencyDependent = countryDependent + "C";
-            $.ajax({
-                url: '/api/enumEntities/dependent',
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-        }
-$('#state').empty().append('<option value="" disabled selected>Select State</option>');     
-        if (countryDependent) {
-            let currencyDependent = countryDependent;
-            $.ajax({
-                url: '/api/enumEntities/dependent',
-                type: 'GET',
-                data: { dependent: currencyDependent },
-                success: function(data) {
-                    $.each(data, function(index, enumValue) {
-                        $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                    });
-                },
-                error: function() {
-                    console.error("Error fetching currencies for the selected country.");
-                }
-            });
-        }
-    });
-});
-function fetchEnumValue(key, valueId, callback) {
-    $.ajax({
-        url: '/api/enumEntities/' + key + '/values/' + valueId,
-        type: 'GET',
-        success: function (description) {
-            console.log(`Fetched ${key}:`, description);
-            callback(description);
-        },
-        error: function () {
-            console.error(`Error fetching enum value for key: ${key}, valueId: ${valueId}`);
-            callback(null);
-        }
-    });
-}
+
 
 $(document).ready(function () {
-    // Utility function to fetch and update values
-    function updateValue(elementId, key, valueId) {
-        if (valueId != null && valueId !== '') {
-            fetchEnumValue(key, valueId, function (description) {
-                if (description) {
-                    $(`#${elementId}`).val(description);
-                } else {
-                    console.warn(`No description found for ${key} with ID ${valueId}`);
-                }
-            });
-        }
-    }
+    const countries = $('#countries').val();
+    const currencies = $('#currencies').val();
+    const state = $('#state').val();
+    const timeZone = $('#timeZone').val();
 
-    // Fetch and update the country, timezone, and state
-    updateValue('country', 'country', $("#countries").val());
-    updateValue('timeZone', 'timeZone', $("#timeZone").val());
-    updateValue('state', 'state', $("#state").val());
+    $.ajax({
+        url: '/api/enumEntities/' + 'country' + '/values/' + countries,
+        type: 'GET',
+        success: function (description) {
+        	 $('#countries').val(description);		
+        },
+        error: function () {
+            console.error("Error fetching enum value for key:", "country", "valueId:", countries);
+        }
+    });
+    $.ajax({
+        url: '/api/enumEntities/' + 'currency' + '/values/' + currencies,
+        type: 'GET',
+        success: function (description) {
+        	 $('#currencies').val(description);
+				
+        },
+        error: function () {
+            console.error("Error fetching enum value for key:", "currency", "valueId:", currencies);
+        }
+    });
+    $.ajax({
+        url: '/api/enumEntities/' + 'state' + '/values/' + state,
+        type: 'GET',
+        success: function (description) {
+        	 $('#state').val(description);
+				
+        },
+        error: function () {
+            console.error("Error fetching enum value for key:", "state", "valueId:", state);
+        }
+    });
+    $.ajax({
+        url: '/api/enumEntities/' + 'timezone' + '/values/' + timeZone,
+        type: 'GET',
+        success: function (description) {
+        	 $('#timeZone').val(description);
+				
+        },
+        error: function () {
+            console.error("Error fetching enum value for key:", "timezone", "valueId:", timeZone);
+        }
+    });
+
 });
 
 </script>

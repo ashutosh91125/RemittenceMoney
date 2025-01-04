@@ -138,6 +138,46 @@ public class AgentController {
 		if (existingAgent.isPresent()) {
 			model.addAttribute("agents", existingAgent);
 		}
+		try {
+			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
+			countriesEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of());
+		}
+		try {
+			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("timezone");
+			countriesEntity.ifPresent(entity -> model.addAttribute("timezoneList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of());
+		}
+		try {
+			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
+			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("currencyList", List.of());
+		}
+		try {
+			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
+			nativeRegionEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error Native Region List: ", e);
+			model.addAttribute("native Region List", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> workingEntity = enumEntityService.getEnumEntityByKey("workingHours");
+			workingEntity.ifPresent(entity -> model.addAttribute("workingHoursList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving working list: ", e);
+			model.addAttribute("workingHoursList", List.of());
+		}
 		return "agent-view-update";
 	}
 

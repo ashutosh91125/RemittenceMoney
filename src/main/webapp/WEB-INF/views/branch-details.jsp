@@ -164,32 +164,66 @@
 }
 </style>
 <script>
-	function registerBranch() {
-		const formData = $("#branchForm").serialize(); // Serialize form data for submission
-		$('#loader').show();
-		$('#submitButton').prop('disabled', true);
-		$.ajax({
-			url : "/api/v1/branch",
-			type : "POST",
-			contentType : "application/x-www-form-urlencoded",
-			data : formData,
-			success : function(response) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				alert(response);
-			},
-			error : function(xhr) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				alert("Error: " + xhr.responseText);
-			}
-		});
+	function viewUpdateBranch() {
+	    const formData = $("#branchForm").serialize(); // Serialize form data for submission
+	    $('#loader').show();
+	    $('#submitButton').prop('disabled', true);
+
+	    $.ajax({
+	        url: "/view-branch-update",
+	        type: "POST",
+	        contentType: "application/x-www-form-urlencoded",
+	        data: formData,
+	        success: function(response) {
+	            $('#loader').hide();
+	            $('#submitButton').prop('disabled', false);
+
+	            // Replace the current content with the response (HTML view)
+	            $('body').html(response);
+	        },
+	        error: function(xhr) {
+	            $('#loader').hide();
+	            $('#submitButton').prop('disabled', false);
+	            alert("Error: " + xhr.responseText);
+	        }
+	    });
 	}
 
 	function toggleDiv(divId) {
 		const element = document.getElementById(divId);
 		element.classList.toggle("show");
 	}
+	
+	$(document).ready(function () {
+	    const state = $('#state').val();
+	    const agentId =$('#agent').val();
+	 
+	    $.ajax({
+	        url: '/api/v1/agent/' +  agentId,
+	        type: 'GET',
+	        success: function (description) {
+	        	 $('#agent').val(description);
+					
+	        },
+	        error: function () {
+	            console.error("Error fetching Agent By Given agentId:",  agentId);
+	        }
+	    });
+		 
+		    $.ajax({
+		        url: '/api/enumEntities/' + 'state' + '/values/' + state,
+		        type: 'GET',
+		        success: function (description) {
+		        	 $('#state').val(description);
+						
+		        },
+		        error: function () {
+		            console.error("Error fetching enum value for key:", "state", "valueId:", state);
+		        }
+		    });
+
+	});
+
 </script>
 </head>
 
@@ -253,7 +287,8 @@
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form id="branchForm" modelAttribute="branch"
-			onsubmit="event.preventDefault(); registerBranch();">
+			onsubmit="event.preventDefault(); viewUpdateBranch();">
+			<form:hidden path="id" value=""/>
 
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
@@ -284,7 +319,7 @@
 											<label class="form-label">Agent<span
 												class="text-danger">*</span></label>
 											<form:input path="agent" class="form-control" id="agent"
-												readonly="true" required='true' value="${agent}"/>
+												readonly="true" required='true' />
 											<span id="agentError" class="text-danger" ></span>
 										</div>
 									</div>
@@ -391,7 +426,7 @@
 											<label class="form-label">State<span
 												class="text-danger">*</span></label>
 											<form:input path="state" class="form-control" id="state"
-												readonly="true" required='true' value="${states}" />
+												readonly="true" required='true'  />
 											<span id="branchChannelIdError" class="text-danger"></span>
 										</div>
 									</div>

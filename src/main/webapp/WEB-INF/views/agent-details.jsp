@@ -678,7 +678,7 @@ $(document).ready(function () {
 						</div>
 					</div>
 				</div>
-				<div class="accordion-item" style="background: aliceblue;">
+				<%-- <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -691,7 +691,7 @@ $(document).ready(function () {
 								<div class="main-content">
 									<div class="card-body pass-security">
 										<div class="row">
-											<%-- <div class="col-xl-4">
+											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Grant_Type<span
 														class="text-danger">*</span></label>
@@ -750,7 +750,7 @@ $(document).ready(function () {
 														placeholder="Admin Password" />
 													<span id="adminPasswordError" class="text-danger"></span>
 												</div>
-											</div> --%>
+											</div>
 											<div class="col-xl-4">
                                                 <div class="mb-4">
                                                     <label class="form-label">Username<span
@@ -761,7 +761,7 @@ $(document).ready(function () {
                                                     <span id="adminUserNameError" class="text-danger"></span>
                                                 </div>
                                             </div>
-                                          <%--   <div class="col-xl-4">
+                                            <div class="col-xl-4">
                                                 <div class="mb-4">
                                                     <label class="form-label">Password<span
                                                         class="text-danger">*</span></label>
@@ -770,14 +770,14 @@ $(document).ready(function () {
                                                         placeholder="Set Password" readonly="true" required='true' />
                                                     <span id="adminPasswordError" class="text-danger"></span>
                                                 </div>
-                                            </div> --%>
+                                            </div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
+				</div> --%>
 				<%-- <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"

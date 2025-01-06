@@ -64,8 +64,8 @@ public class TokenService {
         Agent byAgentId = agentRepositories.findByAgentId((staffDetails.get().getAgent()));
 
 
-        body.add("username", byAgentId.getUsername());
-        body.add("password", byAgentId.getPassword());
+        body.add("username", byAgentId.getApiUsername());
+        body.add("password", byAgentId.getApiPassword());
 //        body.add("password", "Vml0Y29tYXhANzg28");
         body.add("grant_type", byAgentId.getGrantType());
         body.add("client_id", byAgentId.getClientId());

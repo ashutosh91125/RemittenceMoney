@@ -82,6 +82,7 @@ public class StaffDetailsRestController {
             user.setCountry(country);
             user.setPhoneNumber(staffDTO.getMobile());
             user.setRole(staffDTO.getStaffGroup());
+            user.setFirstLogin(true);
             user.setApproved(true);
             userRepository.save(user);
 

@@ -91,9 +91,10 @@ public class AgentRestController {
 			agent.setPerDayLimit(agentDTO.getPerDayLimit());
 			agent.setPerMonthLimit(agentDTO.getPerMonthLimit());
 			agent.setUsername(agentDTO.getUsername());
-			agent.setPassword(agentDTO.getPassword());
 			agent.setOutletCode(agentDTO.getOutletCode());
 			agent.setBranchLocationId(agentDTO.getBranchLocationId());
+			agent.setApiUsername(agentDTO.getApiUsername());
+			agent.setApiPassword(agent.getApiPassword());
 
 			agentService.addAgent(agent);
 
@@ -104,6 +105,7 @@ public class AgentRestController {
 			user.setUsername(agentDTO.getUsername());
 			user.setPhoneNumber(agentDTO.getPhone());
 			user.setCountry(agentDTO.getCountries());
+			user.setFirstLogin(true);
 			user.setRole(Role.AGENT);
 			user.setApproved(true);
 			userRepository.save(user);
@@ -132,9 +134,7 @@ public class AgentRestController {
 	    try {
 	        agentService.updateAgent(id, agents, username);
 	        return new ResponseEntity<>("Agent updated successfully!", HttpStatus.OK);
-	    } catch (IllegalArgumentException e) {
-	        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-	    } catch (Exception e) {
+	    }catch (Exception e) {
 	        e.printStackTrace();
 	        return new ResponseEntity<>("Failed to update agent!", HttpStatus.BAD_REQUEST);
 	    }

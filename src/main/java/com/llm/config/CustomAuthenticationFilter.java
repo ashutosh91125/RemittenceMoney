@@ -1,5 +1,7 @@
 package com.llm.config;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,12 +13,16 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     @Autowired
     private StaffDetailsRepository staffDetailsRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
@@ -25,6 +31,20 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String branch = request.getParameter("branch");
+
+        Optional<User> fetchUser = userRepository.findByUsername(username);
+
+        if (fetchUser.isEmpty()) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
+
+        if (fetchUser.get().isFirstLogin()) {
+            throw new BadCredentialsException("First login: Password change required.");
+        }
+
+        if (fetchUser.get().getPasswordExpiryDate() != null && fetchUser.get().getPasswordExpiryDate().isBefore(LocalDate.now())) {
+            throw new BadCredentialsException("Password expired: Password change required.");
+        }
 
         // Create authentication token
         UsernamePasswordAuthenticationToken authRequest =

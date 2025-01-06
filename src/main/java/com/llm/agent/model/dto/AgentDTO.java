@@ -38,6 +38,8 @@ public class AgentDTO {
     private String scope;
     private String clientId;
     private String clientSecret;
+    private String apiUsername;
+    private String apiPassword;
 
     private String createdBy;
     private String createdOn;
@@ -55,7 +57,6 @@ public class AgentDTO {
 
     private String username;
     private String password;
-    
 
     private String outletCode;
     private String branchLocationId;

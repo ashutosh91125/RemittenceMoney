@@ -62,13 +62,13 @@ public class BranchDetails {
     @Column(name = "mis_emailid")
     private String misEmailId;
 
-    @Column(name = "branch_location_id", unique = true)
+    @Column(name = "branch_location_id")
     private String branchLocationId;
 
     @Column(name = "licence_no")
     private String licenceNo;
 
-    @Column(name = "outlet_code", unique = true)
+    @Column(name = "outlet_code")
     private String outletCode;
 
     @Column(name = "created_by")

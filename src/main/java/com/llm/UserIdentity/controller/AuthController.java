@@ -25,6 +25,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 public class AuthController {
@@ -102,6 +105,28 @@ public class AuthController {
         model.addAttribute("customerCount", customerRepository.count());
         model.addAttribute("branchCount", branchDetailsRepository.count());
         return "superadmindasbord";
+    }
+
+    @GetMapping("/change-password")
+    public String changePasswordPage(@RequestParam(required = false) String message, Model model) {
+        model.addAttribute("message", message);
+        return "change-password";
+    }
+
+    @PostMapping("/change-password")
+    public String changePassword(@RequestParam String username, @RequestParam String newPassword, Model model) {
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        if (userOpt.isPresent()) {
+            User user = userOpt.get();
+            user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+            user.setFirstLogin(false);
+            user.setPasswordExpiryDate(LocalDate.now().plusDays(31));
+            userRepository.save(user);
+            model.addAttribute("success", "Password changed successfully.");
+            return "adminlogin";
+        }
+        model.addAttribute("error", "User not found.");
+        return "change-password";
     }
 }
 

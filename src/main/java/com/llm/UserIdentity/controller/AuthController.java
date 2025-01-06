@@ -92,6 +92,7 @@ public class AuthController {
         user.setPhoneNumber(phoneNumber);
         user.setRole(Role.SUB_ADMIN);
         user.setApproved(true);
+        user.setFirstLogin(true);
         userRepository.save(user);
         return "redirect:/adminlist";
     }

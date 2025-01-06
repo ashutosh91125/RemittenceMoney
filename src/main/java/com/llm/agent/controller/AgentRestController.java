@@ -171,7 +171,6 @@ public class AgentRestController {
 	            existingAgent.setPerTransactionLimit(agents.getPerTransactionLimit());
 	            existingAgent.setPerDayLimit(agents.getPerDayLimit());
 	            existingAgent.setPerMonthLimit(agents.getPerMonthLimit());
-	            existingAgent.setUsername(agents.getUsername());
 	            existingAgent.setOutletCode(agents.getOutletCode());
 	            existingAgent.setBranchLocationId(agents.getBranchLocationId());
 

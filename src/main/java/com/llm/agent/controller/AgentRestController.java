@@ -128,64 +128,18 @@ public class AgentRestController {
 	public ResponseEntity<String> updateAgent(@PathVariable Long id, @ModelAttribute Agent agents) {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    String username = authentication.getName();
+
 	    try {
-	        Optional<Agent> optionalAgent = agentService.getById(id);
-	        if (optionalAgent.isPresent()) {
-	            Agent existingAgent = optionalAgent.get();
-
-	            // Update fields
-	            existingAgent.setCountries(agents.getCountries());
-	            existingAgent.setCurrencies(agents.getCurrencies());
-	            existingAgent.setAgentName(agents.getAgentName());
-	            existingAgent.setAgentDisplayName(agents.getAgentDisplayName());
-	            existingAgent.setAddress1(agents.getAddress1());
-	            existingAgent.setAddress2(agents.getAddress2());
-	            existingAgent.setAddress3(agents.getAddress3());
-	            existingAgent.setCity(agents.getCity());
-	            existingAgent.setState(agents.getState());
-	            existingAgent.setZip(agents.getZip());
-	            existingAgent.setTimeZone(agents.getTimeZone());
-	            existingAgent.setEmail(agents.getEmail());
-	            existingAgent.setMobile(agents.getMobile());
-	            existingAgent.setPhone(agents.getPhone());
-	            existingAgent.setContactPerson(agents.getContactPerson());
-	            existingAgent.setMisEmailId(agents.getMisEmailId());
-	            existingAgent.setTaxIdentificationNumber(agents.getTaxIdentificationNumber());
-	            existingAgent.setLicenceNo(agents.getLicenceNo());
-	            existingAgent.setTaxApplicable(agents.getTaxApplicable());
-	            existingAgent.setWorkingHours(agents.getWorkingHours());
-	            existingAgent.setDaily(agents.getDaily());
-	            existingAgent.setSettlementMode(agents.getSettlementMode());
-	            existingAgent.setSettlementType(agents.getSettlementType());
-	            existingAgent.setStatus(agents.getStatus());
-	            existingAgent.setPerTransaction(agents.getPerTransaction());
-	            existingAgent.setPerDay(agents.getPerDay());
-	            existingAgent.setPerMonth(agents.getPerMonth());
-	            existingAgent.setModifiedBy(username);
-	            existingAgent.setModifiedOn(LocalDateTime.now());
-	            existingAgent.setDisabledBy(agents.getDisabledBy());
-	            existingAgent.setDisabledOn(agents.getDisabledOn());
-	            existingAgent.setRemarks(agents.getRemarks());
-	            existingAgent.setStatusFlag(agents.getStatusFlag());
-	            existingAgent.setIsValid(agents.getIsValid());
-	            existingAgent.setPerTransactionLimit(agents.getPerTransactionLimit());
-	            existingAgent.setPerDayLimit(agents.getPerDayLimit());
-	            existingAgent.setPerMonthLimit(agents.getPerMonthLimit());
-	            existingAgent.setOutletCode(agents.getOutletCode());
-	            existingAgent.setBranchLocationId(agents.getBranchLocationId());
-
-	            // Save updated agent
-	            agentService.updateAgent(id, existingAgent);
-
-	            return new ResponseEntity<>("Agent updated successfully!", HttpStatus.OK);
-	        } else {
-	            return new ResponseEntity<>("Agent not found!", HttpStatus.NOT_FOUND);
-	        }
+	        agentService.updateAgent(id, agents, username);
+	        return new ResponseEntity<>("Agent updated successfully!", HttpStatus.OK);
+	    } catch (IllegalArgumentException e) {
+	        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return new ResponseEntity<>("Failed to update agent!", HttpStatus.BAD_REQUEST);
 	    }
 	}
+
 	
 	@GetMapping("/{agentId}")
 	public ResponseEntity<String> getAgentNameByAgentId(@PathVariable Long agentId) {

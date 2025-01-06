@@ -50,116 +50,52 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
-	public Agent updateAgent(Long id, Agent updatedAgent) {
-	    if (agentRepositories.existsById(id)) {
-	        // Fetch the existing agent entity
-	        Agent existingAgent = agentRepositories.findById(id)
-	                                               .orElseThrow(() -> new IllegalArgumentException("Agent not found with id: " + id));
+	public void updateAgent(Long id, Agent updatedAgent, String modifiedBy) {
+	    Agent existingAgent = agentRepositories.findById(id)
+	        .orElseThrow(() -> new IllegalArgumentException("Agent not found with id: " + id));
 
-	        // Update fields of the existing entity with values from the updatedAgent
-	        existingAgent.setCountries(updatedAgent.getCountries());
-	        existingAgent.setCurrencies(updatedAgent.getCurrencies());
-	        existingAgent.setAgentName(updatedAgent.getAgentName());
-	        existingAgent.setAgentDisplayName(updatedAgent.getAgentDisplayName());
-	        existingAgent.setAddress1(updatedAgent.getAddress1());
-	        existingAgent.setAddress2(updatedAgent.getAddress2());
-	        existingAgent.setAddress3(updatedAgent.getAddress3());
-	        existingAgent.setCity(updatedAgent.getCity());
-	        existingAgent.setState(updatedAgent.getState());
-	        existingAgent.setZip(updatedAgent.getZip());
-	        existingAgent.setTimeZone(updatedAgent.getTimeZone());
-	        existingAgent.setEmail(updatedAgent.getEmail());
-	        existingAgent.setMobile(updatedAgent.getMobile());
-	        existingAgent.setPhone(updatedAgent.getPhone());
-	        existingAgent.setContactPerson(updatedAgent.getContactPerson());
-	        existingAgent.setMisEmailId(updatedAgent.getMisEmailId());
-	        existingAgent.setTaxIdentificationNumber(updatedAgent.getTaxIdentificationNumber());
-	        existingAgent.setLicenceNo(updatedAgent.getLicenceNo());
-	        existingAgent.setTaxApplicable(updatedAgent.getTaxApplicable());
-	        existingAgent.setWorkingHours(updatedAgent.getWorkingHours());
-	        existingAgent.setDaily(updatedAgent.getDaily());
-	        existingAgent.setSettlementMode(updatedAgent.getSettlementMode());
-	        existingAgent.setSettlementType(updatedAgent.getSettlementType());
-	        existingAgent.setStatus(updatedAgent.getStatus());
-	        existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
-	        existingAgent.setPerDay(updatedAgent.getPerDay());
-	        existingAgent.setPerMonth(updatedAgent.getPerMonth());
-	        existingAgent.setModifiedBy(updatedAgent.getModifiedBy());
-	        existingAgent.setModifiedOn(LocalDateTime.now());
-	        existingAgent.setDisabledBy(updatedAgent.getDisabledBy());
-	        existingAgent.setDisabledOn(updatedAgent.getDisabledOn());
-	        existingAgent.setRemarks(updatedAgent.getRemarks());
-	        existingAgent.setStatusFlag(updatedAgent.getStatusFlag());
-	        existingAgent.setIsValid(updatedAgent.getIsValid());
-	        existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
-	        existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());
-	        existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
-	        existingAgent.setOutletCode(updatedAgent.getOutletCode());
-	        existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
+	    // Update fields of the existing entity with values from the updatedAgent
+	    existingAgent.setCountries(updatedAgent.getCountries());
+	    existingAgent.setCurrencies(updatedAgent.getCurrencies());
+	    existingAgent.setAgentName(updatedAgent.getAgentName());
+	    existingAgent.setAgentDisplayName(updatedAgent.getAgentDisplayName());
+	    existingAgent.setAddress1(updatedAgent.getAddress1());
+	    existingAgent.setAddress2(updatedAgent.getAddress2());
+	    existingAgent.setAddress3(updatedAgent.getAddress3());
+	    existingAgent.setCity(updatedAgent.getCity());
+	    existingAgent.setState(updatedAgent.getState());
+	    existingAgent.setZip(updatedAgent.getZip());
+	    existingAgent.setTimeZone(updatedAgent.getTimeZone());
+	    existingAgent.setEmail(updatedAgent.getEmail());
+	    existingAgent.setMobile(updatedAgent.getMobile());
+	    existingAgent.setPhone(updatedAgent.getPhone());
+	    existingAgent.setContactPerson(updatedAgent.getContactPerson());
+	    existingAgent.setMisEmailId(updatedAgent.getMisEmailId());
+	    existingAgent.setTaxIdentificationNumber(updatedAgent.getTaxIdentificationNumber());
+	    existingAgent.setLicenceNo(updatedAgent.getLicenceNo());
+	    existingAgent.setTaxApplicable(updatedAgent.getTaxApplicable());
+	    existingAgent.setWorkingHours(updatedAgent.getWorkingHours());
+	    existingAgent.setDaily(updatedAgent.getDaily());
+	    existingAgent.setSettlementMode(updatedAgent.getSettlementMode());
+	    existingAgent.setSettlementType(updatedAgent.getSettlementType());
+	    existingAgent.setStatus(updatedAgent.getStatus());
+	    existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
+	    existingAgent.setPerDay(updatedAgent.getPerDay());
+	    existingAgent.setPerMonth(updatedAgent.getPerMonth());
+	    existingAgent.setModifiedBy(modifiedBy);
+	    existingAgent.setModifiedOn(LocalDateTime.now());
+	    existingAgent.setDisabledBy(updatedAgent.getDisabledBy());
+	    existingAgent.setDisabledOn(updatedAgent.getDisabledOn());
+	    existingAgent.setRemarks(updatedAgent.getRemarks());
+	    existingAgent.setStatusFlag(updatedAgent.getStatusFlag());
+	    existingAgent.setIsValid(updatedAgent.getIsValid());
+	    existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
+	    existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());
+	    existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
+	    existingAgent.setOutletCode(updatedAgent.getOutletCode());
+	    existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
 
-	        // Add other fields as needed
-
-	        // Save and return the updated agent
-	        return agentRepositories.save(existingAgent);
-	    } else {
-	        throw new IllegalArgumentException("Agent with id " + id + " does not exist.");
-	    }
+	    // Save the updated agent
+	    agentRepositories.save(existingAgent);
 	}
-
-
-//	@Override
-//	public Agent updateAgent(Long id, Agent updatedAgent) {
-//	    Optional<Agent> existingAgentOptional = agentRepositories.findById(id);
-//	    if (existingAgentOptional.isPresent()) {
-//	        Agent existingAgent = existingAgentOptional.get();
-//
-//	        // Update the fields of the existing agent with the new data
-//	        existingAgent.setCountries(updatedAgent.getCountries());
-//	        existingAgent.setCurrencies(updatedAgent.getCurrencies());
-//	        existingAgent.setAgentName(updatedAgent.getAgentName());
-//	        existingAgent.setAgentDisplayName(updatedAgent.getAgentDisplayName());
-//	        existingAgent.setAddress1(updatedAgent.getAddress1());
-//	        existingAgent.setAddress2(updatedAgent.getAddress2());
-//	        existingAgent.setAddress3(updatedAgent.getAddress3());
-//	        existingAgent.setCity(updatedAgent.getCity());
-//	        existingAgent.setState(updatedAgent.getState());
-//	        existingAgent.setZip(updatedAgent.getZip());
-//	        existingAgent.setTimeZone(updatedAgent.getTimeZone());
-//	        existingAgent.setEmail(updatedAgent.getEmail());
-//	        existingAgent.setMobile(updatedAgent.getMobile());
-//	        existingAgent.setPhone(updatedAgent.getPhone());
-//	        existingAgent.setContactPerson(updatedAgent.getContactPerson());
-//	        existingAgent.setMisEmailId(updatedAgent.getMisEmailId());
-//	        existingAgent.setTaxIdentificationNumber(updatedAgent.getTaxIdentificationNumber());
-//	        existingAgent.setLicenceNo(updatedAgent.getLicenceNo());
-//	        existingAgent.setTaxApplicable(updatedAgent.getTaxApplicable());
-//	        existingAgent.setWorkingHours(updatedAgent.getWorkingHours());
-//	        existingAgent.setDaily(updatedAgent.getDaily());
-//	        existingAgent.setSettlementMode(updatedAgent.getSettlementMode());
-//	        existingAgent.setSettlementType(updatedAgent.getSettlementType());
-//	        existingAgent.setStatus(updatedAgent.getStatus());
-//	        existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
-//	        existingAgent.setPerDay(updatedAgent.getPerDay());
-//	        existingAgent.setPerMonth(updatedAgent.getPerMonth());
-//	        existingAgent.setModifiedBy(updatedAgent.getModifiedBy());
-//	        existingAgent.setModifiedOn(LocalDateTime.now());
-//	        existingAgent.setDisabledBy(updatedAgent.getDisabledBy());
-//	        existingAgent.setDisabledOn(updatedAgent.getDisabledOn());
-//	        existingAgent.setRemarks(updatedAgent.getRemarks());
-//	        existingAgent.setStatusFlag(updatedAgent.getStatusFlag());
-//	        existingAgent.setIsValid(updatedAgent.getIsValid());
-//	        existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
-//	        existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());
-//	        existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
-//	        existingAgent.setUsername(updatedAgent.getUsername());
-//	        existingAgent.setOutletCode(updatedAgent.getOutletCode());
-//	        existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
-//
-//	        // Save the updated agent
-//	        return agentRepositories.save(existingAgent);
-////	    } else {
-//	        throw new EntityNotFoundException("Agent not found with ID: " + id);
-//	    }
-//	}
-
 }

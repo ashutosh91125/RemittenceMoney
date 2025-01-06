@@ -165,11 +165,7 @@
 </style>
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
-
 function updateAgent() {
-	/* if(!validation($("#agentForm")))  {
-        return false;  
-    } */
     const formData = $("#agentForm").serialize(); // Serialize form data for submission
     const id = $('#id').val();
     $('#loader').show();
@@ -236,7 +232,26 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
         });
     }
 });
-});		
+});
+function toggleRemarks() {
+    let status = document.getElementById('statusFlag').value;
+    console.log(status);
+    let remarksSection = document.getElementById('remarksSection');
+
+    if (status === 'true') {
+        remarksSection.style.display = 'block';
+    } else {
+        
+        remarksSection.style.display = 'none';
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Page Loaded");
+    toggleRemarks(); 
+});
+
 </script>
 </head>
 
@@ -304,7 +319,7 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 		<form:form id="agentForm" modelAttribute="agents"
 			onsubmit="event.preventDefault(); updateAgent();">
 			<form:hidden path="isValid" value="true" />
-			<form:hidden path="id" value="" id="id"/>
+			<form:hidden path="id" value="" id="id" />
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -566,40 +581,40 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													</div>
 												</div>
 												<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Branch Location Id<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="branchLocationId" type="number"
-														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" />
-													<span id="branchLocationIdError" class="text-danger1"></span>
+													<div class="mb-4">
+														<label class="form-label">Branch Location Id<span
+															class="text-danger">*</span>
+														</label>
+														<form:input path="branchLocationId" type="number"
+															class="form-control" id="branchLocationId"
+															placeholder="Branch Location Id" />
+														<span id="branchLocationIdError" class="text-danger1"></span>
+													</div>
 												</div>
-											</div>
 											</div>
 										</div>
 										<div class="row">
-										<div class="col-xl-4">
+											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Outlet Code<span
 														class="text-danger">*</span></label>
 													<form:input path="outletCode" type="text"
-                                                        class="form-control" id="outletCode"
-                                                        placeholder="Outlet Code"  /> 
-                                                    <span id="outletCodeError" class="text-danger1"></span>
+														class="form-control" id="outletCode"
+														placeholder="Outlet Code" />
+													<span id="outletCodeError" class="text-danger1"></span>
 												</div>
 											</div>
-										<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Tax Applicable<span
-															class="text-danger">*</span></label>
-														<form:select path="taxApplicable" class="form-control"
-															data-select2-selector="icon" id="taxApplicable">
-															<form:option value="0">No</form:option>
-															<form:option value="1">Yes</form:option>
-														</form:select>
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Tax Applicable<span
+														class="text-danger">*</span></label>
+													<form:select path="taxApplicable" class="form-control"
+														data-select2-selector="icon" id="taxApplicable">
+														<form:option value="0">No</form:option>
+														<form:option value="1">Yes</form:option>
+													</form:select>
 												</div>
+											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Working Hours<span
@@ -742,158 +757,67 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-<%-- 						<c:if test="${!isUpdate}"> --%>
-					<%-- <div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseSix')">Api
-								Details</button>
+								onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
+								Tails</button>
 						</h2>
-						<div id="panelsStayOpen-collapseSix"
+						<div id="panelsStayOpen-collapseSeven"
 							class="accordion-collapse collapse">
 							<div class="accordion-body" style="background: aliceblue;">
 								<div class="card-body personal-info">
 									<div class="main-content">
 										<div class="card-body pass-security">
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Grant_Type<span
-															class="text-danger">*</span></label>
-														<form:input path="grantType" type="text"
-															class="form-control" id="grantType"
-															placeholder="Grant Type" />
-														<span id="grantTypeError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Scope<span
-															class="text-danger">*</span></label>
-														<form:input path="scope" type="text" class="form-control"
-															id="scope" placeholder="Scope" />
-														<span id="scopeError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Client_Id<span
-															class="text-danger">*</span></label>
-														<form:input path="clientId" type="text"
-															class="form-control" id="clientId"
-															placeholder="Client Id" />
-														<span id="clientIdError" class="text-danger1"></span>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Client_Secret<span
-															class="text-danger">*</span></label>
-														<form:input path="clientSecret" type="text"
-															class="form-control" id="clientSecret"
-															placeholder="Client Secret" />
-														<span id="clientSecretError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Username<span
-															class="text-danger">*</span></label>
-														<form:input path="username" type="text"
-															class="form-control" id="adminUserName"
-															placeholder="Set Username" />
-														<span id="adminUserNameError" class="text-danger1"></span>
-													</div>
-												</div>
-											
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Password<span
-															class="text-danger">*</span></label>
-														<form:input path="password" type="password"
-															class="form-control" id="adminPassword"
-															placeholder="Set Password" />
-														<span id="adminPasswordError" class="text-danger1"></span>
-													</div>
-												</div>
-												
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div> --%>
-					</div>
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${isUpdate}"> --%>
-					 <div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
-							Tails</button>
-					</h2>
-					<div id="panelsStayOpen-collapseSeven"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-									<div class="row">
+											<%-- <div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Created By<span
 														class="text-danger">*</span></label>
-													<form:input path="createdBy" type="text" class="form-control"
-														id="createdBy" placeholder="Created By" />
+													<form:input path="createdBy" type="text"
+														class="form-control" id="createdBy"
+														placeholder="Created By" readonly="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Created On<span
 														class="text-danger">*</span></label>
-													<form:input path="createdOn" type="text" class="form-control"
-														id="createdOn" placeholder="Created On" />
+													<form:input path="createdOn" type="text"
+														class="form-control" id="createdOn"
+														placeholder="Created On" readonly="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Modified By<span
 														class="text-danger">*</span></label>
-													<form:input path="modifiedBy" type="text" class="form-control"
-														id="modifiedBy" placeholder="Modified By" />
+													<form:input path="modifiedBy" type="text"
+														class="form-control" id="modifiedBy"
+														placeholder="Modified By" readonly="true"/>
 												</div>
 											</div>
-										</div>
-										<div class="row">
-										<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Modified On<span
-														class="text-danger">*</span></label>
-													<form:input path="modifiedOn" type="text" class="form-control"
-														id="modifiedOn" placeholder="Modified On" />
-												</div>
-											</div> --%>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Remarks<span
-														class="text-danger">*</span></label>
-													<form:input path="remarks" type="text" class="form-control"
-														id="remarks" placeholder="Remarks" />
-												</div>
-											</div>
+										</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Status <span
 														class="text-danger">*</span></label>
 													<form:select path="statusFlag" class="form-control"
-														data-select2-selector="icon" id="statusFlag">
+														data-select2-selector="icon" id="statusFlag"
+														onchange="toggleRemarks()">
 														<form:option value="false">Inactive</form:option>
 														<form:option value="true">Active</form:option>
 													</form:select>
+												</div>
+											</div>
+
+											<div class="col-xl-4" id="remarksSection">
+												<div class="mb-4">
+													<label class="form-label">Remarks <span
+														class="text-danger">*</span></label>
+													<form:input path="remarks" type="text" class="form-control"
+														id="remarks" placeholder="Remarks" />
 												</div>
 											</div>
 										</div>
@@ -902,8 +826,6 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-				</div> 
-<%-- 				</c:if> --%>
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">

@@ -58,7 +58,7 @@ public class ExternalServiceImpl implements ExternalService {
         headers.set("Content-Type", "application/json");
         headers.set("sender", byAgentId.getAgentName());
         headers.set("channel", "Direct");
-        headers.set("company", staffDetails.get().getAgent());
+        headers.set("company", byAgentId.getAgentId());
         headers.set("branch", byAgentId.getBranchLocationId());
         headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
         return headers;

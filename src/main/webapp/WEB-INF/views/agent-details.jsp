@@ -299,11 +299,11 @@ $(document).ready(function () {
 
 		<%-- 			<jsp:include page="customersearch.jsp"></jsp:include> --%>
 
-		 <div class="spinner-container" id="loader">
+		<div class="spinner-container" id="loader">
 			<div class="spinner-border text-primary" role="status">
 				<span class="visually-hidden">Loading...</span>
 			</div>
-		</div> 
+		</div>
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
@@ -311,9 +311,10 @@ $(document).ready(function () {
 			crossorigin="anonymous"></script>
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-		<form:form id="agentForm" modelAttribute="agent" onsubmit="event.preventDefault(); updateAgent();">
+		<form:form id="agentForm" modelAttribute="agent"
+			onsubmit="event.preventDefault(); updateAgent();">
 			<form:hidden path="isValid" value="true" />
-			<form:hidden path="id" value="" id="id"/>
+			<form:hidden path="id" value="" id="id" />
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -328,49 +329,52 @@ $(document).ready(function () {
 							style="background: aliceblue; margin-top: -40px;">
 							<div class="main-content">
 								<div class="row">
-								    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Agent Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="agentName" type="text"
-                                                class="form-control" id="agentName"
-                                                placeholder="Agent Name" readonly="true" required='true' />
-                                            <span id="agentNameError" class="text-danger"></span>
-                                        </div>
-                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Agent Name<span
+												class="text-danger">*</span></label>
+											<form:input path="agentName" type="text" class="form-control"
+												id="agentName" placeholder="Agent Name" readonly="true"
+												required='true' />
+											<span id="agentNameError" class="text-danger"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Country<span
-												class="text-danger">*</span></label>
-											<input value="${agent.countries }" class="form-control" id="countries" readonly="true" required='true' />
-											<span id="countriesError" class="text-danger"></span>
+												class="text-danger">*</span></label> <input
+												value="${agent.countries }" class="form-control"
+												id="countries" readonly="true" required='true' /> <span
+												id="countriesError" class="text-danger"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Country Currency<span
-												class="text-danger">*</span></label>
-											<input value="${agent.currencies}" id="currencies"
-												class="form-control"  readonly="true" required='true' />
-											<span id="currenciesError" class="text-danger"></span>
+												class="text-danger">*</span></label> <input
+												value="${agent.currencies}" id="currencies"
+												class="form-control" readonly="true" required='true' /> <span
+												id="currenciesError" class="text-danger"></span>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-                                    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">State</label>
-                                            <input value="${agent.state}" id="state" class="form-control"  readonly="true" required='true' />   
-                                            <span id="stateError" class="text-danger"></span>
-                                        </div>
-                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">State</label> <input
+												value="${agent.state}" id="state" class="form-control"
+												readonly="true" required='true' /> <span id="stateError"
+												class="text-danger"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Agent Display Name<span
 												class="text-danger">*</span></label>
 											<form:input path="agentDisplayName" type="text"
 												class="form-control" id="agentDisplayName"
-												placeholder="Agent Display Name" readonly="true" required='true' />
+												placeholder="Agent Display Name" readonly="true"
+												required='true' />
 											<span id="agentDisplayNameError" class="text-danger"></span>
 										</div>
 									</div>
@@ -379,7 +383,8 @@ $(document).ready(function () {
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" readonly="true" required='true' />
+												id="address1" placeholder="Address1" readonly="true"
+												required='true' />
 											<span id="address1Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -390,7 +395,8 @@ $(document).ready(function () {
 											<label class="form-label">Address 2<span
 												class="text-danger">*</span></label>
 											<form:input path="address2" type="text" class="form-control"
-												id="address2" placeholder="Address2" readonly="true" required='true'/>
+												id="address2" placeholder="Address2" readonly="true"
+												required='true' />
 											<span id="address2Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -398,7 +404,8 @@ $(document).ready(function () {
 										<div class="mb-4">
 											<label class="form-label">Address 3</label>
 											<form:input path="address3" type="text" class="form-control"
-												id="address3" placeholder="Address3" readonly="true" required='true'/>
+												id="address3" placeholder="Address3" readonly="true"
+												required='true' />
 											<span id="address3Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -418,16 +425,18 @@ $(document).ready(function () {
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" readonly="true" required='true' />
+												id="zip" placeholder="Zip/PoBox" readonly="true"
+												required='true' />
 											<span id="zipError" class="text-danger"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
-												class="text-danger">*</span></label>
-											<input value="${agent.timeZone }" class="form-control" readonly="true" required='true' id="timeZone"/>
-											<span id="timeZoneError" class="text-danger"></span>
+												class="text-danger">*</span></label> <input
+												value="${agent.timeZone }" class="form-control"
+												readonly="true" required='true' id="timeZone" /> <span
+												id="timeZoneError" class="text-danger"></span>
 										</div>
 									</div>
 								</div>
@@ -457,7 +466,8 @@ $(document).ready(function () {
 													<label class="form-label">Email<span
 														class="text-danger">*</span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" readonly="true" required='true' />
+														id="email" placeholder="Email" readonly="true"
+														required='true' />
 													<span id="emailError" class="text-danger"></span>
 												</div>
 											</div>
@@ -465,7 +475,8 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Mobile</label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" readonly="true" required='true' />
+														id="mobile" placeholder="Mobile" readonly="true"
+														required='true' />
 													<span id="mobileError" class="text-danger"></span>
 
 												</div>
@@ -475,7 +486,8 @@ $(document).ready(function () {
 													<label class="form-label">Phone<span
 														class="text-danger">*</span></label>
 													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone" readonly="true" required='true' />
+														id="phone" placeholder="Phone" readonly="true"
+														required='true' />
 													<span id="phoneError" class="text-danger"></span>
 												</div>
 											</div>
@@ -489,7 +501,8 @@ $(document).ready(function () {
 														class="text-danger">*</span></label>
 													<form:input path="contactPerson" type="tel"
 														class="form-control" id="contactPerson"
-														placeholder="Contact Person" readonly="true" required='true' />
+														placeholder="Contact Person" readonly="true"
+														required='true' />
 													<span id="contactPersonError" class="text-danger"></span>
 												</div>
 											</div>
@@ -533,7 +546,8 @@ $(document).ready(function () {
 													</label>
 													<form:input path="taxIdentificationNumber" type="text"
 														class="form-control" id="taxIdentificationNumber"
-														placeholder="Tax Identification Number" readonly="true" required='true' />
+														placeholder="Tax Identification Number" readonly="true"
+														required='true' />
 													<span id="taxIdentificationNumberError" class="text-danger"></span>
 												</div>
 											</div>
@@ -551,7 +565,8 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Tax Applicable<span
 														class="text-danger">*</span></label>
-													<form:input path="taxApplicable" class="form-control" id="taxApplicable" readonly="true" required='true'/>
+													<form:input path="taxApplicable" class="form-control"
+														id="taxApplicable" readonly="true" required='true' />
 												</div>
 											</div>
 										</div>
@@ -561,7 +576,8 @@ $(document).ready(function () {
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span
 													class="text-danger">*</span></label>
-												<form:input path="workingHours" class="form-control"  id="working" readonly="true" required='true'/>
+												<form:input path="workingHours" class="form-control"
+													id="working" readonly="true" required='true' />
 												<span id="workingError" class="text-danger"></span>
 											</div>
 										</div>
@@ -591,7 +607,8 @@ $(document).ready(function () {
 													<label class="form-label">Daily<span
 														class="text-danger">*</span></label>
 													<form:input path="daily" type="number" class="form-control"
-														id="daily" placeholder="Daily" readonly="true" required='true' />
+														id="daily" placeholder="Daily" readonly="true"
+														required='true' />
 													<span id="dailyError" class="text-danger"></span>
 												</div>
 											</div>
@@ -599,15 +616,17 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Settlement Mode<span
 														class="text-danger">*</span></label>
-													    <form:input path="settlementMode" class="form-control"  id="settlementMode" readonly="true" required='true'/>
-													    <span id="settlementModeError" class="text-danger"></span>
+													<form:input path="settlementMode" class="form-control"
+														id="settlementMode" readonly="true" required='true' />
+													<span id="settlementModeError" class="text-danger"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Settlement Type<span
-														class="text-danger">*</span></label>	
-												    <form:input path="settlementType" class="form-control"  id="settlementType" readonly="true" required='true'/>
+														class="text-danger">*</span></label>
+													<form:input path="settlementType" class="form-control"
+														id="settlementType" readonly="true" required='true' />
 													<span id="settlementTypeError" class="text-danger"></span>
 												</div>
 											</div>
@@ -617,7 +636,8 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Status<span
 														class="text-danger">*</span></label>
-													<form:input path="status" class="form-control"  id="status" readonly="true" required='true'/>
+													<form:input path="status" class="form-control" id="status"
+														readonly="true" required='true' />
 												</div>
 											</div>
 										</div>
@@ -647,7 +667,8 @@ $(document).ready(function () {
 														class="text-danger">*</span></label>
 													<form:input path="perTransactionLimit" type="number"
 														class="form-control" id="perTransactionLimit"
-														placeholder="Per Transaction" readonly="true" required='true' />
+														placeholder="Per Transaction" readonly="true"
+														required='true' />
 													<span id="perTransactionLimitError" class="text-danger"></span>
 												</div>
 											</div>
@@ -669,6 +690,80 @@ $(document).ready(function () {
 														class="form-control" id="perMonthLimit"
 														placeholder="Per Month" readonly="true" required='true' />
 													<span id="perTransactionLimitError" class="text-danger"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
+							Tails</button>
+					</h2>
+					<div id="panelsStayOpen-collapseSeven"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created By<span
+														class="text-danger">*</span></label>
+													<form:input path="createdBy" type="text"
+														class="form-control" id="createdBy"
+														placeholder="Created By" readonly="true" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created On<span
+														class="text-danger">*</span></label>
+													<form:input path="createdOn" type="text"
+														class="form-control" id="createdOn"
+														placeholder="Created On" readonly="true" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified By<span
+														class="text-danger">*</span></label>
+													<form:input path="modifiedBy" type="text"
+														class="form-control" id="modifiedBy"
+														placeholder="Modified By" readonly="true"/>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											 <div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified On<span
+														class="text-danger">*</span></label>
+													<form:input path="modifiedOn" type="text" class="form-control"
+														id="modifiedOn" placeholder="Modified On" readonly="true"/>
+												</div>
+											</div> 
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Remarks<span
+														class="text-danger">*</span></label>
+													<form:input path="remarks" type="text" class="form-control"
+														id="remarks" placeholder="Remarks" readonly="true"/>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Status <span
+														class="text-danger">*</span></label>
+													<form:input path="statusFlag" class="form-control"
+														id="statusFlag" readonly="true" placeholder="Status"/>
 												</div>
 											</div>
 										</div>

@@ -84,8 +84,8 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setPerMonth(updatedAgent.getPerMonth());
 	    existingAgent.setModifiedBy(modifiedBy);
 	    existingAgent.setModifiedOn(LocalDateTime.now());
-	    existingAgent.setDisabledBy(updatedAgent.getDisabledBy());
-	    existingAgent.setDisabledOn(updatedAgent.getDisabledOn());
+	    existingAgent.setDisabledBy(modifiedBy);
+	    existingAgent.setDisabledOn(LocalDateTime.now());
 	    existingAgent.setRemarks(updatedAgent.getRemarks());
 	    existingAgent.setStatusFlag(updatedAgent.getStatusFlag());
 	    existingAgent.setIsValid(updatedAgent.getIsValid());

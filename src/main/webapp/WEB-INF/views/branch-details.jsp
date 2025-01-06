@@ -576,6 +576,80 @@
 						</div>
 					</div>
 				</div>
+					<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
+							Tails</button>
+					</h2>
+					<div id="panelsStayOpen-collapseSeven"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created By<span
+														class="text-danger">*</span></label>
+													<form:input path="createdBy" type="text"
+														class="form-control" id="createdBy"
+														placeholder="Created By" readonly="true" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created On<span
+														class="text-danger">*</span></label>
+													<form:input path="createdOn" type="text"
+														class="form-control" id="createdOn"
+														placeholder="Created On" readonly="true" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified By<span
+														class="text-danger">*</span></label>
+													<form:input path="modifiedBy" type="text"
+														class="form-control" id="modifiedBy"
+														placeholder="Modified By" readonly="true"/>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											 <div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified On<span
+														class="text-danger">*</span></label>
+													<form:input path="modifiedOn" type="text" class="form-control"
+														id="modifiedOn" placeholder="Modified On" readonly="true"/>
+												</div>
+											</div> 
+											 <div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Remarks<span
+														class="text-danger">*</span></label>
+													<form:input path="remarks" type="text" class="form-control"
+														id="remarks" placeholder="Remarks" readonly="true"/>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Status <span
+														class="text-danger">*</span></label>
+													<form:input path="status" class="form-control"
+														id="statusFlag" readonly="true" placeholder="Status"/>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 			<div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
@@ -586,11 +660,6 @@
 	</div>
 
 
-
-
-	<!--! ================================================================ !-->
-	<!--! [End] Theme Customizer !-->
-	<!--! ================================================================ !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
 	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/select2.min.js"></script>

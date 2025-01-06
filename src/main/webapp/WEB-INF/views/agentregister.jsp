@@ -198,6 +198,7 @@ function toggleDiv(divId) {
 const element = document.getElementById(divId);
 element.classList.toggle("show");
 }
+
 $(document).ready(function() {
 $('#countries').on('change', function() {
     let countryDependent = $(this).val();
@@ -237,7 +238,37 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
         });
     }
 });
-});		
+});	
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("Page Loaded");
+
+    const adminPassword = document.getElementById("adminPassword");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const validationMessage = document.getElementById("validationMessage");
+
+
+    function validateRealTime() {
+        const adminPasswordValue = adminPassword.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+        if (confirmPasswordValue === "") {
+            validationMessage.textContent = "";
+            return;
+        }
+
+        if (adminPasswordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red";
+        } else {
+            validationMessage.textContent = "Passwords match.";
+            validationMessage.style.color = "green";
+        }
+    }
+
+    adminPassword.addEventListener("input", validateRealTime);
+    confirmPassword.addEventListener("input", validateRealTime);
+});
+
 </script>
 </head>
 
@@ -566,40 +597,40 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													</div>
 												</div>
 												<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Branch Location Id<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="branchLocationId" type="number"
-														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" />
-													<span id="branchLocationIdError" class="text-danger1"></span>
+													<div class="mb-4">
+														<label class="form-label">Branch Location Id<span
+															class="text-danger">*</span>
+														</label>
+														<form:input path="branchLocationId" type="number"
+															class="form-control" id="branchLocationId"
+															placeholder="Branch Location Id" />
+														<span id="branchLocationIdError" class="text-danger1"></span>
+													</div>
 												</div>
-											</div>
 											</div>
 										</div>
 										<div class="row">
-										<div class="col-xl-4">
+											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Outlet Code<span
 														class="text-danger">*</span></label>
 													<form:input path="outletCode" type="text"
-                                                        class="form-control" id="outletCode"
-                                                        placeholder="Outlet Code"  /> 
-                                                    <span id="outletCodeError" class="text-danger1"></span>
+														class="form-control" id="outletCode"
+														placeholder="Outlet Code" />
+													<span id="outletCodeError" class="text-danger1"></span>
 												</div>
 											</div>
-										<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Tax Applicable<span
-															class="text-danger">*</span></label>
-														<form:select path="taxApplicable" class="form-control"
-															data-select2-selector="icon" id="taxApplicable">
-															<form:option value="0">No</form:option>
-															<form:option value="1">Yes</form:option>
-														</form:select>
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Tax Applicable<span
+														class="text-danger">*</span></label>
+													<form:select path="taxApplicable" class="form-control"
+														data-select2-selector="icon" id="taxApplicable">
+														<form:option value="0">No</form:option>
+														<form:option value="1">Yes</form:option>
+													</form:select>
 												</div>
+											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Working Hours<span
@@ -803,13 +834,55 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 													<div class="mb-4">
 														<label class="form-label">Username<span
 															class="text-danger">*</span></label>
+														 <form:input path="apiUsername" type="text"
+															class="form-control" id="adminUserName"
+															placeholder="Set Username" /> 
+														<span id="adminUserNameError" class="text-danger1"></span>
+													</div>
+												</div>
+
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Password<span
+															class="text-danger">*</span></label>
+														 <form:input path="apiPassword" type="password"
+															class="form-control" id="adminPassword"
+															placeholder="Set Password" /> 
+														<span id="adminPasswordError" class="text-danger1"></span>
+													</div>
+												</div>
+
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseSeven')">Login
+								Credentials</button>
+						</h2>
+						<div id="panelsStayOpen-collapseSeven"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Username<span
+															class="text-danger">*</span></label>
 														<form:input path="username" type="text"
 															class="form-control" id="adminUserName"
 															placeholder="Set Username" />
 														<span id="adminUserNameError" class="text-danger1"></span>
 													</div>
 												</div>
-											
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Password<span
@@ -820,7 +893,16 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 														<span id="adminPasswordError" class="text-danger1"></span>
 													</div>
 												</div>
-												
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Confirm_Password<span
+															class="text-danger">*</span></label>
+														 <input name="confirmPassword" type="password"
+															class="form-control" id="confirmPassword"
+															placeholder="Confirm_Password" /> 
+													</div>
+													<span id="validationMessage"></span>
+												</div>
 											</div>
 										</div>
 									</div>
@@ -829,7 +911,8 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 						</div>
 					</div>
 
-				<%-- 	 <div class="accordion-item" style="background: aliceblue;">
+
+					<%-- 	 <div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -902,12 +985,12 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 							</div>
 						</div>
 					</div>
-				</div> --%> 
+				</div> --%>
 
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
-				</div>
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
+						<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+					</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

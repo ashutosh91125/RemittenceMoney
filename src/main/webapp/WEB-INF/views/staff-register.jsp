@@ -168,7 +168,7 @@
 		if (!validation($("#staffForm"))) {
 			return false;
 		}
-		const formData = $("#staffForm").serialize(); // Serialize form data for submission
+		const formData = $("#staffForm").serialize(); 
 		$('#loader').show();
 		$('#submitButton').prop('disabled', true);
 		$.ajax({
@@ -193,6 +193,37 @@
 		const element = document.getElementById(divId);
 		element.classList.toggle("show");
 	}
+	
+	document.addEventListener('DOMContentLoaded', function () {
+	    console.log("Page Loaded");
+
+	    const password = document.getElementById("password");
+	    const confirmPassword = document.getElementById("confirmPassword");
+	    const validationMessage = document.getElementById("validationMessage");
+
+
+	    function validateRealTime() {
+	        const passwordValue = password.value.trim();
+	        const confirmPasswordValue = confirmPassword.value.trim();
+
+	        if (confirmPasswordValue === "") {
+	            validationMessage.textContent = "";
+	            return;
+	        }
+
+	        if (passwordValue !== passwordValue) {
+	            validationMessage.textContent = "Passwords do not match!";
+	            validationMessage.style.color = "red";
+	        } else {
+	            validationMessage.textContent = "Passwords match.";
+	            validationMessage.style.color = "green";
+	        }
+	    }
+
+	    password.addEventListener("input", validateRealTime);
+	    confirmPassword.addEventListener("input", validateRealTime);
+	});
+
 </script>
 </head>
 
@@ -350,6 +381,16 @@
 											<span id="passwordError" class="text-danger1"></span>
 										</div>
 									</div>
+								<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Confirm_Password<span
+												class="text-danger">*</span></label>
+												<input name="confirmPassword" type="password"
+													class="form-control" id="confirmPassword"
+													placeholder="Confirm_Password" /> 
+												</div>
+												<span id="validationMessage"></span>
+										</div>
 								</div>
 							</div>
 						</div>

@@ -11,7 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.repository.UserRepository;
@@ -47,15 +50,21 @@ public class BranchDetailsController {
     private AgentRepositories agentRepositories;
 
     @GetMapping("/branch")
-    public String branchRegister(Model model) {
+    public String branchRegister(@RequestParam(value="branchId", required =  false)Long id ,Model model) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Optional<User> byUsername = userRepository.findByUsername(username);
 
         String country = byUsername.get().getCountry();
-        model.addAttribute("branch", new BranchDetails());
-
+        if(id != null) {
+        	Optional<BranchDetails> existingBranch = branchDetailsService.getById(id);
+        	model.addAttribute("branch",existingBranch.get());
+        	model.addAttribute("isUpdate", true);
+        }
+        else {
+        	model.addAttribute("branch", new BranchDetails());
+        }
         try {
             List<EnumValue> nativeRegionEntity = enumEntityService.getDataByDependent(country);
             model.addAttribute("stateList", nativeRegionEntity);
@@ -121,12 +130,16 @@ public class BranchDetailsController {
     public String getAdminDetails(@RequestParam("id") Long id,Model model) {
     	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
     	if(branchDetails.isPresent()) {
-    		Agent agents = agentService.getByAgentId(branchDetails.get().getAgent());
-    		model.addAttribute("agent", agents.getAgentName());
-    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",branchDetails.get().getState()));
     		model.addAttribute("branch", branchDetails);
     	}
     	
     	return "branch-details";
     }
+    
+    @PostMapping("/view-branch-update")
+ 	public String submitViewForm(@ModelAttribute("branch") BranchDetails branch, RedirectAttributes redirectAttributes) {
+ 	    Long branchId = Long.valueOf(branch.getId());
+// 	    redirectAttributes.addFlashAttribute(branch);
+ 	    return "redirect:/branch?branchId=" + branchId;
+ 	}
 }  

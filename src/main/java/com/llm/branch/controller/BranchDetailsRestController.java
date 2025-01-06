@@ -39,6 +39,7 @@ public class BranchDetailsRestController {
             branchDetails.setCreatedBy(username);
             branchDetails.setCreatedOn(LocalDateTime.now());
             branchDetailsService.createBranch(branchDetails);
+            branchDetails.setStatus(true);
 
             return new ResponseEntity<>("Branch create successfully!", HttpStatus.CREATED);
         } catch (Exception e) {
@@ -61,5 +62,36 @@ public class BranchDetailsRestController {
         }
 
     }
+    
+    @PutMapping("/{branchId}")
+    public ResponseEntity<String> updateBranch(@PathVariable("branchId") Long branchId, @ModelAttribute BranchDetails branchDetails) {
+        log.info(branchDetails.toString());
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        try {
+            Optional<User> byUsername = userRepository.findByUsername(username);
+
+            if (!byUsername.isPresent()) {
+                return new ResponseEntity<>("User not found!", HttpStatus.NOT_FOUND);
+            }
+
+            boolean updated = branchDetailsService.updateBranch(branchId, branchDetails, byUsername.get(), username);
+            
+            if (updated) {
+                return new ResponseEntity<>("Branch updated successfully!", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Branch not found!", HttpStatus.NOT_FOUND);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Failed to update branch!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+
 
 }

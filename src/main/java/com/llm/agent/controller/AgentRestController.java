@@ -85,7 +85,7 @@ public class AgentRestController {
 //			agent.setDisabledBy(agentDTO.getDisabledBy());
 //			agent.setDisabledOn(agentDTO.getDisabledOn());
 //			agent.setRemarks(agentDTO.getRemarks());
-			agent.setStatusFlag(agentDTO.getStatusFlag());
+			agent.setStatusFlag(true);
 			agent.setIsValid(agentDTO.getIsValid());
 			agent.setPerTransactionLimit(agentDTO.getPerTransactionLimit());
 			agent.setPerDayLimit(agentDTO.getPerDayLimit());

@@ -203,24 +203,22 @@ element.classList.toggle("show");
 }
 
 function toggleRemarks() {
+    
     let status = document.getElementById('statusFlag').value;
-    console.log(status);
+    console.log(status); 
+    
     let remarksSection = document.getElementById('remarksSection');
-
-    if (status === 'true') {
+    if (status === 'false') {
         remarksSection.style.display = 'block';
     } else {
-        
         remarksSection.style.display = 'none';
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
-    toggleRemarks(); 
+    toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
-
 
 </script>
 </head>
@@ -656,7 +654,7 @@ document.addEventListener('DOMContentLoaded', function() {
 												</div>
 											</div>
 
-											<div class="col-xl-4" id="remarksSection">
+											<div class="col-xl-4" id="remarksSection" style="display:none">
 												<div class="mb-4">
 													<label class="form-label">Remarks <span
 														class="text-danger">*</span></label>

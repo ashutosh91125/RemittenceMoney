@@ -30,42 +30,37 @@
 
 <script type="text/javascript">
 document.addEventListener('DOMContentLoaded', function() {
-	document.getElementById('password').addEventListener('input', function(event) {
-						const password = event.target.value;
-						const errorDiv = document
-								.getElementById('password-error');
-						const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+    const form = document.querySelector('form');
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const validationMessage = document.getElementById("validationMessage");
 
-						if (!passwordPattern.test(password)) {
-							errorDiv.style.display = 'block';
-						} else {
-							errorDiv.style.display = 'none';
-						}
-					});
-		const password = document.getElementById("password");
-	    const confirmPassword = document.getElementById("confirmPassword");
-	    const validationMessage = document.getElementById("validationMessage");
-	    function validateRealTime() {
-	        const passwordValue = password.value.trim();
-	        const confirmPasswordValue = confirmPassword.value.trim();
+    function validatePasswords() {
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
 
-	        if (confirmPasswordValue === "") {
-	            validationMessage.textContent = "";
-	            return;
-	        }
+        if (passwordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red";
+            return false;
+        } else {
+            validationMessage.textContent = "Passwords match.";
+            validationMessage.style.color = "green";
+            return true;
+        }
+    }
 
-	        if (passwordValue !== confirmPasswordValue) {
-	            validationMessage.textContent = "Passwords do not match!";
-	            validationMessage.style.color = "red";
-	        } else {
-	            validationMessage.textContent = "Passwords match.";
-	            validationMessage.style.color = "green";
-	        }
-	    }
+    form.addEventListener('submit', function(event) {
+        if (!validatePasswords()) {
+            event.preventDefault(); // Prevent form submission if passwords don't match
+        }
+    });
 
-	    password.addEventListener("input", validateRealTime);
-	    confirmPassword.addEventListener("input", validateRealTime);
-});	
+    // Real-time password validation
+    password.addEventListener("input", validatePasswords);
+    confirmPassword.addEventListener("input", validatePasswords);
+});
+	
 </script>
 </head>
 <body>

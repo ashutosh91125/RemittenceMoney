@@ -35,12 +35,24 @@
 	    const validationMessage = document.getElementById("validationMessage");
 	    const submitButton = document.querySelector("button[type='submit']");
 	    const passwordError = document.getElementById("password-error");
- 
-	   
+
+	    // Regular expression to check the password validity
+	    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+
 	    function validateRealTime() {
 	        const passwordValue = password.value.trim();
 	        const confirmPasswordValue = confirmPassword.value.trim();
 
+	        // Password validation
+	        if (!passwordPattern.test(passwordValue)) {
+	            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+	            passwordError.style.display = "block";
+	            submitButton.disabled = true;
+	        } else {
+	            passwordError.style.display = "none";
+	        }
+
+	        // Confirm password validation
 	        if (confirmPasswordValue === "") {
 	            validationMessage.textContent = "";
 	            submitButton.disabled = true;
@@ -58,12 +70,10 @@
 	        }
 	    }
 
-	 
 	    password.addEventListener("focus", function () {
 	        passwordError.style.display = "block";
 	    });
 
-	 
 	    password.addEventListener("blur", function () {
 	        if (password.value.trim() === "") {
 	            passwordError.style.display = "none";
@@ -99,7 +109,7 @@
 									placeholder="Username" id="username">
 							</div>
 							<div class="row mb-2">
-								<input name="password" type="password" class="form-control"
+								<input name="password" type="text" class="form-control"
 									placeholder="Password" id="password">
 							</div>
 							<div id="password-error" class="row mb-2"

@@ -18,23 +18,26 @@ public class CustomAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
+        // Authenticate the user first
+        Authentication result = super.authenticate(authentication);
 
+        String username = authentication.getName();
         Optional<User> fetchUser = userRepository.findByUsername(username);
+
         if (fetchUser.isPresent()) {
             User user = fetchUser.get();
 
+            // Check for first login
             if (user.isFirstLogin()) {
                 throw new BadCredentialsException("First login: Password change required.");
             }
 
+            // Check for password expiry
             if (user.getPasswordExpiryDate() != null && user.getPasswordExpiryDate().isBefore(LocalDate.now())) {
                 throw new BadCredentialsException("Password expired: Password change required.");
             }
-        } else {
-            throw new BadCredentialsException("Invalid username or password.");
         }
 
-        return super.authenticate(authentication);
+        return result; // Return authentication result if checks pass
     }
 }

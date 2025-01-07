@@ -28,39 +28,52 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/theme.min.css">
 
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.querySelector('form');
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const validationMessage = document.getElementById("validationMessage");
+<script type="text/javascript"> 
+ document.addEventListener('DOMContentLoaded', function () {
+	    const password = document.getElementById("password");
+	    const confirmPassword = document.getElementById("confirmPassword");
+	    const validationMessage = document.getElementById("validationMessage");
+	    const submitButton = document.querySelector("button[type='submit']");
+	    const passwordError = document.getElementById("password-error");
 
-    function validatePasswords() {
-        const passwordValue = password.value.trim();
-        const confirmPasswordValue = confirmPassword.value.trim();
+	   
+	    function validateRealTime() {
+	        const passwordValue = password.value.trim();
+	        const confirmPasswordValue = confirmPassword.value.trim();
 
-        if (passwordValue !== confirmPasswordValue) {
-            validationMessage.textContent = "Passwords do not match!";
-            validationMessage.style.color = "red";
-            return false;
-        } else {
-            validationMessage.textContent = "Passwords match.";
-            validationMessage.style.color = "green";
-            return true;
-        }
-    }
+	        if (confirmPasswordValue === "") {
+	            validationMessage.textContent = "";
+	            submitButton.disabled = true;
+	            return;
+	        }
 
-    form.addEventListener('submit', function(event) {
-        if (!validatePasswords()) {
-            event.preventDefault(); // Prevent form submission if passwords don't match
-        }
-    });
+	        if (passwordValue !== confirmPasswordValue) {
+	            validationMessage.textContent = "Passwords do not match!";
+	            validationMessage.style.color = "red";
+	            submitButton.disabled = true;
+	        } else {
+	            validationMessage.textContent = "Passwords match.";
+	            validationMessage.style.color = "green";
+	            submitButton.disabled = false;
+	        }
+	    }
 
-    // Real-time password validation
-    password.addEventListener("input", validatePasswords);
-    confirmPassword.addEventListener("input", validatePasswords);
-});
-	
+	 
+	    password.addEventListener("focus", function () {
+	        passwordError.style.display = "block";
+	    });
+
+	 
+	    password.addEventListener("blur", function () {
+	        if (password.value.trim() === "") {
+	            passwordError.style.display = "none";
+	        }
+	    });
+
+	    password.addEventListener("input", validateRealTime);
+	    confirmPassword.addEventListener("input", validateRealTime);
+	});
+
 </script>
 </head>
 <body>

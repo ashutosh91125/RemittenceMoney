@@ -164,66 +164,85 @@
 }
 </style>
 <script>
-	function registerStaff() {
-		if (!validation($("#staffForm"))) {
-			return false;
+function registerStaff() {
+	if (!validation($("#staffForm"))) {
+		return false;
+	}
+	const formData = $("#staffForm").serialize(); 
+	$('#loader').show();
+	$('#submitButton').prop('disabled', true);
+	$.ajax({
+		url : "/api/v1/staff",
+		type : "POST",
+		contentType : "application/x-www-form-urlencoded",
+		data : formData,
+		success : function(response) {
+			$('#loader').hide();
+			$('#submitButton').prop('disabled', false);
+			alert(response);
+		},
+		error : function(xhr) {
+			$('#loader').hide();
+			$('#submitButton').prop('disabled', false);
+			alert("Error: " + xhr.responseText);
 		}
-		const formData = $("#staffForm").serialize(); 
-		$('#loader').show();
-		$('#submitButton').prop('disabled', true);
-		$.ajax({
-			url : "/api/v1/staff",
-			type : "POST",
-			contentType : "application/x-www-form-urlencoded",
-			data : formData,
-			success : function(response) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				alert(response);
-			},
-			error : function(xhr) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				alert("Error: " + xhr.responseText);
-			}
-		});
-	}
-
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-	
-	document.addEventListener('DOMContentLoaded', function () {
-	    console.log("Page Loaded");
-
-	    const password = document.getElementById("password");
-	    const confirmPassword = document.getElementById("confirmPassword");
-	    const validationMessage = document.getElementById("validationMessage");
-
-
-	    function validateRealTime() {
-	        const passwordValue = password.value.trim();
-	        const confirmPasswordValue = confirmPassword.value.trim();
-
-	        if (confirmPasswordValue === "") {
-	            validationMessage.textContent = "";
-	            return;
-	        }
-
-	        if (passwordValue !== passwordValue) {
-	            validationMessage.textContent = "Passwords do not match!";
-	            validationMessage.style.color = "red";
-	        } else {
-	            validationMessage.textContent = "Passwords match.";
-	            validationMessage.style.color = "green";
-	        }
-	    }
-
-	    password.addEventListener("input", validateRealTime);
-	    confirmPassword.addEventListener("input", validateRealTime);
 	});
+}
 
+function toggleDiv(divId) {
+	const element = document.getElementById(divId);
+	element.classList.toggle("show");
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const validationMessage = document.getElementById("validationMessage");
+    const passwordError = document.getElementById("password-error");
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+
+    function validateRealTime() {
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+
+        if (!passwordPattern.test(passwordValue)) {
+            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+            passwordError.style.display = "block";   
+        } else {
+            passwordError.style.display = "none";
+        }
+        if (confirmPasswordValue === "") {
+            validationMessage.textContent = ""; 
+            return;
+        }
+        if (passwordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red"; 
+        } else {
+            if (passwordPattern.test(passwordValue)) {
+                validationMessage.textContent = "Matched password";
+                validationMessage.style.color = "green";
+            } else {
+                validationMessage.textContent = "";
+            }
+        }
+    }
+    password.addEventListener("focus", function () {
+        if (!passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "block";
+        }
+    });
+
+    password.addEventListener("blur", function () {
+        if (password.value.trim() === "" || !passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "none";
+        }
+    });
+
+    password.addEventListener("input", validateRealTime);
+    confirmPassword.addEventListener("input", validateRealTime);
+});	
 </script>
 </head>
 
@@ -308,7 +327,7 @@
 											<label class="form-label">Branch<span
 												class="text-danger">*</span></label>
 											<form:select path="branches" data-select2-selector="tag"
-												id="branches"  title="Select a branch">
+												id="branches" title="Select a branch">
 												<form:options items="${branchList}"
 													itemValue="branchLocationId" itemLabel="branchName" />
 											</form:select>
@@ -378,19 +397,19 @@
 											<form:input path="password" type="password"
 												class="form-control" id="password"
 												placeholder="Set your password" />
+											<span id="password-error" style="color: red; display: none;"></span>
 											<span id="passwordError" class="text-danger1"></span>
 										</div>
 									</div>
-								<div class="col-xl-4">
+									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Confirm_Password<span
-												class="text-danger">*</span></label>
-												<input name="confirmPassword" type="password"
-													class="form-control" id="confirmPassword"
-													placeholder="Confirm_Password" /> 
-												</div>
-												<span id="validationMessage"></span>
+											<label class="form-label">Confirm Password<span
+												class="text-danger">*</span></label> <input name="confirmPassword"
+												type="password" class="form-control" id="confirmPassword"
+												placeholder="Confirm Password" />
 										</div>
+										<span id="validationMessage"></span>
+									</div>
 								</div>
 							</div>
 						</div>

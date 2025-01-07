@@ -35,7 +35,7 @@
 	    const validationMessage = document.getElementById("validationMessage");
 	    const submitButton = document.querySelector("button[type='submit']");
 	    const passwordError = document.getElementById("password-error");
-
+ 
 	   
 	    function validateRealTime() {
 	        const passwordValue = password.value.trim();

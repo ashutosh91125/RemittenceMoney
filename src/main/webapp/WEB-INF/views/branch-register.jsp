@@ -598,6 +598,7 @@ document.addEventListener('DOMContentLoaded', function() {
 						</div>
 					</div>
 				</div>
+				<c:if test="${isUpdate }">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
@@ -640,7 +641,7 @@ document.addEventListener('DOMContentLoaded', function() {
 												</div>
 											</div>
 										</div> --%>
-										<c:if test="${isUpdate }">
+										
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Status <span
@@ -662,13 +663,14 @@ document.addEventListener('DOMContentLoaded', function() {
 														id="remarks" placeholder="Remarks" />
 												</div>
 											</div>
-										</c:if>
+										
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				</c:if>
 			</div>
 			<div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">

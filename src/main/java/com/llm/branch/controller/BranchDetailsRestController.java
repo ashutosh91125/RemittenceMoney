@@ -38,8 +38,8 @@ public class BranchDetailsRestController {
             branchDetails.setCounty(byUsername.get().getCountry());
             branchDetails.setCreatedBy(username);
             branchDetails.setCreatedOn(LocalDateTime.now());
-            branchDetailsService.createBranch(branchDetails);
             branchDetails.setStatus(true);
+            branchDetailsService.createBranch(branchDetails);
 
             return new ResponseEntity<>("Branch create successfully!", HttpStatus.CREATED);
         } catch (Exception e) {

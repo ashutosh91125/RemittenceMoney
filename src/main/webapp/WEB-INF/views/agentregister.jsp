@@ -727,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function () {
 															class="text-danger">*</span></label>
 														<form:select path="creditLimitStatus" class="form-control"
 															data-select2-selector="icon" id="status">
-															<form:option value="" disabled="true" selected="true">Select Status</form:option>
+<%-- 															<form:option value="" disabled="true" selected="true">Select Status</form:option> --%>
 															<form:option value="0">Inactive</form:option>
 															<form:option value="1">Active</form:option>
 														</form:select>

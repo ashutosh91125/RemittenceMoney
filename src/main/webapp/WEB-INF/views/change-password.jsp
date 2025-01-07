@@ -29,60 +29,75 @@
 	href="${pageContext.request.contextPath}/assets/css/theme.min.css">
 
 <script type="text/javascript"> 
- document.addEventListener('DOMContentLoaded', function () {
-	    const password = document.getElementById("password");
-	    const confirmPassword = document.getElementById("confirmPassword");
-	    const validationMessage = document.getElementById("validationMessage");
-	    const submitButton = document.querySelector("button[type='submit']");
-	    const passwordError = document.getElementById("password-error");
+document.addEventListener('DOMContentLoaded', function () {
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const validationMessage = document.getElementById("validationMessage");
+    const submitButton = document.querySelector("button[type='submit']");
+    const passwordError = document.getElementById("password-error");
+    const securedPasswordMessage = document.getElementById("secured-password-message"); // New div for secured password message
 
-	    // Regular expression to check the password validity
-	    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
 
-	    function validateRealTime() {
-	        const passwordValue = password.value.trim();
-	        const confirmPasswordValue = confirmPassword.value.trim();
+    function validateRealTime() {
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
 
-	        // Password validation
-	        if (!passwordPattern.test(passwordValue)) {
-	            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
-	            passwordError.style.display = "block";
-	            submitButton.disabled = true;
-	        } else {
-	            passwordError.style.display = "none";
-	        }
 
-	        // Confirm password validation
-	        if (confirmPasswordValue === "") {
-	            validationMessage.textContent = "";
-	            submitButton.disabled = true;
-	            return;
-	        }
+        if (!passwordPattern.test(passwordValue)) {
+            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+            passwordError.style.display = "block";
+            submitButton.disabled = true;
+            securedPasswordMessage.style.display = "none";
+        } else {
+            passwordError.style.display = "none";
+        }
 
-	        if (passwordValue !== confirmPasswordValue) {
-	            validationMessage.textContent = "Passwords do not match!";
-	            validationMessage.style.color = "red";
-	            submitButton.disabled = true;
-	        } else {
-	            validationMessage.textContent = "Passwords match.";
-	            validationMessage.style.color = "green";
-	            submitButton.disabled = false;
-	        }
-	    }
 
-	    password.addEventListener("focus", function () {
-	        passwordError.style.display = "block";
-	    });
+        if (confirmPasswordValue === "") {
+            validationMessage.textContent = "";
+            submitButton.disabled = true;
+            securedPasswordMessage.style.display = "none"; 
+            return;
+        }
 
-	    password.addEventListener("blur", function () {
-	        if (password.value.trim() === "") {
-	            passwordError.style.display = "none";
-	        }
-	    });
+        if (passwordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red";
+            submitButton.disabled = true;
+            securedPasswordMessage.style.display = "none"; 
+        } else {
+            if (passwordPattern.test(passwordValue)) {
+                validationMessage.textContent = "Matched password";
+                validationMessage.style.color = "green";
+                submitButton.disabled = false;
+                securedPasswordMessage.textContent = "Valid password"; 
+                securedPasswordMessage.style.display = "block";
+            } else {
+                validationMessage.textContent = "";
+                submitButton.disabled = true;
+                securedPasswordMessage.style.display = "none"; 
+            }
+        }
+    }
 
-	    password.addEventListener("input", validateRealTime);
-	    confirmPassword.addEventListener("input", validateRealTime);
-	});
+    submitButton.disabled = true;
+
+    password.addEventListener("focus", function () {
+        if (!passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "block";
+        }
+    });
+
+    password.addEventListener("blur", function () {
+        if (password.value.trim() === "" || !passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "none";
+        }
+    });
+
+    password.addEventListener("input", validateRealTime);
+    confirmPassword.addEventListener("input", validateRealTime);
+});
 
 </script>
 </head>
@@ -115,6 +130,8 @@
 							<div id="password-error" class="row mb-2"
 										style="color: red; font-size: 0.9rem; display: none;">
 										Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.</div>
+										<div id="secured-password-message" style="display: none; color: green;"></div>
+										
 							<div class="row mb-2">
 								<input name="newPassword" type="password" class="form-control"
 									placeholder="New Password" id="confirmPassword">

@@ -78,10 +78,7 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setDaily(updatedAgent.getDaily());
 	    existingAgent.setSettlementMode(updatedAgent.getSettlementMode());
 	    existingAgent.setSettlementType(updatedAgent.getSettlementType());
-	    existingAgent.setStatus(updatedAgent.getStatus());
 	    existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
-	    existingAgent.setPerDay(updatedAgent.getPerDay());
-	    existingAgent.setPerMonth(updatedAgent.getPerMonth());
 	    existingAgent.setModifiedBy(modifiedBy);
 	    existingAgent.setModifiedOn(LocalDateTime.now());
 	    existingAgent.setDisabledBy(modifiedBy);

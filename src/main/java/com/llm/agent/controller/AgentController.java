@@ -121,14 +121,16 @@ public class AgentController {
 	public String getAgentDetails(@RequestParam("agentId") String agentId, Model model) {
 
 		Agent agent = agentService.getByAgentId(agentId);
+		String status = agent.getStatusFlag() ? "Active" : "Inactive";
 		model.addAttribute("agent", agent);
+	    model.addAttribute("statusFlag", status);
 		return "agent-details";
 	}
 
 	@PostMapping("/view-agent-update")
 	public String submitViewForm(@RequestParam("id") Long id, Model model) {
-		Optional<Agent> agentId = agentService.getById(id);
-		model.addAttribute("agent", new Agent());
+//		Optional<Agent> agentId = agentService.getById(id);
+//		model.addAttribute("agent",agentId);
 		return "redirect:/agent-update-form?id=" + id;
 	}
 

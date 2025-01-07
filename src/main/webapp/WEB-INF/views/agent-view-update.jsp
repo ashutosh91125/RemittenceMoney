@@ -689,7 +689,7 @@ document.addEventListener('DOMContentLoaded', function() {
 													<div class="mb-4">
 														<label class="form-label">Status<span
 															class="text-danger">*</span></label>
-														<form:select path="status" class="form-control"
+														<form:select path="creditLimitStatus" class="form-control"
 															data-select2-selector="icon" id="status">
 															<form:option value="" disabled="true" selected="true">Select Status</form:option>
 															<form:option value="0">Inactive</form:option>

@@ -46,10 +46,8 @@ public class Agent {
 	private Long daily;
 	private String settlementMode;
 	private String settlementType;
-	private Boolean status;
+	private Boolean creditLimitStatus;
 	private Long perTransaction;
-	private Long perDay;
-	private Long perMonth;
 	private String grantType;
 	private String scope;
 	private String clientId;

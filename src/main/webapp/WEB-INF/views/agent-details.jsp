@@ -167,7 +167,7 @@
 <script>
 function updateAgent() {
 	
-    const formData = $("#agentForm").serialize(); // Serialize form data for submission
+  /*   const formData = $("#agentForm").serialize(); // Serialize form data for submission */
     const id= $("#id").val();
     $('#loader').show();
     $('#submitButton').prop('disabled', true);
@@ -175,7 +175,7 @@ function updateAgent() {
         url: "/view-agent-update?id=" + id,
         type: "POST",
         contentType: "application/x-www-form-urlencoded",
-        data: formData,
+        data: id,
         success: function(response) {
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
@@ -636,7 +636,7 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Status<span
 														class="text-danger">*</span></label>
-													<form:input path="status" class="form-control" id="status"
+													<form:input path="creditLimitStatus" class="form-control" id="status"
 														readonly="true" required='true' />
 												</div>
 											</div>
@@ -762,7 +762,7 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Status <span
 														class="text-danger">*</span></label>
-													<form:input path="statusFlag" class="form-control"
+													<form:input path="statusFlag" value="${ statusFlag}" class="form-control"
 														id="statusFlag" readonly="true" placeholder="Status"/>
 												</div>
 											</div>

@@ -895,11 +895,11 @@ document.addEventListener('DOMContentLoaded', function () {
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Confirm_Password<span
+														<label class="form-label">Confirm Password<span
 															class="text-danger">*</span></label>
 														 <input name="confirmPassword" type="password"
 															class="form-control" id="confirmPassword"
-															placeholder="Confirm_Password" /> 
+															placeholder="Confirm Password" />
 													</div>
 													<span id="validationMessage"></span>
 												</div>

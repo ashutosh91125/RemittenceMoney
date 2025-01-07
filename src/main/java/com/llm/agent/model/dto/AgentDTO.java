@@ -50,6 +50,7 @@ public class AgentDTO {
     private String remarks;
     private Boolean statusFlag;
     private Boolean isValid;
+    private Boolean creditLimitStatus;
 
     private String perTransactionLimit;
     private String perDayLimit;

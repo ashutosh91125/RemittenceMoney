@@ -18,9 +18,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class MyConfig {
 
     private final CustomUserDetailsService userDetailsService;
+    private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
-    public MyConfig(CustomUserDetailsService userDetailsService) {
+    public MyConfig(CustomUserDetailsService userDetailsService, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
         this.userDetailsService = userDetailsService;
+        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
 
     @Bean
@@ -47,7 +49,7 @@ public class MyConfig {
                         .loginPage("/login")
                         .loginProcessingUrl("/perform_login")
                         .defaultSuccessUrl("/welcome", true)
-                        .failureUrl("/login?error=true")
+                        .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
                 .logout(LogoutConfigurer::permitAll);
 

@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const passwordError = document.getElementById("password-error");
     const securedPasswordMessage = document.getElementById("secured-password-message"); // New div for secured password message
 
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
     function validateRealTime() {
         const passwordValue = password.value.trim();

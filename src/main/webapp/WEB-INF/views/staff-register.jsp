@@ -199,7 +199,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmPassword = document.getElementById("confirmPassword");
     const validationMessage = document.getElementById("validationMessage");
     const passwordError = document.getElementById("password-error");
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
     function validateRealTime() {
         const passwordValue = password.value.trim();

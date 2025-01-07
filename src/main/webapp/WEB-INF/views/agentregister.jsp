@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const confirmPassword = document.getElementById("confirmPassword");
     const validationMessage = document.getElementById("validationMessage");
     const passwordError = document.getElementById("password-error");
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
     function validateRealTime() {
         const passwordValue = password.value.trim();
@@ -905,7 +905,7 @@ document.addEventListener('DOMContentLoaded', function () {
 													<div class="mb-4">
 														<label class="form-label">Password<span
 															class="text-danger">*</span></label>
-														<form:input path="password" type="text"
+														<form:input path="password" type="password"
 															class="form-control" id="password"
 															placeholder="Set Password" />
 														<span id="password-error"
@@ -917,7 +917,7 @@ document.addEventListener('DOMContentLoaded', function () {
 													<div class="mb-4">
 														<label class="form-label">Confirm Password<span
 															class="text-danger">*</span></label> <input
-															name="confirmPassword" type="text" class="form-control"
+															name="confirmPassword" type="password" class="form-control"
 															id="confirmPassword" placeholder="Confirm Password" /> <span
 															id="validationMessage"></span>
 													</div>

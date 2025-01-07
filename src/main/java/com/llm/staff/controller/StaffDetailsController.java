@@ -74,6 +74,7 @@ public class StaffDetailsController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        log.info("List of Staff +++++============ {}", username);
 
 
         // Extract the user's role
@@ -95,8 +96,13 @@ public class StaffDetailsController {
             model.addAttribute("staffDetailsList", staffDetailsList);
         }
 
+        if (role.equals("ROLE_ADMIN")) {
+            List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff();
+            model.addAttribute("staffDetailsList", staffDetailsList);
+        }
+
         List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff();
-        model.addAttribute("staffDetailsList", staffDetailsList);
+        model.addAttribute("staffDetailsList", List.of() );
         return "staff-listing";
 
     }

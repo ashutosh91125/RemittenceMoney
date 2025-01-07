@@ -917,6 +917,7 @@ $(document).ready(function() {
                 const accountNumber = document.getElementById("accountNo");
                 const confirmAccountNumber = document.getElementById("confirmAccountNo");
                 const messageElement = document.getElementById("validationMessage");
+                const dailyCreditLimit = parseFloat("${dailyCreditLimit}");
                 const errorMessage = document.getElementById("error-message");
                 const amountField = document.getElementById("payInAmount");
                 const residentTypeField = document.getElementById('residentTypeId');
@@ -943,12 +944,13 @@ $(document).ready(function() {
 
                 // Function to validate the amount field
                 function validateAmount() {
-                    const value = parseFloat(amountField.value);
+                    const payInAmount = parseFloat(amountField.value);
                     errorMessage.style.display = "none";
-                    if (value < 5 || value > 50000 || isNaN(value)) {
+                    if (!isNaN(payInAmount) && payInAmount > dailyCreditLimit) {
                         errorMessage.style.display = "block";
                         submitButton.disabled = true;
                     } else {
+                        errorMessage.style.display = "none";
                         validateSubmitButton(); // Check other conditions before enabling
                     }
                 }

@@ -12,8 +12,6 @@ import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.agent.service.IAgentService;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class AgentServiceImpl implements IAgentService {
 	@Autowired
@@ -47,6 +45,12 @@ public class AgentServiceImpl implements IAgentService {
 	@Override
 	public Optional<Agent> getById(Long id) {
 		return agentRepositories.findById(id);
+	}
+
+	@Override
+	public double checkCreditLimit(String agentId){
+		Agent byAgentId = agentRepositories.findByAgentId(agentId);
+		return byAgentId.getDaily();
 	}
 
 	@Override

@@ -903,8 +903,7 @@
 													id="payInAmount" name="payInAmount" min="5" max="50000"
 													required>
 												<div id="error-message"
-													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">Amount
-													must be between 5 and 50,000!</div>
+													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">PayIn Amount cannot exceed credit limit of ${dailyCreditLimit}.</div>
 											</div>
 
 											<div class="col-xl-4">

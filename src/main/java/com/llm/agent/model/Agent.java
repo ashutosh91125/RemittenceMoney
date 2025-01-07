@@ -43,7 +43,7 @@ public class Agent {
 	private String licenceNo;
 	private Boolean taxApplicable;
 	private String workingHours;
-	private Long daily;
+	private double daily;
 	private String settlementMode;
 	private String settlementType;
 	private Boolean creditLimitStatus;

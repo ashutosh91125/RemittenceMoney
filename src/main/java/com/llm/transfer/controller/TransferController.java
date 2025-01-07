@@ -7,6 +7,11 @@ import java.util.Optional;
 
 import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
+import com.llm.agent.service.IAgentService;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,14 +46,26 @@ public class TransferController {
 	@Autowired
 	private UserRepository userRepository;
 
+	@Autowired
+	private StaffDetailsRepository staffDetailsRepository;
+
+	private IAgentService agentService;
+
 
 	@GetMapping("/transfer")
 	public String showTransfer(Model model) {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-		Optional<User> byUsername = userRepository.findByUsername(username);
+		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
 
+		try {
+			double dailyCreditLimit = agentService.checkCreditLimit(byUsername.get().getAgent());
+			model.addAttribute("dailyCreditLimit", dailyCreditLimit);
+
+		} catch (Exception e) {
+			model.addAttribute("dailyCreditLimit", 0);
+		}
 
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
@@ -88,7 +105,16 @@ public class TransferController {
 			Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-		Optional<User> byUsername = userRepository.findByUsername(username);
+		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
+
+		try {
+			double dailyCreditLimit = agentService.checkCreditLimit(byUsername.get().getAgent());
+			model.addAttribute("dailyCreditLimit", dailyCreditLimit);
+
+		} catch (Exception e) {
+			model.addAttribute("dailyCreditLimit", 0);
+		}
+
 		try {
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			model.addAttribute("customerListOnTransfer", customers);

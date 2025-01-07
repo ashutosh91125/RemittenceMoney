@@ -109,7 +109,7 @@
 									placeholder="Username" id="username">
 							</div>
 							<div class="row mb-2">
-								<input name="password" type="text" class="form-control"
+								<input name="password" type="password" class="form-control"
 									placeholder="Password" id="password">
 							</div>
 							<div id="password-error" class="row mb-2"

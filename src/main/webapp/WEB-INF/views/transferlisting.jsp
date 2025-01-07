@@ -117,7 +117,8 @@
 
     <!-- DataTables Initialization -->
     <script>
-        $(document).ready(function() {
+    
+       /*   $(document).ready(function() {
             // Initialize DataTable
             $('#transfer-list').DataTable({
                 "pageLength": 10,
@@ -140,6 +141,99 @@
                 }]
             });
 
+            // Check Transaction updated state and sub-state
+            $('#transfer-list').on('click', '.transactionLogo', function() {
+                // Get the transaction reference number from the same row where the logo was clicked
+                var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
+
+                // Check if the transaction reference number exists
+                if (!transactionRefNumber) {
+                    alert('Transaction reference number is missing!');
+                    return;
+                }
+
+                // Make the AJAX request to the backend
+                $.ajax({
+                    url: '/api/v1/raas/enquire-transaction',
+                    type: 'GET',
+                    data: { transaction_ref_number: transactionRefNumber },
+                    success: function(response) {
+                        // If the response is successful, reload the page
+                        if (response.status === 200) {
+                            console.log('Transaction enquiry successful');
+                        } else {
+                            alert(response.error || 'Enquiry failed!');
+                        }
+
+                        // Reload the page after success or failure
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle any errors during the request
+                        alert('Error: ' + error);
+                    }
+                });
+            });
+        });  */
+        $(document).ready(function() {
+            // Initialize DataTable with custom DOM for filter and dropdown
+            $('#transfer-list').DataTable({
+                "pageLength": 10,
+                "ordering": true,
+                "searching": true,
+                "paging": true,
+                "info": true,
+                "language": {
+                    "emptyTable": "No data available",
+                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                    "infoEmpty": "No entries available",
+                    "paginate": {
+                        "previous": "Previous",
+                        "next": "Next"
+                    }
+                },
+                "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>tp",  // Customize DOM to place the dropdown on the left side of the search box
+               /*  "buttons": [
+                    {
+                        text: 'Dropdown',
+                        action: function (e, dt, node, config) {
+                            alert('Dropdown clicked');
+                        },
+                        className: 'btn btn-secondary' 
+                    }
+                ], */
+                "columnDefs": [{
+                    "orderable": false,
+                    "targets": -1
+                }]
+            });
+            var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-6" style="width: 200px; height: 43px;">' +
+            '</select>';
+
+		$('.col-md-6').css({'display': 'flex','justify-content': 'flex-end'}).prepend(dropdownHtml);
+
+		 var dropdownData = [
+		        { id: '1', name: 'Option 1' },
+		        { id: '2', name: 'Option 2' },
+		        { id: '3', name: 'Option 3' },
+		        // Add more options here as needed
+		    ];
+		 
+		 	var dropdown = $('#transactionAgentList');
+		    dropdown.empty(); // Clear existing options
+		    dropdown.append('<option value="">Select Agent</option>'); 
+
+		    // Loop through the dropdownData array to create option elements
+		    $.each(dropdownData, function(index, item) {
+		        dropdown.append('<option value="' + item.id + '">' + item.name + '</option>');
+		    });
+
+		    dropdown.on('change', function() {
+		        var selectedValue = $(this).val();
+		        table.columns(0).search(selectedValue).draw();  
+		    });
+			
+			
             // Check Transaction updated state and sub-state
             $('#transfer-list').on('click', '.transactionLogo', function() {
                 // Get the transaction reference number from the same row where the logo was clicked

@@ -101,7 +101,7 @@ public class StaffDetailsController {
             model.addAttribute("staffDetailsList", staffDetailsList);
         }
 
-        List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff();
+		/* List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff(); */
         model.addAttribute("staffDetailsList", List.of() );
         return "staff-listing";
 

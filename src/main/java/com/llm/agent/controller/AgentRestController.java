@@ -1,7 +1,6 @@
 package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,10 +69,7 @@ public class AgentRestController {
 			agent.setDaily(agentDTO.getDaily());
 			agent.setSettlementMode(agentDTO.getSettlementMode());
 			agent.setSettlementType(agentDTO.getSettlementType());
-			agent.setStatus(agentDTO.getStatus());
 			agent.setPerTransaction(agentDTO.getPerTransaction());
-			agent.setPerDay(agentDTO.getPerDay());
-			agent.setPerMonth(agentDTO.getPerMonth());
 			agent.setCreatedBy(username);
 			agent.setCreatedOn(LocalDateTime.now());
 			agent.setGrantType(agentDTO.getGrantType());

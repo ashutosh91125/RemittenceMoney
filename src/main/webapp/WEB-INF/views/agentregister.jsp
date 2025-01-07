@@ -165,7 +165,6 @@
 </style>
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
-
 function registerAgent() {
 	if(!validation($("#agentForm")))  {
         return false;  
@@ -240,35 +239,54 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 });
 });	
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("Page Loaded");
-
-    const adminPassword = document.getElementById("adminPassword");
+    const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const validationMessage = document.getElementById("validationMessage");
-
+    const passwordError = document.getElementById("password-error");
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
 
     function validateRealTime() {
-        const adminPasswordValue = adminPassword.value.trim();
+        const passwordValue = password.value.trim();
         const confirmPasswordValue = confirmPassword.value.trim();
 
+
+        if (!passwordPattern.test(passwordValue)) {
+            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+            passwordError.style.display = "block";   
+        } else {
+            passwordError.style.display = "none";
+        }
         if (confirmPasswordValue === "") {
-            validationMessage.textContent = "";
+            validationMessage.textContent = ""; 
             return;
         }
-
-        if (adminPasswordValue !== confirmPasswordValue) {
+        if (passwordValue !== confirmPasswordValue) {
             validationMessage.textContent = "Passwords do not match!";
-            validationMessage.style.color = "red";
+            validationMessage.style.color = "red"; 
         } else {
-            validationMessage.textContent = "Passwords match.";
-            validationMessage.style.color = "green";
+            if (passwordPattern.test(passwordValue)) {
+                validationMessage.textContent = "Matched password";
+                validationMessage.style.color = "green";
+            } else {
+                validationMessage.textContent = "";
+            }
         }
     }
+    password.addEventListener("focus", function () {
+        if (!passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "block";
+        }
+    });
 
-    adminPassword.addEventListener("input", validateRealTime);
+    password.addEventListener("blur", function () {
+        if (password.value.trim() === "" || !passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "none";
+        }
+    });
+
+    password.addEventListener("input", validateRealTime);
     confirmPassword.addEventListener("input", validateRealTime);
-});
-
+});	
 </script>
 </head>
 
@@ -834,9 +852,9 @@ document.addEventListener('DOMContentLoaded', function () {
 													<div class="mb-4">
 														<label class="form-label">Username<span
 															class="text-danger">*</span></label>
-														 <form:input path="apiUsername" type="text"
+														<form:input path="apiUsername" type="text"
 															class="form-control" id="adminUserName"
-															placeholder="Set Username" /> 
+															placeholder="Set Username" />
 														<span id="adminUserNameError" class="text-danger1"></span>
 													</div>
 												</div>
@@ -845,9 +863,9 @@ document.addEventListener('DOMContentLoaded', function () {
 													<div class="mb-4">
 														<label class="form-label">Password<span
 															class="text-danger">*</span></label>
-														 <form:input path="apiPassword" type="password"
+														<form:input path="apiPassword" type="password"
 															class="form-control" id="adminPassword"
-															placeholder="Set Password" /> 
+															placeholder="Set Password" />
 														<span id="adminPasswordError" class="text-danger1"></span>
 													</div>
 												</div>
@@ -878,30 +896,31 @@ document.addEventListener('DOMContentLoaded', function () {
 														<label class="form-label">Username<span
 															class="text-danger">*</span></label>
 														<form:input path="username" type="text"
-															class="form-control" id="adminUserName"
+															class="form-control" id="userName"
 															placeholder="Set Username" />
-														<span id="adminUserNameError" class="text-danger1"></span>
+														<span id="userNameError" class="text-danger1"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Password<span
 															class="text-danger">*</span></label>
-														<form:input path="password" type="password"
-															class="form-control" id="adminPassword"
+														<form:input path="password" type="text"
+															class="form-control" id="password"
 															placeholder="Set Password" />
-														<span id="adminPasswordError" class="text-danger1"></span>
+														<span id="password-error"
+															style="color: red; display: none;"></span> <span
+															id="passwordError" class="text-danger1"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Confirm Password<span
-															class="text-danger">*</span></label>
-														 <input name="confirmPassword" type="password"
-															class="form-control" id="confirmPassword"
-															placeholder="Confirm Password" />
+															class="text-danger">*</span></label> <input
+															name="confirmPassword" type="text" class="form-control"
+															id="confirmPassword" placeholder="Confirm Password" /> <span
+															id="validationMessage"></span>
 													</div>
-													<span id="validationMessage"></span>
 												</div>
 											</div>
 										</div>

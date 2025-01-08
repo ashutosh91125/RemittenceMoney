@@ -275,7 +275,7 @@ function toggleDiv(divId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger">*</span></label>
-                                             <form:input path="branches" class="form-control" id="branch"  readonly="true"  required='true' value="${branches }"/> 
+                                             <input name="branches" class="form-control" id="branch"  readonly="true"  required='true' value="${branches }"/> 
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
                                     </div>

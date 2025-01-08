@@ -26,8 +26,10 @@ public class BranchDetails {
     @Column(name = "branch_type")
     private String branchType;
 
-    @Column(name = "branch_channel")
-    private String branchChannel;
+    @Column(name = "cdp_channel")
+    private String cdpChannel;//cdp
+    
+    private String rassChannel;
 
     @Column(name = "branch_channel_id")
     private String branchChannelId;

@@ -4,7 +4,7 @@ function validation(form) {
 		const branchName = $(form).find("#branchName").val().trim();
 		const agent = $(form).find("#agent").val();
 		const branchType = $(form).find("#branchType").val();
-		const branchChannel = $(form).find("#branchChannel").val();
+		const cdpChannel = $(form).find("#cdpChannel").val();
 		const branchDisplayName = $(form).find("#branchDisplayName").val().trim();
 		const address1 = $(form).find("#address1").val().trim();
 		const address2 = $(form).find("#address2").val().trim();
@@ -37,8 +37,8 @@ function validation(form) {
 		$("#branchTypeError").text("Branch Type is required.");
 	       isValid = false;
 	}
-	if (!branchChannel || branchChannel === ""  || branchChannel === "Select") {
-	   	$("#branchChannelError").text("Branch Channel is required.");
+	if (!cdpChannel || cdpChannel === ""  || cdpChannel === "Select") {
+	   	$("#cdpChannelError").text("Cdp Channel is required.");
 	          isValid = false;
 	 }
 	if (branchDisplayName === "") {

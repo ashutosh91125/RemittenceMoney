@@ -336,10 +336,10 @@
 								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Branch Channel</label>
-											<form:input path="branchChannel" class="form-control"
-												id="branchChannel" readonly="true" required='true' />
-											<span id="branchChannelError" class="text-danger"></span>
+											<label class="form-label">Cdp Channel</label>
+											<form:input path="cdpChannel" class="form-control"
+												id="cdpChannel" readonly="true" required='true' />
+											<span id="cdpChannelError" class="text-danger"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -428,6 +428,14 @@
 											<form:input path="state" class="form-control" id="state"
 												readonly="true" required='true'  />
 											<span id="branchChannelIdError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Cdp Channel</label>
+											<form:input path="rassChannel" class="form-control"
+												id="rassChannel" readonly="true" required='true' />
+											<span id="rassChannelError" class="text-danger"></span>
 										</div>
 									</div>
 								</div>

@@ -164,16 +164,17 @@
 }
 </style>
 <script>
-function registerStaff() {
-	if (!validation($("#staffForm"))) {
+function updateStaff() {
+	/* if (!validation($("#staffForm"))) {
 		return false;
-	}
+	} */
 	const formData = $("#staffForm").serialize(); 
+	const id = $('#id').val();
 	$('#loader').show();
 	$('#submitButton').prop('disabled', true);
 	$.ajax({
-		url : "/api/v1/staff",
-		type : "POST",
+		url : "/api/v1/staff/"+id,
+		type : "PUT",
 		contentType : "application/x-www-form-urlencoded",
 		data : formData,
 		success : function(response) {
@@ -306,8 +307,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form id="staffForm" modelAttribute="staff"
-			onsubmit="event.preventDefault(); registerStaff();">
-
+			onsubmit="event.preventDefault(); updateStaff();">
+		<form:hidden path="id" value="" id="id"/>
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -327,7 +328,7 @@ document.addEventListener('DOMContentLoaded', function () {
 											<label class="form-label">Branch<span
 												class="text-danger">*</span></label>
 											<form:select path="branches" data-select2-selector="tag"
-												id="branches" title="Select a branch" class="form-control" >
+												id="branches" title="Select a branch" class="form-control">
 												<form:options items="${branchList}"
 													itemValue="branchLocationId" itemLabel="branchName" />
 											</form:select>
@@ -341,7 +342,6 @@ document.addEventListener('DOMContentLoaded', function () {
 												class="text-danger">*</span></label>
 											<form:select path="staffGroup" class="form-control"
 												data-select2-selector="icon" id="staffGroup">
-												<form:option value="" disabled="true" selected="true">Select Group</form:option>
 												<form:option value="STAFF_TR">Transaction</form:option>
 												<form:option value="STAFF_HO">Head Office</form:option>
 											</form:select>
@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										</div>
 									</div>
 								</div>
-								<div class="row">
+								<%-- <div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Password<span
@@ -410,7 +410,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										</div>
 										<span id="validationMessage"></span>
 									</div>
-								</div>
+								</div> --%>
 							</div>
 						</div>
 					</div>

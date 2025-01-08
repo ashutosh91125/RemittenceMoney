@@ -15,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.llm.branch.projection.BranchProjection;
@@ -115,5 +116,33 @@ public class StaffDetailsController {
     		model.addAttribute("staff",staffDetils);
     	}
     	return "staff-details";
+    }
+    
+    @PostMapping("/view-staff-update")
+	public String submitViewForm(@RequestParam("id") Long id, Model model) {
+		return "redirect:/staff-update-form?id=" + id;
+	}
+    
+    @GetMapping("/staff-update-form")
+	public String showUpdateForm(@RequestParam("id") Long id, Model model) {
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Agent byUsername = agentRepositories.findByUsername(username);
+
+        model.addAttribute("staff", new StaffDTO());
+        try {
+            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByAgent(byUsername.getAgentId());
+            model.addAttribute("branchList", branchDTOS);
+
+        } catch (Exception e) {
+            log.error("Error Branch List: ", e);
+            model.addAttribute("branchList", List.of()); 
+        }
+    	Optional<StaffDetails> staffDetails = staffDetailsService.getById(id);
+    	if(staffDetails.isPresent()) {
+    		model.addAttribute("staff",staffDetails.get());
+    	}
+    	return "staff-view-update";
     }
 }

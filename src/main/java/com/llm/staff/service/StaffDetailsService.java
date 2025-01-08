@@ -16,4 +16,6 @@ public interface StaffDetailsService {
     List<StaffDetails> getAllStaffByCountry(String county);
 
     Optional<StaffDetails> getById(Long id);
+
+	void updateStaff(Long id, StaffDetails updatedDetails, String username);
 }

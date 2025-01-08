@@ -340,17 +340,17 @@ document.addEventListener('DOMContentLoaded', function() {
 								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Branch Channel<span
+											<label class="form-label">Cdp Channel<span
 												class="text-danger">*</span></label>
-											<form:select path="branchChannel" class="form-control"
-												data-select2-selector="icon" id="branchChannel">
-												<form:option value="" disabled="true" selected="true">Select Branch Chhanel</form:option>
+											<form:select path="cdpChannel" class="form-control"
+												data-select2-selector="icon" id="cdpChannel">
+												<form:option value="" disabled="true" selected="true">Select Cdp Chhanel</form:option>
 												<form:option value="Web">Web</form:option>
 												<form:option value="Digital">Digital</form:option>
 												<form:option value="Mobile">mobile</form:option>
 												<form:option value="FC Wholesale Branch">FC Wholesale Branch</form:option>
 											</form:select>
-											<span id="branchChannelError" class="text-danger1"></span>
+											<span id="cdpChannellError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -445,6 +445,19 @@ document.addEventListener('DOMContentLoaded', function() {
 													itemLabel="description" />
 											</form:select>
 											<span id="stateError" class="text-danger1"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Rass Channel<span
+												class="text-danger">*</span></label>
+											<form:select path="rassChannel" class="form-control"
+												data-select2-selector="icon" id="rassChannel">
+												<form:option value="" disabled="true" selected="true">Select Rass Chhanel</form:option>
+												<form:option value="Agency">Aggency</form:option>
+												<form:option value="Direct">Direct</form:option>
+											</form:select>
+											<span id="rassChannelError" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>

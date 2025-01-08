@@ -1,43 +1,73 @@
 package com.llm.staff.service.impl;
 
-import com.llm.staff.model.StaffDetails;
-import com.llm.staff.repository.StaffDetailsRepository;
-import com.llm.staff.service.StaffDetailsService;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
+import com.llm.staff.service.StaffDetailsService;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class StaffDetailsServiceImpl implements StaffDetailsService {
 
-    @Autowired
-    private StaffDetailsRepository staffDetailsRepository;
+	@Autowired
+	private StaffDetailsRepository staffDetailsRepository;
 
-    @Override
-    public void createStaff(StaffDetails staffDetails) {
-        staffDetailsRepository.save(staffDetails);
-    }
+	@Override
+	public void createStaff(StaffDetails staffDetails) {
+		staffDetailsRepository.save(staffDetails);
+	}
 
-    @Override
-    public List<StaffDetails> getAllStaff() {
-        return staffDetailsRepository.findAll();
-    }
+	@Override
+	public List<StaffDetails> getAllStaff() {
+		return staffDetailsRepository.findAll();
+	}
 
-    @Override
-    public List<StaffDetails> getAllStaffByAgent(String agent) {
-        return staffDetailsRepository.findByAgent(agent);
-    }
+	@Override
+	public List<StaffDetails> getAllStaffByAgent(String agent) {
+		return staffDetailsRepository.findByAgent(agent);
+	}
 
-    @Override
-    public List<StaffDetails> getAllStaffByCountry(String county) {
-        return staffDetailsRepository.findByCountry(county);
-    }
+	@Override
+	public List<StaffDetails> getAllStaffByCountry(String county) {
+		return staffDetailsRepository.findByCountry(county);
+	}
 
-    @Override
+	@Override
 	public Optional<StaffDetails> getById(Long id) {
 		return staffDetailsRepository.findById(id);
+	}
+
+	@Override
+	public void updateStaff(Long id, StaffDetails updatedDetails, String updatedBy) {
+		Optional<StaffDetails> optionalStaffDetails = staffDetailsRepository.findById(id);
+
+		if (optionalStaffDetails.isPresent()) {
+			StaffDetails existingDetails = optionalStaffDetails.get();
+
+			existingDetails.setFirstName(updatedDetails.getFirstName());
+			existingDetails.setLastName(updatedDetails.getLastName());
+			existingDetails.setEmail(updatedDetails.getEmail());
+			existingDetails.setModifiedBy(updatedBy);
+			existingDetails.setModifiedOn(LocalDateTime.now());
+			existingDetails.setDisabledBy(updatedBy);
+			existingDetails.setDisabledOn(LocalDateTime.now());
+			existingDetails.setAgent(updatedDetails.getAgent());
+			existingDetails.setCountry(updatedDetails.getCountry());
+			existingDetails.setMiddleName(updatedDetails.getMiddleName());
+			existingDetails.setRemarks(updatedBy);
+			existingDetails.setStaffGroup(updatedDetails.getStaffGroup());
+			existingDetails.setStatus(updatedDetails.isStatus());
+			staffDetailsRepository.save(existingDetails);
+		} else {
+			throw new EntityNotFoundException("Staff not found with ID: " + id);
+		}
 	}
 
 }

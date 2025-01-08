@@ -165,19 +165,20 @@
 </style>
 <script>
 
-  /*   function registerStaff() {
-        const formData = $("#staffForm").serialize(); // Serialize form data for submission
-        $('#loader').show();
+     function registerStaff() {
+//         const formData = $("#staffForm").serialize(); 
+		const id = $('#id').val();
         $('#submitButton').prop('disabled', true);
         $.ajax({
-            url: "/api/v1/staff",
+            url: "/view-staff-update?id=" +id,
             type: "POST",
             contentType: "application/x-www-form-urlencoded",
-            data: formData,
+//             data: formData,
             success: function(response) {
                 $('#loader').hide();
                 $('#submitButton').prop('disabled', false);
-                alert(response);
+//                 alert(response);
+                $('body').html(response);
             },
             error: function(xhr) {
                 $('#loader').hide();
@@ -185,7 +186,7 @@
                 alert("Error: " + xhr.responseText);
             }
         });
-    } */
+    } 
 
 
 function toggleDiv(divId) {
@@ -255,7 +256,7 @@ function toggleDiv(divId) {
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form id="staffForm" modelAttribute="staff" onsubmit="event.preventDefault(); registerStaff();">
-
+		<form:hidden path="id" value="" id="id"/>
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -378,10 +379,10 @@ function toggleDiv(divId) {
 					</div>
 				</div>
 			</div>
-			<!-- <div class="mt-5 mb-5 text-center"
+			 <div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
 				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
-			</div> -->
+			</div> 
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

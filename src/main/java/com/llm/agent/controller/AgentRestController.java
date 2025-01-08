@@ -76,6 +76,7 @@ public class AgentRestController {
 			agent.setScope(agentDTO.getScope());
 			agent.setClientId(agentDTO.getClientId());
 			agent.setClientSecret(agentDTO.getClientSecret());
+			agent.setCreditLimitStatus(agentDTO.getCreditLimitStatus());
 //			agent.setModifiedBy(agentDTO.getModifiedBy());
 //			agent.setModifiedOn(agentDTO.getModifiedOn());
 //			agent.setDisabledBy(agentDTO.getDisabledBy());

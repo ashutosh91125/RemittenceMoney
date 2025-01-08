@@ -95,6 +95,7 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
 	    existingAgent.setOutletCode(updatedAgent.getOutletCode());
 	    existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
+	    existingAgent.setCreditLimitStatus(updatedAgent.getCreditLimitStatus());
 
 	    // Save the updated agent
 	    agentRepositories.save(existingAgent);

@@ -166,6 +166,9 @@
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
 function updateAgent() {
+	if(!validation($("#agentForm")))  {
+        return false;  
+    }
     const formData = $("#agentForm").serialize(); // Serialize form data for submission
     const id = $('#id').val();
     $('#loader').show();
@@ -691,7 +694,6 @@ document.addEventListener('DOMContentLoaded', function() {
 															class="text-danger">*</span></label>
 														<form:select path="creditLimitStatus" class="form-control"
 															data-select2-selector="icon" id="status">
-															<form:option value="" disabled="true" selected="true">Select Status</form:option>
 															<form:option value="0">Inactive</form:option>
 															<form:option value="1">Active</form:option>
 														</form:select>

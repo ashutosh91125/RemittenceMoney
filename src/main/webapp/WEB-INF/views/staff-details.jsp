@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
+<!--! The above 6 meta tags  must  come first in the head; any other head content must come  after  these tags !-->
 <!--! BEGIN: Apps Title-->
 <title>LuLu Money || Staff Register</title>
 <!--! END:  Apps Title-->
@@ -84,13 +84,13 @@
 	font-size: 17px;
 }
 
-/* for accordion */
+/  for accordion  /
 .accordion-button::after {
 	display: none;
 }
-/* Add a custom icon to the left of the accordion button */
+/  Add a custom icon to the left of the accordion button  /
 .accordion-button::before {
-	content: "\f107"; /* Font Awesome chevron-down icon */
+	content: "\f107"; /  Font Awesome chevron-down icon  /
 	font-family: 'Font Awesome 5 Free';
 	font-weight: 900;
 	margin-right: 10px;
@@ -98,7 +98,7 @@
 	transition: transform 0.3s;
 }
 
-/* Rotate icon when the accordion is open */
+/  Rotate icon when the accordion is open  /
 .accordion-button[aria-expanded="true"]::before {
 	transform: rotate(180deg);
 }
@@ -120,43 +120,43 @@
 	display: none;
 }
 
-/* Ensure the .form-control class applies uniformly to inputs and selects */
+/  Ensure the .form-control class applies uniformly to inputs and selects  /
 .form-control {
 	width: 100%;
-	/* Ensures input and select elements take up the full column width */
+	/  Ensures input and select elements take up the full column width  /
 	height: 46px;
-	/* Set a consistent height for both input fields and selects */
-	padding: 10px; /* Adds padding for better appearance */
-	box-sizing: border-box; /* Ensures padding doesn't affect width */
+	/  Set a consistent height for both input fields and selects  /
+	padding: 10px; /  Adds padding for better appearance  /
+	box-sizing: border-box; /  Ensures padding doesn't affect width  /
 }
 
-/* Optional: Remove any internal margins/padding that could affect layout */
+/  Optional: Remove any internal margins/padding that could affect layout  /
 .col-xl-4 {
 	padding-left: 8px;
 	padding-right: 8px;
 }
 
 .mb-4 {
-	margin-bottom: 1.5rem; /* Maintain consistent spacing between fields */
+	margin-bottom: 1.5rem; /  Maintain consistent spacing between fields  /
 }
 
-/* Remove any width restrictions if there are any */
+/  Remove any width restrictions if there are any  /
 .form-control:focus {
-	border-color: #5e72e4; /* Optional: focus effect */
+	border-color: #5e72e4; /  Optional: focus effect  /
 	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-	/* Optional: focus effect */
+	/  Optional: focus effect  /
 }
 
 #search-result td {
-	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
+	padding: 5px; /  Adjust padding  /
+	font-size: 12px; /  Adjust font size  /
+	white-space: nowrap; /  Prevent wrapping  /
 }
 
 #search-result th {
-	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
+	padding: 5px; /  Adjust padding  /
+	font-size: 12px; /  Adjust font size  /
+	white-space: nowrap; /  Prevent wrapping  /
 }
 
 .hidden {
@@ -285,7 +285,7 @@ $(document).ready(function () {
 								    <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
-                                                class="text-danger">*</span></label>
+                                                class="text-danger"> </span></label>
                                              <form:input path="branches" class="form-control" id="branch"  readonly="true"  required='true' /> 
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
@@ -293,7 +293,7 @@ $(document).ready(function () {
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Group<span
-                                            class="text-danger">*</span></label>
+                                            class="text-danger"> </span></label>
                                             <form:input path="staffGroup" class="form-control"  id="staffGroup" required='true' readonly="true"/>
 											<span id="staffGroupError" class="text-danger"></span>
 										</div>
@@ -301,7 +301,7 @@ $(document).ready(function () {
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">First Name<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="firstName" type="text"
                                                 class="form-control" id="firstName"
                                                 placeholder="Enter your First Name" required='true' readonly="true" />
@@ -314,7 +314,7 @@ $(document).ready(function () {
                                     <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Middle Name<span
-                                                class="text-danger">*</span></label>
+                                                class="text-danger"> </span></label>
                                             <form:input path="middleName" type="text"
                                                 class="form-control" id="middleName"
                                                 placeholder="Enter your Middle Name" required='true' readonly="true" />
@@ -325,7 +325,7 @@ $(document).ready(function () {
 									<div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Last Name<span
-                                                class="text-danger">*</span></label>
+                                                class="text-danger"> </span></label>
                                             <form:input path="lastName" type="text"
                                                 class="form-control" id="lastName"
                                                 placeholder="Enter your Last Name" required='true' readonly="true" />
@@ -336,7 +336,7 @@ $(document).ready(function () {
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Username<span
-                                            class="text-danger">*</span></label>
+                                            class="text-danger"> </span></label>
                                             <form:input path="username" type="text"
                                             class="form-control" id="username"
                                             placeholder="Set your Username" required='true' readonly="true" />
@@ -368,7 +368,7 @@ $(document).ready(function () {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Email<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="email" type="email" class="form-control"
 														id="email" placeholder="Email" required='true' readonly="true" />
 													<span id="emailError" class="text-danger"></span>
@@ -406,7 +406,7 @@ $(document).ready(function () {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Created By<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="createdBy" type="text"
 														class="form-control" id="createdBy"
 														placeholder="Created By" readonly="true" />
@@ -414,8 +414,7 @@ $(document).ready(function () {
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Created On<span
-														class="text-danger">*</span></label>
+													<label class="form-label">Created On</label>
 													<form:input path="createdOn" type="text"
 														class="form-control" id="createdOn"
 														placeholder="Created On" readonly="true" />
@@ -423,8 +422,7 @@ $(document).ready(function () {
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Modified By<span
-														class="text-danger">*</span></label>
+													<label class="form-label">Modified By</label>
 													<form:input path="modifiedBy" type="text"
 														class="form-control" id="modifiedBy"
 														placeholder="Modified By" readonly="true"/>
@@ -434,24 +432,21 @@ $(document).ready(function () {
 										<div class="row">
 											 <div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Modified On<span
-														class="text-danger">*</span></label>
+													<label class="form-label">Modified On</label>
 													<form:input path="modifiedOn" type="text" class="form-control"
 														id="modifiedOn" placeholder="Modified On" readonly="true"/>
 												</div>
 											</div> 
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Remarks<span
-														class="text-danger">*</span></label>
+													<label class="form-label">Remarks</label>
 													<form:input path="remarks" type="text" class="form-control"
 														id="remarks" placeholder="Remarks" readonly="true"/>
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Status <span
-														class="text-danger">*</span></label>
+													<label class="form-label">Status</label>
 													<form:input path="status"  class="form-control"
 														id="status" readonly="true" placeholder="Status"/>
 												</div>

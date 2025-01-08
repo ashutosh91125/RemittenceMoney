@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
+<!--! The above 6 meta tags  must  come first in the head; any other head content must come  after  these tags !-->
 <!--! BEGIN: Apps Title-->
 <title>LuLu Money || Branch Register</title>
 <!--! END:  Apps Title-->
@@ -84,13 +84,13 @@
 	font-size: 17px;
 }
 
-/* for accordion */
+/  for accordion  /
 .accordion-button::after {
 	display: none;
 }
-/* Add a custom icon to the left of the accordion button */
+/  Add a custom icon to the left of the accordion button  /
 .accordion-button::before {
-	content: "\f107"; /* Font Awesome chevron-down icon */
+	content: "\f107"; /  Font Awesome chevron-down icon  /
 	font-family: 'Font Awesome 5 Free';
 	font-weight: 900;
 	margin-right: 10px;
@@ -98,7 +98,7 @@
 	transition: transform 0.3s;
 }
 
-/* Rotate icon when the accordion is open */
+/  Rotate icon when the accordion is open  /
 .accordion-button[aria-expanded="true"]::before {
 	transform: rotate(180deg);
 }
@@ -120,43 +120,43 @@
 	display: none;
 }
 
-/* Ensure the .form-control class applies uniformly to inputs and selects */
+/  Ensure the .form-control class applies uniformly to inputs and selects  /
 .form-control {
 	width: 100%;
-	/* Ensures input and select elements take up the full column width */
+	/  Ensures input and select elements take up the full column width  /
 	height: 46px;
-	/* Set a consistent height for both input fields and selects */
-	padding: 10px; /* Adds padding for better appearance */
-	box-sizing: border-box; /* Ensures padding doesn't affect width */
+	/  Set a consistent height for both input fields and selects  /
+	padding: 10px; /  Adds padding for better appearance  /
+	box-sizing: border-box; /  Ensures padding doesn't affect width  /
 }
 
-/* Optional: Remove any internal margins/padding that could affect layout */
+/  Optional: Remove any internal margins/padding that could affect layout  /
 .col-xl-4 {
 	padding-left: 8px;
 	padding-right: 8px;
 }
 
 .mb-4 {
-	margin-bottom: 1.5rem; /* Maintain consistent spacing between fields */
+	margin-bottom: 1.5rem; /  Maintain consistent spacing between fields  /
 }
 
-/* Remove any width restrictions if there are any */
+/  Remove any width restrictions if there are any  /
 .form-control:focus {
-	border-color: #5e72e4; /* Optional: focus effect */
+	border-color: #5e72e4; /  Optional: focus effect  /
 	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-	/* Optional: focus effect */
+	/  Optional: focus effect  /
 }
 
 #search-result td {
-	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
+	padding: 5px; /  Adjust padding  /
+	font-size: 12px; /  Adjust font size  /
+	white-space: nowrap; /  Prevent wrapping  /
 }
 
 #search-result th {
-	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
+	padding: 5px; /  Adjust padding  /
+	font-size: 12px; /  Adjust font size  /
+	white-space: nowrap; /  Prevent wrapping  /
 }
 
 .hidden {
@@ -276,7 +276,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Name<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="branchName" type="text"
 												class="form-control" id="branchName"
 												placeholder="Branch Name"  readonly="true" required='true' />
@@ -286,7 +286,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Agent<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<input value="${agent}" class="form-control" id="agent"
 												readonly="true" required='true'  />
 											<span id="agentError" class="text-danger" ></span>
@@ -295,7 +295,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Type<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="branchType" class="form-control"
 												id="branchType" readonly="true" required='true' />
 											<span id="branchTypeError" class="text-danger"></span>
@@ -314,7 +314,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Display Name<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="branchDisplayName" type="text"
 												class="form-control" id="branchDisplayName"
 												placeholder="Branch Display Name" readonly="true" required='true' />
@@ -324,7 +324,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 1<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="address1" type="text" class="form-control"
 												id="address1" placeholder="Address1" readonly="true" required='true' />
 											<span id="address1Error" class="text-danger"></span>
@@ -335,7 +335,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 2<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="address2" type="text" class="form-control"
 												id="address2" placeholder="Address2"  readonly="true" required='true'/>
 											<span id="address2Error" class="text-danger"></span>
@@ -352,7 +352,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">City<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="city" type="text" class="form-control"
 												id="city" placeholder="City" readonly="true" required='true' />
 											<span id="cityError" class="text-danger"></span>
@@ -372,7 +372,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Channel Id<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="branchChannelId" type="text"
 												class="form-control" id="branchChannelId"
 												placeholder="Branch Channel Id" readonly="true" required='true' />
@@ -382,7 +382,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Mode<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<form:input path="branchMode" class="form-control"
 												id="branchMode" readonly="true" required='true' />
 											<span id="branchModeError" class="text-danger"></span>
@@ -393,7 +393,7 @@
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">State<span
-												class="text-danger">*</span></label>
+												class="text-danger"> </span></label>
 											<input value="${states }" class="form-control" id="state"
 												readonly="true" required='true'  />
 											<span id="branchChannelIdError" class="text-danger"></span>
@@ -432,7 +432,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Email<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="email" type="email" class="form-control"
 														id="email" placeholder="Email" readonly="true" required='true' />
 													<span id="emailError" class="text-danger"></span>
@@ -450,7 +450,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Phone<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="phone" type="tel" class="form-control"
 														id="phone" placeholder="Phone" readonly="true" required='true' />
 													<span id="phoneError" class="text-danger"></span>
@@ -463,7 +463,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Contact Person<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="contactPerson" type="tel"
 														class="form-control" id="contactPerson"
 														placeholder="Contact Person" readonly="true" required='true' />
@@ -473,7 +473,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Mis Email Id<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="misEmailId" type="email"
 														class="form-control" id="misEmailId"
 														placeholder="Mis Email Id" readonly="true" required='true' />
@@ -506,7 +506,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Branch Location Id<span
-														class="text-danger">*</span>
+														class="text-danger"> </span>
 													</label>
 													<form:input path="branchLocationId" type="number"
 														class="form-control" id="branchLocationId"
@@ -517,7 +517,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Licence Number<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="licenceNo" type="text"
 														class="form-control" id="licenceNo"
 														placeholder="Licence Number" readonly="true" required='true' />
@@ -527,7 +527,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Outlet Code<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="outletCode" type="text"
 														class="form-control" id="outletCode"
 														placeholder="Outlet Code" readonly="true" required='true' />
@@ -540,7 +540,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span
-													class="text-danger">*</span></label>
+													class="text-danger"> </span></label>
 												<form:input path="workingHours" class="form-control"
 													id="working" readonly="true" required='true' />
 												<span id="workingError" class="text-danger"></span>
@@ -570,7 +570,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Created By<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="createdBy" type="text"
 														class="form-control" id="createdBy"
 														placeholder="Created By" readonly="true" />
@@ -579,7 +579,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Created On<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="createdOn" type="text"
 														class="form-control" id="createdOn"
 														placeholder="Created On" readonly="true" />
@@ -588,7 +588,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Modified By<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="modifiedBy" type="text"
 														class="form-control" id="modifiedBy"
 														placeholder="Modified By" readonly="true"/>
@@ -599,7 +599,7 @@
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Modified On<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="modifiedOn" type="text" class="form-control"
 														id="modifiedOn" placeholder="Modified On" readonly="true"/>
 												</div>
@@ -607,7 +607,7 @@
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Remarks<span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="remarks" type="text" class="form-control"
 														id="remarks" placeholder="Remarks" readonly="true"/>
 												</div>
@@ -615,7 +615,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Status <span
-														class="text-danger">*</span></label>
+														class="text-danger"> </span></label>
 													<form:input path="status" class="form-control"
 														id="statusFlag" readonly="true" placeholder="Status"/>
 												</div>

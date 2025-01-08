@@ -194,6 +194,17 @@ function toggleDiv(divId) {
 	element.classList.toggle("show");
 }
 
+$(document).ready(function () {
+    const statusFlag = document.getElementById('statusFlag'); 
+    
+    if (statusFlag.value === 'true') {
+        statusField.value = 'Active';
+    }
+    else{
+    	statusFlag.value = 'Inactive';
+    }
+});
+
 /* 
 $(document).ready(function () {
     const countries = $('#countries').val();
@@ -762,7 +773,7 @@ $(document).ready(function () {
 												<div class="mb-4">
 													<label class="form-label">Status <span
 														class="text-danger">*</span></label>
-													<form:input path="statusFlag" value="${ statusFlag}" class="form-control"
+													<form:input path="statusFlag"  class="form-control"
 														id="statusFlag" readonly="true" placeholder="Status"/>
 												</div>
 											</div>

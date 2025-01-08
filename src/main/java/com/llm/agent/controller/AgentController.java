@@ -121,8 +121,6 @@ public class AgentController {
 	public String getAgentDetails(@RequestParam("agentId") String agentId, Model model) {
 
 		Agent agent = agentService.getByAgentId(agentId);
-		String status = agent.getStatusFlag() ? "Active" : "Inactive";
-		model.addAttribute("statusFlag", status);
 		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
 		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
 		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.getState()));

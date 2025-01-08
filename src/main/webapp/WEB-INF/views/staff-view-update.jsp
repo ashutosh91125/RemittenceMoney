@@ -165,9 +165,9 @@
 </style>
 <script>
 function updateStaff() {
-	/* if (!validation($("#staffForm"))) {
+	 if (!validation($("#staffForm"))) {
 		return false;
-	} */
+	} 
 	const formData = $("#staffForm").serialize(); 
 	const id = $('#id').val();
 	$('#loader').show();

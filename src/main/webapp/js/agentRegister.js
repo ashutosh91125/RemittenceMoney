@@ -31,9 +31,9 @@ function validation(form) {
 		const perMonthLimit = $(form).find("#perMonthLimit").val().trim();
 		const adminUserName = $(form).find("#adminUserName").val();
 		const adminPassword = $(form).find("#adminPassword").val();
-				
+		const password = $(form).find("#password").val();	
+		const username = $(form).find("#username").val();	
 		
-		// Clear all previous error messages and set text color to red
 		$(".text-danger1").text("").css("color", "red");
 
 	if (agentId === "") {
@@ -43,7 +43,6 @@ function validation(form) {
     }
     if (agentName === "") {
 		$("#agentNameError").text("Agent Name is required.");
-//        $("#branchName").after('<span class="error" style="color:red;">Branch Name is required.</span>');
         isValid = false;
     }
 
@@ -165,6 +164,13 @@ function validation(form) {
 		 $("#adminPasswordError").text("Password is required.");
 		  isValid = false;
 	  }
-	
+	  if (password === "") {
+	  	  $("#passwordError").text("Password is required.");
+	  	  isValid = false;
+	  }
+	  if (username === "") {
+	     $("#userNameError").text("User Name is required.");
+	     isValid = false;
+	  }
     return isValid;
 }

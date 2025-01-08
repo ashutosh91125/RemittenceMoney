@@ -194,7 +194,7 @@ function toggleDiv(divId) {
 	element.classList.toggle("show");
 }
 
-
+/* 
 $(document).ready(function () {
     const countries = $('#countries').val();
     const currencies = $('#currencies').val();
@@ -246,7 +246,7 @@ $(document).ready(function () {
     });
 
 });
-
+ */
 </script>
 </head>
 
@@ -343,7 +343,7 @@ $(document).ready(function () {
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label> <input
-												value="${agent.countries }" class="form-control"
+												value="${countries }" class="form-control"
 												id="countries" readonly="true" required='true' /> <span
 												id="countriesError" class="text-danger"></span>
 										</div>
@@ -352,7 +352,7 @@ $(document).ready(function () {
 										<div class="mb-4">
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label> <input
-												value="${agent.currencies}" id="currencies"
+												value="${currencies}" id="currencies"
 												class="form-control" readonly="true" required='true' /> <span
 												id="currenciesError" class="text-danger"></span>
 										</div>
@@ -362,7 +362,7 @@ $(document).ready(function () {
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">State</label> <input
-												value="${agent.state}" id="state" class="form-control"
+												value="${states}" id="state" class="form-control"
 												readonly="true" required='true' /> <span id="stateError"
 												class="text-danger"></span>
 										</div>
@@ -434,7 +434,7 @@ $(document).ready(function () {
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label> <input
-												value="${agent.timeZone }" class="form-control"
+												value="${timezones }" class="form-control"
 												readonly="true" required='true' id="timeZone" /> <span
 												id="timeZoneError" class="text-danger"></span>
 										</div>

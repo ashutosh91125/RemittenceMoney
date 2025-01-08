@@ -122,8 +122,13 @@ public class AgentController {
 
 		Agent agent = agentService.getByAgentId(agentId);
 		String status = agent.getStatusFlag() ? "Active" : "Inactive";
+		model.addAttribute("statusFlag", status);
+		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
+		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
+		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.getState()));
+		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.getTimeZone()));
 		model.addAttribute("agent", agent);
-	    model.addAttribute("statusFlag", status);
+	  
 		return "agent-details";
 	}
 

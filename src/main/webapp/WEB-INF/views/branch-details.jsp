@@ -193,37 +193,6 @@
 		const element = document.getElementById(divId);
 		element.classList.toggle("show");
 	}
-	
-	$(document).ready(function () {
-	    const state = $('#state').val();
-	    const agentId =$('#agent').val();
-	 
-	    $.ajax({
-	        url: '/api/v1/agent/' +  agentId,
-	        type: 'GET',
-	        success: function (description) {
-	        	 $('#agent').val(description);
-					
-	        },
-	        error: function () {
-	            console.error("Error fetching Agent By Given agentId:",  agentId);
-	        }
-	    });
-		 
-		    $.ajax({
-		        url: '/api/enumEntities/' + 'state' + '/values/' + state,
-		        type: 'GET',
-		        success: function (description) {
-		        	 $('#state').val(description);
-						
-		        },
-		        error: function () {
-		            console.error("Error fetching enum value for key:", "state", "valueId:", state);
-		        }
-		    });
-
-	});
-
 </script>
 </head>
 
@@ -318,8 +287,8 @@
 										<div class="mb-4">
 											<label class="form-label">Agent<span
 												class="text-danger">*</span></label>
-											<form:input path="agent" class="form-control" id="agent"
-												readonly="true" required='true' />
+											<input value="${agent}" class="form-control" id="agent"
+												readonly="true" required='true'  />
 											<span id="agentError" class="text-danger" ></span>
 										</div>
 									</div>
@@ -425,7 +394,7 @@
 										<div class="mb-4">
 											<label class="form-label">State<span
 												class="text-danger">*</span></label>
-											<form:input path="state" class="form-control" id="state"
+											<input value="${states }" class="form-control" id="state"
 												readonly="true" required='true'  />
 											<span id="branchChannelIdError" class="text-danger"></span>
 										</div>

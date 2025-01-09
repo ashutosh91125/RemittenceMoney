@@ -24,7 +24,7 @@ public class StaffDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String branches;
+    private Long branches;
 
     private String agent;
 

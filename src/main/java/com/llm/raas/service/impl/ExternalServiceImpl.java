@@ -3,7 +3,9 @@ package com.llm.raas.service.impl;
 
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
+import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.service.TokenService;
+import com.llm.raas.repository.BranchRepository;
 import com.llm.raas.service.ExternalService;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
@@ -44,6 +46,9 @@ public class ExternalServiceImpl implements ExternalService {
     StaffDetailsRepository staffDetailsRepository;
 
     @Autowired
+    BranchDetailsRepository branchDetailsRepository;
+
+    @Autowired
     AgentRepositories agentRepositories;
 
     private HttpHeaders createHeaders() {
@@ -52,12 +57,14 @@ public class ExternalServiceImpl implements ExternalService {
 
         Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(username);
 
+        var fetchBranch = branchDetailsRepository.findById(staffDetails.get().getBranches());
+
         Agent byAgentId = agentRepositories.findByAgentId((staffDetails.get().getAgent()));
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");
         headers.set("sender", byAgentId.getAgentName());
-        headers.set("channel", "Direct");
+        headers.set("channel", fetchBranch.get().getRaasChannel());
         headers.set("company", byAgentId.getAgentId());
         headers.set("branch", byAgentId.getBranchLocationId());
         headers.set("Authorization", "Bearer " + tokenService.getAccessToken());

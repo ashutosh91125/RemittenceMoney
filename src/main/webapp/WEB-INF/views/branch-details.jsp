@@ -306,7 +306,7 @@
 								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Cdp Channel</label>
+											<label class="form-label">CDP Channel</label>
 											<form:input path="cdpChannel" class="form-control"
 												id="cdpChannel" readonly="true" required='true' />
 											<span id="cdpChannelError" class="text-danger"></span>
@@ -402,10 +402,10 @@
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Cdp Channel</label>
-											<form:input path="rassChannel" class="form-control"
-												id="rassChannel" readonly="true" required='true' />
-											<span id="rassChannelError" class="text-danger"></span>
+											<label class="form-label">RAAS Channel</label>
+											<form:input path="raasChannel" class="form-control"
+												id="raasChannel" readonly="true" required='true' />
+											<span id="raasChannelError" class="text-danger"></span>
 										</div>
 									</div>
 								</div>

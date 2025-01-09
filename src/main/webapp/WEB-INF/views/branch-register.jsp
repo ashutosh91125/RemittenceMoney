@@ -449,15 +449,15 @@ document.addEventListener('DOMContentLoaded', function() {
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">RASS Channel<span
+											<label class="form-label">RAAS Channel<span
 												class="text-danger">*</span></label>
-											<form:select path="rassChannel" class="form-control"
-												data-select2-selector="icon" id="rassChannel">
-												<form:option value="" disabled="true" selected="true">Select Rass Chhanel</form:option>
+											<form:select path="raasChannel" class="form-control"
+												data-select2-selector="icon" id="raasChannel">
+												<form:option value="" disabled="true" selected="true">Select RAAS Channel</form:option>
 												<form:option value="Agency">Agency</form:option>
 												<form:option value="Direct">Direct</form:option>
 											</form:select>
-											<span id="rassChannelError" class="text-danger1"></span>
+											<span id="raasChannelError" class="text-danger1"></span>
 										</div>
 									</div>
 								</div>

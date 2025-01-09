@@ -130,8 +130,8 @@ public class BranchDetailsController {
     public String getBranchDetails(@RequestParam("id") Long id,Model model) {
     	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
     	if(branchDetails.isPresent()) {
-    		model.addAttribute("agent",agentService.getById(id).get().getAgentName());
-    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",branchDetails.get().getState()));
+    		model.addAttribute("agent",agentService.getByAgentId(branchDetails.get().getAgent()).getAgentName());
+    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",branchDetails.get().getCounty(),branchDetails.get().getState()));
     		model.addAttribute("branch", branchDetails);
     	}
     	

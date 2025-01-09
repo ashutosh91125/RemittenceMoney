@@ -82,7 +82,7 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
         branch.setAddress3(branchDetails.getAddress3());
         branch.setAgent(branchDetails.getAgent());
         branch.setCdpChannel(branchDetails.getCdpChannel());
-        branch.setRassChannel(branchDetails.getRassChannel());
+        branch.setRaasChannel(branchDetails.getRaasChannel());
         branch.setBranchChannelId(branchDetails.getBranchChannelId());
         branch.setBranchDisplayName(branchDetails.getBranchDisplayName());
         branch.setBranchLocationId(branchDetails.getBranchLocationId());

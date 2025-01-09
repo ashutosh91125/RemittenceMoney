@@ -19,6 +19,7 @@ function validation(form) {
 		const licenceNo = $(form).find("#licenceNo").val().trim();
 		const outletCode = $(form).find("#outletCode").val().trim();
 		const workingHours = $(form).find("#workingHours").val();
+		const rassChannel = $(form).find("#rassChannel").val();
 		// Clear all previous error messages and set text color to red
 		$(".text-danger1").text("").css("color", "red");
 
@@ -97,6 +98,9 @@ function validation(form) {
 		$("#workingHoursError").text("Working Hours is required.");
 	 	isValid = false;
 	}
-   
+	if (!rassChannel || rassChannel === ""  || rassChannel === "Select") {
+		$("#rassChannelError").text("Rass Channel is required.");
+		 isValid = false;
+	 }
     return isValid;
 }

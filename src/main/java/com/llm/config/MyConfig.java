@@ -8,28 +8,27 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 public class MyConfig {
 
     private final CustomUserDetailsService userDetailsService;
+    private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
 
-    public MyConfig(CustomUserDetailsService userDetailsService, CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
+    public MyConfig(CustomUserDetailsService userDetailsService,
+                    CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
+                    CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
         this.userDetailsService = userDetailsService;
+        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
         this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
     }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter();
-        customAuthenticationFilter.setAuthenticationManager(authenticationManager);
-
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exception -> exception
@@ -44,14 +43,13 @@ public class MyConfig {
                         .requestMatchers("/agentList").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUB_ADMIN")
                         .requestMatchers("/customerList", "/subAgentList").hasAnyAuthority("ROLE_ADMIN", "ROLE_SUB_ADMIN", "ROLE_AGENT", "ROLE_STAFF")
                         .anyRequest().authenticated())
-                .addFilterAt(customAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/perform_login")
-                        .defaultSuccessUrl("/welcome", true)
+                        .successHandler(customAuthenticationSuccessHandler) // Add success handler
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
-                .logout(LogoutConfigurer::permitAll);
+                .logout(logout -> logout.permitAll());
 
         return http.build();
     }

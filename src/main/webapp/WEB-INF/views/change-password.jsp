@@ -120,10 +120,6 @@ document.addEventListener('DOMContentLoaded', function () {
 								<p style="text-align: center; color: red;">${message}</p>
 							</div>
 							<div class="row mb-2">
-								<input name="username" type="text" class="form-control"
-									placeholder="Username" id="username">
-							</div>
-							<div class="row mb-2">
 								<input name="password" type="password" class="form-control"
 									placeholder="Password" id="password">
 							</div>

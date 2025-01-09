@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
@@ -115,19 +116,47 @@ public class AuthController {
     }
 
     @PostMapping("/change-password")
-    public String changePassword(@RequestParam String username, @RequestParam String newPassword, Model model) {
+    public String changePassword(@RequestParam String newPassword, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
-            user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
+            // Check if the new password matches any of the last three passwords
+            if (user.getPasswordHistory() != null) {
+                for (String oldPassword : user.getPasswordHistory()) {
+                    if (passwordEncoder.matches(newPassword, oldPassword)) {
+                        model.addAttribute("message", "You cannot reuse the last three passwords.");
+                        return "change-password";
+                    }
+                }
+            }
+
+            // Update the password and add it to the history
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encodedPassword);
+            if (user.getPasswordHistory() == null) {
+                user.setPasswordHistory(new ArrayList<>());
+            }
+            user.getPasswordHistory().add(encodedPassword);
+
+            // Ensure only the last three passwords are kept
+            if (user.getPasswordHistory().size() > 3) {
+                user.getPasswordHistory().remove(0);
+            }
+
             user.setFirstLogin(false);
-            user.setPasswordExpiryDate(LocalDate.now().plusDays(31));
+            user.setPasswordExpiryDate(LocalDate.now().plusDays(30)); // Example expiry date
             userRepository.save(user);
+
             model.addAttribute("success", "Password changed successfully.");
-            return "adminlogin";
+            return "redirect:/welcome";
         }
         model.addAttribute("error", "User not found.");
         return "change-password";
     }
+
 }
 

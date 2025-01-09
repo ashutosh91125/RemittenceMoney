@@ -75,10 +75,6 @@
 									</div>
 								</div>
 								<div>
-									<a href="staff-login" class="fs-11 text-primary">Staff
-										Login</a>
-								</div>
-								<div>
 									<a href="auth-reset-minimal.html" class="fs-11 text-primary">Forget
 										password?</a>
 								</div>

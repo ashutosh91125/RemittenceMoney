@@ -14,14 +14,14 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
             throws AuthenticationException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        String branch = request.getParameter("branch");
+//        String branch = request.getParameter("branch");
 
         UsernamePasswordAuthenticationToken authRequest =
                 new UsernamePasswordAuthenticationToken(username, password);
 
-        if (branch != null && !branch.isBlank()) {
-            authRequest.setDetails(branch);
-        }
+//        if (branch != null && !branch.isBlank()) {
+//            authRequest.setDetails(branch);
+//        }
 
         return this.getAuthenticationManager().authenticate(authRequest);
     }

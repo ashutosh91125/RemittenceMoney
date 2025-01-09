@@ -11,7 +11,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -20,6 +22,9 @@ import java.util.List;
 @Entity
 @Table(name = "user_details")
 public class User implements UserDetails {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,6 +48,14 @@ public class User implements UserDetails {
     private Role role;
 
     private Boolean approved;
+
+    @Transient
+    private boolean forcePasswordChange;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_password_history", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "password")
+    private List<String> passwordHistory = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

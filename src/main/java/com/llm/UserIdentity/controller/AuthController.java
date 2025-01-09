@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.llm.UserIdentity.model.User;
@@ -189,6 +193,36 @@ public class AuthController {
 		return "admin-view-update";
 	}
 	
+		@PutMapping("/admin-update")
+		public ResponseEntity<?> updateUser(
+	        @RequestParam("id") Long id, 
+	        @RequestBody User updatedUserDetails) {
+	    try {
+	        Optional<User> userOptional = customUserDetailsService.getById(id);
+	        
+	        if (userOptional.isEmpty()) {
+	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                    .body("User with ID " + id + " not found.");
+	        }
+
+	        User existingUser = userOptional.get();
+	        // Update the fields of the existing user with the provided details
+	        existingUser.setAdminName(updatedUserDetails.getAdminName());
+	        existingUser.setEmail(updatedUserDetails.getEmail());
+	        existingUser.setCountry(updatedUserDetails.getCountry());
+	        existingUser.setUsername(updatedUserDetails.getUsername());
+	        existingUser.setCountry(updatedUserDetails.getCountry());
+	        existingUser.setPhoneNumber(updatedUserDetails.getPhoneNumber());
+	        userRepository.save(existingUser);
+
+	        return ResponseEntity.ok("User updated successfully.");
+	    } catch (Exception e) {
+	        log.error("Error updating user with ID " + id + ": ", e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+	                .body("Error updating user. Please try again.");
+	    }
+	}
+
 	
 }
 

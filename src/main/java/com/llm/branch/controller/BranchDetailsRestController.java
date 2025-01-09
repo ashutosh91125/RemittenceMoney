@@ -100,17 +100,6 @@ public class BranchDetailsRestController {
             e.printStackTrace();
             return new ResponseEntity<>("Failed to update branch!", HttpStatus.BAD_REQUEST);
         }
-    }
-
-    @GetMapping("/{branchLocationId}")
-    public ResponseEntity<List<BranchProjection>> getBranchDetails(@PathVariable String branchLocationId) {
-        List<BranchProjection> branchDetails = branchDetailsService.getBranchDetailsByLocationId(branchLocationId);
-        if (branchDetails.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(branchDetails);
-    }
-    
-
+    }    
 
 }

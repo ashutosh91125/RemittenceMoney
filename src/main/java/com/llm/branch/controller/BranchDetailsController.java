@@ -127,7 +127,7 @@ public class BranchDetailsController {
     }
 
     @GetMapping("/branch-detail")
-    public String getAdminDetails(@RequestParam("id") Long id,Model model) {
+    public String getBranchDetails(@RequestParam("id") Long id,Model model) {
     	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
     	if(branchDetails.isPresent()) {
     		model.addAttribute("agent",agentService.getById(id).get().getAgentName());
@@ -137,11 +137,4 @@ public class BranchDetailsController {
     	
     	return "branch-details";
     }
-    
-    @PostMapping("/view-branch-update")
- 	public String submitViewForm(@ModelAttribute("branch") BranchDetails branch, RedirectAttributes redirectAttributes) {
- 	    Long branchId = Long.valueOf(branch.getId());
-// 	    redirectAttributes.addFlashAttribute(branch);
- 	    return "redirect:/branch?branchId=" + branchId;
- 	}
 }  

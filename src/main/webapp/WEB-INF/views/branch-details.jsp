@@ -166,12 +166,13 @@
 <script>
 	function viewUpdateBranch() {
 	    const formData = $("#branchForm").serialize(); // Serialize form data for submission
+	    const id = $("#id").val();
 	    $('#loader').show();
 	    $('#submitButton').prop('disabled', true);
 
 	    $.ajax({
-	        url: "/view-branch-update",
-	        type: "POST",
+	        url: "/branch?branchId="+id,
+	        type: "GET",
 	        contentType: "application/x-www-form-urlencoded",
 	        data: formData,
 	        success: function(response) {

@@ -167,97 +167,45 @@
 <script>
 function updateAgent() {
 	
-  /    const formData = $("#agentForm").serialize(); // Serialize form data for submission  /
-    const id= $("#id").val();
-    $('#loader').show();
-    $('#submitButton').prop('disabled', true);
-    $.ajax({
-        url: "/view-agent-update?id=" + id,
-        type: "POST",
-        contentType: "application/x-www-form-urlencoded",
-        data: id,
-        success: function(response) {
-            $('#loader').hide();
-            $('#submitButton').prop('disabled', false);
-            $('body').html(response);
-//             alert(response);
-        },
-        error: function(xhr) {
-            $('#loader').hide();
-            $('#submitButton').prop('disabled', false);
-            alert("Error: " + xhr.responseText);
-        }
-    });
-}
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
+	  /*   const formData = $("#agentForm").serialize(); // Serialize form data for submission */
+	    const id= $("#id").val();
+	    $('#loader').show();
+	    $('#submitButton').prop('disabled', true);
+	    $.ajax({
+	        url: "/view-agent-update?id=" + id,
+	        type: "POST",
+	        contentType: "application/x-www-form-urlencoded",
+	        data: id,
+	        success: function(response) {
+	            $('#loader').hide();
+	            $('#submitButton').prop('disabled', false);
+	            $('body').html(response);
+//	             alert(response);
+	        },
+	        error: function(xhr) {
+	            $('#loader').hide();
+	            $('#submitButton').prop('disabled', false);
+	            alert("Error: " + xhr.responseText);
+	        }
+	    });
+	}
+	function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
 
-$(document).ready(function () {
-    const statusFlag = document.getElementById('statusFlag'); 
-    
-    if (statusFlag.value === 'true') {
-        statusField.value = 'Active';
-    }
-    else{
-    	statusFlag.value = 'Inactive';
-    }
-});
+	$(document).ready(function () {
+	    const statusFlag = document.getElementById('statusFlag'); 
+	    const status = document.getElementById('status'); 
+	    
+	    if (statusFlag.value === 'true') {
+	        statusField.value = 'Active';
+	    }
+	    else{
+	    	statusFlag.value = 'Inactive';
+	    }
+	});
 
-/  
-$(document).ready(function () {
-    const countries = $('#countries').val();
-    const currencies = $('#currencies').val();
-    const state = $('#state').val();
-    const timeZone = $('#timeZone').val();
-
-    $.ajax({
-        url: '/api/enumEntities/' + 'country' + '/values/' + countries,
-        type: 'GET',
-        success: function (description) {
-        	 $('#countries').val(description);		
-        },
-        error: function () {
-            console.error("Error fetching enum value for key:", "country", "valueId:", countries);
-        }
-    });
-    $.ajax({
-        url: '/api/enumEntities/' + 'currency' + '/values/' + currencies,
-        type: 'GET',
-        success: function (description) {
-        	 $('#currencies').val(description);
-				
-        },
-        error: function () {
-            console.error("Error fetching enum value for key:", "currency", "valueId:", currencies);
-        }
-    });
-    $.ajax({
-        url: '/api/enumEntities/' + 'state' + '/values/' + state,
-        type: 'GET',
-        success: function (description) {
-        	 $('#state').val(description);
-				
-        },
-        error: function () {
-            console.error("Error fetching enum value for key:", "state", "valueId:", state);
-        }
-    });
-    $.ajax({
-        url: '/api/enumEntities/' + 'timezone' + '/values/' + timeZone,
-        type: 'GET',
-        success: function (description) {
-        	 $('#timeZone').val(description);
-				
-        },
-        error: function () {
-            console.error("Error fetching enum value for key:", "timezone", "valueId:", timeZone);
-        }
-    });
-
-});
-  /
 </script>
 </head>
 
@@ -431,7 +379,6 @@ $(document).ready(function () {
 									</div>
 								</div>
 								<div class="row">
-
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
@@ -784,10 +731,11 @@ $(document).ready(function () {
 						</div>
 					</div>
 				</div>
-			</div>
+			
 			<div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
 				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
+			</div>
 			</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>

@@ -17,7 +17,35 @@
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
-	
+function updateAdmin() {
+	/* if(!validation($("#adminForm")))  {
+        return false;  
+    } */
+    const id = $('#id').val();
+    const formData = $("#adminForm").serializeArray(); 
+    const data = {};
+    formData.forEach(item => data[item.name] = item.value); 
+
+    $('#loader').show();
+    $('#submitButton').prop('disabled', true);
+    $.ajax({
+        url: "/admin-update?id=" + id,
+        type: "PUT",
+        contentType: "application/json", // Send JSON data
+        data: JSON.stringify(data),
+        success: function(response) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            alert(response);
+        },
+        error: function(xhr) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            alert("Error: " + xhr.responseText);
+        }
+    });
+}
+
 </script>
 </head>
 
@@ -44,8 +72,9 @@
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form:form method="post" modelAttribute="user"
-						enctype="multipart/form-data" onsubmit="return validation(this)">
+					<form:form method="post" modelAttribute="user" id="adminForm"
+						enctype="multipart/form-data" onsubmit="event.preventDefault(); updateAdmin();">
+						<form:hidden path="id" value="" id="id"/>
 						<div class="card-body lead-status">
 
 							<div class="row">

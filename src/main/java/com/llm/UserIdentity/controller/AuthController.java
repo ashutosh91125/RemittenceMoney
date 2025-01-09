@@ -172,6 +172,7 @@ public class AuthController {
     @GetMapping("/admin-detail")
 	public String handleSignup(@RequestParam("id") Long id,  Model model) {
 		Optional<User> admin = customUserDetailsService.getById(id);
+		model.addAttribute("country", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", admin.get().getCountry()));
 		model.addAttribute("user",admin);
 		return "admin-details";
 	}
@@ -209,7 +210,6 @@ public class AuthController {
 	        // Update the fields of the existing user with the provided details
 	        existingUser.setAdminName(updatedUserDetails.getAdminName());
 	        existingUser.setEmail(updatedUserDetails.getEmail());
-	        existingUser.setCountry(updatedUserDetails.getCountry());
 	        existingUser.setUsername(updatedUserDetails.getUsername());
 	        existingUser.setCountry(updatedUserDetails.getCountry());
 	        existingUser.setPhoneNumber(updatedUserDetails.getPhoneNumber());

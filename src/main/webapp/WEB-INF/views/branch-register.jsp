@@ -339,20 +339,18 @@ document.addEventListener('DOMContentLoaded', function() {
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">CDP Channel<span
-												class="text-danger">*</span></label>
-											<form:select path="cdpChannel" class="form-control"
-												data-select2-selector="icon" id="cdpChannel">
-												<form:option value="" disabled="true" selected="true">Select CDP Channel</form:option>
-												<form:option value="WEB">Web</form:option>
-												<form:option value="DIGITAL">Digital</form:option>
-												<form:option value="MOBILE">mobile</form:option>
-												<form:option value="EKYC">FC Wholesale Branch</form:option>
-											</form:select>
-											<span id="cdpChannelError" class="text-danger1"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">State<span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="state" class="form-control"
+                                                data-select2-selector="icon" multiple="false" id="state">
+                                                <form:option value="" disabled="true" selected="true">Select State</form:option>
+                                                <form:options items="${stateList}" itemValue="valueId"
+                                                    itemLabel="description" />
+                                            </form:select>
+                                            <span id="stateError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Display Name<span
@@ -435,18 +433,20 @@ document.addEventListener('DOMContentLoaded', function() {
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">State<span
-												class="text-danger">*</span></label>
-											<form:select path="state" class="form-control"
-												data-select2-selector="icon" multiple="false" id="state">
-												<form:option value="" disabled="true" selected="true">Select State</form:option>
-												<form:options items="${stateList}" itemValue="valueId"
-													itemLabel="description" />
-											</form:select>
-											<span id="stateError" class="text-danger1"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">CDP Channel<span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="cdpChannel" class="form-control"
+                                                data-select2-selector="icon" id="cdpChannel">
+                                                <form:option value="" disabled="true" selected="true">Select CDP Channel</form:option>
+                                                <form:option value="WEB">Web</form:option>
+                                                <form:option value="DIGITAL">Digital</form:option>
+                                                <form:option value="MOBILE">mobile</form:option>
+                                                <form:option value="EKYC">EKYC</form:option>
+                                            </form:select>
+                                            <span id="cdpChannelError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">RAAS Channel<span

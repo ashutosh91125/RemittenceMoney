@@ -305,13 +305,14 @@
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">CDP Channel</label>
-											<form:input path="cdpChannel" class="form-control"
-												id="cdpChannel" readonly="true" required='true' />
-											<span id="cdpChannelError" class="text-danger"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">State<span
+                                                class="text-danger"> </span></label>
+                                            <input value="${states }" class="form-control" id="state"
+                                                readonly="true" required='true'  />
+                                            <span id="branchChannelIdError" class="text-danger"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Display Name<span
@@ -392,14 +393,13 @@
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">State<span
-												class="text-danger"> </span></label>
-											<input value="${states }" class="form-control" id="state"
-												readonly="true" required='true'  />
-											<span id="branchChannelIdError" class="text-danger"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">CDP Channel</label>
+                                            <form:input path="cdpChannel" class="form-control"
+                                                id="cdpChannel" readonly="true" required='true' />
+                                            <span id="cdpChannelError" class="text-danger"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">RAAS Channel</label>

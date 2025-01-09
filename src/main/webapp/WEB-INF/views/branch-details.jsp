@@ -194,6 +194,17 @@
 		const element = document.getElementById(divId);
 		element.classList.toggle("show");
 	}
+
+	$(document).ready(function () {
+	    const status = document.getElementById('status'); 
+	    
+	    if (status.value === 'true') {
+	    	status.value = 'Active';
+	    }
+	    else{
+	    	status.value = 'Inactive';
+	    }
+	});
 </script>
 </head>
 
@@ -618,7 +629,7 @@
 													<label class="form-label">Status <span
 														class="text-danger"> </span></label>
 													<form:input path="status" class="form-control"
-														id="statusFlag" readonly="true" placeholder="Status"/>
+														id="status" readonly="true" placeholder="Status"/>
 												</div>
 											</div>
 										</div>

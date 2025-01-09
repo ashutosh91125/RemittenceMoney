@@ -30,8 +30,7 @@ function validation(form) {
 		const perDayLimit = $(form).find("#perDayLimit").val().trim();
 		const perMonthLimit = $(form).find("#perMonthLimit").val().trim();
 		const adminUserName = $(form).find("#adminUserName").val();
-		const adminPassword = $(form).find("#adminPassword").val();
-		const password = $(form).find("#password").val();	
+		const adminPassword = $(form).find("#adminPassword").val();	
 		const username = $(form).find("#username").val();	
 		
 		$(".text-danger1").text("").css("color", "red");
@@ -163,10 +162,6 @@ function validation(form) {
 	  if (adminPassword === "") {
 		 $("#adminPasswordError").text("Password is required.");
 		  isValid = false;
-	  }
-	  if (password === "") {
-	  	  $("#passwordError").text("Password is required.");
-	  	  isValid = false;
 	  }
 	  if (username === "") {
 	     $("#userNameError").text("User Name is required.");

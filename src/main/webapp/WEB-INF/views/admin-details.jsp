@@ -92,7 +92,7 @@
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country</label>
-									<form:input path="country" id="countries"
+									<input value="${country }" id="countries"
 										class="form-control" placeholder="Country" readonly="true" />
 								</div>
 							</div>

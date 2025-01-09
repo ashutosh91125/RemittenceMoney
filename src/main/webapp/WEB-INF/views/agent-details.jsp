@@ -166,13 +166,11 @@
 <!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
 <script>
 function updateAgent() {
-	
-	  /*   const formData = $("#agentForm").serialize(); // Serialize form data for submission */
 	    const id= $("#id").val();
 	    $('#loader').show();
 	    $('#submitButton').prop('disabled', true);
 	    $.ajax({
-	        url: "/agent-update"?id=" + id,
+	        url: "/agent-update?id=" + id,
 	        type: "GET",
 	        contentType: "application/x-www-form-urlencoded",
 	        data: id,

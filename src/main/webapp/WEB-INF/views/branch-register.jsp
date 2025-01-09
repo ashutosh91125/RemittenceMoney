@@ -345,12 +345,12 @@ document.addEventListener('DOMContentLoaded', function() {
 											<form:select path="cdpChannel" class="form-control"
 												data-select2-selector="icon" id="cdpChannel">
 												<form:option value="" disabled="true" selected="true">Select Cdp Chhanel</form:option>
-												<form:option value="Web">Web</form:option>
-												<form:option value="Digital">Digital</form:option>
-												<form:option value="Mobile">mobile</form:option>
-												<form:option value="FC Wholesale Branch">FC Wholesale Branch</form:option>
+												<form:option value="WEB">Web</form:option>
+												<form:option value="DIGITAL">Digital</form:option>
+												<form:option value="MOBILE">mobile</form:option>
+												<form:option value="EKYC">FC Wholesale Branch</form:option>
 											</form:select>
-											<span id="cdpChannellError" class="text-danger1"></span>
+											<span id="cdpChannelError" class="text-danger1"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -449,12 +449,12 @@ document.addEventListener('DOMContentLoaded', function() {
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Rass Channel<span
+											<label class="form-label">RASS Channel<span
 												class="text-danger">*</span></label>
 											<form:select path="rassChannel" class="form-control"
 												data-select2-selector="icon" id="rassChannel">
 												<form:option value="" disabled="true" selected="true">Select Rass Chhanel</form:option>
-												<form:option value="Agency">Aggency</form:option>
+												<form:option value="Agency">Agency</form:option>
 												<form:option value="Direct">Direct</form:option>
 											</form:select>
 											<span id="rassChannelError" class="text-danger1"></span>

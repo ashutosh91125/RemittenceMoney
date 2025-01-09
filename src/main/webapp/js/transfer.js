@@ -688,6 +688,7 @@ $(document).ready(function() {
                                  address_type: "PRESENT",
                                  town_name: "HAWALLI",
                                  post_code: "123456"
+                                 building_number: "AB1234"
                              }
                          }
                     }

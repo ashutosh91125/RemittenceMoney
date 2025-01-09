@@ -172,8 +172,8 @@ function updateAgent() {
 	    $('#loader').show();
 	    $('#submitButton').prop('disabled', true);
 	    $.ajax({
-	        url: "/view-agent-update?id=" + id,
-	        type: "POST",
+	        url: "/agent-update"?id=" + id,
+	        type: "GET",
 	        contentType: "application/x-www-form-urlencoded",
 	        data: id,
 	        success: function(response) {

@@ -9,9 +9,7 @@ function validation(form) {
 		const username = $(form).find("#username").val().trim();
 		const email = $(form).find("#email").val().trim();
 		const mobile = $(form).find("#mobile").val().trim();
-		if (!id) {
-				const password = $(form).find("#password").val().trim();
-				}
+		
 		if (!branches || branches.length === 0 || branches.includes("Select")) {
 		    $("#branchError").text("Branch is required.");
 		    isValid = false;
@@ -34,12 +32,7 @@ function validation(form) {
 			 	 $("#usernameError").text("User Name  is required.");
 			 	  isValid = false;
 			 }
-		 if (!id) {
-		 if (!password || password === "" ) {
-			 	  $("#passwordError").text("Password  is required.");
-			 	  isValid = false;
-			  }
-			}  
+		
 		 if (email === "") {
 			  	  $("#emailError").text("Email is required.");
 			  	  isValid = false;

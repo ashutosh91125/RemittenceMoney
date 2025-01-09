@@ -205,20 +205,21 @@ document.addEventListener('DOMContentLoaded', function () {
         const passwordValue = password.value.trim();
         const confirmPasswordValue = confirmPassword.value.trim();
 
-
         if (!passwordPattern.test(passwordValue)) {
             passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
-            passwordError.style.display = "block";   
+            passwordError.style.display = "block";
         } else {
             passwordError.style.display = "none";
         }
+
         if (confirmPasswordValue === "") {
-            validationMessage.textContent = ""; 
+            validationMessage.textContent = "";
             return;
         }
+
         if (passwordValue !== confirmPasswordValue) {
             validationMessage.textContent = "Passwords do not match!";
-            validationMessage.style.color = "red"; 
+            validationMessage.style.color = "red";
         } else {
             if (passwordPattern.test(passwordValue)) {
                 validationMessage.textContent = "Matched password";
@@ -228,6 +229,41 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
+
+    function validateOnSubmit(event) {
+        let isValid = true;
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+        if (!passwordValue) {
+            passwordError.textContent = "Password is required.";
+            passwordError.style.display = "block";
+            isValid = false;
+        } else if (!passwordPattern.test(passwordValue)) {
+            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+            passwordError.style.display = "block";
+            isValid = false;
+        } else {
+            passwordError.style.display = "none";
+        }
+
+        if (!confirmPasswordValue) {
+            validationMessage.textContent = "Confirm Password is required.";
+            validationMessage.style.color = "red";
+            isValid = false;
+        } else if (passwordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red";
+            isValid = false;
+        } else {
+            validationMessage.textContent = "";
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission
+        }
+    }
+
     password.addEventListener("focus", function () {
         if (!passwordPattern.test(password.value.trim())) {
             passwordError.style.display = "block";
@@ -242,7 +278,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     password.addEventListener("input", validateRealTime);
     confirmPassword.addEventListener("input", validateRealTime);
-});	
+
+    const form = document.querySelector("form"); // Select the form element
+    form.addEventListener("submit", validateOnSubmit);
+});
+
 </script>
 </head>
 
@@ -407,8 +447,8 @@ document.addEventListener('DOMContentLoaded', function () {
 												class="text-danger">*</span></label> <input name="confirmPassword"
 												type="password" class="form-control" id="confirmPassword"
 												placeholder="Confirm Password" />
-										</div>
-										<span id="validationMessage"></span>
+												<span id="validationMessage"></span>
+										</div>	
 									</div>
 								</div>
 							</div>

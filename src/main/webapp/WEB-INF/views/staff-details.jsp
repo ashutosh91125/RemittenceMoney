@@ -286,7 +286,7 @@ $(document).ready(function () {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger"> </span></label>
-                                             <form:input path="branches" class="form-control" id="branch"  readonly="true"  required='true' /> 
+                                             <input value="${branches}" class="form-control" id="branch"  readonly="true"  required='true' multiple="false" /> 
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
                                     </div>

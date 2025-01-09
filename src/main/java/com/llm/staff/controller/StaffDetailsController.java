@@ -3,12 +3,6 @@ package com.llm.staff.controller;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.repository.UserRepository;
-import com.llm.agent.model.Agent;
-import com.llm.agent.repository.AgentRepositories;
-import com.llm.agent.service.IAgentService;
-import com.llm.branch.model.dto.BranchDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,7 +12,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.llm.branch.projection.BranchProjection;
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
+import com.llm.branch.model.BranchDetails;
+import com.llm.branch.model.dto.BranchDTO;
 import com.llm.branch.service.BranchDetailsService;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.model.dto.StaffDTO;
@@ -110,9 +109,25 @@ public class StaffDetailsController {
 
     @GetMapping("/staff-deatils")
     public String getStaffDetails(@RequestParam("id") Long id,Model model) {
+    	
     	Optional<StaffDetails> staffDetils = staffDetailsService.getById(id);
     	if(staffDetils.isPresent()) {
-//    		model.addAttribute("branches",branchDetailsService.getById(staffDetils.get().get).get().getBranchName());
+//    		List<String> branchIds = staffDetils.get().getBranches();
+//    		for (String branchId : branchIds) {
+//    		    try {
+//    		        Long branchDetailsId = Long.parseLong(branchId); 
+//    		        Optional<BranchDetails> branchDetails = branchDetailsService.getById(branchDetailsId);
+//    		        model.addAttribute("branches",branchDetails.get().getBranchName());
+//    		    } catch (NumberFormatException e) {
+//    		       
+//    		    	log.error("Invalid branch ID: " + branchId);
+//    		    }
+//    		}//multiple branches
+    		Long branchId = Long.valueOf(staffDetils.get().getBranches());
+    		Optional<BranchDetails> branch = branchDetailsService.getById(branchId);
+    		if(branch.isPresent()) {
+    			  model.addAttribute("branches", branch.get().getBranchName());
+    		}
     		model.addAttribute("staff",staffDetils);
     	}
     	return "staff-details";

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.llm.UserIdentity.model.User;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.model.dto.BranchDTO;
+import com.llm.branch.projection.BranchProjection;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.branch.service.BranchDetailsService;
 
@@ -50,7 +51,7 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
                 .map(branch -> {
                     BranchDTO branchDTO = new BranchDTO();
                     branchDTO.setAgent(branch.getAgent());
-                    branchDTO.setBranchLocationId(branch.getBranchLocationId());
+                    branchDTO.setId(branch.getId());
                     branchDTO.setBranchName(branch.getBranchName());
                     // Set other fields from BranchDetails to BranchDTO
                     return branchDTO;
@@ -106,6 +107,5 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
 
         return true; 
     }
-
 
 }

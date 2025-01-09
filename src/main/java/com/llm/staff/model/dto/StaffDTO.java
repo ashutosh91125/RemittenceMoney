@@ -9,7 +9,7 @@ import java.util.List;
 public class StaffDTO {
     private String agent;
     private String country;
-    private List<String> branches;
+    private String branches;
     private Role staffGroup;
     private String firstName;
     private String middleName;

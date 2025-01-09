@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class BranchDTO {
     private String agent;
-    private String branchLocationId;
+    private Long id;
     private String branchName;
 }

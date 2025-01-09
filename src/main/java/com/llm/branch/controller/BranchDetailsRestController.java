@@ -1,19 +1,30 @@
 package com.llm.branch.controller;
 
-import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.repository.UserRepository;
-import com.llm.branch.model.BranchDetails;
-import com.llm.branch.service.BranchDetailsService;
-import lombok.extern.slf4j.Slf4j;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.branch.model.BranchDetails;
+import com.llm.branch.projection.BranchProjection;
+import com.llm.branch.service.BranchDetailsService;
+
+import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @RequestMapping("api/v1/branch")
@@ -91,7 +102,15 @@ public class BranchDetailsRestController {
         }
     }
 
-
+    @GetMapping("/{branchLocationId}")
+    public ResponseEntity<List<BranchProjection>> getBranchDetails(@PathVariable String branchLocationId) {
+        List<BranchProjection> branchDetails = branchDetailsService.getBranchDetailsByLocationId(branchLocationId);
+        if (branchDetails.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(branchDetails);
+    }
+    
 
 
 }

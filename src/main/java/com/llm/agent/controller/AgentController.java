@@ -123,21 +123,21 @@ public class AgentController {
 		Agent agent = agentService.getByAgentId(agentId);
 		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
 		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
-		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndValueId("state",agent.getState()));
+		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",agent.getCountries(),agent.getState()));
 		model.addAttribute("timezones", enumEntityService.getEnumValueDescriptionByKeyAndValueId("timezone",agent.getTimeZone()));
 		model.addAttribute("agent", agent);
 	  
 		return "agent-details";
 	}
 
-	@PostMapping("/view-agent-update")
-	public String submitViewForm(@RequestParam("id") Long id, Model model) {
-//		Optional<Agent> agentId = agentService.getById(id);
-//		model.addAttribute("agent",agentId);
-		return "redirect:/agent-update-form?id=" + id;
-	}
+//	@PostMapping("/view-agent-update")
+//	public String submitViewForm(@RequestParam("id") Long id, Model model) {
+////		Optional<Agent> agentId = agentService.getById(id);
+////		model.addAttribute("agent",agentId);
+//		return "redirect:/agent-update-form?id=" + id;
+//	}
 
-	@GetMapping("/agent-update-form")
+	@GetMapping("/agent-update")
 	public String showUpdateForm(@RequestParam("id") Long id, Model model) {
 		Optional<Agent> existingAgent = agentService.getById(id);
 		if (existingAgent.isPresent()) {

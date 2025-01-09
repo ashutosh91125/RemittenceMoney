@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,58 +80,27 @@ public class AdminController {
 
 	}
 
-	@GetMapping("/adminlogin")
-	public String showLoginForm(Model model) {
-		try {
-			Optional<EnumEntity> countriesEntity = enumEntityService.getEnumEntityByKey("country");
-			countriesEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
 
-		} catch (Exception e) {
-			logger.error("Error retrieving country list: ", e);
-			model.addAttribute("countryList", List.of());
-		}
-		model.addAttribute("admin", new Admin());
-		return "adminlogin";
-	}
+//	@GetMapping("/admin-detail")
+//	public String getAgentDetails(@RequestParam("id") Long id, Model model) {
+//		Optional<User> userOptional = customUserDetailsService.getById(id);
+//
+//		if (userOptional.isPresent()) {
+//			User user = userOptional.get();
+//
+//			// Create and populate the Admin object with the user's data
+//			Admin admin = new Admin();
+//			admin.setAdminName(user.getAdminName()); // Assuming `getFullName` is a method in `User`
+//			admin.setUserName(user.getUsername()); // Map the username
+//			admin.setPhone(Long.valueOf(user.getPhoneNumber())); // Map the phone number
+//			admin.setEmail(user.getEmail());
+//			admin.setPassword(user.getPassword());
+//			admin.setCountries(enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", user.getCountry()));
+//			model.addAttribute("admin", admin);
+//			model.addAttribute("id", id);
+//		}
+//		return "admin-details";
+//	}
 
-	@PostMapping("/adminlogin")
-	public String loginAdmin(@ModelAttribute("admin") Admin admin, Model model) {
-		try {
-			Optional<AdminWithoutProfile> adminOpt = adminService.findAdminByEmailAndPassword(admin.getEmail(),
-					admin.getPassword());
-
-			if (adminOpt.isPresent()) {
-				model.addAttribute("loggedInAdmin", adminOpt.get());
-				return "adminlist";
-			} else {
-				model.addAttribute("loginError", "Invalid email or password");
-				return "adminlogin";
-			}
-		} catch (Exception e) {
-			logger.error("Error occurred during admin login", e);
-			model.addAttribute("loginError", "An error occurred. Please try again.");
-			return "adminlogin";
-		}
-	}
 	
-	@GetMapping("/admin-detail")  
-    public String getAgentDetails(@RequestParam("id") Long id,Model model) {
- 		Optional<User> userOptional = customUserDetailsService.getById(id);
- 		
-    	if(userOptional.isPresent()) {
-    		User user = userOptional.get();
-            
-            // Create and populate the Admin object with the user's data
-            Admin admin = new Admin();
-            admin.setAdminName(user.getAdminName()); // Assuming `getFullName` is a method in `User`
-            admin.setUserName(user.getUsername()); // Map the username
-            admin.setPhone(Long.valueOf(user.getPhoneNumber())); // Map the phone number
-            admin.setEmail(user.getEmail());
-            admin.setPassword(user.getPassword());
-            admin.setCountries(enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",user.getCountry()));
-    		model.addAttribute("admin",admin);
-    	}
-    	return "admin-details";
-    }
-
 }

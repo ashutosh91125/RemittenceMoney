@@ -1,15 +1,10 @@
 package com.llm.UserIdentity.controller;
 
-import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.model.dto.SignUp;
-import com.llm.UserIdentity.model.enums.Role;
-import com.llm.UserIdentity.repository.UserRepository;
-import com.llm.UserIdentity.service.CustomUserDetailsService;
-import com.llm.admin.model.Admin;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-import com.llm.branch.repository.BranchDetailsRepository;
-import com.llm.repositories.CustomerRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,15 +17,23 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Optional;
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.model.enums.Role;
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.UserIdentity.service.CustomUserDetailsService;
+import com.llm.branch.repository.BranchDetailsRepository;
+import com.llm.common.model.EnumEntity;
+import com.llm.common.service.EnumEntityService;
+import com.llm.repositories.CustomerRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -47,6 +50,9 @@ public class AuthController {
 
     @Autowired
     private final CustomerRepository customerRepository;
+    
+    @Autowired
+	private EnumEntityService enumEntityService;
 
     // Login Page
     @GetMapping("/login")
@@ -157,6 +163,32 @@ public class AuthController {
         model.addAttribute("error", "User not found.");
         return "change-password";
     }
+    
+    
+    @GetMapping("/admin-detail")
+	public String handleSignup(@RequestParam("id") Long id,  Model model) {
+		Optional<User> admin = customUserDetailsService.getById(id);
+		model.addAttribute("user",admin);
+		return "admin-details";
+	}
+	
+	@GetMapping("/admin-update-form")
+	public String getUserUpdateForm(@RequestParam("id") Long id, Model model) {
+		Optional<User> userOptional = customUserDetailsService.getById(id);
+		try {
+			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
+			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
 
+		} catch (Exception e) {
+			log.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of());
+		}
+		if (userOptional.isPresent()) {
+			model.addAttribute("user", userOptional.get());
+		} 
+		return "admin-view-update";
+	}
+	
+	
 }
 

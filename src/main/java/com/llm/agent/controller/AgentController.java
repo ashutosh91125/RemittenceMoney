@@ -130,12 +130,6 @@ public class AgentController {
 		return "agent-details";
 	}
 
-//	@PostMapping("/view-agent-update")
-//	public String submitViewForm(@RequestParam("id") Long id, Model model) {
-////		Optional<Agent> agentId = agentService.getById(id);
-////		model.addAttribute("agent",agentId);
-//		return "redirect:/agent-update-form?id=" + id;
-//	}
 
 	@GetMapping("/agent-update")
 	public String showUpdateForm(@RequestParam("id") Long id, Model model) {

@@ -17,27 +17,7 @@
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
-	function viewAdminUpdateForm() {
-		const id = $("#id").val();
-		$.ajax({
-			url : "/admin-update-form?id=" + id,
-			type : "GET",
-			contentType : "application/x-www-form-urlencoded",
-			/*   data: formData, */
-			success : function(response) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				 $('body').html(response);
-// 				alert(response);
-				console.log(response);
-			},
-			error : function(xhr) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				alert("Error: " + xhr.responseText);
-			}
-		});
-	}
+	
 </script>
 </head>
 
@@ -61,46 +41,60 @@
 		<div class="nxl-content p-3">
 			<div class="main-content">
 				<div class="card border-top-0">
-					<form:form method="post" enctype="multipart/form-data"
-						modelAttribute="user"
-						onsubmit="event.preventDefault(); viewAdminUpdateForm() "
-						id="adminForm">
-						<form:hidden path="id" value="" id="id" />
+					<div class="card-header p-0">
+						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
+					</div>
+					<form:form method="post" modelAttribute="user"
+						enctype="multipart/form-data" onsubmit="return validation(this)">
 						<div class="card-body lead-status">
+
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Name</label>
+									<label class="form-label">Admin Name<span
+										class="text-danger">*</span></label>
 									<form:input path="adminName" type="text" class="form-control"
-										id="adminName" placeholder="Admin Name" readonly="true" />
+										id="adminName" placeholder="Admin Name" />
+									<span id="adminNameError" style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">User Name</label>
+									<label class="form-label">User Name<span
+										class="text-danger">*</span></label>
 									<form:input path="username" type="text" class="form-control"
-										id="userName" placeholder="User Name" readonly="true" />
+										id="userName" placeholder="User Name" />
+									<span id="userNameError" style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Phone Number</label>
+									<label class="form-label">Phone Number <span
+										class="text-danger">*</span></label>
 									<form:input path="phoneNumber" type="text" class="form-control"
-										id="phoneNumber" placeholder="Phone Number" readonly="true" />
+										id="phoneNumber" placeholder="Phone Number" />
+									<span id="phoneNumberError" style="color: red;"></span>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Email</label>
+									<label class="form-label">Email<span
+										class="text-danger">*</span></label>
 									<form:input path="email" type="text" class="form-control"
-										id="email" placeholder="Email" readonly="true" />
+										id="email" placeholder="Email" />
+									<span id="emailError" style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Country</label>
-									<form:input path="country" id="countries"
-										class="form-control" placeholder="Country" readonly="true" />
+									<label class="form-label">Country<span
+										class="text-danger">*</span></label> <select class="form-control"
+										id="country" name="country">
+										<c:forEach items="${countryList}" var="country">
+											<option value="${country.valueId}">${country.description}</option>
+										</c:forEach>
+									</select> <span id="countryError" style="color: red;"></span>
 								</div>
+
 							</div>
 							<div class="row">
 								<div class="col-10"></div>
 								<div class="col-2 text-end mb-2">
 									<button type="submit"
-										class="btn btn-primary btn-lg next-button">Update</button>
+										class="btn btn-primary btn-lg next-button">Submit</button>
 								</div>
 							</div>
 						</div>
@@ -118,5 +112,7 @@
 	<script src="assets/vendors/js/dataTables.min.js"></script>
 	<script src="assets/vendors/js/dataTables.bs5.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
+	<script type="text/javascript" src="js/adminSignUp.js"></script>
+
 </body>
 </html>

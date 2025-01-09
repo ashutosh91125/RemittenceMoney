@@ -170,8 +170,8 @@
 		const id = $('#id').val();
         $('#submitButton').prop('disabled', true);
         $.ajax({
-            url: "/view-staff-update?id=" +id,
-            type: "POST",
+            url: "/staff-update-form?id=" +id,
+            type: "GET",
             contentType: "application/x-www-form-urlencoded",
 //             data: formData,
             success: function(response) {

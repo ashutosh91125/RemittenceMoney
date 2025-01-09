@@ -132,12 +132,7 @@ public class StaffDetailsController {
     	}
     	return "staff-details";
     }
-    
-    @PostMapping("/view-staff-update")
-	public String submitViewForm(@RequestParam("id") Long id, Model model) {
-		return "redirect:/staff-update-form?id=" + id;
-	}
-    
+
     @GetMapping("/staff-update-form")
 	public String showUpdateForm(@RequestParam("id") Long id, Model model) {
     	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

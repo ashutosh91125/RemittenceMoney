@@ -96,12 +96,9 @@
 										class="form-control" placeholder="Country" readonly="true" />
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-10"></div>
-								<div class="col-2 text-end mb-2">
-									<button type="submit"
-										class="btn btn-primary btn-lg next-button">Update</button>
-								</div>
+							<div class="mt-5 mb-5 text-center"
+								style="display: flex; justify-content: center">
+								<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
 							</div>
 						</div>
 					</form:form>

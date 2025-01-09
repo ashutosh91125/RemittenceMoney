@@ -251,9 +251,8 @@
 		
 		
 
-//    if (!isValid) {
-//        alert("Please fill in all required fields.");
-//    }
-
+		if (!isValid) {
+		          document.getElementById("validationError").style.display = "block";
+		      }
     return isValid;
 }

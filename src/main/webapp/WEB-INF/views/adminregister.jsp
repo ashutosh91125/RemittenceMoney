@@ -113,12 +113,15 @@
 									</select> <span id="countryError" style="color: red;"></span>
 								</div>
 							</div>
-							<div class="row">
-								<div class="col-10"></div>
-								<div class="col-2 text-end mb-2">
-									<button type="submit"
-										class="btn btn-primary btn-lg next-button">Submit</button>
-								</div>
+							<div class="mt-5 mb-5 text-center"
+								style="display: flex; justify-content: center">
+								<span id="validationError"
+									style="color: #ff000087; display: none;"><b>Please
+										fill all the required fields before submitting!</b></span>
+							</div>
+							<div class="mt-5 mb-5 text-center"
+								style="display: flex; justify-content: center">
+								<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
 							</div>
 						</div>
 					</form>

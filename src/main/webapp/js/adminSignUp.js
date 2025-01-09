@@ -33,5 +33,8 @@ function validation(form) {
 	     document.getElementById("countryError").innerHTML = "Country is required.";
 	     isValid = false;
 	}
+	if (!isValid) {
+	          document.getElementById("validationError").style.display = "block";
+	      }
 	return   isValid;
     }

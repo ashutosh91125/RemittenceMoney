@@ -49,5 +49,8 @@ function validation(form) {
 			  	  $("#mobileError").text("Mobile is required.");
 			  	  isValid = false;
 			}
+		if (!isValid) {
+			       document.getElementById("validationError").style.display = "block";
+		   }
   return isValid;
 }

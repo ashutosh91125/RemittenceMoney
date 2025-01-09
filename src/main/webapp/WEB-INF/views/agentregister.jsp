@@ -924,6 +924,10 @@ document.addEventListener('DOMContentLoaded', function () {
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
+					<span id="validationError"  style="color:#ff000087; display:none;"><b>Please fill  all the required fields before submitting!S</b></span>
+				</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
 					<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
 				</div>
 			</div>

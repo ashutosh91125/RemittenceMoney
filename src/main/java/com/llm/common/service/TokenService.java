@@ -6,6 +6,7 @@ import com.llm.agent.repository.AgentRepositories;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -25,6 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TokenService {
 
     @Autowired
@@ -75,8 +77,9 @@ public class TokenService {
 
     public String getAccessToken() {
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(getTokenRequestBody(), getTokenHeaders());
+        log.info("Access Token Header ++++++++++++++========="+ getTokenHeaders());
+        log.info("Access Token Body +++++++=========="+ getTokenRequestBody());
         ResponseEntity<Map> response = restTemplate.postForEntity(TOKEN_URL, requestEntity, Map.class);
-
         return (String) response.getBody().get("access_token");
     }
 

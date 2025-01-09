@@ -91,7 +91,7 @@ public class AgentRestController {
 			agent.setOutletCode(agentDTO.getOutletCode());
 			agent.setBranchLocationId(agentDTO.getBranchLocationId());
 			agent.setApiUsername(agentDTO.getApiUsername());
-			agent.setApiPassword(agent.getApiPassword());
+			agent.setApiPassword(agentDTO.getApiPassword());
 
 			agentService.addAgent(agent);
 

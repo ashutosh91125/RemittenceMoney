@@ -5,8 +5,11 @@ import java.time.ZoneId;
 import java.util.*;
 
 import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.branch.model.BranchDetails;
+import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.service.EnumEntityService;
 import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +36,10 @@ public class CustomerService {
 	private CustomerRepository customerRepository;
 
 	@Autowired
-	private UserRepository userRepository;
+	private StaffDetailsRepository staffDetailsRepository;
+
+	@Autowired
+	private BranchDetailsRepository branchDetailsRepository;
 
 	@Autowired
 	private CustomerCreationService customerCreationService;
@@ -47,13 +53,14 @@ public class CustomerService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 
-		var byUsername = userRepository.findByUsername(username);
+		var byUsername = staffDetailsRepository.findByUsername(username);
+		Optional<BranchDetails> branch = branchDetailsRepository.findById(byUsername.get().getBranches());
 
 		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", byUsername.get().getCountry());
 
 		String formattedCountry = country.substring(0, 1).toUpperCase() + country.substring(1).toLowerCase();
 
-		customer.setChannel("WEB");
+		customer.setChannel(branch.get().getCdpChannel());
 		customer.setAgentLocationId(formattedCountry);
 		if (Objects.equals(customer.getCountryOfBirth(), "MY")) {
 			customer.setPlaceOfBirth(

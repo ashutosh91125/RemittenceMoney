@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.llm.raas.service.ExternalService;
+import org.springframework.web.client.HttpClientErrorException;
 
 @RestController
 @RequestMapping("/api/v1/raas")
@@ -112,24 +113,35 @@ public class ExternalApiController {
 
 	@PostMapping("/create-transaction")
 	public ResponseEntity<?> createTransaction(@RequestBody Map<String, Object> requestBody) {
-		logger.info(requestBody.toString());
-		// Call external service
-		Map<String, Object> response = externalApiService.createTransaction(requestBody);
+		try {
+			logger.info(requestBody.toString());
+			Map<String, Object> response = externalApiService.createTransaction(requestBody);
 
-		if (response.containsKey("data")) {
-			Map<String, Object> data = (Map<String, Object>) response.get("data");
-			String transactionRefNumber = (String) data.get("transaction_ref_number");
-			String state = (String) data.get("state");
-			String subState = (String) data.get("sub_state");
+			if (response.containsKey("data")) {
+				Map<String, Object> data = (Map<String, Object>) response.get("data");
+				String transactionRefNumber = (String) data.get("transaction_ref_number");
+				String state = (String) data.get("state");
+				String subState = (String) data.get("sub_state");
 
-			return ResponseEntity.ok(Map.of(
-					"transaction_ref_number", transactionRefNumber,
-					"state", state,
-					"sub_state", subState,
-					"status", 200
-			));
-		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("error", "Failed to create transaction"));
+				return ResponseEntity.ok(Map.of(
+						"transaction_ref_number", transactionRefNumber,
+						"state", state,
+						"sub_state", subState,
+						"status", 200
+				));
+			} else {
+				// Handle error response properly
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			}
+		} catch (HttpClientErrorException e) {
+			// Log the error and return the original error response
+			logger.error("Error occurred: {}", e.getMessage(), e);
+			return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+		} catch (Exception e) {
+			// Handle unexpected exceptions
+			logger.error("Unexpected error: {}", e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Map.of("message", "An unexpected error occurred."));
 		}
 	}
 

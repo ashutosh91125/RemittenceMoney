@@ -719,9 +719,24 @@ function getQuote() {
                             confirmTransaction(transactionRefNumber, state, subState);
                         }
                     },
-                    error: function() {
+                    error: function(jqXHR) {
                         $('#loader').hide();
-                        alert('Failed to create transaction. Please try again.');
+                        console.log(jqXHR); // Debugging log
+
+                        let errorMessage = 'Failed to create transaction. Please try again.';
+
+                        try {
+                            const response = JSON.parse(jqXHR.responseText);
+                            if (response.details) {
+                                errorMessage = Object.values(response.details)[0]; // Extract the first error message
+                            } else if (response.message) {
+                                errorMessage = response.message; // Use the main error message
+                            }
+                        } catch (e) {
+                            console.error('Error parsing response:', e);
+                        }
+
+                        alert(errorMessage);
                     },
                     complete: function() {
                         $('#loader').hide();

@@ -839,12 +839,25 @@ function getQuote() {
                             window.location.href = "transfer-list";
                         }
                     },
-                    error: function(errorResponse) {
-                        const errorData = errorResponse.responseJSON || {};
+                    error: function(jqXHR) {
+                        $('#loader').hide();
+                        console.log(jqXHR); // Debugging log
+
+                        let errorMessage = 'Transaction confirmation failed. Please try again.';
+                        try {
+                            const response = JSON.parse(jqXHR.responseText);
+                            if (response.details) {
+                                errorMessage = Object.values(response.details)[0]; // Extract the first error message
+                            } else if (response.message) {
+                                errorMessage = response.message; // Use the main error message
+                            }
+                        } catch (e) {
+                            console.error('Error parsing response:', e);
+                        }
                         const transactionData = {
                             ecrn: $('#ecrn').val(),
                             transactionReferenceNumber: transactionRefNumber,
-                            paymentStatus: errorData.status,
+                            paymentStatus: 'failed',
                             transactionState: state,
                             transactionSubState: subState,
 
@@ -918,7 +931,7 @@ function getQuote() {
                         // Save transaction data
                         saveTransaction(transactionData);
 
-                        alert('Transaction confirmation failed: ' + (errorData.message || 'Unknown error'));
+                        alert(errorMessage);
                     }
                 });
             }

@@ -146,8 +146,36 @@ public class ExternalApiController {
 	}
 
 	@PostMapping("/confirm-transaction")
-	public Map<String, Object> confirmTransaction(@RequestBody Map<String, Object> requestBody) {
-		return externalApiService.confirmTransaction(requestBody);
+	public ResponseEntity<?> confirmTransaction(@RequestBody Map<String, Object> requestBody) {
+		try {
+			logger.info("Request received for confirm transaction: {}", requestBody);
+			Map<String, Object> response = externalApiService.confirmTransaction(requestBody);
+
+			if (response.containsKey("data")) {
+				Map<String, Object> data = (Map<String, Object>) response.get("data");
+				String state = (String) data.get("state");
+				String subState = (String) data.get("sub_state");
+				String status = (String) response.get("status");
+
+				return ResponseEntity.ok(Map.of(
+						"status", status,
+						"state", state,
+						"sub_state", subState
+				));
+			} else {
+				// Handle error response properly
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+			}
+		} catch (HttpClientErrorException e) {
+			// Log the error and return the original error response
+			logger.error("Error occurred: {}", e.getMessage(), e);
+			return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+		} catch (Exception e) {
+			// Handle unexpected exceptions
+			logger.error("Unexpected error: {}", e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(Map.of("message", "An unexpected error occurred."));
+		}
 	}
 
 	@GetMapping("/enquire-transaction")

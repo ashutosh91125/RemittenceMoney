@@ -277,6 +277,7 @@
 			<form>
 				<input type="hidden" id="residentTypeId" name="residentTypeId"
 					value="">
+					<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" />	
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row">
@@ -587,7 +588,7 @@
 													<option value="MOBILEWALLET">Mobile Wallet</option>
 													<option value="BANK">BANK</option>
 												</select> <span id="beneficiaryDeliveryOptionError"
-													class="text-danger"></span>
+													style="color:red;"></span>
 											</div>
 											<div class="col-12 col-md-4">
 												<label class="form-label">Payout Country<span
@@ -599,7 +600,7 @@
 													<c:forEach var="country" items="${countryList}">
 														<option value="${country.valueId}">${country.description}</option>
 													</c:forEach>
-												</select> <span id="payOutCountryError" class="text-danger"></span>
+												</select> <span id="payOutCountryError" style="color:red;"></span>
 											</div>
 											<div class="col-12 col-md-4">
 												<label class="form-label">Currency<span
@@ -611,7 +612,7 @@
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
-												</select> <span id="currenciesError" class="text-danger"></span>
+												</select> <span id="currenciesError" style="color:red;"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -622,7 +623,7 @@
 														id="beneficiaryBank" name="beneficiaryBank"
 														data-select2-selector="icon">
 														<option value="" disabled selected>Select Bank</option>
-													</select> <span id="beneficiaryBankError" class="text-danger"></span>
+													</select> <span id="beneficiaryBankError" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -632,7 +633,7 @@
 														id="bankBranches" name="beneficiaryBranch"
 														data-select2-selector="icon">
 														<option value="" disabled selected>Select Branch</option>
-													</select> <span id="bankBranchesError" class="text-danger"></span>
+													</select> <span id="bankBranchesError" style="color:red;"></span>
 													<!-- <input type="text" class="form-control" id="branch"
 													name="branch" placeholder=""> -->
 												</div>
@@ -645,7 +646,7 @@
 														data-select2-selector="icon">
 														<option value="1">Savings</option>
 														<option value="2">Current</option>
-													</select> <span id="beneficiaryAccountTypeError" class="text-danger"></span>
+													</select> <span id="beneficiaryAccountTypeError" style="color:red;"></span>
 												</div>
 											</div>
 
@@ -657,6 +658,7 @@
 														class="text-danger">*</span></label> <input type="password"
 														class="form-control" id="accountNo"
 														name="beneficiaryAccountNo" placeholder="Account No.">
+														<span id="accountNoError" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -666,8 +668,8 @@
 														class="form-control" id="confirmAccountNo"
 														name="beneficiaryConfirmAccountNo"
 														placeholder="Confirm Account No.">
+														<span id="validationMessage" style="color:red;"></span>
 												</div>
-												<span id="validationMessage"></span>
 											</div>
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
@@ -719,7 +721,7 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryFirstName"
 														name="beneficiaryFirstName" placeholder="First Name">
-													<span id="beneficiaryFirstNameError" class="text-danger"></span>
+													<span id="beneficiaryFirstNameError" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -738,7 +740,7 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryLastName"
 														name="beneficiaryLastName" placeholder="Last Name">
-													<span id="beneficiaryLastNameError" class="text-danger"></span>
+													<span id="beneficiaryLastNameError" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -747,7 +749,7 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryAddress1"
 														name="beneficiaryAddress1" placeholder="Address">
-													<span id="beneficiaryAddress1Error" class="text-danger"></span>
+													<span id="beneficiaryAddress1Error" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -765,7 +767,7 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryCity"
 														name="beneficiaryCity" placeholder="City"> <span
-														id="beneficiaryCityError" class="text-danger"></span>
+														id="beneficiaryCityError" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -778,7 +780,7 @@
 														<c:forEach var="country" items="${countryList}">
 															<option value="${country.valueId}">${country.description}</option>
 														</c:forEach>
-													</select> <span id="beneficiaryNationalityError" class="text-danger"></span>
+													</select> <span id="beneficiaryNationalityError" style="color:red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -791,7 +793,7 @@
 														<c:forEach var="states" items="${stateList}">
 															<option value="${states.valueId}">${states.description}</option>
 														</c:forEach>
-													</select> <span id="beneficiaryStateError" class="text-danger"></span>
+													</select> <span id="beneficiaryStateError" style="color:red;"></span>
 												</div>
 											</div>
 										</div>
@@ -859,7 +861,7 @@
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
-												</select> <span id="payInCurrencyError" class="text-danger"></span>
+												</select> <span id="payInCurrencyError" style="color:red;"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
@@ -872,7 +874,7 @@
 													<option value="LOTTERY">Lottery Income</option>
 													<option value="SLRY">Salary</option>
 													<option value="SVGS">Savings</option>
-												</select> <span id="sourceOfFundError" class="text-danger"></span>
+												</select> <span id="sourceOfFundError" style="color:red;"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Transaction Purpose<span
@@ -886,7 +888,7 @@
 													<option value="P18">Gift</option>
 													<option value="MDCS">Medical Expenses</option>
 													<option value="SAVG">Savings</option>
-												</select> <span id="transactionPurposeError" class="text-danger"></span>
+												</select> <span id="transactionPurposeError" style="color:red;"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -903,7 +905,7 @@
 													id="payInAmount" name="payInAmount" min="5" max="50000"
 													required>
 												<div id="error-message"
-													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;">PayIn Amount cannot exceed credit limit of ${dailyCreditLimit}.</div>
+													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;"></div>
 											</div>
 
 											<div class="col-xl-4">
@@ -914,7 +916,7 @@
 													<option value="" disabled selected>Select Payment
 														Mode</option>
 													<option value="BANK">Bank Transfer</option>
-												</select> <span id="paymentModeError" class="text-danger"></span>
+												</select> <span id="paymentModeError" style="color:red;"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Remarks</label> <input type="text"
@@ -1038,6 +1040,10 @@
 							</div>
 						</div>
 					</div>
+					<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<span id="validationError"  style="color:#ff000087; display:none;"><b>Please fill  all the required fields before submitting!</b></span>
+				</div>
 					<div class="mt-5 mb-5 text-center"
 						style="display: flex; justify-content: center">
 						<div id="createQuote">

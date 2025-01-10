@@ -446,8 +446,8 @@ $(document).ready(function() {
    });
 
 });
-    // Function to call the quote service
-           function getQuote() {
+// Function to call the quote service
+function getQuote() {
     // Get the values from the form
     const sendingCountryCode = $('#userCountry').val();
     const sendingCurrencyCode = $('#payInCurrency').val();
@@ -464,8 +464,9 @@ $(document).ready(function() {
     const beneficiaryAddress1 = $('#beneficiaryAddress1').val();
     const beneficiaryCity = $('#beneficiaryCity').val();
     const beneficiaryNationality = $('#beneficiaryNationality').val();
+	
+	
    
-    
     const sourceOfFund = $('#sourceOfFund').val();
     const transactionPurpose = $('#transactionPurpose').val();
     const paymentMode = $('#paymentMode').val();
@@ -514,7 +515,7 @@ $(document).ready(function() {
         $('#beneficiaryBankError').text('');
     }
     if (!bankBranches) {
-        $('#bankBranchesError').text('Branch  is required.');
+        $('#bankBranchesError').text('Branch is required.');
         isValid = false;
     } else {
         $('#bankBranchesError').text('');
@@ -526,7 +527,7 @@ $(document).ready(function() {
         $('#beneficiaryAccountTypeError').text('');
     }
     if (!beneficiaryFirstName) {
-        $('#beneficiaryFirstNameError').text('First  Name is required.');
+        $('#beneficiaryFirstNameError').text('First Name is required.');
         isValid = false;
     } else {
         $('#beneficiaryFirstNameError').text('');
@@ -539,14 +540,14 @@ $(document).ready(function() {
     }
     
     if (!beneficiaryAddress1) {
-        $('#beneficiaryAddress1Error').text('Beneficiry Address1 is required.');
+        $('#beneficiaryAddress1Error').text('Beneficiary Address1 is required.');
         isValid = false;
     } else {
         $('#beneficiaryAddress1Error').text('');
     }
     
     if (!beneficiaryCity) {
-        $('#beneficiaryCityError').text('Beneficiry City is required.');
+        $('#beneficiaryCityError').text('Beneficiary City is required.');
         isValid = false;
     } else {
         $('#beneficiaryCityError').text('');
@@ -572,14 +573,18 @@ $(document).ready(function() {
         $('#transactionPurposeError').text('');
     }
     if (!sourceOfFund) {
-        $('#sourceOfFundError').text('Source Of Fund  is required.');
+        $('#sourceOfFundError').text('Source Of Fund is required.');
         isValid = false;
     } else {
         $('#sourceOfFundError').text('');
     }
+
     // If any field is invalid, return early and stop the quote generation
     if (!isValid) {
-        return;
+        document.getElementById("validationError").style.display = "block";
+        return; // Exit the function early if validation fails
+    } else {
+        document.getElementById("validationError").style.display = "none";
     }
 
     const payload = {
@@ -614,7 +619,7 @@ $(document).ready(function() {
                 $('#payoutAmount').val(response.receiving_amount);
                 $('#tax').val(response.tax_amount);
                 let remainingTime = 60;
-                $('#quoteMessage').html(`Quote Created Successfully , Expires in <span id="countdown" style="color: red; font-weight: bold;">${remainingTime}</span> seconds!`);
+                $('#quoteMessage').html(`Quote Created Successfully, Expires in <span id="countdown" style="color: red; font-weight: bold;">${remainingTime}</span> seconds!`);
                 $('#quoteButton').hide();
                 $('#createTransactionSection').show();
                 const interval = setInterval(() => {
@@ -646,6 +651,7 @@ $(document).ready(function() {
         }
     });
 }
+
 
             function createTransaction() {
                 $('#quoteMessage').hide();
@@ -919,7 +925,7 @@ $(document).ready(function() {
                 });
             }
 
-            document.addEventListener('DOMContentLoaded', function() {
+/*            document.addEventListener('DOMContentLoaded', function() {
                 console.log("Page Loaded");
                 toggleFields();
 
@@ -945,11 +951,11 @@ $(document).ready(function() {
                     if (accountNumberValue !== confirmAccountNumberValue) {
                         messageElement.textContent = "Account numbers do not match!";
                         messageElement.style.color = "red";
-                        submitButton.disabled = true;
+//                        submitButton.disabled = true;
                     } else {
                         messageElement.textContent = "Account numbers match.";
                         messageElement.style.color = "green";
-                        validateSubmitButton(); // Check other conditions before enabling
+//                        validateSubmitButton(); // Check other conditions before enabling
                     }
                 }
 
@@ -962,22 +968,22 @@ $(document).ready(function() {
                         submitButton.disabled = true;
                     } else {
                         errorMessage.style.display = "none";
-                        validateSubmitButton(); // Check other conditions before enabling
+//                        validateSubmitButton(); // Check other conditions before enabling
                     }
                 }
 
                 // Function to validate all fields for submit button enablement
-                function validateSubmitButton() {
-                    const idNumberValue = idNumber.value.trim();
-
-                    // Check all conditions: idNumber, amount, and account numbers
-                    const isIdNumberValid = idNumberValue !== "";
-                    const isAmountValid = !isNaN(parseFloat(amountField.value)) && amountField.value >= 5 && amountField.value <= 50000;
-                    const isAccountNumbersMatch = accountNumber.value.trim() === confirmAccountNumber.value.trim();
-
-                    // Enable or disable the submit button based on conditions
-                    submitButton.disabled = !(isIdNumberValid && isAmountValid && isAccountNumbersMatch);
-                }
+//                function validateSubmitButton() {
+//                    const idNumberValue = idNumber.value.trim();
+//
+//                    // Check all conditions: idNumber, amount, and account numbers
+//                    const isIdNumberValid = idNumberValue !== "";
+//                    const isAmountValid = !isNaN(parseFloat(amountField.value)) && amountField.value >= 5 && amountField.value <= 50000;
+//                    const isAccountNumbersMatch = accountNumber.value.trim() === confirmAccountNumber.value.trim();
+//
+//                    // Enable or disable the submit button based on conditions
+//                    submitButton.disabled = !(isIdNumberValid && isAmountValid && isAccountNumbersMatch);
+//                }
 
                 // Add event listeners for validations
                 accountNumber.addEventListener('input', validateRealTime);
@@ -987,9 +993,72 @@ $(document).ready(function() {
                 idNumber.addEventListener('input', validateSubmitButton); // Check idNumber on input
 
                 // Initial validation on page load
-                validateSubmitButton();
+//                validateSubmitButton();
 
-            });
+            });*/
+			
+			document.addEventListener('DOMContentLoaded', function () {
+			    console.log("Page Loaded");
+			    const accountNumber = document.getElementById("accountNo");
+			    const confirmAccountNumber = document.getElementById("confirmAccountNo");
+			    const messageElement = document.getElementById("validationMessage");
+			    const accountNoError = document.getElementById("accountNoError"); 
+			    const submitButton = document.getElementById("quoteButton");
+			    const residentTypeField = document.getElementById('residentTypeId');
+
+			    function validateAccountNumbers() {
+			        const accountNumberValue = accountNumber.value.trim();
+			        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
+
+			        accountNoError.textContent = "";
+			        messageElement.textContent = "";
+
+			        if (accountNumberValue === "" || confirmAccountNumberValue === "") {
+			            accountNoError.textContent = "Account number is required.";
+			            messageElement.textContent = "Confirm account number is required.";
+			            messageElement.style.color = "red";
+			        } else if (accountNumberValue !== confirmAccountNumberValue) {
+			            messageElement.textContent = "Account numbers do not match!";
+			            messageElement.style.color = "red";
+			        } else {
+			            messageElement.textContent = "Account numbers match.";
+			            messageElement.style.color = "green";
+			        }
+			    }
+
+			    function validateForm(event) {
+			        const accountNumberValue = accountNumber.value.trim();
+			        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
+
+			        let isValid = true;
+
+			        // Check if account numbers are empty
+			        if (accountNumberValue === "" || confirmAccountNumberValue === "") {
+			            isValid = false;
+			            accountNoError.textContent = "Account number is required.";
+			            messageElement.textContent = "Confirm account number is required.";
+			            messageElement.style.color = "red";
+			        }
+
+			        // Check if account numbers match
+			        if (accountNumberValue !== confirmAccountNumberValue) {
+			            isValid = false;
+			            messageElement.textContent = "Account numbers do not match!";
+			            messageElement.style.color = "red";
+			        }
+
+			        // Prevent form submission if validation fails
+			        if (!isValid) {
+			            event.preventDefault();
+			        }
+			    }
+
+			    residentTypeField.addEventListener('change', toggleFields);
+			    accountNumber.addEventListener("input", validateAccountNumbers);
+			    confirmAccountNumber.addEventListener("input", validateAccountNumbers);
+			    submitButton.addEventListener("click", validateForm);
+			});
+
 
 			$(document).ready(function () {
 				    $('#beneficiaryNationality').on('change', function () {

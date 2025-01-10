@@ -1012,68 +1012,83 @@ function getQuote() {
 
             });*/
 			
-			document.addEventListener('DOMContentLoaded', function () {
-			    console.log("Page Loaded");
-			    const accountNumber = document.getElementById("accountNo");
-			    const confirmAccountNumber = document.getElementById("confirmAccountNo");
-			    const messageElement = document.getElementById("validationMessage");
-			    const accountNoError = document.getElementById("accountNoError"); 
-			    const submitButton = document.getElementById("quoteButton");
-			    const residentTypeField = document.getElementById('residentTypeId');
+document.addEventListener('DOMContentLoaded', function () {
+    console.log("Page Loaded");
+    const accountNumber = document.getElementById("accountNo");
+    const confirmAccountNumber = document.getElementById("confirmAccountNo");
+    const messageElement = document.getElementById("validationMessage");
+    const accountNoError = document.getElementById("accountNoError"); 
+    const submitButton = document.getElementById("quoteButton");
+    const residentTypeField = document.getElementById('residentTypeId');
+    const dailyCreditLimit = document.getElementById('dailyCreditLimit');
+    const payInAmount = document.getElementById('payInAmount');
+    const errorMessage = document.getElementById('error-message');
 
-			    function validateAccountNumbers() {
-			        const accountNumberValue = accountNumber.value.trim();
-			        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
+    function validateAccountNumbers() {
+        const accountNumberValue = accountNumber.value.trim();
+        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
 
-			        accountNoError.textContent = "";
-			        messageElement.textContent = "";
+        accountNoError.textContent = "";
+        messageElement.textContent = "";
 
-			        if (accountNumberValue === "" || confirmAccountNumberValue === "") {
-			            accountNoError.textContent = "Account number is required.";
-			            messageElement.textContent = "Confirm account number is required.";
-			            messageElement.style.color = "red";
-			        } else if (accountNumberValue !== confirmAccountNumberValue) {
-			            messageElement.textContent = "Account numbers do not match!";
-			            messageElement.style.color = "red";
-			        } else {
-			            messageElement.textContent = "Account numbers match.";
-			            messageElement.style.color = "green";
-			        }
-			    }
+        if (accountNumberValue === "" || confirmAccountNumberValue === "") {
+            accountNoError.textContent = "Account number is required.";
+            messageElement.textContent = "Confirm account number is required.";
+            messageElement.style.color = "red";
+        } else if (accountNumberValue !== confirmAccountNumberValue) {
+            messageElement.textContent = "Account numbers do not match!";
+            messageElement.style.color = "red";
+        } else {
+            messageElement.textContent = "Account numbers match.";
+            messageElement.style.color = "green";
+        }
+    }
 
-			    function validateForm(event) {
-			        const accountNumberValue = accountNumber.value.trim();
-			        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
+    function validatePayInAmount() {
+        const payInAmountValue = parseFloat(payInAmount.value.trim());
+        const creditLimit = parseFloat(dailyCreditLimit.value.trim());
 
-			        let isValid = true;
+        if (payInAmountValue > creditLimit) {
+            errorMessage.textContent = `PayIn Amount cannot exceed credit limit of ₹${creditLimit}.`;
+            errorMessage.style.display = "block";
+        } else {
+            errorMessage.style.display = "none";
+        }
+    }
 
-			        // Check if account numbers are empty
-			        if (accountNumberValue === "" || confirmAccountNumberValue === "") {
-			            isValid = false;
-			            accountNoError.textContent = "Account number is required.";
-			            messageElement.textContent = "Confirm account number is required.";
-			            messageElement.style.color = "red";
-			        }
+    function validateForm(event) {
+        const accountNumberValue = accountNumber.value.trim();
+        const confirmAccountNumberValue = confirmAccountNumber.value.trim();
 
-			        // Check if account numbers match
-			        if (accountNumberValue !== confirmAccountNumberValue) {
-			            isValid = false;
-			            messageElement.textContent = "Account numbers do not match!";
-			            messageElement.style.color = "red";
-			        }
+        let isValid = true;
 
-			        // Prevent form submission if validation fails
-			        if (!isValid) {
-			            event.preventDefault();
-			        }
-			    }
+        // Check if account numbers are empty
+        if (accountNumberValue === "" || confirmAccountNumberValue === "") {
+            isValid = false;
+            accountNoError.textContent = "Account number is required.";
+            messageElement.textContent = "Confirm account number is required.";
+            messageElement.style.color = "red";
+        }
 
-			    residentTypeField.addEventListener('change', toggleFields);
-			    accountNumber.addEventListener("input", validateAccountNumbers);
-			    confirmAccountNumber.addEventListener("input", validateAccountNumbers);
-			    submitButton.addEventListener("click", validateForm);
-			});
+        // Check if account numbers match
+        if (accountNumberValue !== confirmAccountNumberValue) {
+            isValid = false;
+            messageElement.textContent = "Account numbers do not match!";
+            messageElement.style.color = "red";
+        }
 
+        // Prevent form submission if validation fails
+        if (!isValid) {
+            event.preventDefault();
+        }
+    }
+
+    residentTypeField.addEventListener('change', toggleFields);
+    accountNumber.addEventListener("input", validateAccountNumbers);
+    confirmAccountNumber.addEventListener("input", validateAccountNumbers);
+    payInAmount.addEventListener("input", validatePayInAmount);
+    submitButton.addEventListener("click", validateForm);
+});
 
 			$(document).ready(function () {
 				    $('#beneficiaryNationality').on('change', function () {

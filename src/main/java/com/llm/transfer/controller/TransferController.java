@@ -49,6 +49,7 @@ public class TransferController {
 	@Autowired
 	private StaffDetailsRepository staffDetailsRepository;
 
+	@Autowired
 	private IAgentService agentService;
 
 

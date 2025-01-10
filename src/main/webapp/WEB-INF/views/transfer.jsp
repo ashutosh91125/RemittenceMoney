@@ -625,7 +625,7 @@
 														<option value="" disabled selected>Select Bank</option>
 													</select> <span id="beneficiaryBankError" style="color:red;"></span>
 												</div>
-											</div>
+											</div> 
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Branch<span

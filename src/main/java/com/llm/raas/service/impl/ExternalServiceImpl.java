@@ -3,6 +3,7 @@ package com.llm.raas.service.impl;
 
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
+import com.llm.branch.model.BranchDetails;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.service.TokenService;
 import com.llm.raas.repository.BranchRepository;
@@ -27,6 +28,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -38,6 +40,9 @@ public class ExternalServiceImpl implements ExternalService {
 
     @Autowired
     private TokenService tokenService;
+
+    @Autowired
+    private BankDetailsFetchToken bankDetailsFetchToken;
 
     @Autowired
     TransferRepository transferRepository;
@@ -90,18 +95,55 @@ public class ExternalServiceImpl implements ExternalService {
     @Override
     public Map<String, Object> createTransaction(Map<String, Object> requestBody) {
 
-        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/createtransaction";
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
+
+        Optional<BranchDetails> branch = branchDetailsRepository.findById(byUsername.get().getBranches());
+
+        BranchDetails branchDetails = branch.get();
+
+        // Inject static values into the transaction object
+        Map<String, Object> transaction = (Map<String, Object>) requestBody.get("transaction");
+        if (transaction == null) {
+            transaction = new HashMap<>();
+            requestBody.put("transaction", transaction);
+        }
+
+        // Add static ordering institution values
+        Map<String, Object> orderingInstitution = new HashMap<>();
+        orderingInstitution.put("name", "abc");
+
+        Map<String, Object> institutionAddress = new HashMap<>();
+        institutionAddress.put("country_code", branchDetails.getCounty());
+        institutionAddress.put("address_line", branchDetails.getAddress1());
+        institutionAddress.put("address_type", "PRESENT");
+        institutionAddress.put("town_name", branchDetails.getCity());
+        institutionAddress.put("post_code", branchDetails.getZip());
+        institutionAddress.put("building_number", branchDetails.getOutletCode());
+
+        orderingInstitution.put("institution_address", institutionAddress);
+        transaction.put("ordering_institution", orderingInstitution);
+
+        // Log the modified request body
+        log.info("Modified request body: {}", requestBody);
 
         // Wrap headers and body
         HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<Map> response = restTemplate.postForEntity(url, request, Map.class);
+        ResponseEntity<Map> response = restTemplate.postForEntity(
+                "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/createtransaction",
+                request,
+                Map.class
+        );
 
         // Return the response body
         return response.getBody();
     }
+
 
     @Override
     public Map<String, Object> confirmTransaction(Map<String, Object> requestBody) {
@@ -204,7 +246,7 @@ public class ExternalServiceImpl implements ExternalService {
         headers.set("channel", "Direct");
         headers.set("company", "458100");
         headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        headers.set("Authorization", "Bearer " + bankDetailsFetchToken.getAccessToken());
 
         // Create HttpEntity with headers
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
@@ -233,7 +275,7 @@ public class ExternalServiceImpl implements ExternalService {
         headers.set("channel", "Direct");
         headers.set("company", "458100");
         headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        headers.set("Authorization", "Bearer " + bankDetailsFetchToken.getAccessToken());
 
         // Create query parameters
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
@@ -274,7 +316,7 @@ public class ExternalServiceImpl implements ExternalService {
         headers.set("channel", "Direct");
         headers.set("company", "458100");
         headers.set("branch", "458302");
-        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        headers.set("Authorization", "Bearer " + bankDetailsFetchToken.getAccessToken());
 
         // Create HttpEntity with headers
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);

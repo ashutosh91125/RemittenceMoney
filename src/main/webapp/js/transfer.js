@@ -687,7 +687,7 @@ $(document).ready(function() {
                                  address_line: "ZAYED TOWER",
                                  address_type: "PRESENT",
                                  town_name: "HAWALLI",
-                                 post_code: "123456"
+                                 post_code: "123456",
                                  building_number: "AB1234"
                              }
                          }

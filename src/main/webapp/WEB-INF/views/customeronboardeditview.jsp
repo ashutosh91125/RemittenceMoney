@@ -108,208 +108,12 @@
 </style>
 
 <script>
-function copyAddress() {
-    const checkbox = document.getElementById("sameAsCurrentAddress");
-    const permanentCountryDropdown = document.getElementById("permanentCountry");
-    const permanentStateDropdown = document.getElementById("parStateDropdown");
-    const currentCountry = document.getElementById("currentCountry");
-    const currentState = document.getElementById("stateDropdown");
-
-    if (checkbox.checked) {
-        // Copy field values from current address to permanent address
-        document.getElementById("permanentBuildingName").value = document.getElementById("currentBuildingName").value;
-        document.getElementById("permanentStreetName").value = document.getElementById("currentStreetName").value;
-        document.getElementById("permanentLandmark").value = document.getElementById("currentLandmark").value;
-        document.getElementById("permanentCity").value = document.getElementById("currentCity").value;
-        document.getElementById("permanentDistrict").value = document.getElementById("currentDistrict").value;
-        document.getElementById("permanentZip").value = document.getElementById("currentZip").value;
-
-        // Sync country and trigger change for state options
-        permanentCountryDropdown.value = currentCountry.value;
-        $(permanentCountryDropdown).trigger('change'); // Trigger change to reload dependent states
-
-        // Wait for the states to load and then set the state
-        setTimeout(() => {
-            permanentStateDropdown.value = currentState.value;
-        }, 500); // Delay allows state options to load
-    } else {
-        // Clear permanent address fields
-        document.getElementById("permanentBuildingName").value = "";
-        document.getElementById("permanentStreetName").value = "";
-        document.getElementById("permanentLandmark").value = "";
-        document.getElementById("permanentCity").value = "";
-        document.getElementById("permanentDistrict").value = "";
-        document.getElementById("permanentZip").value = "";
-
-        permanentCountryDropdown.selectedIndex = 0; // Reset country
-        permanentStateDropdown.innerHTML = '<option value="" disabled selected>Select State</option>'; // Reset state
-    }
-}
-
-
 	function toggleDiv(divId) {
 		const element = document.getElementById(divId);
 		element.classList.toggle("show");
 	}
 
-	$(document)
-			.ready(
-					function() {
-						$('#currentCountry')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#stateDropdown')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select State</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#stateDropdown')
-																							.append(
-																									'<option value="' + enumValue.description + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#stateDropdown')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select State</option>');
-											}
-										});
-					});
 
-	$(document)
-			.ready(
-					function() {
-						$('#permanentCountry')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#parStateDropdown')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select State</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#parStateDropdown')
-																							.append(
-																									'<option value="' + enumValue.description + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#parStateDropdown')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select State</option>');
-											}
-										});
-					});
-
-	$(document)
-			.ready(
-					function() {
-						$('#nationality')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#nativeRegion')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select Native Region</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#nativeRegion')
-																							.append(
-																									'<option value="' + enumValue.valueId + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#nativeRegion')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select Native Region</option>');
-											}
-										});
-					});
 	function toggleFields() {
 	    const residentType = document.getElementById('residentType').value;
 	    const idTypeInput = document.getElementById("idType");
@@ -365,7 +169,6 @@ function copyAddress() {
 	            remarksContainer.style.display = "none";
 	        }
 	    }
-	// Initial check to set visibility based on the default selected value
 	document.addEventListener('DOMContentLoaded', function() {
 		console.log("Page Loaded");
 		 toggleCustomerRemarks();
@@ -374,25 +177,19 @@ function copyAddress() {
 
 
     $(document).ready(function() {
-            // Attach a click event to the Back button
             $("#updateButton").on("click", function() {
             	
             	 var ecrn = $("input[name='ecrn']").val()
-                // Use AJAX to send a GET request to the /customer-list endpoint
+               
                 $.ajax({
-                    url: '/customer',  // The URL to send the request to
-                    type: 'GET',  // Method type (GET in this case)
+                    url: '/customer',  
+                    type: 'GET', 
                     data: { ecrn: ecrn },
                     success: function(response) {
-                        // On success, you can manually trigger a redirect
-                        // Since it's a GET request and you want the page to navigate,
-                        // you simply change the window location.
-                        window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);  // Redirect to the customer list page
+                        window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);  
                     },
                     error: function(xhr, status, error) {
-                        // In case of an error, you can handle the failure.
                         console.log('AJAX Error: ' + error);
-                        // Optionally, you could display an error message to the user
                     }
                 });
             });
@@ -447,14 +244,11 @@ function copyAddress() {
 					</div>
 				</div>
 			</div>
-			<!-- [ page-header ] end -->
-			<!-- [ Main Content ] start -->
-
 			<jsp:include page="customersearch.jsp"></jsp:include>
 			<form:form modelAttribute="customer" id="customerView"
 				action="${pageContext.request.contextPath}/createUser" method="post">
 				<form:hidden path="ecrn" />
-			
+
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">
@@ -483,7 +277,8 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Salutation</label>
 												<form:input path="salutation" type="text"
-													class="form-control" placeholder="salutation" />
+													class="form-control" placeholder="salutation"
+													disabled="true" />
 
 											</div>
 										</div>
@@ -492,14 +287,16 @@ function copyAddress() {
 												<label class="form-label">First Name<span
 													class="text-danger">*</span></label>
 												<form:input path="firstName" type="text"
-													class="form-control" placeholder="First Name" />
+													class="form-control" placeholder="First Name"
+													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Middle Name</label>
 												<form:input path="middleName" type="text"
-													class="form-control" placeholder="Middle Name" />
+													class="form-control" placeholder="Middle Name"
+													disabled="true" />
 											</div>
 										</div>
 									</div>
@@ -509,14 +306,15 @@ function copyAddress() {
 												<label class="form-label">Last Name<span
 													class="text-danger">*</span></label>
 												<form:input path="lastName" type="text" class="form-control"
-													placeholder="Last Name" />
+													placeholder="Last Name" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Preferred Name</label>
 												<form:input path="preferredName" type="text"
-													class="form-control" placeholder="Preferred Name" />
+													class="form-control" placeholder="Preferred Name"
+													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -524,7 +322,7 @@ function copyAddress() {
 												<label class="form-label">Nationality <span
 													class="text-danger">*</span></label> <input type="text"
 													class="form-control" placeholder="nationality"
-													value="${nationality}">
+													value="${nationality}" disabled="true" />
 											</div>
 										</div>
 									</div>
@@ -534,14 +332,14 @@ function copyAddress() {
 												<label class="form-label">Secondary Nationality</label> <input
 													type="text" class="form-control"
 													placeholder="Secondary Nationality"
-													value="${secondNationality}">
+													value="${secondNationality}" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Native Region</label> <input
 													type="text" value="${nativeRegion}" class="form-control"
-													placeholder="Native Region">
+													placeholder="Native Region" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -549,7 +347,7 @@ function copyAddress() {
 												<label class="form-label">Date of Birth<span
 													class="text-danger">*</span></label>
 												<form:input path="dateOfBirth" type="text"
-													class="form-control" />
+													class="form-control" disabled="true" />
 											</div>
 										</div>
 									</div>
@@ -559,14 +357,15 @@ function copyAddress() {
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label> <input type="text"
 													class="form-control" placeholder="Secondary Nationality"
-													value="${countryOfBirth}">
+													value="${countryOfBirth}" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Place of Birth </label>
 												<form:input path="placeOfBirth" type="text"
-													class="form-control" placeholder="Place of Birth" />
+													class="form-control" placeholder="Place of Birth"
+													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -574,7 +373,7 @@ function copyAddress() {
 												<label class="form-label">Country of Residence<span
 													class="text-danger">*</span></label> <input type="text"
 													class="form-control" placeholder="Country of Residence"
-													value="${countryOfResidence}">
+													value="${countryOfResidence}" disabled="true" />
 											</div>
 
 										</div>
@@ -585,7 +384,7 @@ function copyAddress() {
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
 												<form:input path="gender" type="text" class="form-control"
-													placeholder="Gender" />
+													placeholder="Gender" disabled="true" />
 											</div>
 										</div>
 
@@ -593,7 +392,8 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Mothers Maiden Name</label>
 												<form:input path="mothersMaidenName" type="Text"
-													class="form-control" placeholder="Mothers Maiden Name" />
+													class="form-control" placeholder="Mothers Maiden Name"
+													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -612,7 +412,7 @@ function copyAddress() {
 													<!-- Combined Input Box -->
 													<form:input path="primaryMobileNumber" type="text"
 														class="form-control" placeholder="Primary Mobile Number"
-														id="primaryMobileNumber" />
+														id="primaryMobileNumber" disabled="true" />
 												</div>
 												<span id="primaryMobileNumberError" class="text-danger"></span>
 											</div>
@@ -625,7 +425,8 @@ function copyAddress() {
 											<div class="mb-4">
 												<label class="form-label">Secondary Mobile Number</label>
 												<form:input path="secondaryMobileNumber" type="tel"
-													class="form-control" placeholder="Secondary Mobile Number" />
+													class="form-control" placeholder="Secondary Mobile Number"
+													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -633,14 +434,15 @@ function copyAddress() {
 												<label class="form-label">Email<span
 													class="text-danger">*</span></label>
 												<form:input path="emailId" type="email" class="form-control"
-													placeholder="Email" />
+													placeholder="Email" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Phone Number</label>
 												<form:input path="phoneNumber" type="tel"
-													class="form-control" placeholder="Phone Number" />
+													class="form-control" placeholder="Phone Number"
+													disabled="true" />
 											</div>
 										</div>
 									</div>
@@ -685,7 +487,7 @@ function copyAddress() {
 														<label class="form-label">Building Name</label>
 														<form:input path="buildingName" type="text"
 															class="form-control" placeholder="Building Name"
-															id="currentBuildingName" />
+															id="currentBuildingName" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -693,7 +495,7 @@ function copyAddress() {
 														<label class="form-label">Street Name</label>
 														<form:input path="streetName" type="text"
 															class="form-control" placeholder="Street Name"
-															id="currentStreetName" />
+															id="currentStreetName" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -701,7 +503,7 @@ function copyAddress() {
 														<label class="form-label">Land Mark</label>
 														<form:input path="landmark" type="text"
 															class="form-control" placeholder="Land Mark"
-															id="currentLandmark" />
+															id="currentLandmark" disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -710,7 +512,7 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">City</label>
 														<form:input path="city" type="text" class="form-control"
-															placeholder="City" id="currentCity" />
+															placeholder="City" id="currentCity" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -718,14 +520,14 @@ function copyAddress() {
 														<label class="form-label">District</label>
 														<form:input path="district" type="text"
 															class="form-control" placeholder="District"
-															id="currentDistrict" />
+															id="currentDistrict" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label> <input
 															value="${country}" type="text" class="form-control"
-															placeholder="Country">
+															placeholder="Country" disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -734,14 +536,14 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">State</label>
 														<form:input path="state" type="text" class="form-control"
-															placeholder="State" id="currentState" />
+															placeholder="State" id="currentState" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Zip</label>
 														<form:input path="zip" type="text" class="form-control"
-															placeholder="Zip" id="currentZip" />
+															placeholder="Zip" id="currentZip" disabled="true" />
 													</div>
 												</div>
 
@@ -770,7 +572,7 @@ function copyAddress() {
 														<label class="form-label">Building Name</label>
 														<form:input path="parBuildingName" type="text"
 															class="form-control" placeholder="Building Name"
-															id="permanentBuildingName" />
+															id="permanentBuildingName" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -778,7 +580,7 @@ function copyAddress() {
 														<label class="form-label">Street Name</label>
 														<form:input path="parStreetName" type="text"
 															class="form-control" placeholder="Street Name"
-															id="permanentStreetName" />
+															id="permanentStreetName" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -786,7 +588,7 @@ function copyAddress() {
 														<label class="form-label">Land Mark</label>
 														<form:input path="parLandmark" type="text"
 															class="form-control" placeholder="Land Mark"
-															id="permanentLandmark" />
+															id="permanentLandmark" disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -796,7 +598,7 @@ function copyAddress() {
 														<label class="form-label">City</label>
 														<form:input path="parCity" type="text"
 															class="form-control" placeholder="City"
-															id="permanentCity" />
+															id="permanentCity" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -804,14 +606,14 @@ function copyAddress() {
 														<label class="form-label">District</label>
 														<form:input path="parDistrict" type="text"
 															class="form-control" placeholder="District"
-															id="permanentDistrict" />
+															id="permanentDistrict" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label> <input
 															value="${parCountry}" type="text" class="form-control"
-															placeholder="Country of Residence">
+															placeholder="Country of Residence" disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -821,14 +623,14 @@ function copyAddress() {
 														<label class="form-label">State</label>
 														<form:input path="parState" type="text"
 															class="form-control" placeholder="State"
-															id="permanentState" />
+															id="permanentState" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Zip</label>
 														<form:input path="parZip" type="text" class="form-control"
-															placeholder="Zip" id="permanentZip" />
+															placeholder="Zip" id="permanentZip" disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -864,16 +666,9 @@ function copyAddress() {
 												</div>
 												<div class="col-lg-8">
 													<div class="mb-4">
-														<%-- <form:select id="residentType" path="residentTypeId"
-															class="form-control" data-select2-selector="icon"
-															multiple="false" onchange="toggleFields(); ">
-															<form:option value="" disabled="true" selected="true">Select Resident Type</form:option>
-															<form:options items="${residentTypeList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select> --%>
 														<input value="${residentType}" type="text"
 															class="form-control" placeholder="Resident Type"
-															id="residentType" />
+															id="residentType" disabled="true" />
 
 													</div>
 												</div>
@@ -889,7 +684,7 @@ function copyAddress() {
 															<label class="form-label">Id Type <span
 																class="text-danger">*</span></label> <input type="text"
 																class="form-control" placeholder="Id Type" id="idType"
-																readonly>
+																disabled="true">
 
 														</div>
 													</div>
@@ -898,7 +693,8 @@ function copyAddress() {
 															<label class="form-label">Id Number<span
 																class="text-danger">*</span></label>
 															<form:input path="idNumber" id="idNumber" name="idNumber"
-																placeholder="Id Number" type="text" class="form-control" />
+																placeholder="Id Number" type="text" class="form-control"
+																disabled="true" />
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -906,7 +702,8 @@ function copyAddress() {
 															<label class="form-label">Name as per Id<span
 																class="text-danger">*</span></label>
 															<form:input path="nameAsPerId" type="text"
-																class="form-control" placeholder="Name as per Id" />
+																class="form-control" placeholder="Name as per Id"
+																disabled="true" />
 														</div>
 													</div>
 												</div>
@@ -916,35 +713,18 @@ function copyAddress() {
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued Country<span
-																class="text-danger">*</span></label>
-															<%-- <form:select path="issuedCountry" id="issuedCountry"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Issued Country</form:option>
-																<form:options items="${countryList}" itemValue="valueId"
-																	itemLabel="description" />
-															</form:select> --%>
-															<%-- <form:input path="issuedCountry" type="text"
-																class="form-control" placeholder="Issued Country" /> --%>
-															<input type="text" class="form-control"
-																placeholder="Issued Country" value="${issuedCountry}">
+																class="text-danger">*</span></label> <input type="text"
+																class="form-control" placeholder="Issued Country"
+																value="${issuedCountry}" disabled="true" />
 														</div>
 													</div>
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued at<span
 																class="text-danger">*</span></label>
-															<%-- <form:select path="issuedAt" id="issuedAt"
-																class="form-control" data-select2-selector="icon"
-																multiple="false">
-																<form:option value="" disabled="true" selected="true">Issued at</form:option>
-																<form:options items="${countryList}"
-																	itemValue="description" itemLabel="description" />
-															</form:select> --%>
-															<%-- <form:input path="issuedAt" type="text"
-																class="form-control" placeholder="Issued at" /> --%>
 															<form:input path="issuedAt" type="text"
-																class="form-control" placeholder="Issued at" />
+																class="form-control" placeholder="Issued at"
+																disabled="true" />
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -953,7 +733,7 @@ function copyAddress() {
 																class="text-danger">*</span></label>
 															<form:input path="issuedBy" type="text"
 																class="form-control" placeholder="Issued By"
-																id="issuedBy" />
+																id="issuedBy" disabled="true" />
 														</div>
 													</div>
 												</div>
@@ -964,7 +744,7 @@ function copyAddress() {
 														<div class="mb-4">
 															<label class="form-label">Issued on</label>
 															<form:input path="issuedOn" type="text"
-																class="form-control" />
+																class="form-control" disabled="true" />
 														</div>
 													</div>
 													<div class="col-xl-4">
@@ -972,7 +752,7 @@ function copyAddress() {
 															<label class="form-label">Date of Expiry<span
 																class="text-danger">*</span></label>
 															<form:input path="dateOfExpiry" type="text"
-																class="form-control" />
+																class="form-control" disabled="true" />
 														</div>
 													</div>
 												</div>
@@ -988,28 +768,24 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">Visa Number</label>
 														<form:input path="visaNumber" type="text"
-															class="form-control" placeholder="Visa Number" />
+															class="form-control" placeholder="Visa Number"
+															disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Visa Expiry Date</label>
 														<form:input path="visaExpiryDate" type="text"
-															class="form-control" placeholder="Visa Expiry Date" />
+															class="form-control" placeholder="Visa Expiry Date"
+															disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Visa Type</label>
-														<%-- <form:select path="visaType" class="form-control"
-															data-select2-selector="icon">
-															<form:option value="" disabled="true" selected="true">Visa Type</form:option>
-															<option value="1">Employment</option>
-															<option value="2">Visitor</option>
-															<option value="3">MyKad</option>
-														</form:select> --%>
 														<form:input path="visaType" type="text"
-															class="form-control" placeholder="Visa Type" />
+															class="form-control" placeholder="Visa Type"
+															disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -1046,35 +822,21 @@ function copyAddress() {
 
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Annual Income Range</label>
-														<%-- <form:select path="annualIncomeRangeId"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
-															<form:options items="${annualIncomeRangeList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select> --%>
-														<input type="text" class="form-control"
+														<label class="form-label">Annual Income Range</label> <input
+															type="text" class="form-control"
 															placeholder="Annual Income Range"
-															value="${annualIncomeRangeId}">
+															value="${annualIncomeRangeId}" disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Annual Income Currency
 															Code </label>
-														<%-- <form:select path="annualIncomeCurrencyCode"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
-															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
-															<form:options items="${currencyList}" itemValue="valueId"
-														itemLabel="description"/>
-															<form:option value="MYR">Malaysian Ringgit</form:option>
-														</form:select> --%>
 														<form:input path="annualIncomeCurrencyCode" type="text"
 															class="form-control"
 															placeholder="Annual Income Currency
-															Code" />
+															Code"
+															disabled="true" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1082,7 +844,7 @@ function copyAddress() {
 														<label class="form-label">Tax Registration Number</label>
 														<form:input path="taxRegistrationNumber" type="text"
 															class="form-control"
-															placeholder="Tax Registration Number" />
+															placeholder="Tax Registration Number" disabled="true" />
 													</div>
 												</div>
 											</div>
@@ -1132,44 +894,25 @@ function copyAddress() {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="riskRatingId" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
-														<form:options items="${riskRatingIdList}"
-															itemValue="valueId" itemLabel="description" />
-													</form:select> --%>
-													<input type="text" class="form-control"
-														placeholder="Risk Rating Id" value="${riskRatingId}">
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Risk Rating Id"
+														value="${riskRatingId}" disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Income Type<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="incomeType" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Income Type</form:option>
-														<form:options items="${incomeTypeList}"
-															itemValue="valueId" itemLabel="description" />
-													</form:select> --%>
-													<input type="text" class="form-control"
-														placeholder="Risk Rating Id" value="${incomeType}">
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Risk Rating Id"
+														value="${incomeType}" disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profession Catagory<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="professionCategory" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
-														<form:options items="${professionCategoryList}"
-															itemValue="valueId" itemLabel="description" />
-													</form:select> --%>
-													<input type="text" class="form-control"
-														placeholder="Profession Catagory"
-														value="${professionCategory}">
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Profession Catagory"
+														value="${professionCategory}" disabled="true" />
 												</div>
 											</div>
 										</div>
@@ -1197,75 +940,51 @@ function copyAddress() {
 												<div class="mb-4">
 													<label class="form-label">Employer Name</label>
 													<form:input path="employerName" type="text"
-														class="form-control" placeholder="Employer Name" />
+														class="form-control" placeholder="Employer Name"
+														disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Employer Address</label>
 													<form:input path="employerAddress" type="text"
-														class="form-control" placeholder="Employer Address" />
+														class="form-control" placeholder="Employer Address"
+														disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Employer Phone</label>
 													<form:input path="employerPhone" type="tel"
-														class="form-control" placeholder="Employer Phone" />
+														class="form-control" placeholder="Employer Phone"
+														disabled="true" />
 												</div>
 											</div>
 										</div>
 										<div class="row">
-
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Reason For Acc.<span
-														class="text-danger">*</span></label>
-													<form:input path="reasonForAcc" type="text"
-														class="form-control" placeholder="Reason For Acc." />
-												</div>
-											</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Volume Month<span
 														class="text-danger">*</span>
-													</label>
-													<%-- <form:select path="txnVolMonth" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
-														<form:options items="${transactionVolumeMonthList}"
-															itemValue="valueId" itemLabel="description" />
-													</form:select> --%>
-													<input type="text" class="form-control"
+													</label> <input type="text" class="form-control"
 														placeholder="Transaction Volume Month"
-														value="${txnVolMonth}">
+														value="${txnVolMonth}" disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Count Month<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="txnCountMonth" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
-														<form:options items="${transactionCountMonthList}"
-															itemValue="valueId" itemLabel="description" />
-													</form:select> --%>
-													<input type="text" class="form-control"
-														placeholder="Transaction Count Month"
-														value="${txnCountMonth}">
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Transaction Count Month"
+														value="${txnCountMonth}" disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">First Language<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="firstLanguage" class="form-control"
-														data-select2-selector="icon">
-														<option value="en">English</option>
-													</form:select> --%>
-													<input type="text" class="form-control"
-														placeholder="First Language" value="English">
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="First Language"
+														value="English" disabled="true" />
 
 												</div>
 											</div>
@@ -1274,29 +993,17 @@ function copyAddress() {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Marital Status<span
-														class="text-danger">*</span></label>
-													<%-- <form:select path="maritalStatus" class="form-control"
-															data-select2-selector="icon">
-															<form:option value="" disabled="true" selected="true">Marital Status</form:option>
-															<option value="2">Unmarried</option>
-															<option value="1">Married</option>
-														</form:select> --%>
-													<input type="text" class="form-control"
-														placeholder="Marital Status" value="${maritalStatus}">
+														class="text-danger">*</span></label> <input type="text"
+														class="form-control" placeholder="Marital Status"
+														value="${maritalStatus}" disabled="true" />
 
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Occupation</label>
-													<%-- <form:select path="occupationId" class="form-control"
-															data-select2-selector="icon" multiple="false">
-															<form:option value="" disabled="true" selected="true">Occupation</form:option>
-															<form:options items="${occupationIdList}"
-																itemValue="valueId" itemLabel="description" />
-														</form:select> --%>
-													<input value="${ occupationId}" class="form-control"
-														placeholder="Occupation">
+													<label class="form-label">Occupation</label> <input
+														value="${ occupationId}" class="form-control"
+														placeholder="Occupation" disabled="true" />
 												</div>
 											</div>
 
@@ -1305,7 +1012,7 @@ function copyAddress() {
 													<label class="form-label">Political Exposed Person</label>
 													<form:input path="politicalExposedPerson"
 														class="form-control"
-														placeholder="Political Exposed Person" />
+														placeholder="Political Exposed Person" disabled="true" />
 
 												</div>
 											</div>
@@ -1315,17 +1022,11 @@ function copyAddress() {
 														<label class="form-label">Show Remark on
 															Transaction<span class="text-danger">*</span>
 														</label>
-														<%-- <form:select path="showRemarksOnTxn" class="form-control"
-															data-select2-selector="icon"
-															onchange="toggleCustomerRemarks();">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-
-														</form:select> --%>
 														<form:input path="showRemarksOnTxn" type="text"
 															class="form-control"
 															placeholder="Show Remark on
-															Transaction" />
+															Transaction"
+															disabled="true" />
 
 													</div>
 												</div>
@@ -1334,7 +1035,7 @@ function copyAddress() {
 													<div class="mb-4">
 														<label class="form-label">Customer Remarks</label>
 														<form:input path="customerRemarks" class="form-control"
-															placeholder="Enter your remarks here" />
+															placeholder="Enter your remarks here" disabled="true" />
 													</div>
 												</div>
 											</div>

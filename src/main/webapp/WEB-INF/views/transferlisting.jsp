@@ -59,6 +59,7 @@
                                         <thead>
                                             <tr>
                                                 <th>S.No</th>
+                                                 <th>Agent</th>
                                                 <th>Transaction Number</th>
                                                 <th>Date</th>
                                                 <th>PayIn Amount</th>
@@ -72,6 +73,7 @@
                                             <c:forEach var="transfer" items="${transferList}" varStatus="status">
                                                 <tr>
                                                     <td>${status.index + 1}</td>
+                                                    <td>${transfer.agentId}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
                                                     <td>${transfer.transactionDateFormatted}</td>
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
@@ -117,157 +119,96 @@
 
     <!-- DataTables Initialization -->
     <script>
-    
-       /*   $(document).ready(function() {
-            // Initialize DataTable
-            $('#transfer-list').DataTable({
-                "pageLength": 10,
-                "ordering": true,
-                "searching": true,
-                "paging": true,
-                "info": true,
-                "language": {
-                    "emptyTable": "No data available",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "infoEmpty": "No entries available",
-                    "paginate": {
-                        "previous": "Previous",
-                        "next": "Next"
-                    }
-                },
-                "columnDefs": [{
-                    "orderable": false,
-                    "targets": -1
-                }]
-            });
-
-            // Check Transaction updated state and sub-state
-            $('#transfer-list').on('click', '.transactionLogo', function() {
-                // Get the transaction reference number from the same row where the logo was clicked
-                var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
-
-                // Check if the transaction reference number exists
-                if (!transactionRefNumber) {
-                    alert('Transaction reference number is missing!');
-                    return;
+    $(document).ready(function () {
+        // Initialize DataTable with custom DOM for filter and dropdown
+        var table = $('#transfer-list').DataTable({
+            "pageLength": 10,
+            "ordering": true,
+            "searching": true,
+            "paging": true,
+            "info": true,
+            "language": {
+                "emptyTable": "No data available",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "infoEmpty": "No entries available",
+                "paginate": {
+                    "previous": "Previous",
+                    "next": "Next"
                 }
+            },
+            "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>tp",
+            "columnDefs": [{
+                "orderable": false,
+                "targets": -1
+            }]
+        });
+        var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-6" style="width: 200px; height: 43px;"></select>';
+        $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-end' }).prepend(dropdownHtml);
 
-                // Make the AJAX request to the backend
-                $.ajax({
-                    url: '/api/v1/raas/enquire-transaction',
-                    type: 'GET',
-                    data: { transaction_ref_number: transactionRefNumber },
-                    success: function(response) {
-                        // If the response is successful, reload the page
-                        if (response.status === 200) {
-                            console.log('Transaction enquiry successful');
-                        } else {
-                            alert(response.error || 'Enquiry failed!');
-                        }
-
-                        // Reload the page after success or failure
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle any errors during the request
-                        alert('Error: ' + error);
-                    }
-                });
-            });
-        });  */
-        $(document).ready(function() {
-            // Initialize DataTable with custom DOM for filter and dropdown
-            $('#transfer-list').DataTable({
-                "pageLength": 10,
-                "ordering": true,
-                "searching": true,
-                "paging": true,
-                "info": true,
-                "language": {
-                    "emptyTable": "No data available",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "infoEmpty": "No entries available",
-                    "paginate": {
-                        "previous": "Previous",
-                        "next": "Next"
-                    }
-                },
-                "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>tp",  // Customize DOM to place the dropdown on the left side of the search box
-               /*  "buttons": [
-                    {
-                        text: 'Dropdown',
-                        action: function (e, dt, node, config) {
-                            alert('Dropdown clicked');
-                        },
-                        className: 'btn btn-secondary' 
-                    }
-                ], */
-                "columnDefs": [{
-                    "orderable": false,
-                    "targets": -1
-                }]
-            });
-            var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-6" style="width: 200px; height: 43px;">' +
-            '</select>';
-
-		$('.col-md-6').css({'display': 'flex','justify-content': 'flex-end'}).prepend(dropdownHtml);
-
-		 var dropdownData = [
-		        { id: '1', name: 'Option 1' },
-		        { id: '2', name: 'Option 2' },
-		        { id: '3', name: 'Option 3' },
-		        // Add more options here as needed
-		    ];
-		 
-		 	var dropdown = $('#transactionAgentList');
-		    dropdown.empty(); // Clear existing options
-		    dropdown.append('<option value="">Select Agent</option>'); 
-
-		    // Loop through the dropdownData array to create option elements
-		    $.each(dropdownData, function(index, item) {
-		        dropdown.append('<option value="' + item.id + '">' + item.name + '</option>');
-		    });
-
-		    dropdown.on('change', function() {
-		        var selectedValue = $(this).val();
-		        table.columns(0).search(selectedValue).draw();  
-		    });
-			
-			
-            // Check Transaction updated state and sub-state
-            $('#transfer-list').on('click', '.transactionLogo', function() {
-                // Get the transaction reference number from the same row where the logo was clicked
-                var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
-
-                // Check if the transaction reference number exists
-                if (!transactionRefNumber) {
-                    alert('Transaction reference number is missing!');
-                    return;
+        $.ajax({
+            url: '/api/v1/agent/agentId',
+            type: 'GET',
+            success: function (response) {
+                if (Array.isArray(response)) {
+                    var dropdown = $('#transactionAgentList');
+                    dropdown.empty();
+                    dropdown.append('<option value="">Select Agent</option>');
+                    $.each(response, function (index, item) {
+                        dropdown.append('<option value="' + item + '">' + item + '</option>');
+                    });
+                } else {
+                    alert('Failed to load agents. Response format is incorrect.');
                 }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching agents:', error);
+                alert('Error fetching agent list.');
+            }
+        });
 
-                // Make the AJAX request to the backend
-                $.ajax({
-                    url: '/api/v1/raas/enquire-transaction',
-                    type: 'GET',
-                    data: { transaction_ref_number: transactionRefNumber },
-                    success: function(response) {
-                        // If the response is successful, reload the page
-                        if (response.status === 200) {
-                            console.log('Transaction enquiry successful');
-                        } else {
-                            alert(response.error || 'Enquiry failed!');
-                        }
+        
+        $('#transactionAgentList').on('change', function () {
+            var dropdownValue = $(this).val(); 
 
-                        // Reload the page after success or failure
-                        location.reload();
-                    },
-                    error: function(xhr, status, error) {
-                        // Handle any errors during the request
-                        alert('Error: ' + error);
+            if (dropdownValue) {
+                table.search(dropdownValue).draw();
+            } else {
+                table.search('').draw();
+            }
+        });
+
+        $('.dataTables_filter input').on('input', function () {
+            var searchValue = $(this).val();
+            table.search(searchValue).draw();
+        });
+
+        $('#transfer-list').on('click', '.transactionLogo', function () {
+            var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
+
+            if (!transactionRefNumber) {
+                alert('Transaction reference number is missing!');
+                return;
+            }
+
+            $.ajax({
+                url: '/api/v1/raas/enquire-transaction',
+                type: 'GET',
+                data: { transaction_ref_number: transactionRefNumber },
+                success: function (response) {
+                    if (response.status === 200) {
+                        console.log('Transaction enquiry successful');
+                    } else {
+                        alert(response.error || 'Enquiry failed!');
                     }
-                });
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    alert('Error: ' + error);
+                }
             });
         });
+    });
+
     </script>
 </body>
 </html>

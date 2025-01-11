@@ -1,6 +1,7 @@
 package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -146,6 +147,18 @@ public class AgentRestController {
 	    } else {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agent not found for agentId: " + agentId);
 	    }
+	}
+	@GetMapping("/agentId")
+	public ResponseEntity<?> getAllAgentIds() {
+	    // Fetch all agent IDs
+	    List<String> allAgentIds = agentService.getAllAgentIds();
+	    
+	    // Check if any agents exist
+	    if (allAgentIds.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body("No agents found.");
+	    }
+	    return ResponseEntity.ok(allAgentIds);
 	}
 
 }

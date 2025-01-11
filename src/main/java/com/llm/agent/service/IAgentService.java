@@ -23,4 +23,6 @@ public interface IAgentService {
 
 	void updateAgent(Long id, Agent updatedAgent, String modifiedBy);
 
+	List<String> getAllAgentIds();
+
 }

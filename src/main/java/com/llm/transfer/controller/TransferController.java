@@ -67,7 +67,13 @@ public class TransferController {
 		} catch (Exception e) {
 			model.addAttribute("dailyCreditLimit", 0);
 		}
+		try {
+			Agent agentId = agentService.getByAgentId(byUsername.get().getAgent());
+			model.addAttribute("agentId", agentId.getAgentId());
 
+		} catch (Exception e) {
+			model.addAttribute("agentId", "Agent not found Given Agent ID");
+		}
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
@@ -115,7 +121,13 @@ public class TransferController {
 		} catch (Exception e) {
 			model.addAttribute("dailyCreditLimit", 0);
 		}
+		try {
+			Agent agentId = agentService.getByAgentId(byUsername.get().getAgent());
+			model.addAttribute("agentId", agentId.getAgentId());
 
+		} catch (Exception e) {
+			model.addAttribute("agentId", "Agent not found Given Agent ID");
+		}
 		try {
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			model.addAttribute("customerListOnTransfer", customers);

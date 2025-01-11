@@ -277,6 +277,8 @@
 			<form>
 				<input type="hidden" id="residentTypeId" name="residentTypeId"
 					value="">
+					<input type="hidden" id="agentId" name="agentId"
+					value="${agentId}">
 					<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" />	
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">

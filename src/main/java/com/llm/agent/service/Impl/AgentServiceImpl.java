@@ -3,6 +3,7 @@ package com.llm.agent.service.Impl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -100,4 +101,12 @@ public class AgentServiceImpl implements IAgentService {
 	    // Save the updated agent
 	    agentRepositories.save(existingAgent);
 	}
+
+	@Override
+	public List<String> getAllAgentIds() {
+	    return agentRepositories.findAll().stream()
+	            .map(Agent::getAgentId)
+	            .collect(Collectors.toList());
+	}
+
 }

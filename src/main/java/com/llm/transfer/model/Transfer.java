@@ -137,5 +137,6 @@ public class Transfer {
 	private LocalDateTime transactionDate;
 	@Transient
 	private String transactionDateFormatted;
+	private String agentId;
    
 }

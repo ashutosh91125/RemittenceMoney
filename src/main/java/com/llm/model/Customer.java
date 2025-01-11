@@ -12,246 +12,289 @@ import com.llm.common.enums.Gender;
 @Table(name = "customer")
 public class Customer {
 
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-//        @JsonProperty("channel")
-        @Column(name = "channel", length = 20, nullable = false)
-        private String channel;
+	@Column(name = "channel", length = 20, nullable = false)
+	private String channel;
 
-//        @JsonProperty("agent_location_id")
-        @Column(name = "agent_location_id", nullable = false)
-        private String agentLocationId;
+	@Column(name = "agent_location_id", nullable = false)
+	private String agentLocationId;
 
+	@Column(name = "salutation", length = 3)
+	private String salutation;
 
-//        @JsonProperty("salutation")
-        @Column(name = "salutation", length = 3)
-        private String salutation;
+	@Column(name = "first_name", length = 100, nullable = false)
+	private String firstName;
 
-//        @JsonProperty("first_name")
-        @Column(name = "first_name", length = 100, nullable = false)
-        private String firstName;
+	@Column(name = "middle_name", length = 60)
+	private String middleName;
 
-//        @JsonProperty("middle_name")
-        @Column(name = "middle_name", length = 60)
-        private String middleName;
+	@Column(name = "last_name", length = 60, nullable = false)
+	private String lastName;
 
-//        @JsonProperty("last_name")
-        @Column(name = "last_name", length = 60, nullable = false)
-        private String lastName;
+	@Column(name = "preferred_name", length = 255)
+	private String preferredName;
 
-//        @JsonProperty("preferred_name")
-        @Column(name = "preferred_name", length = 255)
-        private String preferredName;
+	@Column(name = "nationality", length = 2, nullable = false)
+	private String nationality;
 
-//        @JsonProperty("nationality")
-        @Column(name = "nationality", length = 2, nullable = false)
-        private String nationality;
+	@Column(name = "second_nationality", length = 2)
+	private String secondNationality;
 
-//        @JsonProperty("second_nationality")
-        @Column(name = "second_nationality", length = 2)
-        private String secondNationality;
+	@Column(name = "native_region")
+	private Integer nativeRegion;
 
-//        @JsonProperty("native_region")
-        @Column(name = "native_region")
-        private Integer nativeRegion;
+	@Column(name = "date_of_birth")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String dateOfBirth;
 
-//        @JsonProperty("date_of_birth")
-@Column(name = "date_of_birth")
-@DateTimeFormat(pattern = "yyyy-MM-dd")
-private String dateOfBirth;
+	@Column(name = "country_of_birth", length = 2, nullable = false)
+	private String countryOfBirth;
 
-//        @JsonProperty("country_of_birth")
-        @Column(name = "country_of_birth", length = 2, nullable = false)
-        private String countryOfBirth;
+	@Column(name = "place_of_birth", length = 40)
+	private String placeOfBirth;
 
-//        @JsonProperty("place_of_birth")
-        @Column(name = "place_of_birth", length = 40)
-        private String placeOfBirth;
+	@Column(name = "resident_type_id")
+	private Long residentTypeId;
 
-//        @JsonProperty("resident_type_id")
-        @Column(name = "resident_type_id")
-        private Long residentTypeId;
+	@Column(name = "country_of_residence", length = 2, nullable = false)
+	private String countryOfResidence;
 
-//        @JsonProperty("country_of_residence")
-        @Column(name = "country_of_residence", length = 2, nullable = false)
-        private String countryOfResidence;
+	@Enumerated(EnumType.STRING)
+	@Column(name = "gender", length = 12, nullable = false)
+	private Gender gender;
 
-//        @JsonProperty("gender")
-        @Enumerated(EnumType.STRING)
-        @Column(name = "gender", length = 12, nullable = false)
-        private Gender gender;
+	@Column(name = "mothers_maiden_name", length = 255)
+	private String mothersMaidenName;
 
-//        @JsonProperty("mothers_maiden_name")
-        @Column(name = "mothers_maiden_name", length = 255)
-        private String mothersMaidenName;
+	@Column(name = "primary_mobile_number", length = 20, nullable = false, unique = true)
+	private String primaryMobileNumber;
 
-//        @JsonProperty("primary_mobile_number")
-        @Column(name = "primary_mobile_number", length = 20, nullable = false,unique = true)
-        private String primaryMobileNumber;
+	@Column(name = "secondary_mobile_number", length = 20)
+	private String secondaryMobileNumber;
 
-//        @JsonProperty("secondary_mobile_number")
-        @Column(name = "secondary_mobile_number", length = 20)
-        private String secondaryMobileNumber;
+	@Column(name = "email_id", length = 255, nullable = false)
+	private String emailId;
 
-//        @JsonProperty("email_id")
-        @Column(name = "email_id", length = 255, nullable = false)
-        private String emailId;
+	@Column(name = "phone_number", length = 20)
+	private String phoneNumber;
 
-//        @JsonProperty("phone_number")
-        @Column(name = "phone_number", length = 20)
-        private String phoneNumber;
+	@Column(name = "occupation_id")
+	private Long occupationId;
 
-//        @JsonProperty("occupation_id")
-        @Column(name = "occupation_id")
-        private Long occupationId;
+	@Column(name = "political_exposed_person")
+	private Boolean politicalExposedPerson;
 
-//        @JsonProperty("political_exposed_person")
-        @Column(name = "political_exposed_person")
-        private Boolean politicalExposedPerson;
+	@Column(name = "updated_by", length = 50)
+	private String updatedBy;
 
-//        @JsonProperty("updated_by")
-        @Column(name = "updated_by", length = 50)
-        private String updatedBy;
+	@Column(name = "ecrn", length=16)
+	private String ecrn;
 
-//        @JsonProperty("ecrn")
-        @Column(name = "ecrn")
-        private String ecrn;
+	@Column(name = "address_type_id")
+	private String addressTypeId;
 
-        //Address data
-        @Column(name = "address_type_id")
-        private String addressTypeId;
+	@Column(name = "building_name", length = 255)
+	private String buildingName;
 
-        @Column(name = "building_name", length = 255)
-        private String buildingName;
+	@Column(name = "street_name", length = 255)
+	private String streetName;
 
-        @Column(name = "street_name", length = 255)
-        private String streetName;
+	@Column(name = "landmark", length = 255)
+	private String landmark;
 
-        @Column(name = "landmark", length = 255)
-        private String landmark;
+	@Column(name = "city", length = 60)
+	private String city;
 
-        @Column(name = "city", length = 255)
-        private String city;
+	@Column(name = "district", length = 255)
+	private String district;
 
-        @Column(name = "district", length = 255)
-        private String district;
+	@Column(name = "state", length = 255)
+	private String state;
 
-        @Column(name = "state", length = 255)
-        private String state;
+	@Column(name = "country", length = 3)
+	private String country;
 
-        @Column(name = "country", length = 2)
-        private String country;
+	@Column(name = "zip")
+	private String zip;
 
-        @Column(name = "zip")
-        private String zip;
+	@Column(name = "po_box")
+	private String poBox;
 
-        @Column(name = "po_box")
-        private String poBox;
+	@Column(name = "mobile_number", length = 20)
+	private String mobileNumber;
 
-        @Column(name = "mobile_number", length = 20)
-        private String mobileNumber;
+	// Permanent Address
+	@Column(name = "parAddressTypeId")
+	private String parAddressTypeId;
 
-        //Permanent Address
-        private String parAddressTypeId;
+	@Column(name = "parBuildingName", length = 255)
+	private String parBuildingName;
 
-        private String parBuildingName;
+	@Column(name = "parStreetName", length = 255)
+	private String parStreetName;
 
-        private String parStreetName;
+	@Column(name = "parLandmark", length = 255)
+	private String parLandmark;
 
-        private String parLandmark;
+	@Column(name = "parCity", length = 60)
+	private String parCity;
 
+	@Column(name = "parDistrict", length = 255)
+	private String parDistrict;
 
-        private String parCity;
+	@Column(name = "parState", length = 255)
+	private String parState;
 
-        private String parDistrict;
+	@Column(name = "parCountry", length = 3)
+	private String parCountry;
 
-        private String parState;
+	@Column(name = "parZip")
+	private String parZip;
 
-        private String parCountry;
+	@Column(name = "parPoBox")
+	private String parPoBox;
 
-        private String parZip;
+	@Column(name = "parMobileNumber", length = 20)
+	private String parMobileNumber;
 
-        private String parPoBox;
+	// Additional Document
+	private String documentId;
+	@Column(columnDefinition = "TEXT")
+	private String docbase64Data;
+	private String docContentType;
 
-        private String parMobileNumber;
+	// IdDetails
+	private Integer idType;
+	@Column(name = "idNumber", length = 30)
+	private String idNumber;
+	@Column(name = "visaNumber", length = 30)
+	private String visaNumber;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String visaExpiryDate;
+	private String visaType;
+	@Column(name = "nameAsPerId", length = 30)
+	private String nameAsPerId;
+	@Column(name = "issuedCountry", length = 3)
+	private String issuedCountry;
+	@Column(name = "issuedBy", length = 30)
+	private String issuedBy;
+	@Column(name = "issuedAt", length = 30)
+	private String issuedAt;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String issuedOn;
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private String dateOfExpiry;
+	@Column(name = "defaultStatus", length = 30)
+	private Boolean defaultStatus;
+	@Column(name = "activeStatus", length = 30)
+	private Boolean activeStatus;
 
+	@Lob
+	private byte[] frontBase64Data;
+	@Transient
+	private MultipartFile frontPictureFile;
+	private String frontContentType;
 
-        //Additional Document
-        private String documentId;
-        @Column(columnDefinition = "TEXT")
-        private String docbase64Data;
-        private String docContentType;
+	@Lob
+	private byte[] backBase64Data;
+	@Transient
+	private MultipartFile backPictureFile;
+	private String BackContentType;
 
-        //IdDetails
-        private Integer idType;
-        private String idNumber;
-        private String visaNumber;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private String visaExpiryDate;
-        private String visaType;
-        private String nameAsPerId;
-        private String issuedCountry;
-        private String issuedBy;
-        private String issuedAt;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private String issuedOn;
-        @DateTimeFormat(pattern = "yyyy-MM-dd")
-        private String dateOfExpiry;
-        private Boolean defaultStatus;
-        private Boolean activeStatus;
-        
+	// classification
+	@Column(name = "customerTypeId")
+	private Integer customerTypeId;
+	
+	@Column(name = "annualIncomeRangeId")
+	private Integer annualIncomeRangeId;
+	
+	@Column(name = "annualIncomeCurrencyCode", length = 30)
+	private String annualIncomeCurrencyCode;
+	
+	@Column(name = "socialSecurityNumber", length = 30)
+	private String socialSecurityNumber;
+	
+	@Column(name = "taxRegistrationNumber")
+	private Long taxRegistrationNumber;
+	
+	@Column(name = "txnIssuedCountry", length = 2)
+	private String txnIssuedCountry;
+	
+	@Column(name = "employerName", length = 30)
+	private String employerName;
+	
+	@Column(name = "employerAddress", length = 30)
+	private String employerAddress;
+	
+	@Column(name = "employerPhone", length = 20)
+	private String employerPhone;
+	
+	@Column(name = "employerEstablishmentId", length = 30)
+	private String employerEstablishmentId;
+	
+	@Column(name = "riskRatingId")
+	private Integer riskRatingId;
+	
+	@Column(name = "pepCategory")
+	private Integer pepCategory;
+	
+	@Column(name = "personalMohreId", length = 30)
+	private String personalMohreId;
+	
+	@Column(name = "incomeType", length = 30)
+	private Integer incomeType;
+	
+	@Column(name = "professionCategory", length = 30)
+	private String professionCategory;
+	
+	@Column(name = "reasonForAcc", length = 30)
+	private String reasonForAcc;
+	
+	@Column(name = "txnVolMonth", length = 30)
+	private Integer txnVolMonth;
+	
+	@Column(name = "txnCountMonth", length = 30)
+	private Integer txnCountMonth;
+	
+	@Column(name = "showRemarksOnTxn", length = 30)
+	private Boolean showRemarksOnTxn;
+	
+	@Column(name = "customerRemarks", length = 30)
+	private String customerRemarks;
+	
+	@Column(name = "agentRefNo", length = 30)
+	private String agentRefNo;
+	
+	@Column(name = "firstLanguage", length = 30)
+	private String firstLanguage;
+	
+	@Column(name = "maritalStatus", length = 30)
+	private Integer maritalStatus;
+	
+	@Column(name = "dnfbp", length = 30)
+	private Boolean dnfbp;
+	
+	@Column(name = "dpms", length = 30)
+	private Boolean dpms;
+	
+	@Column(name = "profileCategory", length = 30)
+	private Integer profileCategory;
 
-        @Lob
-        private byte[] frontBase64Data;
-        @Transient
-        private MultipartFile frontPictureFile;
-        private String frontContentType;
+	// SocialLink
+	@Column(name = "socialLinksId", length = 30)
+	private Integer socialLinksId;
+	@Column(name = "textField", length = 30)
+	private String textField;
 
-        @Lob
-        private byte[] backBase64Data;
-        @Transient
-        private MultipartFile backPictureFile;
-        private String BackContentType;
+	// Profile Photo
+	@Column(name = "profBase64Data", length = 30)
+	private String profBase64Data;
+	@Column(name = "profContentType", length = 30)
+	private String profContentType;
 
-
-        //classification
-        private Integer customerTypeId;
-        private Integer annualIncomeRangeId;
-        private String annualIncomeCurrencyCode;
-        private String socialSecurityNumber;
-        private Long taxRegistrationNumber;
-        private String txnIssuedCountry;
-        private String employerName;
-        private String employerAddress;
-        private String employerPhone;
-        private String employerEstablishmentId;
-        private Integer riskRatingId;
-        private Integer pepCategory;
-        private String personalMohreId;
-        private Integer incomeType;
-        private String professionCategory;
-        private String reasonForAcc;
-        private Integer txnVolMonth;
-        private Integer txnCountMonth;
-        private Boolean showRemarksOnTxn;
-        private String customerRemarks;
-        private String agentRefNo;
-        private String firstLanguage;
-        private Integer maritalStatus;
-        private Boolean dnfbp;
-        private Boolean dpms;
-        private Integer profileCategory;
-
-        //SocialLink
-        private Integer socialLinksId;
-        private String textField;
-
-        //Profile Photo
-        private String profBase64Data;
-        private String profContentType;
-        
-        private Boolean isValid;
-        private String phoneCode;
+	private Boolean isValid;
+	private String phoneCode;
 }

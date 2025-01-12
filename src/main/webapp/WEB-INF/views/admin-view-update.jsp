@@ -18,13 +18,62 @@
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
 function updateAdmin() {
-	/* if(!validation($("#adminForm")))  {
-        return false;  
-    } */
+    document.getElementById("adminNameError").innerHTML = "";
+    document.getElementById("userNameError").innerHTML = "";
+    document.getElementById("phoneNumberError").innerHTML = "";
+    document.getElementById("emailError").innerHTML = "";
+    document.getElementById("countryError").innerHTML = "";
+    document.getElementById("validationError").style.display = "none";
+
+    let isValid = true;
+    const adminName = document.getElementById("adminName").value.trim();
+    const userName = document.getElementById("userName").value.trim();
+    const phoneNumber = document.getElementById("phoneNumber").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const country = document.getElementById("country").value;
+
+    if (!adminName) {
+        document.getElementById("adminNameError").innerHTML = "Admin Name is required.";
+        isValid = false;
+    }
+    if (!userName) {
+        document.getElementById("userNameError").innerHTML = "User Name is required.";
+        isValid = false;
+    }
+
+    
+    if (!phoneNumber) {
+        document.getElementById("phoneNumberError").innerHTML = "Phone Number is required.";
+        isValid = false;
+    } 
+
+   
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!email) {
+        document.getElementById("emailError").innerHTML = "Email is required.";
+        isValid = false;
+    } else if (!emailRegex.test(email)) {
+        document.getElementById("emailError").innerHTML = "Enter a valid Email.";
+        isValid = false;
+    }
+
+
+    if (!country) {
+        document.getElementById("countryError").innerHTML = "Country is required.";
+        isValid = false;
+    }
+
+
+    if (!isValid) {
+        document.getElementById("validationError").style.display = "block";
+        return;
+    }
+
+ 
     const id = $('#id').val();
-    const formData = $("#adminForm").serializeArray(); 
+    const formData = $("#adminForm").serializeArray();
     const data = {};
-    formData.forEach(item => data[item.name] = item.value); 
+    formData.forEach(item => data[item.name] = item.value);
 
     $('#loader').show();
     $('#submitButton').prop('disabled', true);
@@ -45,6 +94,7 @@ function updateAdmin() {
         }
     });
 }
+
 	
 </script>
 </head>
@@ -146,7 +196,7 @@ function updateAdmin() {
 	<script src="assets/vendors/js/dataTables.min.js"></script>
 	<script src="assets/vendors/js/dataTables.bs5.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
-	<script type="text/javascript" src="js/adminSignUp.js"></script>
+
 
 </body>
 </html>

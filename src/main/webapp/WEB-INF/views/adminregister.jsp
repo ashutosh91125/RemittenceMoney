@@ -17,7 +17,44 @@
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
-	
+function validation(form) {
+	let isValid = true;
+	document.getElementById("adminNameError").innerHTML = "";
+	document.getElementById("userNameError").innerHTML = "";
+	document.getElementById("phoneNumberError").innerHTML = "";
+	document.getElementById("emailError").innerHTML = "";
+	document.getElementById("passwordError").innerHTML = "";
+	document.getElementById("countryError").innerHTML = "";
+
+	if (!form.adminName.value.trim()) {
+		document.getElementById("adminNameError").innerHTML = "Admin Name is required.";
+		isValid = false;
+	}
+	if (!form.userName.value.trim()) {
+		document.getElementById("userNameError").innerHTML = "User Name is required.";
+		isValid = false;
+	}
+	if (!form.phoneNumber.value.trim()) {
+		document.getElementById("phoneNumberError").innerHTML = "Phone Number is required.";
+		isValid = false;
+	}
+	if (!form.email.value.trim()) {
+		document.getElementById("emailError").innerHTML = "Email is required.";
+		isValid = false;
+	}
+	if (!form.password.value.trim()) {
+		document.getElementById("passwordError").innerHTML = "Password is required.";
+		isValid = false;
+	}
+	if (!form.country.value) {
+		document.getElementById("countryError").innerHTML = "Country is required.";
+		isValid = false;
+	}
+	if (!isValid) {
+		document.getElementById("validationError").style.display = "block";
+	}
+	return isValid;
+}
 </script>
 </head>
 
@@ -138,7 +175,6 @@
 	<script src="assets/vendors/js/dataTables.min.js"></script>
 	<script src="assets/vendors/js/dataTables.bs5.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
-	<script type="text/javascript" src="js/adminSignUp.js"></script>
 
 </body>
 </html>

@@ -596,7 +596,7 @@ document.addEventListener('DOMContentLoaded', function() {
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-xl-4">
+											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Outlet Code<span
 														class="text-danger">*</span></label>
@@ -605,7 +605,7 @@ document.addEventListener('DOMContentLoaded', function() {
 														placeholder="Outlet Code" />
 													<span id="outletCodeError" class="text-danger1"></span>
 												</div>
-											</div>
+											</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Tax Applicable<span

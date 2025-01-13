@@ -76,10 +76,9 @@
 																Inactive
 															</c:otherwise>
 														</c:choose></td>
-													<td class="text-end"><a href="admin-detail?id=${admin.id}"
-														class="btn btn-light-brand">View</a><%-- <a href="#"
-														    class="btn btn-light-brand">Edit</a> <a href="#"
-														class="btn btn-light-brand">Delete</a></td> --%>
+														<td><a href="admin-detail?id=${admin.id}" class="avatar-text avatar-md" title="view">
+                                                            <i class="feather feather-eye"></i>
+                                                        </a></td>
 												</tr>
 											</c:forEach>
 										</tbody>

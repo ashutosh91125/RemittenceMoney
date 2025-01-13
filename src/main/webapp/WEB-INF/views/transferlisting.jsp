@@ -91,8 +91,8 @@
                                                              src="assets/images/transferList/refreshState.svg"
                                                              class="img-fluid" style="width: 24px; cursor: pointer;"
                                                              alt="Check State" />
-                                                        <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" class="ms-2">
-                                                            <img src="assets/images/transferList/viewTransfer.svg" class="img-fluid" style="width: 24px;" title="View Transaction" />
+                                                             <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" title="view">
+                                                            <i class="feather feather-eye"></i>
                                                         </a>
                                                     </td>
                                                 </tr>
@@ -119,6 +119,7 @@
 
     <!-- DataTables Initialization -->
     <script>
+    
     $(document).ready(function () {
         // Initialize DataTable with custom DOM for filter and dropdown
         var table = $('#transfer-list').DataTable({
@@ -143,9 +144,10 @@
             }]
         });
 
-
+        <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')}">
         var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-6" style="width: 200px; height: 43px;"></select>';
         $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-end' }).prepend(dropdownHtml);
+
 
         $.ajax({
             url: '/api/v1/agent/agentId',
@@ -180,7 +182,7 @@
                 table.column(1).search('').draw();
             }
         });
-
+        </c:if>
   
         $('.dataTables_filter input').on('input', function () {
             var searchValue = $(this).val();

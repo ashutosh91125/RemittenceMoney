@@ -1,6 +1,7 @@
 package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -122,43 +123,52 @@ public class AgentRestController {
 //		 return new RedirectView("/agent?agentId=" + agentId, true);
 //
 //	    }
-	
 
 	@PutMapping("{id}")
 	public ResponseEntity<String> updateAgent(@PathVariable Long id, @ModelAttribute Agent agents) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+
+		try {
+			agentService.updateAgent(id, agents, username);
+			return new ResponseEntity<>("Agent updated successfully!", HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<>("Failed to update agent!", HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@GetMapping("/{agentId}")
+	public ResponseEntity<String> getAgentNameByAgentId(@PathVariable Long agentId) {
+		Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
+		if (existingAgent != null) {
+			return ResponseEntity.ok().body(existingAgent.getAgentName());
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agent not found for agentId: " + agentId);
+		}
+	}
+
+	@GetMapping("/agentId")
+	public ResponseEntity<?> getAllAgentIds() {
 	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 	    String username = authentication.getName();
 
-	    try {
-	        agentService.updateAgent(id, agents, username);
-	        return new ResponseEntity<>("Agent updated successfully!", HttpStatus.OK);
-	    }catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResponseEntity<>("Failed to update agent!", HttpStatus.BAD_REQUEST);
-	    }
-	}
+	    String role = authentication.getAuthorities().stream()
+	            .map(authority -> authority.getAuthority())
+	            .findFirst() 
+	            .orElse("");
 
-	
-	@GetMapping("/{agentId}")
-	public ResponseEntity<String> getAgentNameByAgentId(@PathVariable Long agentId) {
-	    Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
-	    if (existingAgent != null) {
-	        return ResponseEntity.ok().body(existingAgent.getAgentName());
-	    } else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agent not found for agentId: " + agentId);
+	    List<String> allAgentIds = new ArrayList<>();
+	    if (role.equals("ROLE_AGENT") || role.equals("ROLE_SUB_ADMIN")) {
+	        allAgentIds = agentService.getAllAgentIds();
 	    }
-	}
-	@GetMapping("/agentId")
-	public ResponseEntity<?> getAllAgentIds() {
-	    // Fetch all agent IDs
-	    List<String> allAgentIds = agentService.getAllAgentIds();
-	    
-	    // Check if any agents exist
+	     
 	    if (allAgentIds.isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("No agents found.");
 	    }
 	    return ResponseEntity.ok(allAgentIds);
 	}
+
 
 }

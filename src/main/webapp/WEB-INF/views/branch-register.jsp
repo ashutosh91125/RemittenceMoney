@@ -555,18 +555,6 @@ document.addEventListener('DOMContentLoaded', function() {
 								<div class="main-content">
 									<div class="card-body pass-security">
 										<div class="row">
-
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Branch Location Id<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="branchLocationId" type="number"
-														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" />
-													<span id="branchLocationIdError" class="text-danger1"></span>
-												</div>
-											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Licence Number<span
@@ -587,9 +575,6 @@ document.addEventListener('DOMContentLoaded', function() {
 													<span id="outletCodeError" class="text-danger1"></span>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span
@@ -605,12 +590,12 @@ document.addEventListener('DOMContentLoaded', function() {
 											</div>
 										</div>
 									</div>
-
-								</div>
-							</div>
-						</div>
-					</div>
+							   </div>
+						  </div>
+					  </div>
+				   </div>
 				</div>
+			 </div>
 				<c:if test="${isUpdate }">
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">

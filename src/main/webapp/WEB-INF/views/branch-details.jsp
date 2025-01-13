@@ -164,47 +164,47 @@
 }
 </style>
 <script>
-	function viewUpdateBranch() {
-	    const formData = $("#branchForm").serialize(); // Serialize form data for submission
-	    const id = $("#id").val();
-	    $('#loader').show();
-	    $('#submitButton').prop('disabled', true);
+function viewUpdateBranch() {
+    const formData = $("#branchForm").serialize(); // Serialize form data for submission
+    const id = $("#id").val();
+    $('#loader').show();
+    $('#submitButton').prop('disabled', true);
 
-	    $.ajax({
-	        url: "/branch?branchId="+id,
-	        type: "GET",
-	        contentType: "application/x-www-form-urlencoded",
-	        data: formData,
-	        success: function(response) {
-	            $('#loader').hide();
-	            $('#submitButton').prop('disabled', false);
+    $.ajax({
+        url: "/branch?branchId="+id,
+        type: "GET",
+        contentType: "application/x-www-form-urlencoded",
+        data: formData,
+        success: function(response) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
 
-	            // Replace the current content with the response (HTML view)
-	            $('body').html(response);
-	        },
-	        error: function(xhr) {
-	            $('#loader').hide();
-	            $('#submitButton').prop('disabled', false);
-	            alert("Error: " + xhr.responseText);
-	        }
-	    });
-	}
+            // Replace the current content with the response (HTML view)
+            $('body').html(response);
+        },
+        error: function(xhr) {
+            $('#loader').hide();
+            $('#submitButton').prop('disabled', false);
+            alert("Error: " + xhr.responseText);
+        }
+    });
+}
 
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
+function toggleDiv(divId) {
+	const element = document.getElementById(divId);
+	element.classList.toggle("show");
+}
 
-	$(document).ready(function () {
-	    const status = document.getElementById('status'); 
-	    
-	    if (status.value === 'true') {
-	    	status.value = 'Active';
-	    }
-	    else{
-	    	status.value = 'Inactive';
-	    }
-	});
+$(document).ready(function () {
+    const status = document.getElementById('status'); 
+    
+    if (status.value === 'true') {
+    	status.value = 'Active';
+    }
+    else{
+    	status.value = 'Inactive';
+    }
+});
 </script>
 </head>
 
@@ -269,7 +269,7 @@
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form id="branchForm" modelAttribute="branch"
 			onsubmit="event.preventDefault(); viewUpdateBranch();">
-			<form:hidden path="id" value=""/>
+			<form:hidden path="id" value="" />
 
 			<div class="accordion" id="accordionPanelsStayOpenExample">
 				<div class="accordion-item" style="background: aliceblue;">
@@ -291,17 +291,17 @@
 												class="text-danger"> </span></label>
 											<form:input path="branchName" type="text"
 												class="form-control" id="branchName"
-												placeholder="Branch Name"  readonly="true" required='true' />
+												placeholder="Branch Name" readonly="true" required='true' />
 											<span id="branchNameError" class="text-danger"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Agent<span
-												class="text-danger"> </span></label>
-											<input value="${agent}" class="form-control" id="agent"
-												readonly="true" required='true'  />
-											<span id="agentError" class="text-danger" ></span>
+												class="text-danger"> </span></label> <input value="${agent}"
+												class="form-control" id="agent" readonly="true"
+												required='true' /> <span id="agentError"
+												class="text-danger"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -316,21 +316,22 @@
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">State<span
-                                                class="text-danger"> </span></label>
-                                            <input value="${states }" class="form-control" id="state"
-                                                readonly="true" required='true'  />
-                                            <span id="branchChannelIdError" class="text-danger"></span>
-                                        </div>
-                                    </div>
+										<div class="mb-4">
+											<label class="form-label">State<span
+												class="text-danger"> </span></label> <input value="${states }"
+												class="form-control" id="state" readonly="true"
+												required='true' /> <span id="branchChannelIdError"
+												class="text-danger"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Display Name<span
 												class="text-danger"> </span></label>
 											<form:input path="branchDisplayName" type="text"
 												class="form-control" id="branchDisplayName"
-												placeholder="Branch Display Name" readonly="true" required='true' />
+												placeholder="Branch Display Name" readonly="true"
+												required='true' />
 											<span id="branchDisplayNameError" class="text-danger"></span>
 										</div>
 									</div>
@@ -339,7 +340,8 @@
 											<label class="form-label">Address 1<span
 												class="text-danger"> </span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" readonly="true" required='true' />
+												id="address1" placeholder="Address1" readonly="true"
+												required='true' />
 											<span id="address1Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -350,7 +352,8 @@
 											<label class="form-label">Address 2<span
 												class="text-danger"> </span></label>
 											<form:input path="address2" type="text" class="form-control"
-												id="address2" placeholder="Address2"  readonly="true" required='true'/>
+												id="address2" placeholder="Address2" readonly="true"
+												required='true' />
 											<span id="address2Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -358,7 +361,8 @@
 										<div class="mb-4">
 											<label class="form-label">Address 3</label>
 											<form:input path="address3" type="text" class="form-control"
-												id="address3" placeholder="Address3" readonly="true" required='true' />
+												id="address3" placeholder="Address3" readonly="true"
+												required='true' />
 											<span id="address3Error" class="text-danger"></span>
 										</div>
 									</div>
@@ -378,7 +382,8 @@
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" readonly="true" required='true' />
+												id="zip" placeholder="Zip/PoBox" readonly="true"
+												required='true' />
 											<span id="zipError" class="text-danger"></span>
 										</div>
 									</div>
@@ -388,7 +393,8 @@
 												class="text-danger"> </span></label>
 											<form:input path="branchChannelId" type="text"
 												class="form-control" id="branchChannelId"
-												placeholder="Branch Channel Id" readonly="true" required='true' />
+												placeholder="Branch Channel Id" readonly="true"
+												required='true' />
 											<span id="branchChannelIdError" class="text-danger"></span>
 										</div>
 									</div>
@@ -404,13 +410,13 @@
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">CDP Channel</label>
-                                            <form:input path="cdpChannel" class="form-control"
-                                                id="cdpChannel" readonly="true" required='true' />
-                                            <span id="cdpChannelError" class="text-danger"></span>
-                                        </div>
-                                    </div>
+										<div class="mb-4">
+											<label class="form-label">CDP Channel</label>
+											<form:input path="cdpChannel" class="form-control"
+												id="cdpChannel" readonly="true" required='true' />
+											<span id="cdpChannelError" class="text-danger"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">RAAS Channel</label>
@@ -446,7 +452,8 @@
 													<label class="form-label">Email<span
 														class="text-danger"> </span></label>
 													<form:input path="email" type="email" class="form-control"
-														id="email" placeholder="Email" readonly="true" required='true' />
+														id="email" placeholder="Email" readonly="true"
+														required='true' />
 													<span id="emailError" class="text-danger"></span>
 												</div>
 											</div>
@@ -454,7 +461,8 @@
 												<div class="mb-4">
 													<label class="form-label">Mobile</label>
 													<form:input path="mobile" type="tel" class="form-control"
-														id="mobile" placeholder="Mobile" readonly="true" required='true' />
+														id="mobile" placeholder="Mobile" readonly="true"
+														required='true' />
 													<span id="mobileError" class="text-danger"></span>
 
 												</div>
@@ -464,7 +472,8 @@
 													<label class="form-label">Phone<span
 														class="text-danger"> </span></label>
 													<form:input path="phone" type="tel" class="form-control"
-														id="phone" placeholder="Phone" readonly="true" required='true' />
+														id="phone" placeholder="Phone" readonly="true"
+														required='true' />
 													<span id="phoneError" class="text-danger"></span>
 												</div>
 											</div>
@@ -478,7 +487,8 @@
 														class="text-danger"> </span></label>
 													<form:input path="contactPerson" type="tel"
 														class="form-control" id="contactPerson"
-														placeholder="Contact Person" readonly="true" required='true' />
+														placeholder="Contact Person" readonly="true"
+														required='true' />
 													<span id="contactPersonError" class="text-danger"></span>
 												</div>
 											</div>
@@ -514,25 +524,14 @@
 								<div class="main-content">
 									<div class="card-body pass-security">
 										<div class="row">
-
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Branch Location Id<span
-														class="text-danger"> </span>
-													</label>
-													<form:input path="branchLocationId" type="number"
-														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" readonly="true" required='true' />
-													<span id="branchLocationIdError" class="text-danger"></span>
-												</div>
-											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Licence Number<span
 														class="text-danger"> </span></label>
 													<form:input path="licenceNo" type="text"
 														class="form-control" id="licenceNo"
-														placeholder="Licence Number" readonly="true" required='true' />
+														placeholder="Licence Number" readonly="true"
+														required='true' />
 													<span id="licenceNoError" class="text-danger"></span>
 												</div>
 											</div>
@@ -546,90 +545,89 @@
 													<span id="outletCodeError" class="text-danger"></span>
 												</div>
 											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Working Hours<span
-													class="text-danger"> </span></label>
-												<form:input path="workingHours" class="form-control"
-													id="working" readonly="true" required='true' />
-												<span id="workingError" class="text-danger"></span>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Working Hours<span
+														class="text-danger"> </span></label>
+													<form:input path="workingHours" class="form-control"
+														id="working" readonly="true" required='true' />
+													<span id="workingError" class="text-danger"></span>
+												</div>
 											</div>
 										</div>
-									</div>	
-
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 					<div class="accordion-item" style="background: aliceblue;">
-					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
-							Tails</button>
-					</h2>
-					<div id="panelsStayOpen-collapseSeven"
-						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
-							<div class="card-body personal-info">
-								<div class="main-content">
-									<div class="card-body pass-security">
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Created By<span
-														class="text-danger"> </span></label>
-													<form:input path="createdBy" type="text"
-														class="form-control" id="createdBy"
-														placeholder="Created By" readonly="true" />
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
+								Tails</button>
+						</h2>
+						<div id="panelsStayOpen-collapseSeven"
+							class="accordion-collapse collapse">
+							<div class="accordion-body" style="background: aliceblue;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Created By<span
+															class="text-danger"> </span></label>
+														<form:input path="createdBy" type="text"
+															class="form-control" id="createdBy"
+															placeholder="Created By" readonly="true" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Created On<span
+															class="text-danger"> </span></label>
+														<form:input path="createdOn" type="text"
+															class="form-control" id="createdOn"
+															placeholder="Created On" readonly="true" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Modified By<span
+															class="text-danger"> </span></label>
+														<form:input path="modifiedBy" type="text"
+															class="form-control" id="modifiedBy"
+															placeholder="Modified By" readonly="true" />
+													</div>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Created On<span
-														class="text-danger"> </span></label>
-													<form:input path="createdOn" type="text"
-														class="form-control" id="createdOn"
-														placeholder="Created On" readonly="true" />
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Modified On<span
+															class="text-danger"> </span></label>
+														<form:input path="modifiedOn" type="text"
+															class="form-control" id="modifiedOn"
+															placeholder="Modified On" readonly="true" />
+													</div>
 												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Modified By<span
-														class="text-danger"> </span></label>
-													<form:input path="modifiedBy" type="text"
-														class="form-control" id="modifiedBy"
-														placeholder="Modified By" readonly="true"/>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Remarks<span
+															class="text-danger"> </span></label>
+														<form:input path="remarks" type="text"
+															class="form-control" id="remarks" placeholder="Remarks"
+															readonly="true" />
+													</div>
 												</div>
-											</div>
-										</div>
-										<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Modified On<span
-														class="text-danger"> </span></label>
-													<form:input path="modifiedOn" type="text" class="form-control"
-														id="modifiedOn" placeholder="Modified On" readonly="true"/>
-												</div>
-											</div> 
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Remarks<span
-														class="text-danger"> </span></label>
-													<form:input path="remarks" type="text" class="form-control"
-														id="remarks" placeholder="Remarks" readonly="true"/>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Status <span
-														class="text-danger"> </span></label>
-													<form:input path="status" class="form-control"
-														id="status" readonly="true" placeholder="Status"/>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Status <span
+															class="text-danger"> </span></label>
+														<form:input path="status" class="form-control" id="status"
+															readonly="true" placeholder="Status" />
+													</div>
 												</div>
 											</div>
 										</div>
@@ -639,11 +637,10 @@
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="mt-5 mb-5 text-center"
-				style="display: flex; justify-content: center">
-				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
-			</div>
+				<div class="mt-5 mb-5 text-center"
+					style="display: flex; justify-content: center">
+					<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
+				</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

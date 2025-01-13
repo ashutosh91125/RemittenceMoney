@@ -15,7 +15,6 @@ function validation(form) {
 		const email = $(form).find("#email").val().trim();
 		const phone = $(form).find("#phone").val().trim();
 		const misEmailId = $(form).find("#misEmailId").val().trim();
-		const branchLocationId = $(form).find("#branchLocationId").val().trim();
 		const licenceNo = $(form).find("#licenceNo").val().trim();
 		const outletCode = $(form).find("#outletCode").val().trim();
 		const workingHours = $(form).find("#workingHours").val();
@@ -82,10 +81,7 @@ function validation(form) {
 		$("#misEmailIdError").text("Mis EmailId is required.");
 		 isValid = false;
 	 }
-	 if (branchLocationId === "") {
-		$("#branchLocationIdError").text("Branch Location Id is required.");
-		 isValid = false;
-	 }
+	
 	 if (licenceNo === "") {
 		$("#licenceNoError").text("Licenec No is required.");
 		 isValid = false;

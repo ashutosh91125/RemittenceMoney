@@ -1,11 +1,13 @@
 package com.llm.staff.repository;
 
-import com.llm.staff.model.StaffDetails;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.projection.StaffDetailsProjection;
 
 @Repository
 public interface StaffDetailsRepository extends JpaRepository<StaffDetails, Long> {
@@ -15,5 +17,7 @@ public interface StaffDetailsRepository extends JpaRepository<StaffDetails, Long
     List<StaffDetails> findByAgent(String agent);
 
     List<StaffDetails> findByCountry(String county);
+    
+    List<StaffDetailsProjection> findAllProjectedBy();
 }
 

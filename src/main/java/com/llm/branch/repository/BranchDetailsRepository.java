@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.llm.agent.projection.AgentProjection;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.projection.BranchProjection;
 
@@ -16,5 +17,7 @@ public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Lo
     List<BranchDetails> findByCounty(String country);
     
     List<BranchProjection> findByBranchLocationId(String branchLocationId);
+    
+    List<BranchProjection> findAllProjectedBy();
 }
 

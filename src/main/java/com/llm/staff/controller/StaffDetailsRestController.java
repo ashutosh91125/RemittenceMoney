@@ -1,7 +1,7 @@
 package com.llm.staff.controller;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +24,7 @@ import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.model.dto.StaffDTO;
+import com.llm.staff.projection.StaffDetailsProjection;
 import com.llm.staff.service.StaffDetailsService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -117,5 +118,13 @@ public class StaffDetailsRestController {
 			return new ResponseEntity<>("Failed to update staff: " + e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	 @GetMapping("/staff")
+		public ResponseEntity<?> getAllStaffByProjection() {
+		    List<StaffDetailsProjection> staffIds = staffDetailsService.getAllStaffByProjection();
+		    if (staffIds.isEmpty()) {
+		        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+		                .body("No agents found.");
+		    }
+		    return ResponseEntity.ok(staffIds);  // This will return agentId and agentName
+		}
 }

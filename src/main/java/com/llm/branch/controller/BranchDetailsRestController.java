@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.llm.agent.model.Agent;
+import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.repository.AgentRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -106,6 +107,16 @@ public class BranchDetailsRestController {
             e.printStackTrace();
             return new ResponseEntity<>("Failed to update branch!", HttpStatus.BAD_REQUEST);
         }
-    }    
+    } 
+    
+    @GetMapping("/branches")
+	public ResponseEntity<?> getAllBrancByProjection() {
+	    List<BranchProjection> branchIds = branchDetailsService.getBranchByProjection();
+	    if (branchIds.isEmpty()) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+	                .body("No agents found.");
+	    }
+	    return ResponseEntity.ok(branchIds);  // This will return agentId and agentName
+	}
 
 }

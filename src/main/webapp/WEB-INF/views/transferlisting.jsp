@@ -58,7 +58,6 @@
                                     <table class="table table-hover" id="transfer-list">
                                         <thead>
                                             <tr>
-                                                <th>S.No</th>
                                                  <th>Agent</th>
                                                 <th>Transaction Number</th>
                                                 <th>Date</th>
@@ -72,7 +71,6 @@
                                         <tbody>
                                             <c:forEach var="transfer" items="${transferList}" varStatus="status">
                                                 <tr>
-                                                    <td>${status.index + 1}</td>
                                                     <td>${transfer.agentId}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
                                                     <td>${transfer.transactionDateFormatted}</td>
@@ -145,12 +143,15 @@
         });
 
         <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')}">
-        var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-6" style="width: 200px; height: 43px;"></select>';
+        var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-1" style="width: 200px; height: 43px;"></select></div>';
+        var dropdownHtml1 = '&nbsp;&nbsp;<select id="transactionAgentList1" class="form-control col-md-1" style="width: 200px; height: 43px;"></select>&nbsp;&nbsp;';
+        var dropdownHtml2 = '<select id="transactionAgentList2" class="form-control col-md-1" style="width: 200px; height: 43px;"></select>';
         $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-end' }).prepend(dropdownHtml);
-
+        $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-center' }).prepend(dropdownHtml1);
+        $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-start' }).prepend(dropdownHtml2);
 
         $.ajax({
-            url: '/api/v1/agent/agentId',
+            url: '/api/v1/agent/agents',
             type: 'GET',
             success: function (response) {
                 if (Array.isArray(response)) {
@@ -158,7 +159,7 @@
                     dropdown.empty();
                     dropdown.append('<option value="">Select Agent</option>');
                     $.each(response, function (index, item) {
-                        dropdown.append('<option value="' + item + '">' + item + '</option>');
+                        dropdown.append('<option value="' + item.agentId + '">' + item.agentName + '</option>');
                     });
                 } else {
                     alert('Failed to load agents. Response format is incorrect.');
@@ -170,16 +171,73 @@
             }
         });
 
-        // Add event listener for agent dropdown change
         $('#transactionAgentList').on('change', function () {
             var dropdownValue = $(this).val();
 
             if (dropdownValue) {
-                // Filter the table based on the Agent column (index 1)
-                table.column(1).search(dropdownValue).draw();
+                table.column(0).search(dropdownValue).draw();
             } else {
-                // Clear the filter if no value is selected
-                table.column(1).search('').draw();
+                table.column(0).search('').draw();
+            }
+        });
+        $.ajax({
+            url: '/api/v1/branch/branches',
+            type: 'GET',
+            success: function (response) {
+                if (Array.isArray(response)) {
+                    var dropdown = $('#transactionAgentList1');
+                    dropdown.empty();
+                    dropdown.append('<option value="">Select Branch</option>');
+                    $.each(response, function (index, item) {
+                        dropdown.append('<option value="' + item.id + '">' + item.branchName + '</option>');
+                    });
+                } else {
+                    alert('Failed to load agents. Response format is incorrect.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching agents:', error);
+                alert('Error fetching agent list.');
+            }
+        });
+
+        $('#transactionAgentList').on('change', function () {
+            var dropdownValue = $(this).val();
+
+            if (dropdownValue) {
+                table.column(0).search(dropdownValue).draw();
+            } else {
+                table.column(0).search('').draw();
+            }
+        });
+        $.ajax({
+            url: '/api/v1/staff/staff',
+            type: 'GET',
+            success: function (response) {
+                if (Array.isArray(response)) {
+                    var dropdown = $('#transactionAgentList2');
+                    dropdown.empty();
+                    dropdown.append('<option value="">Select Staff</option>');
+                    $.each(response, function (index, item) {
+                        dropdown.append('<option value="' + item.id + '">' + item.firstName + '</option>');
+                    });
+                } else {
+                    alert('Failed to load agents. Response format is incorrect.');
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error fetching agents:', error);
+                alert('Error fetching agent list.');
+            }
+        });
+
+        $('#transactionAgentList').on('change', function () {
+            var dropdownValue = $(this).val();
+
+            if (dropdownValue) {
+                table.column(0).search(dropdownValue).draw();
+            } else {
+                table.column(0).search('').draw();
             }
         });
         </c:if>
@@ -214,7 +272,6 @@
             });
         });
 
-        // Redraw the table when input or dropdown changes
         $('#transactionAgentList, .dataTables_filter input').on('change input', function () {
             table.draw();
         });

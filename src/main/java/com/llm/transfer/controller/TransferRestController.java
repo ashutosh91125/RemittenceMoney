@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import com.llm.staff.model.StaffDetails;
-import com.llm.staff.repository.StaffDetailsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.llm.branch.model.BranchDetails;
+import com.llm.branch.repository.BranchDetailsRepository;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import com.llm.transfer.Service.TransferService;
 import com.llm.transfer.model.Transfer;
 
@@ -33,6 +35,9 @@ public class TransferRestController {
 
 	@Autowired
 	private StaffDetailsRepository staffDetailsRepository;
+	
+	@Autowired
+	private BranchDetailsRepository branchDetailsRepository;
 
 
 	@PostMapping
@@ -44,10 +49,11 @@ public class TransferRestController {
 		String username = authentication.getName();
 
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
-
+		Optional<BranchDetails> branch = branchDetailsRepository.findById(byUsername.get().getBranches());
 		transfer.setAgentId(byUsername.get().getAgent());
 		transfer.setStaffCountry(byUsername.get().getCountry());
-
+		transfer.setBranchId(branch.get().getId());
+		transfer.setStaffId(byUsername.get().getId());
 		try {
 
 			transferService.createTransfer(transfer);

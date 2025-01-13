@@ -1,6 +1,7 @@
 package com.llm.staff.service;
 
 import com.llm.staff.model.StaffDetails;
+import com.llm.staff.projection.StaffDetailsProjection;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,4 +19,6 @@ public interface StaffDetailsService {
     Optional<StaffDetails> getById(Long id);
 
 	void updateStaff(Long id, StaffDetails updatedDetails, String username);
+
+	List<StaffDetailsProjection> getAllStaffByProjection();
 }

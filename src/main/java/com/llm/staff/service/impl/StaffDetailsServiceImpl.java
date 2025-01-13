@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.llm.staff.model.StaffDetails;
+import com.llm.staff.projection.StaffDetailsProjection;
 import com.llm.staff.repository.StaffDetailsRepository;
 import com.llm.staff.service.StaffDetailsService;
 
@@ -68,6 +69,11 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 		} else {
 			throw new EntityNotFoundException("Staff not found with ID: " + id);
 		}
+	}
+
+	@Override
+	public List<StaffDetailsProjection> getAllStaffByProjection() {
+		return staffDetailsRepository.findAllProjectedBy();
 	}
 
 }

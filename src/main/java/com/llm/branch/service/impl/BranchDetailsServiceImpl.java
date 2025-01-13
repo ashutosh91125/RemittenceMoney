@@ -108,4 +108,9 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
         return true; 
     }
 
+	@Override
+	public List<BranchProjection> getBranchByProjection() {
+		return branchDetailsRepository.findAllProjectedBy();
+	}
+
 }

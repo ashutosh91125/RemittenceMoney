@@ -1,7 +1,6 @@
 package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -25,6 +24,7 @@ import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
 import com.llm.agent.model.dto.AgentDTO;
+import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.service.IAgentService;
 
 @RestController
@@ -148,17 +148,23 @@ public class AgentRestController {
 		}
 	}
 
-	@GetMapping("/agentId")
+//	@GetMapping("/agentId")
+//	public ResponseEntity<?> getAllAgentIds() { 
+//	    List<String> allAgentIds = agentService.getAllAgentIds();
+//	    if (allAgentIds.isEmpty()) {
+//	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+//	                .body("No agents found.");
+//	    }
+//	    return ResponseEntity.ok(allAgentIds);
+//	}
+	@GetMapping("/agents")
 	public ResponseEntity<?> getAllAgentIds() {
-	  
-	    List<String> allAgentIds = agentService.getAllAgentIds();
-	    
-	    
+	    List<AgentProjection> allAgentIds = agentService.getAllAgentByProjection();
 	    if (allAgentIds.isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("No agents found.");
 	    }
-	    return ResponseEntity.ok(allAgentIds);
+	    return ResponseEntity.ok(allAgentIds);  // This will return agentId and agentName
 	}
 
 }

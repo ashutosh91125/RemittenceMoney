@@ -150,25 +150,15 @@ public class AgentRestController {
 
 	@GetMapping("/agentId")
 	public ResponseEntity<?> getAllAgentIds() {
-	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-	    String username = authentication.getName();
-
-	    String role = authentication.getAuthorities().stream()
-	            .map(authority -> authority.getAuthority())
-	            .findFirst() 
-	            .orElse("");
-
-	    List<String> allAgentIds = new ArrayList<>();
-	    if (role.equals("ROLE_AGENT") || role.equals("ROLE_SUB_ADMIN")) {
-	        allAgentIds = agentService.getAllAgentIds();
-	    }
-	     
+	  
+	    List<String> allAgentIds = agentService.getAllAgentIds();
+	    
+	    
 	    if (allAgentIds.isEmpty()) {
 	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
 	                .body("No agents found.");
 	    }
 	    return ResponseEntity.ok(allAgentIds);
 	}
-
 
 }

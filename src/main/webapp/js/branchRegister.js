@@ -1,6 +1,6 @@
 function validation(form) {
     	let isValid = true; 
-		
+		 
 		const branchName = $(form).find("#branchName").val().trim();
 		const agent = $(form).find("#agent").val();
 		const branchType = $(form).find("#branchType").val();

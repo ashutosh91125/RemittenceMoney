@@ -140,5 +140,7 @@ public class Transfer {
 	@Transient
 	private String transactionDateFormatted;
 	private String agentId;
+	private Long staffId;
+	private Long branchId;
    
 }

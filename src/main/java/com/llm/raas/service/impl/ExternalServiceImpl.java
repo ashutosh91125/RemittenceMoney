@@ -113,7 +113,7 @@ public class ExternalServiceImpl implements ExternalService {
 
         // Add static ordering institution values
         Map<String, Object> orderingInstitution = new HashMap<>();
-        orderingInstitution.put("name", "abc");
+        orderingInstitution.put("name", branchDetails.getBranchName());
 
         Map<String, Object> institutionAddress = new HashMap<>();
         institutionAddress.put("country_code", branchDetails.getCounty());

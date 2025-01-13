@@ -130,6 +130,8 @@ public class Transfer {
 	private Double totalPayInAmount;
 	private String paymentMode;
 
+	private String staffCountry;
+
 	private String paymentStatus;
 	private String transactionState;
 	private String transactionSubState;

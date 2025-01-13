@@ -13,4 +13,8 @@ public interface TransferRepository extends JpaRepository<Transfer, Long> {
 	Optional<Transfer> findTransactionByTransactionReferenceNumber(String transactionReferenceNumber);
 
     List<Transfer> findByUsername(String username);
+
+    List<Transfer> findByStaffCountry(String staffCountry);
+
+    List<Transfer> findByAgentId(String agentId);
 }

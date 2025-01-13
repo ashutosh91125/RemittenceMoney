@@ -46,6 +46,7 @@ public class TransferRestController {
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
 
 		transfer.setAgentId(byUsername.get().getAgent());
+		transfer.setStaffCountry(byUsername.get().getCountry());
 
 		try {
 

@@ -4,8 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,12 @@ import lombok.RequiredArgsConstructor;
 public class TransferServiceImpl implements TransferService {
 	@Autowired
 	private TransferRepository transferRepository;
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private AgentRepositories agentRepositories;
 
 	@Autowired
 	private BeneficiaryDetailsRepository beneficiaryRepository;
@@ -80,8 +91,25 @@ public class TransferServiceImpl implements TransferService {
 	public List<Transfer> getAllTransfers() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
-		return transferRepository.findByUsername(username);
+		String role = authentication.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority)
+				.findFirst()
+				.orElse(null);
+
+
+		if ("ROLE_ADMIN".equals(role)) {
+			return transferRepository.findAll();
+		} else if ("ROLE_SUB_ADMIN".equals(role)) {
+			Optional<User> byUsername = userRepository.findByUsername(username);
+			return transferRepository.findByStaffCountry(byUsername.get().getCountry());
+		} else if ("ROLE_AGENT".equals(role)) {
+			Agent byUsername = agentRepositories.findByUsername(username);
+			return transferRepository.findByAgentId(byUsername.getAgentId());
+		} else {
+			return transferRepository.findByUsername(username);
+		}
 	}
+
 	@Override
 	public Transfer getTransactionByTransactionReferenceNumber(String transactionReferenceNumber) {
 		Optional<Transfer> transfer = transferRepository.findTransactionByTransactionReferenceNumber(transactionReferenceNumber);

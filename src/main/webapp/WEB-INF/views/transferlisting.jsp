@@ -142,6 +142,8 @@
                 "targets": -1
             }]
         });
+
+
         var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-6" style="width: 200px; height: 43px;"></select>';
         $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-end' }).prepend(dropdownHtml);
 
@@ -166,22 +168,24 @@
             }
         });
 
-        
+        // Add event listener for agent dropdown change
         $('#transactionAgentList').on('change', function () {
-            var dropdownValue = $(this).val(); 
+            var dropdownValue = $(this).val();
 
             if (dropdownValue) {
-                table.search(dropdownValue).draw();
+                // Filter the table based on the Agent column (index 1)
+                table.column(1).search(dropdownValue).draw();
             } else {
-                table.search('').draw();
+                // Clear the filter if no value is selected
+                table.column(1).search('').draw();
             }
         });
 
+  
         $('.dataTables_filter input').on('input', function () {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
         });
-
         $('#transfer-list').on('click', '.transactionLogo', function () {
             var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
 
@@ -206,6 +210,11 @@
                     alert('Error: ' + error);
                 }
             });
+        });
+
+        // Redraw the table when input or dropdown changes
+        $('#transactionAgentList, .dataTables_filter input').on('change input', function () {
+            table.draw();
         });
     });
 

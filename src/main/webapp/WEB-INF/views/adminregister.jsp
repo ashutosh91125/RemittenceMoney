@@ -23,7 +23,7 @@ function validation(form) {
 	document.getElementById("userNameError").innerHTML = "";
 	document.getElementById("phoneNumberError").innerHTML = "";
 	document.getElementById("emailError").innerHTML = "";
-	document.getElementById("passwordError").innerHTML = "";
+// 	document.getElementById("passwordError").innerHTML = "";
 	document.getElementById("countryError").innerHTML = "";
 
 	if (!form.adminName.value.trim()) {
@@ -42,10 +42,10 @@ function validation(form) {
 		document.getElementById("emailError").innerHTML = "Email is required.";
 		isValid = false;
 	}
-	if (!form.password.value.trim()) {
+	/* if (!form.password.value.trim()) {
 		document.getElementById("passwordError").innerHTML = "Password is required.";
 		isValid = false;
-	}
+	} */
 	if (!form.country.value) {
 		document.getElementById("countryError").innerHTML = "Country is required.";
 		isValid = false;
@@ -54,7 +54,95 @@ function validation(form) {
 		document.getElementById("validationError").style.display = "block";
 	}
 	return isValid;
-}
+}	
+document.addEventListener('DOMContentLoaded', function () {
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const validationMessage = document.getElementById("validationMessage");
+    const passwordError = document.getElementById("password-error");
+    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
+
+    function validateRealTime() {
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+        if (!passwordPattern.test(passwordValue)) {
+            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+            passwordError.style.display = "block";
+        } else {
+            passwordError.style.display = "none";
+        }
+
+        if (confirmPasswordValue === "") {
+            validationMessage.textContent = "";
+            return;
+        }
+
+        if (passwordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red";
+        } else {
+            if (passwordPattern.test(passwordValue)) {
+                validationMessage.textContent = "Matched password";
+                validationMessage.style.color = "green";
+            } else {
+                validationMessage.textContent = "";
+            }
+        }
+    }
+
+    function validateOnSubmit(event) {
+        let isValid = true;
+        const passwordValue = password.value.trim();
+        const confirmPasswordValue = confirmPassword.value.trim();
+
+        if (!passwordValue) {
+            passwordError.textContent = "Password is required.";
+            passwordError.style.display = "block";
+            isValid = false;
+        } else if (!passwordPattern.test(passwordValue)) {
+            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
+            passwordError.style.display = "block";
+            isValid = false;
+        } else {
+            passwordError.style.display = "none";
+        }
+
+        if (!confirmPasswordValue) {
+            validationMessage.textContent = "Confirm Password is required.";
+            validationMessage.style.color = "red";
+            isValid = false;
+        } else if (passwordValue !== confirmPasswordValue) {
+            validationMessage.textContent = "Passwords do not match!";
+            validationMessage.style.color = "red";
+            isValid = false;
+        } else {
+            validationMessage.textContent = "";
+        }
+
+        if (!isValid) {
+            event.preventDefault(); // Prevent form submission
+        }
+    }
+
+    password.addEventListener("focus", function () {
+        if (!passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "block";
+        }
+    });
+
+    password.addEventListener("blur", function () {
+        if (password.value.trim() === "" || !passwordPattern.test(password.value.trim())) {
+            passwordError.style.display = "none";
+        }
+    });
+
+    password.addEventListener("input", validateRealTime);
+    confirmPassword.addEventListener("input", validateRealTime);
+
+    const form = document.querySelector("form"); // Select the form element
+    form.addEventListener("submit", validateOnSubmit);
+});	
 </script>
 </head>
 
@@ -115,15 +203,25 @@ function validation(form) {
 										class="form-control" id="email" placeholder="Email"> <span
 										id="emailError" style="color: red;"></span>
 								</div>
-
-								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Password<span
-										class="text-danger">*</span></label> <input name="password"
-										type="password" class="form-control" id="password"
-										placeholder="Password"> <span id="passwordError"
-										style="color: red;"></span>
+								<div class="col-xl-4">
+									<div class="mb-4">
+										<label class="form-label">Password<span
+											class="text-danger">*</span></label> <input name="password"
+											type="password" class="form-control" id="password"
+											placeholder="Set Password" /> <span id="password-error"
+											style="color: red; display: none;"></span> <span
+											id="passwordError" class="text-danger1"></span>
+									</div>
 								</div>
-
+								<div class="col-xl-4">
+									<div class="mb-4">
+										<label class="form-label">Confirm Password<span
+											class="text-danger">*</span></label> <input name="confirmPassword"
+											type="password" class="form-control" id="confirmPassword"
+											placeholder="Confirm Password" /> <span
+											id="validationMessage"></span>
+									</div>
+								</div>
 
 								<%-- <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Confirm Password</label>

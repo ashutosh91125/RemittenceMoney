@@ -3,12 +3,17 @@ package com.llm.transfer.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,11 +31,24 @@ public class TransferRestController {
 	@Autowired
 	private TransferService transferService;
 
+	@Autowired
+	private StaffDetailsRepository staffDetailsRepository;
+
+
 	@PostMapping
 	public ResponseEntity<?> registerTransferredDetails(@RequestBody Transfer transfer) {
+
+
 		Map<String, Object> response = new HashMap<>();
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+
+		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
+
+		transfer.setAgentId(byUsername.get().getAgent());
 
 		try {
+
 			transferService.createTransfer(transfer);
 			response.put("status", "CREATED");
 			response.put("message", "Transaction details saved successfully");

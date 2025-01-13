@@ -763,7 +763,6 @@ function getQuote() {
                             paymentStatus: confirmResponse.status,
                             transactionState: confirmResponse.data ? confirmResponse.data.state : state,
                             transactionSubState: confirmResponse.data ? confirmResponse.data.sub_state : subState,
-							 agent:$('#agentId').val();
                              firstName: $('#firstName').val(),
                              middleName: $('#middleName').val(),
                              lastName: $('#lastName').val(),
@@ -860,7 +859,7 @@ function getQuote() {
                             paymentStatus: 'failed',
                             transactionState: state,
                             transactionSubState: subState,
-							agent:$('#agentId').val();
+							
                             firstName: $('#firstName').val(),
                              middleName: $('#middleName').val(),
                              lastName: $('#lastName').val(),

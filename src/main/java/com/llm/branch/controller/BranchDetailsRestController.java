@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +39,9 @@ public class BranchDetailsRestController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private AgentRepositories agentRepositories;
+
     @PostMapping
     public ResponseEntity<String> registerBranch(@ModelAttribute BranchDetails branchDetails) {
         log.info(branchDetails.toString());
@@ -44,9 +49,10 @@ public class BranchDetailsRestController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         try {
-            Optional<User> byUsername = userRepository.findByUsername(username);
+            Agent byUsername = agentRepositories.findByUsername(username);
 
-            branchDetails.setCounty(byUsername.get().getCountry());
+            branchDetails.setCounty(byUsername.getCountries());
+            branchDetails.setBranchLocationId(byUsername.getBranchLocationId());
             branchDetails.setCreatedBy(username);
             branchDetails.setCreatedOn(LocalDateTime.now());
             branchDetails.setStatus(true);

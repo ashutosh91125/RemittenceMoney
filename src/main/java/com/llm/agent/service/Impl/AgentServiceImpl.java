@@ -58,7 +58,8 @@ public class AgentServiceImpl implements IAgentService {
 	    Agent existingAgent = agentRepositories.findById(id)
 	        .orElseThrow(() -> new IllegalArgumentException("Agent not found with id: " + id));
 
-	    // Update fields of the existing entity with values from the updatedAgent
+	    
+	    existingAgent.setCountries(updatedAgent.getAgentId());
 	    existingAgent.setCountries(updatedAgent.getCountries());
 	    existingAgent.setCurrencies(updatedAgent.getCurrencies());
 	    existingAgent.setAgentName(updatedAgent.getAgentName());

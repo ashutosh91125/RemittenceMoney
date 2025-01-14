@@ -2,8 +2,14 @@ package com.llm.staff.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import com.llm.UserIdentity.model.User;
+import com.llm.UserIdentity.model.enums.Role;
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +25,12 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 
 	@Autowired
 	private StaffDetailsRepository staffDetailsRepository;
+
+	@Autowired
+	private AgentRepositories agentRepositories;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Override
 	public void createStaff(StaffDetails staffDetails) {
@@ -57,13 +69,35 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 			existingDetails.setEmail(updatedDetails.getEmail());
 			existingDetails.setModifiedBy(updatedBy);
 			existingDetails.setModifiedOn(LocalDateTime.now());
-			existingDetails.setDisabledBy(updatedBy);
-			existingDetails.setDisabledOn(LocalDateTime.now());
+			if (!updatedDetails.isStatus()){
+				existingDetails.setDisabledBy(updatedBy);
+				existingDetails.setDisabledOn(LocalDateTime.now());
+			}
 			existingDetails.setAgent(updatedDetails.getAgent());
 			existingDetails.setCountry(updatedDetails.getCountry());
 			existingDetails.setMiddleName(updatedDetails.getMiddleName());
 			existingDetails.setRemarks(updatedBy);
+
+			if (Objects.equals(existingDetails.getStaffGroup(), "Head Office") && Objects.equals(updatedDetails.getStaffGroup(), "STAFF_TR")) {
+				existingDetails.setStaffGroup("Transfer");
+				Agent agent = agentRepositories.findByAgentId(existingDetails.getAgent());
+				agent.setHoPresent(false);
+				agentRepositories.save(agent);
+				Optional<User> user = userRepository.findByUsername(updatedBy);
+				user.get().setRole(Role.STAFF_TR);
+				userRepository.save(user.get());
+			}else if (Objects.equals(existingDetails.getStaffGroup(), "Transfer") && Objects.equals(updatedDetails.getStaffGroup(), "STAFF_HO")) {
+				existingDetails.setStaffGroup("Head Office");
+				Agent agent = agentRepositories.findByAgentId(existingDetails.getAgent());
+				agent.setHoPresent(true);
+				agentRepositories.save(agent);
+				Optional<User> user = userRepository.findByUsername(updatedBy);
+				user.get().setRole(Role.STAFF_HO);
+				userRepository.save(user.get());
+			}
+
 			existingDetails.setStaffGroup(updatedDetails.getStaffGroup());
+
 			existingDetails.setStatus(updatedDetails.isStatus());
 			staffDetailsRepository.save(existingDetails);
 		} else {

@@ -120,10 +120,10 @@ public class StaffDetailsRestController {
 		String username = authentication.getName();
 
 		try {
-			Agent agent = agentRepositories.findByUsername(username);
-			String country = agent.getCountries();
-			updatedDetails.setAgent(agent.getAgentId());
-			updatedDetails.setCountry(country);
+//			Agent agent = agentRepositories.findByUsername(username);
+//			String country = agent.getCountries();
+//			updatedDetails.setAgent(agent.getAgentId());
+//			updatedDetails.setCountry(country);
 			staffDetailsService.updateStaff(id, updatedDetails, username);
 
 			return new ResponseEntity<>("Staff updated successfully!", HttpStatus.OK);

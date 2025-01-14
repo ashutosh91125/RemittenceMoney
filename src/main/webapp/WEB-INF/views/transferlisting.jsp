@@ -53,9 +53,9 @@
                     <div class="col-lg-12">
                         <div class="card stretch stretch-full">
                             <div class="card-body p-0">
-                                <div class="table-responsive" style="overflow-x: hidden;">
+                                <div class="table-responsive" >
                                     <!-- Data Table -->
-                                    <table class="table table-hover" id="transfer-list">
+                                    <table class="table table-hover" id="transfer-list" >
                                         <thead>
                                             <tr>
                                                  <th>Agent</th>

@@ -76,4 +76,14 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 		return staffDetailsRepository.findAllProjectedBy();
 	}
 
+	@Override
+	public List<StaffDetailsProjection> getAllStaffByProjectionByCountry(String country) {
+		return staffDetailsRepository.findProjectionsByCountry(country);
+	}
+
+	@Override
+	public List<StaffDetailsProjection> getAllStaffByProjectionByAgent(String agent) {
+		return staffDetailsRepository.findProjectionsByAgent(agent);
+	}
+
 }

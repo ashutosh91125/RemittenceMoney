@@ -44,6 +44,11 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
+	public List<AgentProjection> getAgentsProjectionByCountry(String country) {
+		return agentRepositories.findByCountries(country);
+	}
+
+	@Override
 	public Optional<Agent> getById(Long id) {
 		return agentRepositories.findById(id);
 	}

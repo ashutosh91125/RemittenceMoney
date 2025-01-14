@@ -2,11 +2,13 @@ package com.llm.staff.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -120,11 +122,26 @@ public class StaffDetailsRestController {
 	}
 	 @GetMapping("/staff")
 		public ResponseEntity<?> getAllStaffByProjection() {
-		    List<StaffDetailsProjection> staffIds = staffDetailsService.getAllStaffByProjection();
-		    if (staffIds.isEmpty()) {
-		        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-		                .body("No agents found.");
-		    }
-		    return ResponseEntity.ok(staffIds);  // This will return agentId and agentName
-		}
+		 Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		 String username = authentication.getName();
+		 String role = authentication.getAuthorities().stream()
+				 .map(GrantedAuthority::getAuthority)
+				 .findFirst()
+				 .orElse(null);
+
+		 if ("ROLE_ADMIN".equals(role)) {
+			 return ResponseEntity.ok(staffDetailsService.getAllStaffByProjection());
+		 }
+
+		 if ("ROLE_SUB_ADMIN".equals(role)) {
+			 Optional<User> user = userRepository.findByUsername(username);
+			 return ResponseEntity.ok(staffDetailsService.getAllStaffByProjectionByCountry(user.get().getCountry()));
+		 }
+
+		 if ("ROLE_AGENT".equals(role)) {
+			 Agent byUsername = agentRepositories.findByUsername(username);
+			 return ResponseEntity.ok(staffDetailsService.getAllStaffByProjectionByAgent(byUsername.getAgentId()));
+		 }
+		 return ResponseEntity.ok(List.of());
+	 }
 }

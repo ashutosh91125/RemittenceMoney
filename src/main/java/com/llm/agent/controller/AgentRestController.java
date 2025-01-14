@@ -2,6 +2,7 @@ package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -162,12 +164,21 @@ public class AgentRestController {
 //	}
 	@GetMapping("/agents")
 	public ResponseEntity<?> getAllAgentIds() {
-	    List<AgentProjection> allAgentIds = agentService.getAllAgentByProjection();
-	    if (allAgentIds.isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                .body("No agents found.");
-	    }
-	    return ResponseEntity.ok(allAgentIds);  // This will return agentId and agentName
-	}
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		String role = authentication.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority)
+				.findFirst()
+				.orElse(null);
 
+		if ("ROLE_ADMIN".equals(role)){
+			return ResponseEntity.ok(agentService.getAllAgentByProjection());
+		}
+
+		if ("ROLE_SUB_ADMIN".equals(role)){
+			Optional<User> user = userRepository.findByUsername(username);
+			return ResponseEntity.ok(agentService.getAgentsProjectionByCountry(user.get().getCountry()));
+		}
+	return ResponseEntity.ok(List.of());
+	}
 }

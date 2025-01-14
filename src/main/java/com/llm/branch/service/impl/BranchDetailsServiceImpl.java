@@ -42,6 +42,16 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     }
 
     @Override
+    public List<BranchProjection> getAllBranchesProjectionByCountry(String country) {
+        return branchDetailsRepository.findProjectionsByCounty(country);
+    }
+
+    @Override
+    public List<BranchProjection> getAllBranchesProjectionByAgent(String agent) {
+        return branchDetailsRepository.findProjectionsByAgent(agent);
+    }
+
+    @Override
     public List<BranchDTO> getAllBranchDTOByAgent(String agent) {
         // Fetch the list of BranchDetails from the repository
         List<BranchDetails> branchDetailsList = branchDetailsRepository.findByAgent(agent);

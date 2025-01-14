@@ -21,4 +21,8 @@ public interface StaffDetailsService {
 	void updateStaff(Long id, StaffDetails updatedDetails, String username);
 
 	List<StaffDetailsProjection> getAllStaffByProjection();
+
+    List<StaffDetailsProjection> getAllStaffByProjectionByCountry(String country);
+
+    List<StaffDetailsProjection> getAllStaffByProjectionByAgent(String agent);
 }

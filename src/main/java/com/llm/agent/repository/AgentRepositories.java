@@ -16,4 +16,7 @@ public interface AgentRepositories extends JpaRepository<Agent, Long> {
 	
 	Agent findByUsername(String username);
 
+	// Custom query to fetch projection by countries field
+	List<AgentProjection> findByCountries(String countries);
+
 }

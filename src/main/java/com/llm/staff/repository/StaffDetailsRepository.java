@@ -19,5 +19,9 @@ public interface StaffDetailsRepository extends JpaRepository<StaffDetails, Long
     List<StaffDetails> findByCountry(String county);
     
     List<StaffDetailsProjection> findAllProjectedBy();
+
+    List<StaffDetailsProjection> findProjectionsByCountry(String country);
+
+    List<StaffDetailsProjection> findProjectionsByAgent(String agent);
 }
 

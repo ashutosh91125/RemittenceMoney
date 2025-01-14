@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -111,12 +112,29 @@ public class BranchDetailsRestController {
     
     @GetMapping("/branches")
 	public ResponseEntity<?> getAllBrancByProjection() {
-	    List<BranchProjection> branchIds = branchDetailsService.getBranchByProjection();
-	    if (branchIds.isEmpty()) {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                .body("No agents found.");
-	    }
-	    return ResponseEntity.ok(branchIds);  // This will return agentId and agentName
-	}
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        String role = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .findFirst()
+                .orElse(null);
+
+        if ("ROLE_ADMIN".equals(role)) {
+            return ResponseEntity.ok(branchDetailsService.getBranchByProjection());
+        }
+
+        if ("ROLE_SUB_ADMIN".equals(role)) {
+            Optional<User> user = userRepository.findByUsername(username);
+            return ResponseEntity.ok(branchDetailsService.getAllBranchesProjectionByCountry(user.get().getCountry()));
+        }
+
+        if ("ROLE_AGENT".equals(role)) {
+            Agent byUsername = agentRepositories.findByUsername(username);
+            return ResponseEntity.ok(branchDetailsService.getAllBranchesProjectionByAgent(byUsername.getAgentId()));
+        }
+
+        return ResponseEntity.ok(List.of());
+    }
+
 
 }

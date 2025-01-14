@@ -15,6 +15,10 @@ public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Lo
     List<BranchDetails> findByAgent(String agent);
 
     List<BranchDetails> findByCounty(String country);
+
+    List<BranchProjection> findProjectionsByCounty(String country);
+
+    List<BranchProjection> findProjectionsByAgent(String agent);
     
     List<BranchProjection> findByBranchLocationId(String branchLocationId);
     

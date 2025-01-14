@@ -15,6 +15,8 @@ public interface IAgentService {
 
 	List<AgentProjection> getAllAgentByProjection();
 
+	List<AgentProjection> getAgentsProjectionByCountry(String country);
+
 	Optional<Agent> getById(Long id);
 
 	Agent getByAgentId(String agentId);

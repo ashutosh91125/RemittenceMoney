@@ -59,15 +59,39 @@ public class TransferController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
+		Agent agent = agentService.getByAgentId(byUsername.get().getAgent());
 
 		try {
-			double dailyCreditLimit = agentService.checkCreditLimit(byUsername.get().getAgent());
+			double dailyCreditLimit = agent.getPerTransactionLimit();
 			model.addAttribute("dailyCreditLimit", dailyCreditLimit);
 
 		} catch (Exception e) {
 			model.addAttribute("dailyCreditLimit", 0);
 		}
-		
+
+		try {
+			double value = agent.getRemainingDaily();
+			model.addAttribute("dailyCredit", value);
+
+		} catch (Exception e) {
+			model.addAttribute("dailyCredit", 0);
+		}
+
+		try {
+			double value = agent.getRemainingPerDayLimit();
+			model.addAttribute("perDayLimit", value);
+
+		} catch (Exception e) {
+			model.addAttribute("perDayLimit", 0);
+		}
+
+		try {
+			double value = agent.getRemainingPerMonthLimit();
+			model.addAttribute("perMonthLimit", value);
+		} catch (Exception e) {
+			model.addAttribute("perMonthLimit", 0);
+		}
+
 		try {
 			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
 			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
@@ -107,13 +131,37 @@ public class TransferController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
+		Agent agent = agentService.getByAgentId(byUsername.get().getAgent());
 
 		try {
-			double dailyCreditLimit = agentService.checkCreditLimit(byUsername.get().getAgent());
+			double dailyCreditLimit = agent.getPerTransactionLimit();
 			model.addAttribute("dailyCreditLimit", dailyCreditLimit);
 
 		} catch (Exception e) {
 			model.addAttribute("dailyCreditLimit", 0);
+		}
+
+		try {
+			double value = agent.getRemainingDaily();
+			model.addAttribute("dailyCredit", value);
+
+		} catch (Exception e) {
+			model.addAttribute("dailyCredit", 0);
+		}
+
+		try {
+			double value = agent.getRemainingPerDayLimit();
+			model.addAttribute("perDayLimit", value);
+
+		} catch (Exception e) {
+			model.addAttribute("perDayLimit", 0);
+		}
+
+		try {
+			double value = agent.getRemainingPerMonthLimit();
+			model.addAttribute("perMonthLimit", value);
+		} catch (Exception e) {
+			model.addAttribute("perMonthLimit", 0);
 		}
 		
 		try {

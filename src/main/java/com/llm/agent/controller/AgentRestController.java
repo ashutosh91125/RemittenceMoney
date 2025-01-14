@@ -69,9 +69,10 @@ public class AgentRestController {
 			agent.setTaxApplicable(agentDTO.getTaxApplicable());
 			agent.setWorkingHours(agentDTO.getWorkingHours());
 			agent.setDaily(agentDTO.getDaily());
+			agent.setRemainingDaily(agentDTO.getDaily());
 			agent.setSettlementMode(agentDTO.getSettlementMode());
 			agent.setSettlementType(agentDTO.getSettlementType());
-			agent.setPerTransaction(agentDTO.getPerTransaction());
+//			agent.setPerTransaction(agentDTO.getPerTransaction());
 			agent.setCreatedBy(username);
 			agent.setCreatedOn(LocalDateTime.now());
 			agent.setGrantType(agentDTO.getGrantType());
@@ -89,6 +90,8 @@ public class AgentRestController {
 			agent.setPerTransactionLimit(agentDTO.getPerTransactionLimit());
 			agent.setPerDayLimit(agentDTO.getPerDayLimit());
 			agent.setPerMonthLimit(agentDTO.getPerMonthLimit());
+			agent.setRemainingPerDayLimit(agentDTO.getPerDayLimit());
+			agent.setRemainingPerMonthLimit(agentDTO.getPerMonthLimit());
 			agent.setUsername(agentDTO.getUsername());
 			agent.setOutletCode(agentDTO.getOutletCode());
 			agent.setBranchLocationId(agentDTO.getBranchLocationId());

@@ -19,8 +19,6 @@ public interface IAgentService {
 
 	Agent getByAgentId(String agentId);
 
-	double checkCreditLimit(String agentId);
-
 	void updateAgent(Long id, Agent updatedAgent, String modifiedBy);
 
 	List<String> getAllAgentIds();

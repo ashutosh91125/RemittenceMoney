@@ -52,9 +52,9 @@ public class AgentDTO {
     private Boolean isValid;
     private Boolean creditLimitStatus;
 
-    private String perTransactionLimit;
-    private String perDayLimit;
-    private String perMonthLimit;
+    private double perTransactionLimit;
+    private double perDayLimit;
+    private double perMonthLimit;
 
     private String username;
     private String password;

@@ -20,5 +20,5 @@ public interface ExternalService {
 
      Map<String, Object> getBanks(String receivingCountryCode, String receivingMode);
 
-     public Map<String, Object> getBankBranches(String bankId, String receivingCountryCode, String correspondent, String receivingMode);
+     Map<String, Object> getBankBranches(String bankId, String receivingCountryCode, String correspondent, String receivingMode);
 }

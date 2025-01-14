@@ -1033,6 +1033,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const submitButton = document.getElementById("quoteButton");
     const residentTypeField = document.getElementById('residentTypeId');
     const dailyCreditLimit = document.getElementById('dailyCreditLimit');
+    const dailyCredit = document.getElementById('dailyCredit');
+    const perDayLimit = document.getElementById('perDayLimit');
+    const perMonthLimit = document.getElementById('perMonthLimit');
+
     const payInAmount = document.getElementById('payInAmount');
     const errorMessage = document.getElementById('error-message');
 
@@ -1059,12 +1063,30 @@ document.addEventListener('DOMContentLoaded', function () {
     function validatePayInAmount() {
         const payInAmountValue = parseFloat(payInAmount.value.trim());
         const creditLimit = parseFloat(dailyCreditLimit.value.trim());
+        const dailyCreditValue = parseFloat(dailyCredit.value.trim());
+        const perDay = parseFloat(perDayLimit.value.trim());
+        const perMonth = parseFloat(perMonthLimit.value.trim());
+
+        errorMessage.style.display = "none"; // Reset the error message
 
         if (payInAmountValue > creditLimit) {
-            errorMessage.textContent = `PayIn Amount cannot exceed credit limit of ₹${creditLimit}.`;
+            errorMessage.textContent = `PayIn Amount cannot exceed per transaction limit of ${creditLimit}.`;
             errorMessage.style.display = "block";
+            return; // Stop further checks
+        } else if (payInAmountValue > dailyCreditValue) {
+            errorMessage.textContent = `PayIn Amount cannot exceed daily credit limit of ${dailyCreditValue}.`;
+            errorMessage.style.display = "block";
+            return; // Stop further checks
+        } else if (payInAmountValue > perDay) {
+            errorMessage.textContent = `PayIn Amount cannot exceed per day limit of ${perDay}.`;
+            errorMessage.style.display = "block";
+            return; // Stop further checks
+        } else if (payInAmountValue > perMonth) {
+            errorMessage.textContent = `PayIn Amount cannot exceed per month limit of ${perMonth}.`;
+            errorMessage.style.display = "block";
+            return; // Stop further checks
         } else {
-            errorMessage.style.display = "none";
+            errorMessage.style.display = "none"; // No error
         }
     }
 

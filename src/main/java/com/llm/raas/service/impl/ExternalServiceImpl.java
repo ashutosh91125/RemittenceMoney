@@ -334,14 +334,53 @@ public class ExternalServiceImpl implements ExternalService {
         return response.getBody();
     }
 
+    //Enquire Transaction function for scheduler
+    public Map<String, Object> enquireTransactionForScheduler(String transactionRefNumber) {
+
+        String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/enquire-transaction";
+
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
+                .queryParam("transaction_ref_number", transactionRefNumber);
+
+        // Create headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("sender", "VITCOMEX");
+        headers.set("channel", "Direct");
+        headers.set("company", "458100");
+        headers.set("branch", "458302");
+        headers.set("Authorization", "Bearer " + bankDetailsFetchToken.getAccessToken());
+
+        HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+
+        try {
+            ResponseEntity<Map> response = restTemplate.exchange(
+                    uriBuilder.toUriString(),
+                    HttpMethod.GET,
+                    requestEntity,
+                    Map.class
+            );
+            return response.getBody();
+        } catch (HttpClientErrorException e) {
+            throw new RuntimeException("HTTP Client Error: " + e.getMessage(), e);
+        } catch (HttpServerErrorException e) {
+            throw new RuntimeException("HTTP Server Error: " + e.getMessage(), e);
+        } catch (Exception e) {
+            throw new RuntimeException("An unexpected error occurred: " + e.getMessage(), e);
+        }
+    }
+
     @Scheduled(cron = "0 0/30 * * * *") // Runs every 30 minutes
     public void scheduledStateUpdate() {
+
 
         List<Transfer> transfers = transferRepository.findAll();
 
         for (Transfer transfer : transfers) {
 
-            Map<String, Object> response = enquireTransaction(transfer.getTransactionReferenceNumber());
+            Map<String, Object> response = enquireTransactionForScheduler(transfer.getTransactionReferenceNumber());
 
             if (response.containsKey("data")) {
                 Map<String, Object> data = (Map<String, Object>) response.get("data");

@@ -44,10 +44,11 @@ public class Agent {
 	private Boolean taxApplicable;
 	private String workingHours;
 	private double daily;
+	private double remainingDaily;
 	private String settlementMode;
 	private String settlementType;
 	private Boolean creditLimitStatus;
-	private Long perTransaction;
+//	private Long perTransaction;
 	private String grantType;
 	private String scope;
 	private String clientId;
@@ -67,9 +68,13 @@ public class Agent {
 	private String apiUsername;
 	private String apiPassword;
 
-	private String perTransactionLimit;
-	private String perDayLimit;
-	private String perMonthLimit;
+	private double perTransactionLimit;
+	private double perDayLimit;
+	private double perMonthLimit;
+
+	private double remainingPerDayLimit;
+	private double remainingPerMonthLimit;
+
 	@Column(name = "branch_location_id", unique = true)
 	private String branchLocationId;
 

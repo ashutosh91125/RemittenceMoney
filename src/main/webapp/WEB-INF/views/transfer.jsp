@@ -279,7 +279,10 @@
 					value="">
 					<input type="hidden" id="agentId" name="agentId"
 					value="${agentId}">
-					<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" />	
+					<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" />
+					<input type="hidden" id="dailyCredit" value="${dailyCredit}" />
+					<input type="hidden" id="perDayLimit" value="${perDayLimit}" />
+					<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" />
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row">

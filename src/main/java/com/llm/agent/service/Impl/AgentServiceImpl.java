@@ -49,12 +49,6 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
-	public double checkCreditLimit(String agentId){
-		Agent byAgentId = agentRepositories.findByAgentId(agentId);
-		return byAgentId.getDaily();
-	}
-
-	@Override
 	public void updateAgent(Long id, Agent updatedAgent, String modifiedBy) {
 	    Agent existingAgent = agentRepositories.findById(id)
 	        .orElseThrow(() -> new IllegalArgumentException("Agent not found with id: " + id));
@@ -83,7 +77,7 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setDaily(updatedAgent.getDaily());
 	    existingAgent.setSettlementMode(updatedAgent.getSettlementMode());
 	    existingAgent.setSettlementType(updatedAgent.getSettlementType());
-	    existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
+//	    existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
 	    existingAgent.setModifiedBy(modifiedBy);
 	    existingAgent.setModifiedOn(LocalDateTime.now());
 	    existingAgent.setDisabledBy(modifiedBy);
@@ -97,6 +91,9 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setOutletCode(updatedAgent.getOutletCode());
 	    existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
 	    existingAgent.setCreditLimitStatus(updatedAgent.getCreditLimitStatus());
+		existingAgent.setRemainingDaily(updatedAgent.getRemainingDaily());
+		existingAgent.setRemainingPerDayLimit(updatedAgent.getRemainingPerDayLimit());
+		existingAgent.setRemainingPerMonthLimit(updatedAgent.getRemainingPerMonthLimit());
 
 	    // Save the updated agent
 	    agentRepositories.save(existingAgent);

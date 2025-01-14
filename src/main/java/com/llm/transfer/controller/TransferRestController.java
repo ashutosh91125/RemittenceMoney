@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import com.llm.agent.model.Agent;
+import com.llm.agent.service.IAgentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,9 @@ public class TransferRestController {
 
 	@Autowired
 	private StaffDetailsRepository staffDetailsRepository;
+
+	@Autowired
+	private IAgentService agentService;
 	
 	@Autowired
 	private BranchDetailsRepository branchDetailsRepository;
@@ -49,12 +54,18 @@ public class TransferRestController {
 		String username = authentication.getName();
 
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
-		Optional<BranchDetails> branch = branchDetailsRepository.findById(byUsername.get().getBranches());
 		transfer.setAgentId(byUsername.get().getAgent());
 		transfer.setStaffCountry(byUsername.get().getCountry());
-		transfer.setBranchId(branch.get().getId());
+		transfer.setBranchId(byUsername.get().getBranches());
 		transfer.setStaffId(byUsername.get().getId());
 		try {
+			if (transfer.getPaymentStatus().equals("SUCCESS") || transfer.getPaymentStatus().equals("success")){
+				Agent agent = agentService.getByAgentId(transfer.getAgentId());
+				agent.setRemainingDaily(agent.getRemainingDaily() - transfer.getTotalPayInAmount());
+				agent.setRemainingPerDayLimit(agent.getRemainingPerDayLimit() - transfer.getTotalPayInAmount());
+				agent.setRemainingPerMonthLimit(agent.getRemainingPerMonthLimit() - transfer.getTotalPayInAmount());
+				agentService.addAgent(agent);
+			}
 
 			transferService.createTransfer(transfer);
 			response.put("status", "CREATED");

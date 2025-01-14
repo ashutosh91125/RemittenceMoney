@@ -94,11 +94,13 @@ public class StaffDetailsController {
             Optional<User> byUsername = userRepository.findByUsername(username);
             List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByCountry(byUsername.get().getCountry());
             model.addAttribute("staffDetailsList", staffDetailsList);
+            return "staff-listing";
         }
 
         if (role.equals("ROLE_ADMIN")) {
             List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff();
             model.addAttribute("staffDetailsList", staffDetailsList);
+            return "staff-listing";
         }
 
 		/* List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff(); */

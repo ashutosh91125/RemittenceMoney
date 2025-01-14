@@ -539,7 +539,7 @@
 										style="justify-content: end; align-items: baseline; background: aliceblue;">
 										<div class="col-12 col-md-2">
 											<button onclick="showSelectBeneficiaryDiv()"
-												class="btn btn-primary">select Beneficiry</button>
+												class="btn btn-primary">select Beneficiary</button>
 										</div>
 									</div>
 									<!-- <div class="row">

@@ -126,15 +126,17 @@ public class BankDetailsServiceImpl implements BankDetailsService {
 
                             // Check if the branch already exists, and save it if it doesn't
                             if (!branchRepository.existsByBankIdAndBranchId(bankId, branchId)) {
-                                Branch newBranch = new Branch();
-                                newBranch.setBankId(bankId);
-                                newBranch.setBranchId(branchId);
-                                newBranch.setBranchName(branchName);
-                                newBranch.setRoutingCode(branch.get("routing_code"));
-                                newBranch.setIsoCode(branch.get("iso_code"));
-                                newBranch.setSort(branch.get("sort"));
+                                if (!branch.get("routing_code").isBlank() && branch.get("routing_code") != null && !branch.get("routing_code").equals(".")) {
+                                    Branch newBranch = new Branch();
+                                    newBranch.setBankId(bankId);
+                                    newBranch.setBranchId(branchId);
+                                    newBranch.setBranchName(branchName);
+                                    newBranch.setRoutingCode(branch.get("routing_code"));
+                                    newBranch.setIsoCode(branch.get("iso_code"));
+                                    newBranch.setSort(branch.get("sort"));
 
-                                branchRepository.save(newBranch);
+                                    branchRepository.save(newBranch);
+                                }
                             }
                         }
                     } else {

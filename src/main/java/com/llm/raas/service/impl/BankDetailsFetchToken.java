@@ -70,8 +70,6 @@ public class BankDetailsFetchToken {
 
     public String getAccessToken() {
         HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(getTokenRequestBody(), getTokenHeaders());
-        log.info("Access Token Header ++++++++++++++========="+ getTokenHeaders());
-        log.info("Access Token Body +++++++=========="+ getTokenRequestBody());
         ResponseEntity<Map> response = restTemplate.postForEntity(TOKEN_URL, requestEntity, Map.class);
         return (String) response.getBody().get("access_token");
     }

@@ -53,12 +53,14 @@
                     <div class="col-lg-12">
                         <div class="card stretch stretch-full">
                             <div class="card-body p-0">
-                                <div class="table-responsive">
+                                <div class="table-responsive" style="overflow-x: hidden;">
                                     <!-- Data Table -->
                                     <table class="table table-hover" id="transfer-list">
                                         <thead>
                                             <tr>
                                                  <th>Agent</th>
+                                                 <th style="display:none;">Branch</th>
+                                                 <th style="display:none;">Staff</th>
                                                 <th>Transaction Number</th>
                                                 <th>Date</th>
                                                 <th>PayIn Amount</th>
@@ -72,6 +74,8 @@
                                             <c:forEach var="transfer" items="${transferList}" varStatus="status">
                                                 <tr>
                                                     <td>${transfer.agentId}</td>
+                                                    <td style="display:none;">${transfer.branchId}</td>
+                                                    <td style="display:none;">${transfer.staffId}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
                                                     <td>${transfer.transactionDateFormatted}</td>
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
@@ -143,13 +147,16 @@
         });
 
         <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')}">
-        var dropdownHtml = '<select id="transactionAgentList" class="form-control col-md-1" style="width: 200px; height: 43px;"></select></div>';
-        var dropdownHtml1 = '&nbsp;&nbsp;<select id="transactionAgentList1" class="form-control col-md-1" style="width: 200px; height: 43px;"></select>&nbsp;&nbsp;';
-        var dropdownHtml2 = '<select id="transactionAgentList2" class="form-control col-md-1" style="width: 200px; height: 43px;"></select>';
-        $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-end' }).prepend(dropdownHtml);
-        $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-center' }).prepend(dropdownHtml1);
-        $('.col-md-6').css({ 'display': 'flex', 'justify-content': 'flex-start' }).prepend(dropdownHtml2);
+        const dropdowns = `
+            <select id="transactionAgentList" class="form-control" style="width: 200px; height: 43px;"></select>
+            &nbsp;&nbsp;
+            <select id="transactionAgentList1" class="form-control" style="width: 200px; height: 43px;"></select>
+            &nbsp;&nbsp;
+            <select id="transactionAgentList2" class="form-control" style="width: 200px; height: 43px;"></select>
+        `;
+        $('.col-md-6').css({ display: 'flex', justifyContent: 'space-between' }).prepend(dropdowns);
 
+        // Agent dropdown
         $.ajax({
             url: '/api/v1/agent/agents',
             type: 'GET',
@@ -171,15 +178,7 @@
             }
         });
 
-        $('#transactionAgentList').on('change', function () {
-            var dropdownValue = $(this).val();
-
-            if (dropdownValue) {
-                table.column(0).search(dropdownValue).draw();
-            } else {
-                table.column(0).search('').draw();
-            }
-        });
+        // Branch dropdown
         $.ajax({
             url: '/api/v1/branch/branches',
             type: 'GET',
@@ -192,24 +191,16 @@
                         dropdown.append('<option value="' + item.id + '">' + item.branchName + '</option>');
                     });
                 } else {
-                    alert('Failed to load agents. Response format is incorrect.');
+                    alert('Failed to load branches. Response format is incorrect.');
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error fetching agents:', error);
-                alert('Error fetching agent list.');
+                console.error('Error fetching branches:', error);
+                alert('Error fetching branch list.');
             }
         });
 
-        $('#transactionAgentList').on('change', function () {
-            var dropdownValue = $(this).val();
-
-            if (dropdownValue) {
-                table.column(0).search(dropdownValue).draw();
-            } else {
-                table.column(0).search('').draw();
-            }
-        });
+        // Staff dropdown
         $.ajax({
             url: '/api/v1/staff/staff',
             type: 'GET',
@@ -222,33 +213,93 @@
                         dropdown.append('<option value="' + item.id + '">' + item.firstName + '</option>');
                     });
                 } else {
-                    alert('Failed to load agents. Response format is incorrect.');
+                    alert('Failed to load staff. Response format is incorrect.');
                 }
             },
             error: function (xhr, status, error) {
-                console.error('Error fetching agents:', error);
-                alert('Error fetching agent list.');
+                console.error('Error fetching staff:', error);
+                alert('Error fetching staff list.');
             }
         });
 
+        // Agent filter change
         $('#transactionAgentList').on('change', function () {
             var dropdownValue = $(this).val();
-
             if (dropdownValue) {
                 table.column(0).search(dropdownValue).draw();
             } else {
                 table.column(0).search('').draw();
             }
         });
+/* 
+        // Branch filter change
+        $('#transactionAgentList1').on('change', function () {
+            var selectedValue = $(this).val();
+            if (selectedValue) {
+                $.ajax({
+                    url: '/api/v1/transfer/' + selectedValue,
+                    type: 'GET',
+                    success: function (response) {
+                    	console.log(response);
+                    	alert(response);
+                        table.clear();
+                        if (Array.isArray(response)) {
+                        	 $.each(response, function (index, item) {
+                                 item.beneficiaryAccountNo = item.branchId; 
+                                 table.row.add(item);
+                             });
+                             table.draw();
+                        } else {
+                            alert('Failed to load filtered data. Response format is incorrect.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching filtered data:', error);
+                        alert('Error fetching filtered table data.');
+                    }
+                });
+            }
+        }); */
+        $('#transactionAgentList1').on('change', function () {
+            var dropdownValue1 = $(this).val();
+            if (dropdownValue1) {
+                table.column(1).search(dropdownValue1).draw();
+            } else {
+                table.column(1).search('').draw();
+            }
+        });
+        // Staff filter change
+        $('#transactionAgentList2').on('change', function () {
+            var selectedValue = $(this).val();
+            if (selectedValue) {
+                $.ajax({
+                    url: '/api/v1/transfer/filterByStaff/' + selectedValue,
+                    type: 'GET',
+                    success: function (response) {
+                        table.clear();
+                        if (Array.isArray(response)) {
+                            table.rows.add(response);
+                            table.draw();
+                        } else {
+                            alert('Failed to load filtered data. Response format is incorrect.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error('Error fetching filtered data:', error);
+                        alert('Error fetching filtered table data.');
+                    }
+                });
+            }
+        });
         </c:if>
-  
+
+
         $('.dataTables_filter input').on('input', function () {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
         });
         $('#transfer-list').on('click', '.transactionLogo', function () {
             var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
-
             if (!transactionRefNumber) {
                 alert('Transaction reference number is missing!');
                 return;
@@ -272,10 +323,12 @@
             });
         });
 
+
         $('#transactionAgentList, .dataTables_filter input').on('change input', function () {
             table.draw();
         });
     });
+
 
     </script>
 </body>

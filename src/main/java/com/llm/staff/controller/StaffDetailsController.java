@@ -55,7 +55,7 @@ public class StaffDetailsController {
         String username = authentication.getName();
 
         Agent byUsername = agentRepositories.findByUsername(username);
-
+        model.addAttribute("isHoPresent", byUsername.isHoPresent());
         model.addAttribute("staff", new StaffDTO());
         try {
             List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByAgent(byUsername.getAgentId());

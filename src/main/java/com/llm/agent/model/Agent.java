@@ -74,6 +74,7 @@ public class Agent {
 
 	private double remainingPerDayLimit;
 	private double remainingPerMonthLimit;
+	private boolean hoPresent;
 
 	@Column(name = "branch_location_id", unique = true)
 	private String branchLocationId;

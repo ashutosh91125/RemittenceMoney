@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.staff.repository.StaffDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,9 @@ public class StaffDetailsRestController {
 	@Autowired
 	private StaffDetailsService staffDetailsService;
 
+	@Autowired
+	private StaffDetailsRepository staffDetailsRepository;
+
 	@PostMapping
 	public ResponseEntity<String> registerStaff(@ModelAttribute StaffDTO staffDTO) {
 
@@ -52,6 +56,12 @@ public class StaffDetailsRestController {
 		String username = authentication.getName();
 		Agent byUsername = agentRepositories.findByUsername(username);
 		String country = byUsername.getCountries();
+
+		if (staffDTO.getStaffGroup().equals(Role.STAFF_HO)) {
+			if (byUsername.isHoPresent()) {
+				return new ResponseEntity<>("A head office staff record for this agent already exists!", HttpStatus.BAD_REQUEST);
+			}
+		}
 
 		log.info("Registering staff: {}", staffDTO);
 
@@ -63,6 +73,8 @@ public class StaffDetailsRestController {
 				staff.setStaffGroup("Transfer");
 			} else {
 				staff.setStaffGroup("Head Office");
+				byUsername.setHoPresent(true);
+				agentRepositories.save(byUsername);
 			}
 			staff.setAgent(staffDTO.getAgent());
 			staff.setFirstName(staffDTO.getFirstName());

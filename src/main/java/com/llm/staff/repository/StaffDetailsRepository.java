@@ -23,5 +23,7 @@ public interface StaffDetailsRepository extends JpaRepository<StaffDetails, Long
     List<StaffDetailsProjection> findProjectionsByCountry(String country);
 
     List<StaffDetailsProjection> findProjectionsByAgent(String agent);
+
+    boolean existsByAgentAndStaffGroup(String agent, String staffGroup);
 }
 

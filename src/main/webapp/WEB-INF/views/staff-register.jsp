@@ -376,18 +376,23 @@ document.addEventListener('DOMContentLoaded', function () {
 										</div>
 									</div>
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Group<span
-												class="text-danger">*</span></label>
-											<form:select path="staffGroup" class="form-control"
-												data-select2-selector="icon" id="staffGroup">
-												<form:option value="" disabled="true" selected="true">Select Group</form:option>
-												<form:option value="STAFF_TR">Transaction</form:option>
-												<form:option value="STAFF_HO">Head Office</form:option>
-											</form:select>
-											<span id="staffGroupError" class="text-danger1"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Group<span class="text-danger">*</span></label>
+                                            <form:select path="staffGroup" class="form-control" data-select2-selector="icon" id="staffGroup">
+                                                <form:option value="" disabled="true" selected="true">Select Group</form:option>
+                                                <c:choose>
+                                                    <c:when test="${isHoPresent}">
+                                                        <form:option value="STAFF_TR">Transaction</form:option>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <form:option value="STAFF_TR">Transaction</form:option>
+                                                        <form:option value="STAFF_HO">Head Office</form:option>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </form:select>
+                                            <span id="staffGroupError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">First Name<span

@@ -768,21 +768,21 @@ document.addEventListener("DOMContentLoaded", function() {
 										<div class="row">
 											<div class="col-xl-4">
 												<label class="form-label">PayIn Currency<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" id="payInCurrency"
 													name="payInCurrency" placeholder="PayIn Currency"
 													value="${payInCurrency}" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" id="sourceOfFund" name="sourceOfFund"
 													placeholder="Source of Fund"
 													value="${transferDetails.sourceOfFund}" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Transaction Purpose<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" id="transactionPurpose"
 													name="transactionPurpose" placeholder="Transaction Purpose"
 													value="${transferDetails.transactionPurpose}" readonly>
@@ -791,20 +791,20 @@ document.addEventListener("DOMContentLoaded", function() {
 										<div class="row">
 											<div class="col-xl-4">
 												<label class="form-label">Value Date<span
-													class="text-danger">*</span></label> <input type="date"
+													class="text-danger"></span></label> <input type="date"
 													class="form-control" id="valueDate" name="valueDate"
 													value="${transferDetails.valueDate}" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payment Mode<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" id="paymentMode" name="paymentMode"
 													placeholder="Payment Mode"
 													value="${transferDetails.paymentMode}" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Remarks<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" placeholder="Remarks" id="remarks"
 													name="remarks" value="${transferDetails.remarks}" readonly>
 											</div>
@@ -812,7 +812,7 @@ document.addEventListener("DOMContentLoaded", function() {
 										<div class="row">
 											<div class="col-xl-4">
 												<label class="form-label">PayIn Amount<span
-													class="text-danger">*</span></label> <input type="number"
+													class="text-danger"></span></label> <input type="number"
 													class="form-control" placeholder="PayIn Amount"
 													id="payInAmount" name="payInAmount" min="5" max="50000"
 													value="${transferDetails.payInAmount}" required readonly>
@@ -820,14 +820,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 											<div class="col-xl-4">
 												<label class="form-label">Rate<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" placeholder="Rate" id="rate"
 													style="color: green;" name="rate"
 													value="${transferDetails.rate}" readonly>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payout Amount<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" placeholder="Payout Amount"
 													style="color: green;" id="payoutAmount" name="payoutAmount"
 													value="${transferDetails.payoutAmount}" readonly>
@@ -867,7 +867,7 @@ document.addEventListener("DOMContentLoaded", function() {
 										<div class="row">
                                             <div class="col-xl-4">
                                                 <label class="form-label">Payment Status<span
-                                                    class="text-danger">*</span></label> <input type="text"
+                                                    class="text-danger"></span></label> <input type="text"
                                                     class="form-control" id="paymentStatus" name="paymentStatus"
                                                     placeholder="Payment Status"
                                                     value="${transferDetails.paymentStatus}" readonly>

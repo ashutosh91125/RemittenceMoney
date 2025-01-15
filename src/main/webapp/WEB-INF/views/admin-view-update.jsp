@@ -86,6 +86,7 @@ function updateAdmin() {
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
             alert(response);
+            window.location.href = "/adminlist";
         },
         error: function(xhr) {
             $('#loader').hide();

@@ -181,6 +181,7 @@ function updateStaff() {
 			$('#loader').hide();
 			$('#submitButton').prop('disabled', false);
 			alert(response);
+			window.location.href = "/staff-list";
 		},
 		error : function(xhr) {
 			$('#loader').hide();

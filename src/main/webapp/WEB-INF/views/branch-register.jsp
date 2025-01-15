@@ -187,6 +187,7 @@ function registerBranch() {
            $('#loader').hide();
            $('#submitButton').prop('disabled', false);
            alert(response);
+           window.location.href = "/branch-list";
        },
        error: function(xhr) {
            $('#loader').hide();

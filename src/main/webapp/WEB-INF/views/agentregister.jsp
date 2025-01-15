@@ -181,7 +181,8 @@ function registerAgent() {
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
             alert(response);
-            $('#body').html(response.body.html);
+            window.location.href = "/agentlist";
+//             $('#body').html(response.body.html);
         },
         error: function(xhr) {
             $('#loader').hide();

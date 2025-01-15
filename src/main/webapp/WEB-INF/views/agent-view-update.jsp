@@ -182,6 +182,7 @@ function updateAgent() {
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
             alert(response);
+            window.location.href = "/agentlist";
         },
         error: function(xhr) {
             $('#loader').hide();
@@ -469,6 +470,7 @@ document.addEventListener('DOMContentLoaded', function() {
 							</div>
 						</div>
 					</div>
+				</div>
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"

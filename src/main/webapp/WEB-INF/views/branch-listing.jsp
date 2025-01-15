@@ -68,9 +68,9 @@
 													<td>${branchDetails.branchMode}</td>
 													<td>${branchDetails.email}</td>
 													<td>${branchDetails.state }</td>
-													<td><a  href="branch-detail?id=${branchDetails.id}" class="avatar-text avatar-md" title="view">
+													<td><div style="display: flex;justify-content: end;"><a  href="branch-detail?id=${branchDetails.id}" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></td>
+                                                        </a></div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

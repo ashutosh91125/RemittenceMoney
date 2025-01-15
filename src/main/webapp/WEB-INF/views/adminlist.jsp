@@ -76,9 +76,9 @@
 																Inactive
 															</c:otherwise>
 														</c:choose></td>
-														<td><a href="admin-detail?id=${admin.id}" class="avatar-text avatar-md" title="view">
+														<td><div style="display: flex;justify-content: end;"><a href="admin-detail?id=${admin.id}" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></td>
+                                                        </a></div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

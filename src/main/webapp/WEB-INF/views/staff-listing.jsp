@@ -66,9 +66,9 @@
 													<td>${staffDetails.mobile}</td>
 													<td>${staffDetails.createdOn}</td>
 													<td>${staffDetails.staffGroup}</td>
-														<td><a  href="staff-deatils?id=${staffDetails.id }" class="avatar-text avatar-md" title="view">
+														<td><div style="display: flex;justify-content: end;"><a  href="staff-deatils?id=${staffDetails.id }" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></td>
+                                                        </a></div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

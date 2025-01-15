@@ -64,9 +64,9 @@
 													<td>${agent.phone}</td>
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
-													<td><a href="agent-detail?agentId=${agent.agentId }" class="avatar-text avatar-md" title="view">
+													<td><div style="display: flex;justify-content: end;"><a href="agent-detail?agentId=${agent.agentId }" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></td>
+                                                        </a></div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

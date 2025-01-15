@@ -164,577 +164,10 @@
 }
 </style>
 <script type="text/javascript" src="js/customervalidation.js"></script>
-<script>
-$(document).ready(function () {
-    // Handle form submission
-    $("#customerOnboardForm").on("submit", function (e) {
-        e.preventDefault();  // Prevent the default form submission
-          if (!validation(this)) {
-              return false;  // Stop form submission if validation fails
-          }
-        // Show the loader (Bootstrap spinner)
-        $('#loader').show();
-
-        // Disable the submit button to prevent multiple submissions
-        $("#customerOnboardForm button[type='submit']").prop('disabled', true);
-
-        // Create a FormData object to send form data with the image
-        const formData = new FormData(this);
-
-        // AJAX request to submit the form data
-        $.ajax({
-            url: "/createUser", // URL where the form will be submitted
-            type: "POST",
-            data: formData,
-            processData: false, // Don't let jQuery process the data
-            contentType: false, // Let the browser set the content type
-            success: function (response) {
-                // Hide the loader after success
-                $('#loader').hide();
-
-                // Enable the submit button again
-                $("#customerOnboardForm button[type='submit']").prop('disabled', false);
-
-                // Check if the response contains the ecrn value
-                                if (response && response.includes("ECRN:")) {
-                                    var ecrn = response.split("ECRN:")[1].trim(); // Extract the ecrn value
-                                    alert("Customer Onboarded successfully with ECRN: " + ecrn); // Show the success alert with ecrn
-                                } else {
-                                    alert("Customer Onboarded successfully!");
-                                }
-                $("#customerOnboardForm")[0].reset();
-
-                // Optionally, clear any file input fields if necessary
-                //$('#frontPictureFile').val('');
-                //$('#backPictureFile').val('');
-                window.location.reload();
-            },
-            error: function (xhr) {
-                // Hide the loader on error
-                $('#loader').hide();
-
-                // Enable the submit button again
-                $("#customerOnboardForm button[type='submit']").prop('disabled', false);
-
-                // Show error message if creation fails
-                alert("Something went wrong!");
-            }
-        });
-    });
-//     const formFields = $("#customerOnboardForm").find("input, select, text");
-//     formFields.on("input change", function () {
-//         validation("#customerOnboardForm"); // Trigger validation on input or change
-//         clearValidationError(this);
-//     });
-//     function clearValidationError(field) {
-//         const fieldId = field.id;
-//         const errorElement = document.getElementById(`${fieldId}Error`);
-//         if (errorElement) {
-//             errorElement.innerHTML = '';  // Clear the error message when user interacts with the field
-//         }
-//     }
-});
-
-
-function copyAddress() {
-    const checkbox = document.getElementById("sameAsCurrentAddress");
-    const permanentCountryDropdown = document.getElementById("permanentCountry");
-    const permanentStateDropdown = document.getElementById("parStateDropdown");
-    const currentCountry = document.getElementById("currentCountry");
-    const currentState = document.getElementById("stateDropdown");
-
-    if (checkbox.checked) {
-        // Copy field values from current address to permanent address
-        document.getElementById("permanentBuildingName").value = document.getElementById("currentBuildingName").value;
-        document.getElementById("permanentStreetName").value = document.getElementById("currentStreetName").value;
-        document.getElementById("permanentLandmark").value = document.getElementById("currentLandmark").value;
-        document.getElementById("permanentCity").value = document.getElementById("currentCity").value;
-        document.getElementById("permanentDistrict").value = document.getElementById("currentDistrict").value;
-        document.getElementById("permanentZip").value = document.getElementById("currentZip").value;
-
-        // Sync country and trigger change for state options
-        permanentCountryDropdown.value = currentCountry.value;
-        $(permanentCountryDropdown).trigger('change'); // Trigger change to reload dependent states
-
-        // Wait for the states to load and then set the state
-        setTimeout(() => {
-            permanentStateDropdown.value = currentState.value;
-        }, 500); // Delay allows state options to load
-    } else {
-        // Clear permanent address fields
-        document.getElementById("permanentBuildingName").value = "";
-        document.getElementById("permanentStreetName").value = "";
-        document.getElementById("permanentLandmark").value = "";
-        document.getElementById("permanentCity").value = "";
-        document.getElementById("permanentDistrict").value = "";
-        document.getElementById("permanentZip").value = "";
-
-        permanentCountryDropdown.selectedIndex = 0; // Reset country
-        permanentStateDropdown.innerHTML = '<option value="" disabled selected>Select State</option>'; // Reset state
-    }
-}
-
-
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-
-	$(document)
-			.ready(
-					function() {
-						$('#currentCountry')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#stateDropdown')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select State</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#stateDropdown')
-																							.append(
-																									'<option value="' + enumValue.description + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#stateDropdown')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select State</option>');
-											}
-										});
-					});
-
-	$(document)
-			.ready(
-					function() {
-						$('#permanentCountry')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#parStateDropdown')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select State</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#parStateDropdown')
-																							.append(
-																									'<option value="' + enumValue.description + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#parStateDropdown')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select State</option>');
-											}
-										});
-					});
-
-	$(document)
-			.ready(
-					function() {
-						$('#nationality')
-								.on(
-										'change',
-										function() {
-											let dependent = $(this).val(); // Get the selected country value
-											if (dependent) { // Check if a country is selected
-												$
-														.ajax({
-															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-															type : 'GET',
-															data : {
-																dependent : dependent
-															}, // Pass the selected country ID
-															success : function(
-																	data) {
-																// Clear the state dropdown and populate with new options
-																$(
-																		'#nativeRegion')
-																		.empty()
-																		.append(
-																				'<option value="" disabled selected>Select Native Region</option>');
-																$
-																		.each(
-																				data,
-																				function(
-																						index,
-																						enumValue) {
-																					$(
-																							'#nativeRegion')
-																							.append(
-																									'<option value="' + enumValue.valueId + '">'
-																											+ enumValue.description
-																											+ '</option>');
-																				});
-															},
-															error : function() {
-																console
-																		.error("Error fetching states for the selected country.");
-															}
-														});
-											} else {
-												// Reset the state dropdown if no country is selected
-												$('#nativeRegion')
-														.empty()
-														.append(
-																'<option value="" disabled selected>Select Native Region</option>');
-											}
-										});
-					});
-
-
-    $(document)
-    			.ready(
-    					function() {
-    						$('#countryOfBirth')
-    								.on(
-    										'change',
-    										function() {
-    											let dependent = $(this).val(); // Get the selected country value
-    											if(dependent == "MY"){
-    											    dependent += "R";
-    											}
-    											if (dependent) { // Check if a country is selected
-    												$
-    														.ajax({
-    															url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-    															type : 'GET',
-    															data : {
-    																dependent : dependent
-    															}, // Pass the selected country ID
-    															success : function(
-    																	data) {
-    																// Clear the state dropdown and populate with new options
-    																$(
-    																		'#placeOfBirth')
-    																		.empty()
-    																		.append(
-    																				'<option value="" disabled selected>Select Place Of Birth</option>');
-    																$
-    																		.each(
-    																				data,
-    																				function(
-    																						index,
-    																						enumValue) {
-    																					$(
-    																							'#placeOfBirth')
-    																							.append(
-    																									'<option value="' + enumValue.description + '">'
-    																											+ enumValue.description
-    																											+ '</option>');
-    																				});
-    															},
-    															error : function() {
-    																console
-    																		.error("Error fetching Place Of Birth for the selected country.");
-    															}
-    														});
-    											} else {
-    												// Reset the state dropdown if no country is selected
-    												$('#nativeRegion')
-    														.empty()
-    														.append(
-    																'<option value="" disabled selected>Select Place Of Birth</option>');
-    											}
-    										});
-    					});
-    
-
-    $(document)
-	.ready(
-			function() {
-				$('#countryOfResidence')
-						.on(
-								'change',
-								function() {
-									let dependent = $(this).val(); // Get the selected country value
-									    dependent += "PC";
-									    if (dependent) { // Check if a country is selected
-											$
-												.ajax({
-													url : '/api/enumEntities/dependent', // Ensure this matches your controller's URL mapping
-													type : 'GET',
-													data : {
-														dependent : dependent
-													}, // Pass the selected country ID
-													success : function(
-															data) {
-														// Clear the state dropdown and populate with new options
-														$(
-																'#phoneCode')
-																.empty()
-																		/* .append(
-																				'<option value="" disabled selected>Select State</option>'); */
-														$
-																.each(
-																		data,
-																		function(
-																				index,
-																				enumValue) {
-																			$(
-																					'#phoneCode')
-																					.append(
-																							'<option value="' + enumValue.valueId  + '">'
-																									+ enumValue.description
-																									+ '</option>');
-																		});
-													},
-													error : function() {
-														console
-																.error("Error fetching phone code for the selected country.");
-													}
-												});
-									} else {
-										// Reset the state dropdown if no country is selected
-										$('#phoneCode')
-												.empty()
- 														.append(
- 																'<option value="" disabled selected>Select State</option>');
-									}
-								});
-			});
-
-    function toggleFields() {
-        const residentType = document.getElementById('residentType').value;
-        const idTypeDropdown = document.getElementById("idTypeDropdown");
-        const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
-        const issuedForNonResidents = document.getElementById('issuedForNonResidents');
-        const idDetails = document.getElementById('idDetails');
-        const idDetailsFields = document.getElementById('idDetailsFields');
-        const idNumberField = document.getElementById('idNumberField');
-        const nonResident = document.getElementById('nonResident');
-
-        // Reset dropdown and fields
-        idTypeDropdown.style.display = "none";
-        idTypeDropdown.removeAttribute("disabled");
-        idDetailsFields.style.display = 'none'; // Hide details fields initially
-        idTypeDropdown.value = ""; // Reset dropdown value
-
-        if (residentType === '101') { // Malaysian ID
-        	console.log(residentType);
-            idTypeDropdown.style.display = "block"; // Show dropdown
-            idTypeDropdown.value = "28"; // Set value to 28
-            idTypeDropdown.setAttribute("disabled", true); // Disable the dropdown
-
-            issuedDateExpiryNonResident.style.display = 'none';
-            issuedForNonResidents.style.display = 'none';
-            idDetails.style.display = 'block';
-            idDetailsFields.style.display = 'none';
-            idNumberField.style.display = 'block';
-            nonResident.style.display = 'none';
-        } else if (residentType === '100') { // Non-resident
-            idTypeDropdown.style.display = "block"; // Show dropdown
-            idTypeDropdown.removeAttribute("disabled"); // Enable dropdown for selection
-            idTypeDropdown.value = "2"; // Set default value to 2
-
-            // Show fields relevant to value '2' by default
-            idDetails.style.display = 'block';
-            idDetailsFields.style.display = 'block';
-            idNumberField.style.display = 'block';
-            issuedForNonResidents.style.display = 'block';
-            issuedDateExpiryNonResident.style.display = 'block';
-            nonResident.style.display = 'flex';
-
-            idTypeDropdown.addEventListener('change', function () {
-                if (idTypeDropdown.value === '28') {
-                    // Hide fields if value 28 is selected for non-resident
-                    idDetails.style.display = 'none';
-                    idDetailsFields.style.display = 'none';
-                    idNumberField.style.display = 'none';
-                } else if (idTypeDropdown.value === '2') {
-                    idDetailsFields.style.display = 'block';
-                } else {
-                    idDetailsFields.style.display = 'none';
-                }
-            });
-        } else { // Default case
-            idTypeDropdown.style.display = "none";
-            idTypeDropdown.removeAttribute("disabled");
-
-            issuedDateExpiryNonResident.style.display = 'none';
-            issuedForNonResidents.style.display = 'none';
-            idDetails.style.display = 'none';
-            idDetailsFields.style.display = 'none';
-            idNumberField.style.display = 'none';
-            nonResident.style.display = 'none';
-        }
-    }
-
-
-    function toggleCustomerRemarks() {
-        const showRemarks = document.getElementById("showRemarksOnTxn").value;
-        const remarksContainer = document.getElementById("customerRemarksContainer");
-
-        if (showRemarks === "1") {
-            remarksContainer.style.display = "block";
-        } else {
-            remarksContainer.style.display = "none";
-        }
-    }
-
-    // Ensure the correct fields are toggled on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("Page Loaded");
-        document.getElementById('idNumber').addEventListener('input', function () {
-                const idNumber = this.value.trim();
-                const residentType = document.getElementById('residentType').value;
-                const dateOfBirth = document.getElementById('dateOfBirth').value;
-                const placeOfBirth = document.getElementById('placeOfBirth').value.trim();
-                const gender = document.getElementById('gender').value;
-
-                const errorSpan = document.getElementById('idNumberError');
-                errorSpan.textContent = ""; // Clear previous errors
-
-                // Only validate when residentType is "101"
-                if (residentType !== "101") {
-                    return; // Skip validation if not resident type "101"
-                }
-
-                // Extract integer value from placeOfBirth (e.g., "Cansno (20)" -> "20")
-                const placeOfBirthMatch = placeOfBirth.match(/\((\d+)\)$/); // Regex to extract digits in parentheses
-                const placeOfBirthCode = placeOfBirthMatch ? placeOfBirthMatch[1] : null;
-
-                // Validation starts here
-                if (idNumber.length < 12) {
-                    errorSpan.textContent = "ID Number must be 12 digit.";
-                    return;
-                }
-
-                // Validate first 6 characters (YY-MM-DD)
-                if (dateOfBirth) {
-                    const dobParts = dateOfBirth.split("-");
-                    const expectedDob = dobParts[0].substring(2) + dobParts[1] + dobParts[2]; // Convert YYYY-MM-DD to YYMMDD
-                    if (idNumber.substring(0, 6) !== expectedDob) {
-                        errorSpan.textContent = "First 6 characters must match Date of Birth";
-                        return;
-                    }
-                } else {
-                    errorSpan.textContent = "Please select Date of Birth";
-                    return;
-                }
-
-                // Validate next 2 characters (Place of Birth)
-                if (placeOfBirthCode && idNumber.substring(6, 8) !== placeOfBirthCode) {
-                    errorSpan.textContent = "7th and 8th digit must be Place of Birth code";
-                    return;
-                } else if (!placeOfBirthCode) {
-                    errorSpan.textContent = "Please select Place of Birth";
-                    return;
-                }
-
-                // Validate last character (Gender)
-                const expectedGenderChar = gender === "Male" ? "1" : "0";
-                if (idNumber.charAt(11) !== expectedGenderChar) {
-                    errorSpan.textContent = "Last digit must be 1 for Male or 0 for Female";
-                    return;
-                }
-
-                // If all validations pass
-                errorSpan.textContent = ""; // Clear errors
-            });
-        document.getElementById('primaryMobileNumber').addEventListener('input', function () {
-            const mobileNumber = this.value.trim();
-            const errorSpan = document.getElementById('primaryMobileNumberError');
-            errorSpan.textContent = ""; // Clear error
-
-            if (mobileNumber.length >= 10 && /^\d{10,15}$/.test(mobileNumber)) {
-                $.ajax({
-                    url: '/caas/api/v2/customer/verify-mobile',
-                    type: 'GET',
-                    data: { primaryMobileNumber: mobileNumber },
-                    success: function (response) {
-                        if (response && response.message === "Customer already exists with this mobile number.") {
-                            errorSpan.textContent = response.message; // Display error
-                        } else {
-                            errorSpan.textContent = ""; // Clear if mobile number is available
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                        errorSpan.textContent = "Error checking mobile number. Please try again.";
-                    }
-                });
-            } else {
-                errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
-            }
-        });
-        const today = new Date().toISOString().split("T")[0]; // Today's date in yyyy-mm-dd format
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1); // Tomorrow's date
-        const tomorrowString = tomorrow.toISOString().split("T")[0];
-
-        // Set the max date for "Issued On" to today's date
-        document.querySelector('input[name="issuedOn"]').setAttribute("max", today);
-        
-        // Set the min date for "Date of Expiry" to tomorrow's date
-        document.querySelector('input[name="dateOfExpiry"]').setAttribute("min", tomorrowString);
-
-        toggleFields();
-        toggleCustomerRemarks();
-    });
-
-</script>
+<script type="text/javascript" src="js/customer-onboard.js"></script>
 </head>
 
 <body>
-
 	<jsp:include page="header.jsp"></jsp:include>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
@@ -831,10 +264,12 @@ function copyAddress() {
 														<td>${customer.emailId}</td>
 														<td>${customer.countryOfResidence }</td>
 														<td>${customer.gender }</td>
-
-														<td class="text-end"><a
-															href="customerdetails?ecrn=${customer.ecrn}"
-															class="btn btn-light-brand">View</a></td>
+														<td><div style="display: flex; justify-content: end;">
+																<a href="customerdetails?ecrn=${customer.ecrn}"
+																	class="avatar-text avatar-md" title="view"> <i
+																	class="feather feather-eye"></i>
+																</a>
+															</div></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -879,7 +314,7 @@ function copyAddress() {
 													<form:options items="${salutationList}" itemValue="valueId"
 														itemLabel="displayName" />
 												</form:select>
-												<span id="salutationError" style="color:red;" /></span>
+												<span id="salutationError" style="color: red;" /></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -888,7 +323,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="firstName" type="text"
 													class="form-control" placeholder="First Name" />
-												<span id="firstNameError" style="color:red;" ></span>
+												<span id="firstNameError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -896,7 +331,7 @@ function copyAddress() {
 												<label class="form-label">Middle Name</label>
 												<form:input path="middleName" type="text"
 													class="form-control" placeholder="Middle Name" />
-												<span id="middleNameError" style="color:red;"></span>
+												<span id="middleNameError" style="color: red;"></span>
 											</div>
 										</div>
 									</div>
@@ -907,7 +342,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="lastName" type="text" class="form-control"
 													placeholder="Last Name" />
-												<span id="lastNameError" style="color:red;"></span>
+												<span id="lastNameError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -915,7 +350,7 @@ function copyAddress() {
 												<label class="form-label">Preferred Name</label>
 												<form:input path="preferredName" type="text"
 													class="form-control" placeholder="Preferred Name" />
-												<span id="preferredNameError" style="color:red;"></span>
+												<span id="preferredNameError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -929,7 +364,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
-												<span id="nationalityError" style="color:red;"></span>
+												<span id="nationalityError" style="color: red;"></span>
 											</div>
 										</div>
 									</div>
@@ -943,7 +378,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
-												<span id="secondNationalityError" style="color:red;"></span>
+												<span id="secondNationalityError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -957,7 +392,7 @@ function copyAddress() {
 													<form:options items="${nativeRegionList}"
 														itemValue="valueId" itemLabel="description" />
 												</form:select>
-												<span id="nativeRegionError" style="color:red;"></span>
+												<span id="nativeRegionError" style="color: red;"></span>
 											</div>
 										</div>
 
@@ -967,7 +402,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="dateOfBirth" id="dateOfBirth" type="date"
 													class="form-control" />
-												<span id="dateOfBirthError" style="color:red;"></span>
+												<span id="dateOfBirthError" style="color: red;"></span>
 											</div>
 										</div>
 									</div>
@@ -983,7 +418,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
-												<span id="countryOfBirthError" style="color:red;"></span>
+												<span id="countryOfBirthError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -996,11 +431,7 @@ function copyAddress() {
 													<form:options items="${placeOfBirthList}"
 														itemValue="description" itemLabel="description" />
 												</form:select>
-												<span id="placeOfBirthError" style="color:red;"></span>
-
-												<!-- <form:input path="placeOfBirth" type="text"
-													class="form-control" placeholder="Place of Birth" />
-												<span id="placeOfBirthError" style="color:red;"></span>  -->
+												<span id="placeOfBirthError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -1014,7 +445,7 @@ function copyAddress() {
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
 												</form:select>
-												<span id="countryOfResidenceError" style="color:red;"></span>
+												<span id="countryOfResidenceError" style="color: red;"></span>
 											</div>
 
 										</div>
@@ -1029,7 +460,7 @@ function copyAddress() {
 													<form:option value="" disabled="true" selected="true">Gender</form:option>
 													<form:options items="${genderList}" />
 												</form:select>
-												<span id="genderError" style="color:red;"></span>
+												<span id="genderError" style="color: red;"></span>
 											</div>
 										</div>
 
@@ -1038,7 +469,7 @@ function copyAddress() {
 												<label class="form-label">Mothers Maiden Name</label>
 												<form:input path="mothersMaidenName" type="Text"
 													class="form-control" placeholder="Mothers Maiden Name" />
-												<span id="mothersMaidenNameError" style="color:red;"></span>
+												<span id="mothersMaidenNameError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -1055,7 +486,7 @@ function copyAddress() {
 														class="form-control" placeholder="Primary Mobile Number"
 														id="primaryMobileNumber" />
 												</div>
-												<span id="primaryMobileNumberError" style="color:red;"></span>
+												<span id="primaryMobileNumberError" style="color: red;"></span>
 											</div>
 										</div>
 									</div>
@@ -1065,7 +496,7 @@ function copyAddress() {
 												<label class="form-label">Secondary Mobile Number</label>
 												<form:input path="secondaryMobileNumber" type="text"
 													class="form-control" placeholder="Secondary Mobile Number" />
-												<span id="secondaryMobileNumberError" style="color:red;"></span>
+												<span id="secondaryMobileNumberError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -1074,7 +505,7 @@ function copyAddress() {
 													class="text-danger">*</span></label>
 												<form:input path="emailId" type="email" class="form-control"
 													placeholder="Email" />
-												<span id="emailIdError" style="color:red;"></span>
+												<span id="emailIdError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -1082,7 +513,7 @@ function copyAddress() {
 												<label class="form-label">Phone Number</label>
 												<form:input path="phoneNumber" type="text"
 													class="form-control" placeholder="Phone Number" />
-												<span id="phoneNumberError" style="color:red;"></span>
+												<span id="phoneNumberError" style="color: red;"></span>
 											</div>
 										</div>
 									</div>
@@ -1118,7 +549,7 @@ function copyAddress() {
 														<form:input path="buildingName" type="text"
 															class="form-control" placeholder="Building Name"
 															id="currentBuildingName" />
-														<span id="buildingNameError" style="color:red;"></span>
+														<span id="buildingNameError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1128,7 +559,7 @@ function copyAddress() {
 														<form:input path="streetName" type="text"
 															class="form-control" placeholder="Street Name"
 															id="currentStreetName" />
-														<span id="streetNameError" style="color:red;"></span>
+														<span id="streetNameError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1138,7 +569,7 @@ function copyAddress() {
 														<form:input path="landmark" type="text"
 															class="form-control" placeholder="Land Mark"
 															id="currentLandmark" />
-														<span id="landmarkError" style="color:red;"></span>
+														<span id="landmarkError" style="color: red;"></span>
 													</div>
 												</div>
 											</div>
@@ -1149,7 +580,7 @@ function copyAddress() {
 															class="text-danger">*</span></label>
 														<form:input path="city" type="text" class="form-control"
 															placeholder="City" id="currentCity" />
-														<span id="cityError" style="color:red;"></span>
+														<span id="cityError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1159,7 +590,7 @@ function copyAddress() {
 														<form:input path="district" type="text"
 															class="form-control" placeholder="District"
 															id="currentDistrict" />
-														<span id="districtError" style="color:red;"></span>
+														<span id="districtError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1173,7 +604,7 @@ function copyAddress() {
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
-														<span id="countryError" style="color:red;"></span>
+														<span id="countryError" style="color: red;"></span>
 													</div>
 												</div>
 
@@ -1190,7 +621,7 @@ function copyAddress() {
 															<form:options items="${stateList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
-														<span id="stateError" style="color:red;"></span>
+														<span id="stateError" style="color: red;"></span>
 													</div>
 												</div>
 
@@ -1200,7 +631,7 @@ function copyAddress() {
 															class="text-danger">*</span></label>
 														<form:input path="zip" type="text" class="form-control"
 															placeholder="Zip" id="currentZip" />
-														<span id="zipError" style="color:red;"></span>
+														<span id="zipError" style="color: red;"></span>
 													</div>
 												</div>
 												<!-- <div class="col-xl-4">
@@ -1235,7 +666,7 @@ function copyAddress() {
 														<form:input path="parBuildingName" type="text"
 															class="form-control" placeholder="Building Name"
 															id="permanentBuildingName" />
-														<span id="parBuildingNameError" style="color:red;"></span>
+														<span id="parBuildingNameError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1244,7 +675,7 @@ function copyAddress() {
 														<form:input path="parStreetName" type="text"
 															class="form-control" placeholder="Street Name"
 															id="permanentStreetName" />
-														<span id="parStreetNameError" style="color:red;"></span>
+														<span id="parStreetNameError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1253,7 +684,7 @@ function copyAddress() {
 														<form:input path="parLandmark" type="text"
 															class="form-control" placeholder="Land Mark"
 															id="permanentLandmark" />
-														<span id="parLandmarkError" style="color:red;"></span>
+														<span id="parLandmarkError" style="color: red;"></span>
 													</div>
 												</div>
 											</div>
@@ -1264,7 +695,7 @@ function copyAddress() {
 														<form:input path="parCity" type="text"
 															class="form-control" placeholder="City"
 															id="permanentCity" />
-														<span id="parCityError" style="color:red;"></span>
+														<span id="parCityError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1273,7 +704,7 @@ function copyAddress() {
 														<form:input path="parDistrict" type="text"
 															class="form-control" placeholder="District"
 															id="permanentDistrict" />
-														<span id="parDistrictError" style="color:red;"></span>
+														<span id="parDistrictError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1286,7 +717,7 @@ function copyAddress() {
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
-														<span id="parCountryError" style="color:red;"></span>
+														<span id="parCountryError" style="color: red;"></span>
 													</div>
 												</div>
 											</div>
@@ -1301,7 +732,7 @@ function copyAddress() {
 															<form:options items="${stateList}" itemValue="valueId"
 																itemLabel="description" />
 														</form:select>
-														<span id="parStateError" style="color:red;"></span>
+														<span id="parStateError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1309,7 +740,7 @@ function copyAddress() {
 														<label class="form-label">Zip</label>
 														<form:input path="parZip" type="text" class="form-control"
 															placeholder="Zip" id="permanentZip" />
-														<span id="parZipError" style="color:red;"></span>
+														<span id="parZipError" style="color: red;"></span>
 													</div>
 												</div>
 												<!-- <div class="col-xl-4">
@@ -1360,7 +791,7 @@ function copyAddress() {
 															<form:options items="${residentTypeList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select>
-														<span id="residentTypeError" style="color:red;"></span>
+														<span id="residentTypeError" style="color: red;"></span>
 													</div>
 												</div>
 											</div>
@@ -1387,17 +818,13 @@ function copyAddress() {
 															<div class="mb-4">
 																<label class="form-label">Id Type <span
 																	class="text-danger">*</span></label>
-																<!-- 	<!-- Input field for fixed ID type -->
-																<!-- 		<input type="text" id="idType" class="form-control"
-																	placeholder="ID Type" readonly> <input
-																	type="hidden" id="hiddenIdType" name="idType">  -->
 																<form:select id="idTypeDropdown" path="idType"
 																	class="form-control" style="display: none;">
 																	<form:option value="" disabled="true" selected="true">Select Id Type</form:option>
 																	<form:options items="${idTypesList}"
 																		itemValue="valueId" itemLabel="description" />
 																</form:select>
-																<span id="idTypeError" style="color:red;"></span>
+																<span id="idTypeError" style="color: red;"></span>
 															</div>
 														</div>
 														<div class="col-xl-4">
@@ -1407,7 +834,7 @@ function copyAddress() {
 																<form:input path="idNumber" id="idNumber"
 																	name="idNumber" placeholder="Id Number" type="text"
 																	class="form-control" />
-																<span id="idNumberError" style="color:red;"></span>
+																<span id="idNumberError" style="color: red;"></span>
 															</div>
 														</div>
 														<div class="col-xl-4">
@@ -1416,7 +843,7 @@ function copyAddress() {
 																	class="text-danger">*</span></label>
 																<form:input path="nameAsPerId" type="text"
 																	class="form-control" placeholder="Name as per Id" />
-																<span id="nameAsPerIdError" style="color:red;"></span>
+																<span id="nameAsPerIdError" style="color: red;"></span>
 															</div>
 														</div>
 													</div>
@@ -1433,7 +860,7 @@ function copyAddress() {
 																		<form:options items="${countryList}"
 																			itemValue="valueId" itemLabel="description" />
 																	</form:select>
-																	<span id="issuedCountryError" style="color:red;"></span>
+																	<span id="issuedCountryError" style="color: red;"></span>
 																</div>
 															</div>
 															<div class="col-xl-4">
@@ -1446,7 +873,7 @@ function copyAddress() {
 																		<form:options items="${countryList}"
 																			itemValue="description" itemLabel="description" />
 																	</form:select>
-																	<span id="issuedAtError" style="color:red;"></span>
+																	<span id="issuedAtError" style="color: red;"></span>
 																</div>
 															</div>
 															<div class="col-xl-4">
@@ -1456,7 +883,7 @@ function copyAddress() {
 																	<form:input path="issuedBy" type="text"
 																		class="form-control" placeholder="Issued By"
 																		id="issuedBy" />
-																	<span id="issuedByError" style="color:red;"></span>
+																	<span id="issuedByError" style="color: red;"></span>
 																</div>
 															</div>
 														</div>
@@ -1470,7 +897,7 @@ function copyAddress() {
 																		class="text-danger">*</span></label>
 																	<form:input path="issuedOn" type="date"
 																		class="form-control" min="1900-01-01" max="${today}" />
-																	<span id="issuedOnError" style="color:red;"></span>
+																	<span id="issuedOnError" style="color: red;"></span>
 																</div>
 															</div>
 															<div class="col-xl-4">
@@ -1478,8 +905,8 @@ function copyAddress() {
 																	<label class="form-label">Date of Expiry<span
 																		class="text-danger">*</span></label>
 																	<form:input path="dateOfExpiry" type="date"
-																		class="form-control"  min="${tomorrow}"  />
-																	<span id="dateOfExpiryError" style="color:red;"></span>
+																		class="form-control" min="${tomorrow}" />
+																	<span id="dateOfExpiryError" style="color: red;"></span>
 																</div>
 															</div>
 														</div>
@@ -1515,7 +942,7 @@ function copyAddress() {
 																		<label class="form-label">Visa Number</label>
 																		<form:input path="visaNumber" type="text"
 																			class="form-control" placeholder="Visa Number" />
-																		<span id="visaNumberError" style="color:red;"></span>
+																		<span id="visaNumberError" style="color: red;"></span>
 																	</div>
 																</div>
 																<div class="col-xl-4">
@@ -1523,7 +950,7 @@ function copyAddress() {
 																		<label class="form-label">Visa Expiry Date</label>
 																		<form:input path="visaExpiryDate" type="date"
 																			class="form-control" placeholder="Visa Expiry Date" />
-																		<span id="visaExpiryDateError" style="color:red;"></span>
+																		<span id="visaExpiryDateError" style="color: red;"></span>
 																	</div>
 																</div>
 																<div class="col-xl-4">
@@ -1536,7 +963,7 @@ function copyAddress() {
 																			<option value="2">Visitor</option>
 																			<option value="3">MyKad</option>
 																		</form:select>
-																		<span id="visaTypeError" style="color:red;"></span>
+																		<span id="visaTypeError" style="color: red;"></span>
 																	</div>
 																</div>
 															</div>
@@ -1550,24 +977,6 @@ function copyAddress() {
 							</div>
 						</div>
 					</div>
-					<!--<div class="card-body pass-info">
-									<div class="main-content">
-										<div
-											class="mb-4 d-flex align-items-center justify-content-between">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Upload Document</span>
-											</h5>
-										</div>
-
-										<div class="row mb-4 align-items-center">
-
-
-										</div>
-
-									</div>
-								</div>
-								-->
-
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
@@ -1605,7 +1014,7 @@ function copyAddress() {
 															<form:options items="${annualIncomeRangeList}"
 																itemValue="valueId" itemLabel="description" />
 														</form:select>
-														<span id="annualIncomeRangeIdError" style="color:red;"></span>
+														<span id="annualIncomeRangeIdError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1622,7 +1031,7 @@ function copyAddress() {
 															<form:option value="MYR">Malaysian Ringgit</form:option>
 														</form:select>
 														<span id="annualIncomeCurrencyCodeError"
-															style="color:red;"></span>
+															style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -1631,7 +1040,7 @@ function copyAddress() {
 														<form:input path="taxRegistrationNumber" type="text"
 															class="form-control"
 															placeholder="Tax Registration Number" />
-														<span id="taxRegistrationNumberError" style="color:red;"></span>
+														<span id="taxRegistrationNumberError" style="color: red;"></span>
 													</div>
 												</div>
 											</div>
@@ -1695,7 +1104,7 @@ function copyAddress() {
 														<form:options items="${riskRatingIdList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
-													<span id="riskRatingIdError" style="color:red;"></span>
+													<span id="riskRatingIdError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1708,7 +1117,7 @@ function copyAddress() {
 														<form:options items="${incomeTypeList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
-													<span id="incomeTypeError" style="color:red;"></span>
+													<span id="incomeTypeError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1721,7 +1130,7 @@ function copyAddress() {
 														<form:options items="${professionCategoryList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
-													<span id="professionCategoryError" style="color:red;"></span>
+													<span id="professionCategoryError" style="color: red;"></span>
 												</div>
 											</div>
 										</div>
@@ -1751,7 +1160,7 @@ function copyAddress() {
 														class="text-danger">*</span></label>
 													<form:input path="employerName" type="text"
 														class="form-control" placeholder="Employer Name" />
-													<span id="employerNameError" style="color:red;"></span>
+													<span id="employerNameError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1760,7 +1169,7 @@ function copyAddress() {
 														class="text-danger">*</span></label>
 													<form:input path="employerAddress" type="text"
 														class="form-control" placeholder="Employer Address" />
-													<span id="employerAddressError" style="color:red;"></span>
+													<span id="employerAddressError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1769,7 +1178,7 @@ function copyAddress() {
 														class="text-danger">*</span></label>
 													<form:input path="employerPhone" type="tel"
 														class="form-control" placeholder="Employer Phone" />
-													<span id="employerPhoneError" style="color:red;"></span>
+													<span id="employerPhoneError" style="color: red;"></span>
 												</div>
 											</div>
 										</div>
@@ -1794,7 +1203,7 @@ function copyAddress() {
 														<form:options items="${transactionVolumeMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
-													<span id="txnVolMonthError" style="color:red;"></span>
+													<span id="txnVolMonthError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1807,7 +1216,7 @@ function copyAddress() {
 														<form:options items="${transactionCountMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
-													<span id="txnCountMonthError" style="color:red;"></span>
+													<span id="txnCountMonthError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1818,7 +1227,7 @@ function copyAddress() {
 														data-select2-selector="icon">
 														<option value="en">English</option>
 													</form:select>
-													<span id="firstLanguageError" style="color:red;"></span>
+													<span id="firstLanguageError" style="color: red;"></span>
 												</div>
 											</div>
 										</div>
@@ -1833,7 +1242,7 @@ function copyAddress() {
 														<option value="2">Unmarried</option>
 														<option value="1">Married</option>
 													</form:select>
-													<span id="maritalStatusError" style="color:red;"></span>
+													<span id="maritalStatusError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1845,7 +1254,7 @@ function copyAddress() {
 														<form:options items="${occupationIdList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
-													<span id="occupationIdError" style="color:red;"></span>
+													<span id="occupationIdError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
@@ -1880,7 +1289,7 @@ function copyAddress() {
 													<label class="form-label">Customer Remarks</label>
 													<form:input path="customerRemarks" class="form-control"
 														placeholder="Enter your remarks here" />
-													<span id="customerRemarksError" style="color:red;"></span>
+													<span id="customerRemarksError" style="color: red;"></span>
 												</div>
 											</div>
 											<!-- <div class="col-xl-4">
@@ -1951,7 +1360,8 @@ function copyAddress() {
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
-					<span id="validationError"  style="color:#ff000087; display:none;"><b>Please fill  all the required fields before submitting!</b></span>
+					<span id="validationError" style="color: #ff000087; display: none;"><b>Please
+							fill all the required fields before submitting!</b></span>
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
@@ -1962,24 +1372,13 @@ function copyAddress() {
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 
-
-
-
-	<!--! ================================================================ !-->
-	<!--! [End] Theme Customizer !-->
-	<!--! ================================================================ !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<!-- vendors.min.js {always must need to be top} -->
+
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
-	<!--! END: Vendors JS !-->
-	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>
 	<script src="assets/js/customers-create-init.min.js"></script>
-	<!--! END: Apps Init !-->
-	<!--! BEGIN: Theme Customizer  !-->
 	<script src="assets/js/theme-customizer-init.min.js"></script>
-	<!--! END: Theme Customizer !-->
 </body>
 
 </html>

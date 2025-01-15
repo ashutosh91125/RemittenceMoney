@@ -560,6 +560,7 @@ $(document).ready(function () {
 							</div>
 						</div>
 					</div>
+				</div>
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"

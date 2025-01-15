@@ -561,7 +561,8 @@ document.addEventListener('DOMContentLoaded', function () {
 									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
-											<label class="form-label">Zip/PoBox</label>
+											<label class="form-label">Zip/PoBox<span
+												class="text-danger">*</span></label>
 											<form:input path="zip" type="text" class="form-control"
 												id="zip" placeholder="Zip/PoBox" />
 											<span id="zipError" class="text-danger1"></span>
@@ -893,7 +894,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Grant_Type<span
+													<label class="form-label">Grant Type<span
 														class="text-danger">*</span></label>
 													<form:input path="grantType" type="text"
 														class="form-control" id="grantType"
@@ -912,7 +913,7 @@ document.addEventListener('DOMContentLoaded', function () {
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Client_Id<span
+													<label class="form-label">Client Id<span
 														class="text-danger">*</span></label>
 													<form:input path="clientId" type="text"
 														class="form-control" id="clientId" placeholder="Client Id" />
@@ -923,7 +924,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Client_Secret<span
+													<label class="form-label">Client Secret<span
 														class="text-danger">*</span></label>
 													<form:input path="clientSecret" type="text"
 														class="form-control" id="clientSecret"
@@ -933,7 +934,7 @@ document.addEventListener('DOMContentLoaded', function () {
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Username<span
+													<label class="form-label">API Username<span
 														class="text-danger">*</span></label>
 													<form:input path="apiUsername" type="text"
 														class="form-control" id="adminUserName"
@@ -944,7 +945,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Password<span
+													<label class="form-label">API Password<span
 														class="text-danger">*</span></label>
 													<form:input path="apiPassword" type="password"
 														class="form-control" id="adminPassword"

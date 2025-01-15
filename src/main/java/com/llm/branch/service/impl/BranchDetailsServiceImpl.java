@@ -111,6 +111,10 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
         branch.setStatus(branchDetails.isStatus());
         branch.setWorkingHours(branchDetails.getWorkingHours());
         branch.setZip(branchDetails.getZip());
+        if (!branchDetails.isStatus()){
+        	branch.setDisabledBy(username);
+	    	branch.setDisabledOn(LocalDateTime.now());
+		}
         branch.setDisabledBy(username);
         branch.setDisabledOn(LocalDateTime.now());
         branchDetailsRepository.save(branch);

@@ -86,10 +86,11 @@ public class AgentServiceImpl implements IAgentService {
 //	    existingAgent.setPerTransaction(updatedAgent.getPerTransaction());
 	    existingAgent.setModifiedBy(modifiedBy);
 	    existingAgent.setModifiedOn(LocalDateTime.now());
-	    existingAgent.setDisabledBy(modifiedBy);
-	    existingAgent.setDisabledOn(LocalDateTime.now());
+	    if (!updatedAgent.getStatusFlag()){
+	    	existingAgent.setDisabledBy(modifiedBy);
+	    	existingAgent.setDisabledOn(LocalDateTime.now());
+		}
 	    existingAgent.setRemarks(updatedAgent.getRemarks());
-	    existingAgent.setStatusFlag(updatedAgent.getStatusFlag());
 	    existingAgent.setIsValid(updatedAgent.getIsValid());
 	    existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
 	    existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());

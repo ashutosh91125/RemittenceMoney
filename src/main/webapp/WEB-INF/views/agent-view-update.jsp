@@ -289,10 +289,10 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
                             </a> -->
-							<a href="javascript:void(0);"
+						<!-- 	<a href="javascript:void(0);"
 								class="btn btn-primary successAlertMessage"> <i
 								class="feather-user-plus me-2"></i> <span>Add Agent</span>
-							</a>
+							</a> -->
 						</div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">

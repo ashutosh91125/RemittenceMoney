@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html lang="zxx">
+<html>
 
 <head>
 <meta charset="utf-8">
@@ -65,7 +65,7 @@
 					<c:if test="${pageContext.request.isUserInRole('ADMIN')}">
 						<li class="nxl-item nxl-hasmenu"><a href="adminlist"
 							class="nxl-link"> <span class="nxl-micon"><i
-									class="feather-users"></i></span> <span class="nxl-mtext">Admin</span></i></span>
+									class="feather-users"></i></span> <span class="nxl-mtext">Admin</span>
 						</a></li>
 					</c:if>
 

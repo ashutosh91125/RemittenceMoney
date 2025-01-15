@@ -238,10 +238,10 @@ $(document).ready(function () {
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
                             </a> -->
-							<a href="javascript:void(0);"
+							<!-- <a href="javascript:void(0);"
 								class="btn btn-primary successAlertMessage"> <i
 								class="feather-user-plus me-2"></i> <span>Add Staff</span>
-							</a>
+							</a> -->
 						</div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
@@ -459,10 +459,12 @@ $(document).ready(function () {
 					</div>
 				</div>
 			</div>
+			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 			 <div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
 				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
 			</div> 
+			</c:if>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

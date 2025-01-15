@@ -9,19 +9,12 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
-<!--! BEGIN: Apps Title-->
 <title>LuLu Money || Customers Create</title>
-<!--! END:  Apps Title-->
-<!--! BEGIN: Favicon-->
 <link rel="shortcut icon" type="image/x-icon"
 	href="assets/images/favicon.ico">
-<!--! END: Favicon-->
-<!--! BEGIN: Bootstrap CSS-->
+
 <link rel="stylesheet" type="text/css"
 	href="assets/css/bootstrap.min.css">
-<!--! END: Bootstrap CSS-->
-<!--! BEGIN: Vendors CSS-->
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/vendors.min.css">
 <link rel="stylesheet" type="text/css"
@@ -30,19 +23,7 @@
 	href="assets/vendors/css/select2-theme.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/datepicker.min.css">
-<!--! END: Vendors CSS-->
-<!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<!--! END: Custom CSS-->
-<!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
-<!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
-<!--[if lt IE 9]>
-			<script src="https:oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https:oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-
-<!-- for KYC -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
 <link rel="stylesheet" href="./style.css">
@@ -54,13 +35,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
-
-
-
-
-
-
-
 <style>
 .search-bar-container input {
 	width: 100%;
@@ -285,7 +259,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">First Name<span
-													class="text-danger">*</span></label>
+													class="text-danger"></span></label>
 												<form:input path="firstName" type="text"
 													class="form-control" placeholder="First Name"
 													disabled="true" />
@@ -304,7 +278,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Last Name<span
-													class="text-danger">*</span></label>
+													class="text-danger"></span></label>
 												<form:input path="lastName" type="text" class="form-control"
 													placeholder="Last Name" disabled="true" />
 											</div>
@@ -320,7 +294,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Nationality <span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" placeholder="nationality"
 													value="${nationality}" disabled="true" />
 											</div>
@@ -345,7 +319,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Date of Birth<span
-													class="text-danger">*</span></label>
+													class="text-danger"></span></label>
 												<form:input path="dateOfBirth" type="text"
 													class="form-control" disabled="true" />
 											</div>
@@ -355,7 +329,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" placeholder="Secondary Nationality"
 													value="${countryOfBirth}" disabled="true" />
 											</div>
@@ -371,7 +345,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
-													class="text-danger">*</span></label> <input type="text"
+													class="text-danger"></span></label> <input type="text"
 													class="form-control" placeholder="Country of Residence"
 													value="${countryOfResidence}" disabled="true" />
 											</div>
@@ -382,7 +356,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Gender<span
-													class="text-danger">*</span></label>
+													class="text-danger"></span></label>
 												<form:input path="gender" type="text" class="form-control"
 													placeholder="Gender" disabled="true" />
 											</div>
@@ -399,7 +373,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Primary Mobile Number<span
-													class="text-danger">*</span></label>
+													class="text-danger"></span></label>
 												<div class="input-group">
 													<!-- Fixed Phone Code -->
 													<form:select path="phoneCode" id="phoneCode"
@@ -432,7 +406,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Email<span
-													class="text-danger">*</span></label>
+													class="text-danger"></span></label>
 												<form:input path="emailId" type="email" class="form-control"
 													placeholder="Email" disabled="true" />
 											</div>
@@ -682,7 +656,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Type <span
-																class="text-danger">*</span></label> <input type="text"
+																class="text-danger"></span></label> <input type="text"
 																class="form-control" placeholder="Id Type" id="idType"
 																disabled="true">
 
@@ -691,7 +665,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Id Number<span
-																class="text-danger">*</span></label>
+																class="text-danger"></span></label>
 															<form:input path="idNumber" id="idNumber" name="idNumber"
 																placeholder="Id Number" type="text" class="form-control"
 																disabled="true" />
@@ -700,7 +674,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Name as per Id<span
-																class="text-danger">*</span></label>
+																class="text-danger"></span></label>
 															<form:input path="nameAsPerId" type="text"
 																class="form-control" placeholder="Name as per Id"
 																disabled="true" />
@@ -713,7 +687,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued Country<span
-																class="text-danger">*</span></label> <input type="text"
+																class="text-danger"></span></label> <input type="text"
 																class="form-control" placeholder="Issued Country"
 																value="${issuedCountry}" disabled="true" />
 														</div>
@@ -721,7 +695,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued at<span
-																class="text-danger">*</span></label>
+																class="text-danger"></span></label>
 															<form:input path="issuedAt" type="text"
 																class="form-control" placeholder="Issued at"
 																disabled="true" />
@@ -730,7 +704,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Issued By<span
-																class="text-danger">*</span></label>
+																class="text-danger"></span></label>
 															<form:input path="issuedBy" type="text"
 																class="form-control" placeholder="Issued By"
 																id="issuedBy" disabled="true" />
@@ -750,7 +724,7 @@
 													<div class="col-xl-4">
 														<div class="mb-4">
 															<label class="form-label">Date of Expiry<span
-																class="text-danger">*</span></label>
+																class="text-danger"></span></label>
 															<form:input path="dateOfExpiry" type="text"
 																class="form-control" disabled="true" />
 														</div>
@@ -883,7 +857,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Employer Establishment Id<span
-														class="text-danger">*</span>
+														class="text-danger"></span>
 													</label>
 													<form:input path="employerEstablishmentId" type="text"
 														class="form-control"
@@ -894,7 +868,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
-														class="text-danger">*</span></label> <input type="text"
+														class="text-danger"></span></label> <input type="text"
 														class="form-control" placeholder="Risk Rating Id"
 														value="${riskRatingId}" disabled="true" />
 												</div>
@@ -902,7 +876,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Income Type<span
-														class="text-danger">*</span></label> <input type="text"
+														class="text-danger"></span></label> <input type="text"
 														class="form-control" placeholder="Risk Rating Id"
 														value="${incomeType}" disabled="true" />
 												</div>
@@ -910,7 +884,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profession Catagory<span
-														class="text-danger">*</span></label> <input type="text"
+														class="text-danger"></span></label> <input type="text"
 														class="form-control" placeholder="Profession Catagory"
 														value="${professionCategory}" disabled="true" />
 												</div>
@@ -920,7 +894,7 @@
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">PEP Catagory<span
-														class="text-danger">*</span></label>
+														class="text-danger"></span></label>
 													<form:input path="pepCategory" type="text"
 														class="form-control" placeholder="PEP Catagory" />
 												</div>
@@ -928,7 +902,7 @@
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Personal Mohre Id<span
-														class="text-danger">*</span></label>
+														class="text-danger"></span></label>
 													<form:input path="personalMohreId" type="text"
 														class="form-control" placeholder="Personal Mohre Id" />
 												</div>
@@ -965,7 +939,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Volume Month<span
-														class="text-danger">*</span>
+														class="text-danger"></span>
 													</label> <input type="text" class="form-control"
 														placeholder="Transaction Volume Month"
 														value="${txnVolMonth}" disabled="true" />
@@ -974,7 +948,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Count Month<span
-														class="text-danger">*</span></label> <input type="text"
+														class="text-danger"></span></label> <input type="text"
 														class="form-control" placeholder="Transaction Count Month"
 														value="${txnCountMonth}" disabled="true" />
 												</div>
@@ -982,7 +956,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">First Language<span
-														class="text-danger">*</span></label> <input type="text"
+														class="text-danger"></span></label> <input type="text"
 														class="form-control" placeholder="First Language"
 														value="English" disabled="true" />
 
@@ -993,7 +967,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Marital Status<span
-														class="text-danger">*</span></label> <input type="text"
+														class="text-danger"></span></label> <input type="text"
 														class="form-control" placeholder="Marital Status"
 														value="${maritalStatus}" disabled="true" />
 
@@ -1020,7 +994,7 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Show Remark on
-															Transaction<span class="text-danger">*</span>
+															Transaction<span class="text-danger"></span>
 														</label>
 														<form:input path="showRemarksOnTxn" type="text"
 															class="form-control"
@@ -1042,7 +1016,7 @@
 											<!-- <div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DNFBP<span
-															class="text-danger">*</span></label>
+															class="text-danger"></span></label>
 														<form:select path="dnfbp" class="form-control"
 															data-select2-selector="icon">
 															<option value="false">No</option>
@@ -1053,7 +1027,7 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">DPMS<span
-															class="text-danger">*</span></label>
+															class="text-danger"></span></label>
 														<form:select path="dpms" class="form-control"
 															data-select2-selector="icon">
 															<option value="false">No</option>
@@ -1066,7 +1040,7 @@
 											 <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Agent Referenc Number<span
-														class="text-danger">*</span></label>
+														class="text-danger"></span></label>
 													<form:input path="agentRefNo" type="text"
 														class="form-control" placeholder="Agent Referenc Number" />
 												</div>
@@ -1074,7 +1048,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Social Links<span
-														class="text-danger">*</span></label>
+														class="text-danger"></span></label>
 													<form:input path="socialLinksId" class="form-control"
 														placeholder="Social Links" />
 												</div>
@@ -1085,7 +1059,7 @@
 											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profile Catagory<span
-														class="text-danger">*</span></label>
+														class="text-danger"></span></label>
 													<form:input path="profileCategory" class="form-control"
 														placeholder="Profile Catagory" />
 												</div>
@@ -1093,7 +1067,7 @@
 											<%-- <div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Profile Photo<span
-														class="text-danger">*</span></label>
+														class="text-danger"></span></label>
 													<form:input path="" type="file" class="form-control"
 														placeholder="Profile Photo" />
 												</div>
@@ -1113,27 +1087,14 @@
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
-
-
-
-
-	<!--! ================================================================ !-->
-	<!--! [End] Theme Customizer !-->
-	<!--! ================================================================ !-->
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<!-- vendors.min.js {always must need to be top} -->
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
 	<script src="assets/vendors/js/datepicker.min.js"></script>
 	<script src="assets/vendors/js/lslstrength.min.js"></script>
-	<!--! END: Vendors JS !-->
-	<!--! BEGIN: Apps Init  !-->
 	<script src="assets/js/common-init.min.js"></script>
 	<script src="assets/js/customers-create-init.min.js"></script>
-	<!--! END: Apps Init !-->
-	<!--! BEGIN: Theme Customizer  !-->
 	<script src="assets/js/theme-customizer-init.min.js"></script>
-	<!--! END: Theme Customizer !-->
 </body>
 
 </html>

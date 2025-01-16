@@ -46,7 +46,7 @@
 										<thead>
 											<tr>
 												<th>S.No</th>
-												<th>Agent ID</th>
+												<th>Company ID</th>
 												<th>Agent Name</th>
 												<th>Phone Number</th>
 												<th>Email</th>
@@ -64,7 +64,7 @@
 													<td>${agent.phone}</td>
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
-													<td><div style="display: flex;justify-content: end;"><a href="agent-detail?agentId=${agent.agentId }" class="avatar-text avatar-md" title="view">
+													<td><div style="display: flex;justify-content: end;"><a href="agent-detail?id=${agent.id }" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
                                                         </a></div></td>
 												</tr>

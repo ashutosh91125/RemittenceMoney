@@ -37,6 +37,11 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     }
 
     @Override
+    public List<BranchDetails> getAllBranchesByBranchLocationId(String branchLocationId){
+        return branchDetailsRepository.findByBranchLocationId(branchLocationId);
+    }
+
+    @Override
     public List<BranchDetails> getAllBranchesByCountry(String country){
         return branchDetailsRepository.findByCounty(country);
     }

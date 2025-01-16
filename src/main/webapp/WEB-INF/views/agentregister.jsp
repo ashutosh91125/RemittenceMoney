@@ -451,15 +451,7 @@ document.addEventListener('DOMContentLoaded', function () {
 							style="background: aliceblue; margin-top: -40px;">
 							<div class="main-content">
 								<div class="row">
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Agent Id<span
-												class="text-danger">*</span></label>
-											<form:input path="agentId" type="text" class="form-control"
-												id="agentId" placeholder="Agent Id" />
-											<span id="agentIdError" class="text-danger1"></span>
-										</div>
-									</div>
+
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Agent Name<span
@@ -470,18 +462,28 @@ document.addEventListener('DOMContentLoaded', function () {
 										</div>
 									</div>
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Country<span
-												class="text-danger">*</span></label>
-											<form:select path="countries" class="form-control"
-												data-select2-selector="icon" multiple="false" id="countries">
-												<form:option value="" disabled="true" selected="true">Select Country</form:option>
-												<form:options items="${countryList}" itemValue="valueId"
-													itemLabel="description" />
-											</form:select>
-											<span id="countriesError" class="text-danger1"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Agent Display Name<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="agentDisplayName" type="text"
+                                                class="form-control" id="agentDisplayName"
+                                                placeholder="Agent Display Name" />
+                                            <span id="agentDisplayNameError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Country<span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="countries" class="form-control"
+                                                data-select2-selector="icon" multiple="false" id="countries">
+                                                <form:option value="" disabled="true" selected="true">Select Country</form:option>
+                                                <form:options items="${countryList}" itemValue="valueId"
+                                                    itemLabel="description" />
+                                            </form:select>
+                                            <span id="countriesError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
@@ -511,15 +513,14 @@ document.addEventListener('DOMContentLoaded', function () {
 										</div>
 									</div>
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Agent Display Name<span
-												class="text-danger">*</span></label>
-											<form:input path="agentDisplayName" type="text"
-												class="form-control" id="agentDisplayName"
-												placeholder="Agent Display Name" />
-											<span id="agentDisplayNameError" class="text-danger1"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">City<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="city" type="text" class="form-control"
+                                                id="city" placeholder="City" />
+                                            <span id="cityError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
@@ -550,15 +551,6 @@ document.addEventListener('DOMContentLoaded', function () {
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">City<span
-												class="text-danger">*</span></label>
-											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" />
-											<span id="cityError" class="text-danger1"></span>
-										</div>
-									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox<span
@@ -676,53 +668,39 @@ document.addEventListener('DOMContentLoaded', function () {
 								<div class="main-content">
 									<div class="card-body pass-security">
 										<div class="row">
-
+                                            <div class="col-xl-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Company Id<span
+                                                        class="text-danger">*</span></label>
+                                                    <form:input path="agentId" type="text" class="form-control"
+                                                        id="agentId" placeholder="Enter Company Id" />
+                                                    <span id="agentIdError" class="text-danger1"></span>
+                                                </div>
+                                            </div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Tax Identification Number<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="taxIdentificationNumber" type="text"
-														class="form-control" id="taxIdentificationNumber"
-														placeholder="Tax Identification Number" />
-													<span id="taxIdentificationNumberError"
-														class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Licence No.<span
-														class="text-danger">*</span></label>
-													<form:input path="licenceNo" type="text"
-														class="form-control" id="licenceNo"
-														placeholder="Licence No." />
-													<span id="licenceNoError" class="text-danger1"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Branch Location Id<span
+													<label class="form-label">Agent Location Id<span
 														class="text-danger">*</span>
 													</label>
 													<form:input path="branchLocationId" type="number"
 														class="form-control" id="branchLocationId"
-														placeholder="Branch Location Id" />
+														placeholder="Enter Agent Location Id" />
 													<span id="branchLocationIdError" class="text-danger1"></span>
 												</div>
 											</div>
+											<div class="col-xl-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Licence No.<span
+                                                        class="text-danger">*</span></label>
+                                                    <form:input path="licenceNo" type="text"
+                                                        class="form-control" id="licenceNo"
+                                                        placeholder="Licence No." />
+                                                    <span id="licenceNoError" class="text-danger1"></span>
+                                                </div>
+                                            </div>
 										</div>
 									</div>
 									<div class="row">
-										<%-- <div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Outlet Code<span
-													class="text-danger">*</span></label>
-												<form:input path="outletCode" type="text"
-													class="form-control" id="outletCode"
-													placeholder="Outlet Code" />
-												<span id="outletCodeError" class="text-danger1"></span>
-											</div>
-										</div> --%>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Tax Applicable<span
@@ -747,8 +725,19 @@ document.addEventListener('DOMContentLoaded', function () {
 												<span id="workingError" class="text-danger1"></span>
 											</div>
 										</div>
+										<div class="col-xl-4">
+                                            <div class="mb-4">
+                                                <label class="form-label">Tax Identification Number<span
+                                                    class="text-danger">*</span>
+                                                </label>
+                                                <form:input path="taxIdentificationNumber" type="text"
+                                                    class="form-control" id="taxIdentificationNumber"
+                                                    placeholder="Tax Identification Number" />
+                                                <span id="taxIdentificationNumberError"
+                                                    class="text-danger1"></span>
+                                            </div>
+                                        </div>
 									</div>
-
 								</div>
 							</div>
 						</div>

@@ -118,9 +118,10 @@ public class AgentController {
 //		}
 //	}
 	@GetMapping("/agent-detail")
-	public String getAgentDetails(@RequestParam("agentId") String agentId, Model model) {
+	public String getAgentDetails(@RequestParam("id") Long id, Model model) {
 
-		Agent agent = agentService.getByAgentId(agentId);
+		Optional<Agent> fetch = agentService.getById(id);
+		Agent agent = fetch.get();
 		model.addAttribute("countries", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",agent.getCountries()));
 		model.addAttribute("currencies", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",agent.getCurrencies()));
 		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",agent.getCountries(),agent.getState()));

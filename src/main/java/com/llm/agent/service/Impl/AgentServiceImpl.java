@@ -34,13 +34,18 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
-	public Agent getByAgentId(String agentId) {
-		return agentRepositories.findByAgentId(agentId);
+	public Agent getByBranchLocationId(String branchLocationId) {
+		return agentRepositories.findByBranchLocationId(branchLocationId);
 	}
 
 	@Override
 	public List<AgentProjection> getAllAgentByProjection() {
 		return agentRepositories.findAllProjectedBy();
+	}
+
+	@Override
+	public AgentProjection getAgentProjectionByBranchLocationId(String branchLocationId) {
+		return agentRepositories.findProjectionsByBranchLocationId(branchLocationId);
 	}
 
 	@Override
@@ -95,7 +100,6 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
 	    existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());
 	    existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
-	    existingAgent.setOutletCode(updatedAgent.getOutletCode());
 	    existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
 	    existingAgent.setCreditLimitStatus(updatedAgent.getCreditLimitStatus());
 		existingAgent.setRemainingDaily(updatedAgent.getDaily());

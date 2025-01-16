@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.branch.model.BranchDetails;
+import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.staff.repository.StaffDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -44,6 +46,9 @@ public class StaffDetailsRestController {
 	private AgentRepositories agentRepositories;
 
 	@Autowired
+	private BranchDetailsRepository branchDetailsRepository;
+
+	@Autowired
 	private StaffDetailsService staffDetailsService;
 
 	@Autowired
@@ -55,13 +60,9 @@ public class StaffDetailsRestController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Agent byUsername = agentRepositories.findByUsername(username);
+		Optional<BranchDetails> branch = branchDetailsRepository.findById(staffDTO.getBranches());
 		String country = byUsername.getCountries();
 
-		if (staffDTO.getStaffGroup().equals(Role.STAFF_HO)) {
-			if (byUsername.isHoPresent()) {
-				return new ResponseEntity<>("A head office staff record for this agent already exists!", HttpStatus.BAD_REQUEST);
-			}
-		}
 
 		log.info("Registering staff: {}", staffDTO);
 
@@ -69,14 +70,8 @@ public class StaffDetailsRestController {
 			// Map StaffDTO to StaffDetails
 			StaffDetails staff = new StaffDetails();
 			staff.setBranches(staffDTO.getBranches());
-			if (staffDTO.getStaffGroup() == Role.STAFF_TR) {
-				staff.setStaffGroup("Transfer");
-			} else {
-				staff.setStaffGroup("Head Office");
-				byUsername.setHoPresent(true);
-				agentRepositories.save(byUsername);
-			}
-			staff.setAgent(staffDTO.getAgent());
+            branch.ifPresent(branchDetails -> staff.setStaffGroup(branchDetails.getBranchMode()));
+
 			staff.setFirstName(staffDTO.getFirstName());
 			staff.setMiddleName(staffDTO.getMiddleName());
 			staff.setLastName(staffDTO.getLastName());
@@ -88,6 +83,7 @@ public class StaffDetailsRestController {
 			staff.setCreatedOn(LocalDateTime.now());
 			staff.setCreatedBy(username);
 			staff.setCountry(country);
+			staff.setBranchLocationId(branch.get().getBranchLocationId());
 
 			// Save StaffDetails
 			staffDetailsService.createStaff(staff);
@@ -100,7 +96,12 @@ public class StaffDetailsRestController {
 			user.setUsername(staffDTO.getUsername());
 			user.setCountry(country);
 			user.setPhoneNumber(staffDTO.getMobile());
-			user.setRole(staffDTO.getStaffGroup());
+			if (staff.getStaffGroup().equals("Transaction")){
+				user.setRole(Role.STAFF_TR);
+			}else {
+				user.setRole(Role.STAFF_HO);
+			}
+
 			user.setFirstLogin(true);
 			user.setApproved(true);
 			userRepository.save(user);

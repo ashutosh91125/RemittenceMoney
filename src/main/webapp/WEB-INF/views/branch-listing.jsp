@@ -49,11 +49,11 @@
 											<tr>
 												<th>S.No</th>
 												<th>Branch Name</th>
-												<th>Agent ID</th>
+												<th>Company ID</th>
 												<th>Branch Type</th>
 												<th>Branch Mode</th>
-												<th>Email</th>
-												<th>State</th>
+												<th>Agent Location ID</th>
+												<th>Outlet Code</th>
 												<th class="text-end">Actions</th>
 											</tr>
 										</thead>
@@ -66,8 +66,8 @@
 													<td>${branchDetails.agent}</td>
 													<td>${branchDetails.branchType}</td>
 													<td>${branchDetails.branchMode}</td>
-													<td>${branchDetails.email}</td>
-													<td>${branchDetails.state }</td>
+													<td>${branchDetails.branchLocationId}</td>
+													<td>${branchDetails.outletCode }</td>
 													<td><div style="display: flex;justify-content: end;"><a  href="branch-detail?id=${branchDetails.id}" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
                                                         </a></div></td>

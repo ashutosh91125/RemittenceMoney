@@ -142,5 +142,6 @@ public class Transfer {
 	private String agentId;
 	private Long staffId;
 	private Long branchId;
+	private String branchLocationId;
    
 }

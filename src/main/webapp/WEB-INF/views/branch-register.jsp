@@ -316,7 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
 												class="text-danger">*</span></label>
 											<form:select path="agent" class="form-control"
 												data-select2-selector="icon" multiple="false" id="agent">
-												<form:option value="" disabled="true" selected="true">Select Agent</form:option>
 												<form:options items="${agentList}" itemValue="agentId"
 													itemLabel="agentName" />
 											</form:select>

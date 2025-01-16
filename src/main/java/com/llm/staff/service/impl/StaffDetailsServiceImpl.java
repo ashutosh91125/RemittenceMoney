@@ -78,26 +78,6 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 			existingDetails.setMiddleName(updatedDetails.getMiddleName());
 			existingDetails.setRemarks(updatedBy);
 
-			if (Objects.equals(existingDetails.getStaffGroup(), "Head Office") && Objects.equals(updatedDetails.getStaffGroup(), "STAFF_TR")) {
-				existingDetails.setStaffGroup("Transfer");
-				Agent agent = agentRepositories.findByAgentId(existingDetails.getAgent());
-				agent.setHoPresent(false);
-				agentRepositories.save(agent);
-				Optional<User> user = userRepository.findByUsername(updatedBy);
-				user.get().setRole(Role.STAFF_TR);
-				userRepository.save(user.get());
-			}else if (Objects.equals(existingDetails.getStaffGroup(), "Transfer") && Objects.equals(updatedDetails.getStaffGroup(), "STAFF_HO")) {
-				existingDetails.setStaffGroup("Head Office");
-				Agent agent = agentRepositories.findByAgentId(existingDetails.getAgent());
-				agent.setHoPresent(true);
-				agentRepositories.save(agent);
-				Optional<User> user = userRepository.findByUsername(updatedBy);
-				user.get().setRole(Role.STAFF_HO);
-				userRepository.save(user.get());
-			}
-
-			existingDetails.setStaffGroup(updatedDetails.getStaffGroup());
-
 			existingDetails.setStatus(updatedDetails.isStatus());
 			staffDetailsRepository.save(existingDetails);
 		} else {

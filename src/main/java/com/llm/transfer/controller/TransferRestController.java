@@ -58,9 +58,10 @@ public class TransferRestController {
 		transfer.setStaffCountry(byUsername.get().getCountry());
 		transfer.setBranchId(byUsername.get().getBranches());
 		transfer.setStaffId(byUsername.get().getId());
+		transfer.setBranchLocationId(byUsername.get().getBranchLocationId());
 		try {
 			if (transfer.getPaymentStatus().equals("SUCCESS") || transfer.getPaymentStatus().equals("success")){
-				Agent agent = agentService.getByAgentId(transfer.getAgentId());
+				Agent agent = agentService.getByBranchLocationId(transfer.getBranchLocationId());
 				agent.setRemainingDaily(agent.getRemainingDaily() - transfer.getTotalPayInAmount());
 				agent.setRemainingPerDayLimit(agent.getRemainingPerDayLimit() - transfer.getTotalPayInAmount());
 				agent.setRemainingPerMonthLimit(agent.getRemainingPerMonthLimit() - transfer.getTotalPayInAmount());

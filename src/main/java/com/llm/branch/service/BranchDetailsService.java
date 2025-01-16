@@ -14,6 +14,8 @@ public interface BranchDetailsService {
 
     List<BranchDetails> getAllBranches();
 
+    List<BranchDetails> getAllBranchesByBranchLocationId(String branchLocationId);
+
     List<BranchDetails> getAllBranchesByCountry(String country);
 
     List<BranchProjection> getAllBranchesProjectionByCountry(String country);

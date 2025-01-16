@@ -95,7 +95,6 @@ public class AgentRestController {
 			agent.setRemainingPerDayLimit(agent.getPerDayLimit());
 			agent.setRemainingPerMonthLimit(agent.getPerMonthLimit());
 			agent.setUsername(agentDTO.getUsername());
-			agent.setOutletCode(agentDTO.getOutletCode());
 			agent.setBranchLocationId(agentDTO.getBranchLocationId());
 			agent.setApiUsername(agentDTO.getApiUsername());
 			agent.setApiPassword(agentDTO.getApiPassword());
@@ -143,13 +142,14 @@ public class AgentRestController {
 		}
 	}
 
-	@GetMapping("/{agentId}")
-	public ResponseEntity<String> getAgentNameByAgentId(@PathVariable Long agentId) {
-		Agent existingAgent = agentService.getByAgentId(String.valueOf(agentId));
-		if (existingAgent != null) {
-			return ResponseEntity.ok().body(existingAgent.getAgentName());
+	@GetMapping("/{id}")
+	public ResponseEntity<String> getAgentNameByAgentId(@PathVariable Long id) {
+		Optional<Agent> existingAgent = agentService.getById(id);
+		if (existingAgent.isPresent()) {
+			Agent agent = existingAgent.get();
+			return ResponseEntity.ok().body(agent.getAgentName());
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agent not found for agentId: " + agentId);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Agent not found for Id: " + id);
 		}
 	}
 

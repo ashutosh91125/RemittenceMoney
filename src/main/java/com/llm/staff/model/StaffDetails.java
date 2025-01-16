@@ -26,6 +26,8 @@ public class StaffDetails {
 
     private Long branches;
 
+    private String branchLocationId;
+
     private String agent;
 
     private String country;

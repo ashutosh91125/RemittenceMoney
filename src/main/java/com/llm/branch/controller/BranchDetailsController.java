@@ -54,9 +54,9 @@ public class BranchDetailsController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-        Optional<User> byUsername = userRepository.findByUsername(username);
+        Agent byUsername = agentRepositories.findByUsername(username);
 
-        String country = byUsername.get().getCountry();
+        String country = byUsername.getCountries();
         if(id != null) {
         	Optional<BranchDetails> existingBranch = branchDetailsService.getById(id);
         	model.addAttribute("branch",existingBranch.get());
@@ -75,7 +75,7 @@ public class BranchDetailsController {
         }
 
         try {
-            List<AgentProjection> agentProjections = agentService.getAllAgentByProjection();
+            AgentProjection agentProjections = agentService.getAgentProjectionByBranchLocationId(byUsername.getBranchLocationId());
             model.addAttribute("agentList", agentProjections);
 
         } catch (Exception e) {
@@ -109,7 +109,7 @@ public class BranchDetailsController {
         // Check role and fetch data accordingly
         if (role.equals("ROLE_AGENT")) { // Ensure you check against the correct role string
             Agent agent = agentRepositories.findByUsername(username);
-            List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranchesByAgent(agent.getAgentId());
+            List<BranchDetails> branchDetailsList = branchDetailsService.getAllBranchesByBranchLocationId(agent.getBranchLocationId());
             model.addAttribute("branchDetailsList", branchDetailsList);
             return "branch-listing";
         }
@@ -129,12 +129,11 @@ public class BranchDetailsController {
     @GetMapping("/branch-detail")
     public String getBranchDetails(@RequestParam("id") Long id,Model model) {
     	Optional<BranchDetails> branchDetails = branchDetailsService.getById(id);
-    	if(branchDetails.isPresent()) {
-    		model.addAttribute("agent",agentService.getByAgentId(branchDetails.get().getAgent()).getAgentName());
-    		model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",branchDetails.get().getCounty(),branchDetails.get().getState()));
-    		model.addAttribute("branch", branchDetails);
-    	}
-    	
-    	return "branch-details";
+        AgentProjection agent = agentService.getAgentProjectionByBranchLocationId(branchDetails.get().getBranchLocationId());
+        model.addAttribute("agent", agent.getAgentName());
+        model.addAttribute("states", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",branchDetails.get().getCounty(),branchDetails.get().getState()));
+        model.addAttribute("branch", branchDetails);
+
+        return "branch-details";
     }
 }  

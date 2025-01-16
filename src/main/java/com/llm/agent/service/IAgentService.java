@@ -13,13 +13,17 @@ public interface IAgentService {
 
 	Agent getByEmail(String email);
 
+	Agent getByBranchLocationId(String branchLocationId);
+
 	List<AgentProjection> getAllAgentByProjection();
+
+	AgentProjection getAgentProjectionByBranchLocationId(String branchLocationId);
 
 	List<AgentProjection> getAgentsProjectionByCountry(String country);
 
 	Optional<Agent> getById(Long id);
 
-	Agent getByAgentId(String agentId);
+//	Agent getByAgentId(String agentId);
 
 	void updateAgent(Long id, Agent updatedAgent, String modifiedBy);
 

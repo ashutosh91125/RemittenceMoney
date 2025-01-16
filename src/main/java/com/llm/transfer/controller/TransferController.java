@@ -59,7 +59,7 @@ public class TransferController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
-		Agent agent = agentService.getByAgentId(byUsername.get().getAgent());
+		Agent agent = agentService.getByBranchLocationId(byUsername.get().getBranchLocationId());
 
 		try {
 			double dailyCreditLimit = agent.getPerTransactionLimit();
@@ -131,7 +131,7 @@ public class TransferController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
-		Agent agent = agentService.getByAgentId(byUsername.get().getAgent());
+		Agent agent = agentService.getByBranchLocationId(byUsername.get().getBranchLocationId());
 
 		try {
 			double dailyCreditLimit = agent.getPerTransactionLimit();

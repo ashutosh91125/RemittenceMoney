@@ -21,7 +21,6 @@ public class Agent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@Column(unique = true)
 	private String agentId;
 	private String countries;
 	private String currencies;
@@ -74,12 +73,8 @@ public class Agent {
 
 	private double remainingPerDayLimit;
 	private double remainingPerMonthLimit;
-	private boolean hoPresent;
 
 	@Column(name = "branch_location_id", unique = true)
 	private String branchLocationId;
-
-	@Column(name = "outlet_code", unique = true)
-	private String outletCode;
 
 }

@@ -64,7 +64,7 @@ public class ExternalServiceImpl implements ExternalService {
 
         var fetchBranch = branchDetailsRepository.findById(staffDetails.get().getBranches());
 
-        Agent byAgentId = agentRepositories.findByAgentId((staffDetails.get().getAgent()));
+        Agent byAgentId = agentRepositories.findByBranchLocationId(fetchBranch.get().getBranchLocationId());
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");

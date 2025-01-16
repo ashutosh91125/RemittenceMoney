@@ -20,7 +20,7 @@ public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Lo
 
     List<BranchProjection> findProjectionsByAgent(String agent);
     
-    List<BranchProjection> findByBranchLocationId(String branchLocationId);
+    List<BranchDetails> findByBranchLocationId(String branchLocationId);
     
     List<BranchProjection> findAllProjectedBy();
 }

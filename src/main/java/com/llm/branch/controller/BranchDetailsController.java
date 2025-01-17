@@ -76,7 +76,7 @@ public class BranchDetailsController {
 
         try {
             AgentProjection agentProjections = agentService.getAgentProjectionByBranchLocationId(byUsername.getBranchLocationId());
-            model.addAttribute("agentList", agentProjections);
+            model.addAttribute("agentList", List.of(agentProjections));
 
         } catch (Exception e) {
             log.error("Error Native Region List: ", e);

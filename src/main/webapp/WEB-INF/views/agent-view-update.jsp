@@ -457,6 +457,18 @@ document.addEventListener('DOMContentLoaded', function() {
 											<span id="timeZoneError" class="text-danger1"></span>
 										</div>
 									</div>
+									<div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Status <span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="statusFlag" class="form-control"
+                                                data-select2-selector="icon" id="statusFlag"
+                                                onchange="toggleRemarks()">
+                                                <form:option value="false">Inactive</form:option>
+                                                <form:option value="true">Active</form:option>
+                                            </form:select>
+                                        </div>
+                                    </div>
 								</div>
 							</div>
 						</div>
@@ -742,76 +754,6 @@ document.addEventListener('DOMContentLoaded', function() {
 															placeholder="Per Month" />
 														<span id="perMonthLimitError" class="text-danger1"></span>
 													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
-								Tails</button>
-						</h2>
-						<div id="panelsStayOpen-collapseSeven"
-							class="accordion-collapse collapse">
-							<div class="accordion-body" style="background: aliceblue;">
-								<div class="card-body personal-info">
-									<div class="main-content">
-										<div class="card-body pass-security">
-											<%-- <div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Created By<span
-														class="text-danger">*</span></label>
-													<form:input path="createdBy" type="text"
-														class="form-control" id="createdBy"
-														placeholder="Created By" readonly="true" />
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Created On<span
-														class="text-danger">*</span></label>
-													<form:input path="createdOn" type="text"
-														class="form-control" id="createdOn"
-														placeholder="Created On" readonly="true" />
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Modified By<span
-														class="text-danger">*</span></label>
-													<form:input path="modifiedBy" type="text"
-														class="form-control" id="modifiedBy"
-														placeholder="Modified By" readonly="true"/>
-												</div>
-											</div>
-										</div> --%>
-										<div class="row">
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Status <span
-														class="text-danger">*</span></label>
-													<form:select path="statusFlag" class="form-control"
-														data-select2-selector="icon" id="statusFlag"
-														onchange="toggleRemarks()">
-														<form:option value="false">Inactive</form:option>
-														<form:option value="true">Active</form:option>
-													</form:select>
-												</div>
-											</div>
-
-											<div class="col-xl-4" id="remarksSection" style="display:none">
-												<div class="mb-4">
-													<label class="form-label">Remarks <span
-														class="text-danger">*</span></label>
-													<form:input path="remarks" type="text" class="form-control"
-														id="remarks" placeholder="Remarks" />
 												</div>
 											</div>
 										</div>

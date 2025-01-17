@@ -16,5 +16,5 @@ public interface TransferRepository extends JpaRepository<Transfer, Long> {
 
     List<Transfer> findByStaffCountry(String staffCountry);
 
-    List<Transfer> findByAgentId(String agentId);
+    List<Transfer> findByBranchLocationId(String agentId);
 }

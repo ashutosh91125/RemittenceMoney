@@ -14,6 +14,8 @@ public interface StaffDetailsService {
 
     List<StaffDetails> getAllStaffByAgent(String agent);
 
+    List<StaffDetails> getAllStaffByBranchLocationId(String agent);
+
     List<StaffDetails> getAllStaffByCountry(String county);
 
     Optional<StaffDetails> getById(Long id);

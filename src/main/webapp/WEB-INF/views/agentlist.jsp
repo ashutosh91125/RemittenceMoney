@@ -46,9 +46,9 @@
 										<thead>
 											<tr>
 												<th>S.No</th>
-												<th>Company ID</th>
 												<th>Agent Name</th>
-												<th>Phone Number</th>
+												<th>Company ID</th>
+												<th>Agent Location ID</th>
 												<th>Email</th>
 												<th>Country</th>
 												<th class="text-end">Actions</th>
@@ -59,9 +59,9 @@
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>
-													<td>${agent.agentId}</td>
 													<td>${agent.agentName}</td>
-													<td>${agent.phone}</td>
+													<td>${agent.agentId}</td>
+													<td>${agent.branchLocationId}</td>
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
 													<td><div style="display: flex;justify-content: end;"><a href="agent-detail?id=${agent.id }" class="avatar-text avatar-md" title="view">

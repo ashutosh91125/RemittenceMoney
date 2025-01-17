@@ -197,8 +197,9 @@ public class TransferController {
 	public String getTransferList(Model model) {
 		try {
 			DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-			// Fetching the list of transfers
+
 			List<Transfer> transferList = transferService.getAllTransfers();
+
 			for (Transfer transfer : transferList) {
 		        Bank bank = bankService.getBankById(transfer.getBeneficiaryBank());
 		        transfer.setBeneficiaryBank(bank.getBankName());  // Set the bank name in the transfer object
@@ -215,7 +216,7 @@ public class TransferController {
 			return "transferlisting";  // Return the name of the view (JSP page)
 		} catch (Exception e) {
 			// Log the error if any exception occurs
-			logger.error("Error occurred while fetching customer list: " + e);
+			logger.error("Error occurred while fetching transfer list: " + e);
 			return "transferlisting";  // Return to the same view in case of error
 		}
 	}

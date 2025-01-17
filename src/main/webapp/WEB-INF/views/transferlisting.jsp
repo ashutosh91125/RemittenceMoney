@@ -58,7 +58,7 @@
                                     <table class="table table-hover" id="transfer-list" >
                                         <thead>
                                             <tr>
-                                                 <th>Agent</th>
+                                                 <th>Agent Location Id</th>
                                                  <th style="display:none;">Branch</th>
                                                  <th style="display:none;">Staff</th>
                                                 <th>Transaction Number</th>
@@ -73,7 +73,7 @@
                                         <tbody>
                                             <c:forEach var="transfer" items="${transferList}" varStatus="status">
                                                 <tr>
-                                                    <td>${transfer.agentId}</td>
+                                                    <td>${transfer.branchLocationId}</td>
                                                     <td style="display:none;">${transfer.branchId}</td>
                                                     <td style="display:none;">${transfer.staffId}</td>
                                                     <td id="transactionRefNumberCell">${transfer.transactionReferenceNumber }</td>
@@ -223,7 +223,7 @@
                     dropdown.empty();
                     dropdown.append('<option value="">Select Agent</option>');
                     $.each(response, function (index, item) {
-                        dropdown.append('<option value="' + item.agentId + '">' + item.agentName + '</option>');
+                        dropdown.append('<option value="' + item.branchLocationId + '">' + item.agentName + '</option>');
                     });
                 } else {
                     alert('Failed to load agents. Response format is incorrect.');

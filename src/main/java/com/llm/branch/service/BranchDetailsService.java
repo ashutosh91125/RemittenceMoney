@@ -22,7 +22,7 @@ public interface BranchDetailsService {
 
     List<BranchProjection> getAllBranchesProjectionByAgent(String agent);
 
-    List<BranchDTO> getAllBranchDTOByAgent(String agent);
+    List<BranchDTO> getAllBranchDTOByBranchLocationId(String branchLocationId);
 
     Optional<BranchDetails> getById(Long id);
 

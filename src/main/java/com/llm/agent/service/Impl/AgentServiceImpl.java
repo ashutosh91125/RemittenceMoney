@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.llm.agent.projection.AgentBranchProjection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +35,17 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
+	public List<Agent> findByCountries(String countries) {
+		return agentRepositories.findByCountries(countries);
+	}
+
+	@Override
 	public Agent getByBranchLocationId(String branchLocationId) {
 		return agentRepositories.findByBranchLocationId(branchLocationId);
 	}
 
 	@Override
-	public List<AgentProjection> getAllAgentByProjection() {
+	public List<AgentBranchProjection> getAllAgentByProjection() {
 		return agentRepositories.findAllProjectedBy();
 	}
 
@@ -49,8 +55,8 @@ public class AgentServiceImpl implements IAgentService {
 	}
 
 	@Override
-	public List<AgentProjection> getAgentsProjectionByCountry(String country) {
-		return agentRepositories.findByCountries(country);
+	public List<AgentBranchProjection> getAgentsProjectionByCountry(String country) {
+		return agentRepositories.findProjectionsByCountries(country);
 	}
 
 	@Override

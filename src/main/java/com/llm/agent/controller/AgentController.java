@@ -3,9 +3,13 @@ package com.llm.agent.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.UserIdentity.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +34,9 @@ public class AgentController {
 
 	@Autowired
 	private IAgentService agentService;
+
+	@Autowired
+	private UserRepository userRepository;
 
 	@Autowired
 	private EnumEntityService enumEntityService;
@@ -94,9 +101,29 @@ public class AgentController {
 
 	@GetMapping("/agentlist")
 	public String getAgentList(Model model) {
-		List<Agent> agentList = agentService.findAllAgent();
-		model.addAttribute("agentList", agentList);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String username = authentication.getName();
+		String country = (userRepository.findByUsername(username).get().getCountry());
+		String role = authentication.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority)
+				.findFirst() // Assuming a single role per user
+				.orElse("");
+
+		if ("ROLE_ADMIN".equals(role)){
+			List<Agent> agentList = agentService.findAllAgent();
+			model.addAttribute("agentList", agentList);
+			return "agentlist";
+		}
+
+		if ("ROLE_SUB_ADMIN".equals(role)){
+			List<Agent> agentList = agentService.findByCountries(country);
+			model.addAttribute("agentList", agentList);
+			return "agentlist";
+		}
+
+		model.addAttribute("agentList", List.of());
 		return "agentlist";
+
 
 	}
 

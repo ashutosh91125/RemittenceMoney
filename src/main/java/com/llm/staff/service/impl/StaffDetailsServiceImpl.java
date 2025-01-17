@@ -48,6 +48,11 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 	}
 
 	@Override
+	public List<StaffDetails> getAllStaffByBranchLocationId(String branchLocationId) {
+		return staffDetailsRepository.findByBranchLocationId(branchLocationId);
+	}
+
+	@Override
 	public List<StaffDetails> getAllStaffByCountry(String county) {
 		return staffDetailsRepository.findByCountry(county);
 	}

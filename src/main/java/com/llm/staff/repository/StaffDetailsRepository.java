@@ -25,5 +25,7 @@ public interface StaffDetailsRepository extends JpaRepository<StaffDetails, Long
     List<StaffDetailsProjection> findProjectionsByAgent(String agent);
 
     boolean existsByAgentAndStaffGroup(String agent, String staffGroup);
+
+    List<StaffDetails> findByBranchLocationId(String branchLocationId);
 }
 

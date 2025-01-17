@@ -57,7 +57,7 @@ public class StaffDetailsController {
         Agent byUsername = agentRepositories.findByUsername(username);
         model.addAttribute("staff", new StaffDTO());
         try {
-            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByAgent(byUsername.getAgentId());
+            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByBranchLocationId(byUsername.getBranchLocationId());
             model.addAttribute("branchList", branchDTOS);
 
         } catch (Exception e) {
@@ -84,7 +84,7 @@ public class StaffDetailsController {
 
         if (role.equals("ROLE_AGENT")) {
             Agent byUsername = agentRepositories.findByUsername(username);
-            List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByAgent(byUsername.getAgentId());
+            List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByBranchLocationId(byUsername.getBranchLocationId());
             model.addAttribute("staffDetailsList", staffDetailsList);
             return "staff-listing";
         }
@@ -143,7 +143,7 @@ public class StaffDetailsController {
 
         model.addAttribute("staff", new StaffDTO());
         try {
-            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByAgent(byUsername.getAgentId());
+            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByBranchLocationId(byUsername.getBranchLocationId());
             model.addAttribute("branchList", branchDTOS);
 
         } catch (Exception e) {

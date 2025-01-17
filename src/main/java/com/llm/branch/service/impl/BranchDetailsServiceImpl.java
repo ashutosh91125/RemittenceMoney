@@ -57,18 +57,15 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     }
 
     @Override
-    public List<BranchDTO> getAllBranchDTOByAgent(String agent) {
-        // Fetch the list of BranchDetails from the repository
-        List<BranchDetails> branchDetailsList = branchDetailsRepository.findByAgent(agent);
+    public List<BranchDTO> getAllBranchDTOByBranchLocationId(String branchLocationId) {
+        List<BranchDetails> branchDetailsList = branchDetailsRepository.findByBranchLocationId(branchLocationId);
 
-        // Map the list of BranchDetails to BranchDTO
         return branchDetailsList.stream()
                 .map(branch -> {
                     BranchDTO branchDTO = new BranchDTO();
                     branchDTO.setAgent(branch.getAgent());
                     branchDTO.setId(branch.getId());
                     branchDTO.setBranchName(branch.getBranchName());
-                    // Set other fields from BranchDetails to BranchDTO
                     return branchDTO;
                 })
                 .collect(Collectors.toList());

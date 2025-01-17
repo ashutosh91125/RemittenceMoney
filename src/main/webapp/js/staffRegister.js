@@ -3,7 +3,6 @@ function validation(form) {
 		$(".text-danger1").text("").css("color", "red");
 		const id = $(form).find("#id").val();
 		const branches = $(form).find("#branches").val();
-		const staffGroup = $(form).find("#staffGroup").val();
 		const firstName = $(form).find("#firstName").val().trim();
 		const lastName = $(form).find("#lastName").val().trim();
 		const username = $(form).find("#username").val().trim();
@@ -15,10 +14,6 @@ function validation(form) {
 		    isValid = false;
 		}
 
-		if (!staffGroup || staffGroup === "" || staffGroup==='Select') {
-				$("#staffGroupError").text("Group  is required.");
-		        isValid = false;
-		    }			
 		if (!firstName || firstName === "" ) {
 				$("#firstNameError").text("First Name  is required.");
 				isValid = false;

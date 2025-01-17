@@ -104,7 +104,7 @@ public class TransferServiceImpl implements TransferService {
 			return transferRepository.findByStaffCountry(byUsername.get().getCountry());
 		} else if ("ROLE_AGENT".equals(role)) {
 			Agent byUsername = agentRepositories.findByUsername(username);
-			return transferRepository.findByAgentId(byUsername.getAgentId());
+			return transferRepository.findByBranchLocationId(byUsername.getBranchLocationId());
 		} else {
 			return transferRepository.findByUsername(username);
 		}

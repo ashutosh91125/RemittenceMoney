@@ -369,6 +369,8 @@ document.addEventListener('DOMContentLoaded', function () {
 												class="text-danger">*</span></label>
 											<form:select path="branches" data-select2-selector="tag" multiple="false"
 												id="branches" title="Select a branch" class="form-control" >
+
+                                                <form:option value="" disabled="true" selected="true">Select Branch</form:option>
 												<form:options items="${branchList}"
 													itemValue="id" itemLabel="branchName" />
 											</form:select>
@@ -386,18 +388,18 @@ document.addEventListener('DOMContentLoaded', function () {
 											<span id="firstNameError" class="text-danger1"></span>
 										</div>
 									</div>
+									<div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Middle Name</label>
+                                            <form:input path="middleName" type="text"
+                                                class="form-control" id="middleName"
+                                                placeholder="Enter your Middle Name" />
+
+                                            <span id="firstNameError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="row">
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Middle Name</label>
-											<form:input path="middleName" type="text"
-												class="form-control" id="middleName"
-												placeholder="Enter your Middle Name" />
-
-											<span id="firstNameError" class="text-danger1"></span>
-										</div>
-									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Last Name<span
@@ -416,19 +418,19 @@ document.addEventListener('DOMContentLoaded', function () {
 											<span id="usernameError" class="text-danger1"></span>
 										</div>
 									</div>
+									<div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Password<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="password" type="password"
+                                                class="form-control" id="password"
+                                                placeholder="Set your password" />
+                                            <span id="password-error" style="color: red; display: none;"></span>
+                                            <span id="passwordError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="row">
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Password<span
-												class="text-danger">*</span></label>
-											<form:input path="password" type="password"
-												class="form-control" id="password"
-												placeholder="Set your password" />
-											<span id="password-error" style="color: red; display: none;"></span>
-											<span id="passwordError" class="text-danger1"></span>
-										</div>
-									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Confirm Password<span

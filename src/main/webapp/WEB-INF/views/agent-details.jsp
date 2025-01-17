@@ -494,6 +494,25 @@ function updateAgent() {
 								<div class="main-content">
 									<div class="card-body pass-security">
 										<div class="row">
+                                            <div class="col-xl-4">
+                                                <div class="mb-4">
+                                                    <label class="form-label">Company Id<span
+                                                        class="text-danger"> </span>
+                                                    </label>
+                                                    <form:input path="agentId" type="text"
+                                                        class="form-control" id="agentId" readonly="true"/>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xl-4">
+                                                <div class="mb-4">
+                                                   <label class="form-label">Agent Location Id<span
+                                                       class="text-danger"> </span>
+                                                   </label>
+                                                   <form:input path="branchLocationId" type="text"
+                                                       class="form-control" id="branchLocationId" readonly="true" />
+                                                </div>
+                                            </div>
 
 											<div class="col-xl-4">
 												<div class="mb-4">
@@ -507,27 +526,27 @@ function updateAgent() {
 													<span id="taxIdentificationNumberError" class="text-danger"></span>
 												</div>
 											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Licence No.<span
-														class="text-danger"> </span></label>
-													<form:input path="licenceNo" type="text"
-														class="form-control" id="licenceNo"
-														placeholder="Licence No." readonly="true" required='true' />
-													<span id="licenceNoError" class="text-danger"></span>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Applicable<span
-														class="text-danger"> </span></label>
-													<form:input path="taxApplicable" class="form-control"
-														id="taxApplicable" readonly="true" required='true' />
-												</div>
-											</div>
 										</div>
 									</div>
 									<div class="row">
+									    <div class="col-xl-4">
+                                            <div class="mb-4">
+                                                <label class="form-label">Licence No.<span
+                                                    class="text-danger"> </span></label>
+                                                <form:input path="licenceNo" type="text"
+                                                    class="form-control" id="licenceNo"
+                                                    placeholder="Licence No." readonly="true" required='true' />
+                                                <span id="licenceNoError" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="mb-4">
+                                                <label class="form-label">Tax Applicable<span
+                                                    class="text-danger"> </span></label>
+                                                <form:input path="taxApplicable" class="form-control"
+                                                    id="taxApplicable" readonly="true" required='true' />
+                                            </div>
+                                        </div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span

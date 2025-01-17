@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.llm.UserIdentity.repository.UserRepository;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +23,12 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
 
     @Autowired
     private BranchDetailsRepository branchDetailsRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private StaffDetailsRepository staffDetailsRepository;
 
     @Override
     public void createBranch(BranchDetails branchDetails) {
@@ -114,9 +123,28 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
         branch.setWorkingHours(branchDetails.getWorkingHours());
         branch.setZip(branchDetails.getZip());
         if (!branchDetails.isStatus()){
+            branch.setStatus(false);
         	branch.setDisabledBy(username);
 	    	branch.setDisabledOn(LocalDateTime.now());
-		}
+            List<StaffDetails> staffs = staffDetailsRepository.findByBranchLocationId(branch.getBranchLocationId());
+
+            for (StaffDetails staffDetail : staffs){
+                staffDetail.setStatus(false);
+                staffDetail.setDisabledOn(LocalDateTime.now());
+                staffDetail.setDisabledBy(username);
+
+                staffDetailsRepository.save(staffDetail);
+                Optional<User> byUsername = userRepository.findByUsername(staffDetail.getUsername());
+                byUsername.get().setApproved(false);
+                userRepository.save(byUsername.get());
+            }
+
+
+        } else {
+            branch.setStatus(true);
+            branch.setDisabledBy("");
+            branch.setDisabledOn(null);
+        }
         branch.setDisabledBy(username);
         branch.setDisabledOn(LocalDateTime.now());
         branchDetailsRepository.save(branch);

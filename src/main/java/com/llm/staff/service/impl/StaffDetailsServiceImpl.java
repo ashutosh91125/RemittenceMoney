@@ -75,8 +75,21 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 			existingDetails.setModifiedBy(updatedBy);
 			existingDetails.setModifiedOn(LocalDateTime.now());
 			if (!updatedDetails.isStatus()){
+				existingDetails.setStatus(false);
 				existingDetails.setDisabledBy(updatedBy);
 				existingDetails.setDisabledOn(LocalDateTime.now());
+				Optional<User> byUsername = userRepository.findByUsername(existingDetails.getUsername());
+				byUsername.get().setApproved(false);
+				userRepository.save(byUsername.get());
+			}
+			else {
+				existingDetails.setStatus(true);
+				existingDetails.setDisabledBy("");
+				existingDetails.setDisabledOn(null);
+
+				Optional<User> byUsername = userRepository.findByUsername(existingDetails.getUsername());
+				byUsername.get().setApproved(true);
+				userRepository.save(byUsername.get());
 			}
 			existingDetails.setAgent(updatedDetails.getAgent());
 			existingDetails.setCountry(updatedDetails.getCountry());

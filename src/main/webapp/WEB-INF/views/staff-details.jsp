@@ -345,6 +345,22 @@ $(document).ready(function () {
 										</div>
 									</div>
 								</div>
+								<div class="row">
+								<div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Status</label>
+                                            <form:input path="status"  class="form-control"
+                                                id="status" readonly="true" placeholder="Status"/>
+                                        </div>
+                                    </div>
+								    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Remarks</label>
+                                            <form:input path="remarks" type="text" class="form-control"
+                                                id="remarks" placeholder="Remarks" readonly="true"/>
+                                        </div>
+                                    </div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -435,20 +451,6 @@ $(document).ready(function () {
 													<label class="form-label">Modified On</label>
 													<form:input path="modifiedOn" type="text" class="form-control"
 														id="modifiedOn" placeholder="Modified On" readonly="true"/>
-												</div>
-											</div> 
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Remarks</label>
-													<form:input path="remarks" type="text" class="form-control"
-														id="remarks" placeholder="Remarks" readonly="true"/>
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Status</label>
-													<form:input path="status"  class="form-control"
-														id="status" readonly="true" placeholder="Status"/>
 												</div>
 											</div>
 										</div>

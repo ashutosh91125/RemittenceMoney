@@ -646,9 +646,9 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 												<div class="mb-4">
 													<label class="form-label">Company Id<span
 														class="text-danger">*</span></label>
-													<form:input path="agentId" type="text" class="form-control"
+													<form:input path="agentId" type="number" class="form-control"
 														id="agentId" placeholder="Enter Company Id" maxlength="6"
-														oninput="validateLengthWithMaxMessage('agentId', 6, 'agentIdError')" />
+														oninput="validateLengthWithMaxMessageAgentLocation('agentId', 6, 'agentIdError')" />
 													<span id="agentIdError" style="color: red;"></span>
 												</div>
 											</div>

@@ -121,7 +121,7 @@ public class AuthController {
     }
 
     @GetMapping("/change-password")
-    public String changePasswordPage(@RequestParam(required = false) String message, Model model) {
+    public String changePasswordPage(@RequestParam(name = "message",required = false) String message, Model model) {
         model.addAttribute("message", message);
         return "change-password";
     }

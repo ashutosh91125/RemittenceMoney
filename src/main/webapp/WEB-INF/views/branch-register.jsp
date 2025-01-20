@@ -221,6 +221,17 @@ document.addEventListener('DOMContentLoaded', function() {
     toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
 
+function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
+    const inputElement = document.getElementById(inputId);
+    const errorElement = document.getElementById(errorId);
+
+    if (inputElement.value.length >= maxLength) {
+        errorElement.innerText = `Maximum allowed characters  reached.`;
+    } else {
+        errorElement.innerText = ""; 
+    }
+} 
+
 </script>
 </head>
 
@@ -306,8 +317,9 @@ document.addEventListener('DOMContentLoaded', function() {
 												class="text-danger">*</span></label>
 											<form:input path="branchName" type="text"
 												class="form-control" id="branchName"
-												placeholder="Branch Name" />
-											<span id="branchNameError" class="text-danger1"></span>
+												placeholder="Branch Name" maxlength="60"
+												oninput="validateLengthWithMaxMessage('branchName', 60, 'branchNameError')"/>
+											<span id="branchNameError" style="color:red;"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -366,8 +378,9 @@ document.addEventListener('DOMContentLoaded', function() {
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" />
-											<span id="address1Error" class="text-danger1"></span>
+												id="address1" placeholder="Address1" maxlength="70"
+												oninput="validateLengthWithMaxMessage('address1', 70, 'address1Error')" />
+											<span id="address1Error" style="color:red;"></span>
 										</div>
 									</div>
 								</div>
@@ -394,8 +407,9 @@ document.addEventListener('DOMContentLoaded', function() {
 											<label class="form-label">City<span
 												class="text-danger">*</span></label>
 											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" />
-											<span id="cityError" class="text-danger1"></span>
+												id="city" placeholder="City" maxlength="35"
+												oninput="validateLengthWithMaxMessage('city', 35, 'cityError')" />
+											<span id="cityError" style="color:red;"></span>
 										</div>
 									</div>
 								</div>
@@ -405,8 +419,9 @@ document.addEventListener('DOMContentLoaded', function() {
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" />
-											<span id="zipError" class="text-danger1"></span>
+												id="zip" placeholder="Zip/PoBox" maxlength="16"
+												oninput="validateLengthWithMaxMessage('zip', 16, 'zipError')"/>
+											<span id="zipError" style="color:red;"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -593,8 +608,9 @@ document.addEventListener('DOMContentLoaded', function() {
 														class="text-danger">*</span></label>
 													<form:input path="outletCode" type="text"
 														class="form-control" id="outletCode"
-														placeholder="Outlet Code" />
-													<span id="outletCodeError" class="text-danger1"></span>
+														placeholder="Outlet Code" maxlength="16"
+												oninput="validateLengthWithMaxMessage('outletCode', 16, 'outletCodeError')"/>
+													<span id="outletCodeError" style="color:red;"></span>
 												</div>
 											</div>
 										<div class="col-xl-4">

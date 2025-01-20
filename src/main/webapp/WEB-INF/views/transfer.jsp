@@ -276,13 +276,12 @@
 			<jsp:include page="customersearchontransfer.jsp"></jsp:include>
 			<form>
 				<input type="hidden" id="residentTypeId" name="residentTypeId"
-					value="">
-					<input type="hidden" id="agentId" name="agentId"
-					value="${agentId}">
-					<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" />
-					<input type="hidden" id="dailyCredit" value="${dailyCredit}" />
-					<input type="hidden" id="perDayLimit" value="${perDayLimit}" />
-					<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" />
+					value=""> <input type="hidden" id="agentId" name="agentId"
+					value="${agentId}"> <input type="hidden"
+					id="dailyCreditLimit" value="${dailyCreditLimit}" /> <input
+					type="hidden" id="dailyCredit" value="${dailyCredit}" /> <input
+					type="hidden" id="perDayLimit" value="${perDayLimit}" /> <input
+					type="hidden" id="perMonthLimit" value="${perMonthLimit}" />
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row">
@@ -560,7 +559,8 @@
 											<div class="col-lg-8 p-4">
 												<div class="card stretch stretch-full">
 													<div class="card-body p-0">
-														<div class="table-responsive" style="max-height: 200px; overflow-y: auto;">
+														<div class="table-responsive"
+															style="max-height: 200px; overflow-y: auto;">
 															<table class="table table-hover" id="search-result1">
 																<thead>
 																	<tr>
@@ -593,7 +593,7 @@
 													<option value="MOBILEWALLET">Mobile Wallet</option>
 													<option value="BANK">BANK</option>
 												</select> <span id="beneficiaryDeliveryOptionError"
-													style="color:red;"></span>
+													style="color: red;"></span>
 											</div>
 											<div class="col-12 col-md-4">
 												<label class="form-label">Payout Country<span
@@ -605,7 +605,7 @@
 													<c:forEach var="country" items="${countryList}">
 														<option value="${country.valueId}">${country.description}</option>
 													</c:forEach>
-												</select> <span id="payOutCountryError" style="color:red;"></span>
+												</select> <span id="payOutCountryError" style="color: red;"></span>
 											</div>
 											<div class="col-12 col-md-4">
 												<label class="form-label">Currency<span
@@ -617,7 +617,7 @@
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
-												</select> <span id="currenciesError" style="color:red;"></span>
+												</select> <span id="currenciesError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -628,9 +628,9 @@
 														id="beneficiaryBank" name="beneficiaryBank"
 														data-select2-selector="icon">
 														<option value="" disabled selected>Select Bank</option>
-													</select> <span id="beneficiaryBankError" style="color:red;"></span>
+													</select> <span id="beneficiaryBankError" style="color: red;"></span>
 												</div>
-											</div> 
+											</div>
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Branch<span
@@ -638,7 +638,7 @@
 														id="bankBranches" name="beneficiaryBranch"
 														data-select2-selector="icon">
 														<option value="" disabled selected>Select Branch</option>
-													</select> <span id="bankBranchesError" style="color:red;"></span>
+													</select> <span id="bankBranchesError" style="color: red;"></span>
 													<!-- <input type="text" class="form-control" id="branch"
 													name="branch" placeholder=""> -->
 												</div>
@@ -651,7 +651,7 @@
 														data-select2-selector="icon">
 														<option value="1">Savings</option>
 														<option value="2">Current</option>
-													</select> <span id="beneficiaryAccountTypeError" style="color:red;"></span>
+													</select> <span id="beneficiaryAccountTypeError" style="color: red;"></span>
 												</div>
 											</div>
 
@@ -663,7 +663,7 @@
 														class="text-danger">*</span></label> <input type="password"
 														class="form-control" id="accountNo"
 														name="beneficiaryAccountNo" placeholder="Account No.">
-														<span id="accountNoError" style="color:red;"></span>
+													<span id="accountNoError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -672,8 +672,8 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="confirmAccountNo"
 														name="beneficiaryConfirmAccountNo"
-														placeholder="Confirm Account No.">
-														<span id="validationMessage" style="color:red;"></span>
+														placeholder="Confirm Account No."> <span
+														id="validationMessage" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -681,7 +681,7 @@
 													<label class="form-label">Account Name</label> <input
 														type="text" class="form-control"
 														id="beneficiaryAccountName" name="beneficiaryAccountName"
-														placeholder="Account Name">
+														placeholder="Account Name" />
 												</div>
 											</div>
 										</div>
@@ -690,7 +690,9 @@
 												<div class="mb-1">
 													<label class="form-label">IBAN</label> <input type="text"
 														class="form-control" id="beneficiaryIban"
-														name="beneficiaryIban" placeholder="IBAN">
+														name="beneficiaryIban" placeholder="IBAN" maxlength="34"
+														oninput="validateLengthWithMaxMessage('beneficiaryIban', 34 'beneficiaryIbanError')">
+													<span id="beneficiaryIbanError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -725,8 +727,10 @@
 													<label class="form-label">First Name<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryFirstName"
-														name="beneficiaryFirstName" placeholder="First Name">
-													<span id="beneficiaryFirstNameError" style="color:red;"></span>
+														maxlength="60" name="beneficiaryFirstName"
+														placeholder="First Name"
+														oninput="validateLengthWithMaxMessage('beneficiaryFirstName', 60, 'beneficiaryFirstNameError')">
+													<span id="beneficiaryFirstNameError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -734,7 +738,9 @@
 													<label class="form-label">Middle Name</label> <input
 														type="text" class="form-control"
 														id="beneficiaryMiddleName" name="beneficiaryMiddleName"
-														placeholder="Middle Name">
+														placeholder="Middle Name" maxlength="60"
+														oninput="validateLengthWithMaxMessage('beneficiaryMiddleName', 60, 'beneficiaryMiddleNameError')">
+													<span id="beneficiaryMiddleNameError" style="color: red;"></span>
 												</div>
 											</div>
 										</div>
@@ -744,8 +750,10 @@
 													<label class="form-label">Last Name<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryLastName"
-														name="beneficiaryLastName" placeholder="Last Name">
-													<span id="beneficiaryLastNameError" style="color:red;"></span>
+														name="beneficiaryLastName" placeholder="Last Name"
+														maxlength="60"
+														oninput="validateLengthWithMaxMessage('beneficiaryLastName', 60, 'beneficiaryLastNameError')">
+													<span id="beneficiaryLastNameError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -753,8 +761,10 @@
 													<label class="form-label">Beneficiary Address 1<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryAddress1"
-														name="beneficiaryAddress1" placeholder="Address">
-													<span id="beneficiaryAddress1Error" style="color:red;"></span>
+														name="beneficiaryAddress1" placeholder="Address"
+														maxlength="70"
+														oninput="validateLengthWithMaxMessage('beneficiaryAddress1', 70, 'beneficiaryAddress1Error')">
+													<span id="beneficiaryAddress1Error" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -771,8 +781,9 @@
 													<label class="form-label">Beneficiary City<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryCity"
-														name="beneficiaryCity" placeholder="City"> <span
-														id="beneficiaryCityError" style="color:red;"></span>
+														name="beneficiaryCity" placeholder="City" maxlength="35"
+														oninput="validateLengthWithMaxMessage('beneficiaryCity', 35, 'beneficiaryCityError')">
+													<span id="beneficiaryCityError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -785,7 +796,7 @@
 														<c:forEach var="country" items="${countryList}">
 															<option value="${country.valueId}">${country.description}</option>
 														</c:forEach>
-													</select> <span id="beneficiaryNationalityError" style="color:red;"></span>
+													</select> <span id="beneficiaryNationalityError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -798,7 +809,7 @@
 														<c:forEach var="states" items="${stateList}">
 															<option value="${states.valueId}">${states.description}</option>
 														</c:forEach>
-													</select> <span id="beneficiaryStateError" style="color:red;"></span>
+													</select> <span id="beneficiaryStateError" style="color: red;"></span>
 												</div>
 											</div>
 										</div>
@@ -807,7 +818,10 @@
 												<div class="mb-1">
 													<label class="form-label">Mobile</label> <input type="text"
 														class="form-control" id="beneficiaryMobile"
-														name="beneficiaryMobile" placeholder="Mobile">
+														name="beneficiaryMobile" placeholder="Mobile"
+														maxlength="20"
+														oninput="validateLengthWithMaxMessage('beneficiaryMobile', 20, 'beneficiaryMobileError')">
+													<span id="beneficiaryMobileError" style="color: red;"></span>
 												</div>
 											</div>
 											<div class="col-12 col-md-4">
@@ -856,17 +870,17 @@
 									<div class="card-body pass-security">
 										<div class="row">
 											<div class="col-xl-4">
-                                                <input type="hidden" name="userCountry" id="userCountry" value="${userCountry}">
-												<label class="form-label">Pay In Currency<span
-													class="text-danger">*</span></label> <select name="payInCurrency"
-													id="payInCurrency" class="form-control"
-													data-select2-selector="icon">
+												<input type="hidden" name="userCountry" id="userCountry"
+													value="${userCountry}"> <label class="form-label">Pay
+													In Currency<span class="text-danger">*</span>
+												</label> <select name="payInCurrency" id="payInCurrency"
+													class="form-control" data-select2-selector="icon">
 													<option value="" disabled selected>Select Pay In
 														Currency</option>
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
-												</select> <span id="payInCurrencyError" style="color:red;"></span>
+												</select> <span id="payInCurrencyError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
@@ -879,7 +893,7 @@
 													<option value="LOTTERY">Lottery Income</option>
 													<option value="SLRY">Salary</option>
 													<option value="SVGS">Savings</option>
-												</select> <span id="sourceOfFundError" style="color:red;"></span>
+												</select> <span id="sourceOfFundError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Transaction Purpose<span
@@ -893,7 +907,7 @@
 													<option value="P18">Gift</option>
 													<option value="MDCS">Medical Expenses</option>
 													<option value="SAVG">Savings</option>
-												</select> <span id="transactionPurposeError" style="color:red;"></span>
+												</select> <span id="transactionPurposeError" style="color: red;"></span>
 											</div>
 										</div>
 										<div class="row">
@@ -921,7 +935,7 @@
 													<option value="" disabled selected>Select Payment
 														Mode</option>
 													<option value="BANK">Bank Transfer</option>
-												</select> <span id="paymentModeError" style="color:red;"></span>
+												</select> <span id="paymentModeError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Remarks</label> <input type="text"
@@ -1046,9 +1060,11 @@
 						</div>
 					</div>
 					<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<span id="validationError"  style="color:#ff000087; display:none;"><b>Please fill  all the required fields before submitting!</b></span>
-				</div>
+						style="display: flex; justify-content: center">
+						<span id="validationError"
+							style="color: #ff000087; display: none;"><b>Please
+								fill all the required fields before submitting!</b></span>
+					</div>
 					<div class="mt-5 mb-5 text-center"
 						style="display: flex; justify-content: center">
 						<div id="createQuote">

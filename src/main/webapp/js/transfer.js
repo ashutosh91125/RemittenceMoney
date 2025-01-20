@@ -1039,7 +1039,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const payInAmount = document.getElementById('payInAmount');
     const errorMessage = document.getElementById('error-message');
-
+	const MAX_LENGTH = 34;
     function validateAccountNumbers() {
         const accountNumberValue = accountNumber.value.trim();
         const confirmAccountNumberValue = confirmAccountNumber.value.trim();
@@ -1047,6 +1047,19 @@ document.addEventListener('DOMContentLoaded', function () {
         accountNoError.textContent = "";
         messageElement.textContent = "";
 
+		if (accountNumberValue.length > MAX_LENGTH) {
+		     messageElement.textContent = `Maximum allowed characters reached for Account Number.`;
+		     messageElement.style.color = "red";
+		     accountNumber.value = accountNumberValue.slice(0, MAX_LENGTH); // Truncate input
+		     return;
+		 }
+
+		if (confirmAccountNumberValue.length > MAX_LENGTH) {
+		     messageElement.textContent = `Maximum allowed characters reached for Confirm Account Number.`;
+		     messageElement.style.color = "red";
+		     confirmAccountNumber.value = confirmAccountNumberValue.slice(0, MAX_LENGTH); // Truncate input
+		     return;
+		 }
         if (accountNumberValue === "" || confirmAccountNumberValue === "") {
             accountNoError.textContent = "Account number is required.";
             messageElement.textContent = "Confirm account number is required.";
@@ -1167,3 +1180,13 @@ function showSelectBeneficiaryDiv() {
 			}
 		}
 		
+		function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
+		    const inputElement = document.getElementById(inputId);
+		    const errorElement = document.getElementById(errorId);
+
+		    if (inputElement.value.length >= maxLength) {
+		        errorElement.innerText = `Maximum allowed characters  reached.`;
+		    } else {
+		        errorElement.innerText = ""; 
+		    }
+		} 

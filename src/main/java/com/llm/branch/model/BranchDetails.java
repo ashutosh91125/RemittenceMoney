@@ -14,83 +14,83 @@ import java.time.LocalDateTime;
 @Table(name = "branch_details")
 public class BranchDetails {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    private String agent;
+	private String agent;
 
-    @Column(name = "branch_mode")
-    private String branchMode;
+	@Column(name = "branch_mode")
+	private String branchMode;
 
-    @Column(name = "branch_type")
-    private String branchType;
+	@Column(name = "branch_type")
+	private String branchType;
 
-    @Column(name = "cdp_channel")
-    private String cdpChannel;//cdp
-    
-    private String raasChannel;
+	@Column(name = "cdp_channel")
+	private String cdpChannel;// cdp
 
-    @Column(name = "branch_channel_id")
-    private String branchChannelId;
+	private String raasChannel;
 
-    @Column(name = "branch_name")
-    private String branchName;
+	@Column(name = "branch_channel_id")
+	private String branchChannelId;
 
-    @Column(name = "branch_display_name")
-    private String branchDisplayName;
+	@Column(name = "branch_name", length = 60)
+	private String branchName;
 
-    private String address1;
-    private String address2;
-    private String address3;
+	@Column(name = "branch_display_name")
+	private String branchDisplayName;
+	@Column(name = "address1", length = 70)
+	private String address1;
+	private String address2;
+	private String address3;
+	@Column(name = "city", length = 35)
+	private String city;
+	private String state;
+	private String county;
 
-    private String city;
-    private String state;
-    private String county;
+	@Column(name = "zip_or_pobox", length = 16)
+	private String zip;
 
-    @Column(name = "zip_or_pobox")
-    private String zip;
+	@Column(name = "working_hours")
+	private String workingHours;
 
-    @Column(name = "working_hours")
-    private String workingHours;
+	private String email;
+	private String mobile;
+	private String phone;
 
-    private String email;
-    private String mobile;
-    private String phone;
+	@Column(name = "contact_person")
+	private String contactPerson;
 
-    @Column(name = "contact_person")
-    private String contactPerson;
+	@Column(name = "mis_emailid")
+	private String misEmailId;
 
-    @Column(name = "mis_emailid")
-    private String misEmailId;
+	@Column(name = "branch_location_id")
+	private String branchLocationId;
 
-    @Column(name = "branch_location_id")
-    private String branchLocationId;
+	@Column(name = "licence_no")
+	private String licenceNo;
 
-    @Column(name = "licence_no")
-    private String licenceNo;
+	@Column(name = "outlet_code", length = 16)
+	private String outletCode;
 
-    @Column(name = "outlet_code")
-    private String outletCode;
+	@Column(name = "created_by")
+	private String createdBy;
 
-    @Column(name = "created_by")
-    private String createdBy;
+	@Column(name = "created_on")
+	private LocalDateTime createdOn;
 
-    @Column(name = "created_on")
-    private LocalDateTime createdOn;
+	@Column(name = "modified_by")
+	private String modifiedBy;
 
-    @Column(name = "modified_by")
-    private String modifiedBy;
+	@Column(name = "modified_on")
+	private LocalDateTime modifiedOn;
 
-    @Column(name = "modified_on")
-    private LocalDateTime modifiedOn;
+	@Column(name = "disabled_by")
+	private String disabledBy;
 
-    @Column(name = "disabled_by")
-    private String disabledBy;
+	@Column(name = "disabled_on")
+	private LocalDateTime disabledOn;
 
-    @Column(name = "disabled_on")
-    private LocalDateTime disabledOn;
-
-    private String remarks;
-    private boolean status;
+	private String remarks;
+	private boolean status;
 }

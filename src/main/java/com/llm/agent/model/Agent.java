@@ -21,9 +21,11 @@ public class Agent {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(name="agentId", length = 6)
 	private String agentId;
 	private String countries;
 	private String currencies;
+	@Column(name="agentName", length = 60)
 	private String agentName;
 	private String agentDisplayName;
 	private String address1;
@@ -48,9 +50,13 @@ public class Agent {
 	private String settlementType;
 	private Boolean creditLimitStatus;
 //	private Long perTransaction;
+	@Column(name="grantType", length = 10)
 	private String grantType;
+	@Column(name="scope", length = 60)
 	private String scope;
+	@Column(name="clientId", length = 60)
 	private String clientId;
+	@Column(name="clientSecret", length = 60)
 	private String clientSecret;
 	@Column(unique = true)
 	private String username;
@@ -63,8 +69,9 @@ public class Agent {
 	private String remarks;
 	private Boolean statusFlag;
 	private Boolean isValid;
-
+	@Column(name="apiUsername", length = 60)
 	private String apiUsername;
+	@Column(name="apiPassword", length = 60)
 	private String apiPassword;
 
 	private double perTransactionLimit;
@@ -74,7 +81,7 @@ public class Agent {
 	private double remainingPerDayLimit;
 	private double remainingPerMonthLimit;
 
-	@Column(name = "branch_location_id", unique = true)
+	@Column(name = "branch_location_id",length = 6, unique = true)
 	private String branchLocationId;
 
 }

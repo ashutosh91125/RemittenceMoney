@@ -32,7 +32,7 @@ function validation(form) {
 		const adminUserName = $(form).find("#adminUserName").val();
 		const adminPassword = $(form).find("#adminPassword").val();	
 		const username = $(form).find("#username").val();	
-		
+		const branchLocationId = $(form).find("#branchLocationId").val();
 		$(".text-danger1").text("").css("color", "red");
 
 	if (agentId === "") {
@@ -167,7 +167,10 @@ function validation(form) {
 	     $("#userNameError").text("User Name is required.");
 	     isValid = false;
 	  }
-	  
+	  if (branchLocationId === "") {
+	  		$("#branchLocationIdError").text("Agent Location Id is required.");
+	          isValid = false;
+	      }
 	  if (!isValid) {
 	          document.getElementById("validationError").style.display = "block";
 	      }

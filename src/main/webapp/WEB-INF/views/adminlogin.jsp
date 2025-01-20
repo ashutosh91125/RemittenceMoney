@@ -47,6 +47,9 @@
 						<form action="${pageContext.request.contextPath}/perform_login"
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
+                                <p style="text-align: center; color: red;">${error}</p>
+                            </div>
+							<div class="row mb-2">
 								<input name="username" type="text" class="form-control"
 									placeholder="Username" >
 							</div>

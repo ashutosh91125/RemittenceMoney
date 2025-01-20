@@ -60,7 +60,8 @@ public class AuthController {
 
     // Login Page
     @GetMapping("/login")
-    public String login() {
+    public String login(@RequestParam(name = "error",required = false) String error,Model model) {
+        model.addAttribute("error", error);
         return "adminlogin";
     }
 

@@ -18,9 +18,9 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
                                         AuthenticationException exception) throws IOException, ServletException {
 
         if (exception instanceof BadCredentialsException) {
-            response.sendRedirect("/login?error=true");
+            response.sendRedirect("/login?error=Invalid Credentials");
         } else {
-            response.sendRedirect("/login?error=unknown");
+            response.sendRedirect("/login?error=You are blocked");
         }
     }
 }

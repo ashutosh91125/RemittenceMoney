@@ -10,6 +10,7 @@ import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.agent.service.IAgentService;
+import com.llm.common.model.EnumValue;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
 import org.slf4j.Logger;
@@ -109,6 +110,17 @@ public class TransferController {
 			logger.error("Error retrieving currency list: ", e);
 			model.addAttribute("currencyList", List.of());
 		}
+
+		String payInCurr = byUsername.get().getCountry() + "C";
+		try {
+			List<EnumValue> currency = enumEntityService.getDataByDependent(payInCurr);
+			model.addAttribute("payInCurrKey", currency);
+
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("payInCurrKey", List.of());
+		}
+
 		return "transfer";
 	}
 
@@ -189,6 +201,18 @@ public class TransferController {
 			logger.error("Error retrieving currency list: ", e);
 			model.addAttribute("currencyList", List.of());
 		}
+
+		String payInCurr = byUsername.get().getCountry() + "C";
+
+		try {
+			List<EnumValue> currency = enumEntityService.getDataByDependent(payInCurr);
+			model.addAttribute("payInCurrKey", currency);
+
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("payInCurrKey", List.of());
+		}
+
 		model.addAttribute("customer", new Customer());
 		return "transfer";
 	}

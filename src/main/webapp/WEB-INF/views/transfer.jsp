@@ -612,7 +612,7 @@
 													class="text-danger">*</span></label> <select name="currencies"
 													id="currencies" class="form-control"
 													data-select2-selector="icon">
-													<option value="" disabled selected>Selected
+													<option value="" disabled selected>Select
 														Currency</option>
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
@@ -875,9 +875,7 @@
 													In Currency<span class="text-danger">*</span>
 												</label> <select name="payInCurrency" id="payInCurrency"
 													class="form-control" data-select2-selector="icon">
-													<option value="" disabled selected>Select Pay In
-														Currency</option>
-													<c:forEach var="currency" items="${currencyList}">
+													<c:forEach var="currency" items="${payInCurrKey}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
 												</select> <span id="payInCurrencyError" style="color: red;"></span>

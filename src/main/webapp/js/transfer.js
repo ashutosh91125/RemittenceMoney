@@ -375,7 +375,6 @@ $(document).ready(function() {
        let dependent = $(this).val();
 	
 
-       $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
        $('#beneficiaryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
 
@@ -389,7 +388,7 @@ $(document).ready(function() {
                data: { dependent: currencyDependent },
                success: function(data) {
                    $.each(data, function(index, enumValue) {
-                       $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+                       $('#currencies').empty().append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
                    });
                },
                error: function() {

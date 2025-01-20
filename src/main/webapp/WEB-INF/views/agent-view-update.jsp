@@ -254,7 +254,27 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
     toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
+function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
+    const inputElement = document.getElementById(inputId);
+    const errorElement = document.getElementById(errorId);
 
+    if (inputElement.value.length >= maxLength) {
+        errorElement.innerText = `Maximum allowed characters  reached.`;
+    } else {
+        errorElement.innerText = ""; 
+    }
+} 
+function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) {
+    const input = document.getElementById(inputId);
+    const error = document.getElementById(errorId);
+
+    if (input.value.length > maxLength) {
+        input.value = input.value.slice(0, maxLength); 
+        error.textContent = `Maximum allowed characters  reached.`; 
+    } else {
+        error.textContent = ''; 
+    }
+}
 </script>
 </head>
 
@@ -342,8 +362,9 @@ document.addEventListener('DOMContentLoaded', function() {
 											<label class="form-label">Agent Name<span
 												class="text-danger">*</span></label>
 											<form:input path="agentName" type="text" class="form-control"
-												id="agentName" placeholder="Agent Name" />
-											<span id="agentNameError" class="text-danger1"></span>
+												id="agentName" placeholder="Agent Name"  maxlength="60"
+												oninput="validateLengthWithMaxMessage('agentName', 60, 'agentNameError')" />
+											<span id="agentNameError" style="color: red;"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
@@ -570,8 +591,9 @@ document.addEventListener('DOMContentLoaded', function() {
                                                         <label class="form-label">Company Id<span
                                                             class="text-danger">*</span></label>
                                                         <form:input path="agentId" type="text" class="form-control"
-                                                            id="agentId" placeholder="Agent Id" />
-                                                        <span id="agentIdError" class="text-danger1"></span>
+                                                            id="agentId" placeholder="Agent Id" maxlength="6"
+														oninput="validateLengthWithMaxMessage('agentId', 6, 'agentIdError')"  />
+                                                        <span id="agentIdError" style="color: red;"></span>
                                                     </div>
                                                 </div>
 												<div class="col-xl-4">
@@ -581,8 +603,9 @@ document.addEventListener('DOMContentLoaded', function() {
 														</label>
 														<form:input path="branchLocationId" type="number"
 															class="form-control" id="branchLocationId"
-															placeholder="Branch Location Id" />
-														<span id="branchLocationIdError" class="text-danger1"></span>
+															placeholder="Branch Location Id" maxlength="6"
+														oninput="validateLengthWithMaxMessageAgentLocation('branchLocationId', 6, 'branchLocationIdError')" />
+													<span id="branchLocationIdError" style="color: red;"></span>
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -762,6 +785,103 @@ document.addEventListener('DOMContentLoaded', function() {
 							</div>
 						</div>
 					</div>
+					<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseSix')">Api
+							Details</button>
+					</h2>
+					<div id="panelsStayOpen-collapseSix"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Grant Type<span
+														class="text-danger">*</span></label>
+													<form:input path="grantType" type="text"
+														class="form-control" id="grantType" maxlength="10"
+														placeholder="Grant Type"
+														oninput="validateLengthWithMaxMessage('grantType', 10, 'grantTypeError')" />
+													<span id="grantTypeError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Scope<span
+														class="text-danger">*</span></label>
+													<!-- <label id="scopeValidation" style="color:red; display:none;">Scope
+														(max 60 characters):</label> -->
+													<form:input path="scope" type="text" class="form-control"
+														id="scope" placeholder="Scope" maxlength="60"
+														oninput="validateLengthWithMaxMessage('scope', 60, 'scopeError')" />
+													<span id="scopeError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">Client Id<span
+														class="text-danger">*</span></label>
+													<!--  <label id="clientIdValidation" style="color:red; display:none;">Client
+														Id (max 60 characters):</label> -->
+													<form:input path="clientId" type="text"
+														class="form-control" id="clientId" placeholder="Client Id"
+														oninput="validateLengthWithMaxMessage('clientId', 60, 'clientIdValidation')"
+														maxlength="60" />
+													<span id="clientIdError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">Client Secret<span
+														class="text-danger">*</span></label>
+													<form:input path="clientSecret" type="text"
+														class="form-control" id="clientSecret"
+														placeholder="Client Secret" maxlength="60"
+														oninput="validateLengthWithMaxMessage('clientSecret', 60, 'clientSecretValidation')" />
+													<span id="clientSecretError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">API Username<span
+														class="text-danger">*</span></label>
+													<form:input path="apiUsername" type="text"
+														class="form-control" id="adminUserName" maxlength="60"
+														placeholder="Set Username"
+														oninput="validateLengthWithMaxMessage('adminUserName', 60, 'adminUserNameError')" />
+													<span id="adminUserNameError" style="color: red;"></span>
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">API Password<span
+														class="text-danger">*</span></label>
+													<form:input path="apiPassword" type="password"
+														class="form-control" id="adminPassword" maxlength="60"
+														placeholder="Set Password"
+														oninput="validateLengthWithMaxMessage('adminPassword', 60, 'adminPasswordError')" />
+													<span id="adminPasswordError" style="color: red;"></span>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">

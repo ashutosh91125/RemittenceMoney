@@ -674,6 +674,104 @@ function updateAgent() {
 						</div>
 					</div>
 				</div>
+					<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseSix')">Api
+							Details</button>
+					</h2>
+					<div id="panelsStayOpen-collapseSix"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Grant Type<span
+														class="text-danger">*</span></label>
+													<form:input path="grantType" type="text"
+														class="form-control" id="grantType" maxlength="10"
+														placeholder="Grant Type" readonly="true" 
+														oninput="validateLengthWithMaxMessage('grantType', 10, 'grantTypeError')" />
+													<span id="grantTypeError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Scope<span
+														class="text-danger">*</span></label>
+													<!-- <label id="scopeValidation" style="color:red; display:none;">Scope
+														(max 60 characters):</label> -->
+													<form:input path="scope" type="text" class="form-control"
+														id="scope" placeholder="Scope" maxlength="60" readonly="true" 
+														oninput="validateLengthWithMaxMessage('scope', 60, 'scopeError')" />
+													<span id="scopeError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">Client Id<span
+														class="text-danger">*</span></label>
+													<!--  <label id="clientIdValidation" style="color:red; display:none;">Client
+														Id (max 60 characters):</label> -->
+													<form:input path="clientId" type="text"
+														class="form-control" id="clientId" placeholder="Client Id" readonly="true" 
+														oninput="validateLengthWithMaxMessage('clientId', 60, 'clientIdValidation')"
+														maxlength="60" />
+													<span id="clientIdError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">Client Secret<span
+														class="text-danger">*</span></label>
+													<form:input path="clientSecret" type="text"
+														class="form-control" id="clientSecret"
+														placeholder="Client Secret" maxlength="60" readonly="true" 
+														oninput="validateLengthWithMaxMessage('clientSecret', 60, 'clientSecretValidation')" />
+													<span id="clientSecretError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">API Username<span
+														class="text-danger">*</span></label>
+													<form:input path="apiUsername" type="text"
+														class="form-control" id="adminUserName" maxlength="60" readonly="true" 
+														placeholder="Set Username"
+														oninput="validateLengthWithMaxMessage('adminUserName', 60, 'adminUserNameError')" />
+													<span id="adminUserNameError" style="color: red;"></span>
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">API Password<span
+														class="text-danger">*</span></label>
+													<form:input path="apiPassword" type="password"
+														class="form-control" id="adminPassword" maxlength="60" readonly="true" 
+														placeholder="Set Password"
+														oninput="validateLengthWithMaxMessage('adminPassword', 60, 'adminPasswordError')" />
+													<span id="adminPasswordError" style="color: red;"></span>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"

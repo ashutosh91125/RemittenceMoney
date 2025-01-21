@@ -1178,14 +1178,14 @@ function showSelectBeneficiaryDiv() {
 				beneficiaryDiv.style.display = "none"; 
 			}
 		}
-		
 		function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
-		    const inputElement = document.getElementById(inputId);
-		    const errorElement = document.getElementById(errorId);
+		    const input = document.getElementById(inputId);
+		    const error = document.getElementById(errorId);
 
-		    if (inputElement.value.length >= maxLength) {
-		        errorElement.innerText = `Maximum allowed characters  reached.`;
+		    if (input.value.length > maxLength) {
+		        input.value = input.value.slice(0, maxLength); 
+		        error.textContent = `Maximum allowed characters  reached.`; 
 		    } else {
-		        errorElement.innerText = ""; 
+		        error.textContent = ''; 
 		    }
-		} 
+		}

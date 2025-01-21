@@ -139,7 +139,7 @@ public class AgentServiceImpl implements IAgentService {
 
 				Optional<User> staffUser = userRepository.findByUsername(staffDetail.getUsername());
 				staffUser.get().setApproved(false);
-				userRepository.save(byUsername.get());
+				userRepository.save(staffUser.get());
 			}
 
 

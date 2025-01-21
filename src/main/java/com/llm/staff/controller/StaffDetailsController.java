@@ -57,7 +57,7 @@ public class StaffDetailsController {
         Agent byUsername = agentRepositories.findByUsername(username);
         model.addAttribute("staff", new StaffDTO());
         try {
-            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByBranchLocationId(byUsername.getBranchLocationId());
+            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByBranchLocationId(byUsername.getBranchLocationId(), true);
             model.addAttribute("branchList", branchDTOS);
 
         } catch (Exception e) {
@@ -143,7 +143,7 @@ public class StaffDetailsController {
 
         model.addAttribute("staff", new StaffDTO());
         try {
-            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByBranchLocationId(byUsername.getBranchLocationId());
+            List<BranchDTO> branchDTOS = branchDetailsService.getAllBranchDTOByBranchLocationId(byUsername.getBranchLocationId(), true);
             model.addAttribute("branchList", branchDTOS);
 
         } catch (Exception e) {

@@ -66,8 +66,8 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
     }
 
     @Override
-    public List<BranchDTO> getAllBranchDTOByBranchLocationId(String branchLocationId) {
-        List<BranchDetails> branchDetailsList = branchDetailsRepository.findByBranchLocationId(branchLocationId);
+    public List<BranchDTO> getAllBranchDTOByBranchLocationId(String branchLocationId, boolean status) {
+        List<BranchDetails> branchDetailsList = branchDetailsRepository.findByBranchLocationIdAndStatus(branchLocationId, status);
 
         return branchDetailsList.stream()
                 .map(branch -> {
@@ -106,7 +106,6 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
         branch.setRaasChannel(branchDetails.getRaasChannel());
         branch.setBranchChannelId(branchDetails.getBranchChannelId());
         branch.setBranchDisplayName(branchDetails.getBranchDisplayName());
-        branch.setBranchLocationId(branchDetails.getBranchLocationId());
         branch.setBranchMode(branchDetails.getBranchMode());
         branch.setBranchType(branchDetails.getBranchType());
         branch.setCity(branchDetails.getCity());

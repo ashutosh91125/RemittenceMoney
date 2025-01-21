@@ -589,8 +589,8 @@
 													name="beneficiaryDeliveryOption"
 													id="beneficiaryDeliveryOption">
 													<option value="">Select Delivery Option</option>
-													<option value="CASHPICKUP">Cash Pickup</option>
-													<option value="MOBILEWALLET">Mobile Wallet</option>
+													<%-- <option value="CASHPICKUP">Cash Pickup</option>
+													<option value="MOBILEWALLET">Mobile Wallet</option> --%>
 													<option value="BANK">BANK</option>
 												</select> <span id="beneficiaryDeliveryOptionError"
 													style="color: red;"></span>

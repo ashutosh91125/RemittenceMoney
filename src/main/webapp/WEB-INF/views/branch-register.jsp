@@ -222,16 +222,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
-    const inputElement = document.getElementById(inputId);
-    const errorElement = document.getElementById(errorId);
+    const input = document.getElementById(inputId);
+    const error = document.getElementById(errorId);
 
-    if (inputElement.value.length >= maxLength) {
-        errorElement.innerText = `Maximum allowed characters  reached.`;
+    if (input.value.length > maxLength) {
+        input.value = input.value.slice(0, maxLength); 
+        error.textContent = `Maximum allowed characters  reached.`; 
     } else {
-        errorElement.innerText = ""; 
+        error.textContent = ''; 
     }
-} 
-
+}
 </script>
 </head>
 
@@ -317,7 +317,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 												class="text-danger">*</span></label>
 											<form:input path="branchName" type="text"
 												class="form-control" id="branchName"
-												placeholder="Branch Name" maxlength="60"
+												placeholder="Branch Name"
 												oninput="validateLengthWithMaxMessage('branchName', 60, 'branchNameError')"/>
 											<span id="branchNameError" style="color:red;"></span>
 										</div>
@@ -378,7 +378,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<label class="form-label">Address 1<span
 												class="text-danger">*</span></label>
 											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" maxlength="70"
+												id="address1" placeholder="Address1" 
 												oninput="validateLengthWithMaxMessage('address1', 70, 'address1Error')" />
 											<span id="address1Error" style="color:red;"></span>
 										</div>
@@ -407,7 +407,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<label class="form-label">City<span
 												class="text-danger">*</span></label>
 											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" maxlength="35"
+												id="city" placeholder="City" 
 												oninput="validateLengthWithMaxMessage('city', 35, 'cityError')" />
 											<span id="cityError" style="color:red;"></span>
 										</div>
@@ -419,7 +419,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
 											<form:input path="zip" type="text" class="form-control"
-												id="zip" placeholder="Zip/PoBox" maxlength="16"
+												id="zip" placeholder="Zip/PoBox" 
 												oninput="validateLengthWithMaxMessage('zip', 16, 'zipError')"/>
 											<span id="zipError" style="color:red;"></span>
 										</div>
@@ -608,8 +608,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 														class="text-danger">*</span></label>
 													<form:input path="outletCode" type="text"
 														class="form-control" id="outletCode"
-														placeholder="Outlet Code" maxlength="16"
-												oninput="validateLengthWithMaxMessage('outletCode', 16, 'outletCodeError')"/>
+														placeholder="Outlet Code" oninput="validateLengthWithMaxMessage('outletCode', 16, 'outletCodeError')"/>
 													<span id="outletCodeError" style="color:red;"></span>
 												</div>
 											</div>

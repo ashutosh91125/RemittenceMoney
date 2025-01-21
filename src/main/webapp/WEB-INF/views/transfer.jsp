@@ -612,8 +612,7 @@
 													class="text-danger">*</span></label> <select name="currencies"
 													id="currencies" class="form-control"
 													data-select2-selector="icon">
-													<option value="" disabled selected>Select
-														Currency</option>
+													<option value="" disabled selected>Select Currency</option>
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
@@ -690,7 +689,7 @@
 												<div class="mb-1">
 													<label class="form-label">IBAN</label> <input type="text"
 														class="form-control" id="beneficiaryIban"
-														name="beneficiaryIban" placeholder="IBAN" maxlength="34"
+														name="beneficiaryIban" placeholder="IBAN"
 														oninput="validateLengthWithMaxMessage('beneficiaryIban', 34 'beneficiaryIbanError')">
 													<span id="beneficiaryIbanError" style="color: red;"></span>
 												</div>
@@ -727,8 +726,7 @@
 													<label class="form-label">First Name<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryFirstName"
-														maxlength="60" name="beneficiaryFirstName"
-														placeholder="First Name"
+														name="beneficiaryFirstName" placeholder="First Name"
 														oninput="validateLengthWithMaxMessage('beneficiaryFirstName', 60, 'beneficiaryFirstNameError')">
 													<span id="beneficiaryFirstNameError" style="color: red;"></span>
 												</div>
@@ -738,7 +736,7 @@
 													<label class="form-label">Middle Name</label> <input
 														type="text" class="form-control"
 														id="beneficiaryMiddleName" name="beneficiaryMiddleName"
-														placeholder="Middle Name" maxlength="60"
+														placeholder="Middle Name"
 														oninput="validateLengthWithMaxMessage('beneficiaryMiddleName', 60, 'beneficiaryMiddleNameError')">
 													<span id="beneficiaryMiddleNameError" style="color: red;"></span>
 												</div>
@@ -751,7 +749,6 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryLastName"
 														name="beneficiaryLastName" placeholder="Last Name"
-														maxlength="60"
 														oninput="validateLengthWithMaxMessage('beneficiaryLastName', 60, 'beneficiaryLastNameError')">
 													<span id="beneficiaryLastNameError" style="color: red;"></span>
 												</div>
@@ -762,7 +759,6 @@
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryAddress1"
 														name="beneficiaryAddress1" placeholder="Address"
-														maxlength="70"
 														oninput="validateLengthWithMaxMessage('beneficiaryAddress1', 70, 'beneficiaryAddress1Error')">
 													<span id="beneficiaryAddress1Error" style="color: red;"></span>
 												</div>
@@ -781,7 +777,7 @@
 													<label class="form-label">Beneficiary City<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="beneficiaryCity"
-														name="beneficiaryCity" placeholder="City" maxlength="35"
+														name="beneficiaryCity" placeholder="City"
 														oninput="validateLengthWithMaxMessage('beneficiaryCity', 35, 'beneficiaryCityError')">
 													<span id="beneficiaryCityError" style="color: red;"></span>
 												</div>
@@ -819,7 +815,6 @@
 													<label class="form-label">Mobile</label> <input type="text"
 														class="form-control" id="beneficiaryMobile"
 														name="beneficiaryMobile" placeholder="Mobile"
-														maxlength="20"
 														oninput="validateLengthWithMaxMessage('beneficiaryMobile', 20, 'beneficiaryMobileError')">
 													<span id="beneficiaryMobileError" style="color: red;"></span>
 												</div>

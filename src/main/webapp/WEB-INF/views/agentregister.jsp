@@ -430,7 +430,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 											<label class="form-label">Agent Name<span
 												class="text-danger">*</span></label>
 											<form:input path="agentName" type="text" class="form-control"
-												id="agentName" placeholder="Agent Name" maxlength="60"
+												id="agentName" placeholder="Agent Name"
 												oninput="validateLengthWithMaxMessage('agentName', 60, 'agentNameError')" />
 											<span id="agentNameError" style="color: red;"></span>
 										</div>
@@ -647,7 +647,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 													<label class="form-label">Company Id<span
 														class="text-danger">*</span></label>
 													<form:input path="agentId" type="text" class="form-control"
-														id="agentId" placeholder="Enter Company Id" maxlength="6"
+														id="agentId" placeholder="Enter Company Id"
 														oninput="validateLengthWithMaxMessage('agentId', 6, 'agentIdError')" />
 													<span id="agentIdError" style="color: red;"></span>
 												</div>
@@ -659,8 +659,8 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 													</label>
 													<form:input path="branchLocationId" type="number"
 														class="form-control" id="branchLocationId"
-														placeholder="Enter Agent Location Id" maxlength="6"
-														oninput="validateLengthWithMaxMessageAgentLocation('branchLocationId', 6, 'branchLocationIdError')" />
+														placeholder="Enter Agent Location Id"
+														oninput="validateLengthWithMaxMessage('branchLocationId', 6, 'branchLocationIdError')" />
 													<span id="branchLocationIdError" style="color: red;"></span>
 												</div>
 											</div>
@@ -861,7 +861,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 													<label class="form-label">Grant Type<span
 														class="text-danger">*</span></label>
 													<form:input path="grantType" type="text"
-														class="form-control" id="grantType" maxlength="10"
+														class="form-control" id="grantType"
 														placeholder="Grant Type"
 														oninput="validateLengthWithMaxMessage('grantType', 10, 'grantTypeError')" />
 													<span id="grantTypeError" style="color: red;"></span>
@@ -874,7 +874,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 													<!-- <label id="scopeValidation" style="color:red; display:none;">Scope
 														(max 60 characters):</label> -->
 													<form:input path="scope" type="text" class="form-control"
-														id="scope" placeholder="Scope" maxlength="60"
+														id="scope" placeholder="Scope"
 														oninput="validateLengthWithMaxMessage('scope', 60, 'scopeError')" />
 													<span id="scopeError" style="color: red;"></span>
 												</div>
@@ -888,8 +888,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 														Id (max 60 characters):</label> -->
 													<form:input path="clientId" type="text"
 														class="form-control" id="clientId" placeholder="Client Id"
-														oninput="validateLengthWithMaxMessage('clientId', 60, 'clientIdValidation')"
-														maxlength="60" />
+														oninput="validateLengthWithMaxMessage('clientId', 60, 'clientIdValidation')" />
 													<span id="clientIdError" class="text-danger1"></span>
 												</div>
 											</div>
@@ -902,7 +901,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 														class="text-danger">*</span></label>
 													<form:input path="clientSecret" type="text"
 														class="form-control" id="clientSecret"
-														placeholder="Client Secret" maxlength="60"
+														placeholder="Client Secret"
 														oninput="validateLengthWithMaxMessage('clientSecret', 60, 'clientSecretValidation')" />
 													<span id="clientSecretError" style="color: red;"></span>
 												</div>
@@ -913,7 +912,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 													<label class="form-label">API Username<span
 														class="text-danger">*</span></label>
 													<form:input path="apiUsername" type="text"
-														class="form-control" id="adminUserName" maxlength="60"
+														class="form-control" id="adminUserName"
 														placeholder="Set Username"
 														oninput="validateLengthWithMaxMessage('adminUserName', 60, 'adminUserNameError')" />
 													<span id="adminUserNameError" style="color: red;"></span>
@@ -925,7 +924,7 @@ function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) 
 													<label class="form-label">API Password<span
 														class="text-danger">*</span></label>
 													<form:input path="apiPassword" type="password"
-														class="form-control" id="adminPassword" maxlength="60"
+														class="form-control" id="adminPassword"
 														placeholder="Set Password"
 														oninput="validateLengthWithMaxMessage('adminPassword', 60, 'adminPasswordError')" />
 													<span id="adminPasswordError" style="color: red;"></span>

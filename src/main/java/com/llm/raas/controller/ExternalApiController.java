@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.llm.transfer.model.Transfer;
 import com.llm.transfer.repository.TransferRepository;
@@ -136,12 +138,26 @@ public class ExternalApiController {
 		} catch (HttpClientErrorException e) {
 			// Log the error and return the original error response
 			logger.error("Error occurred: {}", e.getMessage(), e);
-			return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAsString());
+			return ResponseEntity.status(e.getStatusCode()).body(e.getResponseBodyAs(Map.class));
 		} catch (Exception e) {
 			// Handle unexpected exceptions
 			logger.error("Unexpected error: {}", e.getMessage(), e);
+
+			String message = e.getMessage();
+			// Regular expression to match the message field
+			String regex = "\"message\":\"([^\"]+)\"";
+
+			Pattern pattern = Pattern.compile(regex);
+			Matcher matcher = pattern.matcher(message);
+
+			if (matcher.find()) {
+                message = matcher.group(1);
+			} else {
+				message = "Unexpected error! Please try after sometime.";
+			}
+
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(Map.of("message", "An unexpected error occurred."));
+					.body(Map.of("message", message));
 		}
 	}
 

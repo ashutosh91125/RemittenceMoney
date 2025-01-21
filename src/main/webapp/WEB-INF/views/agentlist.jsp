@@ -51,6 +51,7 @@
 												<th>Agent Location ID</th>
 												<th>Email</th>
 												<th>Country</th>
+												<th>Status</th>
 												<th class="text-end">Actions</th>
 											</tr>
 										</thead>
@@ -64,6 +65,14 @@
 													<td>${agent.branchLocationId}</td>
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
+													<td><c:choose>
+                                                        <c:when test="${agent.statusFlag}">
+                                                            Active
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Inactive
+                                                        </c:otherwise>
+                                                    </c:choose></td>
 													<td><div style="display: flex;justify-content: end;"><a href="agent-detail?id=${agent.id }" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
                                                         </a></div></td>

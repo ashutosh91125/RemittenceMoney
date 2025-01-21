@@ -54,6 +54,7 @@
 												<th>Branch Mode</th>
 												<th>Agent Location ID</th>
 												<th>Outlet Code</th>
+												<th>Status</th>
 												<th class="text-end">Actions</th>
 											</tr>
 										</thead>
@@ -68,6 +69,14 @@
 													<td>${branchDetails.branchMode}</td>
 													<td>${branchDetails.branchLocationId}</td>
 													<td>${branchDetails.outletCode }</td>
+													<td><c:choose>
+                                                        <c:when test="${branchDetails.status}">
+                                                            Active
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            Inactive
+                                                        </c:otherwise>
+                                                    </c:choose></td>
 													<td><div style="display: flex;justify-content: end;"><a  href="branch-detail?id=${branchDetails.id}" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
                                                         </a></div></td>

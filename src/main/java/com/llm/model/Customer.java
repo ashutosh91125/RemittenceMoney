@@ -1,5 +1,6 @@
 package com.llm.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -297,4 +298,16 @@ public class Customer {
 
 	private Boolean isValid;
 	private String phoneCode;
+
+	@Column(length = 20)
+	@JsonProperty("customer_status")
+	private String customerStatus;
+
+	@Column(length = 20)
+	@JsonProperty("id_status")
+	private String amlScanStatus;
+
+	@Column(length = 20)
+	@JsonProperty("id_status")
+	private String idStatus;
 }

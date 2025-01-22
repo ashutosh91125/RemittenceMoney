@@ -26,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.llm.Service.CustomerEcrnService;
 import com.llm.Service.CustomerService;
 //import com.llm.Service.CustomerValidationService;
-import com.llm.Service.OnboardingService;
 import com.llm.model.Customer;
 
 @RestController
@@ -38,11 +37,6 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 
-//	@Autowired
-//	private CustomerValidationService customerValidationService;
-
-	@Autowired
-	private OnboardingService onboardingService;
 	@Autowired
 	private CustomerEcrnService customerEcrnService;
 
@@ -58,22 +52,6 @@ public class CustomerController {
 		binder.registerCustomEditor(java.util.Date.class, new CustomDateEditor(sdf, true));
 	}
 
-// Endpoint 1: Get Customer Details by ID
-//	@GetMapping("/{ecrn}")
-//	public ResponseEntity<Customer> getCustomerDetails(@PathVariable String ecrn) {
-//		Optional<Customer> customer = customerService.getByEcrn(ecrn);
-//
-//		if (!customer.isPresent()) {
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if no customer is found
-//		}
-//
-//		Customer response = new Customer();
-//		// response.setStatus("success");
-//		// response.setStatusCode(200);
-//		// response.setData(customer.get()); // Mapping to the response DTO
-//
-//		return ResponseEntity.ok(customer.get());
-//	}
 	@GetMapping("/{ecrn}")
 	public ResponseEntity<Customer> getCustomerByEcrn(@PathVariable("ecrn") String ecrn) {
 		Optional<Customer> customerData = customerService.getByEcrn(ecrn);
@@ -88,40 +66,14 @@ public class CustomerController {
 		try {
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			if (customers.isEmpty()) {
-				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(customers); // Return empty list with no
-																						// content status
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).body(customers);
 			}
-			return ResponseEntity.ok(customers); // Return 200 OK with the customer list
+			return ResponseEntity.ok(customers);
 		} catch (Exception e) {
-			// In case of error, return an error response
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList()); // Return
-																											// empty
-																											// list with
-																											// internal
-																											// server
-																											// error
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Collections.emptyList());
 		}
 	}
 
-	// Endpoint 2: Validate Customer
-//	@PostMapping("/validate")
-//	public ResponseEntity<CustomerValidationResponse> validateCustomer(@RequestBody CustomerValidationRequest request) {
-//		CustomerValidationResponse.CustomerData customerData = customerValidationService
-//				.validateCustomer(request.getIdNumber(), Integer.valueOf(request.getIdType()));
-//
-//		if (customerData == null) {
-//			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); // Return 404 if customer not found
-//		}
-//
-//		CustomerValidationResponse response = new CustomerValidationResponse();
-//		response.setStatus("success");
-//		response.setStatusCode(200);
-//		response.setData(customerData);
-//
-//		return ResponseEntity.ok(response);
-//	}
-
-	// Endpoint 3: Onboard Customer
 	@PostMapping(value = "/onBoarding/customer", consumes = "application/json")
 	public ResponseEntity<String> createCustomer(@RequestBody Customer customer) {
 		logger.info("=========customer=======" + customer);
@@ -134,33 +86,6 @@ public class CustomerController {
 			return new ResponseEntity<>("Failed to onboard customer" + status, HttpStatus.BAD_REQUEST);
 		}
 	}
-
-	// Endpoint 3: Onboard Customer
-//	@PostMapping(value = "/onBoarding/customer", consumes = "application/json")
-//	public ResponseEntity<OnboardingSuccessResponse> onboardCustomer(@RequestBody Customer customerRequest) {
-//		// Call the onboarding service to save customer details
-//		Customer customer = onboardingService.onboardCustomer(customerRequest);
-//
-//		// Create the success response
-//		OnboardingSuccessResponse response = new OnboardingSuccessResponse();
-//		response.setStatus("success");
-//		response.setStatusCode(200);
-//
-//		// Populate the response with required data
-//		Data responseData = new Data();
-//		responseData.setAml_scan_status(AMLScanStatu.ACCEPTED); // Assuming this is determined elsewhere
-//		// responseData.setEcrn(customer.getEcrn()); // Assuming the customer has an
-//		// ECRN field
-//		responseData.setCustomer_status(CustomerStatus.ACTIVE.toString()); // Assuming the customer is active
-//		responseData.setPep(customer.getPoliticalExposedPerson()); // Assuming there's a boolean field for PEP
-//		responseData.setAml_category("2"); // Assuming a static value for now
-//
-//		response.setData(responseData);
-//		response.setRequestId("4138e3038999d41b7534ce12a18a6031"); // Replace with dynamically generated request ID
-//
-//		// Return the response entity with a 200 status
-//		return ResponseEntity.ok(response);
-//	}
 
 	@GetMapping("/verify-mobile")
 	public ResponseEntity<Map<String, String>> verifyMobile(@RequestParam String primaryMobileNumber) {

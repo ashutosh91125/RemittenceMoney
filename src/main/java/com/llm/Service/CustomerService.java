@@ -8,6 +8,7 @@ import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.service.EnumEntityService;
+import com.llm.model.response.ResponseDTO;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
 import org.slf4j.Logger;
@@ -338,12 +339,19 @@ public class CustomerService {
 				Map<String, Object> dataMap = (Map<String, Object>) responseBody.get("data");
 				if (dataMap != null) {
 					String ecrn = (String) dataMap.get("ecrn");
+					String amlScanStatus = (String) dataMap.get("aml_scan_status");
+					String customerStatus = (String) dataMap.get("customer_status");
 					if (ecrn != null) {
 						customer.setEcrn(ecrn);
 					}
+					if (amlScanStatus != null) {
+						customer.setAmlScanStatus(amlScanStatus);
+					}
+					if (customerStatus != null) {
+						customer.setCustomerStatus(customerStatus);
+					}
 				}
 
-				// Process the response and save to the database if necessary
 				status = responseBody.toString();
 				saveCustomer = customerRepository.save(customer);
 				System.out.println("Customer onboarded successfully: " + response.getBody());
@@ -356,48 +364,6 @@ public class CustomerService {
 		}
 
 		return status;
-
-		// Set the customer reference in CustomerClassification (if present)
-//  if (savedCustomer.getCustomerClassification() != null) {
-//            CustomerClassification classification = savedCustomer.getCustomerClassification();
-//            classification.setCustomer(savedCustomer);
-//
-//            // Handle Social Links under CustomerClassification
-//            if (classification.getSocialLinks() != null) {
-//                for (SocialLink link : classification.getSocialLinks()) {
-//                    link.setCustomerClassification(classification);
-//                }
-//            }
-//        }
-//
-//
-//        // Set customer reference in related Address entities
-//        if (savedCustomer.getAddressList() != null) {
-//            for (Address address : savedCustomer.getAddressList()) {
-//                address.setCustomer(savedCustomer);
-//            }
-//        }
-//
-//
-//
-//        // Set customer reference in related Document entities
-// if (savedCustomer.getAdditionalDocs() != null) {
-//            for (Document doc : savedCustomer.getAdditionalDocs()) {
-//                doc.setCustomer(savedCustomer);
-//            }
-//        }
-//
-//        // Set customer reference in related IdDetail entities
-//        if (savedCustomer.getIdDetails() != null) {
-//            for (IdDetail idDetail : savedCustomer.getIdDetails()) {
-//                idDetail.setCustomer(savedCustomer);
-//            }
-//        }
-//
-//
-//        // Save again to persist all relationships (optional optimization)
-//        // Only needed if cascading is not configured correctly in your JPA annotations.
-//        return customerRepository.save(savedCustomer);
 	}
 
 	public Optional<Customer> getByEcrn(String ecrn) {
@@ -433,5 +399,36 @@ public class CustomerService {
 
 	public boolean verifyPrimaryMobileNumber(String primaryMobileNumber) {
 		return customerRepository.existsByPrimaryMobileNumber(primaryMobileNumber);
+	}
+
+	/**
+	 * Update the customer's AML scan status and customer status based on the provided ECRN.
+	 *
+	 * @param ecrn           The unique ECRN of the customer.
+	 * @param amlScanStatus  The new AML scan status.
+	 * @param customerStatus The new customer status.
+	 * @return ResponseDTO indicating success or failure.
+	 */
+	public ResponseDTO updateCustomerStatus(String ecrn, String amlScanStatus, String customerStatus) {
+		try {
+			// Fetch the customer by ECRN
+			Customer customer = customerRepository.findByEcrn(ecrn);
+
+			if (customer == null) {
+				return new ResponseDTO(HttpStatus.NOT_FOUND.value(), "failed", "Customer not found", null);
+			}
+
+			// Update the fields
+			customer.setAmlScanStatus(amlScanStatus);
+			customer.setCustomerStatus(customerStatus);
+
+			// Save the updated customer
+			customerRepository.save(customer);
+
+			return new ResponseDTO(HttpStatus.OK.value(), "success", "Customer status updated successfully", null);
+		} catch (Exception ex) {
+			// Handle exceptions and return appropriate error response
+			return new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "failed", "An error occurred while updating customer status", ex.getMessage());
+		}
 	}
 }

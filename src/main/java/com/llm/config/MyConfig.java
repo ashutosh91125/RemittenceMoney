@@ -1,6 +1,7 @@
 package com.llm.config;
 
 import com.llm.UserIdentity.service.CustomUserDetailsService;
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -8,24 +9,20 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
+@AllArgsConstructor
 public class MyConfig {
 
     private final CustomUserDetailsService userDetailsService;
     private final CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
     private final CustomAuthenticationFailureHandler customAuthenticationFailureHandler;
-
-    public MyConfig(CustomUserDetailsService userDetailsService,
-                    CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler,
-                    CustomAuthenticationFailureHandler customAuthenticationFailureHandler) {
-        this.userDetailsService = userDetailsService;
-        this.customAuthenticationSuccessHandler = customAuthenticationSuccessHandler;
-        this.customAuthenticationFailureHandler = customAuthenticationFailureHandler;
-    }
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
@@ -34,8 +31,8 @@ public class MyConfig {
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/login", "/staff-login", "/token", "/api/v1/raas/**", "/api/v1/banks/**",
-                                "/api/enumEntities/**", "/caas/api/v2/customer/**", "/api/v1/transfer/**","/api/v1/staff/**",
+                        .requestMatchers("/login", "/api/auth/token", "/staff-login", "/api/v1/raas/**", "/api/v1/banks/**",
+                                "/caas/api/v2/customer/**", "/api/v1/transfer/**","/api/v1/staff/**",
                                 "/api/v1/agent/**", "/api/v1/beneficiaries/**", "/static/**", "/assets/**", "/WEB-INF/views/**")
                         .permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/vendors/**", "/scss/**").permitAll()
@@ -46,10 +43,11 @@ public class MyConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/perform_login")
-                        .successHandler(customAuthenticationSuccessHandler) // Add success handler
+                        .successHandler(customAuthenticationSuccessHandler)
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
-                .logout(logout -> logout.permitAll());
+                .logout(LogoutConfigurer::permitAll)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

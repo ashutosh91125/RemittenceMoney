@@ -70,10 +70,12 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 			StaffDetails existingDetails = optionalStaffDetails.get();
 
 			existingDetails.setFirstName(updatedDetails.getFirstName());
+			existingDetails.setMiddleName(updatedDetails.getMiddleName());
 			existingDetails.setLastName(updatedDetails.getLastName());
 			existingDetails.setEmail(updatedDetails.getEmail());
 			existingDetails.setModifiedBy(updatedBy);
 			existingDetails.setModifiedOn(LocalDateTime.now());
+			existingDetails.setRemarks(updatedBy);
 			if (!updatedDetails.isStatus()){
 				existingDetails.setStatus(false);
 				existingDetails.setDisabledBy(updatedBy);
@@ -91,10 +93,6 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 				byUsername.get().setApproved(true);
 				userRepository.save(byUsername.get());
 			}
-			existingDetails.setAgent(updatedDetails.getAgent());
-			existingDetails.setCountry(updatedDetails.getCountry());
-			existingDetails.setMiddleName(updatedDetails.getMiddleName());
-			existingDetails.setRemarks(updatedBy);
 
 			existingDetails.setStatus(updatedDetails.isStatus());
 			staffDetailsRepository.save(existingDetails);

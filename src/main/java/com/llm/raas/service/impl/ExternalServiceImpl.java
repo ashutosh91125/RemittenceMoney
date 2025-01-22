@@ -76,6 +76,23 @@ public class ExternalServiceImpl implements ExternalService {
         return headers;
     }
 
+    private HttpHeaders createHeadersForEnq(String transNumber) {
+
+        Optional<Transfer> transfer = transferRepository.findTransactionByTransactionReferenceNumber(transNumber);
+        var fetchBranch = branchDetailsRepository.findById(transfer.get().getBranchId());
+
+        Agent byAgentId = agentRepositories.findByBranchLocationId(fetchBranch.get().getBranchLocationId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Content-Type", "application/json");
+        headers.set("sender", byAgentId.getAgentName());
+        headers.set("channel", fetchBranch.get().getRaasChannel());
+        headers.set("company", byAgentId.getAgentId());
+        headers.set("branch", byAgentId.getBranchLocationId());
+        headers.set("Authorization", "Bearer " + tokenService.getAccessToken());
+        return headers;
+    }
+
     @Override
     public Map<String, Object> callExternalApi(Map<String, Object> requestBody) {
 
@@ -169,7 +186,7 @@ public class ExternalServiceImpl implements ExternalService {
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("transaction_ref_number", transactionRefNumber);
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(createHeaders());
+        HttpEntity<Void> requestEntity = new HttpEntity<>(createHeadersForEnq(transactionRefNumber));
 
         RestTemplate restTemplate = new RestTemplate();
 

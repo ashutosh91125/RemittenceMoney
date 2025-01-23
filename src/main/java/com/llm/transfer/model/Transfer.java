@@ -152,4 +152,11 @@ public class Transfer {
 	private Long branchId;
 	private String branchLocationId;
 
+	public void setTransactionState(String transactionState) {
+		this.transactionState = transactionState.replace("_"," ");
+	}
+
+	public void setTransactionSubState(String transactionSubState) {
+		this.transactionSubState = transactionSubState.replace("_", " ");
+	}
 }

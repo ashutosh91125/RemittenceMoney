@@ -7,6 +7,8 @@ import java.util.Optional;
 
 import com.llm.agent.model.Agent;
 import com.llm.agent.service.IAgentService;
+import com.llm.model.response.ResponseDTO;
+import com.llm.transfer.model.dto.UpdateTransactionStateDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.llm.branch.model.BranchDetails;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
@@ -127,5 +128,20 @@ public class TransferRestController {
 	    }
 	}
 
-
+	/**
+	 * Endpoint to update transaction state and sub-state based on the reference number.
+	 *
+	 * @param requestDTO Request body containing transactionReferenceNumber, transactionState, and transactionSubState.
+	 * @return ResponseEntity with the result of the operation.
+	 */
+	@PostMapping("/update-transaction-state")
+	public ResponseEntity<ResponseDTO> updateTransactionState(
+			@RequestBody UpdateTransactionStateDTO requestDTO) {
+		ResponseDTO response = transferService.updateTransactionState(
+				requestDTO.getTransactionReferenceNumber(),
+				requestDTO.getTransactionState(),
+				requestDTO.getTransactionSubState()
+		);
+		return ResponseEntity.status(response.getStatusCode()).body(response);
+	}
 }

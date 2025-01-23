@@ -8,7 +8,9 @@ import com.llm.UserIdentity.model.User;
 import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
+import com.llm.model.response.ResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -119,5 +121,31 @@ public class TransferServiceImpl implements TransferService {
 		return transfer.get();
 	}
 
+	/**
+	 * Update the transaction state and sub-state based on the transaction reference number.
+	 *
+	 * @param transactionReferenceNumber Transaction reference number to identify the record.
+	 * @param transactionState           New transaction state.
+	 * @param transactionSubState        New transaction sub-state.
+	 * @return ResponseDTO indicating the success or failure of the operation.
+	 */
+	@Override
+	public ResponseDTO updateTransactionState(String transactionReferenceNumber, String transactionState, String transactionSubState) {
+		try {
+			// Fetch the transfer record by transactionReferenceNumber
+			Transfer transfer = transferRepository.findByTransactionReferenceNumber(transactionReferenceNumber);
 
+			if (transfer == null) {
+				return new ResponseDTO(HttpStatus.NOT_FOUND.value(), "failed", "Transaction not found", null);
+			}
+
+			transfer.setTransactionState(transactionState);
+			transfer.setTransactionSubState(transactionSubState);
+			transferRepository.save(transfer);
+
+			return new ResponseDTO(HttpStatus.OK.value(), "success", "Transaction updated successfully", null);
+		} catch (Exception ex) {
+			return new ResponseDTO(HttpStatus.INTERNAL_SERVER_ERROR.value(), "failed", "An error occurred while updating the transaction", ex.getMessage());
+		}
+	}
 }

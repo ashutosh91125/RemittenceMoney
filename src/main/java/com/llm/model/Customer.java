@@ -300,14 +300,11 @@ public class Customer {
 	private String phoneCode;
 
 	@Column(length = 20)
-	@JsonProperty("customer_status")
 	private String customerStatus;
 
 	@Column(length = 20)
-	@JsonProperty("id_status")
 	private String amlScanStatus;
 
 	@Column(length = 20)
-	@JsonProperty("id_status")
 	private String idStatus;
 }

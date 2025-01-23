@@ -9,6 +9,10 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 if (response) {
+                    if(response.amlScanStatus != 'Accepted' && response.customerStatus != 'ACTIVE'){
+                        alert("Customer is not valid for transaction!");
+                        return;
+                    }
                     $('#ecrn').val(response.ecrn?.trim() || '');
                     $('#firstName').val(response.firstName?.trim() || '');
                     $('#middleName').val(response.middleName?.trim() || '');

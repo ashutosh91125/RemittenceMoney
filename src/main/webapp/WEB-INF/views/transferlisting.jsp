@@ -89,10 +89,10 @@
                                                     <div>${transfer.transactionState} </div>
                                                     <div>(${transfer.transactionSubState})</div></td>
                                                     <td class="text-end">
-                                                        <img class="transactionLogo" title="Check Status"
+                                                        <%-- <img class="transactionLogo" title="Check Status"
                                                              src="assets/images/transferList/refreshState.svg"
                                                              class="img-fluid" style="width: 24px; cursor: pointer;"
-                                                             alt="Check State" />
+                                                             alt="Check State" /> --%>
                                                              <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" title="view">
                                                             <i class="feather feather-eye"></i>
                                                         </a>

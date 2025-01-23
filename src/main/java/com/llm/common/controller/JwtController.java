@@ -30,13 +30,15 @@ public class JwtController {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
 
-//            String username = ((UserDetails) authentication.getPrincipal()).getUsername();
             String jwtToken = jwtTokenUtil.generateToken(username);
             Date expirationTime = jwtTokenUtil.getExpirationDateFromToken(jwtToken);
 
+            // Calculate remaining time in seconds
+            long remainingTimeInSeconds = (expirationTime.getTime() - System.currentTimeMillis()) / 1000;
+
             Map<String, Object> response = Map.of(
                     "token", jwtToken,
-                    "expiresAt", expirationTime
+                    "expiresIn", remainingTimeInSeconds
             );
 
             return ResponseEntity.ok(response);

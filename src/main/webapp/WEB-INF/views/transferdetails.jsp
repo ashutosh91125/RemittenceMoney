@@ -872,6 +872,20 @@ document.addEventListener("DOMContentLoaded", function() {
                                                     placeholder="Payment Status"
                                                     value="${transferDetails.paymentStatus}" readonly>
                                             </div>
+                                             <div class="col-xl-4">
+                                                <label class="form-label">Transaction State<span
+                                                     class="text-danger"></span></label> <input type="text"
+                                                     class="form-control" id="transactionState" name="transactionState"
+                                                     placeholder="Transaction State"
+                                                     value="${transferDetails.transactionState}" readonly>
+                                             </div>
+                                            <div class="col-xl-4">
+                                                <label class="form-label">Transaction SubState<span
+                                                     class="text-danger"></span></label> <input type="text"
+                                                     class="form-control" id="transactionSubState" name="transactionSubState"
+                                                     placeholder="Transaction SubState"
+                                                     value="${transferDetails.transactionSubState}" readonly>
+                                           </div>
 									</div>
 								</div>
 							</div>

@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', function () {
 							</div>
 							<div class="row mb-2">
 								<input name="password" type="password" class="form-control"
-									placeholder="Password" id="password">
+									placeholder="Enter new password" id="password">
 							</div>
 							<div id="password-error" class="row mb-2"
 										style="color: red; font-size: 0.9rem; display: none;">
@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										
 							<div class="row mb-2">
 								<input name="newPassword" type="password" class="form-control"
-									placeholder="New Password" id="confirmPassword">
+									placeholder="Enter confirm password" id="confirmPassword">
 									<span id="validationMessage"></span>
 							</div>
 							<div class="mt-5">

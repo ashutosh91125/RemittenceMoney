@@ -329,17 +329,8 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener("submit", validateOnSubmit);
 });	
 
- function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
-    const inputElement = document.getElementById(inputId);
-    const errorElement = document.getElementById(errorId);
 
-    if (inputElement.value.length >= maxLength) {
-        errorElement.innerText = `Maximum allowed characters  reached.`;
-    } else {
-        errorElement.innerText = ""; 
-    }
-} 
-function validateLengthWithMaxMessageAgentLocation(inputId, maxLength, errorId) {
+function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
     const input = document.getElementById(inputId);
     const error = document.getElementById(errorId);
 

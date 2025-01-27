@@ -864,9 +864,11 @@
 								<div class="card-body personal-info">
 									<div class="card-body pass-security">
 										<div class="row">
-											<div class="col-xl-4">
+											<div class="col-xl-4" style="display: none;">
 												<input type="hidden" name="userCountry" id="userCountry"
-													value="${userCountry}"> <label class="form-label">Pay
+													value="${userCountry}">
+
+												<label class="form-label">Pay
 													In Currency<span class="text-danger">*</span>
 												</label> <select name="payInCurrency" id="payInCurrency"
 													class="form-control" data-select2-selector="icon">
@@ -875,6 +877,16 @@
 													</c:forEach>
 												</select> <span id="payInCurrencyError" style="color: red;"></span>
 											</div>
+											<div class="col-xl-4">
+                                                <label class="form-label">Payment Mode<span
+                                                    class="text-danger">*</span></label> <select class="form-control"
+                                                    id="paymentMode" name="paymentMode"
+                                                    data-select2-selector="icon">
+                                                    <option value="" disabled selected>Select Payment
+                                                        Mode</option>
+                                                    <option value="BANK">Bank Transfer</option>
+                                                </select> <span id="paymentModeError" style="color: red;"></span>
+                                            </div>
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
 													class="text-danger">*</span></label> <select
@@ -913,7 +925,7 @@
 											<div class="col-xl-4">
 												<label class="form-label">PayIn Amount<span
 													class="text-danger">*</span>
-													(<span id="selectedPayInCurrency" style="font-weight: bold; color: #007bff;"></span>)
+													<span id="selectedPayInCurrency" style="font-weight: bold; color: #007bff;"></span>
 													</label> <input type="number"
 													class="form-control" placeholder="PayIn Amount"
 													id="payInAmount" name="payInAmount" min="5" max="50000"
@@ -922,16 +934,7 @@
 													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;"></div>
 											</div>
 
-											<div class="col-xl-4">
-												<label class="form-label">Payment Mode<span
-													class="text-danger">*</span></label> <select class="form-control"
-													id="paymentMode" name="paymentMode"
-													data-select2-selector="icon">
-													<option value="" disabled selected>Select Payment
-														Mode</option>
-													<option value="BANK">Bank Transfer</option>
-												</select> <span id="paymentModeError" style="color: red;"></span>
-											</div>
+
 											<div class="col-xl-4">
 												<label class="form-label">Remarks</label> <input type="text"
 													class="form-control" placeholder="Remarks" id="remarks"
@@ -948,7 +951,7 @@
 											</div>
 											<div class="col-xl-4">
                                                 <label class="form-label">
-                                                    Payout Amount (<span id="selectedPayoutCurrency" style="font-weight: bold; color: #007bff;"></span>)
+                                                    Payout Amount <span id="selectedPayoutCurrency" style="font-weight: bold; color: #007bff;"></span>
                                                 </label>
                                                 <input type="text" class="form-control" placeholder="Payout Amount" style="color: green;" id="payoutAmount" name="payoutAmount" readonly>
                                             </div>

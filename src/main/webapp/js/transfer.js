@@ -462,7 +462,7 @@ $(document).ready(function() {
   currencySelect.on('select2:select change', function (e) {
       const selectedValue = $(this).val(); // Get the selected value
       //const selectedText = $(this).find("option:selected").text(); // Get the selected text
-      $('#selectedPayoutCurrency').text(selectedValue ? selectedValue : 'None'); // Update label
+      $('#selectedPayoutCurrency').text(selectedValue ? '(' + selectedValue +')' : 'None'); // Update label
   });
 
 });
@@ -1047,7 +1047,7 @@ function getQuote() {
 			window.onload = function () {
                     const payInCurrencySelect = document.getElementById('payInCurrency');
                     const selectedValueId = payInCurrencySelect.options[payInCurrencySelect.selectedIndex]?.value || '';
-                    document.getElementById('selectedPayInCurrency').textContent = selectedValueId;
+                    document.getElementById('selectedPayInCurrency').textContent = '(' + selectedValueId + ')';
             };
             $(document).ready(function () {
 
@@ -1061,7 +1061,7 @@ function getQuote() {
                         console.log('Dropdown changed (Select2)!');
                         const selectedValue = e.params.data.id;
                         console.log('Selected value (Select2):', selectedValue);
-                        $('#selectedPayoutCurrency').text(selectedValue ? selectedValue : 'None');
+                        $('#selectedPayoutCurrency').text(selectedValue ? '(' + selectedValue +')' : 'None');
                     });
                 });
 document.addEventListener('DOMContentLoaded', function () {

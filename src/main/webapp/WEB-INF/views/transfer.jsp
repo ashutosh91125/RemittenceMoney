@@ -608,7 +608,7 @@
 												</select> <span id="payOutCountryError" style="color: red;"></span>
 											</div>
 											<div class="col-12 col-md-4">
-												<label class="form-label">Currency<span
+												<label class="form-label">Payout Currency<span
 													class="text-danger">*</span></label> <select name="currencies"
 													id="currencies" class="form-control"
 													data-select2-selector="icon">
@@ -912,7 +912,9 @@
 
 											<div class="col-xl-4">
 												<label class="form-label">PayIn Amount<span
-													class="text-danger">*</span></label> <input type="number"
+													class="text-danger">*</span>
+													(<span id="selectedPayInCurrency" style="font-weight: bold; color: #007bff;"></span>)
+													</label> <input type="number"
 													class="form-control" placeholder="PayIn Amount"
 													id="payInAmount" name="payInAmount" min="5" max="50000"
 													required>
@@ -945,11 +947,11 @@
 													style="color: green;" name="rate" readonly>
 											</div>
 											<div class="col-xl-4">
-												<label class="form-label">Payout Amount</label> <input
-													type="text" class="form-control"
-													placeholder="Payout Amount" style="color: green;"
-													id="payoutAmount" name="payoutAmount" readonly>
-											</div>
+                                                <label class="form-label">
+                                                    Payout Amount (<span id="selectedPayoutCurrency" style="font-weight: bold; color: #007bff;"></span>)
+                                                </label>
+                                                <input type="text" class="form-control" placeholder="Payout Amount" style="color: green;" id="payoutAmount" name="payoutAmount" readonly>
+                                            </div>
 
 											<div class="col-xl-2">
 												<label class="form-label">Commission</label> <input

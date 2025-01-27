@@ -374,7 +374,7 @@ function toggleFields() {
 }
 
 $(document).ready(function() {
-
+   const currencySelect = $('#currencies').select2();
    $('#payOutCountry').on('change', function() {
        let dependent = $(this).val();
 	
@@ -391,9 +391,19 @@ $(document).ready(function() {
                type: 'GET',
                data: { dependent: currencyDependent },
                success: function(data) {
-                   $.each(data, function(index, enumValue) {
-                       $('#currencies').empty().append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+
+                   const currenciesDropdown = $('#currencies');
+
+                   currenciesDropdown.empty().append('<option value="" disabled selected>Select Currency</option>');
+                   $.each(data, function (index, enumValue) {
+                       currenciesDropdown.append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
                    });
+
+                   // Automatically select the first currency (if any)
+                   if (data.length > 0) {
+                       const firstCurrency = data[0].valueId;
+                       currenciesDropdown.val(firstCurrency).trigger('change'); // Trigger change event for Select2
+                   }
                },
                error: function() {
                    console.error("Error fetching currencies for the selected country.");
@@ -447,6 +457,13 @@ $(document).ready(function() {
 
        }
    });
+
+  // Listen to Select2's change event
+  currencySelect.on('select2:select change', function (e) {
+      const selectedValue = $(this).val(); // Get the selected value
+      //const selectedText = $(this).find("option:selected").text(); // Get the selected text
+      $('#selectedPayoutCurrency').text(selectedValue ? selectedValue : 'None'); // Update label
+  });
 
 });
 // Function to call the quote service
@@ -1026,7 +1043,27 @@ function getQuote() {
 //                validateSubmitButton();
 
             });*/
-			
+
+			window.onload = function () {
+                    const payInCurrencySelect = document.getElementById('payInCurrency');
+                    const selectedValueId = payInCurrencySelect.options[payInCurrencySelect.selectedIndex]?.value || '';
+                    document.getElementById('selectedPayInCurrency').textContent = selectedValueId;
+            };
+            $(document).ready(function () {
+
+                    const currencySelect = $('#currencies');
+
+                    if (!currencySelect.hasClass('select2-hidden-accessible')) {
+                        currencySelect.select2();
+                    }
+
+                    currencySelect.on('select2:select', function (e) {
+                        console.log('Dropdown changed (Select2)!');
+                        const selectedValue = e.params.data.id;
+                        console.log('Selected value (Select2):', selectedValue);
+                        $('#selectedPayoutCurrency').text(selectedValue ? selectedValue : 'None');
+                    });
+                });
 document.addEventListener('DOMContentLoaded', function () {
     console.log("Page Loaded");
     const accountNumber = document.getElementById("accountNo");

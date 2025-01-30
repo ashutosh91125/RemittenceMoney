@@ -104,22 +104,29 @@
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">All
 								Transfers </span>
 					</a></li>
+					<%--
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-cast"></i></span> <span class="nxl-mtext">Reports</span><span
 							class="nxl-arrow"><i class="feather-chevron-right"></i></span>
 					</a>
+
 						<ul class="nxl-submenu collapse">
 							<li class="nxl-item"><a class="nxl-link"
 								href="reports-sales.html">Transactions Reports</a></li>
 
-						</ul></li>
+						</ul>
+					</li>
+					--%>
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);" class="nxl-link">
 							<span class="nxl-micon"><i class="feather-settings"></i></span> <span
 							class="nxl-mtext">Settings</span><span class="nxl-arrow"><i
 								class="feather-chevron-right"></i></span>
 					</a>
 						<ul class="nxl-submenu show">
+						<li class="nxl-item"><a class="nxl-link"
+                        href="/update-password">Update Password</a></li>
+						<%--
 							<li class="nxl-item"><a class="nxl-link"
 								href="settings-general.html">General</a></li>
 							<li class="nxl-item"><a class="nxl-link"
@@ -128,6 +135,7 @@
 								href="settings-seo.html">Roles</a></li>
 							<li class="nxl-item"><a class="nxl-link"
 								href="settings-tags.html">Permission</a></li>
+					    --%>
 						</ul></li>
 					<li class="nxl-item nxl-hasmenu"><a
 						href="${pageContext.request.contextPath}/logout" class="nxl-link">

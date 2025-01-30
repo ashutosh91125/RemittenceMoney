@@ -18,9 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -199,7 +197,6 @@ public class AuthController {
                 }
             }
 
-            // Update the password and add it to the history
             String encodedPassword = passwordEncoder.encode(newPassword);
             user.setPassword(encodedPassword);
             if (user.getPasswordHistory() == null) {
@@ -207,7 +204,6 @@ public class AuthController {
             }
             user.getPasswordHistory().add(encodedPassword);
 
-            // Ensure only the last three passwords are kept
             if (user.getPasswordHistory().size() > 3) {
                 user.getPasswordHistory().remove(0);
             }
@@ -221,6 +217,19 @@ public class AuthController {
         }
         model.addAttribute("error", "User not found.");
         return "change-password";
+    }
+
+    @GetMapping("/update-password")
+    public String updatePasswordPage(@RequestParam(name = "message",required = false) String message, Model model) {
+        model.addAttribute("message", message);
+        return "update-password";
+    }
+
+    @PostMapping("/update-password")
+    public String changePassword(@RequestParam String oldPassword,
+                                 @RequestParam String newPassword,
+                                 Model model) {
+        return customUserDetailsService.updatePassword(oldPassword, newPassword, model);
     }
     
     

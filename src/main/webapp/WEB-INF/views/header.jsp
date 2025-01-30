@@ -54,7 +54,7 @@
 					</a></li>
 
                     <c:if
-                        test="${pageContext.request.isUserInRole('STAFF_TR')}">
+                        test="${sessionScope.role == 'STAFF_TR'}">
 					<li class="nxl-item nxl-hasmenu"><a href="/transfer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Transfer
@@ -92,7 +92,7 @@
                     </a></li>
                     </c:if>
 
-                    <c:if test="${pageContext.request.isUserInRole('STAFF_TR')}">
+                    <c:if test="${sessionScope.role == 'STAFF_TR'}">
 					<li class="nxl-item nxl-hasmenu"><a href="customer"
 						class="nxl-link"> <span class="nxl-micon"><i
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>

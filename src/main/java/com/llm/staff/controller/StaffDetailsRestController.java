@@ -60,7 +60,7 @@ public class StaffDetailsRestController {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		Agent byUsername = agentRepositories.findByUsername(username);
-		Optional<BranchDetails> branch = branchDetailsRepository.findById(staffDTO.getBranches());
+//		Optional<BranchDetails> branch = branchDetailsRepository.findById(staffDTO.getBranches());
 		String country = byUsername.getCountries();
 
 
@@ -70,7 +70,7 @@ public class StaffDetailsRestController {
 			// Map StaffDTO to StaffDetails
 			StaffDetails staff = new StaffDetails();
 			staff.setBranches(staffDTO.getBranches());
-            branch.ifPresent(branchDetails -> staff.setStaffGroup(branchDetails.getBranchMode()));
+//            branch.ifPresent(branchDetails -> staff.setStaffGroup(branchDetails.getBranchMode()));
 
 			staff.setFirstName(staffDTO.getFirstName());
 			staff.setMiddleName(staffDTO.getMiddleName());
@@ -83,7 +83,7 @@ public class StaffDetailsRestController {
 			staff.setCreatedOn(LocalDateTime.now());
 			staff.setCreatedBy(username);
 			staff.setCountry(country);
-			staff.setBranchLocationId(branch.get().getBranchLocationId());
+			staff.setBranchLocationId(byUsername.getBranchLocationId());
 
 			// Save StaffDetails
 			staffDetailsService.createStaff(staff);
@@ -96,11 +96,7 @@ public class StaffDetailsRestController {
 			user.setUsername(staffDTO.getUsername());
 			user.setCountry(country);
 			user.setPhoneNumber(staffDTO.getMobile());
-			if (staff.getStaffGroup().equals("Transaction")){
-				user.setRole(Role.STAFF_TR);
-			}else {
-				user.setRole(Role.STAFF_HO);
-			}
+			user.setRole(Role.STAFF);
 
 			user.setFirstLogin(true);
 			user.setApproved(true);

@@ -9,6 +9,7 @@ import com.llm.agent.model.Agent;
 import com.llm.agent.service.IAgentService;
 import com.llm.model.response.ResponseDTO;
 import com.llm.transfer.model.dto.UpdateTransactionStateDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,17 +48,18 @@ public class TransferRestController {
 
 
 	@PostMapping
-	public ResponseEntity<?> registerTransferredDetails(@RequestBody Transfer transfer) {
+	public ResponseEntity<?> registerTransferredDetails(@RequestBody Transfer transfer, HttpServletRequest servletRequest) {
 
 
 		Map<String, Object> response = new HashMap<>();
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
+		String selectedBranch = (String) servletRequest.getSession().getAttribute("selectedBranch");
 
 		Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
 		transfer.setAgentId(byUsername.get().getAgent());
 		transfer.setStaffCountry(byUsername.get().getCountry());
-		transfer.setBranchId(byUsername.get().getBranches());
+		transfer.setBranchId(Long.valueOf(selectedBranch));
 		transfer.setStaffId(byUsername.get().getId());
 		transfer.setBranchLocationId(byUsername.get().getBranchLocationId());
 		try {

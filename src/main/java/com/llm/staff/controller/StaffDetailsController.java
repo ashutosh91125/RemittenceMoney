@@ -43,10 +43,10 @@ public class StaffDetailsController {
     @Autowired
     private final UserRepository userRepository;
 
-    @GetMapping("/staff-login")
-    public String staffLogin(Model model) {
-        return "staff-login";
-    }
+//    @GetMapping("/staff-login")
+//    public String staffLogin(Model model) {
+//        return "staff-login";
+//    }
 
     @GetMapping("/staff")
     public String showCompanyDetailsForm(Model model) {
@@ -113,23 +113,22 @@ public class StaffDetailsController {
     	
     	Optional<StaffDetails> staffDetils = staffDetailsService.getById(id);
     	if(staffDetils.isPresent()) {
-//    		List<String> branchIds = staffDetils.get().getBranches();
-//    		for (String branchId : branchIds) {
-//    		    try {
-//    		        Long branchDetailsId = Long.parseLong(branchId); 
-//    		        Optional<BranchDetails> branchDetails = branchDetailsService.getById(branchDetailsId);
-//    		        model.addAttribute("branches",branchDetails.get().getBranchName());
-//    		    } catch (NumberFormatException e) {
-//    		       
-//    		    	log.error("Invalid branch ID: " + branchId);
-//    		    }
-//    		}//multiple branches
-    		Long branchId = Long.valueOf(staffDetils.get().getBranches());
-    		Optional<BranchDetails> branch = branchDetailsService.getById(branchId);
-    		if(branch.isPresent()) {
-    			  model.addAttribute("branches", branch.get().getBranchName());
-    		}
-    		model.addAttribute("staff",staffDetils);
+    		List<Long> branchIds = staffDetils.get().getBranches();
+    		for (Long branchId : branchIds) {
+    		    try {
+                    Optional<BranchDetails> branchDetails = branchDetailsService.getById(branchId);
+    		        model.addAttribute("branches",branchDetails.get().getBranchName());
+    		    } catch (NumberFormatException e) {
+
+    		    	log.error("Invalid branch ID: " + branchId);
+    		    }
+    		}//multiple branches
+//    		Long branchId = Long.valueOf(staffDetils.get().getBranches());
+//    		Optional<BranchDetails> branch = branchDetailsService.getById(branchId);
+//    		if(branch.isPresent()) {
+//    			  model.addAttribute("branches", branch.get().getBranchName());
+//    		}
+//    		model.addAttribute("staff",staffDetils);
     	}
     	return "staff-details";
     }

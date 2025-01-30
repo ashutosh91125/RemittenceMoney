@@ -55,6 +55,7 @@ public class BranchDetailsRestController {
 
             branchDetails.setCounty(byUsername.getCountries());
             branchDetails.setBranchLocationId(byUsername.getBranchLocationId());
+            branchDetails.setBranchStaffRole(branchDetails.getBranchMode());
             branchDetails.setCreatedBy(username);
             branchDetails.setCreatedOn(LocalDateTime.now());
             branchDetails.setStatus(true);

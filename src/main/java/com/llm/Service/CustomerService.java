@@ -53,9 +53,10 @@ public class CustomerService {
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
+		Object fetchBranch = authentication.getDetails();
 
 		var byUsername = staffDetailsRepository.findByUsername(username);
-		Optional<BranchDetails> branch = branchDetailsRepository.findById(byUsername.get().getBranches());
+		Optional<BranchDetails> branch = branchDetailsRepository.findById((Long) fetchBranch);
 
 		String country = enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", byUsername.get().getCountry());
 

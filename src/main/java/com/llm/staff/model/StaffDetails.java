@@ -3,12 +3,7 @@ package com.llm.staff.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +19,9 @@ public class StaffDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long branches;
+    @Column(name = "branches")
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<Long> branches;
 
     private String branchLocationId;
 

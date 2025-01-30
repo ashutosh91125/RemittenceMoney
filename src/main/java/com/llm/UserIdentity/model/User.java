@@ -49,6 +49,8 @@ public class User implements UserDetails {
 
     private Boolean approved;
 
+    private String branch;
+
     @Transient
     private boolean forcePasswordChange;
 

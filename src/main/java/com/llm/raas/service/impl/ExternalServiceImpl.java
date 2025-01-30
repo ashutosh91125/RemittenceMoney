@@ -6,12 +6,12 @@ import com.llm.agent.repository.AgentRepositories;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.service.TokenService;
-import com.llm.raas.repository.BranchRepository;
 import com.llm.raas.service.ExternalService;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
 import com.llm.transfer.model.Transfer;
 import com.llm.transfer.repository.TransferRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,13 +56,14 @@ public class ExternalServiceImpl implements ExternalService {
     @Autowired
     AgentRepositories agentRepositories;
 
-    private HttpHeaders createHeaders() {
+    private HttpHeaders createHeaders(HttpServletRequest servletRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        String selectedBranch = (String) servletRequest.getSession().getAttribute("selectedBranch");
 
         Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(username);
 
-        var fetchBranch = branchDetailsRepository.findById(staffDetails.get().getBranches());
+        var fetchBranch = branchDetailsRepository.findById(Long.valueOf(selectedBranch));
 
         Agent byAgentId = agentRepositories.findByBranchLocationId(fetchBranch.get().getBranchLocationId());
 
@@ -94,12 +95,12 @@ public class ExternalServiceImpl implements ExternalService {
     }
 
     @Override
-    public Map<String, Object> callExternalApi(Map<String, Object> requestBody) {
+    public Map<String, Object> callExternalApi(Map<String, Object> requestBody, HttpServletRequest httpServletRequest) {
 
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/quote";
 
         // Wrap headers and body
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders(httpServletRequest));
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
@@ -110,14 +111,16 @@ public class ExternalServiceImpl implements ExternalService {
     }
 
     @Override
-    public Map<String, Object> createTransaction(Map<String, Object> requestBody) {
+    public Map<String, Object> createTransaction(Map<String, Object> requestBody, HttpServletRequest servletRequest) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
 
+        String selectedBranch = (String) servletRequest.getSession().getAttribute("selectedBranch");
+
         Optional<StaffDetails> byUsername = staffDetailsRepository.findByUsername(username);
 
-        Optional<BranchDetails> branch = branchDetailsRepository.findById(byUsername.get().getBranches());
+        Optional<BranchDetails> branch = branchDetailsRepository.findById(Long.valueOf(selectedBranch));
 
         BranchDetails branchDetails = branch.get();
 
@@ -147,7 +150,7 @@ public class ExternalServiceImpl implements ExternalService {
         log.info("Modified request body: {}", requestBody);
 
         // Wrap headers and body
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders(servletRequest));
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
@@ -163,12 +166,12 @@ public class ExternalServiceImpl implements ExternalService {
 
 
     @Override
-    public Map<String, Object> confirmTransaction(Map<String, Object> requestBody) {
+    public Map<String, Object> confirmTransaction(Map<String, Object> requestBody, HttpServletRequest servletRequest) {
 
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/confirmtransaction";
 
         // Wrap headers and body
-        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders());
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, createHeaders(servletRequest));
 
         // Make the request
         RestTemplate restTemplate = new RestTemplate();
@@ -209,14 +212,14 @@ public class ExternalServiceImpl implements ExternalService {
 
 
     @Override
-    public Map<String, Object> getTransactionReceipt(String transactionRefNumber) {
+    public Map<String, Object> getTransactionReceipt(String transactionRefNumber, HttpServletRequest servletRequest) {
 
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/transaction-receipt";
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("transaction_ref_number", transactionRefNumber);
 
-        HttpEntity<Void> requestEntity = new HttpEntity<>(createHeaders());
+        HttpEntity<Void> requestEntity = new HttpEntity<>(createHeaders(servletRequest));
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -239,12 +242,12 @@ public class ExternalServiceImpl implements ExternalService {
 
 
     @Override
-    public Map<String, Object> cancelTransaction(Map<String, Object> requestBody) {
+    public Map<String, Object> cancelTransaction(Map<String, Object> requestBody, HttpServletRequest servletRequest) {
 
         String url = "https://drap-sandbox.digitnine.com/amr/ras/api/v1_0/ras/canceltransaction";
 
         // Create HttpEntity with headers and body
-        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, createHeaders());
+        HttpEntity<Map<String, Object>> requestEntity = new HttpEntity<>(requestBody, createHeaders(servletRequest));
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<Map> response = restTemplate.postForEntity(url, requestEntity, Map.class);

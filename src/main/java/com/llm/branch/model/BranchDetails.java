@@ -91,6 +91,18 @@ public class BranchDetails {
 	@Column(name = "disabled_on")
 	private LocalDateTime disabledOn;
 
+	private String branchStaffRole;
+
 	private String remarks;
 	private boolean status;
+
+	public void setBranchStaffRole(String branchMode) {
+		if (branchMode.equals("Transaction")){
+			this.branchStaffRole = "STAFF_TR";
+		}
+		else {
+			this.branchStaffRole = "STAFF_HO";
+		}
+
+	}
 }

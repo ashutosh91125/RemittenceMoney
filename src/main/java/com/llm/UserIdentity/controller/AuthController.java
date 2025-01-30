@@ -5,13 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.branch.model.BranchDetails;
+import com.llm.staff.model.StaffDetails;
+import com.llm.staff.repository.StaffDetailsRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -44,6 +53,9 @@ public class AuthController {
     private UserRepository userRepository;
 
     @Autowired
+    private StaffDetailsRepository staffDetailsRepository;
+
+    @Autowired
     private final AuthenticationManager authenticationManager;
 
     @Autowired
@@ -65,24 +77,66 @@ public class AuthController {
         return "adminlogin";
     }
 
+    @GetMapping("/select-branch")
+    public String staffBranchSelection() {
+        return "staff-branch-selection";
+    }
+
+    @PostMapping("/select-branch")
+    public String selectBranch(@RequestParam String branch, HttpServletRequest request, HttpServletResponse response) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Optional<User> userOpt = userRepository.findByUsername(username);
+        Optional<StaffDetails> staffDetailsOpt = staffDetailsRepository.findByUsername(username);
+
+        if (userOpt.isPresent() && staffDetailsOpt.isPresent()) {
+            StaffDetails staffDetails = staffDetailsOpt.get();
+
+            if (staffDetails.getBranches().contains(Long.valueOf(branch))) {
+                Optional<BranchDetails> fetchedBranchOpt = branchDetailsRepository.findById(Long.valueOf(branch));
+
+                if (fetchedBranchOpt.isPresent()) {
+                    BranchDetails fetchedBranch = fetchedBranchOpt.get();
+
+                    try {
+                        // Get new role for authentication (without saving to DB)
+                        Role newRole = Role.valueOf(fetchedBranch.getBranchStaffRole());
+
+                        // Update the user's authentication role in SecurityContext
+//                        updateUserAuthentication(authentication, newRole, request, response);
+                        request.getSession().setAttribute("role", newRole.name());
+                        request.getSession().setAttribute("selectedBranch", branch);
+                    } catch (IllegalArgumentException e) {
+                        return logoutAndRedirect(request, response, "Invalid role");
+                    }
+
+                    return "redirect:/welcome";
+                } else {
+                    return logoutAndRedirect(request, response, "Branch not found");
+                }
+            } else {
+                return logoutAndRedirect(request, response, "Unauthorized branch");
+            }
+        }
+
+        return logoutAndRedirect(request, response, "User not found");
+    }
+
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, Model model) {
 
 //        model.addAttribute("admin", new User());
         try {
-            // Authenticate manually (if you want custom behavior)
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password)
             );
-
-            // If authentication is successful, set the authentication context
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            return "redirect:/welcome"; // Redirect to a welcome page after successful login
+            return "redirect:/welcome";
         } catch (Exception e) {
-            // If authentication fails, add error to model and return to login page
             model.addAttribute("error", "Invalid username or password");
-            return "login";  // Return to the login page with error message
+            return "login";
         }
     }
 
@@ -224,6 +278,51 @@ public class AuthController {
 	    }
 	}
 
-	
+//    private void updateUserAuthentication(Authentication authentication, Role newRole, HttpServletRequest request, HttpServletResponse response) {
+//        // Get existing user details
+//        Object principal = authentication.getPrincipal();
+//
+//        List<GrantedAuthority> updatedAuthorities = List.of(new SimpleGrantedAuthority(newRole.name()));
+//
+//        Authentication newAuth = new UsernamePasswordAuthenticationToken(
+//                principal,
+//                authentication.getCredentials(),
+//                updatedAuthorities
+//        );
+//
+//        // Update security context
+//        SecurityContextHolder.getContext().setAuthentication(newAuth);
+//
+//        request.getSession().setAttribute("role", newRole.name());
+//
+//        System.out.println("Updated authentication role to: " + newRole.name());
+//    }
+
+    private String logoutAndRedirect(HttpServletRequest request, HttpServletResponse response, String errorMessage) {
+        // Invalidate the session
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        // Clear authentication from SecurityContext
+        SecurityContextHolder.clearContext();
+
+        // Remove authentication cookie (JSESSIONID)
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
+
+        System.out.println("User logged out due to error: " + errorMessage);
+
+        // Redirect to login page with error message
+        return "redirect:/login?error=" + errorMessage;
+    }
+
+
+
 }
 

@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import com.llm.transfer.model.Transfer;
 import com.llm.transfer.repository.TransferRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,9 @@ public class ExternalApiController {
 	private TransferRepository transferRepository;
 
 	@PostMapping("/quote")
-	public ResponseEntity<?> getQuote(@RequestBody Map<String, Object> requestBody) {
+	public ResponseEntity<?> getQuote(@RequestBody Map<String, Object> requestBody, HttpServletRequest servletRequest) {
 		// Call external service
-		Map<String, Object> response = externalApiService.callExternalApi(requestBody);
+		Map<String, Object> response = externalApiService.callExternalApi(requestBody, servletRequest);
 
 		if (response.containsKey("data")) {
 			Map<String, Object> data = (Map<String, Object>) response.get("data");
@@ -114,10 +115,10 @@ public class ExternalApiController {
 	}
 
 	@PostMapping("/create-transaction")
-	public ResponseEntity<?> createTransaction(@RequestBody Map<String, Object> requestBody) {
+	public ResponseEntity<?> createTransaction(@RequestBody Map<String, Object> requestBody, HttpServletRequest httpServletRequest) {
 		try {
 			logger.info(requestBody.toString());
-			Map<String, Object> response = externalApiService.createTransaction(requestBody);
+			Map<String, Object> response = externalApiService.createTransaction(requestBody,httpServletRequest);
 
 			if (response.containsKey("data")) {
 				Map<String, Object> data = (Map<String, Object>) response.get("data");
@@ -162,10 +163,10 @@ public class ExternalApiController {
 	}
 
 	@PostMapping("/confirm-transaction")
-	public ResponseEntity<?> confirmTransaction(@RequestBody Map<String, Object> requestBody) {
+	public ResponseEntity<?> confirmTransaction(@RequestBody Map<String, Object> requestBody, HttpServletRequest servletRequest) {
 		try {
 			logger.info("Request received for confirm transaction: {}", requestBody);
-			Map<String, Object> response = externalApiService.confirmTransaction(requestBody);
+			Map<String, Object> response = externalApiService.confirmTransaction(requestBody, servletRequest);
 
 			if (response.containsKey("data")) {
 				Map<String, Object> data = (Map<String, Object>) response.get("data");
@@ -229,13 +230,13 @@ public class ExternalApiController {
 
 	@GetMapping("/transaction-receipt")
 	public Map<String, Object> getTransactionReceipt(
-			@RequestParam("transaction_ref_number") String transactionRefNumber) {
-		return externalApiService.getTransactionReceipt(transactionRefNumber);
+			@RequestParam("transaction_ref_number") String transactionRefNumber, HttpServletRequest servletRequest) {
+		return externalApiService.getTransactionReceipt(transactionRefNumber, servletRequest);
 	}
 
 	@PostMapping("/cancel-transaction")
-	public Map<String, Object> cancelTransaction(@RequestBody Map<String, Object> requestBody) {
-		return externalApiService.cancelTransaction(requestBody);
+	public Map<String, Object> cancelTransaction(@RequestBody Map<String, Object> requestBody, HttpServletRequest servletRequest) {
+		return externalApiService.cancelTransaction(requestBody, servletRequest);
 	}
 
 	@GetMapping("/fetch-rates")

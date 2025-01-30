@@ -107,6 +107,7 @@ public class BranchDetailsServiceImpl implements BranchDetailsService {
         branch.setBranchChannelId(branchDetails.getBranchChannelId());
         branch.setBranchDisplayName(branchDetails.getBranchDisplayName());
         branch.setBranchMode(branchDetails.getBranchMode());
+        branch.setBranchStaffRole(branchDetails.getBranchMode());
         branch.setBranchType(branchDetails.getBranchType());
         branch.setCity(branchDetails.getCity());
         branch.setContactPerson(branchDetails.getContactPerson());

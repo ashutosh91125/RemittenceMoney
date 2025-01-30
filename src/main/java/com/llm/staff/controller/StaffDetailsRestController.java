@@ -1,6 +1,7 @@
 package com.llm.staff.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -92,6 +93,10 @@ public class StaffDetailsRestController {
 			User user = new User();
 			user.setEmail(staff.getEmail());
 			user.setPassword(new BCryptPasswordEncoder().encode(staffDTO.getPassword()));
+			if (user.getPasswordHistory() == null) {
+				user.setPasswordHistory(new ArrayList<>());
+			}
+			user.getPasswordHistory().add(user.getPassword());
 			user.setAdminName(staffDTO.getFirstName() + " " + staffDTO.getLastName());
 			user.setUsername(staffDTO.getUsername());
 			user.setCountry(country);

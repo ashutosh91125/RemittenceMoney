@@ -28,16 +28,13 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             response.sendRedirect("/change-password?message=Password change required");
         } else if (isPasswordExpired) {
             response.sendRedirect("/change-password?message=Password expired");
-        } else {
-            if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
+        } else if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
                 response.sendRedirect("/select-branch");
-            }
-//            else if (authorities.stream().anyMatch(role -> role.getAuthority().equals("ROLE_USER"))) {
-//                response.sendRedirect("/user/home");
-//            }
-            else {
-                response.sendRedirect("/welcome");
-            }
+        }else {
+            response.sendRedirect("/welcome");
         }
+
+
+
     }
 }

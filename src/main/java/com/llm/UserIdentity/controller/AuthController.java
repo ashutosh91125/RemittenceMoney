@@ -2,6 +2,7 @@ package com.llm.UserIdentity.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -182,6 +184,7 @@ public class AuthController {
     public String changePassword(@RequestParam String newPassword, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Optional<User> userOpt = userRepository.findByUsername(username);
         if (userOpt.isPresent()) {
             User user = userOpt.get();
@@ -204,15 +207,14 @@ public class AuthController {
             }
             user.getPasswordHistory().add(encodedPassword);
 
-            if (user.getPasswordHistory().size() > 3) {
-                user.getPasswordHistory().remove(0);
-            }
-
             user.setFirstLogin(false);
             user.setPasswordExpiryDate(LocalDate.now().plusDays(30)); // Example expiry date
             userRepository.save(user);
 
             model.addAttribute("success", "Password changed successfully.");
+             if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
+                 return "redirect:/select-branch";
+             }
             return "redirect:/welcome";
         }
         model.addAttribute("error", "User not found.");

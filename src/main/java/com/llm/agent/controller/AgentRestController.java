@@ -1,6 +1,7 @@
 package com.llm.agent.controller;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -104,6 +105,10 @@ public class AgentRestController {
 			User user = new User();
 			user.setEmail(agent.getEmail());
 			user.setPassword(new BCryptPasswordEncoder().encode(agentDTO.getPassword()));
+			if (user.getPasswordHistory() == null) {
+				user.setPasswordHistory(new ArrayList<>());
+			}
+			user.getPasswordHistory().add(user.getPassword());
 			user.setAdminName(agentDTO.getAgentName());
 			user.setUsername(agentDTO.getUsername());
 			user.setPhoneNumber(agentDTO.getPhone());

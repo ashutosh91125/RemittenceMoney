@@ -52,7 +52,6 @@
 												<th>Email</th>
 												<th>Mobile Number</th>
 												<th>Created Date</th>
-												<th>Group</th>
 												<th>Status</th>
 												<th class="text-end">Actions</th>
 											</tr>
@@ -66,7 +65,6 @@
 													<td>${staffDetails.email}</td>
 													<td>${staffDetails.mobile}</td>
 													<td>${staffDetails.createdOn}</td>
-													<td>${staffDetails.staffGroup}</td>
 													<td><c:choose>
                                                         <c:when test="${staffDetails.status}">
                                                             Active

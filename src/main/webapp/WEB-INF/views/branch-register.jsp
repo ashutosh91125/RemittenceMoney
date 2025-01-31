@@ -167,7 +167,10 @@
 function registerBranch() {
 	 if(!validation($("#branchForm")))  {
         return false;  
-    } 
+    }
+    if ($('#branchMode').val() === "Head Office") {
+            $('#branchType, #cdpChannel, #raasChannel, #outletCode').prop('disabled', false); // Re-enable for submission
+    }
    const formData = $("#branchForm").serialize(); // Serialize form data for submission
    const id = $("#id").val();
    let url = "/api/v1/branch";
@@ -190,6 +193,9 @@ function registerBranch() {
            window.location.href = "/branch-list";
        },
        error: function(xhr) {
+            if ($('#branchMode').val() === "Head Office") {
+                        $('#branchType, #cdpChannel, #raasChannel, #outletCode').prop('disabled', true); // Re-enable for submission
+            }
            $('#loader').hide();
            $('#submitButton').prop('disabled', false);
            alert("Error: " + xhr.responseText);
@@ -215,6 +221,33 @@ function toggleRemarks() {
         remarksSection.style.display = 'none';
     }
 }
+
+    function updateFields() {
+            var branchMode = document.getElementById("branchMode").value;
+            var branchType = $('#branchType');  // Using jQuery to select Select2 element
+            var cdpChannel = $('#cdpChannel');
+            var raasChannel = $('#raasChannel');
+            var outletCode = $('#outletCode');
+
+            if (branchMode === "Head Office") {
+                // Set all fields to 'N/A' and disable them using Select2 API
+                branchType.val("N/A").prop('disabled', true).trigger('change');
+                cdpChannel.val("N/A").prop('disabled', true).trigger('change');
+                raasChannel.val("N/A").prop('disabled', true).trigger('change');
+                outletCode.val("N/A").prop('disabled', true); // For input text field
+            } else {
+                // Reset the fields if branch mode is not "Head Office"
+                branchType.val("").prop('disabled', false).trigger('change');
+                cdpChannel.val("").prop('disabled', false).trigger('change');
+                raasChannel.val("").prop('disabled', false).trigger('change');
+                outletCode.val("").prop('disabled', false); // Re-enable text field
+            }
+        }
+
+        // Call updateFields on page load to handle initial state
+        window.onload = function () {
+            updateFields(); // Call the function to ensure proper state on page load
+        };
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
@@ -311,6 +344,34 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 							style="background: aliceblue; margin-top: -40px;">
 							<div class="main-content">
 								<div class="row">
+								    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Branch Mode<span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="branchMode" class="form-control"
+                                                data-select2-selector="icon" id="branchMode" onchange="updateFields()">
+                                                <form:option value="" disabled="true" selected="true">Select Branch Mode</form:option>
+                                                <form:option value="Head Office">Head Office</form:option>
+                                                <form:option value="Transaction">Transaction</form:option>
+                                            </form:select>
+                                            <span id="branchModeError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Branch Type<span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="branchType" class="form-control"
+                                            data-select2-selector="icon" id="branchType">
+                                                <form:option value="" disabled="true" selected="true">Select Branch Type</form:option>
+                                                <form:option value="Remittance">Remittance</form:option>
+                                                <form:option value="FC">FC</form:option>
+                                                <form:option value="Both">Both</form:option>
+                                                <form:option value="N/A">N/A</form:option>
+                                            </form:select>
+                                            <span id="branchTypeError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Name<span
@@ -322,34 +383,20 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<span id="branchNameError" style="color:red;"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Agent<span
-												class="text-danger">*</span></label>
-											<form:select path="agent" class="form-control"
-												data-select2-selector="icon" multiple="false" id="agent">
-												<form:options items="${agentList}" itemValue="agentId"
-													itemLabel="agentName" />
-											</form:select>
-											<span id="agentError" class="text-danger1"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Type<span
-												class="text-danger">*</span></label>
-											<form:select path="branchType" class="form-control"
-												data-select2-selector="icon" id="branchType">
-												<form:option value="" disabled="true" selected="true">Select Branch Type</form:option>
-												<form:option value="Remittance">Remittance</form:option>
-												<form:option value="FC">FC</form:option>
-												<form:option value="Both">Both</form:option>
-											</form:select>
-											<span id="branchTypeError" class="text-danger1"></span>
-										</div>
-									</div>
 								</div>
 								<div class="row">
+								    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Agent<span
+                                                class="text-danger">*</span></label>
+                                            <form:select path="agent" class="form-control"
+                                                data-select2-selector="icon" multiple="false" id="agent">
+                                                <form:options items="${agentList}" itemValue="agentId"
+                                                    itemLabel="agentName" />
+                                            </form:select>
+                                            <span id="agentError" class="text-danger1"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">State<span
@@ -373,18 +420,18 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<span id="branchDisplayNameError" class="text-danger1"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Address 1<span
-												class="text-danger">*</span></label>
-											<form:input path="address1" type="text" class="form-control"
-												id="address1" placeholder="Address1" 
-												oninput="validateLengthWithMaxMessage('address1', 70, 'address1Error')" />
-											<span id="address1Error" style="color:red;"></span>
-										</div>
-									</div>
 								</div>
 								<div class="row">
+								    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Address 1<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="address1" type="text" class="form-control"
+                                                id="address1" placeholder="Address1"
+                                                oninput="validateLengthWithMaxMessage('address1', 70, 'address1Error')" />
+                                            <span id="address1Error" style="color:red;"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 2<span
@@ -402,19 +449,18 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<span id="address3Error" class="text-danger1"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">City<span
-												class="text-danger">*</span></label>
-											<form:input path="city" type="text" class="form-control"
-												id="city" placeholder="City" 
-												oninput="validateLengthWithMaxMessage('city', 35, 'cityError')" />
-											<span id="cityError" style="color:red;"></span>
-										</div>
-									</div>
 								</div>
 								<div class="row">
-
+                                    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">City<span
+                                                class="text-danger">*</span></label>
+                                            <form:input path="city" type="text" class="form-control"
+                                                id="city" placeholder="City"
+                                                oninput="validateLengthWithMaxMessage('city', 35, 'cityError')" />
+                                            <span id="cityError" style="color:red;"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
@@ -424,29 +470,6 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<span id="zipError" style="color:red;"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Channel Id</label>
-											<form:input path="branchChannelId" type="text"
-												class="form-control" id="branchChannelId"
-												placeholder="Branch Channel Id" />
-											<span id="branchChannelIdError" class="text-danger1"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Mode<span
-												class="text-danger">*</span></label>
-											<form:select path="branchMode" class="form-control"
-												data-select2-selector="icon" id="branchMode">
-												<form:option value="Head Office">Head Office</form:option>
-												<form:option value="Transaction">Transaction</form:option>
-											</form:select>
-											<span id="branchModeError" class="text-danger1"></span>
-										</div>
-									</div>
-								</div>
-								<div class="row">
 									<div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">CDP Channel<span
@@ -458,10 +481,13 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
                                                 <form:option value="DIGITAL">Digital</form:option>
                                                 <form:option value="MOBILE">mobile</form:option>
                                                 <form:option value="EKYC">EKYC</form:option>
+                                                <form:option value="N/A">N/A</form:option>
                                             </form:select>
                                             <span id="cdpChannelError" class="text-danger1"></span>
                                         </div>
                                     </div>
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">RAAS Channel<span
@@ -471,6 +497,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 												<form:option value="" disabled="true" selected="true">Select RAAS Channel</form:option>
 												<form:option value="Agency">Agency</form:option>
 												<form:option value="Direct">Direct</form:option>
+												<form:option value="N/A">N/A</form:option>
 											</form:select>
 											<span id="raasChannelError" class="text-danger1"></span>
 										</div>

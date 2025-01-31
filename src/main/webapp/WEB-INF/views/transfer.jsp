@@ -335,12 +335,12 @@
 
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
-					<div class="row">
-						<div class="col-lg-12">
+					<div class="row" style="display: flex; justify-content: center;">
+						<div class="col-lg-8">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
-									<div class="table-responsive">
-										<table class="table table-hover" id="search-result">
+								<div class="table-responsive">
+								<table class="table table-hover" id="search-result">
 											<thead>
 												<tr>
 													<%--  id="customerRow-${customer.ecrn}"
@@ -364,7 +364,7 @@
 															onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
 															onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
 														<td>${customer.firstName}</td>
-														<td>${customer.phoneNumber}</td>
+														<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
 														<td>${customer.emailId}</td>
 														<td>${customer.countryOfResidence }</td>
 														<td>${customer.gender }</td>
@@ -579,23 +579,23 @@
 											<h6>ID Details</h6>
 										</div>
 										<div id="idDetails">
-											<div class="row">
-												<div class="col-lg-12">
+											<div class="row" style="display: flex; justify-content: center;">
+												<div class="col-lg-8">
 													<div class="card stretch stretch-full">
 														<div class="card-body p-0">
 															<div class="table-responsive">
 																<table class="table table-hover" id="search-result2">
 																	<thead>
 																		<tr>
-																			<th>ID Type</th>
 																			<th>ID No</th>
+																			<th>ID Type</th>
 																			<th>ID Issued By</th>
 																			<th>ID Date of Issue</th>
 																			<th>ID Date of Expiry</th>
 																			<th>Country</th>
-																			<th>Visa Number</th>
+																		<!-- 	<th>Visa Number</th>
 																			<th>Visa Expiry Date</th>
-																			<th>Visa Type</th>
+																			<th>Visa Type</th> -->
 																			<th>Status</th>
 																			<th class="text-end">Actions</th>
 																		</tr>
@@ -603,18 +603,6 @@
 																	<tbody>
 																		<c:forEach var="id-detail" items="${idDetailsList}"
 																			varStatus="status">
-																			<tr>
-																				<td>${id-detail.idType}</td>
-																				<td>${id-detail.idNumber}</td>
-																				<td>${id-detail.issuedBy}</td>
-																				<td>${id-detail.issuedOn }</td>
-																				<td>${id-detail.dateOfExpiry }</td>
-																				<td>${id-detail.issuedCountry }</td>
-																				<td>${id-detail.visaNumber }</td>
-																				<td>${id-detail.visaExpiryDate }</td>
-																				<td>${id-detail.visaTypevisaType }</td>
-																				<td>${id-detail.activeStatus }</td>
-																			</tr>
 																		</c:forEach>
 																	</tbody>
 																</table>
@@ -651,11 +639,10 @@
 									<div id="selectBeneficiaryDiv" style="display: none;">
 										<div class="row" id="benficeryTable"
 											style="display: flex; justify-content: center;">
-											<div class="col-lg-8 p-4">
+											<div class="col-lg-8">
 												<div class="card stretch stretch-full">
 													<div class="card-body p-0">
-														<div class="table-responsive"
-															style="max-height: 200px; overflow-y: auto;">
+														<div class="table-responsive" style="overflow-x: hidden;">
 															<table class="table table-hover" id="search-result1">
 																<thead>
 																	<tr>
@@ -1065,29 +1052,8 @@
 													class="form-control" placeholder="Tax"
 													style="color: green;" id="tax" name="tax" readonly>
 											</div>
-
-
 										</div>
-
 										<div class="row">
-
-											<!-- <div class="col-xl-2">
-												<div>
-													<label class="form-label">Tax</label> <input
-														type="text" class="form-control" placeholder="Tax"
-														id="tax" name="tax" readonly>
-												</div>
-											</div>
-											<div class="col-xl-2">
-												<div>
-													<label class="form-label">Other Charges</label> <input
-														type="text" class="form-control"
-														placeholder="Other Charges" id="otherCharges"
-														name="otherCharges" readonly>
-												</div>
-											</div> -->
-
-
 											<div class="col-xl-4">
 												<label class="form-label">Total Pay In Amount</label> <input
 													type="text" class="form-control"
@@ -1095,60 +1061,6 @@
 													style="color: green;" name="totalPayInAmount" readonly>
 											</div>
 										</div>
-										<!-- <div class="row mt-4">
-											<div class="col-xl-4">
-												<div class="mb-5">
-													<label class="form-label">Amount<span
-														class="text-danger">*</span></label>
-												</div>
-											</div>
-										</div> -->
-										<!-- <div class="row">
-											<div class="col-12 col-md-12">
-												<h6 class="mb-3">ID Details Table</h6>
-												<div class="table-responsive">
-													<table class="table table-bordered">
-														<thead>
-															<tr>
-																<th>S.No.</th>
-																<th>Mode</th>
-																<th>Amount</th>
-																<th>Card Type</th>
-																<th>Intl No.</th>
-																<th>Product No.</th>
-																<th>Intl Code</th>
-																<th>Bank Name</th>
-																<th>Remarks</th>
-															</tr>
-														</thead>
-														<tbody>
-															Dummy Data Row 1
-															<tr>
-																<td>1</td>
-																<td>Cash</td>
-																<td>$500</td>
-																<td>Visa</td>
-																<td>12345</td>
-																<td>Prod-001</td>
-																<td>Intl-001</td>
-																<td>Bank A</td>
-																<td>Payment completed</td>
-															</tr>
-
-														</tbody>
-													</table>
-												</div>
-												Footer for dynamic content
-												<div class="row mt-3">
-													<div class="col-xl-6">
-														<strong>Amount Collected:</strong> $1800
-													</div>
-													<div class="col-xl-6 text-end">
-														<strong>Balance To Pay:</strong> $200
-													</div>
-												</div>
-											</div>
-										</div> -->
 									</div>
 								</div>
 							</div>

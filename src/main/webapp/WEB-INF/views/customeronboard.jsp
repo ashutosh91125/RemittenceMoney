@@ -260,7 +260,7 @@
 
 														<td><a href="customerdetails?ecrn=${customer.ecrn}">${customer.ecrn}</a></td>
 														<td>${customer.firstName}</td>
-														<td>${customer.phoneNumber}</td>
+														<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
 														<td>${customer.emailId}</td>
 														<td>${customer.countryOfResidence }</td>
 														<td>${customer.gender }</td>

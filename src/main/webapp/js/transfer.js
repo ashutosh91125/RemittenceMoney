@@ -210,20 +210,16 @@ $(document).ready(function () {
 		                        var issuedCountry = fullCountryName || idDetail.issuedCountry || '';
 								var activeStatusDisplay = idDetail.activeStatus ? 'Active' : 'Inactive';
 		                        var row = `<tr>
+									<td class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+									onmouseout="this.style.color='#303030'">${idDetail.idNumber || ''}</td>
 		                            <td>${idTypeDisplay}</td>
-		                            <td>${idDetail.idNumber || ''}</td>
 		                            <td>${idDetail.issuedBy || ''}</td>
 									<td>${idDetail.issuedOn || ''}</td>
 		                            <td>${idDetail.dateOfExpiry || ''}</td>
 		                             <td>${issuedCountry}</td>
-		                            <td>${idDetail.visaNumber || ''}</td>
-		                            <td>${idDetail.visaExpiryDate || ''}</td>
-		                            <td>${idDetail.visaType || ''}</td>
 									<td>${activeStatusDisplay}</td>
-		                            <td class="text-end">
-									<img class="transactionLogo" title="Edit"
-									    src="assets/images/pen.png"
-									    class="img-fluid" style="width: 20px;" onclick="openPopup('${idDetail.idNumber}', ${idDetail.activeStatus})"//>
+		                            <td class="text-end" onclick="openPopup('${idDetail.idNumber}', ${idDetail.activeStatus})">
+									<i class="bi bi-pencil-square"></i>
 		                            </td>
 		                        </tr>`;
 		                        idDetailsTable.append(row);
@@ -281,18 +277,17 @@ $(document).ready(function () {
 		                        type: 'GET',
 		                        success: function (bankResponse) {
 		                            let bankName = bankResponse?.bankName || "Unknown Bank";
+									var status = bankResponse.status ? 'Active' : 'Inactive';
 									console.log(bankName,"search-result1");
 									let row = `<tr data-beneficiary-id="${beneficiary.id}">
 									                                <td class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
-																	onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
+																		onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
 									                                <td>${bankName}</td>
 									                                <td>${beneficiary.beneficiaryAccountNo}</td>
-																	<td>${beneficiary.status}</td>
-																	<td class="text-end">
-																									<img class="transactionLogo" title="Edit"
-																									    src="assets/images/pen.png"
-																									    class="img-fluid" style="width: 20px;" onclick="openPopupForBeneficiary('${beneficiary.id}', ${beneficiary.status})"//>
-																		                            </td>
+																	<td>${status}</td>
+																	<td class="text-end" onclick="openPopupForBeneficiary('${beneficiary.id}', ${beneficiary.status})">
+																	<i class="bi bi-pencil-square"></i>
+																	</td>
 									                            </tr>`;
 		                            tableBody.append(row);
 		                        },
@@ -303,6 +298,7 @@ $(document).ready(function () {
 																	onmouseout="this.style.color='#303030'" >${beneficiary.fullName}</td>
 									                               <td>Unknown Bank</td>
 									                               <td>${beneficiary.beneficiaryAccountNo}</td>
+																   <td>${status}</td>
 									                           </tr>`;
 		                            tableBody.append(row);
 		                        }
@@ -329,9 +325,9 @@ $(document).ready(function () {
 		}
     })
      $('#searchBenficery').on('change', function () {
-                    var selectedId = $(this).val(); // Get the selected value (beneficiary ID)
+                    var selectedId = $(this).val();
                     if (selectedId) {
-                        fetchBeneficiaryDetails(selectedId); // Fetch the details of the selected beneficiary
+                        fetchBeneficiaryDetails(selectedId); 
                     }
                 });
 
@@ -341,7 +337,7 @@ $(document).ready(function () {
             type: 'GET',
             success: function (response) {
             	console.log(response);
-                if (response && response.data) { // Ensure `response.data` exists
+                if (response && response.data) { 
                     var beneficiary = response.data;
                     $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
                     $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
@@ -1398,63 +1394,38 @@ function showSelectBeneficiaryDiv() {
 		    }
 		}
 
-		function openPopup(idNumber, activeStatus) {
-		    const activeButton = document.querySelector('#openPopup .btn-primary');
-		    const deactiveButton = document.querySelector('#openPopup .btn-danger');
-		    const container = document.querySelector('.nxl-container');
-
-
-		    container.classList.add('blur-background');
-
-
-		    const activeLink = document.querySelector('#activeLink');
-		    const deactiveLink = document.querySelector('#deactiveLink');
-
-		    if (activeStatus) {
-		        activeButton.setAttribute('disabled', true);
-		        deactiveButton.removeAttribute('disabled');
-		    } else {
-		        activeButton.removeAttribute('disabled');
-		        deactiveButton.setAttribute('disabled', true);
-		    }
-
-		    activeLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=true`);
-		    deactiveLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=false`);
-
-
-		    $('#openPopup').show();
-		}
-		function openPopupForBeneficiary(id, status) {
-				    const activeButton = document.querySelector('#openPopupForBeneficiary .btn-primary');
-				    const deactiveButton = document.querySelector('#openPopupForBeneficiary .btn-danger');
-				    const container = document.querySelector('.nxl-container');
-
-
-				    container.classList.add('blur-background');
-
-
-				    const activeLink = document.querySelector('#activeLink');
-				    const deactiveLink = document.querySelector('#deactiveLink');
-
-				    if (stauts) {
-				        activeButton.setAttribute('disabled', true);
-				        deactiveButton.removeAttribute('disabled');
-				    } else {
-				        activeButton.removeAttribute('disabled');
-				        deactiveButton.setAttribute('disabled', true);
-				    }
-
-				    activeLink.setAttribute('href', `/api/v1/beneficiaries/status/${id}?stauts=true`);
-				    deactiveLink.setAttribute('href', `/api/v1/beneficiaries/status/${id}?stauts=false`);
-
-
-				    $('#openPopupForBeneficiary').show();
-				}
-
-		function closePopup() {
-		    const container = document.querySelector('.nxl-container');
-		    container.classList.remove('blur-background');
-		    $('#openPopup').hide();
-			$('#openPopupForBeneficiary').hide();
+			function openPopup(idNumber, activeStatus) {
+			    const activeButton = document.querySelector('#openPopup .btn-primary');
+			    const deactiveButton = document.querySelector('#openPopup .btn-danger');
+			    const container = document.querySelector('.nxl-container');
+	
+	
+			    container.classList.add('blur-background');
+	
+	
+			    const activeLink = document.querySelector('#activeLink');
+			    const deactiveLink = document.querySelector('#deactiveLink');
+	
+			    if (activeStatus) {
+			        activeButton.setAttribute('disabled', true);
+			        deactiveButton.removeAttribute('disabled');
+			    } else {
+			        activeButton.removeAttribute('disabled');
+			        deactiveButton.setAttribute('disabled', true);
+			    }
+	
+			    activeLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=true`);
+			    deactiveLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=false`);
+	
+	
+			    $('#openPopup').show();
+			}
 			
-		}
+	
+			function closePopup() {
+			    const container = document.querySelector('.nxl-container');
+			    container.classList.remove('blur-background');
+			    $('#openPopup').hide();
+				
+		
+			}

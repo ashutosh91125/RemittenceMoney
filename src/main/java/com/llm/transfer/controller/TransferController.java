@@ -254,8 +254,6 @@ public class TransferController {
 	model.addAttribute("country", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getCountry()));
 	model.addAttribute("countryOfResidence", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getCountryOfResidence()));
 	model.addAttribute("countryOfNatinality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getNationality()));
-//	model.addAttribute("issuedCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getIssuedCountry()));
-//	model.addAttribute("idType",enumEntityService.getEnumValueDescriptionByKeyAndValueId("idTypes", String.valueOf(customer.get().getIdType())));
 	model.addAttribute("payOutCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",transferDetails.getPayOutCountry()));
 	model.addAttribute("currency", enumEntityService.getEnumValueDescriptionByKeyAndValueId("currency",transferDetails.getCurrencies()));
 	model.addAttribute("bank",bankService.getBankById(transferDetails.getBeneficiaryBank()));

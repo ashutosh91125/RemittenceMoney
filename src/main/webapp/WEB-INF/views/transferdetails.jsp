@@ -467,7 +467,7 @@ document.addEventListener("DOMContentLoaded", function() {
 												value="${transferDetails.customerType}" readonly>
 										</div>
 									</div>
-									<div class="row mt-5">
+									<%-- <div class="row mt-5">
 										<div class="col-12">
 											<h6>ID Details</h6>
 										</div>
@@ -538,7 +538,7 @@ document.addEventListener("DOMContentLoaded", function() {
 												</div>
 											</div>
 										</div>
-									</div>
+									</div> --%>
 								</div>
 							</div>
 						</div>

@@ -202,7 +202,7 @@ element.classList.toggle("show");
 $(document).ready(function() {
 $('#countries').on('change', function() {
     let countryDependent = $(this).val();
-    $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
+    $('#currencies').empty();
     
     if (countryDependent) {
         let currencyDependent = countryDependent + "C";

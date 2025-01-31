@@ -49,6 +49,7 @@
 											<tr>
 												<th>S.No</th>
 												<th>Staff Name</th>
+												<th>Username</th>
 												<th>Email</th>
 												<th>Mobile Number</th>
 												<th>Created Date</th>
@@ -62,6 +63,7 @@
 												<tr>
 													<td>${status.index + 1}</td>
 													<td>${staffDetails.firstName} ${staffDetails.lastName}</td>
+													<td>${staffDetails.username}</td>
 													<td>${staffDetails.email}</td>
 													<td>${staffDetails.mobile}</td>
 													<td>${staffDetails.createdOn}</td>

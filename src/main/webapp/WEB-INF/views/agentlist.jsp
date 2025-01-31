@@ -47,6 +47,7 @@
 											<tr>
 												<th>S.No</th>
 												<th>Agent Name</th>
+												<th>Username</th>
 												<th>Company ID</th>
 												<th>Agent Location ID</th>
 												<th>Email</th>
@@ -61,6 +62,7 @@
 												<tr>
 													<td>${status.index + 1}</td>
 													<td>${agent.agentName}</td>
+													<td>${agent.username}</td>
 													<td>${agent.agentId}</td>
 													<td>${agent.branchLocationId}</td>
 													<td>${agent.email}</td>

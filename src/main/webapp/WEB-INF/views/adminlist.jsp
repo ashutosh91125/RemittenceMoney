@@ -47,6 +47,7 @@
 											<tr>
 												<th>S.No</th>
 												<th>Admin Name</th>
+												<th>Username</th>
 												<th>Phone Number</th>
 												<th>Email</th>
 												 <th>Countries</th>
@@ -61,6 +62,7 @@
 												<tr>
 													<td>${status.index + 1}</td>
 													<td>${admin.adminName}</td>
+													<td>${admin.username}</td>
 													<td>${admin.phoneNumber}</td>
 													<td>${admin.email}</td>
 													 <td>${admin.country}</td> 

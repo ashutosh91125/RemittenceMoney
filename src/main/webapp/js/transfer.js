@@ -1438,12 +1438,12 @@ function showSelectBeneficiaryDiv() {
 			       activeButton.onclick = () => window.location.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=true`;
 			       deactiveButton.onclick = () => window.location.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=false`;
 
-			       $('#openPopupForBeneficiary').modal('show');
+			       $('#openPopupForBeneficiary').show();
 			   }
 			function closePopup() {
 			    const container = document.querySelector('.nxl-container');
 			    container.classList.remove('blur-background');
 			    $('#openPopup').hide();
-				$('#openPopupForBeneficiary').modal('hide');
+				$('#openPopupForBeneficiary').hide();
 					
 			}

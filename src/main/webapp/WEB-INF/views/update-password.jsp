@@ -102,15 +102,14 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 </head>
 <body>
-
+    <div class="nxl-navigation">
+        <jsp:include page="header.jsp"></jsp:include>
+    </div>
 	<main class="auth-minimal-wrapper">
 		<div class="auth-minimal-inner">
 			<div class="minimal-card-wrapper">
 				<div class="card mb-4 mt-5 mx-4 mx-sm-0 position-relative">
-					<div
-						class="wd-100 bg-white p-2 rounded-circle shadow-lg position-absolute translate-middle top-0 start-50">
-						<img src="assets/images/LuluMoney.png" class="img-fluid">
-					</div>
+
 					<div class="card-body p-sm-5">
 						<h2 class="fs-20 fw-bolder mb-4" style="text-align: center;">Update
 							Password</h2>

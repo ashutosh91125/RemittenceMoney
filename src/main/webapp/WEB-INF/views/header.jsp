@@ -101,8 +101,7 @@
 
 					<li class="nxl-item nxl-hasmenu"><a href="transfer-list"
 						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">All
-								Transfers </span>
+								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Transaction Enquiry</span>
 					</a></li>
 					<%--
 					<li class="nxl-item nxl-hasmenu"><a href="javascript:void(0);"

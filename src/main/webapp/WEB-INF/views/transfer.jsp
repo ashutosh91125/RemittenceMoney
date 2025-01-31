@@ -257,26 +257,23 @@
         </div>
     </div>
 </div>
-<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1" style="display: none; padding-left: 0px;">
-    <div class="modal-dialog modal-lg" role="document" style="width: 508px; height: 360px; display: flex; align-items: center;">
+<div class="modal fade" id="openPopupForBeneficiary" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="height: 45%;">
             <div class="modal-header">
-                <div style="align-items: end;">
-                    <h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary Status</h5>
-                    <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
-                </div>
-                <div style="display: flex; position: absolute;top: 80px;left: 145px;">
-                    <button class="btn btn-primary" id="activeBtn">
-                        <a href="#" id="activeLink" style="color: white;">Active</a>
-                    </button>&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-danger" id="deactiveBtn">
-                        <a href="#" id="deactiveLink" style="color: white;">Deactivate</a>
-                    </button>
+                <h5 class="modal-title">Beneficiary Status</h5>
+                <button type="button" class="btn-close" onclick="closePopup()"></button>
+            </div>
+            <div class="modal-body text-center">
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" id="activeLinkBeneficiary" class="btn btn-primary">Activate</a>
+                    <a href="#" id="deactiveLinkBeneficiary" class="btn btn-danger">Deactivate</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">

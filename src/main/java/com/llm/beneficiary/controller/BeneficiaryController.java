@@ -111,7 +111,7 @@ public class BeneficiaryController {
 		}
 	}
 
-	@GetMapping("/status/{idNumber}")
+	@GetMapping("/status/{id}")
 	public String getByIdNumber(@PathVariable("id") Long id, @RequestParam("status") boolean status) {
 		BeneficiaryDetails beneficiaryDetails = beneficiaryService.getById(id);
 		if (beneficiaryDetails != null) {

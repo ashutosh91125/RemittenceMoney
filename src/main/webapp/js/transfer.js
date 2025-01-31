@@ -1420,12 +1420,32 @@ function showSelectBeneficiaryDiv() {
 	
 			    $('#openPopup').show();
 			}
-			
-	
+			function openPopupForBeneficiary(beneficiaryId, activeStatus) {
+			   
+			    const activeButton = document.querySelector('#activeLinkBeneficiary');
+			    const deactiveButton = document.querySelector('#deactiveLinkBeneficiary');
+			    const container = document.querySelector('.nxl-container');
+
+			  
+			    container.classList.add('blur-background');
+
+			    
+			    activeButton.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=true`;
+			    deactiveButton.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=false`;
+
+			    if (activeStatus) {
+			        activeButton.setAttribute('disabled', true);
+			        deactiveButton.removeAttribute('disabled');
+			    } else {
+			        activeButton.removeAttribute('disabled');
+			        deactiveButton.setAttribute('disabled', true);
+			    }
+			    $('#openPopupForBeneficiary').modal('show');
+			}
 			function closePopup() {
 			    const container = document.querySelector('.nxl-container');
 			    container.classList.remove('blur-background');
 			    $('#openPopup').hide();
-				
-		
+				$('#openPopupForBeneficiary').modal('hide');
+					
 			}

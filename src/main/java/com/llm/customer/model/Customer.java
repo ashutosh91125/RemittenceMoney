@@ -173,17 +173,18 @@ public class Customer {
 	@JoinColumn(name = "customer_id")
 	private List<IdDetail> idDetails;
 
-	//	@Lob
-	private byte[] frontBase64Data;
-	@Transient
-	private MultipartFile frontPictureFile;
-	private String frontContentType;
+//	@Lob
+//	private byte[] frontBase64Data;
+//	@Transient
+//	private MultipartFile frontPictureFile;
+//	private String frontContentType;
+//
+//	@Lob
+//	private byte[] backBase64Data;
+//	@Transient
+//	private MultipartFile backPictureFile;
+//	private String BackContentType;
 
-	@Lob
-	private byte[] backBase64Data;
-	@Transient
-	private MultipartFile backPictureFile;
-	private String BackContentType;
 	// classification
 	@Column(name = "customerTypeId")
 	private Integer customerTypeId;

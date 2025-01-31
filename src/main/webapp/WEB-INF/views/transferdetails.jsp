@@ -842,7 +842,7 @@ document.addEventListener("DOMContentLoaded", function() {
 													value="${transferDetails.commission}" readonly>
 											</div>
 											<div class="col-xl-2">
-												<label class="form-label">Tax (%)</label> <input type="text"
+												<label class="form-label">Tax</label> <input type="text"
 													class="form-control" placeholder="Tax"
 													style="color: green;" id="tax" name="tax"
 													value="${transferDetails.tax}" readonly>

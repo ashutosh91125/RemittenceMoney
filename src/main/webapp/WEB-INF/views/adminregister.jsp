@@ -149,11 +149,11 @@ document.addEventListener('DOMContentLoaded', function () {
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
+
 	<div class="nxl-container" style="background: aliceblue;">
-		<div class="page-header">
+		<%--<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
-					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 						<a href="javascript:void(0);"
 							class="btn btn-primary successAlertMessage"> <i
@@ -163,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				</div>
 			</div>
 		</div>
+		--%>
 		<div class="nxl-content p-3">
 			<div class="main-content">
 				<div class="card border-top-0">
@@ -175,10 +176,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Name<span
+									<label class="form-label">Admin Full Name<span
 										class="text-danger">*</span></label> <input name="adminName"
 										type="text" class="form-control" id="adminName"
-										placeholder="Admin Name"> <span id="adminNameError"
+										placeholder="Enter full name"> <span id="adminNameError"
 										style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">

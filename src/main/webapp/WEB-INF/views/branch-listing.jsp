@@ -30,7 +30,7 @@
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 						<a href="branch" class="btn btn-primary">
-							<i class="feather-user-plus me-2"></i> <span>Add Branch</span>
+							<i class="bi bi-bezier me-2"></i> <span>Add New Branch</span>
 						</a>
 					</div>
 				</div>

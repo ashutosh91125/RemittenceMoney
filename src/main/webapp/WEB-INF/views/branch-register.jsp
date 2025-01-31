@@ -265,11 +265,11 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 							<!-- <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
-                            </a> -->
+                            </a>
 							<a href="javascript:void(0);"
 								class="btn btn-primary successAlertMessage"> <i
 								class="feather-user-plus me-2"></i> <span>Add Branch</span>
-							</a>
+							</a> -->
 						</div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">

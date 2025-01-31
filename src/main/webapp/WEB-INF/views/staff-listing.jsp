@@ -30,7 +30,7 @@
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 						<a href="staff" class="btn btn-primary">
-							<i class="feather-user-plus me-2"></i> <span>Add Staff</span>
+							<i class="feather-user-plus me-2"></i> <span>Add New Staff</span>
 						</a>
 					</div>
 				</div>

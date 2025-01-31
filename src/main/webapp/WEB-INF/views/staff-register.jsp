@@ -369,8 +369,6 @@ document.addEventListener('DOMContentLoaded', function () {
 												class="text-danger">*</span></label>
 											<form:select path="branches" data-select2-selector="tag" multiple="true"
 												id="branches" title="Select a branch" class="form-control" >
-
-                                                <form:option value="" disabled="true" selected="true">Select Branch</form:option>
 												<form:options items="${branchList}"
 													itemValue="id" itemLabel="branchName" />
 											</form:select>

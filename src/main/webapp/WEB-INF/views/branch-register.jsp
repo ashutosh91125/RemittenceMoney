@@ -50,12 +50,10 @@
 <!-- for KYC -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-<link rel="stylesheet" href="./style.css">
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
-<script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
@@ -223,6 +221,7 @@ function toggleRemarks() {
 }
 
     function updateFields() {
+            console.log("updateFields function called");
             var branchMode = document.getElementById("branchMode").value;
             var branchType = $('#branchType');  // Using jQuery to select Select2 element
             var cdpChannel = $('#cdpChannel');
@@ -245,12 +244,14 @@ function toggleRemarks() {
         }
 
         // Call updateFields on page load to handle initial state
-        window.onload = function () {
-            updateFields(); // Call the function to ensure proper state on page load
+        window.onload = function() {
+            console.log("window.onload triggered");
+            updateFields();
         };
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log("Page Loaded");
+    updateFields(); // Call the function to ensure proper state on page load
     toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
 

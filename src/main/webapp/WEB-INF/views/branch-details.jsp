@@ -388,36 +388,44 @@ Remove any width restrictions if there are any /
 										</div>
 									</div>
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Name<span
-												class="text-danger"> </span></label>
-											<form:input path="branchName" type="text"
-												class="form-control" id="branchName"
-												placeholder="Branch Name" readonly="true" required='true' />
-											<span id="branchNameError" class="text-danger"></span>
-										</div>
-									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Agent<span
-												class="text-danger"> </span></label> <input value="${agent}"
-												class="form-control" id="agent" readonly="true"
-												required='true' /> <span id="agentError"
-												class="text-danger"></span>
-										</div>
-									</div>
-
+                                        <div class="mb-4">
+                                            <label class="form-label">Branch Mode<span
+                                                class="text-danger"> </span></label>
+                                            <form:input path="branchMode" class="form-control"
+                                                id="branchMode" readonly="true" required='true' />
+                                            <span id="branchModeError" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Branch Type<span
+                                                class="text-danger"> </span></label>
+                                            <form:input path="branchType" class="form-control"
+                                                id="branchType" readonly="true" required='true' />
+                                            <span id="branchTypeError" class="text-danger"></span>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Type<span
-												class="text-danger"> </span></label>
-											<form:input path="branchType" class="form-control"
-												id="branchType" readonly="true" required='true' />
-											<span id="branchTypeError" class="text-danger"></span>
-										</div>
-									</div>
+                                        <div class="mb-4">
+                                            <label class="form-label">Branch Name<span
+                                                class="text-danger"> </span></label>
+                                            <form:input path="branchName" type="text"
+                                                class="form-control" id="branchName"
+                                                placeholder="Branch Name" readonly="true" required='true' />
+                                            <span id="branchNameError" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Agent<span
+                                                class="text-danger"> </span></label> <input value="${agent}"
+                                                class="form-control" id="agent" readonly="true"
+                                                required='true' /> <span id="agentError"
+                                                class="text-danger"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">State<span
@@ -427,19 +435,19 @@ Remove any width restrictions if there are any /
 												class="text-danger"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Display Name<span
-												class="text-danger"> </span></label>
-											<form:input path="branchDisplayName" type="text"
-												class="form-control" id="branchDisplayName"
-												placeholder="Branch Display Name" readonly="true"
-												required='true' />
-											<span id="branchDisplayNameError" class="text-danger"></span>
-										</div>
-									</div>
 								</div>
 								<div class="row">
+								    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Branch Display Name<span
+                                                class="text-danger"> </span></label>
+                                            <form:input path="branchDisplayName" type="text"
+                                                class="form-control" id="branchDisplayName"
+                                                placeholder="Branch Display Name" readonly="true"
+                                                required='true' />
+                                            <span id="branchDisplayNameError" class="text-danger"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 1<span
@@ -460,18 +468,17 @@ Remove any width restrictions if there are any /
 											<span id="address2Error" class="text-danger"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Address 3</label>
-											<form:input path="address3" type="text" class="form-control"
-												id="address3" placeholder="Address3" readonly="true"
-												required='true' />
-											<span id="address3Error" class="text-danger"></span>
-										</div>
-									</div>
-
 								</div>
 								<div class="row">
+								    <div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Address 3</label>
+                                            <form:input path="address3" type="text" class="form-control"
+                                                id="address3" placeholder="Address3" readonly="true"
+                                                required='true' />
+                                            <span id="address3Error" class="text-danger"></span>
+                                        </div>
+                                    </div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">City<span
@@ -490,29 +497,8 @@ Remove any width restrictions if there are any /
 											<span id="zipError" class="text-danger"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Channel Id<span
-												class="text-danger"> </span></label>
-											<form:input path="branchChannelId" type="text"
-												class="form-control" id="branchChannelId"
-												placeholder="Branch Channel Id" readonly="true"
-												required='true' />
-											<span id="branchChannelIdError" class="text-danger"></span>
-										</div>
-									</div>
-									
 								</div>
 								<div class="row">
-								<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Branch Mode<span
-												class="text-danger"> </span></label>
-											<form:input path="branchMode" class="form-control"
-												id="branchMode" readonly="true" required='true' />
-											<span id="branchModeError" class="text-danger"></span>
-										</div>
-									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">CDP Channel</label>
@@ -529,16 +515,16 @@ Remove any width restrictions if there are any /
 											<span id="raasChannelError" class="text-danger"></span>
 										</div>
 									</div>
+									<div class="col-xl-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Status <span
+                                                class="text-danger"> </span></label>
+                                            <form:input path="status" class="form-control" id="status"
+                                                readonly="true" placeholder="Status" />
+                                        </div>
+                                    </div>
 								</div>
 								<div class="row">
-								<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Status <span
-												class="text-danger"> </span></label>
-											<form:input path="status" class="form-control" id="status"
-												readonly="true" placeholder="Status" />
-										</div>
-									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Remarks<span

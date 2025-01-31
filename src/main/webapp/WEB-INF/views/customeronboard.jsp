@@ -784,9 +784,8 @@
 												<div class="col-lg-8">
 													<div class="mb-4">
 														<form:select id="residentType" path="residentTypeId"
-															class="form-control" data-select2-selector="icon"
-															multiple="false" onchange="toggleFields(); "
-															onblur="toggleFields();">
+															class="form-control" multiple="false"
+															onchange="toggleFields(); " onblur="toggleFields();">
 															<form:option value="" disabled="true" selected="true">Select Resident Type</form:option>
 															<form:options items="${residentTypeList}"
 																itemValue="valueId" itemLabel="description" />
@@ -795,16 +794,7 @@
 													</div>
 												</div>
 											</div>
-											<hr>
-
-											<div id="idNumberField" class="row">
-												<div id="nonResident" class="row"
-													style="display: flex; justify-content: end;">
-													<a href="javascript:void(0);"
-														class="avatar-text avatar-md bg-primary text-white"> <i
-														class="feather-plus"></i>
-													</a>
-												</div>
+											<div id="idNumberField" class="row" style="display:none;">
 												<div id="customerIdentityContainer" class="row">
 													<div class="row">
 														<div class="col-xl-4">
@@ -818,8 +808,9 @@
 															<div class="mb-4">
 																<label class="form-label">Id Type <span
 																	class="text-danger">*</span></label>
-																<form:select id="idTypeDropdown" path="idType"
-																	class="form-control" style="display: none;">
+																<form:select id="idTypeDropdown"
+																	path="idDetails[0].idType" class="form-control"
+																	style="display: none;">
 																	<form:option value="" disabled="true" selected="true">Select Id Type</form:option>
 																	<form:options items="${idTypesList}"
 																		itemValue="valueId" itemLabel="description" />
@@ -831,7 +822,7 @@
 															<div class="mb-4">
 																<label class="form-label">Id Number<span
 																	class="text-danger">*</span></label>
-																<form:input path="idNumber" id="idNumber"
+																<form:input path="idDetails[0].idNumber" id="idNumber"
 																	name="idNumber" placeholder="Id Number" type="text"
 																	class="form-control" />
 																<span id="idNumberError" style="color: red;"></span>
@@ -841,8 +832,8 @@
 															<div class="mb-4">
 																<label class="form-label">Name as per Id<span
 																	class="text-danger">*</span></label>
-																<form:input path="nameAsPerId" type="text"
-																	class="form-control" placeholder="Name as per Id" />
+																<form:input path="idDetails[0].nameAsPerId" type="text"
+																	class="form-control" placeholder="Name as per Id" id="nameAsPerId"/>
 																<span id="nameAsPerIdError" style="color: red;"></span>
 															</div>
 														</div>
@@ -854,8 +845,9 @@
 																<div class="mb-4">
 																	<label class="form-label">Issued Country<span
 																		class="text-danger">*</span></label>
-																	<form:select path="issuedCountry" class="form-control"
-																		data-select2-selector="icon" multiple="false">
+																	<form:select path="idDetails[0].issuedCountry"
+																		class="form-control" data-select2-selector="icon"
+																		multiple="false" id="issuedCountry">
 																		<form:option value="" disabled="true" selected="true">Issued Country</form:option>
 																		<form:options items="${countryList}"
 																			itemValue="valueId" itemLabel="description" />
@@ -867,11 +859,12 @@
 																<div class="mb-4">
 																	<label class="form-label">Issued at<span
 																		class="text-danger">*</span></label>
-																	<form:select path="issuedAt" class="form-control"
-																		data-select2-selector="icon" multiple="false">
+																	<form:select path="idDetails[0].issuedAt"
+																		class="form-control" data-select2-selector="icon"
+																		multiple="false" id="issuedAt">
 																		<form:option value="" disabled="true" selected="true">Issued at</form:option>
 																		<form:options items="${countryList}"
-																			itemValue="description" itemLabel="description" />
+																			itemValue="valueId" itemLabel="description" />
 																	</form:select>
 																	<span id="issuedAtError" style="color: red;"></span>
 																</div>
@@ -880,7 +873,7 @@
 																<div class="mb-4">
 																	<label class="form-label">Issued By<span
 																		class="text-danger">*</span></label>
-																	<form:input path="issuedBy" type="text"
+																	<form:input path="idDetails[0].issuedBy" type="text"
 																		class="form-control" placeholder="Issued By"
 																		id="issuedBy" />
 																	<span id="issuedByError" style="color: red;"></span>
@@ -895,7 +888,7 @@
 																<div class="mb-4">
 																	<label class="form-label">Issued on<span
 																		class="text-danger">*</span></label>
-																	<form:input path="issuedOn" type="date"
+																	<form:input path="idDetails[0].issuedOn" type="date"
 																		class="form-control" min="1900-01-01" max="${today}" />
 																	<span id="issuedOnError" style="color: red;"></span>
 																</div>
@@ -904,34 +897,34 @@
 																<div class="mb-4">
 																	<label class="form-label">Date of Expiry<span
 																		class="text-danger">*</span></label>
-																	<form:input path="dateOfExpiry" type="date"
-																		class="form-control" min="${tomorrow}" />
+																	<form:input path="idDetails[0].dateOfExpiry"
+																		type="date" class="form-control" min="${tomorrow}" />
 																	<span id="dateOfExpiryError" style="color: red;"></span>
 																</div>
 															</div>
 														</div>
 													</div>
 													<div id="idDetails">
-														<div class="row">
+														 <div class="row">
 															<div class="col-xl-4">
 																<div class="mb-4">
 																	<label class="form-label">Id Front (Jpg only)<span
 																		class="text-danger">*</span></label>
-																	<form:input path="frontPictureFile" type="file"
-																		accept="image/jpeg, image/jpg" class="form-control"
-																		placeholder="Id Front" />
+																	<form:input path="idDetails[0].frontPictureFile"
+																		type="file" accept="image/jpeg, image/jpg"
+																		class="form-control" placeholder="Id Front" />
 																</div>
 															</div>
 															<div class="col-xl-4">
 																<div class="mb-4">
 																	<label class="form-label">Id Back (Jpg only)<span
 																		class="text-danger">*</span></label>
-																	<form:input path="backPictureFile" type="file"
-																		accept="image/jpeg, image/jpg" class="form-control"
-																		placeholder="Id Back" />
+																	<form:input path="idDetails[0].backPictureFile"
+																		type="file" accept="image/jpeg, image/jpg"
+																		class="form-control" placeholder="Id Back" />
 																</div>
 															</div>
-														</div>
+														</div> 
 														<div id="idDetailsFields">
 															<h5 class="fw-bold mb-0 me-4">
 																<span class="d-block mb-4">Visa Details</span>
@@ -940,7 +933,7 @@
 																<div class="col-xl-4">
 																	<div class="mb-4">
 																		<label class="form-label">Visa Number</label>
-																		<form:input path="visaNumber" type="text"
+																		<form:input path="idDetails[0].visaNumber" type="text"
 																			class="form-control" placeholder="Visa Number" />
 																		<span id="visaNumberError" style="color: red;"></span>
 																	</div>
@@ -948,16 +941,17 @@
 																<div class="col-xl-4">
 																	<div class="mb-4">
 																		<label class="form-label">Visa Expiry Date</label>
-																		<form:input path="visaExpiryDate" type="date"
-																			class="form-control" placeholder="Visa Expiry Date" />
+																		<form:input path="idDetails[0].visaExpiryDate"
+																			type="date" class="form-control"
+																			placeholder="Visa Expiry Date" />
 																		<span id="visaExpiryDateError" style="color: red;"></span>
 																	</div>
 																</div>
 																<div class="col-xl-4">
 																	<div class="mb-4">
 																		<label class="form-label">Visa Type</label>
-																		<form:select path="visaType" class="form-control"
-																			data-select2-selector="icon">
+																		<form:select path="idDetails[0].visaType"
+																			class="form-control" data-select2-selector="icon">
 																			<form:option value="" disabled="true" selected="true">Visa Type</form:option>
 																			<option value="1">Employment</option>
 																			<option value="2">Visitor</option>
@@ -977,6 +971,7 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
@@ -1045,55 +1040,7 @@
 												</div>
 											</div>
 										</div>
-										<%--	<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Security Number</label>
-													<form:input path="socialSecurityNumber" type="text"
-														class="form-control" placeholder="Social Security Number" />
-												</div>
-											</div>
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Registration Number</label>
-													<form:input path="taxRegistrationNumber" type="text"
-														class="form-control" placeholder="Tax Registration Number" />
-												</div>
-											</div>
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Transaction Issued
-														Country </label>
-													<form:select path="txnIssuedCountry" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Transaction Issued Country</form:option>
-														<form:options items="${countryList}" />
-													</form:select>
-												</div>
-											</div>
-										</div>--%>
-
-										<%-- --%>
 										<div class="row">
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer ecrn<span
-														class="text-danger">*</span></label>
-													<form:input path="ecrn" type="text" class="form-control"
-														placeholder="Employer ecrn" />
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Establishment Id<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="employerEstablishmentId" type="text"
-														class="form-control"
-														placeholder="Employer Establishment Id" />
-												</div>
-											</div> --%>
-
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
@@ -1134,25 +1081,6 @@
 												</div>
 											</div>
 										</div>
-										<%--<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">PEP Catagory<span
-														class="text-danger">*</span></label>
-													<form:input path="pepCategory" type="text"
-														class="form-control" placeholder="PEP Catagory" />
-												</div>
-											</div>
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Personal Mohre Id<span
-														class="text-danger">*</span></label>
-													<form:input path="personalMohreId" type="text"
-														class="form-control" placeholder="Personal Mohre Id" />
-												</div>
-											</div>
-
-										</div>--%>
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
@@ -1183,15 +1111,6 @@
 											</div>
 										</div>
 										<div class="row">
-
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Reason For Acc.<span
-														class="text-danger">*</span></label>
-													<form:input path="reasonForAcc" type="text"
-														class="form-control" placeholder="Reason For Acc." />
-												</div>
-											</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Volume Month<span
@@ -1292,66 +1211,17 @@
 													<span id="customerRemarksError" style="color: red;"></span>
 												</div>
 											</div>
-											<!-- <div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">DNFBP<span
-															class="text-danger">*</span></label>
-														<form:select path="dnfbp" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">DPMS<span
-															class="text-danger">*</span></label>
-														<form:select path="dpms" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
-													</div>
-												</div>  -->
-										</div>
-										<%--<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Agent Referenc Number<span
-														class="text-danger">*</span></label>
-													<form:input path="agentRefNo" type="text"
-														class="form-control" placeholder="Agent Referenc Number" />
-												</div>
-											</div>
 											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Links<span
-														class="text-danger">*</span></label>
-													<form:input path="socialLinksId" class="form-control"
-														placeholder="Social Links" />
-												</div>
-											</div>
-										</div>--%>
-										<div class="row"></div>
-										<div class="row">
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Catagory<span
-														class="text-danger">*</span></label>
-													<form:input path="profileCategory" class="form-control"
-														placeholder="Profile Catagory" />
-												</div>
-											</div> --%>
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Photo<span
-														class="text-danger">*</span></label>
-													<form:input path="" type="file" class="form-control"
-														placeholder="Profile Photo" />
-												</div>
-											</div> --%>
+                                            	<div class="mb-4">
+                                            		<label class="form-label">Profile Photo (Jpg only)<span
+                                            		class="text-danger">*</span></label>
+                                            		<form:input path="profPictureFile"
+                                            		type="file" accept="image/jpeg, image/jpg"
+                                            		class="form-control" placeholder="Profile Photo" />
+                                            		</div>
+                                            </div>
 										</div>
+										
 									</div>
 								</div>
 							</div>

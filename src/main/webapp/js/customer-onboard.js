@@ -260,69 +260,72 @@ function copyAddress() {
 	        }
 	    });
 	});
-    function toggleFields() {
-        const residentType = document.getElementById('residentType').value;
-        const idTypeDropdown = document.getElementById("idTypeDropdown");
-        const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
-        const issuedForNonResidents = document.getElementById('issuedForNonResidents');
-        const idDetails = document.getElementById('idDetails');
-        const idDetailsFields = document.getElementById('idDetailsFields');
-        const idNumberField = document.getElementById('idNumberField');
-        const nonResident = document.getElementById('nonResident');
+	function toggleFields() {
+	    const residentType = document.getElementById('residentType').value;
+	    const idTypeDropdowns = document.querySelectorAll("[id^='idTypeDropdown']");
+	    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
+	    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+	    const idDetails = document.getElementById('idDetails');
+	    const idDetailsFields = document.getElementById('idDetailsFields');
+	    const idNumberField = document.getElementById('idNumberField');
+	//     const nonResident = document.getElementById('nonResident');
+	    const customerIdentityContainer = document.getElementById('customerIdentityContainer');
 
-      
-        idTypeDropdown.style.display = "none";
-        idTypeDropdown.removeAttribute("disabled");
-        idDetailsFields.style.display = 'none'; 
-        idTypeDropdown.value = ""; 
+	    if (residentType === '101') {
+	        idTypeDropdowns.forEach(dropdown => {
+	            dropdown.style.display = "block";
+	            dropdown.value = "28";
+	            dropdown.setAttribute("disabled", true);
+	        });
 
-        if (residentType === '101') {
-        	console.log(residentType);
-            idTypeDropdown.style.display = "block"; 
-            idTypeDropdown.value = "28"; 
-            idTypeDropdown.setAttribute("disabled", true);
+	        issuedDateExpiryNonResident.style.display = 'none';
+	        issuedForNonResidents.style.display = 'none';
+	        idDetails.style.display = 'block';
+	        idDetailsFields.style.display = 'none';
+	        idNumberField.style.display = 'block';
+	//         nonResident.style.display = 'none';
+	        customerIdentityContainer.style.display = 'block';
+	    } else if (residentType === '100') {
+	        idTypeDropdowns.forEach(dropdown => {
+	            dropdown.style.display = "block";
+	            dropdown.removeAttribute("disabled");
+	            dropdown.value = "2";
 
-            issuedDateExpiryNonResident.style.display = 'none';
-            issuedForNonResidents.style.display = 'none';
-            idDetails.style.display = 'block';
-            idDetailsFields.style.display = 'none';
-            idNumberField.style.display = 'block';
-            nonResident.style.display = 'none';
-        } else if (residentType === '100') { 
-            idTypeDropdown.style.display = "block";
-            idTypeDropdown.removeAttribute("disabled"); 
-            idTypeDropdown.value = "2"; 
+	            dropdown.addEventListener('change', function () {
+	                if (this.value === '28') {
+	                    idDetails.style.display = 'none';
+	                    idDetailsFields.style.display = 'none';
+	                    idNumberField.style.display = 'none';
+	                } else if (this.value === '2') {
+	                    idDetailsFields.style.display = 'block';
+	                } else {
+	                    idDetailsFields.style.display = 'none';
+	                }
+	            });
+	        });
 
-            idDetails.style.display = 'block';
-            idDetailsFields.style.display = 'block';
-            idNumberField.style.display = 'block';
-            issuedForNonResidents.style.display = 'block';
-            issuedDateExpiryNonResident.style.display = 'block';
-            nonResident.style.display = 'flex';
+	        issuedDateExpiryNonResident.style.display = 'block';
+	        issuedForNonResidents.style.display = 'block';
+	        idDetails.style.display = 'block';
+	        idDetailsFields.style.display = 'block';
+	        idNumberField.style.display = 'block';
+	//         nonResident.style.display = 'flex';
+	        customerIdentityContainer.style.display = 'block';
+	    } else {
+	        idTypeDropdowns.forEach(dropdown => {
+	            dropdown.style.display = "none";
+	            dropdown.removeAttribute("disabled");
+	        });
 
-            idTypeDropdown.addEventListener('change', function () {
-                if (idTypeDropdown.value === '28') {
-                    idDetails.style.display = 'none';
-                    idDetailsFields.style.display = 'none';
-                    idNumberField.style.display = 'none';
-                } else if (idTypeDropdown.value === '2') {
-                    idDetailsFields.style.display = 'block';
-                } else {
-                    idDetailsFields.style.display = 'none';
-                }
-            });
-        } else {
-            idTypeDropdown.style.display = "none";
-            idTypeDropdown.removeAttribute("disabled");
-
-            issuedDateExpiryNonResident.style.display = 'none';
-            issuedForNonResidents.style.display = 'none';
-            idDetails.style.display = 'none';
-            idDetailsFields.style.display = 'none';
-            idNumberField.style.display = 'none';
-            nonResident.style.display = 'none';
-        }
-    }
+	        issuedDateExpiryNonResident.style.display = 'none';
+	        issuedForNonResidents.style.display = 'none';
+	        idDetails.style.display = 'none';
+	        idDetailsFields.style.display = 'none';
+	        idNumberField.style.display = 'none';
+	//         nonResident.style.display = 'none';
+	        customerIdentityContainer.style.display = 'none';
+	    }
+	}
 
 
     function toggleCustomerRemarks() {
@@ -411,13 +414,43 @@ function copyAddress() {
             }
         });
         const today = new Date().toISOString().split("T")[0];
-        const tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() + 1); 
-        const tomorrowString = tomorrow.toISOString().split("T")[0];
+           const tomorrow = new Date();
+           tomorrow.setDate(tomorrow.getDate() + 1);
+           const tomorrowString = tomorrow.toISOString().split("T")[0];
 
-        document.querySelector('input[name="issuedOn"]').setAttribute("max", today);
-        document.querySelector('input[name="dateOfExpiry"]').setAttribute("min", tomorrowString);
+           const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
+           const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
 
+           issuedOnInput.setAttribute("max", today);
+           dateOfExpiryInput.setAttribute("min", tomorrowString);
+
+
+           issuedOnInput.addEventListener('change', function () {
+               const issuedOnValue = this.value;
+               const dateOfExpiryValue = dateOfExpiryInput.value;
+
+               const issuedOnError = document.getElementById('issuedOnError');
+               issuedOnError.textContent = "";
+
+               if (!issuedOnValue) {
+                   issuedOnError.textContent = "Issued On date is required.";
+                   return;
+               }
+
+           });
+
+           dateOfExpiryInput.addEventListener('change', function () {
+               const dateOfExpiryValue = this.value;
+               const issuedOnValue = issuedOnInput.value;
+
+               const dateOfExpiryError = document.getElementById('dateOfExpiryError');
+               dateOfExpiryError.textContent = "";
+
+               if (!dateOfExpiryValue) {
+                   dateOfExpiryError.textContent = "Date of Expiry is required.";
+                   return;
+               }
+           });
         toggleFields();
         toggleCustomerRemarks();
     });

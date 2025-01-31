@@ -66,8 +66,15 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
                 beneficiary.getId(),
                 beneficiary.getEcrn(),
                 fullName,beneficiary.getBeneficiaryAccountNo(), // Assuming this field exists in BeneficiaryDetails
-                beneficiary.getBeneficiaryBank()
+                beneficiary.getBeneficiaryBank(),beneficiary.getStatus()
         );
     }
+
+    @Override
+    public BeneficiaryDetails getById(Long id) {
+        return beneficiaryRepository.findById(id)
+            .orElseThrow(() -> new IllegalArgumentException("Beneficiary not found with ID: " + id));
+    }
+
 
 }

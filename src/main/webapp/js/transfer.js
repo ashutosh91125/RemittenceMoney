@@ -1,10 +1,98 @@
+//$(document).ready(function () {
+//    $("tr[data-customer-ecrn]").on("click", function () {
+//        var customerEcrn = $(this).data("customer-ecrn");
+//        console.log("Fetching customer for ECRN:", customerEcrn);
+//		$("#idDetailsSection").fadeIn();
+//        $.ajax({
+//            url: '/caas/api/v2/customer/' + customerEcrn,
+//            type: 'GET',
+//            success: function (response) {
+//                console.log(response);
+//                if (response) {
+//                    if(response.amlScanStatus != 'Accepted' && response.customerStatus != 'ACTIVE'){
+//                        alert("Customer is not valid for transaction!");
+//                        return;
+//                    }
+//					$('#customerId').val(response.id || '');
+//                    $('#ecrn').val(response.ecrn?.trim() || '');
+//                    $('#firstName').val(response.firstName?.trim() || '');
+//                    $('#middleName').val(response.middleName?.trim() || '');
+//                    $('#lastName').val(response.lastName?.trim() || '');
+//                    $('#currentCity').val(response.city?.trim() || '');
+//                    $('#placeOfBirth').val(response.placeOfBirth?.trim() || '');
+//                    $('#dateOfBirth').val(response.dateOfBirth?.trim() || '');
+//                    $('#emailId').val(response.emailId?.trim() || '');
+//                    $('#primaryMobileNumber').val(response.primaryMobileNumber?.trim() || '');
+//                    $('#state').val(response.state?.trim() || '');
+//                    $('#residentTypeId').val(response.residentTypeId || '');
+//                    $('#visaType').val(response.visaType?.trim() || '');
+//                    $('#idNumber').val(response.idNumber?.trim() || '');
+////                     $('#idType').val(response.idType || '');
+//                    $('#issuedBy').val(response.issuedBy?.trim() || '');
+//                    $('#issuedOn').val(response.issuedOn?.trim() || '');
+//                    $('#dateOfExpiry').val(response.dateOfExpiry?.trim() || '');
+//                    $('#visaExpiryDate').val(response.visaExpiryDate?.trim() || '');
+//                    $('#visaNumber').val(response.visaNumber?.trim() || '');
+//
+//					if (response.id) {
+//					                        fetchIdDetails(response.id);
+//					                    }
+//                    // Map country code to country name
+//                    if (response.country) {
+//                        fetchEnumValue('country', response.country, function (country) {
+//                            $('#country').val(country || response.country);
+//                        });
+//                        fetchEnumValue('country', response.countryOfResidence, function (country) {
+//                            $('#countryOfResidence').val(country || response.countryOfResidence);
+//                        });
+//                        fetchEnumValue('country', response.nationality, function (country) {
+//                            $('#nationality').val(country || response.nationality);
+//                        });
+//                        fetchEnumValue('country', response.issuedCountry, function (country) {
+//                            $('#issuedCountry').val(country || response.issuedCountry);
+//                        });
+//                        fetchEnumValue('idTypes', response.idType, function (idTypes) {
+//                            $('#idType').val(idTypes || response.idType);
+//                        });
+//                    }
+//                    var mergedAddress1 = [
+//                        response.buildingName?.trim(),
+//                        response.streetName?.trim(),
+//                        response.landmark?.trim(),
+//                        response.district?.trim(),
+//                        response.zip ? ', Zip - ' + response.zip.trim() : ''
+//                    ].filter(Boolean).join(' ');
+//                    $('#address1').val(mergedAddress1);
+//                    var mergedAddress2 = [
+//                        response.parBuildingName?.trim(),
+//                        response.parStreetName?.trim(),
+//                        response.parLandmark?.trim(),
+//                        response.parDistrict?.trim(),
+//                        response.parZip ? ', Zip - ' + response.parZip.trim() : ''
+//                    ].filter(Boolean).join(' ');
+//                    $('#address2').val(mergedAddress2);
+//                    toggleFields();
+//                    fetchBeneficiaries(customerEcrn);
+//                } else {
+//                    console.error("No customer data found for the provided ECRN.");
+//                }
+//            },
+//            error: function (xhr, status, error) {
+//                if (xhr.status === 404) {
+//                    alert("Customer not found for the provided ECRN.");
+//                } else {
+//                    alert("An error occurred while fetching customer data.");
+//                }
+//            }
+//        });
+//
 $(document).ready(function () {
     $("tr[data-customer-ecrn]").on("click", function () {
         var customerEcrn = $(this).data("customer-ecrn");
         console.log("Fetching customer for ECRN:", customerEcrn);
-
+		$("#idDetailsSection").fadeIn();
         $.ajax({
-            url: '/caas/api/v2/customer/' + customerEcrn, // Include ECRN in path
+            url: '/caas/api/v2/customer/' + customerEcrn,
             type: 'GET',
             success: function (response) {
                 console.log(response);
@@ -13,6 +101,7 @@ $(document).ready(function () {
                         alert("Customer is not valid for transaction!");
                         return;
                     }
+					$('#customerId').val(response.id || '');
                     $('#ecrn').val(response.ecrn?.trim() || '');
                     $('#firstName').val(response.firstName?.trim() || '');
                     $('#middleName').val(response.middleName?.trim() || '');
@@ -24,15 +113,43 @@ $(document).ready(function () {
                     $('#primaryMobileNumber').val(response.primaryMobileNumber?.trim() || '');
                     $('#state').val(response.state?.trim() || '');
                     $('#residentTypeId').val(response.residentTypeId || '');
-                    $('#visaType').val(response.visaType?.trim() || '');
-                    $('#idNumber').val(response.idNumber?.trim() || '');
-//                     $('#idType').val(response.idType || '');
-                    $('#issuedBy').val(response.issuedBy?.trim() || '');
-                    $('#issuedOn').val(response.issuedOn?.trim() || '');
-                    $('#dateOfExpiry').val(response.dateOfExpiry?.trim() || '');
-                    $('#visaExpiryDate').val(response.visaExpiryDate?.trim() || '');
-                    $('#visaNumber').val(response.visaNumber?.trim() || '');
-                    // Map country code to country name
+					if (response.id) {
+										                        fetchIdDetails(response.id);
+										                    }
+					if (Array.isArray(response.idDetails) && response.idDetails.length > 0){
+						var firstObject = response.idDetails[0];
+						console.log(firstObject);
+						if(firstObject.activeStatus === true){
+							if(firstObject.id || firstObject.idType || firstObject.idNumber || firstObject.visaNumber || firstObject.visaExpiryDate || firstObject.nameAsPerId
+								|| firstObject.issuedCountry || firstObject.issuedBy || firstObject.issuedAt || firstObject.issuedOn || firstObject.activeStatus || firstObject.visaType){
+									$('#visaType').val(firstObject.visaType);
+									$('#idNumber').val(firstObject.idNumber);
+									$('#idType').val(firstObject.idType);
+									$('#issuedBy').val(firstObject.issuedBy);
+									$('#issuedOn').val(firstObject.issuedOn);
+									$('#dateOfExpiry').val(firstObject.dateOfExpiry);
+									$('#visaExpiryDate').val(firstObject.visaExpiryDate);
+									$('#visaNumber').val(firstObject.visaNumber);
+									$('#issuedCountry').val(firstObject.issuedCountry);
+
+								}
+
+						}else {
+							    console.log("No valid idDetails found.");
+							    $('#visaType').val('');
+							    $('#idNumber').val('');
+							    $('#idType').val('');
+							    $('#issuedBy').val('');
+							    $('#issuedOn').val('');
+							    $('#dateOfExpiry').val('');
+							    $('#visaExpiryDate').val('');
+							    $('#visaNumber').val('');
+							    $('#issuedCountry').val('');
+							    $('#visaNumber').val('');
+							}
+
+					}
+
                     if (response.country) {
                         fetchEnumValue('country', response.country, function (country) {
                             $('#country').val(country || response.country);
@@ -42,12 +159,6 @@ $(document).ready(function () {
                         });
                         fetchEnumValue('country', response.nationality, function (country) {
                             $('#nationality').val(country || response.nationality);
-                        });
-                        fetchEnumValue('country', response.issuedCountry, function (country) {
-                            $('#issuedCountry').val(country || response.issuedCountry);
-                        });
-                        fetchEnumValue('idTypes', response.idType, function (idTypes) {
-                            $('#idType').val(idTypes || response.idType);
                         });
                     }
                     var mergedAddress1 = [
@@ -62,12 +173,13 @@ $(document).ready(function () {
                         response.parBuildingName?.trim(),
                         response.parStreetName?.trim(),
                         response.parLandmark?.trim(),
-                        response.parDistrict?.trim(),	
-                        response.parZip ? ', Zip - ' + response.parZip.trim() : '' 
+                        response.parDistrict?.trim(),
+                        response.parZip ? ', Zip - ' + response.parZip.trim() : ''
                     ].filter(Boolean).join(' ');
                     $('#address2').val(mergedAddress2);
+					fetchBeneficiaries(customerEcrn);
                     toggleFields();
-                    fetchBeneficiaries(customerEcrn);
+
                 } else {
                     console.error("No customer data found for the provided ECRN.");
                 }
@@ -80,6 +192,55 @@ $(document).ready(function () {
                 }
             }
         });
+
+		function fetchIdDetails(customerId) {
+		    $.ajax({
+		        url: '/caas/api/v2/customer/id-detail/' + customerId,
+		        type: 'GET',
+		        success: function (idDetailsList) {
+		            console.log("Fetched ID Details:", idDetailsList);
+		            var idDetailsTable = $("#search-result2 tbody");
+		            idDetailsTable.empty();
+
+		            if (idDetailsList.length > 0) {
+		                idDetailsList.forEach(function (idDetail) {
+							fetchEnumValue("idTypes", idDetail.idType, function (fullIdType) {
+							                        var idTypeDisplay = fullIdType || idDetail.idType || '';
+		                    fetchEnumValue("country", idDetail.issuedCountry, function (fullCountryName) {
+		                        var issuedCountry = fullCountryName || idDetail.issuedCountry || '';
+								var activeStatusDisplay = idDetail.activeStatus ? 'Active' : 'Inactive';
+		                        var row = `<tr>
+		                            <td>${idTypeDisplay}</td>
+		                            <td>${idDetail.idNumber || ''}</td>
+		                            <td>${idDetail.issuedBy || ''}</td>
+									<td>${idDetail.issuedOn || ''}</td>
+		                            <td>${idDetail.dateOfExpiry || ''}</td>
+		                             <td>${issuedCountry}</td>
+		                            <td>${idDetail.visaNumber || ''}</td>
+		                            <td>${idDetail.visaExpiryDate || ''}</td>
+		                            <td>${idDetail.visaType || ''}</td>
+									<td>${activeStatusDisplay}</td>
+		                            <td class="text-end">
+									<img class="transactionLogo" title="Edit"
+									    src="assets/images/pen.png"
+									    class="img-fluid" style="width: 20px;" onclick="openPopup('${idDetail.idNumber}', ${idDetail.activeStatus})"//>
+		                            </td>
+		                        </tr>`;
+		                        idDetailsTable.append(row);
+		                    });
+		                });
+						});
+		            } else {
+		                idDetailsTable.append('<tr><td colspan="10" class="text-center">No ID details found</td></tr>');
+		            }
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("Error fetching ID details:", error);
+		            alert("Failed to retrieve ID details.");
+		        }
+		    });
+		}
+
      // Fetch Beneficiaries Function
        /* function fetchBeneficiaries(ecrn) {
             $.ajax({
@@ -111,21 +272,27 @@ $(document).ready(function () {
 		            if (response.success && response.data?.length > 0) {
 		                console.log("Beneficiaries fetched successfully:", response.data);
 		                let tableBody = $('#search-result1 tbody');
-		                tableBody.empty(); // Clear any existing rows in the table body
+		                tableBody.empty();
 
-		                // For each beneficiary, fetch the bank name using the bank ID
+
 		                response.data.forEach(function (beneficiary) {
 		                    $.ajax({
-		                        url: '/api/v1/banks/' + beneficiary.beneficiaryBank, // Call the bank API with the bank ID
+		                        url: '/api/v1/banks/' + beneficiary.beneficiaryBank,
 		                        type: 'GET',
 		                        success: function (bankResponse) {
-		                            let bankName = bankResponse?.bankName || "Unknown Bank"; // Use the bank name or a fallback value
-									console.log(bankName);
+		                            let bankName = bankResponse?.bankName || "Unknown Bank";
+									console.log(bankName,"search-result1");
 									let row = `<tr data-beneficiary-id="${beneficiary.id}">
 									                                <td class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
 																	onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
 									                                <td>${bankName}</td>
 									                                <td>${beneficiary.beneficiaryAccountNo}</td>
+																	<td>${beneficiary.status}</td>
+																	<td class="text-end">
+																									<img class="transactionLogo" title="Edit"
+																									    src="assets/images/pen.png"
+																									    class="img-fluid" style="width: 20px;" onclick="openPopupForBeneficiary('${beneficiary.id}', ${beneficiary.status})"//>
+																		                            </td>
 									                            </tr>`;
 		                            tableBody.append(row);
 		                        },
@@ -270,7 +437,7 @@ $(document).ready(function () {
 
                     // Set selected state value after populating options
                     $('#beneficiaryState').val(beneficiary.beneficiaryState?.trim() || '').change();
-                    }, 
+                    },
         			error: function () {
             		console.error("Error fetching states for nationality.");
         			}
@@ -374,10 +541,10 @@ function toggleFields() {
 }
 
 $(document).ready(function() {
-   const currencySelect = $('#currencies').select2();
+   const currencySelect = $('#currencies');
    $('#payOutCountry').on('change', function() {
        let dependent = $(this).val();
-	
+
 
        $('#beneficiaryBank').empty().append('<option value="" disabled selected>Select Bank</option>');
        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
@@ -433,7 +600,7 @@ $(document).ready(function() {
        }
    });
    $('#beneficiaryBank').on('change', function() {
-       let bankId = $(this).val();  
+       let bankId = $(this).val();
        $('#bankBranches').empty().append('<option value="" disabled selected>Select Branch</option>');
 
        if (bankId) {
@@ -475,7 +642,7 @@ function getQuote() {
     const receivingCurrencyCode = $('#currencies').val();
     const sendingAmount = $('#payInAmount').val();
     const receivingMode = $('#beneficiaryDeliveryOption').val();
-    
+
     const beneficiaryBank = $('#beneficiaryBank').val();
     const bankBranches = $('#bankBranches').val();
     const beneficiaryAccountType = $('#beneficiaryAccountType').val();
@@ -484,13 +651,13 @@ function getQuote() {
     const beneficiaryAddress1 = $('#beneficiaryAddress1').val();
     const beneficiaryCity = $('#beneficiaryCity').val();
     const beneficiaryNationality = $('#beneficiaryNationality').val();
-	
-	
-   
+
+
+
     const sourceOfFund = $('#sourceOfFund').val();
     const transactionPurpose = $('#transactionPurpose').val();
     const paymentMode = $('#paymentMode').val();
-    
+
     // Check if any required field is empty
     let isValid = true;
 
@@ -558,28 +725,28 @@ function getQuote() {
     } else {
         $('#beneficiaryLastNameError').text('');
     }
-    
+
     if (!beneficiaryAddress1) {
         $('#beneficiaryAddress1Error').text('Beneficiary Address1 is required.');
         isValid = false;
     } else {
         $('#beneficiaryAddress1Error').text('');
     }
-    
+
     if (!beneficiaryCity) {
         $('#beneficiaryCityError').text('Beneficiary City is required.');
         isValid = false;
     } else {
         $('#beneficiaryCityError').text('');
     }
-    
+
     if (!beneficiaryNationality) {
         $('#beneficiaryNationalityError').text('Nationality is required.');
         isValid = false;
     } else {
         $('#beneficiaryNationalityError').text('');
     }
-    
+
     if (!paymentMode) {
         $('#paymentModeError').text('Payment Mode is required.');
         isValid = false;
@@ -879,7 +1046,7 @@ function getQuote() {
                             paymentStatus: 'failed',
                             transactionState: state,
                             transactionSubState: subState,
-							
+
                             firstName: $('#firstName').val(),
                              middleName: $('#middleName').val(),
                              lastName: $('#lastName').val(),
@@ -1069,7 +1236,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const accountNumber = document.getElementById("accountNo");
     const confirmAccountNumber = document.getElementById("confirmAccountNo");
     const messageElement = document.getElementById("validationMessage");
-    const accountNoError = document.getElementById("accountNoError"); 
+    const accountNoError = document.getElementById("accountNoError");
     const submitButton = document.getElementById("quoteButton");
     const residentTypeField = document.getElementById('residentTypeId');
     const dailyCreditLimit = document.getElementById('dailyCreditLimit');
@@ -1191,7 +1358,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				                    $('#beneficiaryState')
 				                        .empty()
 				                        .append('<option value="" disabled selected>Select Beneficiary State</option>');
-				                    
+
 				                    $.each(data, function (index, enumValue) {
 				                        $('#beneficiaryState').append(
 				                            '<option value="' + enumValue.description + '">' + enumValue.description + '</option>'
@@ -1210,13 +1377,13 @@ document.addEventListener('DOMContentLoaded', function () {
 				    });
 				});
 
-		
+
 function showSelectBeneficiaryDiv() {
 	const beneficiaryDiv = document.getElementById("selectBeneficiaryDiv");
 	if (beneficiaryDiv.style.display === "none" || beneficiaryDiv.style.display === "") {
-			beneficiaryDiv.style.display = "block"; 
+			beneficiaryDiv.style.display = "block";
 			} else {
-				beneficiaryDiv.style.display = "none"; 
+				beneficiaryDiv.style.display = "none";
 			}
 		}
 		function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
@@ -1224,9 +1391,70 @@ function showSelectBeneficiaryDiv() {
 		    const error = document.getElementById(errorId);
 
 		    if (input.value.length > maxLength) {
-		        input.value = input.value.slice(0, maxLength); 
-		        error.textContent = `Maximum allowed characters  reached.`; 
+		        input.value = input.value.slice(0, maxLength);
+		        error.textContent = `Maximum allowed characters  reached.`;
 		    } else {
-		        error.textContent = ''; 
+		        error.textContent = '';
 		    }
+		}
+
+		function openPopup(idNumber, activeStatus) {
+		    const activeButton = document.querySelector('#openPopup .btn-primary');
+		    const deactiveButton = document.querySelector('#openPopup .btn-danger');
+		    const container = document.querySelector('.nxl-container');
+
+
+		    container.classList.add('blur-background');
+
+
+		    const activeLink = document.querySelector('#activeLink');
+		    const deactiveLink = document.querySelector('#deactiveLink');
+
+		    if (activeStatus) {
+		        activeButton.setAttribute('disabled', true);
+		        deactiveButton.removeAttribute('disabled');
+		    } else {
+		        activeButton.removeAttribute('disabled');
+		        deactiveButton.setAttribute('disabled', true);
+		    }
+
+		    activeLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=true`);
+		    deactiveLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=false`);
+
+
+		    $('#openPopup').show();
+		}
+		function openPopupForBeneficiary(id, status) {
+				    const activeButton = document.querySelector('#openPopupForBeneficiary .btn-primary');
+				    const deactiveButton = document.querySelector('#openPopupForBeneficiary .btn-danger');
+				    const container = document.querySelector('.nxl-container');
+
+
+				    container.classList.add('blur-background');
+
+
+				    const activeLink = document.querySelector('#activeLink');
+				    const deactiveLink = document.querySelector('#deactiveLink');
+
+				    if (stauts) {
+				        activeButton.setAttribute('disabled', true);
+				        deactiveButton.removeAttribute('disabled');
+				    } else {
+				        activeButton.removeAttribute('disabled');
+				        deactiveButton.setAttribute('disabled', true);
+				    }
+
+				    activeLink.setAttribute('href', `/api/v1/beneficiaries/status/${id}?stauts=true`);
+				    deactiveLink.setAttribute('href', `/api/v1/beneficiaries/status/${id}?stauts=false`);
+
+
+				    $('#openPopupForBeneficiary').show();
+				}
+
+		function closePopup() {
+		    const container = document.querySelector('.nxl-container');
+		    container.classList.remove('blur-background');
+		    $('#openPopup').hide();
+			$('#openPopupForBeneficiary').hide();
+			
 		}

@@ -21,4 +21,6 @@ public interface BeneficiaryService {
     BeneficiaryDetails updateBeneficiary(Long id, BeneficiaryDetails beneficiaryDetails);
 
     void deleteBeneficiary(Long id);
+
+	BeneficiaryDetails getById(Long id);
 }

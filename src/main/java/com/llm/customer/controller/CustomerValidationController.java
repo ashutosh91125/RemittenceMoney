@@ -9,7 +9,7 @@
 //import org.springframework.web.bind.annotation.RestController;
 //
 //import com.llm.Service.CustomerValidationService;
-//import com.llm.model.Customer;
+//import com.llm.customer.model.Customer;
 //import com.llm.model.request.CustomerValidationRequest;
 //import com.llm.model.response.CustomerValidationResponse;
 //

@@ -43,20 +43,9 @@
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
-<script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
-
-<script type="text/javascript">
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-</script>
-
-
-
 <style>
 .search-bar-container input {
 	width: 100%;
@@ -232,11 +221,63 @@
 	z-index: 9999;
 	display: none;
 }
+
+.blur-background {
+    filter: blur(5px); /* Adjust the blur intensity as needed */
+    pointer-events: none; /* To prevent interaction with blurred elements */
+}
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
+<script type="text/javascript">
+	function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
+</script>
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
+	<div class="modal fade show" id="openPopup" tabindex="-1" style="display: none; padding-left: 0px;">
+    <div class="modal-dialog modal-lg" role="document" style="width: 508px; height: 360px; display: flex; align-items: center;">
+        <div class="modal-content" style="height: 45%;">
+            <div class="modal-header">
+                <div style="align-items: end;">
+                    <h5 class="modal-title" style="position: absolute; top: 15px;">ID Status</h5>
+                    <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
+                </div>
+                <div style="display: flex; position: absolute;top: 80px;left: 145px;">
+                    <button class="btn btn-primary" id="activeBtn">
+                        <a href="#" id="activeLink" style="color: white;">Active</a>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-danger" id="deactiveBtn">
+                        <a href="#" id="deactiveLink" style="color: white;">Deactivate</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1" style="display: none; padding-left: 0px;">
+    <div class="modal-dialog modal-lg" role="document" style="width: 508px; height: 360px; display: flex; align-items: center;">
+        <div class="modal-content" style="height: 45%;">
+            <div class="modal-header">
+                <div style="align-items: end;">
+                    <h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary Status</h5>
+                    <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
+                </div>
+                <div style="display: flex; position: absolute;top: 80px;left: 145px;">
+                    <button class="btn btn-primary" id="activeBtn">
+                        <a href="#" id="activeLink" style="color: white;">Active</a>
+                    </button>&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-danger" id="deactiveBtn">
+                        <a href="#" id="deactiveLink" style="color: white;">Deactivate</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 			<!-- [ page-header ] start -->
@@ -278,10 +319,20 @@
 				<input type="hidden" id="residentTypeId" name="residentTypeId"
 					value=""> <input type="hidden" id="agentId" name="agentId"
 					value="${agentId}"> <input type="hidden"
-					id="dailyCreditLimit" value="${dailyCreditLimit}" /> <input
-					type="hidden" id="dailyCredit" value="${dailyCredit}" /> <input
-					type="hidden" id="perDayLimit" value="${perDayLimit}" /> <input
-					type="hidden" id="perMonthLimit" value="${perMonthLimit}" />
+					id="dailyCreditLimit" value="${dailyCreditLimit}" />
+					<input type="hidden" id="dailyCredit" value="${dailyCredit}" />
+					<input type="hidden" id="perDayLimit" value="${perDayLimit}" />
+					<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" />
+					<input type="hidden" id="visaType" value="" />
+					<input type="hidden" id="idNumber" value="" />
+					<input type="hidden" id="idType" value="" />
+					<input type="hidden" id="issuedBy" value="" />
+					<input type="hidden" id="issuedOn" value="" />
+					<input type="hidden" id="dateOfExpiry" value="" />
+					<input type="hidden" id="visaExpiryDate" value="" />
+					<input type="hidden" id="visaNumber" value="" />
+					<input type="hidden" id="issuedCountry" value="" />
+
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row">
@@ -317,10 +368,12 @@
 														<td>${customer.emailId}</td>
 														<td>${customer.countryOfResidence }</td>
 														<td>${customer.gender }</td>
-
-														<td class="text-end"><a
-															href="customerdetails?ecrn=${customer.ecrn}"
-															class="btn btn-light-brand">View</a></td>
+														<td><div style="display: flex; justify-content: end;">
+																<a href="customerdetails?ecrn=${customer.ecrn}"
+																	class="avatar-text avatar-md" title="view"> <i
+																	class="feather feather-eye"></i>
+																</a>
+															</div></td>
 													</tr>
 												</c:forEach>
 											</tbody>
@@ -331,6 +384,7 @@
 						</div>
 					</div>
 				</div>
+
 				<div class="spinner-container" id="loader">
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
@@ -452,7 +506,7 @@
 												readonly>
 										</div>
 									</div>
-									<div class="row mt-5">
+									<!-- 		<div class="row mt-5">
 										<div class="col-12">
 											<h6>ID Details</h6>
 										</div>
@@ -518,6 +572,59 @@
 												</div>
 											</div>
 										</div>
+									</div> -->
+									<div class="row mt-5" id="idDetailsSection"
+										style="display: none;">
+										<div class="col-12">
+											<h6>ID Details</h6>
+										</div>
+										<div id="idDetails">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="card stretch stretch-full">
+														<div class="card-body p-0">
+															<div class="table-responsive">
+																<table class="table table-hover" id="search-result2">
+																	<thead>
+																		<tr>
+																			<th>ID Type</th>
+																			<th>ID No</th>
+																			<th>ID Issued By</th>
+																			<th>ID Date of Issue</th>
+																			<th>ID Date of Expiry</th>
+																			<th>Country</th>
+																			<th>Visa Number</th>
+																			<th>Visa Expiry Date</th>
+																			<th>Visa Type</th>
+																			<th>Status</th>
+																			<th class="text-end">Actions</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																		<c:forEach var="id-detail" items="${idDetailsList}"
+																			varStatus="status">
+																			<tr>
+																				<td>${id-detail.idType}</td>
+																				<td>${id-detail.idNumber}</td>
+																				<td>${id-detail.issuedBy}</td>
+																				<td>${id-detail.issuedOn }</td>
+																				<td>${id-detail.dateOfExpiry }</td>
+																				<td>${id-detail.issuedCountry }</td>
+																				<td>${id-detail.visaNumber }</td>
+																				<td>${id-detail.visaExpiryDate }</td>
+																				<td>${id-detail.visaTypevisaType }</td>
+																				<td>${id-detail.activeStatus }</td>
+																			</tr>
+																		</c:forEach>
+																	</tbody>
+																</table>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+
+										</div>
 									</div>
 								</div>
 							</div>
@@ -541,18 +648,6 @@
 												class="btn btn-primary">select Beneficiary</button>
 										</div>
 									</div>
-									<!-- <div class="row">
-										<div class="col-lg-3">
-											<div class="mb-4">
-												<select class="form-control" data-select2-selector="icon"
-													onchange="toggleBeneficiaryDivs()" id="beneficiarySelect">
-													<option value="" disabled="true" selected="true">Beneficiary</option>
-													<option value="0">Create Beneficiary</option>
-													<option value="1">Select Beneficiary</option>
-												</select> <span id="residentTypeError" class="text-danger"></span>
-											</div>
-										</div>
-									</div> -->
 									<div id="selectBeneficiaryDiv" style="display: none;">
 										<div class="row" id="benficeryTable"
 											style="display: flex; justify-content: center;">
@@ -567,10 +662,12 @@
 																		<th>Beneficiary Full Name</th>
 																		<th>Bank Name</th>
 																		<th>Account Number</th>
+																		<th>Status</th>
+																		<th>Action</th>
 																	</tr>
 																</thead>
 																<tbody id="search-result1-body">
-																	<!-- Dynamic rows will be added here -->
+
 																</tbody>
 															</table>
 														</div>
@@ -866,9 +963,7 @@
 										<div class="row">
 											<div class="col-xl-4" style="display: none;">
 												<input type="hidden" name="userCountry" id="userCountry"
-													value="${userCountry}">
-
-												<label class="form-label">Pay
+													value="${userCountry}"> <label class="form-label">Pay
 													In Currency<span class="text-danger">*</span>
 												</label> <select name="payInCurrency" id="payInCurrency"
 													class="form-control" data-select2-selector="icon">
@@ -878,15 +973,15 @@
 												</select> <span id="payInCurrencyError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Payment Mode<span
-                                                    class="text-danger">*</span></label> <select class="form-control"
-                                                    id="paymentMode" name="paymentMode"
-                                                    data-select2-selector="icon">
-                                                    <option value="" disabled selected>Select Payment
-                                                        Mode</option>
-                                                    <option value="BANK">Bank Transfer</option>
-                                                </select> <span id="paymentModeError" style="color: red;"></span>
-                                            </div>
+												<label class="form-label">Payment Mode<span
+													class="text-danger">*</span></label> <select class="form-control"
+													id="paymentMode" name="paymentMode"
+													data-select2-selector="icon">
+													<option value="" disabled selected>Select Payment
+														Mode</option>
+													<option value="BANK">Bank Transfer</option>
+												</select> <span id="paymentModeError" style="color: red;"></span>
+											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
 													class="text-danger">*</span></label> <select
@@ -924,12 +1019,12 @@
 
 											<div class="col-xl-4">
 												<label class="form-label">PayIn Amount<span
-													class="text-danger">*</span>
-													<span id="selectedPayInCurrency" style="font-weight: bold; color: #007bff;"></span>
-													</label> <input type="number"
-													class="form-control" placeholder="PayIn Amount"
-													id="payInAmount" name="payInAmount" min="5" max="50000"
-													required>
+													class="text-danger">*</span> <span
+													id="selectedPayInCurrency"
+													style="font-weight: bold; color: #007bff;"></span>
+												</label> <input type="number" class="form-control"
+													placeholder="PayIn Amount" id="payInAmount"
+													name="payInAmount" min="5" max="50000" required>
 												<div id="error-message"
 													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;"></div>
 											</div>
@@ -950,11 +1045,13 @@
 													style="color: green;" name="rate" readonly>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">
-                                                    Payout Amount <span id="selectedPayoutCurrency" style="font-weight: bold; color: #007bff;"></span>
-                                                </label>
-                                                <input type="text" class="form-control" placeholder="Payout Amount" style="color: green;" id="payoutAmount" name="payoutAmount" readonly>
-                                            </div>
+												<label class="form-label"> Payout Amount <span
+													id="selectedPayoutCurrency"
+													style="font-weight: bold; color: #007bff;"></span>
+												</label> <input type="text" class="form-control"
+													placeholder="Payout Amount" style="color: green;"
+													id="payoutAmount" name="payoutAmount" readonly>
+											</div>
 
 											<div class="col-xl-2">
 												<label class="form-label">Commission</label> <input

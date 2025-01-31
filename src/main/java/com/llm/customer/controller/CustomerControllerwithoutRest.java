@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.llm.Service.CustomerService;
 import com.llm.common.enums.Gender;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.model.Customer;
+import com.llm.customer.model.Customer;
+import com.llm.customer.service.CustomerService;
+import com.llm.iddetail.model.IdDetail;
 
 @Controller
 //@SessionAttributes({ "custDTO" })
@@ -254,12 +256,47 @@ public class CustomerControllerwithoutRest {
 	// Handle user creation form submission
 	@PostMapping("/createUser")
 	@ResponseBody
-	public ResponseEntity<?> createUser(@ModelAttribute Customer customer) throws JsonProcessingException {
+	public ResponseEntity<?> createUser(@ModelAttribute Customer customer, HttpServletRequest httpServletRequest) throws JsonProcessingException {
+		if (customer.getIdDetails() != null && !customer.getIdDetails().isEmpty()) {
+			for (IdDetail idDetail : customer.getIdDetails()) {
+				if (idDetail.getFrontPictureFile() != null && !idDetail.getFrontPictureFile().isEmpty()) {
+					String contentType = idDetail.getFrontPictureFile().getContentType();
 
+					if (contentType == null || !contentType.startsWith("image/")) {
+						throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+					}
+					try {
+						idDetail.setFrontBase64Data(idDetail.getFrontPictureFile().getBytes());
+						idDetail.setFrontContentType(contentType);
+					} catch (Exception e) {
+
+						return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+					}
+				}
+			}
+		}
+		if (customer.getIdDetails() != null && !customer.getIdDetails().isEmpty()) {
+			for (IdDetail idDetail : customer.getIdDetails()) {
+				if (idDetail.getBackPictureFile() != null && !idDetail.getBackPictureFile().isEmpty()) {
+					String contentType = idDetail.getBackPictureFile().getContentType();
+
+					if (contentType == null || !contentType.startsWith("image/")) {
+						throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+					}
+					try {
+						idDetail.setBackBase64Data(idDetail.getBackPictureFile().getBytes());
+						idDetail.setBackContentType(contentType);
+					} catch (Exception e) {
+
+						return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+					}
+				}
+			}
+		}
 		try {
 			// Validate picture file if present
-			if (customer.getFrontPictureFile() != null && !customer.getFrontPictureFile().isEmpty()) {
-				String contentType = customer.getFrontPictureFile().getContentType();
+			if (customer.getProfPictureFile() != null && !customer.getProfPictureFile().isEmpty()) {
+				String contentType = customer.getProfPictureFile().getContentType();
 
 				// Ensure only image files are allowed
 				if (contentType == null || !contentType.startsWith("image/")) {
@@ -267,34 +304,14 @@ public class CustomerControllerwithoutRest {
 				}
 
 				// Set image data in ToDo object
-				customer.setFrontBase64Data(customer.getFrontPictureFile().getBytes());
-				customer.setFrontContentType(contentType);
+				customer.setProfBase64Data(customer.getProfPictureFile().getBytes());
+				customer.setProfContentType(contentType);
 			}
 		} catch (Exception e) {
 			// Return error response with exception message
 			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
 		}
-
-		try {
-			// Validate picture file if present
-			if (customer.getBackPictureFile() != null && !customer.getBackPictureFile().isEmpty()) {
-				String contentType = customer.getBackPictureFile().getContentType();
-
-				// Ensure only image files are allowed
-				if (contentType == null || !contentType.startsWith("image/")) {
-					throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
-				}
-
-				// Set image data in ToDo object
-				customer.setBackBase64Data(customer.getBackPictureFile().getBytes());
-				customer.setBackContentType(contentType);
-			}
-		} catch (Exception e) {
-			// Return error response with exception message
-			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
-		}
-
-		String status = customerService.createCustomer(customer); // Get the status response from the service
+		String status = customerService.createCustomer(customer, httpServletRequest); // Get the status response from the service
 
 		// Remove any leading or trailing whitespaces from the status string
 		status = status.trim();
@@ -363,44 +380,25 @@ public class CustomerControllerwithoutRest {
 			Optional<Customer> customer = customerService.getByEcrn(ecrn);
 			if (customer.isPresent()) {
 				model.addAttribute("customer", customer.get());
-
+				model.addAttribute("idDetails",customer.get().getIdDetails());
 				model.addAttribute("residentType", getResidentTypeDescription(customer.get().getResidentTypeId()));
 				model.addAttribute("maritalStatus", getMaritalStatusDescription(customer.get().getMaritalStatus()));
-
-				model.addAttribute("nationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
-						customer.get().getNationality()));
-				model.addAttribute("secondNationality", enumEntityService
-						.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getSecondNationality()));
-				model.addAttribute("countryOfBirth", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
-						customer.get().getCountryOfBirth()));
-				model.addAttribute("countryOfResidence", enumEntityService
-						.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getCountryOfResidence()));
-				model.addAttribute("occupationId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
-						"occupationId", String.valueOf(customer.get().getOccupationId())));
-				model.addAttribute("issuedCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
-						customer.get().getIssuedCountry()));
-				model.addAttribute("annualIncomeRangeId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
-						"annualIncomeRange", String.valueOf(customer.get().getAnnualIncomeRangeId())));
-				model.addAttribute("riskRatingId", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
-						"riskRatingId", String.valueOf(customer.get().getRiskRatingId())));
-				model.addAttribute("incomeType", enumEntityService.getEnumValueDescriptionByKeyAndValueId("incomeType",
-						String.valueOf(customer.get().getIncomeType())));
-				model.addAttribute("professionCategory", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
-						"professionCategory", customer.get().getProfessionCategory()));
-				model.addAttribute("txnVolMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
-						"transactionVolumeMonth", String.valueOf(customer.get().getTxnVolMonth())));
-				model.addAttribute("txnCountMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId(
-						"transactionCountMonth", String.valueOf(customer.get().getTxnCountMonth())));
-				model.addAttribute("country", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
-						customer.get().getCountry()));
-				model.addAttribute("parCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",
-						customer.get().getParCountry()));
-
+				model.addAttribute("nationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getNationality()));
+				model.addAttribute("secondNationality", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getSecondNationality()));
+				model.addAttribute("countryOfBirth", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getCountryOfBirth()));
+				model.addAttribute("countryOfResidence", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", customer.get().getCountryOfResidence()));
+				model.addAttribute("occupationId", enumEntityService.getEnumValueDescriptionByKeyAndValueId("occupationId", String.valueOf(customer.get().getOccupationId())));
+//				model.addAttribute("issuedCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getIssuedCountry()));
+				model.addAttribute("annualIncomeRangeId", enumEntityService.getEnumValueDescriptionByKeyAndValueId("annualIncomeRange", String.valueOf(customer.get().getAnnualIncomeRangeId())));
+				model.addAttribute("riskRatingId", enumEntityService.getEnumValueDescriptionByKeyAndValueId("riskRatingId", String.valueOf(customer.get().getRiskRatingId())));
+				model.addAttribute("incomeType", enumEntityService.getEnumValueDescriptionByKeyAndValueId("incomeType",String.valueOf(customer.get().getIncomeType())));
+				model.addAttribute("professionCategory", enumEntityService.getEnumValueDescriptionByKeyAndValueId("professionCategory", customer.get().getProfessionCategory()));
+				model.addAttribute("txnVolMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId("transactionVolumeMonth", String.valueOf(customer.get().getTxnVolMonth())));
+				model.addAttribute("txnCountMonth", enumEntityService.getEnumValueDescriptionByKeyAndValueId("transactionCountMonth", String.valueOf(customer.get().getTxnCountMonth())));
+				model.addAttribute("country", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getCountry()));
+				model.addAttribute("parCountry", enumEntityService.getEnumValueDescriptionByKeyAndValueId("country",customer.get().getParCountry()));
 				model.addAttribute("nativeRegion", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
-						customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion())));
-//				String result=enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
-//						customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion()));
-//				logger.info("result========="+result);
+						customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion())));;
 			} else {
 				model.addAttribute("error", "Customer details not found.");
 			}
@@ -442,5 +440,164 @@ public class CustomerControllerwithoutRest {
 		}
 		return "redirect:/customer";
 	}
+	@GetMapping("/updateCustomer")
+	public String onboardCustomer2(@RequestParam("ecrn") String ecrn, Model model) {
+		Optional<Customer> customer = customerService.getByEcrn(ecrn);
+		try {
+			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
+			salutationEntity.ifPresent(entity -> model.addAttribute("salutationList", entity.getValues()));
 
+		} catch (Exception e) {
+			logger.error("Error retrieving salutation list: ", e);
+			model.addAttribute("salutationList", List.of()); // or set a default list if needed
+		}
+
+		try {
+			Optional<EnumEntity> countryEntity = enumEntityService.getEnumEntityByKey("country");
+			countryEntity.ifPresent(entity -> model.addAttribute("countryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving country list: ", e);
+			model.addAttribute("countryList", List.of()); // or set a default list if needed
+		}
+
+		// Repeat the same pattern for other attributes
+		try {
+			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
+			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
+		} catch (Exception e) {
+			logger.error("Error retrieving currency list: ", e);
+			model.addAttribute("currencyList", List.of());
+		}
+
+		try {
+			Optional<EnumEntity> incomeTypeEntity = enumEntityService.getEnumEntityByKey("incomeType");
+			incomeTypeEntity.ifPresent(entity -> model.addAttribute("incomeTypeList", entity.getValues()));
+		} catch (Exception e) {
+			logger.error("Error retrieving income type list: ", e);
+			model.addAttribute("incomeTypeList", List.of());
+		}
+
+		try {
+			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
+			professionCategoryEntity
+					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+		} catch (Exception e) {
+			logger.error("Error retrieving profession category list: ", e);
+			model.addAttribute("professionCategoryList", List.of());
+		}
+
+		try {
+			Optional<EnumEntity> idTypesEntity = enumEntityService.getEnumEntityByKey("idTypes");
+			idTypesEntity.ifPresent(entity -> model.addAttribute("idTypesList", entity.getValues()));
+		} catch (Exception e) {
+			logger.error("Error retrieving ID types list: ", e);
+			model.addAttribute("idTypesList", List.of());
+		}
+
+		try {
+			Optional<EnumEntity> nationalityEntity = enumEntityService.getEnumEntityByKey("nationality");
+			nationalityEntity.ifPresent(entity -> model.addAttribute("nationalityList", entity.getValues()));
+		} catch (Exception e) {
+			logger.error("Error retrieving nationality list: ", e);
+			model.addAttribute("nationalityList", List.of());
+		}
+		try {
+			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("residentType");
+			salutationEntity.ifPresent(entity -> model.addAttribute("residentTypeList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving residentType list: ", e);
+			model.addAttribute("residentTypeList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> annualIncomeRangeEntity = enumEntityService.getEnumEntityByKey("annualIncomeRange");
+			annualIncomeRangeEntity
+					.ifPresent(entity -> model.addAttribute("annualIncomeRangeList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving annual Income Range list: ", e);
+			model.addAttribute("annualIncomeRangeList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> transactionCountMonthEntity = enumEntityService
+					.getEnumEntityByKey("transactionCountMonth");
+			transactionCountMonthEntity
+					.ifPresent(entity -> model.addAttribute("transactionCountMonthList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving annual Income Range list: ", e);
+			model.addAttribute("transactionCountMonthList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> transactionVolumeMonthEntity = enumEntityService
+					.getEnumEntityByKey("transactionVolumeMonth");
+			transactionVolumeMonthEntity
+					.ifPresent(entity -> model.addAttribute("transactionVolumeMonthList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving transaction Volume Month List: ", e);
+			model.addAttribute("transactionVolumeMonthList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> riskRatingIdEntity = enumEntityService.getEnumEntityByKey("riskRatingId");
+			riskRatingIdEntity.ifPresent(entity -> model.addAttribute("riskRatingIdList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error retrieving riskRatingId list: ", e);
+			model.addAttribute("riskRatingIdList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> incomeTypeEntity = enumEntityService.getEnumEntityByKey("incomeType");
+			incomeTypeEntity.ifPresent(entity -> model.addAttribute("incomeTypeList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error income Type list: ", e);
+			model.addAttribute("incomeTypeList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
+			professionCategoryEntity
+					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error profession Category list: ", e);
+			model.addAttribute("professionCategoryList", List.of()); // or set a default list if needed
+		}
+
+		try {
+			Optional<EnumEntity> occupationIdEntity = enumEntityService.getEnumEntityByKey("occupationId");
+			occupationIdEntity.ifPresent(entity -> model.addAttribute("occupationIdList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error occupation Id list: ", e);
+			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
+			nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error Native Region List: ", e);
+			model.addAttribute("native Region List", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
+			placeofBirthEntity.ifPresent(entity -> model.addAttribute("placeOfBirthList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error  Place Of Birth List: ", e);
+			model.addAttribute("Place Of Birth List", List.of()); // or set a default list if needed
+		}
+		try {
+			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
+			nativeRegionEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
+
+		} catch (Exception e) {
+			logger.error("Error State List: ", e);
+			model.addAttribute("State List", List.of()); // or set a default list if needed
+		}
+		model.addAttribute("customer",customer.get());
+		return "customeronboardupdate";
+	}
 }

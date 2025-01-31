@@ -32,7 +32,7 @@ public class MyConfig {
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/login", "/api/auth/token", "/staff-login", "/api/v1/raas/**", "/api/v1/banks/**",
-                                "/caas/api/v2/customer/**", "/api/v1/transfer/**","/api/v1/staff/**",
+                                "/caas/api/v2/customer/**", "/api/v1/transfer/**","/api/v1/staff/**","/api/enumEntities/**",
                                 "/api/v1/agent/**", "/api/v1/beneficiaries/**", "/static/**", "/assets/**", "/WEB-INF/views/**")
                         .permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/vendors/**", "/scss/**").permitAll()

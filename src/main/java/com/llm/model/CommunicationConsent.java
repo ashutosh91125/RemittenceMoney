@@ -1,5 +1,6 @@
 package com.llm.model;
 
+import com.llm.customer.model.Customer;
 import jakarta.persistence.*;
 import lombok.Data;
 

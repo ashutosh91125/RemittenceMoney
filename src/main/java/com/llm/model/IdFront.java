@@ -2,6 +2,7 @@ package com.llm.model;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.llm.iddetail.model.IdDetail;
 import jakarta.persistence.*;
 import lombok.Data;
 

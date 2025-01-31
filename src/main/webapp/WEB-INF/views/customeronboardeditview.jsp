@@ -150,17 +150,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-$(document).ready(function() {
+ $(document).ready(function() {
         $("#updateButton").on("click", function() {
 
-        	 var ecrn = $("input[name='ecrn']").val()
+         	 var ecrn = $("input[name='ecrn']").val()
 
             $.ajax({
-                url: '/customer',
+                url: '/updateCustomer?ecrn='+ecrn,
                 type: 'GET',
-                data: { ecrn: ecrn },
+//                 data: { ecrn: ecrn },
                 success: function(response) {
-                    window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);
+                	 $('body').html(response);
+//                     window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX Error: ' + error);
@@ -172,6 +173,65 @@ $(document).ready(function() {
 document.querySelectorAll('#customerView input').forEach(function(input) {
         input.readOnly = true;
     });
+
+$(document).ready(function () {
+    $(".issued-country-dropdown").each(function () {
+        const inputElement = $(this);
+        const key = inputElement.data("key");
+        const valueId = inputElement.val();
+
+        fetchEnumValue(key, valueId, function (description) {
+            if (description) {
+                inputElement.val(description);
+            } else {
+                console.error("Unable to fetch value for Issued Country");
+            }
+        });
+    });
+
+    $(".issued-at-dropdown").each(function () {
+        const inputElement = $(this);
+        const key = inputElement.data("key");
+        const valueId = inputElement.val();
+
+        fetchEnumValue(key, valueId, function (description) {
+            if (description) {
+                inputElement.val(description);
+            } else {
+                console.error("Unable to fetch value for Issued At");
+            }
+        });
+    });
+    $(".id-type-dropdown").each(function () {
+        const inputElement = $(this);
+        const key = inputElement.data("key");
+        const valueId = inputElement.val();
+
+        fetchEnumValue(key, valueId, function (description) {
+            if (description) {
+                inputElement.val(description);
+            } else {
+                console.error("Unable to fetch value for Issued At");
+            }
+        });
+    });
+});
+
+
+function fetchEnumValue(key, valueId, callback) {
+$.ajax({
+    url: '/api/enumEntities/' + key + '/values/' + valueId,
+    type: 'GET',
+    success: function (description) {
+    	console.log(description);
+        callback(description);
+    },
+    error: function () {
+        console.error("Error fetching enum value for key:", key, "valueId:", valueId);
+        callback(null);
+    }
+});
+}		
 </script>
 </head>
 
@@ -219,9 +279,13 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 				</div>
 			</div>
 			<jsp:include page="customersearch.jsp"></jsp:include>
-			<form:form modelAttribute="customer" id="customerView"
-				action="${pageContext.request.contextPath}/createUser" method="post">
-				<form:hidden path="ecrn" />
+			<%-- <form:form id="customerView" modelAttribute="customer"
+			onsubmit="event.preventDefault(); updateCustomer();"> --%>
+			<form modelAttribute="customer" id="customerView"
+				action="${pageContext.request.contextPath}/customerdetails"
+				enctype="multipart/form-data" method="post">
+				<input type="hidden" name="ecrn" id="ecrn" value="${customer.ecrn}" />
+				<input type="hidden" id="id" name="id" value="${customer.id}">
 
 
 				<div class="accordion" id="accordionPanelsStayOpenExample">
@@ -249,28 +313,28 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Salutation</label>
-												<form:input path="salutation" type="text"
-													class="form-control" placeholder="salutation"
-													disabled="true" />
+												<label class="form-label">Salutation</label> <input
+													name="salutation" type="text"
+													value="${customer.salutation}" class="form-control"
+													placeholder="salutation" disabled="true" />
 
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">First Name<span
-													class="text-danger"></span></label>
-												<form:input path="firstName" type="text"
+													class="text-danger"></span></label> <input name="firstName"
+													type="text" value="${customer.firstName}"
 													class="form-control" placeholder="First Name"
 													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Middle Name</label>
-												<form:input path="middleName" type="text"
-													class="form-control" placeholder="Middle Name"
-													disabled="true" />
+												<label class="form-label">Middle Name</label> <input
+													name="middleName" type="text"
+													value="${customer.middleName}" class="form-control"
+													placeholder="Middle Name" disabled="true" />
 											</div>
 										</div>
 									</div>
@@ -278,17 +342,17 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Last Name<span
-													class="text-danger"></span></label>
-												<form:input path="lastName" type="text" class="form-control"
-													placeholder="Last Name" disabled="true" />
+													class="text-danger"></span></label> <input name="lastName"
+													type="text" class="form-control" placeholder="Last Name"
+													disabled="true" value="${customer.lastName}" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Preferred Name</label>
-												<form:input path="preferredName" type="text"
-													class="form-control" placeholder="Preferred Name"
-													disabled="true" />
+												<label class="form-label">Preferred Name</label> <input
+													name="preferredName" type="text"
+													value="${customer.preferredName}" class="form-control"
+													placeholder="Preferred Name" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -319,8 +383,8 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Date of Birth<span
-													class="text-danger"></span></label>
-												<form:input path="dateOfBirth" type="text"
+													class="text-danger"></span></label> <input name="dateOfBirth"
+													type="text" value="${customer.dateOfBirth}"
 													class="form-control" disabled="true" />
 											</div>
 										</div>
@@ -336,10 +400,10 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Place of Birth </label>
-												<form:input path="placeOfBirth" type="text"
-													class="form-control" placeholder="Place of Birth"
-													disabled="true" />
+												<label class="form-label">Place of Birth </label> <input
+													name="placeOfBirth" type="text" class="form-control"
+													placeholder="Place of Birth"
+													value="${customer.placeOfBirth}" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -356,18 +420,18 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Gender<span
-													class="text-danger"></span></label>
-												<form:input path="gender" type="text" class="form-control"
-													placeholder="Gender" disabled="true" />
+													class="text-danger"></span></label> <input name="gender"
+													type="text" class="form-control" placeholder="Gender"
+													disabled="true" value="${customer.gender}" />
 											</div>
 										</div>
 
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Mothers Maiden Name</label>
-												<form:input path="mothersMaidenName" type="Text"
-													class="form-control" placeholder="Mothers Maiden Name"
-													disabled="true" />
+												<label class="form-label">Mothers Maiden Name</label> <input
+													name="mothersMaidenName" type="Text"
+													value="${customer.mothersMaidenName}" class="form-control"
+													placeholder="Mothers Maiden Name" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
@@ -376,17 +440,15 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 													class="text-danger"></span></label>
 												<div class="input-group">
 													<!-- Fixed Phone Code -->
-													<form:select path="phoneCode" id="phoneCode"
-														class="form-control" multiple="false"
-														style="max-width: 80px; padding: 0; text-align:center;"
-														disabled="true">
-														<form:option value="+60" selected="true">+60</form:option>
-													</form:select>
-
+													<input name="phoneCode" id="phoneCode" class="form-control"
+														multiple="false" value="${customer.phoneCode}"
+														style="max-width: 80px; padding: 0; text-align: center;"
+														disabled="true" />
 													<!-- Combined Input Box -->
-													<form:input path="primaryMobileNumber" type="text"
+													<input name="primaryMobileNumber" type="text"
 														class="form-control" placeholder="Primary Mobile Number"
-														id="primaryMobileNumber" disabled="true" />
+														id="primaryMobileNumber" disabled="true"
+														value="${customer.primaryMobileNumber}" />
 												</div>
 												<span id="primaryMobileNumberError" class="text-danger"></span>
 											</div>
@@ -397,8 +459,9 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Secondary Mobile Number</label>
-												<form:input path="secondaryMobileNumber" type="tel"
+												<label class="form-label">Secondary Mobile Number</label> <input
+													name="secondaryMobileNumber" type="tel"
+													value="${customer.secondaryMobileNumber}"
 													class="form-control" placeholder="Secondary Mobile Number"
 													disabled="true" />
 											</div>
@@ -406,49 +469,39 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Email<span
-													class="text-danger"></span></label>
-												<form:input path="emailId" type="email" class="form-control"
-													placeholder="Email" disabled="true" />
+													class="text-danger"></span></label> <input name="emailId"
+													type="email" class="form-control"
+													value="${customer.emailId}" placeholder="Email"
+													disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Phone Number</label>
-												<form:input path="phoneNumber" type="tel"
-													class="form-control" placeholder="Phone Number"
-													disabled="true" />
+												<label class="form-label">Phone Number</label> <input
+													name="phoneNumber" type="tel"
+													value="${customer.phoneNumber}" class="form-control"
+													placeholder="Phone Number" disabled="true" />
 											</div>
 										</div>
 									</div>
 									<div class="row">
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">AML Status</label>
-												<form:input path="amlScanStatus" type="text" class="form-control"
+												<label class="form-label">AML Status</label> <input
+													name="amlScanStatus" type="text" class="form-control"
 													lass="form-control" placeholder="AML Status"
-													disabled="true" />
+													value="${customer.amlScanStatus}" disabled="true" />
 											</div>
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Customer Status</label>
-												<form:input path="amlScanStatus" type="text"
-													class="form-control" placeholder="Customer Status"
-													disabled="true" />
+												<label class="form-label">Customer Status</label> <input
+													name="amlScanStatus" type="text"
+													value="${customer.amlScanStatus}" class="form-control"
+													placeholder="Customer Status" disabled="true" />
 											</div>
 										</div>
 									</div>
-									<%-- <div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Occupation Id</label> <input
-													type="text" class="form-control"
-													placeholder="Occupation Id" value="${occupationId}">
-													<form:input path="occupationId" type="text"
-													class="form-control" placeholder="Occupation Id" />
-											</div>
-										</div>
-									</div> --%>
 								</div>
 							</div>
 						</div>
@@ -476,43 +529,43 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Building Name</label>
-														<form:input path="buildingName" type="text"
-															class="form-control" placeholder="Building Name"
-															id="currentBuildingName" disabled="true" />
+														<label class="form-label">Building Name</label> <input
+															name="buildingName" type="text" class="form-control"
+															placeholder="Building Name" id="currentBuildingName"
+															disabled="true" value="${customer.buildingName}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Street Name</label>
-														<form:input path="streetName" type="text"
-															class="form-control" placeholder="Street Name"
-															id="currentStreetName" disabled="true" />
+														<label class="form-label">Street Name</label> <input
+															name="streetName" type="text" class="form-control"
+															placeholder="Street Name" id="currentStreetName"
+															disabled="true" value="${customer.streetName}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Land Mark</label>
-														<form:input path="landmark" type="text"
-															class="form-control" placeholder="Land Mark"
-															id="currentLandmark" disabled="true" />
+														<label class="form-label">Land Mark</label> <input
+															name="landmark" type="text" class="form-control"
+															placeholder="Land Mark" id="currentLandmark"
+															disabled="true" value="${customer.landmark}" />
 													</div>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">City</label>
-														<form:input path="city" type="text" class="form-control"
-															placeholder="City" id="currentCity" disabled="true" />
+														<label class="form-label">City</label> <input name="city"
+															type="text" class="form-control" placeholder="City"
+															id="currentCity" disabled="true" value="${customer.city}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">District</label>
-														<form:input path="district" type="text"
-															class="form-control" placeholder="District"
-															id="currentDistrict" disabled="true" />
+														<label class="form-label">District</label> <input
+															name="district" type="text" class="form-control"
+															placeholder="District" id="currentDistrict"
+															disabled="true" value="${customer.district}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -526,16 +579,17 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">State</label>
-														<form:input path="state" type="text" class="form-control"
-															placeholder="State" id="currentState" disabled="true" />
+														<label class="form-label">State</label> <input
+															name="state" type="text" class="form-control"
+															placeholder="State" id="currentState" disabled="true"
+															value="${customer.state}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Zip</label>
-														<form:input path="zip" type="text" class="form-control"
-															placeholder="Zip" id="currentZip" disabled="true" />
+														<label class="form-label">Zip</label> <input name="zip"
+															type="text" class="form-control" placeholder="Zip"
+															id="currentZip" disabled="true" value="${customer.zip}" />
 													</div>
 												</div>
 
@@ -561,44 +615,44 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Building Name</label>
-														<form:input path="parBuildingName" type="text"
-															class="form-control" placeholder="Building Name"
-															id="permanentBuildingName" disabled="true" />
+														<label class="form-label">Building Name</label> <input
+															name="parBuildingName" type="text" class="form-control"
+															placeholder="Building Name" id="permanentBuildingName"
+															disabled="true" value="${customer.parBuildingName}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Street Name</label>
-														<form:input path="parStreetName" type="text"
-															class="form-control" placeholder="Street Name"
-															id="permanentStreetName" disabled="true" />
+														<label class="form-label">Street Name</label> <input
+															name="parStreetName" type="text" class="form-control"
+															placeholder="Street Name" id="permanentStreetName"
+															disabled="true" value="${customer.parStreetName}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Land Mark</label>
-														<form:input path="parLandmark" type="text"
-															class="form-control" placeholder="Land Mark"
-															id="permanentLandmark" disabled="true" />
+														<label class="form-label">Land Mark</label> <input
+															name="parLandmark" type="text" class="form-control"
+															placeholder="Land Mark" id="permanentLandmark"
+															disabled="true" value="${customer.parLandmark}" />
 													</div>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">City</label>
-														<form:input path="parCity" type="text"
-															class="form-control" placeholder="City"
-															id="permanentCity" disabled="true" />
+														<label class="form-label">City</label> <input
+															name="parCity" type="text" class="form-control"
+															placeholder="City" id="permanentCity" disabled="true"
+															value="${customer.parCity}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">District</label>
-														<form:input path="parDistrict" type="text"
-															class="form-control" placeholder="District"
-															id="permanentDistrict" disabled="true" />
+														<label class="form-label">District</label> <input
+															name="parDistrict" type="text" class="form-control"
+															placeholder="District" id="permanentDistrict"
+															disabled="true" value="${customer.parDistrict}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
@@ -612,17 +666,18 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 											<div class="row">
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">State</label>
-														<form:input path="parState" type="text"
-															class="form-control" placeholder="State"
-															id="permanentState" disabled="true" />
+														<label class="form-label">State</label> <input
+															name="parState" type="text" class="form-control"
+															placeholder="State" id="permanentState" disabled="true"
+															value="${customer.parState}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
-														<label class="form-label">Zip</label>
-														<form:input path="parZip" type="text" class="form-control"
-															placeholder="Zip" id="permanentZip" disabled="true" />
+														<label class="form-label">Zip</label> <input name="parZip"
+															type="text" class="form-control" placeholder="Zip"
+															id="permanentZip" disabled="true"
+															value="${customer.parZip}" />
 													</div>
 												</div>
 											</div>
@@ -650,7 +705,6 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 												<span class="d-block mb-2">Document Details</span>
 											</h5>
 										</div>
-
 										<div class="row mb-4 align-items-center">
 											<div class="row">
 												<div class="col-lg-4">
@@ -665,120 +719,180 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 													</div>
 												</div>
 											</div>
-											<hr>
-											<div id="idNumberField" class="row" style="display: block;">
-												<h5 class="fw-bold mb-0 me-4">
-													<span class="d-block mb-2">Customer Identity</span>
-												</h5>
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Id Type <span
-																class="text-danger"></span></label> <input type="text"
-																class="form-control" placeholder="Id Type" id="idType"
-																disabled="true">
+											<div id="idNumberField" class="row">
+												<div id="customerIdentityContainer" class="row">
+													<c:forEach var="idDetail" items="${customer.idDetails}"
+														varStatus="status">
+														<div class="identity-row row" id="identityTemplate">
+															<div class="row" id="customerTemplate">
+																<div class="col-xl-4">
+																	<h5 class="fw-bold mb-0 me-4">
+																		<span class="d-block mb-2">Customer Identity</span>
+																	</h5>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-xl-4">
+																	<div class="mb-4">
+																		<label class="form-label">Id Type <span
+																			class="text-danger">*</span></label> <input
+																			name="idDetails[${status.index}].idType" type="text"
+																			class="form-control id-type-dropdown"
+																			placeholder="Id Type"
+																			value="${idDetails[status.index].idType}"
+																			id="idTypeDropdown${status.index}" data-key="idTypes"
+																			readonly="true" />
+																	</div>
+																</div>
+																<div class="col-xl-4">
+																	<div class="mb-4">
+																		<label class="form-label">Id Number<span
+																			class="text-danger">*</span></label> <input
+																			name="idDetails[${status.index}].idNumber"
+																			value="${idDetails[status.index].idNumber}"
+																			id="idNumber" name="idNumber" placeholder="Id Number"
+																			type="text" class="form-control" disabled="true" />
+																	</div>
+																</div>
+																<div class="col-xl-4">
+																	<div class="mb-4">
+																		<label class="form-label">Name as per Id<span
+																			class="text-danger">*</span></label> <input
+																			name="idDetails[${status.index}].nameAsPerId"
+																			value="${idDetails[status.index].nameAsPerId}"
+																			type="text" class="form-control"
+																			placeholder="Name as per Id" disabled="true" />
+																	</div>
+																</div>
+															</div>
+															<div id="issuedForNonResidents">
+																<div class="row">
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued Country<span
+																				class="text-danger">*</span></label> <input
+																				name="idDetails[${status.index}].issuedCountry"
+																				type="text"
+																				value="${idDetails[status.index].issuedCountry}"
+																				class="form-control issued-country-dropdown"
+																				placeholder="Issued Country"
+																				id="issuedCountryDropdown${status.index}"
+																				data-key="country" disabled="true" />
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued at<span
+																				class="text-danger">*</span></label> <input
+																				name="idDetails[${status.index}].issuedAt"
+																				type="text"
+																				value="${idDetails[status.index].issuedAt}"
+																				class="form-control issued-at-dropdown"
+																				id="issuedAtDropdown${status.index}"
+																				data-key="country" placeholder="Issued at"
+																				disabled="true" />
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued By<span
+																				class="text-danger">*</span></label> <input
+																				name="idDetails[${status.index}].issuedBy"
+																				type="text" class="form-control"
+																				value="${idDetails[status.index].issuedBy}"
+																				placeholder="Issued By" id="issuedBy"
+																				disabled="true" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div id="issuedDateExpiryNonResident">
+																<div class="row">
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued on</label> <input
+																				name="idDetails[${status.index}].issuedOn"
+																				value="${idDetails[status.index].issuedOn}"
+																				type="text" class="form-control" disabled="true" />
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Date of Expiry<span
+																				class="text-danger">*</span></label> <input
+																				name="idDetails[${status.index}].dateOfExpiry"
+																				value="${idDetails[status.index].dateOfExpiry}"
+																				type="text" class="form-control" disabled="true" />
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div id="idDetails">
+																<div class="row">
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<div>
+																				<label class="form-label">Id Front</label>
+																			</div>
 
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Id Number<span
-																class="text-danger"></span></label>
-															<form:input path="idNumber" id="idNumber" name="idNumber"
-																placeholder="Id Number" type="text" class="form-control"
-																disabled="true" />
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Name as per Id<span
-																class="text-danger"></span></label>
-															<form:input path="nameAsPerId" type="text"
-																class="form-control" placeholder="Name as per Id"
-																disabled="true" />
-														</div>
-													</div>
-												</div>
-											</div>
-											<div id="issuedForNonResidents">
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued Country<span
-																class="text-danger"></span></label> <input type="text"
-																class="form-control" placeholder="Issued Country"
-																value="${issuedCountry}" disabled="true" />
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued at<span
-																class="text-danger"></span></label>
-															<form:input path="issuedAt" type="text"
-																class="form-control" placeholder="Issued at"
-																disabled="true" />
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued By<span
-																class="text-danger"></span></label>
-															<form:input path="issuedBy" type="text"
-																class="form-control" placeholder="Issued By"
-																id="issuedBy" disabled="true" />
-														</div>
-													</div>
-												</div>
-											</div>
-											<div id="issuedDateExpiryNonResident">
-												<div class="row">
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Issued on</label>
-															<form:input path="issuedOn" type="text"
-																class="form-control" disabled="true" />
-														</div>
-													</div>
-													<div class="col-xl-4">
-														<div class="mb-4">
-															<label class="form-label">Date of Expiry<span
-																class="text-danger"></span></label>
-															<form:input path="dateOfExpiry" type="text"
-																class="form-control" disabled="true" />
-														</div>
-													</div>
-												</div>
-											</div>
+																			<img
+																				src="/caas/api/v2/iddetail/frontimage/${idDetails[status.index].id}"
+																				alt="Id Front"
+																				class="img-thumbnail passport-picture id-Front"
+																				style="width: 300px; height: 180px;">
 
-										</div>
-										<div id="idDetailsFields" class="row" style="display: none;">
-											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-4">Visa Details</span>
-											</h5>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Visa Number</label>
-														<form:input path="visaNumber" type="text"
-															class="form-control" placeholder="Visa Number"
-															disabled="true" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Visa Expiry Date</label>
-														<form:input path="visaExpiryDate" type="text"
-															class="form-control" placeholder="Visa Expiry Date"
-															disabled="true" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Visa Type</label>
-														<form:input path="visaType" type="text"
-															class="form-control" placeholder="Visa Type"
-															disabled="true" />
-													</div>
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<div>
+																				<label class="form-label">Id Back</label>
+																			</div>
+																			<img
+																				src="/caas/api/v2/iddetail/backimage/${idDetails[status.index].id}"
+																				alt="Id Back"
+																				class="img-thumbnail passport-picture id-Back"
+																				style="width: 300px; height: 180px;">
+																		</div>
+																	</div>
+																</div>
+																<div id="idDetailsFields">
+																	<h5 class="fw-bold mb-0 me-4">
+																		<span class="d-block mb-4">Visa Details</span>
+																	</h5>
+																	<div class="row">
+																		<div class="col-xl-4">
+																			<div class="mb-4">
+																				<label class="form-label">Visa Number</label> <input
+																					name="idDetails[${status.index}].visaNumber"
+																					value="${idDetails[status.index].visaNumber}"
+																					type="text" class="form-control"
+																					placeholder="Visa Number" disabled="true" />
+																			</div>
+																		</div>
+																		<div class="col-xl-4">
+																			<div class="mb-4">
+																				<label class="form-label">Visa Expiry Date</label> <input
+																					name="idDetails[${status.index}].visaExpiryDate"
+																					value="${idDetails[status.index].visaExpiryDate}"
+																					type="text" class="form-control"
+																					placeholder="Visa Expiry Date" disabled="true" />
+																			</div>
+																		</div>
+																		<div class="col-xl-4">
+																			<div class="mb-4">
+																				<label class="form-label">Visa Type</label> <input
+																					name="idDetails[${status.index}].visaType"
+																					value="${idDetails[status.index].visaType}"
+																					type="text" class="form-control"
+																					placeholder="Visa Type" disabled="true" />
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</c:forEach>
 												</div>
 											</div>
 										</div>
@@ -787,6 +901,7 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 							</div>
 						</div>
 					</div>
+
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
@@ -804,7 +919,7 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 										<!-- <div
 											class="mb-4 d-flex align-items-center justify-content-between">
 											<h5 class="fw-bold mb-0 me-4">
-												<span class="d-block mb-2">Other Information </span> 
+												<span class="d-block mb-2">Other Information </span>
 											</h5>
 
 										</div> -->
@@ -823,66 +938,26 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Annual Income Currency
-															Code </label>
-														<form:input path="annualIncomeCurrencyCode" type="text"
+															Code </label> <input name="annualIncomeCurrencyCode" type="text"
 															class="form-control"
 															placeholder="Annual Income Currency
 															Code"
-															disabled="true" />
+															disabled="true"
+															value="${customer.annualIncomeCurrencyCode}" />
 													</div>
 												</div>
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Tax Registration Number</label>
-														<form:input path="taxRegistrationNumber" type="text"
+														<input name="taxRegistrationNumber" type="text"
 															class="form-control"
-															placeholder="Tax Registration Number" disabled="true" />
+															placeholder="Tax Registration Number" disabled="true"
+															value="${customer.taxRegistrationNumber}" />
 													</div>
 												</div>
 											</div>
 										</div>
-										<%--	<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Security Number</label>
-													<form:input path="socialSecurityNumber" type="text"
-														class="form-control" placeholder="Social Security Number" />
-												</div>
-											</div> 
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Registration Number</label>
-													<form:input path="taxRegistrationNumber" type="text"
-														class="form-control" placeholder="Tax Registration Number" />
-												</div>
-											</div> 
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Transaction Issued
-														Country </label>
-													<form:select path="txnIssuedCountry" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Transaction Issued Country</form:option>
-														<form:options items="${countryList}" />
-													</form:select>
-												</div>
-											</div> 
-										</div>--%>
-
-										<%----%>
 										<div class="row">
-											<%--
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Establishment Id<span
-														class="text-danger"></span>
-													</label>
-													<form:input path="employerEstablishmentId" type="text"
-														class="form-control"
-														placeholder="Employer Establishment Id" />
-												</div>
-											</div> --%>
-
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
@@ -908,48 +983,29 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 												</div>
 											</div>
 										</div>
-										<%--<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">PEP Catagory<span
-														class="text-danger"></span></label>
-													<form:input path="pepCategory" type="text"
-														class="form-control" placeholder="PEP Catagory" />
-												</div>
-											</div> 
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Personal Mohre Id<span
-														class="text-danger"></span></label>
-													<form:input path="personalMohreId" type="text"
-														class="form-control" placeholder="Personal Mohre Id" />
-												</div>
-											</div> 
-											
-										</div>--%>
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Employer Name</label>
-													<form:input path="employerName" type="text"
-														class="form-control" placeholder="Employer Name"
-														disabled="true" />
+													<label class="form-label">Employer Name</label> <input
+														name="employerName" type="text" class="form-control"
+														placeholder="Employer Name" disabled="true"
+														value="${customer.employerName}" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Employer Address</label>
-													<form:input path="employerAddress" type="text"
-														class="form-control" placeholder="Employer Address"
-														disabled="true" />
+													<label class="form-label">Employer Address</label> <input
+														name="employerAddress" type="text" class="form-control"
+														placeholder="Employer Address" disabled="true"
+														value="${customer.employerAddress}" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Employer Phone</label>
-													<form:input path="employerPhone" type="tel"
-														class="form-control" placeholder="Employer Phone"
-														disabled="true" />
+													<label class="form-label">Employer Phone</label> <input
+														name="employerPhone" type="tel" class="form-control"
+														placeholder="Employer Phone" disabled="true"
+														value="${customer.employerPhone}" />
 												</div>
 											</div>
 										</div>
@@ -1002,8 +1058,7 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Political Exposed Person</label>
-													<form:input path="politicalExposedPerson"
-														class="form-control"
+													<input name="politicalExposedPerson" class="form-control"
 														placeholder="Political Exposed Person" disabled="true" />
 
 												</div>
@@ -1013,8 +1068,7 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 													<div class="mb-4">
 														<label class="form-label">Show Remark on
 															Transaction<span class="text-danger"></span>
-														</label>
-														<form:input path="showRemarksOnTxn" type="text"
+														</label> <input name="showRemarksOnTxn" type="text"
 															class="form-control"
 															placeholder="Show Remark on
 															Transaction"
@@ -1025,84 +1079,37 @@ document.querySelectorAll('#customerView input').forEach(function(input) {
 												<div id="customerRemarksContainer" class="col-xl-4"
 													style="display: none;">
 													<div class="mb-4">
-														<label class="form-label">Customer Remarks</label>
-														<form:input path="customerRemarks" class="form-control"
+														<div>
+															<label class="form-label">Customer Remarks</label>
+														</div>
+														<input name="customerRemarks" class="form-control"
 															placeholder="Enter your remarks here" disabled="true" />
 													</div>
 												</div>
 											</div>
-											<!-- <div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">DNFBP<span
-															class="text-danger"></span></label>
-														<form:select path="dnfbp" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">DPMS<span
-															class="text-danger"></span></label>
-														<form:select path="dpms" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
-													</div>
-												</div>  -->
 										</div>
-										<%--<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Agent Referenc Number<span
-														class="text-danger"></span></label>
-													<form:input path="agentRefNo" type="text"
-														class="form-control" placeholder="Agent Referenc Number" />
+										<div class="col-xl-4">
+											<div class="mb-4">
+												<div>
+													<label class="form-label"> Profile Photo</label>
 												</div>
-											</div> 
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Links<span
-														class="text-danger"></span></label>
-													<form:input path="socialLinksId" class="form-control"
-														placeholder="Social Links" />
-												</div>
+												<img src="/caas/api/v2/customer/image/${customer.id}"
+													style="width: 150px; height: 190px;" alt="Profile Image"
+													class="img-thumbnail" class="passport-picture">
 											</div>
-										</div>--%>
-										<div class="row"></div>
-										<div class="row">
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Catagory<span
-														class="text-danger"></span></label>
-													<form:input path="profileCategory" class="form-control"
-														placeholder="Profile Catagory" />
-												</div>
-											</div> --%>
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Photo<span
-														class="text-danger"></span></label>
-													<form:input path="" type="file" class="form-control"
-														placeholder="Profile Photo" />
-												</div>
-											</div> --%>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+
 				</div>
-				<%--
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
 					<button type="button" class="btn btn-warning" id="updateButton">Update</button>
-				</div> --%>
-			</form:form>
+				</div>
+			</form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

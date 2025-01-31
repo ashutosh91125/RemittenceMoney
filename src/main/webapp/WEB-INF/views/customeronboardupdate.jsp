@@ -35,29 +35,15 @@
 	rel="stylesheet"
 	integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
 	crossorigin="anonymous">
-<!--! END: Vendors CSS-->
-<!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<!--! END: Custom CSS-->
-<!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
-<!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
-<!--[if lt IE 9]>
-			<script src="https:oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https:oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
-
-
-<!-- for KYC -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-<link rel="stylesheet" href="./style.css">
+
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
-<script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
 
 
@@ -163,58 +149,208 @@
 	display: none;
 }
 </style>
-<script type="text/javascript" src="js/customervalidation.js"></script>
-<script type="text/javascript" src="js/customer-onboard.js"></script>
+
+<script type="text/javascript" src="js/customer-update-validations.js"></script>
 <script type="text/javascript">
 /*let identityIndex = ${customer.idDetails != null ? customer.idDetails.size() : 0}; */
 let identityIndex=0;
 function addIdentity() {
+    const residentType = document.getElementById('residentType').value;
     const container = document.getElementById("customerIdentityContainer");
-    const template = document.getElementById("identityTemplate0"); 
+    const template = document.getElementById("identityTemplate0");
 
     if (template) {
         const cloned = template.cloneNode(true);
-        identityIndex++; 
+        identityIndex++;
         cloned.id = `identityTemplate${identityIndex}`;
+
+
         cloned.querySelectorAll("[id]").forEach(element => {
             const oldId = element.id;
-            element.id = oldId.replace(/\d+/, identityIndex); 
+            element.id = oldId.replace(/\d+/, identityIndex);
         });
 
         cloned.querySelectorAll("[name]").forEach(element => {
             const oldName = element.name;
-            element.name = oldName.replace(/\d+/, identityIndex); 
+            element.name = oldName.replace(/\d+/, identityIndex);
         });
 
         cloned.querySelectorAll("[path]").forEach(element => {
             const oldPath = element.getAttribute("path");
-            element.setAttribute("path", oldPath.replace(/\d+/, identityIndex)); 
+            element.setAttribute("path", oldPath.replace(/\d+/, identityIndex));
         });
+
         cloned.querySelectorAll("input, select, textarea").forEach(element => {
             if (element.type === "checkbox" || element.type === "radio") {
-                element.checked = false; 
+                element.checked = false;
             } else if (element.tagName === "SELECT") {
-                element.selectedIndex = 0; 
+                element.selectedIndex = 0;
             } else {
-                element.value = ""; 
+                element.value = "";
             }
         });
 
-        container.appendChild(cloned); 
+
+        if (residentType === '101') {
+            const idTypeDropdown = cloned.querySelector("[id^='idTypeDropdown']");
+            if (idTypeDropdown) {
+                idTypeDropdown.value = '28';
+                idTypeDropdown.disabled = true;
+            }
+        }
+
+
+        const idTypeDropdown = cloned.querySelector("[id^='idTypeDropdown']");
+        const idDetailsFields = cloned.querySelector("#idDetailsFields");
+
+
+        if (idTypeDropdown && idDetailsFields) {
+            if (idTypeDropdown.value === '2') {
+                idDetailsFields.style.display = 'block';
+            } else {
+                idDetailsFields.style.display = 'none';
+            }
+
+
+            idTypeDropdown.addEventListener('change', function() {
+                if (idTypeDropdown.value === '2') {
+                    idDetailsFields.style.display = 'block';
+                } else {
+                    idDetailsFields.style.display = 'none';
+                }
+            });
+        }
+
+        container.appendChild(cloned);
+        const hr = document.createElement('hr');
+        hr.style.border = "2px solid black"; 
+        hr.style.margin = "20px 0"; 
+        container.appendChild(hr);
     }
 }
+
 
 
 function removeIdentities() {
     const container = document.getElementById("customerIdentityContainer");
     if (container.children.length > 1) {
-        container.removeChild(container.lastElementChild); // Remove the last element
-        identityIndex--; // Decrement the index
+        container.removeChild(container.lastElementChild);
+        identityIndex--;
     } else {
         alert("At least one identity must be present.");
     }
 }
+function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
 
+$(document).ready(function () {
+    $("#customerOnboardForm").on("submit", function (e) {
+        e.preventDefault();
+        console.log("Form Submitted");
+
+       /*  if (!validation(this)) {
+            return false;
+        } */
+
+        $('#loader').show();
+        const formData = new FormData(this);
+        const ecrn = $('#ecrn').val();
+
+        // Send the data via AJAX
+        $.ajax({
+            url: "/caas/api/v2/customer/onBoarding/updateCustomer/" + ecrn,
+            type: "PUT",
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                console.log("Success response:", response);
+                alert("Customer updated successfully with ECRN: " + ecrn);
+                window.location.href = "/customer";
+            },
+            error: function (xhr) {
+                console.log("Error:", xhr.responseText);
+                $('#loader').hide();
+                alert("Error: " + xhr.responseText);
+            }
+        });
+    });
+});
+
+
+function toggleFields() {
+    const residentType = document.getElementById('residentType').value;
+    const idTypeDropdowns = document.querySelectorAll("[id^='idTypeDropdown']");
+    const issuedDateExpiryNonResident = document.getElementById('issuedDateExpiryNonResident');
+    const issuedForNonResidents = document.getElementById('issuedForNonResidents');
+    const idDetails = document.getElementById('idDetails');
+    const idDetailsFields = document.getElementById('idDetailsFields');
+    const idNumberField = document.getElementById('idNumberField');
+    const nonResident = document.getElementById('nonResident');
+    const customerIdentityContainer = document.getElementById('customerIdentityContainer');
+
+    if (residentType === '101') {
+        idTypeDropdowns.forEach(dropdown => {
+            dropdown.style.display = "block";
+            dropdown.value = "28";
+            dropdown.setAttribute("disabled", true);
+        });
+
+        issuedDateExpiryNonResident.style.display = 'none';
+        issuedForNonResidents.style.display = 'none';
+        idDetails.style.display = 'block';
+        idDetailsFields.style.display = 'none';
+        idNumberField.style.display = 'block';
+         nonResident.style.display = 'none';
+        customerIdentityContainer.style.display = 'block';
+    } else if (residentType === '100') {
+        idTypeDropdowns.forEach(dropdown => {
+            dropdown.style.display = "block";
+            dropdown.removeAttribute("disabled");
+            dropdown.value = "2";
+
+            dropdown.addEventListener('change', function () {
+                if (this.value === '28') {
+                    idDetails.style.display = 'none';
+                    idDetailsFields.style.display = 'none';
+                    idNumberField.style.display = 'none';
+                } else if (this.value === '2') {
+                    idDetailsFields.style.display = 'block';
+                } else {
+                    idDetailsFields.style.display = 'none';
+                }
+            });
+        });
+
+        issuedDateExpiryNonResident.style.display = 'block';
+        issuedForNonResidents.style.display = 'block';
+        idDetails.style.display = 'block';
+        idDetailsFields.style.display = 'block';
+        idNumberField.style.display = 'block';
+         nonResident.style.display = 'flex';
+        customerIdentityContainer.style.display = 'block';
+    } else {
+        idTypeDropdowns.forEach(dropdown => {
+            dropdown.style.display = "none";
+            dropdown.removeAttribute("disabled");
+        });
+
+        issuedDateExpiryNonResident.style.display = 'none';
+        issuedForNonResidents.style.display = 'none';
+        idDetails.style.display = 'none';
+        idDetailsFields.style.display = 'none';
+        idNumberField.style.display = 'none';
+         nonResident.style.display = 'none';
+        customerIdentityContainer.style.display = 'none';
+    }
+}
+
+$(document).ready(function () {
+    toggleFields();
+});
+	
 </script>
 </head>
 
@@ -278,10 +414,9 @@ function removeIdentities() {
 
 			<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 			<form:form modelAttribute="customer" id="customerOnboardForm"
-				action="${pageContext.request.contextPath}/createUser" method="post"
-				enctype="multipart/form-data" onsubmit="return validation(this)">
+				method="post" enctype="multipart/form-data">
 				<form:hidden path="isValid" value="true" />
-				<form:hidden path="ecrn" />
+				<form:hidden path="ecrn" value="" id="ecrn" />
 
 
 				<div class="${not empty customerList?'main-content':'hidden' }">
@@ -360,7 +495,8 @@ function removeIdentities() {
 												<label class="form-label">Salutation<span
 													class="text-danger">*</span></label>
 												<form:select path="salutation" class="form-control"
-													data-select2-selector="icon" multiple="false">
+													data-select2-selector="icon" multiple="false"
+													id="salutation">
 													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
 													<form:options items="${salutationList}" itemValue="valueId"
 														itemLabel="displayName" />
@@ -373,7 +509,8 @@ function removeIdentities() {
 												<label class="form-label">First Name<span
 													class="text-danger">*</span></label>
 												<form:input path="firstName" type="text"
-													class="form-control" placeholder="First Name" />
+													class="form-control" placeholder="First Name"
+													id="firstName" />
 												<span id="firstNameError" style="color: red;"></span>
 											</div>
 										</div>
@@ -392,7 +529,7 @@ function removeIdentities() {
 												<label class="form-label">Last Name<span
 													class="text-danger">*</span></label>
 												<form:input path="lastName" type="text" class="form-control"
-													placeholder="Last Name" />
+													placeholder="Last Name" id="lastName" />
 												<span id="lastNameError" style="color: red;"></span>
 											</div>
 										</div>
@@ -424,7 +561,8 @@ function removeIdentities() {
 											<div class="mb-4">
 												<label class="form-label">Secondary Nationality </label>
 												<form:select path="secondNationality" class="form-control"
-													data-select2-selector="icon" multiple="false">
+													data-select2-selector="icon" multiple="false"
+													id="secondNationality">
 													<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
@@ -436,9 +574,9 @@ function removeIdentities() {
 											<div class="mb-4">
 												<label class="form-label">Native Region <span
 													class="text-danger">*</span></label>
-												<form:select path="nativeRegion" id="nativeRegion"
-													class="form-control" multiple="false"
-													data-select2-selector="icon">
+												<form:select path="nativeRegion" class="form-control"
+													multiple="false" data-select2-selector="icon"
+													id="nativeRegion">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
 													<form:options items="${nativeRegionList}"
 														itemValue="valueId" itemLabel="description" />
@@ -462,9 +600,9 @@ function removeIdentities() {
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" id="countryOfBirth"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
+												<form:select path="countryOfBirth" class="form-control"
+													data-select2-selector="icon" multiple="false"
+													id="countryOfBirth">
 													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
@@ -555,7 +693,7 @@ function removeIdentities() {
 												<label class="form-label">Email<span
 													class="text-danger">*</span></label>
 												<form:input path="emailId" type="email" class="form-control"
-													placeholder="Email" />
+													placeholder="Email" id="emailId" />
 												<span id="emailIdError" style="color: red;"></span>
 											</div>
 										</div>
@@ -835,9 +973,8 @@ function removeIdentities() {
 												<div class="col-lg-8">
 													<div class="mb-4">
 														<form:select id="residentType" path="residentTypeId"
-															class="form-control" data-select2-selector="icon"
-															multiple="false" onchange="toggleFields(); "
-															onblur="toggleFields();">
+															class="form-control" multiple="false"
+															onchange="toggleFields(); " onblur="toggleFields();">
 															<form:option value="" disabled="true" selected="true">Select Resident Type</form:option>
 															<form:options items="${residentTypeList}"
 																itemValue="valueId" itemLabel="description" />
@@ -847,187 +984,219 @@ function removeIdentities() {
 												</div>
 											</div>
 											<div id="nonResident" class="row"
-													style="display: flex; justify-content: end;">
-													<a onclick="addIdentity()"
+												style="display: flex; justify-content: end;">
+												<a onclick="addIdentity()"
 													class="avatar-text avatar-md bg-primary text-white"> <i
 													class="feather-plus"></i>
 												</a>&nbsp;&nbsp; <a onclick="removeIdentities()"
 													class="avatar-text avatar-md bg-secondary text-danger">
 													<i class="feather-minus"></i> <!-- or you can use feather-trash-2 -->
 												</a>
-												</div>
+											</div>
 
-											<div id="idNumberField" class="row">	
+											<div id="idNumberField" class="row">
 												<div id="customerIdentityContainer" class="row">
 													<c:forEach var="idDetail" items="${customer.idDetails}"
 														varStatus="status">
-												<div class="identity-row row" id="identityTemplate${status.index}">
-													<div class="row" id="customerTemplate${status.index}">
-														<div class="col-xl-4">
-															<h5 class="fw-bold mb-0 me-4">
-																<span class="d-block mb-2">Customer Identity</span>
-															</h5>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Id Type <span
-																	class="text-danger">*</span></label>
-																<form:select id="idTypeDropdown${status.index}" path="idDetails[${status.index}].idType"
-																	class="form-control">
-<%--  																	 <form:option value="2" selected="true">PASSPORT</form:option>   --%>
-																	<form:options items="${idTypesList}"
-																		itemValue="valueId" itemLabel="description" />
-																</form:select>
-																<span id="idTypeError${status.index}" class="text-danger"></span>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Id Number<span
-																	class="text-danger">*</span></label>
-																<form:input path="idDetails[${status.index}].idNumber" id="idNumber"
-																	name="idNumber" placeholder="Id Number" type="text"
-																	class="form-control" />
-																<span id="idNumberError${status.index}" class="text-danger"></span>
-															</div>
-														</div>
-														<div class="col-xl-4">
-															<div class="mb-4">
-																<label class="form-label">Name as per Id<span
-																	class="text-danger">*</span></label>
-																<form:input path="idDetails[${status.index}].nameAsPerId" type="text"
-																	class="form-control" placeholder="Name as per Id" />
-																<span id="nameAsPerIdError${status.index}" class="text-danger"></span>
-															</div>
-														</div>
-													</div>
-
-													<div id="issuedForNonResidents">
-														<div class="row">
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Issued Country<span
-																		class="text-danger">*</span></label>
-																	<form:select path="idDetails[${status.index}].issuedCountry" class="form-control"
-																		 multiple="false">
-																		<form:option value="" disabled="true" selected="true">Issued Country</form:option>
-																		<form:options items="${countryList}"
-																			itemValue="valueId" itemLabel="description" />
-																	</form:select>
-																	<span id="issuedCountryError${status.index}" class="text-danger"></span>
+														<div class="identity-row row"
+															id="identityTemplate${status.index}">
+															<div class="row" id="customerTemplate${status.index}">
+																<div class="col-xl-4">
+																	<h5 class="fw-bold mb-0 me-4">
+																		<span class="d-block mb-2">Customer Identity</span>
+																	</h5>
 																</div>
 															</div>
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Issued at<span
-																		class="text-danger">*</span></label>
-																	<form:select path="idDetails[${status.index}].issuedAt" class="form-control"
-																		 multiple="false">
-																		<form:option value="" disabled="true" selected="true">Issued at</form:option>
-																		<form:options items="${countryList}"
-																			itemValue="description" itemLabel="description" />
-																	</form:select>
-																	<span id="issuedAtError${status.index}" class="text-danger"></span>
-																</div>
-															</div>
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Issued By<span
-																		class="text-danger">*</span></label>
-																	<form:input path="idDetails[${status.index}].issuedBy" type="text"
-																		class="form-control" placeholder="Issued By"
-																		id="issuedBy" />
-																	<span id="issuedByError${status.index}" class="text-danger"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-
-													<div id="issuedDateExpiryNonResident">
-														<div class="row">
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Issued on<span
-																		class="text-danger">*</span></label>
-																	<form:input path="idDetails[${status.index}].issuedOn" type="date"
-																		class="form-control" min="1900-01-01" max="${today}" />
-																	<span id="issuedOnError${status.index}" class="text-danger"></span>
-																</div>
-															</div>
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Date of Expiry<span
-																		class="text-danger">*</span></label>
-																	<form:input path="idDetails[${status.index}].dateOfExpiry" type="date"
-																		class="form-control"  min="${tomorrow}"  />
-																	<span id="dateOfExpiryError${status.index}" class="text-danger"></span>
-																</div>
-															</div>
-														</div>
-													</div>
-													<div id="idDetails">
-														<div class="row">
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Id Front (Jpg only)<span
-																		class="text-danger">*</span></label>
-																	<form:input path="idDetails[${status.index}].frontPictureFile" type="file"
-																		accept="image/jpeg, image/jpg" class="form-control"
-																		placeholder="Id Front" />
-																</div>
-															</div>
-															<div class="col-xl-4">
-																<div class="mb-4">
-																	<label class="form-label">Id Back (Jpg only)<span
-																		class="text-danger">*</span></label>
-																	<form:input path="idDetails[${status.index}].backPictureFile" type="file"
-																		accept="image/jpeg, image/jpg" class="form-control"
-																		placeholder="Id Back" />
-																</div>
-															</div>
-														</div>
-														<div id="idDetailsFields">
-															<h5 class="fw-bold mb-0 me-4">
-																<span class="d-block mb-4">Visa Details</span>
-															</h5>
 															<div class="row">
 																<div class="col-xl-4">
 																	<div class="mb-4">
-																		<label class="form-label">Visa Number</label>
-																		<form:input path="idDetails[${status.index}].visaNumber" type="text"
-																			class="form-control" placeholder="Visa Number" />
-																		<span id="visaNumberError${status.index}" class="text-danger"></span>
-																	</div>
-																</div>
-																<div class="col-xl-4">
-																	<div class="mb-4">
-																		<label class="form-label">Visa Expiry Date</label>
-																		<form:input path="idDetails[${status.index}].visaExpiryDate" type="date"
-																			class="form-control" placeholder="Visa Expiry Date" />
-																		<span id="visaExpiryDateError${status.index}" class="text-danger"></span>
-																	</div>
-																</div>
-																<div class="col-xl-4">
-																	<div class="mb-4">
-																		<label class="form-label">Visa Type</label>
-																		<form:select path="idDetails[${status.index}].visaType" class="form-control">
-																			<form:option value="" disabled="true" selected="true">Visa Type</form:option>
-																			<option value="1">Employment</option>
-																			<option value="2">Visitor</option>
-																			<option value="3">MyKad</option>
+																		<label class="form-label">Id Type <span
+																			class="text-danger">*</span></label>
+																		<form:select id="idTypeDropdown${status.index}"
+																			path="idDetails[${status.index}].idType"
+																			class="form-control">
+																			<%--  																	 <form:option value="2" selected="true">PASSPORT</form:option>   --%>
+																			<form:options items="${idTypesList}"
+																				itemValue="valueId" itemLabel="description" />
 																		</form:select>
-																		<span id="visaTypeError${status.index}" class="text-danger"></span>
+																		<span id="idTypeError${status.index}"
+																			class="text-danger"></span>
+																	</div>
+																</div>
+																<div class="col-xl-4">
+																	<div class="mb-4">
+																		<label class="form-label">Id Number<span
+																			class="text-danger">*</span></label>
+																		<form:input path="idDetails[${status.index}].idNumber"
+																			id="idNumber" name="idNumber" placeholder="Id Number"
+																			type="text" class="form-control" />
+																		<span id="idNumberError${status.index}"
+																			class="text-danger"></span>
+																	</div>
+																</div>
+																<div class="col-xl-4">
+																	<div class="mb-4">
+																		<label class="form-label">Name as per Id<span
+																			class="text-danger">*</span></label>
+																		<form:input
+																			path="idDetails[${status.index}].nameAsPerId"
+																			type="text" class="form-control"
+																			placeholder="Name as per Id" />
+																		<span id="nameAsPerIdError${status.index}"
+																			class="text-danger"></span>
+																	</div>
+																</div>
+															</div>
+
+															<div id="issuedForNonResidents">
+																<div class="row">
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued Country<span
+																				class="text-danger">*</span></label>
+																			<form:select
+																				path="idDetails[${status.index}].issuedCountry"
+																				class="form-control" multiple="false">
+																				<form:option value="" disabled="true"
+																					selected="true">Issued Country</form:option>
+																				<form:options items="${countryList}"
+																					itemValue="valueId" itemLabel="description" />
+																			</form:select>
+																			<span id="issuedCountryError${status.index}"
+																				class="text-danger"></span>
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued at<span
+																				class="text-danger">*</span></label>
+																			<form:select
+																				path="idDetails[${status.index}].issuedAt"
+																				class="form-control" multiple="false">
+																				<form:option value="" disabled="true"
+																					selected="true">Issued at</form:option>
+																				<form:options items="${countryList}"
+																					itemValue="valueId" itemLabel="description" />
+																			</form:select>
+																			<span id="issuedAtError${status.index}"
+																				class="text-danger"></span>
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued By<span
+																				class="text-danger">*</span></label>
+																			<form:input
+																				path="idDetails[${status.index}].issuedBy"
+																				type="text" class="form-control"
+																				placeholder="Issued By" id="issuedBy" />
+																			<span id="issuedByError${status.index}"
+																				class="text-danger"></span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+															<div id="issuedDateExpiryNonResident">
+																<div class="row">
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Issued on<span
+																				class="text-danger">*</span></label>
+																			<form:input
+																				path="idDetails[${status.index}].issuedOn"
+																				type="date" class="form-control" min="1900-01-01"
+																				max="${today}" />
+																			<span id="issuedOnError${status.index}"
+																				class="text-danger"></span>
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Date of Expiry<span
+																				class="text-danger">*</span></label>
+																			<form:input
+																				path="idDetails[${status.index}].dateOfExpiry"
+																				type="date" class="form-control" min="${tomorrow}" />
+																			<span id="dateOfExpiryError${status.index}"
+																				class="text-danger"></span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div id="idDetails">
+																<div class="row">
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Id Front (Jpg only)<span
+																				class="text-danger">*</span></label>
+																			<form:input
+																				path="idDetails[${status.index}].frontPictureFile"
+																				type="file" accept="image/jpeg, image/jpg"
+																				class="form-control" placeholder="Id Front" />
+																		</div>
+																	</div>
+																	<div class="col-xl-4">
+																		<div class="mb-4">
+																			<label class="form-label">Id Back (Jpg only)<span
+																				class="text-danger">*</span></label>
+																			<form:input
+																				path="idDetails[${status.index}].backPictureFile"
+																				type="file" accept="image/jpeg, image/jpg"
+																				class="form-control" placeholder="Id Back" />
+																		</div>
+																	</div>
+																</div>
+																<div id="idDetailsFields">
+																	<h5 class="fw-bold mb-0 me-4">
+																		<span class="d-block mb-4">Visa Details</span>
+																	</h5>
+																	<div class="row">
+																		<div class="col-xl-4">
+																			<div class="mb-4">
+																				<label class="form-label">Visa Number</label>
+																				<form:input
+																					path="idDetails[${status.index}].visaNumber"
+																					type="text" class="form-control"
+																					placeholder="Visa Number" />
+																				<span id="visaNumberError${status.index}"
+																					class="text-danger"></span>
+																			</div>
+																		</div>
+																		<div class="col-xl-4">
+																			<div class="mb-4">
+																				<label class="form-label">Visa Expiry Date</label>
+																				<form:input
+																					path="idDetails[${status.index}].visaExpiryDate"
+																					type="date" class="form-control"
+																					placeholder="Visa Expiry Date" />
+																				<span id="visaExpiryDateError${status.index}"
+																					class="text-danger"></span>
+																			</div>
+																		</div>
+																		<div class="col-xl-4">
+																			<div class="mb-4">
+																				<label class="form-label">Visa Type</label>
+																				<form:select
+																					path="idDetails[${status.index}].visaType"
+																					class="form-control">
+																					<form:option value="" disabled="true"
+																						selected="true">Visa Type</form:option>
+																					<option value="1">Employment</option>
+																					<option value="2">Visitor</option>
+																					<option value="3">MyKad</option>
+																				</form:select>
+																				<span id="visaTypeError${status.index}"
+																					class="text-danger"></span>
+																			</div>
+																		</div>
 																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
+													</c:forEach>
 												</div>
-												</c:forEach>
 											</div>
-										</div>
 										</div>
 									</div>
 								</div>
@@ -1066,7 +1235,7 @@ function removeIdentities() {
 															class="text-danger">*</span></label>
 														<form:select path="annualIncomeRangeId"
 															class="form-control" data-select2-selector="icon"
-															multiple="false">
+															multiple="false" id="annualIncomeRangeId">
 															<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
 															<form:options items="${annualIncomeRangeList}"
 																itemValue="valueId" itemLabel="description" />
@@ -1081,7 +1250,7 @@ function removeIdentities() {
 														</label>
 														<form:select path="annualIncomeCurrencyCode"
 															class="form-control" data-select2-selector="icon"
-															multiple="false">
+															multiple="false" id="annualIncomeCurrencyCode">
 															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
 															<%-- <form:options items="${currencyList}" itemValue="valueId"
 														itemLabel="description"/> --%>
@@ -1102,61 +1271,14 @@ function removeIdentities() {
 												</div>
 											</div>
 										</div>
-										<%--	<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Social Security Number</label>
-													<form:input path="socialSecurityNumber" type="text"
-														class="form-control" placeholder="Social Security Number" />
-												</div>
-											</div>
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Tax Registration Number</label>
-													<form:input path="taxRegistrationNumber" type="text"
-														class="form-control" placeholder="Tax Registration Number" />
-												</div>
-											</div>
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Transaction Issued
-														Country </label>
-													<form:select path="txnIssuedCountry" class="form-control"
-														data-select2-selector="icon" multiple="false">
-														<form:option value="" disabled="true" selected="true">Transaction Issued Country</form:option>
-														<form:options items="${countryList}" />
-													</form:select>
-												</div>
-											</div>
-										</div>--%>
-
-										<%-- --%>
 										<div class="row">
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer ecrn<span
-														class="text-danger">*</span></label>
-													<form:input path="ecrn" type="text" class="form-control"
-														placeholder="Employer ecrn" />
-												</div>
-											</div>
-											<div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Employer Establishment Id<span
-														class="text-danger">*</span>
-													</label>
-													<form:input path="employerEstablishmentId" type="text"
-														class="form-control"
-														placeholder="Employer Establishment Id" />
-												</div>
-											</div> --%>
-
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
 														class="text-danger">*</span></label>
 													<form:select path="riskRatingId" class="form-control"
-														data-select2-selector="icon" multiple="false">
+														data-select2-selector="icon" multiple="false"
+														id="riskRatingId">
 														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
 														<form:options items="${riskRatingIdList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1169,7 +1291,8 @@ function removeIdentities() {
 													<label class="form-label">Income Type<span
 														class="text-danger">*</span></label>
 													<form:select path="incomeType" class="form-control"
-														data-select2-selector="icon" multiple="false">
+														data-select2-selector="icon" multiple="false"
+														id="incomeType">
 														<form:option value="" disabled="true" selected="true">Income Type</form:option>
 														<form:options items="${incomeTypeList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1182,7 +1305,8 @@ function removeIdentities() {
 													<label class="form-label">Profession Catagory<span
 														class="text-danger">*</span></label>
 													<form:select path="professionCategory" class="form-control"
-														data-select2-selector="icon" multiple="false">
+														data-select2-selector="icon" multiple="false"
+														id="professionCategory">
 														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
 														<form:options items="${professionCategoryList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1191,32 +1315,14 @@ function removeIdentities() {
 												</div>
 											</div>
 										</div>
-										<%--<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">PEP Catagory<span
-														class="text-danger">*</span></label>
-													<form:input path="pepCategory" type="text"
-														class="form-control" placeholder="PEP Catagory" />
-												</div>
-											</div>
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Personal Mohre Id<span
-														class="text-danger">*</span></label>
-													<form:input path="personalMohreId" type="text"
-														class="form-control" placeholder="Personal Mohre Id" />
-												</div>
-											</div>
-
-										</div>--%>
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Employer Name<span
 														class="text-danger">*</span></label>
 													<form:input path="employerName" type="text"
-														class="form-control" placeholder="Employer Name" />
+														class="form-control" placeholder="Employer Name"
+														id="employerName" />
 													<span id="employerNameError" style="color: red;"></span>
 												</div>
 											</div>
@@ -1225,7 +1331,8 @@ function removeIdentities() {
 													<label class="form-label">Employer Address<span
 														class="text-danger">*</span></label>
 													<form:input path="employerAddress" type="text"
-														class="form-control" placeholder="Employer Address" />
+														class="form-control" placeholder="Employer Address"
+														id="employerAddress" />
 													<span id="employerAddressError" style="color: red;"></span>
 												</div>
 											</div>
@@ -1234,28 +1341,21 @@ function removeIdentities() {
 													<label class="form-label">Employer Phone<span
 														class="text-danger">*</span></label>
 													<form:input path="employerPhone" type="tel"
-														class="form-control" placeholder="Employer Phone" />
+														id="employerPhone" class="form-control"
+														placeholder="Employer Phone" />
 													<span id="employerPhoneError" style="color: red;"></span>
 												</div>
 											</div>
 										</div>
 										<div class="row">
-
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Reason For Acc.<span
-														class="text-danger">*</span></label>
-													<form:input path="reasonForAcc" type="text"
-														class="form-control" placeholder="Reason For Acc." />
-												</div>
-											</div> --%>
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Transaction Volume Month<span
 														class="text-danger">*</span>
 													</label>
 													<form:select path="txnVolMonth" class="form-control"
-														data-select2-selector="icon" multiple="false">
+														data-select2-selector="icon" multiple="false"
+														id="txnVolMonth">
 														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
 														<form:options items="${transactionVolumeMonthList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1268,7 +1368,8 @@ function removeIdentities() {
 													<label class="form-label">Transaction Count Month<span
 														class="text-danger">*</span></label>
 													<form:select path="txnCountMonth" class="form-control"
-														data-select2-selector="icon" multiple="false">
+														data-select2-selector="icon" multiple="false"
+														id="txnCountMonth">
 														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
 														<form:options items="${transactionCountMonthList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1281,7 +1382,7 @@ function removeIdentities() {
 													<label class="form-label">First Language<span
 														class="text-danger">*</span></label>
 													<form:select path="firstLanguage" class="form-control"
-														data-select2-selector="icon">
+														data-select2-selector="icon" id="firstLanguage">
 														<option value="en">English</option>
 													</form:select>
 													<span id="firstLanguageError" style="color: red;"></span>
@@ -1294,8 +1395,8 @@ function removeIdentities() {
 													<label class="form-label">Marital Status<span
 														class="text-danger">*</span></label>
 													<form:select path="maritalStatus" class="form-control"
-														data-select2-selector="icon">
-<%-- 														<form:option value="" disabled="true" selected="true">Marital Status</form:option> --%>
+														data-select2-selector="icon" id="maritalStatus">
+														<%-- 														<form:option value="" disabled="true" selected="true">Marital Status</form:option> --%>
 														<option value="2">Unmarried</option>
 														<option value="1">Married</option>
 													</form:select>
@@ -1306,7 +1407,8 @@ function removeIdentities() {
 												<div class="mb-4">
 													<label class="form-label">Occupation</label>
 													<form:select path="occupationId" class="form-control"
-														data-select2-selector="icon" multiple="false">
+														data-select2-selector="icon" multiple="false"
+														id="occupationId">
 														<form:option value="" disabled="true" selected="true">Occupation</form:option>
 														<form:options items="${occupationIdList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1349,88 +1451,38 @@ function removeIdentities() {
 													<span id="customerRemarksError" style="color: red;"></span>
 												</div>
 											</div>
-											<!-- <div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">DNFBP<span
-															class="text-danger">*</span></label>
-														<form:select path="dnfbp" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">DPMS<span
-															class="text-danger">*</span></label>
-														<form:select path="dpms" class="form-control"
-															data-select2-selector="icon">
-															<option value="false">No</option>
-															<option value="true">Yes</option>
-														</form:select>
-													</div>
-												</div>  -->
-										</div>
-										<%--<div class="row">
-											 <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Agent Referenc Number<span
-														class="text-danger">*</span></label>
-													<form:input path="agentRefNo" type="text"
-														class="form-control" placeholder="Agent Referenc Number" />
-												</div>
-											</div>
+
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Social Links<span
+													<label class="form-label">Profile Photo (Jpg only)<span
 														class="text-danger">*</span></label>
-													<form:input path="socialLinksId" class="form-control"
-														placeholder="Social Links" />
-												</div>
-											</div>
-										</div>--%>
-										<div class="row"></div>
-										<div class="row">
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Catagory<span
-														class="text-danger">*</span></label>
-													<form:input path="profileCategory" class="form-control"
-														placeholder="Profile Catagory" />
-												</div>
-											</div> --%>
-											<%-- <div class="col-xl-4">
-												<div class="mb-4">
-													<label class="form-label">Profile Photo<span
-														class="text-danger">*</span></label>
-													<form:input path="" type="file" class="form-control"
+													<form:input path="profPictureFile" type="file"
+														accept="image/jpeg, image/jpg" class="form-control"
 														placeholder="Profile Photo" />
 												</div>
-											</div> --%>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<span id="validationError" style="color: #ff000087; display: none;"><b>Please
-							fill all the required fields before submitting!</b></span>
-				</div>
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<button type="submit" class="btn btn-primary">Submit</button>
-				</div>
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
+						<span id="validationError"
+							style="color: #ff000087; display: none;"><b>Please
+								fill all the required fields before submitting!</b></span>
+					</div>
+					<div class="mt-5 mb-5 text-center"
+						style="display: flex; justify-content: center">
+						<button type="submit" class="btn btn-primary">Submit</button>
+					</div>
 			</form:form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>
 
 	<script src="assets/vendors/js/vendors.min.js"></script>
-
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>

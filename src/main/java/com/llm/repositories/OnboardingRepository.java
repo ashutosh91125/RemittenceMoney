@@ -1,9 +1,10 @@
 package com.llm.repositories;
 
+import com.llm.customer.model.Customer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.llm.model.Customer;
+
 
 @Repository
 public interface OnboardingRepository extends JpaRepository<Customer, Long> {

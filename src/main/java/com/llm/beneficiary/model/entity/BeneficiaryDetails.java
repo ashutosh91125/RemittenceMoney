@@ -50,4 +50,5 @@ public class BeneficiaryDetails {
 	private String beneficiaryDob;
 	private String beneficiaryIdType;
 	private String beneficiaryIdNo;
+	private Boolean status;
 }

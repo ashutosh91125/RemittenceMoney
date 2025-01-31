@@ -2,7 +2,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html lang="zxx">
 
-<head> 
+<head>
 <meta charset="utf-8">
 <meta http-equiv="x-ua-compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -84,21 +84,25 @@
 	font-size: 17px;
 }
 
-/  for accordion  /
+/
+for accordion /
 .accordion-button::after {
 	display: none;
 }
-/  Add a custom icon to the left of the accordion button  /
+
+/
+Add a custom icon to the left of the accordion button /
 .accordion-button::before {
-	content: "\f107"; /  Font Awesome chevron-down icon  /
-	font-family: 'Font Awesome 5 Free';
+	content: "\f107"; / Font Awesome chevron-down icon / font-family :
+	'Font Awesome 5 Free';
 	font-weight: 900;
 	margin-right: 10px;
 	font-size: 16px;
 	transition: transform 0.3s;
 }
 
-/  Rotate icon when the accordion is open  /
+/
+Rotate icon when the accordion is open /
 .accordion-button[aria-expanded="true"]::before {
 	transform: rotate(180deg);
 }
@@ -120,43 +124,132 @@
 	display: none;
 }
 
-/  Ensure the .form-control class applies uniformly to inputs and selects  /
+/
+Ensure the .form-control class applies uniformly to inputs and selects /
 .form-control {
 	width: 100%;
-	/  Ensures input and select elements take up the full column width  /
-	height: 46px;
-	/  Set a consistent height for both input fields and selects  /
-	padding: 10px; /  Adds padding for better appearance  /
-	box-sizing: border-box; /  Ensures padding doesn't affect width  /
+	/
+	Ensures
+	input
+	and
+	select
+	elements
+	take
+	up
+	the
+	full
+	column
+	width
+	/
+	height
+	:
+	46px;
+	/
+	Set
+	a
+	consistent
+	height
+	for
+	both
+	input
+	fields
+	and
+	selects
+	/
+	padding
+	:
+	10px;
+	/
+	Adds
+	padding
+	for
+	better
+	appearance
+	/
+	box-sizing
+	:
+	border-box;
+	/
+	Ensures
+	padding
+	doesn't
+	affect
+	width
+	/
 }
 
-/  Optional: Remove any internal margins/padding that could affect layout  /
+/
+Optional: Remove any internal margins /padding that could affect layout
+	/
 .col-xl-4 {
 	padding-left: 8px;
 	padding-right: 8px;
 }
 
 .mb-4 {
-	margin-bottom: 1.5rem; /  Maintain consistent spacing between fields  /
+	margin-bottom: 1.5rem;
+	/
+	Maintain
+	consistent
+	spacing
+	between
+	fields
+	/
 }
 
-/  Remove any width restrictions if there are any  /
+/
+Remove any width restrictions if there are any /
 .form-control:focus {
-	border-color: #5e72e4; /  Optional: focus effect  /
-	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-	/  Optional: focus effect  /
+	border-color: #5e72e4; /
+	Optional: focus effect/box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+	/
+	Optional: focus effect/
 }
 
 #search-result td {
-	padding: 5px; /  Adjust padding  /
-	font-size: 12px; /  Adjust font size  /
-	white-space: nowrap; /  Prevent wrapping  /
+	padding: 5px;
+	/
+	Adjust
+	padding
+	/
+	font-size
+	:
+	12px;
+	/
+	Adjust
+	font
+	size
+	/
+	white-space
+	:
+	nowrap;
+	/
+	Prevent
+	wrapping
+	/
 }
 
 #search-result th {
-	padding: 5px; /  Adjust padding  /
-	font-size: 12px; /  Adjust font size  /
-	white-space: nowrap; /  Prevent wrapping  /
+	padding: 5px;
+	/
+	Adjust
+	padding
+	/
+	font-size
+	:
+	12px;
+	/
+	Adjust
+	font
+	size
+	/
+	white-space
+	:
+	nowrap;
+	/
+	Prevent
+	wrapping
+	/
 }
 
 .hidden {
@@ -164,47 +257,46 @@
 }
 </style>
 <script>
-function viewUpdateBranch() {
-    const formData = $("#branchForm").serialize(); // Serialize form data for submission
-    const id = $("#id").val();
-    $('#loader').show();
-    $('#submitButton').prop('disabled', true);
+	function viewUpdateBranch() {
+		const formData = $("#branchForm").serialize(); // Serialize form data for submission
+		const id = $("#id").val();
+		$('#loader').show();
+		$('#submitButton').prop('disabled', true);
 
-    $.ajax({
-        url: "/branch?branchId="+id,
-        type: "GET",
-        contentType: "application/x-www-form-urlencoded",
-        data: formData,
-        success: function(response) {
-            $('#loader').hide();
-            $('#submitButton').prop('disabled', false);
+		$.ajax({
+			url : "/branch?branchId=" + id,
+			type : "GET",
+			contentType : "application/x-www-form-urlencoded",
+			data : formData,
+			success : function(response) {
+				$('#loader').hide();
+				$('#submitButton').prop('disabled', false);
 
-            // Replace the current content with the response (HTML view)
-            $('body').html(response);
-        },
-        error: function(xhr) {
-            $('#loader').hide();
-            $('#submitButton').prop('disabled', false);
-            alert("Error: " + xhr.responseText);
-        }
-    });
-}
+				// Replace the current content with the response (HTML view)
+				$('body').html(response);
+			},
+			error : function(xhr) {
+				$('#loader').hide();
+				$('#submitButton').prop('disabled', false);
+				alert("Error: " + xhr.responseText);
+			}
+		});
+	}
 
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
+	function toggleDiv(divId) {
+		const element = document.getElementById(divId);
+		element.classList.toggle("show");
+	}
 
-$(document).ready(function () {
-    const status = document.getElementById('status'); 
-    
-    if (status.value === 'true') {
-    	status.value = 'Active';
-    }
-    else{
-    	status.value = 'Inactive';
-    }
-});
+	$(document).ready(function() {
+		const status = document.getElementById('status');
+
+		if (status.value === 'true') {
+			status.value = 'Active';
+		} else {
+			status.value = 'Inactive';
+		}
+	});
 </script>
 </head>
 
@@ -287,6 +379,16 @@ $(document).ready(function () {
 								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
+											<label class="form-label">Branch ID<span
+												class="text-danger"> </span></label>
+											<form:input path="id" type="text" class="form-control"
+												id="brancID" placeholder="Branch ID" readonly="true"
+												required='true' />
+											<span id="brancIDError" class="text-danger"></span>
+										</div>
+									</div>
+									<div class="col-xl-4">
+										<div class="mb-4">
 											<label class="form-label">Branch Name<span
 												class="text-danger"> </span></label>
 											<form:input path="branchName" type="text"
@@ -304,6 +406,9 @@ $(document).ready(function () {
 												class="text-danger"></span>
 										</div>
 									</div>
+
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Type<span
@@ -313,8 +418,6 @@ $(document).ready(function () {
 											<span id="branchTypeError" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">State<span
@@ -335,6 +438,8 @@ $(document).ready(function () {
 											<span id="branchDisplayNameError" class="text-danger"></span>
 										</div>
 									</div>
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 1<span
@@ -345,8 +450,6 @@ $(document).ready(function () {
 											<span id="address1Error" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Address 2<span
@@ -366,6 +469,9 @@ $(document).ready(function () {
 											<span id="address3Error" class="text-danger"></span>
 										</div>
 									</div>
+
+								</div>
+								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">City<span
@@ -375,9 +481,6 @@ $(document).ready(function () {
 											<span id="cityError" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Zip/PoBox</label>
@@ -398,7 +501,10 @@ $(document).ready(function () {
 											<span id="branchChannelIdError" class="text-danger"></span>
 										</div>
 									</div>
-									<div class="col-xl-4">
+									
+								</div>
+								<div class="row">
+								<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Branch Mode<span
 												class="text-danger"> </span></label>
@@ -407,8 +513,6 @@ $(document).ready(function () {
 											<span id="branchModeError" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">CDP Channel</label>
@@ -425,25 +529,24 @@ $(document).ready(function () {
 											<span id="raasChannelError" class="text-danger"></span>
 										</div>
 									</div>
+								</div>
+								<div class="row">
+								<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">Status <span
+												class="text-danger"> </span></label>
+											<form:input path="status" class="form-control" id="status"
+												readonly="true" placeholder="Status" />
+										</div>
+									</div>
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Status <span
-                                                class="text-danger"> </span></label>
-                                            <form:input path="status" class="form-control" id="status"
-                                                readonly="true" placeholder="Status" />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Remarks<span
-                                                class="text-danger"> </span></label>
-                                            <form:input path="remarks" type="text"
-                                                class="form-control" id="remarks" placeholder="Remarks"
-                                                readonly="true" />
-                                        </div>
-                                    </div>
+										<div class="mb-4">
+											<label class="form-label">Remarks<span
+												class="text-danger"> </span></label>
+											<form:input path="remarks" type="text" class="form-control"
+												id="remarks" placeholder="Remarks" readonly="true" />
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -580,57 +683,56 @@ $(document).ready(function () {
 						</div>
 					</div>
 				</div>
-					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
-								Tails</button>
-						</h2>
-						<div id="panelsStayOpen-collapseSeven"
-							class="accordion-collapse collapse">
-							<div class="accordion-body" style="background: aliceblue;">
-								<div class="card-body personal-info">
-									<div class="main-content">
-										<div class="card-body pass-security">
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Created By<span
-															class="text-danger"> </span></label>
-														<form:input path="createdBy" type="text"
-															class="form-control" id="createdBy"
-															placeholder="Created By" readonly="true" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Created On<span
-															class="text-danger"> </span></label>
-														<form:input path="createdOn" type="text"
-															class="form-control" id="createdOn"
-															placeholder="Created On" readonly="true" />
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Modified By<span
-															class="text-danger"> </span></label>
-														<form:input path="modifiedBy" type="text"
-															class="form-control" id="modifiedBy"
-															placeholder="Modified By" readonly="true" />
-													</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Audit
+							Tails</button>
+					</h2>
+					<div id="panelsStayOpen-collapseSeven"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created By<span
+														class="text-danger"> </span></label>
+													<form:input path="createdBy" type="text"
+														class="form-control" id="createdBy"
+														placeholder="Created By" readonly="true" />
 												</div>
 											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Modified On<span
-															class="text-danger"> </span></label>
-														<form:input path="modifiedOn" type="text"
-															class="form-control" id="modifiedOn"
-															placeholder="Modified On" readonly="true" />
-													</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Created On<span
+														class="text-danger"> </span></label>
+													<form:input path="createdOn" type="text"
+														class="form-control" id="createdOn"
+														placeholder="Created On" readonly="true" />
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified By<span
+														class="text-danger"> </span></label>
+													<form:input path="modifiedBy" type="text"
+														class="form-control" id="modifiedBy"
+														placeholder="Modified By" readonly="true" />
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Modified On<span
+														class="text-danger"> </span></label>
+													<form:input path="modifiedOn" type="text"
+														class="form-control" id="modifiedOn"
+														placeholder="Modified On" readonly="true" />
 												</div>
 											</div>
 										</div>
@@ -640,12 +742,13 @@ $(document).ready(function () {
 						</div>
 					</div>
 				</div>
-				<c:if test="${pageContext.request.isUserInRole('AGENT')}">
+			</div>
+			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
 					<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
 				</div>
-				</c:if>
+			</c:if>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

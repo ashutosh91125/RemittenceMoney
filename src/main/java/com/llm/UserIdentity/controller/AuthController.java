@@ -39,7 +39,7 @@ import com.llm.UserIdentity.service.CustomUserDetailsService;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.model.EnumEntity;
 import com.llm.common.service.EnumEntityService;
-import com.llm.repositories.CustomerRepository;
+import com.llm.customer.repository.CustomerRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

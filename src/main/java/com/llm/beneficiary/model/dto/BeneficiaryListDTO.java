@@ -15,12 +15,9 @@ public class BeneficiaryListDTO {
     private String fullName;
     private String beneficiaryAccountNo;
     private String beneficiaryBank;
+    private Boolean status;
     
-    public BeneficiaryListDTO(String ecrn, String fullName, String beneficiaryAccountNo, String beneficiaryBank) {
-        this.ecrn = ecrn;
-        this.fullName = fullName;
-        this.beneficiaryAccountNo = beneficiaryAccountNo;
-        this.beneficiaryBank = beneficiaryBank;
-    }    
+   
+    
     
 }

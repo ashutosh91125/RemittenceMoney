@@ -169,27 +169,20 @@
 	 	  document.getElementById("nameAsPerIdError").innerHTML = "Name AS Per Id is required.";
 	 	  isValid = false;
 	 }
-	 if (!form.residentType.value.trim() == "100") { 
+	 if (form.residentType.value.trim() == "100") {
 	     if (!form.issuedCountry.value) {
 	         document.getElementById("issuedCountryError").innerHTML = "Issued Country is required.";
 	         isValid = false;
-	     } 
-	 }
-	 if (!form.residentType.value.trim()  == "100") { 
+	     }
 		if (!form.issuedAt.value) {
 		      document.getElementById("issuedAtError").innerHTML = "Issued At is required.";
 		      isValid = false;
 		 }
-	 }
-	 if (form.residentType.value.trim()  == "100") { 
 	 if (!form.issuedBy.value) {
 		      document.getElementById("issuedByError").innerHTML = "Issued By is required.";
 		      isValid = false;
 		 }
-		 else {
-		 	 	   document.getElementById("issuedCountryError").innerHTML = ""; // Clear the error if field is valid
-		 	 }
-		  }
+	}
 			
 	if (!form.annualIncomeRangeId.value) {
 				document.getElementById("annualIncomeRangeIdError").innerHTML = "Annual Income is required.";
@@ -247,9 +240,6 @@
 				 document.getElementById("occupationIdError").innerHTML = "Occupation Id is required.";
 				 isValid = false;
 		}
-		
-		
-		
 
 		if (!isValid) {
 		          document.getElementById("validationError").style.display = "block";

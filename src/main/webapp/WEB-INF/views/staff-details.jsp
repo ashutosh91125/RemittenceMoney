@@ -1,5 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <html lang="zxx">
 
 <head>
@@ -286,18 +287,17 @@ $(document).ready(function () {
                                         <div class="mb-4">
                                             <label class="form-label">Branch<span
                                                 class="text-danger"> </span></label>
-                                             <input value="${branches}" class="form-control" id="branch"  readonly="true"  required='true' multiple="false" /> 
+                                             <c:set var="branchNames" value="" />
+											<%-- <c:forEach var="branch" items="${branches}">
+   											 <c:set var="branchNames" value="${branchNames}${branch}, " />
+											</c:forEach>
+											<input type="text" class="form-control" id="branch" 
+      										 value="${fn:substring(branchNames, 0, fn:length(branchNames) - 2)}" readonly="true" required="true" /> --%>
+      										 <input type="text" class="form-control" id="branch" 
+      										 value="${branches}" readonly="true" required="true" />
                                             <span id="branchError" class="text-danger"></span>
                                         </div>
                                     </div>
-									<div class="col-xl-4">
-										<div class="mb-4">
-											<label class="form-label">Group<span
-                                            class="text-danger"> </span></label>
-                                            <form:input path="staffGroup" class="form-control"  id="staffGroup" required='true' readonly="true"/>
-											<span id="staffGroupError" class="text-danger"></span>
-										</div>
-									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">First Name<span
@@ -309,9 +309,7 @@ $(document).ready(function () {
 											<span id="firstNameError" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-                                    <div class="col-xl-4">
+									 <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Middle Name<span
                                                 class="text-danger"> </span></label>
@@ -322,6 +320,8 @@ $(document).ready(function () {
                                             <span id="firstNameError" class="text-danger"></span>
                                         </div>
                                     </div>
+								</div>
+								<div class="row"> 
 									<div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Last Name<span
@@ -344,15 +344,16 @@ $(document).ready(function () {
                                             <span id="usernameError" class="text-danger"></span>
 										</div>
 									</div>
-								</div>
-								<div class="row">
-								<div class="col-xl-4">
+									<div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Status</label>
                                             <form:input path="status"  class="form-control"
                                                 id="status" readonly="true" placeholder="Status"/>
                                         </div>
                                     </div>
+								</div>
+								<div class="row">
+								
 								    <div class="col-xl-4">
                                         <div class="mb-4">
                                             <label class="form-label">Remarks</label>

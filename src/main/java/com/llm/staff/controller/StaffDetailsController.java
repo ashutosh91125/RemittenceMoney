@@ -1,5 +1,6 @@
 package com.llm.staff.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.llm.UserIdentity.model.User;
@@ -109,28 +109,26 @@ public class StaffDetailsController {
     }
 
     @GetMapping("/staff-deatils")
-    public String getStaffDetails(@RequestParam("id") Long id,Model model) {
-    	
-    	Optional<StaffDetails> staffDetils = staffDetailsService.getById(id);
-    	if(staffDetils.isPresent()) {
-    		List<Long> branchIds = staffDetils.get().getBranches();
-    		for (Long branchId : branchIds) {
-    		    try {
+    public String getStaffDetails(@RequestParam("id") Long id, Model model) {
+        Optional<StaffDetails> staffDetails = staffDetailsService.getById(id);
+        if (staffDetails.isPresent()) {
+            List<Long> branchIds = staffDetails.get().getBranches();
+            List<String> branchNames = new ArrayList<>();
+            
+            for (Long branchId : branchIds) {
+                try {
                     Optional<BranchDetails> branchDetails = branchDetailsService.getById(branchId);
-    		        model.addAttribute("branches",branchDetails.get().getBranchName());
-    		    } catch (NumberFormatException e) {
-
-    		    	log.error("Invalid branch ID: " + branchId);
-    		    }
-    		}//multiple branches
-//    		Long branchId = Long.valueOf(staffDetils.get().getBranches());
-//    		Optional<BranchDetails> branch = branchDetailsService.getById(branchId);
-//    		if(branch.isPresent()) {
-//    			  model.addAttribute("branches", branch.get().getBranchName());
-//    		}
-//    		model.addAttribute("staff",staffDetils);
-    	}
-    	return "staff-details";
+                    branchDetails.ifPresent(branch -> branchNames.add(branch.getBranchName()));
+                } catch (Exception e) {
+                    log.error("Error fetching branch details for branchId: " + branchId, e);
+                }
+            }
+            String branchNamesString = String.join(", ", branchNames);
+            
+            model.addAttribute("branches", branchNamesString);
+            model.addAttribute("staff", staffDetails.get());
+        }
+        return "staff-details";
     }
 
     @GetMapping("/staff-update-form")
@@ -155,4 +153,6 @@ public class StaffDetailsController {
     	}
     	return "staff-view-update";
     }
+    
+  
 }

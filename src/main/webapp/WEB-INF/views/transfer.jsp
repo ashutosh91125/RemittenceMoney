@@ -223,8 +223,9 @@
 }
 
 .blur-background {
-    filter: blur(5px); /* Adjust the blur intensity as needed */
-    pointer-events: none; /* To prevent interaction with blurred elements */
+	filter: blur(5px); /* Adjust the blur intensity as needed */
+	pointer-events: none;
+	/* To prevent interaction with blurred elements */
 }
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
@@ -237,44 +238,46 @@
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<div class="modal fade show" id="openPopup" tabindex="-1" style="display: none; padding-left: 0px;">
+	<div class="modal fade show" id="openPopup" tabindex="-1"
+		style="display: none; padding-left: 0px;">
+		<div class="modal-dialog modal-lg" role="document"
+			style="width: 508px; height: 360px; display: flex; align-items: center;">
+			<div class="modal-content" style="height: 45%;">
+				<div class="modal-header">
+					<div style="align-items: end;">
+						<h5 class="modal-title" style="position: absolute; top: 15px;">ID
+							Status</h5>
+						<button type="button" class="btn-close" onclick="closePopup()"
+							style="position: absolute; top: 15px; right: 25px;"></button>
+					</div>
+					<div
+						style="display: flex; position: absolute; top: 80px; left: 145px;">
+						<button class="btn btn-primary" id="activeBtn">
+							<a href="#" id="activeLink" style="color: white;">Active</a>
+						</button>
+						&nbsp;&nbsp;&nbsp;
+						<button class="btn btn-danger" id="deactiveBtn">
+							<a href="#" id="deactiveLink" style="color: white;">Deactivate</a>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1" style="display: none; padding-left: 0px;">
     <div class="modal-dialog modal-lg" role="document" style="width: 508px; height: 360px; display: flex; align-items: center;">
         <div class="modal-content" style="height: 45%;">
             <div class="modal-header">
-                <div style="align-items: end;">
-                    <h5 class="modal-title" style="position: absolute; top: 15px;">ID Status</h5>
-                    <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
-                </div>
-                <div style="display: flex; position: absolute;top: 80px;left: 145px;">
-                    <button class="btn btn-primary" id="activeBtn">
-                        <a href="#" id="activeLink" style="color: white;">Active</a>
-                    </button>&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-danger" id="deactiveBtn">
-                        <a href="#" id="deactiveLink" style="color: white;">Deactivate</a>
-                    </button>
-                </div>
+                <h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary Status</h5>
+                <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
+            </div>
+            <div class="modal-body" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+                <button class="btn btn-primary" id="activeButton">Activate</button>
+                <button class="btn btn-danger" id="deactiveButton">Deactivate</button>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="openPopupForBeneficiary" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content" style="height: 45%;">
-            <div class="modal-header">
-                <h5 class="modal-title">Beneficiary Status</h5>
-                <button type="button" class="btn-close" onclick="closePopup()"></button>
-            </div>
-            <div class="modal-body text-center">
-                <div class="d-flex justify-content-center gap-3">
-                    <a href="#" id="activeLinkBeneficiary" class="btn btn-primary">Activate</a>
-                    <a href="#" id="deactiveLinkBeneficiary" class="btn btn-danger">Deactivate</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 			<!-- [ page-header ] start -->
@@ -316,19 +319,18 @@
 				<input type="hidden" id="residentTypeId" name="residentTypeId"
 					value=""> <input type="hidden" id="agentId" name="agentId"
 					value="${agentId}"> <input type="hidden"
-					id="dailyCreditLimit" value="${dailyCreditLimit}" />
-					<input type="hidden" id="dailyCredit" value="${dailyCredit}" />
-					<input type="hidden" id="perDayLimit" value="${perDayLimit}" />
-					<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" />
-					<input type="hidden" id="visaType" value="" />
-					<input type="hidden" id="idNumber" value="" />
-					<input type="hidden" id="idType" value="" />
-					<input type="hidden" id="issuedBy" value="" />
-					<input type="hidden" id="issuedOn" value="" />
-					<input type="hidden" id="dateOfExpiry" value="" />
-					<input type="hidden" id="visaExpiryDate" value="" />
-					<input type="hidden" id="visaNumber" value="" />
-					<input type="hidden" id="issuedCountry" value="" />
+					id="dailyCreditLimit" value="${dailyCreditLimit}" /> <input
+					type="hidden" id="dailyCredit" value="${dailyCredit}" /> <input
+					type="hidden" id="perDayLimit" value="${perDayLimit}" /> <input
+					type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> <input
+					type="hidden" id="visaType" value="" /> <input type="hidden"
+					id="idNumber" value="" /> <input type="hidden" id="idType"
+					value="" /> <input type="hidden" id="issuedBy" value="" /> <input
+					type="hidden" id="issuedOn" value="" /> <input type="hidden"
+					id="dateOfExpiry" value="" /> <input type="hidden"
+					id="visaExpiryDate" value="" /> <input type="hidden"
+					id="visaNumber" value="" /> <input type="hidden"
+					id="issuedCountry" value="" />
 
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
@@ -336,8 +338,8 @@
 						<div class="col-lg-8">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
-								<div class="table-responsive">
-								<table class="table table-hover" id="search-result">
+									<div class="table-responsive">
+										<table class="table table-hover" id="search-result">
 											<thead>
 												<tr>
 													<%--  id="customerRow-${customer.ecrn}"
@@ -576,7 +578,8 @@
 											<h6>ID Details</h6>
 										</div>
 										<div id="idDetails">
-											<div class="row" style="display: flex; justify-content: center;">
+											<div class="row"
+												style="display: flex; justify-content: center;">
 												<div class="col-lg-8">
 													<div class="card stretch stretch-full">
 														<div class="card-body p-0">
@@ -590,7 +593,7 @@
 																			<th>ID Date of Issue</th>
 																			<th>ID Date of Expiry</th>
 																			<th>Country</th>
-																		<!-- 	<th>Visa Number</th>
+																			<!-- 	<th>Visa Number</th>
 																			<th>Visa Expiry Date</th>
 																			<th>Visa Type</th> -->
 																			<th>Status</th>

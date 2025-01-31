@@ -1421,27 +1421,25 @@ function showSelectBeneficiaryDiv() {
 			    $('#openPopup').show();
 			}
 			function openPopupForBeneficiary(beneficiaryId, activeStatus) {
-			   
-			    const activeButton = document.querySelector('#activeLinkBeneficiary');
-			    const deactiveButton = document.querySelector('#deactiveLinkBeneficiary');
-			    const container = document.querySelector('.nxl-container');
+			       const activeButton = document.querySelector('#activeButton');
+			       const deactiveButton = document.querySelector('#deactiveButton');
+			       const container = document.querySelector('.nxl-container');
 
-			  
-			    container.classList.add('blur-background');
+			       container.classList.add('blur-background');
 
-			    
-			    activeButton.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=true`;
-			    deactiveButton.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=false`;
+			       if (activeStatus) {
+			           activeButton.setAttribute('disabled', true);
+			           deactiveButton.removeAttribute('disabled');
+			       } else {
+			           activeButton.removeAttribute('disabled');
+			           deactiveButton.setAttribute('disabled', true);
+			       }
 
-			    if (activeStatus) {
-			        activeButton.setAttribute('disabled', true);
-			        deactiveButton.removeAttribute('disabled');
-			    } else {
-			        activeButton.removeAttribute('disabled');
-			        deactiveButton.setAttribute('disabled', true);
-			    }
-			    $('#openPopupForBeneficiary').modal('show');
-			}
+			       activeButton.onclick = () => window.location.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=true`;
+			       deactiveButton.onclick = () => window.location.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=false`;
+
+			       $('#openPopupForBeneficiary').modal('show');
+			   }
 			function closePopup() {
 			    const container = document.querySelector('.nxl-container');
 			    container.classList.remove('blur-background');

@@ -277,14 +277,14 @@ $(document).ready(function () {
 		                        type: 'GET',
 		                        success: function (bankResponse) {
 		                            let bankName = bankResponse?.bankName || "Unknown Bank";
-									var status = bankResponse.status ? 'Active' : 'Inactive';
 									console.log(bankName,"search-result1");
+									let statusText = beneficiary.status ? 'Active' : 'Inactive';
 									let row = `<tr data-beneficiary-id="${beneficiary.id}">
 									                                <td class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
 																		onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
 									                                <td>${bankName}</td>
 									                                <td>${beneficiary.beneficiaryAccountNo}</td>
-																	<td>${status}</td>
+																	<td>${statusText}</td>
 																	<td class="text-end" onclick="openPopupForBeneficiary('${beneficiary.id}', ${beneficiary.status})">
 																	<i class="bi bi-pencil-square"></i>
 																	</td>
@@ -1394,52 +1394,106 @@ function showSelectBeneficiaryDiv() {
 		    }
 		}
 
-			function openPopup(idNumber, activeStatus) {
-			    const activeButton = document.querySelector('#openPopup .btn-primary');
-			    const deactiveButton = document.querySelector('#openPopup .btn-danger');
-			    const container = document.querySelector('.nxl-container');
-	
-	
-			    container.classList.add('blur-background');
-	
-	
-			    const activeLink = document.querySelector('#activeLink');
-			    const deactiveLink = document.querySelector('#deactiveLink');
-	
-			    if (activeStatus) {
-			        activeButton.setAttribute('disabled', true);
-			        deactiveButton.removeAttribute('disabled');
-			    } else {
-			        activeButton.removeAttribute('disabled');
-			        deactiveButton.setAttribute('disabled', true);
-			    }
-	
-			    activeLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=true`);
-			    deactiveLink.setAttribute('href', `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=false`);
-	
-	
-			    $('#openPopup').show();
-			}
-			function openPopupForBeneficiary(beneficiaryId, activeStatus) {
-			       const activeButton = document.querySelector('#activeButton');
-			       const deactiveButton = document.querySelector('#deactiveButton');
-			       const container = document.querySelector('.nxl-container');
+		function openPopup(idNumber, activeStatus) {
+		    const activeButton = document.querySelector('#openPopup .btn-primary');
+		    const deactiveButton = document.querySelector('#openPopup .btn-danger');
+		    const container = document.querySelector('.nxl-container');
 
-			       container.classList.add('blur-background');
+		    container.classList.add('blur-background');
 
-			       if (activeStatus) {
-			           activeButton.setAttribute('disabled', true);
-			           deactiveButton.removeAttribute('disabled');
-			       } else {
-			           activeButton.removeAttribute('disabled');
-			           deactiveButton.setAttribute('disabled', true);
-			       }
+		    const activeLink = document.querySelector('#activeLink');
+		    const deactiveLink = document.querySelector('#deactiveLink');
 
-			       activeButton.onclick = () => window.location.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=true`;
-			       deactiveButton.onclick = () => window.location.href = `/api/v1/beneficiaries/status/${beneficiaryId}?status=false`;
+		    if (activeStatus) {
+		        activeButton.setAttribute('disabled', true);
+		        deactiveButton.removeAttribute('disabled');
+		    } else {
+		        activeButton.removeAttribute('disabled');
+		        deactiveButton.setAttribute('disabled', true);
+		    }
 
-			       $('#openPopupForBeneficiary').show();
-			   }
+		    $('#openPopup').show();
+		   
+		    activeLink.onclick = function(event) {
+		        event.preventDefault(); 
+		        updateStatus(idNumber, true);
+		    };
+
+		    deactiveLink.onclick = function(event) {
+		        event.preventDefault(); 
+		        updateStatus(idNumber, false);
+		    };
+		}
+
+		function updateStatus(idNumber, status) {
+			const container = document.querySelector('.nxl-container');
+		    $.ajax({
+		        url: `/caas/api/v2/iddetail/get-by-idnumber/${idNumber}?activeStatus=${status}`,
+		        type: 'GET',
+		        success: function(response) {
+		            console.log("Status updated successfully:", response);
+		            $('#openPopup').hide();
+		            container.classList.remove('blur-background');
+					
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("Error updating status:", error);
+		            alert("Failed to update status. Please try again.");
+		        }
+		    });
+		}
+
+
+		function openPopupForBeneficiary(beneficiaryId, activeStatus) {
+		    const activeButton = document.querySelector('#activeButton');
+		    const deactiveButton = document.querySelector('#deactiveButton');
+		    const container = document.querySelector('.nxl-container');
+
+		    container.classList.add('blur-background');
+
+		   
+		    if (activeStatus) {
+		        activeButton.setAttribute('disabled', true);
+		        deactiveButton.removeAttribute('disabled');
+		    } else {
+		        activeButton.removeAttribute('disabled');
+		        deactiveButton.setAttribute('disabled', true);
+		    }
+
+		    
+		    activeButton.onclick = function(event) {
+		        event.preventDefault();
+		        updateBeneficiaryStatus(beneficiaryId, true);
+		    };
+
+		    deactiveButton.onclick = function(event) {
+		        event.preventDefault();
+		        updateBeneficiaryStatus(beneficiaryId, false);
+		    };
+
+		  
+		    $('#openPopupForBeneficiary').show();
+		}
+
+		
+		function updateBeneficiaryStatus(beneficiaryId, status) {
+		    const container = document.querySelector('.nxl-container');
+		    $.ajax({
+		        url: `/api/v1/beneficiaries/status/${beneficiaryId}?status=${status}`,
+		        type: 'GET',
+		        success: function(response) {
+		            console.log("Status updated successfully:", response);
+					alert("Status updated successfully:", response);
+		            $('#openPopupForBeneficiary').hide();
+		            container.classList.remove('blur-background');
+		        },
+		        error: function(xhr, status, error) {
+		            console.error("Error updating status:", error);
+		            alert("Failed to update status. Please try again.");
+		        }
+		    });
+		}
+
 			function closePopup() {
 			    const container = document.querySelector('.nxl-container');
 			    container.classList.remove('blur-background');

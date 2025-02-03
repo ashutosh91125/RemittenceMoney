@@ -813,6 +813,7 @@ function getQuote() {
                         $('#quoteMessage').text(""); // Clear message
                         $('#quoteButton').show(); // Show quote button
                         $('#createTransactionSection').hide();
+                        window.location.reload();
                     }
                 }, 1000);
                 console.log(remainingTime);
@@ -822,10 +823,26 @@ function getQuote() {
                 $('#createTransactionSection').hide(); // Ensure it remains hidden
             }
         },
-        error: function() {
+
+        error: function(jqXHR) {
             $('#loader').hide();
             $('#createTransactionSection').hide();
-            alert('Failed to generate quote. Please try again.');
+            console.log(jqXHR); // Debugging log
+
+            let errorMessage = 'Failed to generate quote. Please try again.';
+
+            try {
+                const response = JSON.parse(jqXHR.responseText);
+                if (response.details) {
+                    errorMessage = Object.values(response.details)[0]; // Extract the first error message
+                } else if (response.message) {
+                    errorMessage = response.message; // Use the main error message
+                }
+            } catch (e) {
+                console.error('Error parsing response:', e);
+            }
+
+            alert(errorMessage);
         },
         complete: function() {
             // Hide loader and enable button

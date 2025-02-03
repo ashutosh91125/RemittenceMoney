@@ -20,16 +20,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.llm.Service.CustomerEcrnService;
-//import com.llm.Service.CustomerValidationService;
 import com.llm.customer.model.Customer;
 import com.llm.customer.service.CustomerService;
 import com.llm.iddetail.dto.IdDetailDto;
@@ -43,9 +38,6 @@ public class CustomerController {
 	private static final String BASE_URL = "https://drap-sandbox.digitnine.com";
 	@Autowired
 	private CustomerService customerService;
-
-	@Autowired
-	private CustomerEcrnService customerEcrnService;
 
 	@GetMapping
 	public ResponseEntity<List<Customer>> customer() {

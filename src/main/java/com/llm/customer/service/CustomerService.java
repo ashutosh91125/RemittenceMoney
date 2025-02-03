@@ -25,14 +25,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
-import com.llm.Service.CustomerCreationService;
 import com.llm.branch.model.BranchDetails;
 import com.llm.branch.repository.BranchDetailsRepository;
 import com.llm.common.service.EnumEntityService;
 import com.llm.customer.model.Customer;
 import com.llm.customer.repository.CustomerRepository;
 import com.llm.iddetail.model.IdDetail;
-import com.llm.iddetail.projection.IdDetailProjection;
 import com.llm.model.response.ResponseDTO;
 import com.llm.staff.repository.StaffDetailsRepository;
 

@@ -81,19 +81,6 @@ public class CustomerController {
 		}
 	}
 
-	@PostMapping(value = "/onBoarding/customer", consumes = "application/json")
-	public ResponseEntity<String> createCustomer(@RequestBody Customer customer, HttpServletRequest httpServletRequest) {
-		logger.info("=========customer=======" + customer);
-		String status = new String();
-		try {
-			status = customerService.createCustomer(customer, httpServletRequest);
-			return new ResponseEntity<>(status, HttpStatus.CREATED);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return new ResponseEntity<>("Failed to onboard customer" + status, HttpStatus.BAD_REQUEST);
-		}
-	}
-
 	@GetMapping("/verify-mobile")
 	public ResponseEntity<Map<String, String>> verifyMobile(@RequestParam String primaryMobileNumber) {
 		logger.info(primaryMobileNumber.toString());

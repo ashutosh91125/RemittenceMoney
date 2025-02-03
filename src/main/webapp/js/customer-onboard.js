@@ -5,6 +5,7 @@ $(document).ready(function () {
         if (!validation(this)) {
             return false;
         }
+
         $('#loader').show();
         $("#customerOnboardForm button[type='submit']").prop('disabled', true);
         const formData = new FormData(this);
@@ -14,27 +15,44 @@ $(document).ready(function () {
             type: "POST",
             data: formData,
             processData: false,
-            contentType: false, 
+            contentType: false,
             success: function (response) {
                 $('#loader').hide();
                 $("#customerOnboardForm button[type='submit']").prop('disabled', false);
-                if (response && response.includes("ECRN:")) {
-                    var ecrn = response.split("ECRN:")[1].trim(); // Extract the ecrn value
-                    alert("Customer Onboarded successfully with ECRN: " + ecrn);
+
+                if (response && response.status === "success" && response.data && response.data.ecrn) {
+                    alert("Customer Onboarded successfully with ECRN: " + response.data.ecrn);
                 } else {
                     alert("Customer Onboarded successfully!");
                 }
+
                 $("#customerOnboardForm")[0].reset();
                 window.location.reload();
             },
-            error: function () {
+            error: function (xhr) {
                 $('#loader').hide();
                 $("#customerOnboardForm button[type='submit']").prop('disabled', false);
-                alert("Something went wrong!");
+
+                try {
+                    let response = JSON.parse(xhr.responseText);
+
+                    if ((response.status === "failure" || response.status === "failed") && response.message) {
+                        alert("Error: " + response.message);
+                    } else if (response.code === 504 && response.message) {
+                        alert("Server Error: " + response.message);
+                    } else if (response.error) {
+                        alert("Error: " + response.error);
+                    } else {
+                        alert("Something went wrong!");
+                    }
+                } catch (e) {
+                    alert("Something went wrong!");
+                }
             }
         });
     });
 });
+
 
 
 function copyAddress() {

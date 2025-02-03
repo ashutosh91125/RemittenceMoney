@@ -673,8 +673,8 @@
 													name="beneficiaryDeliveryOption"
 													id="beneficiaryDeliveryOption">
 													<option value="">Select Delivery Option</option>
-													<%-- <option value="CASHPICKUP">Cash Pickup</option>
-													<option value="MOBILEWALLET">Mobile Wallet</option> --%>
+													<option value="CASHPICKUP">Cash Pickup</option>
+													<option value="MOBILEWALLET">Mobile Wallet</option>
 													<option value="BANK">BANK</option>
 												</select> <span id="beneficiaryDeliveryOptionError"
 													style="color: red;"></span>
@@ -960,16 +960,6 @@
 												</select> <span id="payInCurrencyError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
-												<label class="form-label">Payment Mode<span
-													class="text-danger">*</span></label> <select class="form-control"
-													id="paymentMode" name="paymentMode"
-													data-select2-selector="icon">
-													<option value="" disabled selected>Select Payment
-														Mode</option>
-													<option value="BANK">Bank Transfer</option>
-												</select> <span id="paymentModeError" style="color: red;"></span>
-											</div>
-											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
 													class="text-danger">*</span></label> <select
 													data-select2-selector="icon" class="form-control"
@@ -996,6 +986,16 @@
 													<option value="SAVG">Savings</option>
 												</select> <span id="transactionPurposeError" style="color: red;"></span>
 											</div>
+											<div class="col-xl-4">
+                                                <label class="form-label">Payment Mode<span
+                                                    class="text-danger">*</span></label> <select class="form-control"
+                                                    id="paymentMode" name="paymentMode"
+                                                    data-select2-selector="icon">
+                                                    <option value="" disabled selected>Select Payment
+                                                        Mode</option>
+                                                    <option value="BANK">Bank Transfer</option>
+                                                </select> <span id="paymentModeError" style="color: red;"></span>
+                                            </div>
 										</div>
 										<div class="row">
 											<%-- <div class="col-xl-4">
@@ -1015,51 +1015,43 @@
 												<div id="error-message"
 													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;"></div>
 											</div>
-
-
 											<div class="col-xl-4">
-												<label class="form-label">Remarks</label> <input type="text"
-													class="form-control" placeholder="Remarks" id="remarks"
-													name="remarks">
-											</div>
+                                                <label class="form-label">Rate</label> <input type="text"
+                                                    class="form-control" placeholder="Rate" id="rate"
+                                                    style="color: green;" name="rate" readonly>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <label class="form-label"> Payout Amount <span
+                                                    id="selectedPayoutCurrency"
+                                                    style="font-weight: bold; color: #007bff;"></span>
+                                                </label> <input type="text" class="form-control"
+                                                    placeholder="Payout Amount" style="color: green;"
+                                                    id="payoutAmount" name="payoutAmount" readonly>
+                                            </div>
 										</div>
 										<div class="row">
-
-
-											<div class="col-xl-4">
-												<label class="form-label">Rate</label> <input type="text"
-													class="form-control" placeholder="Rate" id="rate"
-													style="color: green;" name="rate" readonly>
-											</div>
-											<div class="col-xl-4">
-												<label class="form-label"> Payout Amount <span
-													id="selectedPayoutCurrency"
-													style="font-weight: bold; color: #007bff;"></span>
-												</label> <input type="text" class="form-control"
-													placeholder="Payout Amount" style="color: green;"
-													id="payoutAmount" name="payoutAmount" readonly>
-											</div>
-
 											<div class="col-xl-2">
 												<label class="form-label">Commission</label> <input
 													type="text" class="form-control" placeholder="Commission"
 													style="color: green;" id="commission" name="commission"
 													readonly>
 											</div>
-
 											<div class="col-xl-2">
 												<label class="form-label">Tax</label> <input type="text"
 													class="form-control" placeholder="Tax"
 													style="color: green;" id="tax" name="tax" readonly>
 											</div>
-										</div>
-										<div class="row">
 											<div class="col-xl-4">
-												<label class="form-label">Total Pay In Amount</label> <input
-													type="text" class="form-control"
-													placeholder="Total Pay In Amount" id="totalPayInAmount"
-													style="color: green;" name="totalPayInAmount" readonly>
-											</div>
+                                                <label class="form-label">Total Pay In Amount</label> <input
+                                                    type="text" class="form-control"
+                                                    placeholder="Total Pay In Amount" id="totalPayInAmount"
+                                                    style="color: green;" name="totalPayInAmount" readonly>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <label class="form-label">Remarks</label> <input type="text"
+                                                    class="form-control" placeholder="Remarks" id="remarks"
+                                                    name="remarks">
+                                            </div>
 										</div>
 									</div>
 								</div>

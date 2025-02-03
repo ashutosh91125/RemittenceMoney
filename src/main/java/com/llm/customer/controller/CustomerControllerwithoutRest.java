@@ -1,14 +1,12 @@
 package com.llm.customer.controller;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -257,121 +255,77 @@ public class CustomerControllerwithoutRest {
 	@PostMapping("/createUser")
 	@ResponseBody
 	public ResponseEntity<?> createUser(@ModelAttribute Customer customer, HttpServletRequest httpServletRequest) throws JsonProcessingException {
+		Map<String, String> errorResponse = new HashMap<>();
+
 		if (customer.getIdDetails() != null && !customer.getIdDetails().isEmpty()) {
 			for (IdDetail idDetail : customer.getIdDetails()) {
 				if (idDetail.getFrontPictureFile() != null && !idDetail.getFrontPictureFile().isEmpty()) {
 					String contentType = idDetail.getFrontPictureFile().getContentType();
 
 					if (contentType == null || !contentType.startsWith("image/")) {
-						throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+						errorResponse.put("error", "Only image files are allowed (JPEG, PNG, etc.).");
+						return ResponseEntity.badRequest().body(errorResponse);
 					}
 					try {
 						idDetail.setFrontBase64Data(idDetail.getFrontPictureFile().getBytes());
 						idDetail.setFrontContentType(contentType);
 					} catch (Exception e) {
-
-						return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+						errorResponse.put("error", "Error processing front picture: " + e.getMessage());
+						return ResponseEntity.badRequest().body(errorResponse);
 					}
 				}
 			}
 		}
+
 		if (customer.getIdDetails() != null && !customer.getIdDetails().isEmpty()) {
 			for (IdDetail idDetail : customer.getIdDetails()) {
 				if (idDetail.getBackPictureFile() != null && !idDetail.getBackPictureFile().isEmpty()) {
 					String contentType = idDetail.getBackPictureFile().getContentType();
 
 					if (contentType == null || !contentType.startsWith("image/")) {
-						throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+						errorResponse.put("error", "Only image files are allowed (JPEG, PNG, etc.).");
+						return ResponseEntity.badRequest().body(errorResponse);
 					}
 					try {
 						idDetail.setBackBase64Data(idDetail.getBackPictureFile().getBytes());
 						idDetail.setBackContentType(contentType);
 					} catch (Exception e) {
-
-						return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+						errorResponse.put("error", "Error processing back picture: " + e.getMessage());
+						return ResponseEntity.badRequest().body(errorResponse);
 					}
 				}
 			}
 		}
+
 		try {
-			// Validate picture file if present
 			if (customer.getProfPictureFile() != null && !customer.getProfPictureFile().isEmpty()) {
 				String contentType = customer.getProfPictureFile().getContentType();
 
-				// Ensure only image files are allowed
 				if (contentType == null || !contentType.startsWith("image/")) {
-					throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+					errorResponse.put("error", "Only image files are allowed (JPEG, PNG, etc.).");
+					return ResponseEntity.badRequest().body(errorResponse);
 				}
 
-				// Set image data in ToDo object
 				customer.setProfBase64Data(customer.getProfPictureFile().getBytes());
 				customer.setProfContentType(contentType);
 			}
 		} catch (Exception e) {
-			// Return error response with exception message
-			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+			errorResponse.put("error", "Error processing profile picture: " + e.getMessage());
+			return ResponseEntity.badRequest().body(errorResponse);
 		}
-		String status = customerService.createCustomer(customer, httpServletRequest); // Get the status response from the service
 
-		// Remove any leading or trailing whitespaces from the status string
-		status = status.trim();
-		logger.info("Trimmed Status: " + status); // Print the status for debugging
+		try {
+			Map<String, Object> serviceResponse = customerService.createCustomer(customer, httpServletRequest);
 
-		// Check if the status string contains "status_code"
-		if (status.contains("status_code")) {
-
-			// Extract the status_code by finding the substring with "status_code="
-			String statusCodeString = extractFieldValue(status, "status_code=");
-
-			// Safely try to parse the status_code and handle invalid input
-			int statusCode = 0;
-			try {
-				statusCode = Integer.parseInt(statusCodeString.trim());
-			} catch (NumberFormatException e) {
-				logger.error("Error parsing status_code: " + statusCodeString, e);
-				return ResponseEntity.badRequest().body("Error: Invalid status code format");
+			if (serviceResponse.containsKey("status") && "failed".equals(serviceResponse.get("status")) || serviceResponse.containsKey("status") && "failure".equals(serviceResponse.get("status"))) {
+				return ResponseEntity.badRequest().body(serviceResponse);
 			}
 
-			// Print out the status code for debugging
-			logger.info("Extracted Status Code: " + statusCode);
-
-			// If status code is 200, return success
-			if (statusCode == 200) {
-
-				String ecrn = extractFieldValue(status, "ecrn=");
-
-				return ResponseEntity.ok("Customer Onboarded successfully with the ECRN: " + ecrn);
-			}
-
-			// If status code is not 200, extract the message
-			String message = extractFieldValue(status, "message=");
-			logger.info("Extracted Message: " + message);
-
-			// Return bad request with the error message
-			return ResponseEntity.badRequest().body("Error: " + message);
+			return ResponseEntity.ok(serviceResponse);
+		} catch (Exception e) {
+			errorResponse.put("error", "An unexpected error occurred: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
 		}
-
-		// If no status_code is found, return a generic error
-		return ResponseEntity.badRequest().body("Error: Invalid response format");
-	}
-
-	// Helper method to extract the value of a field in the format `key=value`
-	private String extractFieldValue(String input, String field) {
-		int startIndex = input.indexOf(field) + field.length();
-		int endIndex = input.indexOf(",", startIndex);
-		if (endIndex == -1) {
-			endIndex = input.indexOf("}", startIndex); // Handle the case where it's the last field
-		}
-
-		if (startIndex != -1 && endIndex != -1) {
-			String value = input.substring(startIndex, endIndex).trim();
-			// Remove any surrounding quotes if present
-			if (value.startsWith("\"") && value.endsWith("\"")) {
-				value = value.substring(1, value.length() - 1);
-			}
-			return value;
-		}
-		return ""; // Return empty string if field is not found
 	}
 
 	@GetMapping("/customerdetails")

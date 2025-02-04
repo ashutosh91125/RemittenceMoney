@@ -225,7 +225,7 @@ $(document).ready(function () {
 		        success: function (idDetailsList) {
 		            console.log("Fetched ID Details:", idDetailsList);
 		            var idDetailsTable = $("#search-result2 tbody");
-		            idDetailsTable.empty();
+		            idDetailsTable.empty(); 
 
 		            if (idDetailsList.length > 0) {
 		                idDetailsList.forEach(function (idDetail) {

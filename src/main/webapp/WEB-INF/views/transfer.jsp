@@ -383,7 +383,7 @@
 													<th class="text-end">Actions</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody> 
 												<c:choose>
 													<c:when test="${not empty customerListOnTransfer}">
 														<c:forEach var="customer"

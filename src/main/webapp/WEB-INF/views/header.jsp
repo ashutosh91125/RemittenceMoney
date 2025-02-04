@@ -88,7 +88,15 @@
                         test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
 					<li class="nxl-item nxl-hasmenu"><a href="/staff-list"
                         class="nxl-link"> <span class="nxl-micon"><i
-                                class="feather-users"></i></span> <span class="nxl-mtext">All Staff</span>
+                                class="feather-users"></i></span> <span class="nxl-mtext">All Agent Staff</span>
+                    </a></li>
+                    </c:if>
+
+                    <c:if
+                        test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
+                    <li class="nxl-item nxl-hasmenu"><a href="#"
+                        class="nxl-link"> <span class="nxl-micon"><i
+                                class="feather-users"></i></span> <span class="nxl-mtext">All Lulu Staff</span>
                     </a></li>
                     </c:if>
 

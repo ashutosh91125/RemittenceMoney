@@ -1,5 +1,6 @@
 package com.llm.receipt.controller;
 
+import com.llm.receipt.dto.ReceiptDTO;
 import com.llm.receipt.service.ReceiptService;
 import com.llm.transfer.model.Transfer;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,8 +18,8 @@ public class ReceiptController {
     }
 
     @PostMapping("/generate")
-    public Map<String, String> generateReceipt(@RequestBody Transfer transfer, HttpServletRequest request, HttpServletResponse response) {
-        return Map.of("receipt_base", receiptService.generateReceiptPdf(transfer, request, response));
+    public Map<String, String> generateReceipt(@RequestBody ReceiptDTO receiptDTO, HttpServletRequest request, HttpServletResponse response) {
+        return Map.of("receipt_base", receiptService.generateReceiptPdf(receiptDTO, request, response));
     }
 }
 

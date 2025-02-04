@@ -17,7 +17,7 @@
         }
 
         .custom-gap {
-                margin-bottom: 30px; /* You can adjust this value as needed */
+                margin-bottom: 45px; /* You can adjust this value as needed */
         }
 
         .header {
@@ -105,12 +105,12 @@
 
                 <table class="mt-4">
                     <tr>
-                        <td colspan="4"><b> YO Pin </b> <b> : ${transaction_ref_number}</b> </td>
+                        <td colspan="4"><b> YO Pin </b> <b> : ${transactionRefNumber}</b> </td>
                     </tr>
                     <tr>
                         <td colspan="2">Date <b>:</b> ${date}</td>
                         <td><strong>Lulu Now-Account Credit</strong></td>
-                        <td>${transaction_ref_number}</td>
+                        <td>${transactionRefNumber}</td>
                     </tr>
                     <tr class="beneficiary py-5">
                         <td colspan="2" class="pt-3"> <strong>Customer Details</strong></td>

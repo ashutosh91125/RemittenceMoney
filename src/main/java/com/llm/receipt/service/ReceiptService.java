@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.Base64;
 import java.util.Map;
 
+import com.llm.receipt.dto.ReceiptDTO;
 import com.llm.transfer.model.Transfer;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import jakarta.servlet.RequestDispatcher;
@@ -22,12 +23,12 @@ public class ReceiptService {
         this.servletContext = servletContext;
     }
 
-    public String generateReceiptPdf(Transfer transfer, HttpServletRequest request, HttpServletResponse response) {
+    public String generateReceiptPdf(ReceiptDTO receiptDTO, HttpServletRequest request, HttpServletResponse response) {
         try {
             // Use reflection to set attributes dynamically
-            for (Field field : transfer.getClass().getDeclaredFields()) {
+            for (Field field : receiptDTO.getClass().getDeclaredFields()) {
                 field.setAccessible(true);
-                request.setAttribute(field.getName(), field.get(transfer));
+                request.setAttribute(field.getName(), field.get(receiptDTO));
             }
 
             // Render JSP to HTML

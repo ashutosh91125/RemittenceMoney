@@ -180,19 +180,19 @@ public class CustomerController {
 //	}
 
 	@GetMapping("/id-detail/{customerId}")
-	public ResponseEntity<List<IdDetailDto>> getIdDetails2(@PathVariable Long customerId) {
+	public ResponseEntity<List<IdDetail>> getIdDetails2(@PathVariable Long customerId) {
 		List<IdDetail> idDetailsList = customerService.getIdDetailsByCustomerId(customerId);
 		Collections.reverse(idDetailsList);
 
-		// Convert IdDetail to IdDetailDto
-		List<IdDetailDto> idDetailDtos = idDetailsList.stream()
-				.map(idDetail -> new IdDetailDto(idDetail.getId(), idDetail.getIdType(), idDetail.getIdNumber(),
-						idDetail.getIssuedBy(), idDetail.getIssuedOn(), idDetail.getDateOfExpiry(),
-						idDetail.getIssuedCountry(), idDetail.getVisaType(), idDetail.getVisaNumber(),
-						idDetail.getVisaExpiryDate(), idDetail.getActiveStatus()))
-				.collect(Collectors.toList());
+//		// Convert IdDetail to IdDetailDto
+//		List<IdDetailDto> idDetailDtos = idDetailsList.stream()
+//				.map(idDetail -> new IdDetailDto(idDetail.getId(), idDetail.getIdType(), idDetail.getIdNumber(),
+//						idDetail.getIssuedBy(), idDetail.getIssuedOn(), idDetail.getDateOfExpiry(),
+//						idDetail.getIssuedCountry(), idDetail.getVisaType(), idDetail.getVisaNumber(),
+//						idDetail.getVisaExpiryDate(), idDetail.getActiveStatus()))
+//				.collect(Collectors.toList());
 
-		return ResponseEntity.ok(idDetailDtos);
+		return ResponseEntity.ok(idDetailsList);
 	}
 
 }

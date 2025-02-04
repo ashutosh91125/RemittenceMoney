@@ -278,6 +278,24 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade show" id="popupIdDetails" tabindex="-1"
+		style="display: none;" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">ID Details</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						onclick="closePopup()" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<div id="idDetailsContainer">
+						<div id="idDetails"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 			<!-- [ page-header ] start -->

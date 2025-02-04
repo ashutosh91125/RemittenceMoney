@@ -76,6 +76,8 @@ public class IdDetail {
 	@Transient
 	private MultipartFile backPictureFile;
 	private String BackContentType;
+	@Column(name="customer_id")
+	private Long customerId;
 
 
 }

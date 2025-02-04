@@ -48,7 +48,7 @@
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
 								<input name="branch" type="text" class="form-control"
-									placeholder="Enter your branch Id" >
+									placeholder="Enter your branch Id" required>
 							</div>
 
 							<div class="mt-5">

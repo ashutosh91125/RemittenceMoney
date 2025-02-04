@@ -353,7 +353,7 @@
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row" style="display: flex; justify-content: center;">
-						<div class="col-lg-8">
+						<div class="col-lg-12">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
 									<div class="table-responsive">
@@ -598,7 +598,7 @@
 										<div id="idDetails">
 											<div class="row"
 												style="display: flex; justify-content: center;">
-												<div class="col-lg-8">
+												<div class="col-lg-12">
 													<div class="card stretch stretch-full">
 														<div class="card-body p-0">
 															<div class="table-responsive">
@@ -657,7 +657,7 @@
 									<div id="selectBeneficiaryDiv" style="display: none;">
 										<div class="row" id="benficeryTable"
 											style="display: flex; justify-content: center;">
-											<div class="col-lg-8">
+											<div class="col-lg-12 p-4">
 												<div class="card stretch stretch-full">
 													<div class="card-body p-0">
 														<div class="table-responsive" style="overflow-x: hidden;">

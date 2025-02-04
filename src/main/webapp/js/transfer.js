@@ -1452,6 +1452,7 @@ function showSelectBeneficiaryDiv() {
 		            console.log("Status updated successfully:", response);
 		            $('#openPopup').hide();
 		            container.classList.remove('blur-background');
+					window.location.reload();
 					
 		        },
 		        error: function(xhr, status, error) {
@@ -1504,6 +1505,7 @@ function showSelectBeneficiaryDiv() {
 					alert("Status updated successfully:", response);
 		            $('#openPopupForBeneficiary').hide();
 		            container.classList.remove('blur-background');
+					window.location.reload();
 		        },
 		        error: function(xhr, status, error) {
 		            console.error("Error updating status:", error);

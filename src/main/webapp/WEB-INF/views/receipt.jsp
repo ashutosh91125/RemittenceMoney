@@ -16,6 +16,10 @@
             color: #1b426b;
         }
 
+        .custom-gap {
+                margin-bottom: 30px; /* You can adjust this value as needed */
+        }
+
         .header {
             text-align: center;
             line-height: 1.6;
@@ -101,12 +105,12 @@
 
                 <table class="mt-4">
                     <tr>
-                        <td colspan="4"><b> YO Pin </b> <b> : 1253025102281181</b> </td>
+                        <td colspan="4"><b> YO Pin </b> <b> : ${transaction_ref_number}</b> </td>
                     </tr>
                     <tr>
                         <td colspan="2">Date <b>:</b> ${date}</td>
                         <td><strong>Lulu Now-Account Credit</strong></td>
-                        <td>(LR1253025102282181)</td>
+                        <td>${transaction_ref_number}</td>
                     </tr>
                     <tr class="beneficiary py-5">
                         <td colspan="2" class="pt-3"> <strong>Customer Details</strong></td>
@@ -167,7 +171,7 @@
                         <td></td>
                         <td></td>
                         <td>Cash</td>
-                        <td> <b>:</b>   10000.0</td>
+                        <td> <b>:</b>   0.0</td>
                     </tr>
                     <tr>
                         <td>Profession/Occupation</td>
@@ -201,9 +205,9 @@
                     </tr>
                     <tr>
                         <td>Bene. Bank</td>
-                        <td> <b>:</b>   ${bank}</td>
+                        <td> <b>:</b>   ${benBank}</td>
                         <td>Bene. IBAN</td>
-                        <td> <b>:</b>   ${routingCode}</td>
+                        <td> <b>:</b>   ${iban}</td>
                     </tr>
                     <tr>
                         <td>Account No</td>
@@ -216,7 +220,7 @@
                     </tr>
                     <tr>
                         <td>Bene Branch</td>
-                        <td colspan="3"> <b>:</b>   MAIN BRANCH PHILIPPINE NATIONAL BANK</td>
+                        <td colspan="3"> <b>:</b>  ${benBranch}</td>
                     </tr>
                     <tr>
                         <td>Benef Address</td>
@@ -252,11 +256,13 @@
             </div>
         </div>
 
-        <div class="row mb-6 d-flex justify-content-between"> <!-- Use d-flex and justify-content-between to space columns -->
-            <div class="col-5 text-left">
+        <div class="row custom-gap d-flex justify-content-between"> <!-- Use d-flex and justify-content-between to space columns -->
+            <div class="col text-left">
                 <b>Customer's Signature</b>
             </div>
-            <div class="col-5 text-right">
+        </div>
+        <div class="row custom-gap d-flex justify-content-between">
+            <div class="col text-right">
                 <b>Agent&apos;s Signature &amp; Seal</b>
             </div>
         </div>
@@ -264,9 +270,9 @@
 
         </div>
         <div class="row mb-5 d-flex justify-content-between">
-            <div class="col-5 text-left">
+            <div class="col-1 text-left">
             </div>
-            <div class="col-5 text-right"> <!-- Align the image to the right -->
+            <div class="col-1 text-right"> <!-- Align the image to the right -->
                 <a href="https://imgbb.com/"><img src="https://i.ibb.co/Tqc6K5Xm/image.png" alt="image" border="0" /></a>
             </div>
         </div>

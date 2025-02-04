@@ -192,8 +192,13 @@
 }
 
 .hidden {
-	display: none;
+    display: none;
 }
+
+.main-content {
+    display: block; /* or however you want to display it */
+}
+
 /* Reduce the height of the Select2 container */
 .custom-select2+.select2-container .select2-selection--single {
 	height: 30px; /* Adjust as needed */
@@ -264,22 +269,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1" style="display: none; padding-left: 0px;">
-    <div class="modal-dialog modal-lg" role="document" style="width: 508px; height: 360px; display: flex; align-items: center;">
-        <div class="modal-content" style="height: 45%;">
-            <div class="modal-header">
-                <h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary Status</h5>
-                <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
-            </div>
-            <div class="modal-body" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
-                <button class="btn btn-primary" id="activeButton">Activate</button>
-                <button class="btn btn-danger" id="deactiveButton">Deactivate</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1"
+		style="display: none; padding-left: 0px;">
+		<div class="modal-dialog modal-lg" role="document"
+			style="width: 508px; height: 360px; display: flex; align-items: center;">
+			<div class="modal-content" style="height: 45%;">
+				<div class="modal-header">
+					<h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary
+						Status</h5>
+					<button type="button" class="btn-close" onclick="closePopup()"
+						style="position: absolute; top: 15px; right: 25px;"></button>
+				</div>
+				<div class="modal-body"
+					style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+					<button class="btn btn-primary" id="activeButton">Activate</button>
+					<button class="btn btn-danger" id="deactiveButton">Deactivate</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div class="modal fade show" id="popupIdDetails" tabindex="-1"
+	<div class="modal fade show" id="popupIdDetails" tabindex="-1"
 		style="display: none;" aria-modal="true" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
@@ -374,25 +384,36 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="customer" items="${customerListOnTransfer}"
-													varStatus="status">
-													<tr data-customer-ecrn="${customer.ecrn}">
-														<td
-															onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
-															onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
-														<td>${customer.firstName}</td>
-														<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
-														<td>${customer.emailId}</td>
-														<td>${customer.countryOfResidence }</td>
-														<td>${customer.gender }</td>
-														<td><div style="display: flex; justify-content: end;">
-																<a href="customerdetails?ecrn=${customer.ecrn}"
-																	class="avatar-text avatar-md" title="view"> <i
-																	class="feather feather-eye"></i>
-																</a>
-															</div></td>
-													</tr>
-												</c:forEach>
+												<c:choose>
+													<c:when test="${not empty customerListOnTransfer}">
+														<c:forEach var="customer"
+															items="${customerListOnTransfer}" varStatus="status">
+															<tr data-customer-ecrn="${customer.ecrn}">
+																<td
+																	onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+																	onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
+																<td>${customer.firstName}</td>
+																<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
+																<td>${customer.emailId}</td>
+																<td>${customer.countryOfResidence }</td>
+																<td>${customer.gender }</td>
+																<td><div
+																		style="display: flex; justify-content: end;">
+																		<a href="customerdetails?ecrn=${customer.ecrn}"
+																			class="avatar-text avatar-md" title="view"> <i
+																			class="feather feather-eye"></i>
+																		</a>
+																	</div></td>
+															</tr>
+														</c:forEach>
+													</c:when>
+													<c:otherwise>
+														<tr>
+															<td colspan="7" style="text-align: center;">No data
+																found</td>
+														</tr>
+													</c:otherwise>
+												</c:choose>
 											</tbody>
 										</table>
 									</div>
@@ -1005,15 +1026,15 @@
 												</select> <span id="transactionPurposeError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Payment Mode<span
-                                                    class="text-danger">*</span></label> <select class="form-control"
-                                                    id="paymentMode" name="paymentMode"
-                                                    data-select2-selector="icon">
-                                                    <option value="" disabled selected>Select Payment
-                                                        Mode</option>
-                                                    <option value="BANK">Bank Transfer</option>
-                                                </select> <span id="paymentModeError" style="color: red;"></span>
-                                            </div>
+												<label class="form-label">Payment Mode<span
+													class="text-danger">*</span></label> <select class="form-control"
+													id="paymentMode" name="paymentMode"
+													data-select2-selector="icon">
+													<option value="" disabled selected>Select Payment
+														Mode</option>
+													<option value="BANK">Bank Transfer</option>
+												</select> <span id="paymentModeError" style="color: red;"></span>
+											</div>
 										</div>
 										<div class="row">
 											<%-- <div class="col-xl-4">
@@ -1034,18 +1055,18 @@
 													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;"></div>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Rate</label> <input type="text"
-                                                    class="form-control" placeholder="Rate" id="rate"
-                                                    style="color: green;" name="rate" readonly>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <label class="form-label"> Payout Amount <span
-                                                    id="selectedPayoutCurrency"
-                                                    style="font-weight: bold; color: #007bff;"></span>
-                                                </label> <input type="text" class="form-control"
-                                                    placeholder="Payout Amount" style="color: green;"
-                                                    id="payoutAmount" name="payoutAmount" readonly>
-                                            </div>
+												<label class="form-label">Rate</label> <input type="text"
+													class="form-control" placeholder="Rate" id="rate"
+													style="color: green;" name="rate" readonly>
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label"> Payout Amount <span
+													id="selectedPayoutCurrency"
+													style="font-weight: bold; color: #007bff;"></span>
+												</label> <input type="text" class="form-control"
+													placeholder="Payout Amount" style="color: green;"
+													id="payoutAmount" name="payoutAmount" readonly>
+											</div>
 										</div>
 										<div class="row">
 											<div class="col-xl-2">
@@ -1060,16 +1081,16 @@
 													style="color: green;" id="tax" name="tax" readonly>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Total Pay In Amount</label> <input
-                                                    type="text" class="form-control"
-                                                    placeholder="Total Pay In Amount" id="totalPayInAmount"
-                                                    style="color: green;" name="totalPayInAmount" readonly>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <label class="form-label">Remarks</label> <input type="text"
-                                                    class="form-control" placeholder="Remarks" id="remarks"
-                                                    name="remarks">
-                                            </div>
+												<label class="form-label">Total Pay In Amount</label> <input
+													type="text" class="form-control"
+													placeholder="Total Pay In Amount" id="totalPayInAmount"
+													style="color: green;" name="totalPayInAmount" readonly>
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label">Remarks</label> <input type="text"
+													class="form-control" placeholder="Remarks" id="remarks"
+													name="remarks">
+											</div>
 										</div>
 									</div>
 								</div>

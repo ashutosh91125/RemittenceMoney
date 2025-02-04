@@ -101,6 +101,31 @@ $(document).ready(function () {
                         alert("Customer is not valid for transaction!");
                         return;
                     }
+					if (Array.isArray(response.idDetails) && response.idDetails.length > 0) {
+					                       var activeIdDetail = response.idDetails.find(function(detail) {
+					                           return detail.activeStatus === true;
+					                       });
+					                       
+					                       if (!activeIdDetail) {
+					                           alert("This Customer Does Not Have Any Active Id!");
+					                           return;
+					                       }
+					                       // Fill the id details fields from the active object.
+					                       $('#visaType').val(activeIdDetail.visaType || '');
+					                       $('#idNumber').val(activeIdDetail.idNumber || '');
+					                       $('#idType').val(activeIdDetail.idType || '');
+					                       $('#issuedBy').val(activeIdDetail.issuedBy || '');
+					                       $('#issuedOn').val(activeIdDetail.issuedOn || '');
+					                       $('#dateOfExpiry').val(activeIdDetail.dateOfExpiry || '');
+					                       $('#visaExpiryDate').val(activeIdDetail.visaExpiryDate || '');
+					                       $('#visaNumber').val(activeIdDetail.visaNumber || '');
+					                       $('#issuedCountry').val(activeIdDetail.issuedCountry || '');
+					                   } else {
+					                       // idDetails is not available or empty.
+					                       console.log("No idDetails available.");
+					                       alert("No idDetails available.");
+					                       return;
+					                   }
 					$('#customerId').val(response.id || '');
                     $('#ecrn').val(response.ecrn?.trim() || '');
                     $('#firstName').val(response.firstName?.trim() || '');
@@ -116,7 +141,7 @@ $(document).ready(function () {
 					if (response.id) {
 										                        fetchIdDetails(response.id);
 										                    }
-					if (Array.isArray(response.idDetails) && response.idDetails.length > 0){
+					/*if (Array.isArray(response.idDetails) && response.idDetails.length > 0){
 						var firstObject = response.idDetails[0];
 						console.log(firstObject);
 						if(firstObject.activeStatus === true){
@@ -148,8 +173,8 @@ $(document).ready(function () {
 							    $('#visaNumber').val('');
 							}
 
-					}
-
+					}*/
+					
                     if (response.country) {
                         fetchEnumValue('country', response.country, function (country) {
                             $('#country').val(country || response.country);
@@ -227,7 +252,9 @@ $(document).ready(function () {
 		                });
 						});
 		            } else {
-		                idDetailsTable.append('<tr><td colspan="10" class="text-center">No ID details found</td></tr>');
+						let tableBody = $('#search-result2 tbody');
+							                tableBody.empty(); // Clear any existing rows
+							                tableBody.append('<tr><td colspan="3">No ID details found</td></tr>');
 		            }
 		        },
 		        error: function (xhr, status, error) {

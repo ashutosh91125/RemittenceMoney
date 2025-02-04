@@ -248,40 +248,49 @@ document.addEventListener("DOMContentLoaded", function() {
 });
     function viewReceipt() {
         var transactionRefNumber = $('#transactionRefNumber').val();
-        var url = '/api/v1/raas/transaction-receipt?transaction_ref_number=' + transactionRefNumber;
+        var url = '/api/receipt/' + transactionRefNumber;
+
         $('#loader').show();
         $('#viewReceiptButton').prop('disabled', true);
+
         $.ajax({
             url: url,
             type: 'GET',
             success: function (response) {
-                if (response.status === "success" && response.status_code === 200) {
+                // Assuming the response contains the receiptBase64Data directly
+                if (response && response.receiptBase64Data) {
                     // Decode the Base64 data and create a Blob
-                    const base64Data = response.data;
-                    const binaryString = atob(base64Data);
+                    const base64Data = response.receiptBase64Data;
+                    const binaryString = atob(base64Data);  // Decoding the Base64 string
                     const len = binaryString.length;
                     const bytes = new Uint8Array(len);
 
+                    // Convert each character code into a byte
                     for (let i = 0; i < len; i++) {
                         bytes[i] = binaryString.charCodeAt(i);
                     }
 
+                    // Create a Blob object from the decoded byte array
                     const blob = new Blob([bytes], { type: 'application/pdf' });
 
                     // Create a URL for the Blob and open in a new tab
                     const blobUrl = URL.createObjectURL(blob);
 
+                    // Hide loader and enable the button after the PDF opens
                     $('#loader').hide();
                     $('#viewReceiptButton').prop('disabled', false);
 
+                    // Open the Blob URL (PDF) in a new tab
                     window.open(blobUrl, '_blank');
                 } else {
-                    alert('Failed to fetch receipt: ' + response.message);
+                    // Handle error: No receipt data found
+                    alert('Failed to fetch receipt: Receipt data is missing.');
                     $('#loader').hide();
                     $('#viewReceiptButton').prop('disabled', false);
                 }
             },
             error: function (xhr, status, error) {
+                // Handle any unexpected AJAX error
                 alert('Error occurred: ' + error);
                 $('#loader').hide();
                 $('#viewReceiptButton').prop('disabled', false);

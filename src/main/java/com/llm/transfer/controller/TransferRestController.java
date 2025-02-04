@@ -10,6 +10,7 @@ import com.llm.agent.service.IAgentService;
 import com.llm.model.response.ResponseDTO;
 import com.llm.transfer.model.dto.UpdateTransactionStateDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class TransferRestController {
 
 
 	@PostMapping
-	public ResponseEntity<?> registerTransferredDetails(@RequestBody Transfer transfer, HttpServletRequest servletRequest) {
+	public ResponseEntity<?> registerTransferredDetails(@RequestBody Transfer transfer, HttpServletRequest servletRequest, HttpServletResponse servletResponse) {
 
 
 		Map<String, Object> response = new HashMap<>();
@@ -71,7 +72,7 @@ public class TransferRestController {
 				agentService.addAgent(agent);
 			}
 
-			transferService.createTransfer(transfer);
+			transferService.createTransfer(transfer, servletRequest, servletResponse);
 			response.put("status", "CREATED");
 			response.put("message", "Transaction details saved successfully");
 			return new ResponseEntity<>(response, HttpStatus.CREATED);

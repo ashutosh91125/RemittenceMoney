@@ -1,5 +1,6 @@
 package com.llm.transfer.Service.impl;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -9,6 +10,10 @@ import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.model.response.ResponseDTO;
+import com.llm.receipt.dto.ReceiptDTO;
+import com.llm.receipt.service.ReceiptService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -39,8 +44,11 @@ public class TransferServiceImpl implements TransferService {
 	@Autowired
 	private BeneficiaryDetailsRepository beneficiaryRepository;
 
+	@Autowired
+	private ReceiptService receiptService;
+
 	@Override
-	public Transfer createTransfer(Transfer transfer) {
+	public Transfer createTransfer(Transfer transfer, HttpServletRequest request, HttpServletResponse response) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
 		transfer.setUsername(username);
@@ -85,8 +93,51 @@ public class TransferServiceImpl implements TransferService {
 
 			beneficiaryRepository.save(beneficiaryDetails);
 		}
+		Transfer savedTransfer = transferRepository.save(transfer);
 
-		return transferRepository.save(transfer);
+		// Assuming you already have the savedTransfer object available from the database.
+		ReceiptDTO receiptDTO = new ReceiptDTO();
+
+// Mapping fields from the savedTransfer to the receiptDTO
+		receiptDTO.setTransactionRefNumber(savedTransfer.getTransactionReferenceNumber());
+		receiptDTO.setDate(LocalDate.now()); // Set the current date for the receipt (could be different if required).
+		receiptDTO.setCustomerNo(savedTransfer.getUsername()); // Assuming the customer number is the username in Transfer.
+		receiptDTO.setPayoutAmount(savedTransfer.getPayoutAmount());
+		receiptDTO.setPayOutCurrency(savedTransfer.getCurrencies()); // Assuming the currencies field is the payout currency.
+		receiptDTO.setCustomerName(savedTransfer.getFirstName() + " " + savedTransfer.getLastName());
+		receiptDTO.setCustomerPhone(savedTransfer.getPrimaryMobileNumber());
+		receiptDTO.setCustomerIdType(savedTransfer.getIdType());
+		receiptDTO.setCustomerIdNo(savedTransfer.getIdNumber());
+		receiptDTO.setIdDateOfExpiry(savedTransfer.getDateOfExpiry()); // Mapping the expiration date.
+		receiptDTO.setNationality(savedTransfer.getNationality());
+		receiptDTO.setIssuedAt(savedTransfer.getIssuedBy()); // Assuming "issuedAt" corresponds to the "issuedBy" field.
+		receiptDTO.setSourceOfFund(savedTransfer.getSourceOfFund());
+		receiptDTO.setPurposeOfTxn(savedTransfer.getTransactionPurpose());
+		receiptDTO.setCustomerCity(savedTransfer.getCity());
+//		receiptDTO.setEmployerName(savedTransfer.getEmployerName()); // If available
+//		receiptDTO.setOccupation(savedTransfer.getOccupation()); // If available
+		receiptDTO.setPayInAmount(savedTransfer.getPayInAmount());
+		receiptDTO.setPayInCurrency(savedTransfer.getPayInCurrency());
+		receiptDTO.setCommission(savedTransfer.getCommission());
+		receiptDTO.setRate(savedTransfer.getRate());
+		receiptDTO.setTax(savedTransfer.getTax());
+//		receiptDTO.setOtherCharges(savedTransfer.getOtherCharges()); // If available
+		receiptDTO.setTotalPayInAmount(savedTransfer.getTotalPayInAmount());
+		receiptDTO.setBeneficiaryName(savedTransfer.getBeneficiaryFirstName() + " " + savedTransfer.getBeneficiaryLastName());
+		receiptDTO.setBeneficiaryPhone(savedTransfer.getBeneficiaryMobile());
+		receiptDTO.setBeneficiaryRelation(savedTransfer.getBeneficiaryRelation());
+		receiptDTO.setBeneficiaryNationality(savedTransfer.getBeneficiaryNationality());
+		receiptDTO.setBenBank(savedTransfer.getBeneficiaryBank());
+		receiptDTO.setBenBranch(savedTransfer.getBeneficiaryBranch());
+		receiptDTO.setIban(savedTransfer.getBeneficiaryIban());
+		receiptDTO.setAccountNo(savedTransfer.getBeneficiaryAccountNo());
+		receiptDTO.setRemarks(savedTransfer.getRemarks());
+		receiptDTO.setBeneficiaryAddress(savedTransfer.getBeneficiaryAddress1() + " " + savedTransfer.getBeneficiaryAddress2());
+
+// Call the service method to generate the PDF receipt
+		receiptService.generateReceiptPdf(receiptDTO, request, response);
+
+		return savedTransfer;
 	}
 
 	@Override

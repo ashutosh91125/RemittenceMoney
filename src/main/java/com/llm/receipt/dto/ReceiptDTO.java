@@ -12,7 +12,7 @@ public class ReceiptDTO {
 
     private String transactionRefNumber;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime date;
+    private LocalDate date;
     private String customerNo;
     private Double payoutAmount;
     private String payOutCurrency;

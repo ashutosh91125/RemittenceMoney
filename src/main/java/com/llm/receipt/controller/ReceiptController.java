@@ -16,7 +16,7 @@ public class ReceiptController {
     }
 
     @PostMapping("/generate")
-    public String generateReceipt(@RequestBody Map<String, Object> requestData, HttpServletRequest request, HttpServletResponse response) {
+    public Map generateReceipt(@RequestBody Map<String, Object> requestData, HttpServletRequest request, HttpServletResponse response) {
         return receiptService.generateReceiptPdf(requestData, request, response);
     }
 }

@@ -19,7 +19,7 @@ public class ReceiptService {
         this.servletContext = servletContext;
     }
 
-    public String generateReceiptPdf(Map<String, Object> data, HttpServletRequest request, HttpServletResponse response) {
+    public Map generateReceiptPdf(Map<String, Object> data, HttpServletRequest request, HttpServletResponse response) {
         try {
             // Pass dynamic data to JSP
             for (Map.Entry<String, Object> entry : data.entrySet()) {
@@ -41,7 +41,7 @@ public class ReceiptService {
                 builder.run();
 
                 // Convert PDF to Base64
-                return Base64.getEncoder().encodeToString(outputStream.toByteArray());
+                return Map.of("receipt_bash" , Base64.getEncoder().encodeToString(outputStream.toByteArray()));
             }
         } catch (Exception e) {
             throw new RuntimeException("Error generating PDF", e);

@@ -1,6 +1,7 @@
 package com.llm.receipt.controller;
 
 import com.llm.receipt.service.ReceiptService;
+import com.llm.transfer.model.Transfer;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,8 @@ public class ReceiptController {
     }
 
     @PostMapping("/generate")
-    public Map generateReceipt(@RequestBody Map<String, Object> requestData, HttpServletRequest request, HttpServletResponse response) {
-        return receiptService.generateReceiptPdf(requestData, request, response);
+    public Map<String, String> generateReceipt(@RequestBody Transfer transfer, HttpServletRequest request, HttpServletResponse response) {
+        return Map.of("receipt_base", receiptService.generateReceiptPdf(transfer, request, response));
     }
 }
 

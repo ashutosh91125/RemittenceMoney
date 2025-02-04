@@ -2,8 +2,11 @@ package com.llm.receipt.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.StringWriter;
+import java.lang.reflect.Field;
 import java.util.Base64;
 import java.util.Map;
+
+import com.llm.transfer.model.Transfer;
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletContext;
@@ -19,11 +22,12 @@ public class ReceiptService {
         this.servletContext = servletContext;
     }
 
-    public Map generateReceiptPdf(Map<String, Object> data, HttpServletRequest request, HttpServletResponse response) {
+    public String generateReceiptPdf(Transfer transfer, HttpServletRequest request, HttpServletResponse response) {
         try {
-            // Pass dynamic data to JSP
-            for (Map.Entry<String, Object> entry : data.entrySet()) {
-                request.setAttribute(entry.getKey(), entry.getValue());
+            // Use reflection to set attributes dynamically
+            for (Field field : transfer.getClass().getDeclaredFields()) {
+                field.setAccessible(true);
+                request.setAttribute(field.getName(), field.get(transfer));
             }
 
             // Render JSP to HTML
@@ -41,7 +45,7 @@ public class ReceiptService {
                 builder.run();
 
                 // Convert PDF to Base64
-                return Map.of("receipt_base" , Base64.getEncoder().encodeToString(outputStream.toByteArray()));
+                return Base64.getEncoder().encodeToString(outputStream.toByteArray());
             }
         } catch (Exception e) {
             throw new RuntimeException("Error generating PDF", e);

@@ -51,11 +51,11 @@
                             </div>
 							<div class="row mb-2">
 								<input name="username" type="text" class="form-control"
-									placeholder="Username" >
+									placeholder="Username" required>
 							</div>
 							<div class="row mb-2">
 								<input name="password" type="password" class="form-control"
-									placeholder="Password" >
+									placeholder="Password" required>
 							</div>
 
 							    <%-- <div class="row mb-2 ">
@@ -77,10 +77,10 @@
 											Me</label>
 									</div>
 								</div>
-								<div>
+								<%-- <div>
 									<a href="auth-reset-minimal.html" class="fs-11 text-primary">Forget
 										password?</a>
-								</div>
+								</div> --%>
 							</div>
 							<div class="mt-5">
 								<button type="submit" class="btn btn-lg btn-primary w-100">Login</button>

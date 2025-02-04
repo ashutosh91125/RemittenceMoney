@@ -41,7 +41,7 @@ public class ReceiptService {
                 builder.run();
 
                 // Convert PDF to Base64
-                return Map.of("receipt_bash" , Base64.getEncoder().encodeToString(outputStream.toByteArray()));
+                return Map.of("receipt_base" , Base64.getEncoder().encodeToString(outputStream.toByteArray()));
             }
         } catch (Exception e) {
             throw new RuntimeException("Error generating PDF", e);

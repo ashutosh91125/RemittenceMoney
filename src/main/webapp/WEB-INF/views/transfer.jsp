@@ -191,13 +191,7 @@
 	text-align: center;
 }
 
-.hidden {
-    display: none;
-}
 
-.main-content {
-    display: block; /* or however you want to display it */
-}
 
 /* Reduce the height of the Select2 container */
 .custom-select2+.select2-container .select2-selection--single {
@@ -363,7 +357,7 @@
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row" style="display: flex; justify-content: center;">
-						<div class="col-lg-12">
+						<div class="col-lg-12 mt-3 px-5">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
 									<div class="table-responsive">
@@ -409,8 +403,7 @@
 													</c:when>
 													<c:otherwise>
 														<tr>
-															<td colspan="7" style="text-align: center;">No data
-																found</td>
+															<td colspan="6" style="text-align: center;">Customer Not Found</td>
 														</tr>
 													</c:otherwise>
 												</c:choose>

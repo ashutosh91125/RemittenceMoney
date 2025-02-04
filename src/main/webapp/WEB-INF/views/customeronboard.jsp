@@ -147,18 +147,18 @@
 	/* Optional: focus effect */
 }
 
-#search-result td {
+/* #search-result td {
 	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
-}
-
+/* 	font-size: 12px; /* Adjust font size */ 
+/* 	white-space: nowrap; /* Prevent wrapping */ 
+/* }*/ 
+/*
 #search-result th {
 	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
-}
-
+	/* font-size: 12px; /* Adjust font size */
+/* 	 white-space: nowrap; /* Prevent wrapping */
+/* } */
+ 
 .hidden {
 	display: none;
 }
@@ -233,9 +233,10 @@
 				<form:hidden path="ecrn" />
 
 
-				<div class="${not empty customerList?'main-content':'hidden' }">
-					<div class="row">
-						<div class="col-lg-12">
+<%-- 				<div class="${not empty customerList?'main-content':'hidden' }"> --%>
+				
+					<div class="row" style="display: flex; justify-content: center;">
+						<div class="col-lg-12 mt-3 px-5">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
 									<div class="table-responsive">
@@ -254,6 +255,8 @@
 												</tr>
 											</thead>
 											<tbody>
+												<c:choose>
+													<c:when test="${not empty customerList}">
 												<c:forEach var="customer" items="${customerList}"
 													varStatus="status">
 													<tr>
@@ -272,13 +275,21 @@
 															</div></td>
 													</tr>
 												</c:forEach>
+												</c:when>
+													<c:otherwise>
+														<tr>
+															<td colspan="6" style="text-align: center;">Customer Not Found</td>
+														</tr>
+													</c:otherwise>
+												</c:choose>
 											</tbody>
 										</table>
 									</div>
 								</div>
 							</div>
 						</div>
-					</div>
+						
+<!-- 					</div> -->
 				</div>
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">

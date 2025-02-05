@@ -233,17 +233,16 @@
 				<form:hidden path="ecrn" />
 
 
-				<div class="${not empty customerList?'main-content':'hidden' }">
-				
+			<div
+					class="${not empty customerList?'main-content':'hidden' }">
 					<div class="row" style="display: flex; justify-content: center;">
-						<div class="col-lg-12 mt-3 px-5">
+						<div class="col-lg-12 p-4">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
 									<div class="table-responsive">
 										<table class="table table-hover" id="search-result">
 											<thead>
 												<tr>
-
 													<th>Ecrn</th>
 													<th>First Name</th>
 													<th>Mobile Number</th>
@@ -255,13 +254,12 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:choose>
-													<c:when test="${not empty customerList}">
 												<c:forEach var="customer" items="${customerList}"
 													varStatus="status">
-													<tr>
-
-														<td><a href="customerdetails?ecrn=${customer.ecrn}">${customer.ecrn}</a></td>
+													<tr data-customer-ecrn="${customer.ecrn}">
+														<td
+															onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+															onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
 														<td>${customer.firstName}</td>
 														<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
 														<td>${customer.emailId}</td>
@@ -275,22 +273,47 @@
 															</div></td>
 													</tr>
 												</c:forEach>
-												</c:when>
-													<c:otherwise>
-														<tr>
-															<td colspan="6" style="text-align: center;">Customer Not Found</td>
-														</tr>
-													</c:otherwise>
-												</c:choose>
 											</tbody>
 										</table>
 									</div>
 								</div>
 							</div>
 						</div>
-						
- 					</div>
+					</div>
 				</div>
+				<c:if test="${showBlank}">
+                <div>
+                    <div class="row" style="display: flex; justify-content: center;">
+                        <div class="col-lg-12 p-4">
+                            <div class="card stretch stretch-full">
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="search-result">
+                                            <thead>
+                                                <tr>
+                                                    <th>Ecrn</th>
+                                                    <th>First Name</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>Email</th>
+                                                    <th>Country</th>
+                                                    <th>Gender</th>
+
+                                                    <th class="text-end">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="7" class="text-center">No customer available!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </c:if>
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">

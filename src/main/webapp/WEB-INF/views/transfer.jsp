@@ -358,28 +358,12 @@
 					</div>
 				</div>
 			</div>
+			<div class="mb-3">
 			<jsp:include page="customersearchontransfer.jsp"></jsp:include>
-			<form>
-				<input type="hidden" id="residentTypeId" name="residentTypeId" value=""> 
-				<input type="hidden" id="agentId" name="agentId" value="${agentId}"> 
-				<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" /> 
-				<input type="hidden" id="dailyCredit" value="${dailyCredit}" /> 
-				<input type="hidden" id="perDayLimit" value="${perDayLimit}" /> 
-				<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> 
-				<input type="hidden" id="visaType" value="" /> 
-				<input type="hidden" id="idNumber" value="" /> 
-				<input type="hidden" id="idType" value="" /> 
-				<input type="hidden" id="issuedBy" value="" /> 
-				<input type="hidden" id="issuedOn" value="" /> 
-				<input type="hidden" id="dateOfExpiry" value="" /> 
-				<input type="hidden" id="visaExpiryDate" value="" /> 
-				<input type="hidden" id="visaNumber" value="" /> 
-				<input type="hidden" id="issuedCountry" value="" />
-
-				<div
-					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
+			</div>	
+			<div class="${not empty customerListOnTransfer?'main-content':'hidden' }">
 					<div class="row" style="display: flex; justify-content: center;">
-						<div class="col-lg-12 p-4">
+						<div class="col-lg-12">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
 									<div class="table-responsive">
@@ -462,13 +446,31 @@
                     </div>
                 </div>
                 </c:if>
+			
+			<form>
+				<input type="hidden" id="residentTypeId" name="residentTypeId" value=""> 
+				<input type="hidden" id="agentId" name="agentId" value="${agentId}"> 
+				<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" /> 
+				<input type="hidden" id="dailyCredit" value="${dailyCredit}" /> 
+				<input type="hidden" id="perDayLimit" value="${perDayLimit}" /> 
+				<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> 
+				<input type="hidden" id="visaType" value="" /> 
+				<input type="hidden" id="idNumber" value="" /> 
+				<input type="hidden" id="idType" value="" /> 
+				<input type="hidden" id="issuedBy" value="" /> 
+				<input type="hidden" id="issuedOn" value="" /> 
+				<input type="hidden" id="dateOfExpiry" value="" /> 
+				<input type="hidden" id="visaExpiryDate" value="" /> 
+				<input type="hidden" id="visaNumber" value="" /> 
+				<input type="hidden" id="issuedCountry" value="" />
 
+				
 				<div class="spinner-container" id="loader">
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
 					</div>
 				</div>
-				<div class="accordion" id="accordionPanelsStayOpenExample">
+				<div class="accordion" id="accordionPanelsStayOpenExample" style="background: aliceblue; pointer-events: none; opacity: 0.6;">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button class="accordion-button" type="button"

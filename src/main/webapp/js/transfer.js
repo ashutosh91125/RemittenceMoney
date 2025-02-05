@@ -110,7 +110,10 @@ $(document).ready(function () {
 					                           alert("This Customer Does Not Have Any Active Id!");
 					                           return;
 					                       }
-					                       // Fill the id details fields from the active object.
+										   var accordionDiv = document.getElementById("accordionPanelsStayOpenExample");
+										       accordionDiv.style.pointerEvents = "auto";
+										       accordionDiv.style.opacity = "1";
+
 					                       $('#visaType').val(activeIdDetail.visaType || '');
 					                       $('#idNumber').val(activeIdDetail.idNumber || '');
 					                       $('#idType').val(activeIdDetail.idType || '');

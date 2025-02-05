@@ -1653,7 +1653,7 @@ function showSelectBeneficiaryDiv() {
 		          popupIdDetails.style.display = 'block';
 		          container.classList.add('blur-background');
 
-		          $('.passport-picture1').on('click', function() {
+		          $('.passport-picture').on('click', function() {
 		            
 		            const imgElement = this;
 		            if (imgElement.requestFullscreen) {

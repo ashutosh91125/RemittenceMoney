@@ -69,5 +69,5 @@ public class StaffDetails {
 
     private boolean status;
     @Transient
-    private String staffCraetedDateFormated;
+    private String staffCraetedDateFormated; 
 }

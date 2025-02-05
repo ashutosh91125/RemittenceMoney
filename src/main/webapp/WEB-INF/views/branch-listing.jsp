@@ -21,7 +21,7 @@
 		const dropdownMenu = element.nextElementSibling;
 		dropdownMenu.classList.toggle('show');
 	}
-</script>
+</script> 
 </head>
 
 <body>

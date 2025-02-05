@@ -64,7 +64,7 @@ public class StaffDetails {
     @Column(name = "disabled_on")
     private LocalDateTime disabledOn;
 
-    @Column(name = "remarks")
+    @Column(name = "remarks")  
     private String remarks;
 
     private boolean status;

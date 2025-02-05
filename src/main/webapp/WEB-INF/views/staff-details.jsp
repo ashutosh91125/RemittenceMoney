@@ -460,8 +460,8 @@ $(document).ready(function () {
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
+				</div> 
+			</div> 
 			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 			<!--  <div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">

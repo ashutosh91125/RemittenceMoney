@@ -17,7 +17,8 @@
         }
 
         .custom-gap {
-                margin-bottom: 45px; /* You can adjust this value as needed */
+            margin-bottom: 120px;
+            margin-top: 120px;
         }
 
         .header {
@@ -153,11 +154,11 @@
                         <td>Source of Funds/Purpose</td>
                         <td> <b>:</b>   ${sourceOfFund} / ${purposeOfTxn}</td>
                         <td>Other Charges</td>
-                        <td> <b>:</b>   ${otherCharges} ${payInCurrency}</td>
+                        <td> <b>:</b>   0.00 ${payInCurrency}</td>
                     </tr>
                     <tr>
                         <td>Cust Address/City</td>
-                        <td> <b>:</b>   Beverly Hills, Lot C11 Block C Phase 5, Kota Kinabalu, ${customerCity} <br></br> MALAYSIA.POBox 88200 / KOTA KINABALU</td>
+                        <td> <b>:</b>  ${customerCity}</td>
                         <td>Total Paying Amount</td>
                         <td> <b>:</b>   ${totalPayInAmount} ${payInCurrency}</td>
                     </tr>
@@ -261,7 +262,7 @@
                 <b>Customer's Signature</b>
             </div>
         </div>
-        <div class="row custom-gap d-flex justify-content-between">
+        <div class="row d-flex justify-content-between">
             <div class="col text-right">
                 <b>Agent&apos;s Signature &amp; Seal</b>
             </div>
@@ -269,11 +270,11 @@
         <div class="row mb-4"> <!-- Use d-flex and justify-content-between to space columns -->
 
         </div>
-        <div class="row mb-5 d-flex justify-content-between">
-            <div class="col-1 text-left">
-            </div>
-            <div class="col-1 text-right"> <!-- Align the image to the right -->
-                <a href="https://imgbb.com/"><img src="https://i.ibb.co/Tqc6K5Xm/image.png" alt="image" border="0" /></a>
+        <div class="row mb-5 d-flex justify-content-center">
+            <div class="col text-center">
+                <a href="https://imgbb.com/">
+                    <img src="https://i.ibb.co/Tqc6K5Xm/image.png" alt="image" class="img-fluid" />
+                </a>
             </div>
         </div>
     </div>

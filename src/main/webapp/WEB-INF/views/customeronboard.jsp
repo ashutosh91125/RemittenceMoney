@@ -233,7 +233,7 @@
 				<form:hidden path="ecrn" />
 
 
-<%-- 				<div class="${not empty customerList?'main-content':'hidden' }"> --%>
+<				<div class="${not empty customerList?'main-content':'hidden' }"> 
 				
 					<div class="row" style="display: flex; justify-content: center;">
 						<div class="col-lg-12 mt-3 px-5">
@@ -289,7 +289,7 @@
 							</div>
 						</div>
 						
-<!-- 					</div> -->
+ 					</div> 
 				</div>
 				<div class="accordion" id="accordionPanelsStayOpenExample">
 					<div class="accordion-item" style="background: aliceblue;">

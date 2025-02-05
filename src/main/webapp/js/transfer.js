@@ -1540,129 +1540,142 @@ function showSelectBeneficiaryDiv() {
 		        }
 		    });
 		}
-
 		function openPopupForIdDetails(idNumber, customerId) {
-				    const popupIdDetails = document.getElementById('popupIdDetails');
-				    const container = document.querySelector('.nxl-container');
+		    const popupIdDetails = document.getElementById('popupIdDetails');
+		    const container = document.querySelector('.nxl-container');
 
-				    $.ajax({
-				        url: '/caas/api/v2/customer/id-detail/' + customerId,
-				        type: 'GET',
-				        success: function (response) {
-				            console.log("ID details fetched by customerId", response);
+		    $.ajax({
+		      url: '/caas/api/v2/customer/id-detail/' + customerId,
+		      type: 'GET',
+		      success: function (response) {
+		        console.log("ID details fetched by customerId", response);
 
-				            if (Array.isArray(response) && response.length > 0) {
-				                $('#idDetailsContainer').empty(); 
-				                $.each(response, function(index, idDetail) {
-				                    let idDetailHtml = `
-				                        <div class="id-detail-item mb-4">
-				                            <div class="row">
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">ID Type</label>
-				                                    <input type="text" name="idType" class="form-control" placeholder="Id Type" value="${idDetail.idType || ''}" readonly id="idTypes-${index}">
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">ID No.</label>
-				                                    <input type="text" name="idNumber" class="form-control" placeholder="ID No." value="${idDetail.idNumber || ''}" readonly>
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Name as per ID</label>
-				                                    <input type="text" name="nameAsPerId" class="form-control" placeholder="Name as per ID" value="${idDetail.nameAsPerId || ''}" readonly>
-				                                </div>
-				                            </div>
+		        if (Array.isArray(response) && response.length > 0) {
+		          $('#idDetailsContainer').empty(); 
+		          $.each(response, function(index, idDetail) {
+		            let idDetailHtml = `
+		              <div class="id-detail-item mb-4">
+		                <div class="row">
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">ID Type</label>
+		                    <input type="text" name="idType" class="form-control" placeholder="Id Type" value="${idDetail.idType || ''}" readonly id="idTypes-${index}">
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">ID No.</label>
+		                    <input type="text" name="idNumber" class="form-control" placeholder="ID No." value="${idDetail.idNumber || ''}" readonly>
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Name as per ID</label>
+		                    <input type="text" name="nameAsPerId" class="form-control" placeholder="Name as per ID" value="${idDetail.nameAsPerId || ''}" readonly>
+		                  </div>
+		                </div>
 
-				                            <div class="row mt-2">
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Issued Country</label>
-				                                    <input type="text" name="issuedCountry" class="form-control" placeholder="Issued Country" value="${idDetail.issuedCountry || ''}" readonly id="issuedCountrys-${index}">
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Issued at</label>
-				                                    <input type="text" name="issuedAt" class="form-control" placeholder="Issued at" value="${idDetail.issuedAt || ''}" readonly id="issuedAts-${index}">
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Issued By</label>
-				                                    <input type="text" name="issuedBy" class="form-control" placeholder="Issued By" value="${idDetail.issuedBy || ''}" readonly>
-				                                </div>
-				                            </div>
+		                <div class="row mt-2">
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Issued Country</label>
+		                    <input type="text" name="issuedCountry" class="form-control" placeholder="Issued Country" value="${idDetail.issuedCountry || ''}" readonly id="issuedCountrys-${index}">
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Issued at</label>
+		                    <input type="text" name="issuedAt" class="form-control" placeholder="Issued at" value="${idDetail.issuedAt || ''}" readonly id="issuedAts-${index}">
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Issued By</label>
+		                    <input type="text" name="issuedBy" class="form-control" placeholder="Issued By" value="${idDetail.issuedBy || ''}" readonly>
+		                  </div>
+		                </div>
 
-				                            <div class="row mt-2">
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Issued on</label>
-				                                    <input type="text" name="issuedOn" class="form-control" placeholder="Date of Issue" value="${idDetail.issuedOn || ''}" readonly>
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Date of Expiry</label>
-				                                    <input type="text" name="dateOfExpiry" class="form-control" placeholder="Date of Expiry" value="${idDetail.dateOfExpiry || ''}" readonly>
-				                                </div>
-				                            </div>
+		                <div class="row mt-2">
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Issued on</label>
+		                    <input type="text" name="issuedOn" class="form-control" placeholder="Date of Issue" value="${idDetail.issuedOn || ''}" readonly>
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Date of Expiry</label>
+		                    <input type="text" name="dateOfExpiry" class="form-control" placeholder="Date of Expiry" value="${idDetail.dateOfExpiry || ''}" readonly>
+		                  </div>
+		                </div>
 
-				                            <div class="row mt-2">
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">ID Front</label>
-				                                    <img src="data:${idDetail.frontContentType};base64,${idDetail.frontBase64Data}" alt="ID Front" class="img-thumbnail passport-picture" style="width: 300px; height: 180px;">
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">ID Back</label>
-				                                    <img src="data:${idDetail.backContentType};base64,${idDetail.backBase64Data}" alt="ID Back" class="img-thumbnail passport-picture" style="width: 300px; height: 180px;">
-				                                </div>
-				                            </div>
+		                <div class="row mt-2">
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">ID Front</label>
+		                    <img src="data:${idDetail.frontContentType};base64,${idDetail.frontBase64Data}" alt="ID Front" class="img-thumbnail passport-picture" style="width: 300px; height: 180px;">
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">ID Back</label>
+		                    <img src="data:${idDetail.backContentType};base64,${idDetail.backBase64Data}" alt="ID Back" class="img-thumbnail passport-picture" style="width: 300px; height: 180px;">
+		                  </div>
+		                </div>
 
-				                            ${idDetail.visaDetails ? `
-				                            <div class="row mt-4" id="visaDetails-${index}">
-				                                <h5 class="fw-bold mb-0 me-4">
-				                                    <span class="d-block mb-4">Visa Details</span>
-				                                </h5>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Visa Number</label>
-				                                    <input type="text" name="visaNumber" class="form-control" placeholder="Visa Number" value="${idDetail.visaDetails.visaNumber || ''}" readonly>
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Visa Expiry Date</label>
-				                                    <input type="text" name="visaExpiryDate" class="form-control" placeholder="Visa Expiry Date" value="${idDetail.visaDetails.visaExpiryDate || ''}" readonly>
-				                                </div>
-				                                <div class="col-12 col-md-4">
-				                                    <label class="form-label">Visa Type</label>
-				                                    <input type="text" name="visaType" class="form-control" placeholder="Visa Type" value="${idDetail.visaDetails.visaType || ''}" readonly>
-				                                </div>
-				                            </div>
-				                            ` : ''}
-				                        </div>`;
+		                ${idDetail.visaDetails ? `
+		                <div class="row mt-4" id="visaDetails-${index}">
+		                  <h5 class="fw-bold mb-0 me-4">
+		                    <span class="d-block mb-4">Visa Details</span>
+		                  </h5>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Visa Number</label>
+		                    <input type="text" name="visaNumber" class="form-control" placeholder="Visa Number" value="${idDetail.visaDetails.visaNumber || ''}" readonly>
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Visa Expiry Date</label>
+		                    <input type="text" name="visaExpiryDate" class="form-control" placeholder="Visa Expiry Date" value="${idDetail.visaDetails.visaExpiryDate || ''}" readonly>
+		                  </div>
+		                  <div class="col-12 col-md-4">
+		                    <label class="form-label">Visa Type</label>
+		                    <input type="text" name="visaType" class="form-control" placeholder="Visa Type" value="${idDetail.visaDetails.visaType || ''}" readonly>
+		                  </div>
+		                </div>
+		                ` : ''}
+		              </div>`;
+		              
+		          
+		            $('#idDetailsContainer').append(idDetailHtml);
 
-				                    $('#idDetailsContainer').append(idDetailHtml);
+		            
+		            if (idDetail.idType) {
+		              fetchEnumValue("idTypes", idDetail.idType, function(description) {
+		                $(`#idTypes-${index}`).val(description || "Unknown Type");
+		              });
+		            }
+		            if (idDetail.issuedCountry) {
+		              fetchEnumValue("country", idDetail.issuedCountry, function(description) {
+		                $(`#issuedCountrys-${index}`).val(description || "Unknown Country");
+		              });
+		            }
+		            if (idDetail.issuedAt) {
+		              fetchEnumValue("country", idDetail.issuedAt, function(description) {
+		                $(`#issuedAts-${index}`).val(description || "Unknown Country");
+		              });
+		            }
+		          });
 
-				                    // Convert `idType` to description
-				                    if (idDetail.idType) {
-				                        fetchEnumValue("idTypes", idDetail.idType, function(description) {
-				                            $(`#idTypes-${index}`).val(description || "Unknown Type");
-				                        });
-				                    }
+	
+		          popupIdDetails.style.display = 'block';
+		          container.classList.add('blur-background');
 
-				                    // Convert `issuedCountry` to description
-				                    if (idDetail.issuedCountry) {
-				                        fetchEnumValue("country", idDetail.issuedCountry, function(description) {
-				                            $(`#issuedCountrys-${index}`).val(description || "Unknown Country");
-				                        });
-				                    }
-									if (idDetail.issuedCountry) {
-										fetchEnumValue("country", idDetail.issuedAt, function(description) {
-										   $(`#issuedAts-${index}`).val(description || "Unknown Country");
-										   });
-										 }
-				                });
-
-				                popupIdDetails.style.display = 'block';
-				                container.classList.add('blur-background');
-				            } else {
-				                alert("No ID details found for this customer.");
-				            }
-				        },
-				        error: function (xhr, status, error) {
-				            console.error("Error fetching ID details:", error);
-				            alert("Failed to fetch ID details. Please try again.");
-				        }
-				    });
-				}
+		          $('.passport-picture1').on('click', function() {
+		            
+		            const imgElement = this;
+		            if (imgElement.requestFullscreen) {
+		              imgElement.requestFullscreen();
+		            } else if (imgElement.webkitRequestFullscreen) { 
+		              imgElement.webkitRequestFullscreen();
+		            } else if (imgElement.msRequestFullscreen) { 
+		              imgElement.msRequestFullscreen();
+		            } else {
+		              alert("Fullscreen mode is not supported by your browser.");
+		            }
+		          });
+		        } else {
+		          alert("No ID details found for this customer.");
+		        }
+		      },
+		      error: function (xhr, status, error) {
+		        console.error("Error fetching ID details:", error);
+		        alert("Failed to fetch ID details. Please try again.");
+		      }
+		    });
+		  }
 
 					function closePopup() {
 					    const container = document.querySelector('.nxl-container');
@@ -1671,3 +1684,10 @@ function showSelectBeneficiaryDiv() {
 						$('#openPopupForBeneficiary').hide();
 						$('#popupIdDetails').hide();	
 					}
+					
+					$(document).on('mouseenter', '.passport-picture', function(e) {
+					      var imgSrc = $(this).attr('src');
+					      // Insert an image into the preview container
+					      $('#imagePreview').html('<img src="' + imgSrc + '">');
+					      $('#imagePreview').fadeIn(200);
+					    });

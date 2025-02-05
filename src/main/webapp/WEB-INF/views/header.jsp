@@ -57,7 +57,7 @@
                         test="${sessionScope.role == 'STAFF_TR'}">
 					<li class="nxl-item nxl-hasmenu"><a href="/transfer"
 						class="nxl-link"> <span class="nxl-micon"><i
-								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Transfer
+								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">New Transfer
 						</span>
 					</a></li>
 					</c:if>
@@ -80,8 +80,7 @@
 					<c:if
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
 						<li class="nxl-item nxl-hasmenu"><a href="branch-list"
-							class="nxl-link"> <span class="nxl-micon"><i
-									class="feather-users"></i></span> <span class="nxl-mtext">All Branches</span>
+							class="nxl-link"> <span class="nxl-micon"><i class="bi bi-bezier me-1"></i></span><span class="nxl-mtext">All Branches</span>
 						</a></li>
 					</c:if>
                     <c:if

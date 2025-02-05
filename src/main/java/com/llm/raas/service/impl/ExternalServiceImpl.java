@@ -392,37 +392,37 @@ public class ExternalServiceImpl implements ExternalService {
         }
     }
 
-    @Scheduled(cron = "0 0/30 * * * *") // Runs every 30 minutes
-    public void scheduledStateUpdate() {
-
-
-        List<Transfer> transfers = transferRepository.findAll();
-
-        for (Transfer transfer : transfers) {
-
-            Map<String, Object> response = enquireTransactionForScheduler(transfer.getTransactionReferenceNumber());
-
-            if (response.containsKey("data")) {
-                Map<String, Object> data = (Map<String, Object>) response.get("data");
-                String state = (String) data.get("state");
-                String subState = (String) data.get("sub_state");
-
-                state = state.replace("_", " ");
-                subState = subState.replace("_", " ");
-
-                // Find and update the transfer in the repository
-                Optional<Transfer> fetchedTransfer = transferRepository
-                        .findTransactionByTransactionReferenceNumber(transfer.getTransactionReferenceNumber());
-
-                if (fetchedTransfer.isPresent()) {
-                    fetchedTransfer.get().setTransactionState(state);
-                    fetchedTransfer.get().setTransactionSubState(subState);
-
-                    transferRepository.save(fetchedTransfer.get());
-                }
-
-            }
-        }
-    }
+//    @Scheduled(cron = "0 0/30 * * * *") // Runs every 30 minutes
+//    public void scheduledStateUpdate() {
+//
+//
+//        List<Transfer> transfers = transferRepository.findAll();
+//
+//        for (Transfer transfer : transfers) {
+//
+//            Map<String, Object> response = enquireTransactionForScheduler(transfer.getTransactionReferenceNumber());
+//
+//            if (response.containsKey("data")) {
+//                Map<String, Object> data = (Map<String, Object>) response.get("data");
+//                String state = (String) data.get("state");
+//                String subState = (String) data.get("sub_state");
+//
+//                state = state.replace("_", " ");
+//                subState = subState.replace("_", " ");
+//
+//                // Find and update the transfer in the repository
+//                Optional<Transfer> fetchedTransfer = transferRepository
+//                        .findTransactionByTransactionReferenceNumber(transfer.getTransactionReferenceNumber());
+//
+//                if (fetchedTransfer.isPresent()) {
+//                    fetchedTransfer.get().setTransactionState(state);
+//                    fetchedTransfer.get().setTransactionSubState(subState);
+//
+//                    transferRepository.save(fetchedTransfer.get());
+//                }
+//
+//            }
+//        }
+//    }
 
 }

@@ -9,6 +9,7 @@ import java.util.Optional;
 import com.llm.branch.model.BranchDetails;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
+import com.llm.transfer.repository.TransferRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,6 +55,9 @@ public class AuthController {
 
     @Autowired
     private StaffDetailsRepository staffDetailsRepository;
+
+    @Autowired
+    private TransferRepository transferRepository;
 
     @Autowired
     private final AuthenticationManager authenticationManager;
@@ -167,6 +171,12 @@ public class AuthController {
     @GetMapping("/welcome")
     public String welcome(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
+            Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(userDetails.getUsername());
+            model.addAttribute("transferCount", transferRepository.countByStaffId(staffDetails.get().getId()));
+            return "superadmindasbord";
+        }
         model.addAttribute("subAdminCount", customUserDetailsService.getUserCountByRole(Role.SUB_ADMIN));
         model.addAttribute("agentCount", customUserDetailsService.getUserCountByRole(Role.AGENT));
         model.addAttribute("customerCount", customerRepository.count());

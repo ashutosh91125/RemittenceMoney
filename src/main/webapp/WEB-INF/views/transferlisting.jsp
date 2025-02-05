@@ -22,6 +22,37 @@
         white-space: nowrap;
         vertical-align: middle;
     }
+   /* Table Responsiveness */
+   .table-responsive {
+       -webkit-overflow-scrolling: touch;
+       overflow-x: auto;
+       max-width: 100%;  /* Ensure it doesn't overflow */
+   }
+
+   /* Reduce table font and adjust padding on small screens */
+   @media (max-width: 768px) {
+       .table th, .table td {
+           padding: 5px; /* Reduced padding for smaller screens */
+           font-size: 12px; /* Smaller font size */
+       }
+
+       /* If needed, hide less important columns on small screens */
+       #transfer-list th:nth-child(2),
+       #transfer-list td:nth-child(2),
+       #transfer-list th:nth-child(3),
+       #transfer-list td:nth-child(3) {
+           display: none;
+       }
+   }
+
+   /* More compact table on mobile */
+   @media (max-width: 576px) {
+       .table th, .table td {
+           padding: 3px; /* Further reduced padding */
+           font-size: 10px; /* Even smaller font size */
+       }
+   }
+
 </style>
 
 </head>
@@ -53,21 +84,20 @@
                     <div class="col-lg-12">
                         <div class="card stretch stretch-full">
                             <div class="card-body p-0">
-                                <div class="table-responsive" style="overflow-x: hidden;">
-                                    <!-- Data Table -->
-                                    <table class="table table-hover" id="transfer-list" >
+                                <div class="table-responsive">
+                                    <table class="table table-hover" id="transfer-list">
                                         <thead>
                                             <tr>
                                                  <th>Agent Location Id</th>
                                                  <th style="display:none;">Branch</th>
                                                  <th style="display:none;">Staff</th>
-                                                <th>Transaction Number</th>
-                                                <th>Date</th>
-                                                <th>PayIn Amount</th>
-                                                <th>PayOut Amount</th>
-                                                <th>Beneficiary Details</th>
-                                                <th>Transaction State</th>
-                                                <th class="text-end">Actions</th>
+                                                 <th>Transaction Number</th>
+                                                 <th>Date</th>
+                                                 <th>PayIn Amount</th>
+                                                 <th>PayOut Amount</th>
+                                                 <th>Beneficiary Details</th>
+                                                 <th>Transaction State</th>
+                                                 <th class="text-end">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -81,19 +111,16 @@
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
                                                     <td>${transfer.currencies} ${transfer.payoutAmount}</td>
                                                     <td>
-                                                    <div>${transfer.beneficiaryFirstName}${transfer.beneficiaryMiddleName} ${transfer.beneficiaryLastName}</div>
-                                                    <div><span class="truncate-text" title="${transfer.beneficiaryBank}">${transfer.beneficiaryBank} </span></div>
-                                                    <div>${transfer.beneficiaryAccountNo}</div>
+                                                        <div>${transfer.beneficiaryFirstName}${transfer.beneficiaryMiddleName} ${transfer.beneficiaryLastName}</div>
+                                                        <div><span class="truncate-text" title="${transfer.beneficiaryBank}">${transfer.beneficiaryBank}</span></div>
+                                                        <div>${transfer.beneficiaryAccountNo}</div>
                                                     </td>
                                                     <td>
-                                                    <div>${transfer.transactionState} </div>
-                                                    <div>(${transfer.transactionSubState})</div></td>
+                                                        <div>${transfer.transactionState} </div>
+                                                        <div>(${transfer.transactionSubState})</div>
+                                                    </td>
                                                     <td class="text-end">
-                                                        <%-- <img class="transactionLogo" title="Check Status"
-                                                             src="assets/images/transferList/refreshState.svg"
-                                                             class="img-fluid" style="width: 24px; cursor: pointer;"
-                                                             alt="Check State" /> --%>
-                                                             <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" title="view">
+                                                        <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" title="view">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                     </td>

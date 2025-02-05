@@ -1,3 +1,5 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -68,6 +70,7 @@
     <main class="nxl-container">
       <div class="nxl-content">
         <div class="main-content" style="background: aliceblue;">
+          <c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
           <div class="row" style="display: flex; justify-content: space-between;">
             <!-- First column: Admin -->
             <div class="col-half" style="flex: 1; padding: 10px;">
@@ -109,6 +112,19 @@
               </div>
             </div>
           </div>
+          </c:if>
+          <c:if test="${pageContext.request.isUserInRole('STAFF') or pageContext.request.isUserInRole('STAFF_TR') or pageContext.request.isUserInRole('STAFF_HO')}">
+          <div class="row" style="display: flex; justify-content: space-between;">
+              <div class="col-half" style="flex: 1; padding: 10px;">
+                <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #E0F7FA;">
+                  <div class="card-body rounded-3 text-center">
+                    <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${transferCount}</span></div>
+                    <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Transfers</p>
+                  </div>
+                </div>
+              </div>
+          </div>
+          </c:if>
         </div>
       </div>
     </main>

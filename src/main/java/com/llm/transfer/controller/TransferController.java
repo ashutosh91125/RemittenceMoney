@@ -120,6 +120,7 @@ public class TransferController {
 			logger.error("Error retrieving currency list: ", e);
 			model.addAttribute("payInCurrKey", List.of());
 		}
+		model.addAttribute("showBlank", false);
 
 		return "transfer";
 	}
@@ -179,6 +180,11 @@ public class TransferController {
 		try {
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			model.addAttribute("customerListOnTransfer", customers);
+			if (!customers.isEmpty()){
+				model.addAttribute("showBlank", false);
+			}else {
+				model.addAttribute("showBlank", true);
+			}
 		} catch (Exception e) {
 			logger.error(e.toString());
 		}

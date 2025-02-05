@@ -427,6 +427,41 @@
 						</div>
 					</div>
 				</div>
+				<c:if test="${showBlank}">
+                <div>
+                    <div class="row" style="display: flex; justify-content: center;">
+                        <div class="col-lg-12">
+                            <div class="card stretch stretch-full">
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover" id="search-result">
+                                            <thead>
+                                                <tr>
+                                                    <%--  id="customerRow-${customer.ecrn}"
+                                                    data-customer-ecrn="${customer.ecrn}"> --%>
+                                                    <th>Ecrn</th>
+                                                    <th>First Name</th>
+                                                    <th>Mobile Number</th>
+                                                    <th>Email</th>
+                                                    <th>Country</th>
+                                                    <th>Gender</th>
+
+                                                    <th class="text-end">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td colspan="7" class="text-center">No customer available!</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </c:if>
 
 				<div class="spinner-container" id="loader">
 					<div class="spinner-border text-primary" role="status">

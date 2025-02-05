@@ -13,6 +13,7 @@ import com.llm.common.service.EnumEntityService;
 import com.llm.customer.model.Customer;
 import com.llm.customer.repository.CustomerRepository;
 import com.llm.model.response.ResponseDTO;
+import com.llm.raas.repository.BankRepository;
 import com.llm.raas.repository.BranchRepository;
 import com.llm.receipt.dto.ReceiptDTO;
 import com.llm.receipt.service.ReceiptService;
@@ -60,6 +61,9 @@ public class TransferServiceImpl implements TransferService {
 
 	@Autowired
 	private BranchRepository branchRepository;
+
+	@Autowired
+	private BankRepository bankRepository;
 
 	@Override
 	@Transactional
@@ -118,6 +122,7 @@ public class TransferServiceImpl implements TransferService {
 		String occupation = enumEntityService.getEnumValueDescriptionByKeyAndValueId("occupationId", String.valueOf(customer.getOccupationId()));
 		String customerIdTpe = enumEntityService.getEnumValueDescriptionByKeyAndValueId("idTypes", savedTransfer.getIdType());
 		String nationality = enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", savedTransfer.getBeneficiaryNationality());
+		String bankName = bankRepository.findById(savedTransfer.getBeneficiaryBank()).get().getBankName();
 		String bankBranchName = (branchRepository.findByRoutingCode(savedTransfer.getBeneficiaryBranch()).getBranchName());
 
 		receiptDTO.setTransactionRefNumber(savedTransfer.getTransactionReferenceNumber());
@@ -148,7 +153,7 @@ public class TransferServiceImpl implements TransferService {
 		receiptDTO.setBeneficiaryPhone(savedTransfer.getBeneficiaryMobile());
 		receiptDTO.setBeneficiaryRelation(savedTransfer.getBeneficiaryRelation());
 		receiptDTO.setBeneficiaryNationality(nationality);
-		receiptDTO.setBenBank(savedTransfer.getBeneficiaryBank());
+		receiptDTO.setBenBank(bankName);
 		receiptDTO.setBenBranch(bankBranchName);
 		receiptDTO.setIban(savedTransfer.getBeneficiaryIban());
 		receiptDTO.setAccountNo(savedTransfer.getBeneficiaryAccountNo());

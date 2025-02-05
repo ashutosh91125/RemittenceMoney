@@ -381,6 +381,7 @@ public class CustomerControllerwithoutRest {
 		return maritalStatusId == 1 ? "Married" : "Unmarried";
 	}
 
+	
 	@GetMapping("/searchCustomers")
 	public String searchCustomers(@RequestParam("criteria") String criteria, @RequestParam("query") String query,
 			RedirectAttributes redirectAttributes) {
@@ -388,6 +389,11 @@ public class CustomerControllerwithoutRest {
 			// Use the searchByCriteria method from the service
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			redirectAttributes.addFlashAttribute("customerList", customers);
+			if(!customers.isEmpty()) {
+				redirectAttributes.addFlashAttribute("showBlank", false);
+			}else {
+			redirectAttributes.addFlashAttribute("showBlank", true);
+			}
 		} catch (Exception e) {
 			logger.error(e.toString());
 //			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());

@@ -227,6 +227,17 @@
 	pointer-events: none;
 	/* To prevent interaction with blurred elements */
 }
+.passport-picture {
+  transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.passport-picture:hover {
+  transform: scale(2.0); /* Increase size on hover */
+  cursor: pointer;
+  z-index: 8; /* Bring image to the front */
+  position: relative;
+}
+
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
 <script type="text/javascript">

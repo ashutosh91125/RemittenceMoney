@@ -238,6 +238,7 @@
 	z-index: 8; /* Bring image to the front */
 	position: relative;
 }
+
 .passport-picture {
 	transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
@@ -359,11 +360,69 @@
 				</div>
 			</div>
 			<div class="mb-3">
-			<jsp:include page="customersearchontransfer.jsp"></jsp:include>
-			</div>	
-			<div class="${not empty customerListOnTransfer?'main-content':'hidden' }">
+				<jsp:include page="customersearchontransfer.jsp"></jsp:include>
+			</div>
+
+			<div
+				class="${not empty customerListOnTransfer?'main-content':'hidden' }">
+				<div class="row" style="display: flex; justify-content: center;">
+					<div class="col-lg-12">
+						<div class="card stretch stretch-full">
+							<div class="card-body p-0">
+								<div class="table-responsive">
+									<table class="table table-hover" id="search-result">
+										<thead>
+											<tr>
+												<%--  id="customerRow-${customer.ecrn}"
+													data-customer-ecrn="${customer.ecrn}">
+ --%>
+												<th>Ecrn</th>
+												<th>First Name</th>
+												<th>Mobile Number</th>
+												<th>Email</th>
+												<th>Country</th>
+												<th>Gender</th>
+
+												<th class="text-end">Actions</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:forEach var="customer" items="${customerListOnTransfer}"
+												varStatus="status">
+												<tr data-customer-ecrn="${customer.ecrn}">
+													<td
+														onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+														onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
+													<td>${customer.firstName}</td>
+													<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
+													<td>${customer.emailId}</td>
+													<td>${customer.countryOfResidence }</td>
+													<td>${customer.gender }</td>
+													<td><div style="display: flex; justify-content: end;">
+															<a href="customerdetails?ecrn=${customer.ecrn}"
+																class="avatar-text avatar-md" title="view"> <i
+																class="feather feather-eye"></i>
+															</a>
+														</div></td>
+												</tr>
+											</c:forEach>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<c:if test="${showHeading}">
+				<div style="display: flex; justify-content: center;  background-color: #8080803b;  ">
+					<marquee><h5 style="color: #003366;">Please search and select a customer!</h5></marquee>
+				</div>
+			</c:if>
+			<c:if test="${showBlank}">
+				<div>
 					<div class="row" style="display: flex; justify-content: center;">
-						<div class="col-lg-12">
+						<div class="col-lg-12 p-4">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
 									<div class="table-responsive">
@@ -371,8 +430,7 @@
 											<thead>
 												<tr>
 													<%--  id="customerRow-${customer.ecrn}"
-													data-customer-ecrn="${customer.ecrn}">
- --%>
+                                                    data-customer-ecrn="${customer.ecrn}"> --%>
 													<th>Ecrn</th>
 													<th>First Name</th>
 													<th>Mobile Number</th>
@@ -384,25 +442,10 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach var="customer" items="${customerListOnTransfer}"
-													varStatus="status">
-													<tr data-customer-ecrn="${customer.ecrn}">
-														<td
-															onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
-															onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
-														<td>${customer.firstName}</td>
-														<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
-														<td>${customer.emailId}</td>
-														<td>${customer.countryOfResidence }</td>
-														<td>${customer.gender }</td>
-														<td><div style="display: flex; justify-content: end;">
-																<a href="customerdetails?ecrn=${customer.ecrn}"
-																	class="avatar-text avatar-md" title="view"> <i
-																	class="feather feather-eye"></i>
-																</a>
-															</div></td>
-													</tr>
-												</c:forEach>
+												<tr>
+													<td colspan="7" class="text-center">No customer
+														available!</td>
+												</tr>
 											</tbody>
 										</table>
 									</div>
@@ -411,43 +454,10 @@
 						</div>
 					</div>
 				</div>
-				<c:if test="${showBlank}">
-                <div>
-                    <div class="row" style="display: flex; justify-content: center;">
-                        <div class="col-lg-12 p-4">
-                            <div class="card stretch stretch-full">
-                                <div class="card-body p-0">
-                                    <div class="table-responsive">
-                                        <table class="table table-hover" id="search-result">
-                                            <thead>
-                                                <tr>
-                                                    <%--  id="customerRow-${customer.ecrn}"
-                                                    data-customer-ecrn="${customer.ecrn}"> --%>
-                                                    <th>Ecrn</th>
-                                                    <th>First Name</th>
-                                                    <th>Mobile Number</th>
-                                                    <th>Email</th>
-                                                    <th>Country</th>
-                                                    <th>Gender</th>
+			</c:if>
 
-                                                    <th class="text-end">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td colspan="7" class="text-center">No customer available!</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                </c:if>
-			
 			<form>
+
 				<input type="hidden" id="residentTypeId" name="residentTypeId" value=""> 
 				<input type="hidden" id="agentId" name="agentId" value="${agentId}"> 
 				<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" /> 
@@ -463,14 +473,13 @@
 				<input type="hidden" id="visaExpiryDate" value="" /> 
 				<input type="hidden" id="visaNumber" value="" /> 
 				<input type="hidden" id="issuedCountry" value="" />
-
-				
 				<div class="spinner-container" id="loader">
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
 					</div>
 				</div>
-				<div class="accordion" id="accordionPanelsStayOpenExample" style="background: aliceblue; pointer-events: none; opacity: 0.6;">
+				<div class="accordion" id="accordionPanelsStayOpenExample"
+					style="background: aliceblue; pointer-events: none; opacity: 0.6;">
 					<div class="accordion-item">
 						<h2 class="accordion-header">
 							<button class="accordion-button" type="button"
@@ -588,14 +597,14 @@
 									</div>
 									<div class="row">
 										<div class="col-12 col-md-4">
-											
-												<label class="form-label"> Profile Photo</label>
+
+											<label class="form-label"> Profile Photo</label>
 											<div>
-											<img
-												src="data:${idDetail.profContentType};base64,${idDetail.profContentType}"
-												alt=" Profile Photo" class="img-thumbnail passport-picture"
-												style="width: 150px; height: 190px;" id="profilePhoto">
-										</div>
+												<img
+													src="data:${idDetail.profContentType};base64,${idDetail.profContentType}"
+													alt=" Profile Photo" class="img-thumbnail passport-picture"
+													style="width: 150px; height: 190px;" id="profilePhoto">
+											</div>
 										</div>
 									</div>
 									<!-- 		<div class="row mt-5">

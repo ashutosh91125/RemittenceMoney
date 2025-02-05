@@ -121,7 +121,7 @@ public class TransferController {
 			model.addAttribute("payInCurrKey", List.of());
 		}
 		model.addAttribute("showBlank", false);
-
+		model.addAttribute("showHeading", true);
 		return "transfer";
 	}
 
@@ -218,7 +218,7 @@ public class TransferController {
 			logger.error("Error retrieving currency list: ", e);
 			model.addAttribute("payInCurrKey", List.of());
 		}
-
+		model.addAttribute("showHeading", false);
 		model.addAttribute("customer", new Customer());
 		return "transfer";
 	}

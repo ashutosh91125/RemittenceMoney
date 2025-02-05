@@ -13,10 +13,12 @@ import com.llm.common.service.EnumEntityService;
 import com.llm.customer.model.Customer;
 import com.llm.customer.repository.CustomerRepository;
 import com.llm.model.response.ResponseDTO;
+import com.llm.raas.repository.BranchRepository;
 import com.llm.receipt.dto.ReceiptDTO;
 import com.llm.receipt.service.ReceiptService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
@@ -56,7 +58,11 @@ public class TransferServiceImpl implements TransferService {
 	@Autowired
 	private EnumEntityService enumEntityService;
 
+	@Autowired
+	private BranchRepository branchRepository;
+
 	@Override
+	@Transactional
 	public Transfer createTransfer(Transfer transfer, HttpServletRequest request, HttpServletResponse response) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String username = authentication.getName();
@@ -107,30 +113,30 @@ public class TransferServiceImpl implements TransferService {
 		// Assuming you already have the savedTransfer object available from the database.
 		ReceiptDTO receiptDTO = new ReceiptDTO();
 
+		try{
 		Customer customer = customerRepository.findByEcrn(savedTransfer.getEcrn());
 		String occupation = enumEntityService.getEnumValueDescriptionByKeyAndValueId("occupationId", String.valueOf(customer.getOccupationId()));
-		String customerIdTpe = enumEntityService.getEnumValueDescriptionByKeyAndValueId("idType", savedTransfer.getIdType());
+		String customerIdTpe = enumEntityService.getEnumValueDescriptionByKeyAndValueId("idTypes", savedTransfer.getIdType());
 		String nationality = enumEntityService.getEnumValueDescriptionByKeyAndValueId("country", savedTransfer.getBeneficiaryNationality());
+		String bankBranchName = (branchRepository.findByRoutingCode(savedTransfer.getBeneficiaryBranch()).getBranchName());
 
-
-// Mapping fields from the savedTransfer to the receiptDTO
 		receiptDTO.setTransactionRefNumber(savedTransfer.getTransactionReferenceNumber());
-		receiptDTO.setDate(LocalDate.now()); // Set the current date for the receipt (could be different if required).
-		receiptDTO.setCustomerNo(savedTransfer.getEcrn()); // Assuming the customer number is the username in Transfer.
+		receiptDTO.setDate(LocalDate.now());
+		receiptDTO.setCustomerNo(savedTransfer.getEcrn());
 		receiptDTO.setPayoutAmount(savedTransfer.getPayoutAmount());
-		receiptDTO.setPayOutCurrency(savedTransfer.getCurrencies()); // Assuming the currencies field is the payout currency.
+		receiptDTO.setPayOutCurrency(savedTransfer.getCurrencies());
 		receiptDTO.setCustomerName(savedTransfer.getFirstName() + " " + savedTransfer.getLastName());
 		receiptDTO.setCustomerPhone(savedTransfer.getPrimaryMobileNumber());
 		receiptDTO.setCustomerIdType(customerIdTpe);
 		receiptDTO.setCustomerIdNo(savedTransfer.getIdNumber());
-		receiptDTO.setIdDateOfExpiry(savedTransfer.getDateOfExpiry()); // Mapping the expiration date.
+		receiptDTO.setIdDateOfExpiry(savedTransfer.getDateOfExpiry());
 		receiptDTO.setNationality(savedTransfer.getNationality());
-		receiptDTO.setIssuedAt(savedTransfer.getIssuedBy()); // Assuming "issuedAt" corresponds to the "issuedBy" field.
+		receiptDTO.setIssuedAt(savedTransfer.getIssuedBy());
 		receiptDTO.setSourceOfFund(savedTransfer.getSourceOfFund());
 		receiptDTO.setPurposeOfTxn(savedTransfer.getTransactionPurpose());
 		receiptDTO.setCustomerCity(savedTransfer.getAddress1());
-		receiptDTO.setEmployerName(customer.getEmployerName()); // If available
-		receiptDTO.setOccupation(occupation); // If available
+		receiptDTO.setEmployerName(customer.getEmployerName());
+		receiptDTO.setOccupation(occupation);
 		receiptDTO.setPayInAmount(savedTransfer.getPayInAmount());
 		receiptDTO.setPayInCurrency(savedTransfer.getPayInCurrency());
 		receiptDTO.setCommission(savedTransfer.getCommission());
@@ -143,14 +149,16 @@ public class TransferServiceImpl implements TransferService {
 		receiptDTO.setBeneficiaryRelation(savedTransfer.getBeneficiaryRelation());
 		receiptDTO.setBeneficiaryNationality(nationality);
 		receiptDTO.setBenBank(savedTransfer.getBeneficiaryBank());
-		receiptDTO.setBenBranch(savedTransfer.getBeneficiaryBranch());
+		receiptDTO.setBenBranch(bankBranchName);
 		receiptDTO.setIban(savedTransfer.getBeneficiaryIban());
 		receiptDTO.setAccountNo(savedTransfer.getBeneficiaryAccountNo());
 		receiptDTO.setRemarks(savedTransfer.getRemarks());
 		receiptDTO.setBeneficiaryAddress(savedTransfer.getBeneficiaryAddress1() + " " + savedTransfer.getBeneficiaryAddress2());
 
-		// Call the service method to generate the PDF receipt
 		receiptService.generateReceiptPdf(receiptDTO, request, response);
+		} catch (RuntimeException e) {
+			throw new RuntimeException(e);
+		}
 
 		return savedTransfer;
 	}

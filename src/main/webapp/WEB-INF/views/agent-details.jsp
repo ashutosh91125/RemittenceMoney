@@ -847,10 +847,10 @@ function updateAgent() {
 					</div>
 				</div>
 			
-			<div class="mt-5 mb-5 text-center"
+		<!-- 	<div class="mt-5 mb-5 text-center"
 				style="display: flex; justify-content: center">
 				<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
-			</div>
+			</div> -->
 			</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>

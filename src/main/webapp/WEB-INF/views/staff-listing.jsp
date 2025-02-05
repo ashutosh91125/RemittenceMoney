@@ -16,6 +16,12 @@
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+<script type="text/javascript">
+function toggleDropdown(element) {
+	const dropdownMenu = element.nextElementSibling;
+	dropdownMenu.classList.toggle('show');
+}
+</script>
 </head>
 
 <body>
@@ -24,18 +30,18 @@
 	</div>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
-		<c:if test="${pageContext.request.isUserInRole('AGENT')}">
-			<div class="page-header-right ms-auto">
-				<div class="page-header-right-items">
-					<div
-						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="staff" class="btn btn-primary">
-							<i class="feather-user-plus me-2"></i> <span>Add New Staff</span>
-						</a>
+			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
+				<div class="page-header-right ms-auto">
+					<div class="page-header-right-items">
+						<div
+							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+							<a href="staff" class="btn btn-primary"> <i
+								class="feather-user-plus me-2"></i> <span>Add New Staff</span>
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-	    </c:if>
+			</c:if>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
 			<div class="main-content">
@@ -62,22 +68,47 @@
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>
-													<td>${staffDetails.firstName} ${staffDetails.lastName}</td>
+													<td>${staffDetails.firstName}${staffDetails.lastName}</td>
 													<td>${staffDetails.username}</td>
 													<td>${staffDetails.email}</td>
 													<td>${staffDetails.mobile}</td>
-													<td>${staffDetails.createdOn}</td>
+													<td>${staffDetails.staffCraetedDateFormated}</td>
 													<td><c:choose>
-                                                        <c:when test="${staffDetails.status}">
+															<c:when test="${staffDetails.status}">
                                                             Active
                                                         </c:when>
-                                                        <c:otherwise>
+															<c:otherwise>
                                                             Inactive
                                                         </c:otherwise>
-                                                    </c:choose></td>
-														<td><div style="display: flex;justify-content: end;"><a  href="staff-deatils?id=${staffDetails.id }" class="avatar-text avatar-md" title="view">
+														</c:choose></td>
+													<%-- <td><div style="display: flex;justify-content: end;"><a  href="staff-deatils?id=${staffDetails.id }" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></div></td>
+                                                        </a></div></td> --%>
+													<td><div class="hstack gap-2 justify-content-end">
+															<a href="/staff-deatils?id=${staffDetails.id}"
+																class="avatar-text avatar-md"> <i
+																class="feather feather-eye"></i>
+															</a>
+															<div class="dropdown">
+																<a href="javascript:void(0)"
+																	onclick="toggleDropdown(this)"
+																	class="avatar-text avatar-md"> <i
+																	class="feather feather-more-horizontal"></i>
+																</a>
+																<ul class="dropdown-menu"
+																	style="position: absolute; right: 38px; top: 54px;">
+																	<li><a class="dropdown-item"
+																		href="/staff-update-form?id=${staffDetails.id}"> <i
+																			class="feather feather-edit-3 me-3"></i> <span>Edit</span>
+																	</a></li>
+																	<!-- 																	<li class="dropdown-divider"></li> -->
+																	<!-- <li><a class="dropdown-item"
+																		href="javascript:void(0)"> <i
+																			class="feather feather-trash-2 me-3"></i> <span>Delete</span>
+																	</a></li> -->
+																</ul>
+															</div>
+														</div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

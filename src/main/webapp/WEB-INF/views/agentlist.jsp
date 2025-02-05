@@ -16,6 +16,12 @@
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+<script type="text/javascript">
+	function toggleDropdown(element) {
+		const dropdownMenu = element.nextElementSibling;
+		dropdownMenu.classList.toggle('show');
+	}
+</script>
 </head>
 
 <body>
@@ -28,8 +34,8 @@
 				<div class="page-header-right-items">
 					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="agent" class="btn btn-primary">
-							<i class="feather-user-plus me-2"></i> <span>Add New Agent</span>
+						<a href="agent" class="btn btn-primary"> <i
+							class="feather-user-plus me-2"></i> <span>Add New Agent</span>
 						</a>
 					</div>
 				</div>
@@ -68,16 +74,38 @@
 													<td>${agent.email}</td>
 													<td>${agent.countries }</td>
 													<td><c:choose>
-                                                        <c:when test="${agent.statusFlag}">
+															<c:when test="${agent.statusFlag}">
                                                             Active
                                                         </c:when>
-                                                        <c:otherwise>
+															<c:otherwise>
                                                             Inactive
                                                         </c:otherwise>
-                                                    </c:choose></td>
-													<td><div style="display: flex;justify-content: end;"><a href="agent-detail?id=${agent.id }" class="avatar-text avatar-md" title="view">
-                                                            <i class="feather feather-eye"></i>
-                                                        </a></div></td>
+														</c:choose></td>
+													<td><div class="hstack gap-2 justify-content-end">
+															<a href="agent-detail?id=${agent.id }"
+																class="avatar-text avatar-md"> <i
+																class="feather feather-eye"></i>
+															</a>
+															<div class="dropdown">
+																<a href="javascript:void(0)"
+																	onclick="toggleDropdown(this)"
+																	class="avatar-text avatar-md"> <i
+																	class="feather feather-more-horizontal"></i>
+																</a>
+																<ul class="dropdown-menu"
+																	style="position: absolute; right: 38px; top: 54px;">
+																	<li><a class="dropdown-item"
+																		href="/agent-update?id=${agent.id}"> <i
+																			class="feather feather-edit-3 me-3"></i> <span>Edit</span>
+																	</a></li>
+																	<!-- 																	<li class="dropdown-divider"></li> -->
+																	<!-- <li><a class="dropdown-item"
+																		href="javascript:void(0)"> <i
+																			class="feather feather-trash-2 me-3"></i> <span>Delete</span>
+																	</a></li> -->
+																</ul>
+															</div>
+														</div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

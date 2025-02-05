@@ -16,6 +16,12 @@
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+<script type="text/javascript">
+function toggleDropdown(element) {
+	const dropdownMenu = element.nextElementSibling;
+	dropdownMenu.classList.toggle('show');
+}
+</script>
 </head>
 
 <body>
@@ -78,9 +84,34 @@
 																Inactive
 															</c:otherwise>
 														</c:choose></td>
-														<td><div style="display: flex;justify-content: end;"><a href="admin-detail?id=${admin.id}" class="avatar-text avatar-md" title="view">
+													<%-- <td><div style="display: flex;justify-content: end;"><a href="admin-detail?id=${admin.id}" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></div></td>
+                                                        </a></div></td> --%>
+                                                        <td><div class="hstack gap-2 justify-content-end">
+															<a href="/admin-detail?id=${admin.id}"
+																class="avatar-text avatar-md"> <i
+																class="feather feather-eye"></i>
+															</a>
+															<div class="dropdown">
+																<a href="javascript:void(0)"
+																	onclick="toggleDropdown(this)"
+																	class="avatar-text avatar-md"> <i
+																	class="feather feather-more-horizontal"></i>
+																</a>
+																<ul class="dropdown-menu"
+																	style="position: absolute; right: 38px; top: 54px;">
+																	<li><a class="dropdown-item"
+																		href="/admin-update-form?id=${admin.id}"> <i
+																			class="feather feather-edit-3 me-3"></i> <span>Edit</span>
+																	</a></li>
+																	<!-- 																	<li class="dropdown-divider"></li> -->
+																	<!-- <li><a class="dropdown-item"
+																		href="javascript:void(0)"> <i
+																			class="feather feather-trash-2 me-3"></i> <span>Delete</span>
+																	</a></li> -->
+																</ul>
+															</div>
+														</div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

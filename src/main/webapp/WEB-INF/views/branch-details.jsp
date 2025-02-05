@@ -730,10 +730,10 @@ Remove any width restrictions if there are any /
 				</div>
 			</div>
 			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
-				<div class="mt-5 mb-5 text-center"
+				<!-- <div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
 					<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
-				</div>
+				</div> -->
 			</c:if>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>

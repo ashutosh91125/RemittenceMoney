@@ -16,6 +16,12 @@
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+<script type="text/javascript">
+	function toggleDropdown(element) {
+		const dropdownMenu = element.nextElementSibling;
+		dropdownMenu.classList.toggle('show');
+	}
+</script>
 </head>
 
 <body>
@@ -24,18 +30,18 @@
 	</div>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
-		<c:if test="${pageContext.request.isUserInRole('AGENT')}">
-			<div class="page-header-right ms-auto">
-				<div class="page-header-right-items">
-					<div
-						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="branch" class="btn btn-primary">
-							<i class="bi bi-bezier me-2"></i> <span>Add New Branch</span>
-						</a>
+			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
+				<div class="page-header-right ms-auto">
+					<div class="page-header-right-items">
+						<div
+							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+							<a href="branch" class="btn btn-primary"> <i
+								class="bi bi-bezier me-2"></i> <span>Add New Branch</span>
+							</a>
+						</div>
 					</div>
 				</div>
-			</div>
-		</c:if>
+			</c:if>
 		</div>
 		<div class="nxl-content" style="margin-top: -89px;">
 			<div class="main-content">
@@ -70,16 +76,41 @@
 													<td>${branchDetails.branchLocationId}</td>
 													<td>${branchDetails.outletCode }</td>
 													<td><c:choose>
-                                                        <c:when test="${branchDetails.status}">
+															<c:when test="${branchDetails.status}">
                                                             Active
                                                         </c:when>
-                                                        <c:otherwise>
+															<c:otherwise>
                                                             Inactive
                                                         </c:otherwise>
-                                                    </c:choose></td>
-													<td><div style="display: flex;justify-content: end;"><a  href="branch-detail?id=${branchDetails.id}" class="avatar-text avatar-md" title="view">
+														</c:choose></td>
+													<%-- <td><div style="display: flex;justify-content: end;"><a  href="branch-detail?id=${branchDetails.id}" class="avatar-text avatar-md" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a></div></td>
+                                                        </a></div></td> --%>
+													<td><div class="hstack gap-2 justify-content-end">
+															<a href="branch-detail?id=${branchDetails.id}"
+																class="avatar-text avatar-md"> <i
+																class="feather feather-eye"></i>
+															</a>
+															<div class="dropdown">
+																<a href="javascript:void(0)"
+																	onclick="toggleDropdown(this)"
+																	class="avatar-text avatar-md"> <i
+																	class="feather feather-more-horizontal"></i>
+																</a>
+																<ul class="dropdown-menu"
+																	style="position: absolute; right: 38px; top: 54px;">
+																	<li><a class="dropdown-item"
+																		href="/branch?branchId=${branchDetails.id }"> <i
+																			class="feather feather-edit-3 me-3"></i> <span>Edit</span>
+																	</a></li>
+																	<!-- 																	<li class="dropdown-divider"></li> -->
+																	<!-- <li><a class="dropdown-item"
+																		href="javascript:void(0)"> <i
+																			class="feather feather-trash-2 me-3"></i> <span>Delete</span>
+																	</a></li> -->
+																</ul>
+															</div>
+														</div></td>
 												</tr>
 											</c:forEach>
 										</tbody>

@@ -1,5 +1,6 @@
 package com.llm.staff.controller;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +75,7 @@ public class StaffDetailsController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         log.info("List of Staff +++++============ {}", username);
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
 
         // Extract the user's role
@@ -85,6 +87,10 @@ public class StaffDetailsController {
         if (role.equals("ROLE_AGENT")) {
             Agent byUsername = agentRepositories.findByUsername(username);
             List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByBranchLocationId(byUsername.getBranchLocationId());
+            for(StaffDetails staffDetails: staffDetailsList) {
+            	  String formattedDate = staffDetails.getCreatedOn().format(dateFormatter);
+            	  staffDetails.setStaffCraetedDateFormated(formattedDate);
+            }
             model.addAttribute("staffDetailsList", staffDetailsList);
             return "staff-listing";
         }
@@ -92,12 +98,20 @@ public class StaffDetailsController {
         if (role.equals("ROLE_SUB_ADMIN")) {
             Optional<User> byUsername = userRepository.findByUsername(username);
             List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaffByCountry(byUsername.get().getCountry());
+            for(StaffDetails staffDetails: staffDetailsList) {
+          	  String formattedDate = staffDetails.getCreatedOn().format(dateFormatter);
+          	  staffDetails.setStaffCraetedDateFormated(formattedDate);
+          }
             model.addAttribute("staffDetailsList", staffDetailsList);
             return "staff-listing";
         }
 
         if (role.equals("ROLE_ADMIN")) {
             List<StaffDetails> staffDetailsList = staffDetailsService.getAllStaff();
+            for(StaffDetails staffDetails: staffDetailsList) {
+          	  String formattedDate = staffDetails.getCreatedOn().format(dateFormatter);
+          	  staffDetails.setStaffCraetedDateFormated(formattedDate);
+          }
             model.addAttribute("staffDetailsList", staffDetailsList);
             return "staff-listing";
         }

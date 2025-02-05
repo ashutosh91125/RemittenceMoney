@@ -68,4 +68,6 @@ public class StaffDetails {
     private String remarks;
 
     private boolean status;
+    @Transient
+    private String staffCraetedDateFormated;
 }

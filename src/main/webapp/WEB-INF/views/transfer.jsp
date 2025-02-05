@@ -227,17 +227,27 @@
 	pointer-events: none;
 	/* To prevent interaction with blurred elements */
 }
+
+.id-picture {
+	transition: transform 0.3s ease-in-out; /* Smooth transition */
+}
+
+.id-picture:hover {
+	transform: scale(2.0); /* Increase size on hover */
+	cursor: pointer;
+	z-index: 8; /* Bring image to the front */
+	position: relative;
+}
 .passport-picture {
-  transition: transform 0.3s ease-in-out; /* Smooth transition */
+	transition: transform 0.3s ease-in-out; /* Smooth transition */
 }
 
 .passport-picture:hover {
-  transform: scale(2.0); /* Increase size on hover */
-  cursor: pointer;
-  z-index: 8; /* Bring image to the front */
-  position: relative;
+	transform: scale(1.4); /* Increase size on hover */
+	cursor: pointer;
+	z-index: 8; /* Bring image to the front */
+	position: relative;
 }
-
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
 <script type="text/javascript">
@@ -275,22 +285,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1" style="display: none; padding-left: 0px;">
-    <div class="modal-dialog modal-lg" role="document" style="width: 508px; height: 360px; display: flex; align-items: center;">
-        <div class="modal-content" style="height: 45%;">
-            <div class="modal-header">
-                <h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary Status</h5>
-                <button type="button" class="btn-close" onclick="closePopup()" style="position: absolute; top: 15px; right: 25px;"></button>
-            </div>
-            <div class="modal-body" style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
-                <button class="btn btn-primary" id="activeButton">Activate</button>
-                <button class="btn btn-danger" id="deactiveButton">Deactivate</button>
-            </div>
-        </div>
-    </div>
-</div>
+	<div class="modal fade show" id="openPopupForBeneficiary" tabindex="-1"
+		style="display: none; padding-left: 0px;">
+		<div class="modal-dialog modal-lg" role="document"
+			style="width: 508px; height: 360px; display: flex; align-items: center;">
+			<div class="modal-content" style="height: 45%;">
+				<div class="modal-header">
+					<h5 class="modal-title" style="position: absolute; top: 15px;">Beneficiary
+						Status</h5>
+					<button type="button" class="btn-close" onclick="closePopup()"
+						style="position: absolute; top: 15px; right: 25px;"></button>
+				</div>
+				<div class="modal-body"
+					style="display: flex; justify-content: center; gap: 20px; margin-top: 30px;">
+					<button class="btn btn-primary" id="activeButton">Activate</button>
+					<button class="btn btn-danger" id="deactiveButton">Deactivate</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-<div class="modal fade show" id="popupIdDetails" tabindex="-1"
+	<div class="modal fade show" id="popupIdDetails" tabindex="-1"
 		style="display: none;" aria-modal="true" role="dialog">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
@@ -345,21 +360,21 @@
 			</div>
 			<jsp:include page="customersearchontransfer.jsp"></jsp:include>
 			<form>
-				<input type="hidden" id="residentTypeId" name="residentTypeId"
-					value=""> <input type="hidden" id="agentId" name="agentId"
-					value="${agentId}"> <input type="hidden"
-					id="dailyCreditLimit" value="${dailyCreditLimit}" /> <input
-					type="hidden" id="dailyCredit" value="${dailyCredit}" /> <input
-					type="hidden" id="perDayLimit" value="${perDayLimit}" /> <input
-					type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> <input
-					type="hidden" id="visaType" value="" /> <input type="hidden"
-					id="idNumber" value="" /> <input type="hidden" id="idType"
-					value="" /> <input type="hidden" id="issuedBy" value="" /> <input
-					type="hidden" id="issuedOn" value="" /> <input type="hidden"
-					id="dateOfExpiry" value="" /> <input type="hidden"
-					id="visaExpiryDate" value="" /> <input type="hidden"
-					id="visaNumber" value="" /> <input type="hidden"
-					id="issuedCountry" value="" />
+				<input type="hidden" id="residentTypeId" name="residentTypeId" value=""> 
+				<input type="hidden" id="agentId" name="agentId" value="${agentId}"> 
+				<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" /> 
+				<input type="hidden" id="dailyCredit" value="${dailyCredit}" /> 
+				<input type="hidden" id="perDayLimit" value="${perDayLimit}" /> 
+				<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> 
+				<input type="hidden" id="visaType" value="" /> 
+				<input type="hidden" id="idNumber" value="" /> 
+				<input type="hidden" id="idType" value="" /> 
+				<input type="hidden" id="issuedBy" value="" /> 
+				<input type="hidden" id="issuedOn" value="" /> 
+				<input type="hidden" id="dateOfExpiry" value="" /> 
+				<input type="hidden" id="visaExpiryDate" value="" /> 
+				<input type="hidden" id="visaNumber" value="" /> 
+				<input type="hidden" id="issuedCountry" value="" />
 
 				<div
 					class="${not empty customerListOnTransfer?'main-content':'hidden' }">
@@ -532,6 +547,18 @@
 												type="text" class="form-control" placeholder="nationality"
 												name="customerType" id="customerType" value="Standard"
 												readonly>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-12 col-md-4">
+											
+												<label class="form-label"> Profile Photo</label>
+											<div>
+											<img
+												src="data:${idDetail.profContentType};base64,${idDetail.profContentType}"
+												alt=" Profile Photo" class="img-thumbnail passport-picture"
+												style="width: 150px; height: 190px;" id="profilePhoto">
+										</div>
 										</div>
 									</div>
 									<!-- 		<div class="row mt-5">
@@ -1016,15 +1043,15 @@
 												</select> <span id="transactionPurposeError" style="color: red;"></span>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Payment Mode<span
-                                                    class="text-danger">*</span></label> <select class="form-control"
-                                                    id="paymentMode" name="paymentMode"
-                                                    data-select2-selector="icon">
-                                                    <option value="" disabled selected>Select Payment
-                                                        Mode</option>
-                                                    <option value="BANK">Bank Transfer</option>
-                                                </select> <span id="paymentModeError" style="color: red;"></span>
-                                            </div>
+												<label class="form-label">Payment Mode<span
+													class="text-danger">*</span></label> <select class="form-control"
+													id="paymentMode" name="paymentMode"
+													data-select2-selector="icon">
+													<option value="" disabled selected>Select Payment
+														Mode</option>
+													<option value="BANK">Bank Transfer</option>
+												</select> <span id="paymentModeError" style="color: red;"></span>
+											</div>
 										</div>
 										<div class="row">
 											<%-- <div class="col-xl-4">
@@ -1045,18 +1072,18 @@
 													style="color: red; display: none; font-size: 0.875rem; margin-top: 5px;"></div>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Rate</label> <input type="text"
-                                                    class="form-control" placeholder="Rate" id="rate"
-                                                    style="color: green;" name="rate" readonly>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <label class="form-label"> Payout Amount <span
-                                                    id="selectedPayoutCurrency"
-                                                    style="font-weight: bold; color: #007bff;"></span>
-                                                </label> <input type="text" class="form-control"
-                                                    placeholder="Payout Amount" style="color: green;"
-                                                    id="payoutAmount" name="payoutAmount" readonly>
-                                            </div>
+												<label class="form-label">Rate</label> <input type="text"
+													class="form-control" placeholder="Rate" id="rate"
+													style="color: green;" name="rate" readonly>
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label"> Payout Amount <span
+													id="selectedPayoutCurrency"
+													style="font-weight: bold; color: #007bff;"></span>
+												</label> <input type="text" class="form-control"
+													placeholder="Payout Amount" style="color: green;"
+													id="payoutAmount" name="payoutAmount" readonly>
+											</div>
 										</div>
 										<div class="row">
 											<div class="col-xl-2">
@@ -1071,16 +1098,16 @@
 													style="color: green;" id="tax" name="tax" readonly>
 											</div>
 											<div class="col-xl-4">
-                                                <label class="form-label">Total Pay In Amount</label> <input
-                                                    type="text" class="form-control"
-                                                    placeholder="Total Pay In Amount" id="totalPayInAmount"
-                                                    style="color: green;" name="totalPayInAmount" readonly>
-                                            </div>
-                                            <div class="col-xl-4">
-                                                <label class="form-label">Remarks</label> <input type="text"
-                                                    class="form-control" placeholder="Remarks" id="remarks"
-                                                    name="remarks">
-                                            </div>
+												<label class="form-label">Total Pay In Amount</label> <input
+													type="text" class="form-control"
+													placeholder="Total Pay In Amount" id="totalPayInAmount"
+													style="color: green;" name="totalPayInAmount" readonly>
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label">Remarks</label> <input type="text"
+													class="form-control" placeholder="Remarks" id="remarks"
+													name="remarks">
+											</div>
 										</div>
 									</div>
 								</div>

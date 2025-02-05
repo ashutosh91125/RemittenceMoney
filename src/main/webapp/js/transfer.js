@@ -137,7 +137,11 @@ $(document).ready(function () {
                     $('#emailId').val(response.emailId?.trim() || '');
                     $('#primaryMobileNumber').val(response.primaryMobileNumber?.trim() || '');
                     $('#state').val(response.state?.trim() || '');
-                    $('#residentTypeId').val(response.residentTypeId || '');
+					if (response.profBase64Data && response.profContentType) {
+					                       $("#profilePhoto").attr("src", `data:${response.profContentType};base64,${response.profBase64Data}`);
+					                   } else {
+					                       $("#profilePhoto").attr("src", "/path/to/default/image.jpg"); // Placeholder if no image available
+					                   }
 					if (response.id) {
 										                        fetchIdDetails(response.id);
 										                    }
@@ -1599,11 +1603,11 @@ function showSelectBeneficiaryDiv() {
 		                <div class="row mt-2">
 		                  <div class="col-12 col-md-4">
 		                    <label class="form-label">ID Front</label>
-		                    <img src="data:${idDetail.frontContentType};base64,${idDetail.frontBase64Data}" alt="ID Front" class="img-thumbnail passport-picture" style="width: 300px; height: 180px;">
+		                    <img src="data:${idDetail.frontContentType};base64,${idDetail.frontBase64Data}" alt="ID Front" class="img-thumbnail id-picture" style="width: 300px; height: 180px;">
 		                  </div>
 		                  <div class="col-12 col-md-4">
 		                    <label class="form-label">ID Back</label>
-		                    <img src="data:${idDetail.backContentType};base64,${idDetail.backBase64Data}" alt="ID Back" class="img-thumbnail passport-picture" style="width: 300px; height: 180px;">
+		                    <img src="data:${idDetail.backContentType};base64,${idDetail.backBase64Data}" alt="ID Back" class="img-thumbnail id-picture" style="width: 300px; height: 180px;">
 		                  </div>
 		                </div>
 
@@ -1653,7 +1657,7 @@ function showSelectBeneficiaryDiv() {
 		          popupIdDetails.style.display = 'block';
 		          container.classList.add('blur-background');
 
-		          $('.passport-picture').on('click', function() {
+		          $('.id-picture').on('click', function() {
 		            
 		            const imgElement = this;
 		            if (imgElement.requestFullscreen) {
@@ -1691,3 +1695,5 @@ function showSelectBeneficiaryDiv() {
 					      $('#imagePreview').html('<img src="' + imgSrc + '">');
 					      $('#imagePreview').fadeIn(200);
 					    });
+						
+						

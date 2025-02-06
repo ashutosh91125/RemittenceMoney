@@ -353,7 +353,7 @@
                 alert('Error fetching staff list.');
             }
         });
-       
+        
         $('#transactionStaffList').on('change', function () {
             var staffValue = $(this).val();
             table.column(2).search(staffValue ? staffValue : '').draw();

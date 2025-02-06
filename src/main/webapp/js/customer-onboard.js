@@ -416,7 +416,7 @@ function copyAddress() {
                     type: 'GET',
                     data: { primaryMobileNumber: mobileNumber },
                     success: function (response) {
-                        if (response && response.message === "Customer already exists with this mobile number.") {
+                        if (response && response.message === "Customer exists with this mobile number. Please Change!") {
                             errorSpan.textContent = response.message; 
                         } else {
                             errorSpan.textContent = "";
@@ -484,7 +484,7 @@ function copyAddress() {
 		               url: '/caas/api/v2/customer/emailId?emailId='+ emailId,
 		               type: 'GET',
 		               success: function (response) {
-		                   if (response && response.message === "emailId already exists.") {
+		                   if (response && response.message === "emailId already exists Please Change!.") {
 		                       errorSpan.textContent = response.message;
 		                   } else {
 		                       errorSpan.textContent = "";

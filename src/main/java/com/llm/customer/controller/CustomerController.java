@@ -80,7 +80,7 @@ public class CustomerController {
 		boolean isMobileExist = customerService.verifyPrimaryMobileNumber(primaryMobileNumber);
 
 		if (isMobileExist) {
-			response.put("message", "Customer already exists with this mobile number.");
+			response.put("message", "Customer exists with this mobile number. Please Change!");
 		}
 
 		return ResponseEntity.ok(response);
@@ -201,7 +201,7 @@ public class CustomerController {
 		boolean emailIdExist = customerService.verifyEmailId(emailId);
 
 		if (emailIdExist) {
-			response.put("message", "emailId already exists.");
+			response.put("message", "emailId already exists Please Change!.");
 		}
 
 		return ResponseEntity.ok(response);

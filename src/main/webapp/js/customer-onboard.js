@@ -438,11 +438,12 @@ function copyAddress() {
 
            const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
            const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
-
+		   const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
+		   const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
            issuedOnInput.setAttribute("max", today);
            dateOfExpiryInput.setAttribute("min", tomorrowString);
-
-
+		   visaExpiryDate.setAttribute("min",tomorrowString)
+		   dateOfBirth.setAttribute("max",today);
            issuedOnInput.addEventListener('change', function () {
                const issuedOnValue = this.value;
                const dateOfExpiryValue = dateOfExpiryInput.value;
@@ -469,6 +470,8 @@ function copyAddress() {
                    return;
                }
            });
+		   
+		   
         toggleFields();
         toggleCustomerRemarks();
     });

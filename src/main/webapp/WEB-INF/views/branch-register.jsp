@@ -239,7 +239,7 @@ function toggleRemarks() {
                 branchType.val("").prop('disabled', false).trigger('change');
                 cdpChannel.val("").prop('disabled', false).trigger('change');
                 raasChannel.val("").prop('disabled', false).trigger('change');
-                outletCode.val("").prop('disabled', false); // Re-enable text field
+//                  outletCode.val("").prop('disabled', false); // Re-enable text field
             }
         }
 

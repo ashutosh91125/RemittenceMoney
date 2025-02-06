@@ -435,7 +435,7 @@
 												<label class="form-label">Date of Birth<span
 													class="text-danger">*</span></label>
 												<form:input path="dateOfBirth" id="dateOfBirth" type="date"
-													class="form-control" />
+													class="form-control"  min="1900-01-01" max="${today}"/>
 												<span id="dateOfBirthError" style="color: red;"></span>
 											</div>
 										</div>
@@ -977,7 +977,7 @@
 																		<label class="form-label">Visa Expiry Date</label>
 																		<form:input path="idDetails[0].visaExpiryDate"
 																			type="date" class="form-control"
-																			placeholder="Visa Expiry Date" />
+																			placeholder="Visa Expiry Date"  min="${tomorrow}" />
 																		<span id="visaExpiryDateError" style="color: red;"></span>
 																	</div>
 																</div>

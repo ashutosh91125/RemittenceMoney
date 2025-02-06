@@ -150,6 +150,7 @@
     <script>
     
     $(document).ready(function () {
+    	 $('#transfer-list tbody').hide();
         var table = $('#transfer-list').DataTable({
             "pageLength": 10,
             "ordering": true,
@@ -201,10 +202,20 @@
                 alert('Error fetching branch list.');
             }
         });
-        $('#transactionBranchList').on('change', function () {
-            var branchValue = $(this).val();
-            table.column(1).search(branchValue ? branchValue : '').draw();
-        });
+//         $('#transactionBranchList').on('change', function () {
+//             var branchValue = $(this).val();
+//             table.column(1).search(branchValue ? branchValue : '').draw();
+//             $('#transfer-list tbody').show();
+//         });
+ $('#transactionBranchList').on('change', function () {
+        var branchValue = $(this).val();
+        if (!branchValue) {
+            $('#transfer-list tbody').hide(); // Hide table body if value is empty
+        } else {
+            table.column(1).search(branchValue).draw();
+            $('#transfer-list tbody').show(); // Show table body when a value is selected
+        }
+    });
 
         $.ajax({
             url: '/api/v1/staff/staff',
@@ -227,10 +238,21 @@
             }
         });
       
-        $('#transactionStaffList').on('change', function () {
-            var staffValue = $(this).val();
-            table.column(2).search(staffValue ? staffValue : '').draw();
-        });
+//         $('#transactionStaffList').on('change', function () {
+//             var staffValue = $(this).val();
+//             table.column(2).search(staffValue ? staffValue : '').draw();
+//             $('#transfer-list tbody').show();
+//         });
+
+ $('#transactionStaffList').on('change', function () {
+        var staffValue = $(this).val();
+        if (!staffValue) {
+            $('#transfer-list tbody').hide(); // Hide table body if value is empty
+        } else {
+            table.column(1).search(staffValue).draw();
+            $('#transfer-list tbody').show(); // Show table body when a value is selected
+        }
+    });
 
         </c:if>
         <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')}">
@@ -263,10 +285,20 @@
         });
 
 
-        $('#transactionAgentList').on('change', function () {
-            var agentValue = $(this).val();
-            table.column(0).search(agentValue ? agentValue : '').draw();
-        });
+//         $('#transactionAgentList').on('change', function () {
+//             var agentValue = $(this).val();
+//             table.column(0).search(agentValue ? agentValue : '').draw();
+//             $('#transfer-list tbody').show();
+//         });
+ $('#transactionAgentList').on('change', function () {
+        var agentValue = $(this).val();
+        if (!agentValue) {
+            $('#transfer-list tbody').hide(); // Hide table body if value is empty
+        } else {
+            table.column(1).search(agentValue).draw();
+            $('#transfer-list tbody').show(); // Show table body when a value is selected
+        }
+    });
         </c:if>
  /*        <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')} || pageContext.request.isUserInRole('AGENT')}">
         const dropdowns1 = `<select id="transactionBranchList" class="form-control" style="width: 200px; height: 43px;"></select>
@@ -330,6 +362,7 @@
         $('.dataTables_filter input').on('input', function () {
             var searchValue = $(this).val();
             table.search(searchValue).draw();
+            $('#transfer-list tbody').show();
         });
         $('#transfer-list').on('click', '.transactionLogo', function () {
             var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();

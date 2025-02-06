@@ -7,6 +7,7 @@ import java.util.Optional;
 import com.llm.agent.model.Agent;
 import com.llm.agent.projection.AgentProjection;
 import com.llm.agent.repository.AgentRepositories;
+import com.llm.branch.repository.BranchDetailsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,6 +43,9 @@ public class BranchDetailsRestController {
     private UserRepository userRepository;
 
     @Autowired
+    private BranchDetailsRepository branchDetailsRepository;
+
+    @Autowired
     private AgentRepositories agentRepositories;
 
     @PostMapping
@@ -50,6 +54,11 @@ public class BranchDetailsRestController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
+
+        if (!branchDetails.getOutletCode().equals("N/A") && branchDetailsRepository.existsByOutletCode(branchDetails.getOutletCode())){
+            return new ResponseEntity<>("Outlet code already exists!!", HttpStatus.CONFLICT);
+        }
+
         try {
             Agent byUsername = agentRepositories.findByUsername(username);
 

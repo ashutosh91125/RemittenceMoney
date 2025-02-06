@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.agent.repository.AgentRepositories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class AgentRestController {
 	private IAgentService agentService;
 
 	@Autowired
+	private AgentRepositories agentRepositories;
+
+	@Autowired
 	private UserRepository userRepository;
 
 	@PostMapping
@@ -48,6 +52,9 @@ public class AgentRestController {
 		try {
 			if (agentDTO.getAgentName().isEmpty()) {
 				return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
+			}
+			if (agentRepositories.existsByBranchLocationId(agentDTO.getBranchLocationId())){
+				return new ResponseEntity<>("Agent Location Id already exists!!", HttpStatus.CONFLICT);
 			}
 			Agent agent = new Agent();
 			agent.setAgentId(agentDTO.getAgentId());

@@ -54,6 +54,7 @@
 										<thead>
 											<tr>
 												<th>S.No</th>
+												<th>Branch ID</th>
 												<th>Branch Name</th>
 												<th>Company ID</th>
 												<th>Branch Type</th>
@@ -69,6 +70,7 @@
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>
+													<td>${branchDetails.id}</td>
 													<td>${branchDetails.branchName}</td>
 													<td>${branchDetails.agent}</td>
 													<td>${branchDetails.branchType}</td>

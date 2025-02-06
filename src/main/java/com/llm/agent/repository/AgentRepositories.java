@@ -14,6 +14,8 @@ public interface AgentRepositories extends JpaRepository<Agent, Long> {
 	Agent findByAgentId(String agentId);
 	Agent findByBranchLocationId(String branchLocationId);
 
+	boolean existsByBranchLocationId(String branchLocationId);
+
 	// Custom query that fetches only specific fields (projection)
 	List<AgentBranchProjection> findAllProjectedBy();
 	

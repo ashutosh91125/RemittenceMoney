@@ -538,7 +538,7 @@
 												<label class="form-label">Email<span
 													class="text-danger">*</span></label>
 												<form:input path="emailId" type="email" class="form-control"
-													placeholder="Email" />
+													placeholder="Email" id="emailId" />
 												<span id="emailIdError" style="color: red;"></span>
 											</div>
 										</div>

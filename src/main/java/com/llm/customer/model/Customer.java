@@ -78,7 +78,7 @@ public class Customer {
 	@Column(name = "secondary_mobile_number", length = 20)
 	private String secondaryMobileNumber;
 
-	@Column(name = "email_id", length = 255, nullable = false)
+	@Column(name = "email_id", length = 255, nullable = false, unique = true)
 	private String emailId;
 
 	@Column(name = "phone_number", length = 20)

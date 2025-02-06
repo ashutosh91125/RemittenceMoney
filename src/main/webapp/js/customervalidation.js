@@ -14,7 +14,7 @@
 	    document.getElementById("countryOfResidenceError").innerHTML = "";
 	    document.getElementById("genderError").innerHTML = "";
 		document.getElementById("emailIdError").innerHTML = "";
-		
+		document.getElementById("primaryMobileNumberError").innerHTML = "";
 		
 	    document.getElementById("buildingNameError").innerHTML = "";
 	    document.getElementById("streetNameError").innerHTML = "";
@@ -123,7 +123,9 @@
 	 } else {
 	     document.getElementById("emailIdError").innerHTML = "";
 	 }
-	
+	if(!form.primaryMobileNumber.value){
+		document.getElementById("primaryMobileNumberError").innerHTML = "Primary Mobile Number is required.";
+	}
 	
     if (!form.buildingName.value.trim()) {
         document.getElementById("buildingNameError").innerHTML = "Building name is required.";

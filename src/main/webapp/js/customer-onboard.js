@@ -471,6 +471,35 @@ function copyAddress() {
                }
            });
 		   
+		   document.getElementById('emailId').addEventListener('input', function () {
+		       const emailId = this.value.trim();
+		       const errorSpan = document.getElementById('emailIdError');
+		       errorSpan.textContent = "";
+
+		       // Email validation regex pattern
+		       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+		       if (emailPattern.test(emailId)) {
+		           $.ajax({
+		               url: '/caas/api/v2/customer/emailId?emailId='+ emailId,
+		               type: 'GET',
+		               success: function (response) {
+		                   if (response && response.message === "emailId already exists.") {
+		                       errorSpan.textContent = response.message;
+		                   } else {
+		                       errorSpan.textContent = "";
+		                   }
+		               },
+		               error: function (xhr, status, error) {
+		                   console.error("AJAX Error:", status, error);
+		                   errorSpan.textContent = "Error checking email. Please try again.";
+		               }
+		           });
+		       } else {
+		           errorSpan.textContent = "Enter a valid Email.";
+		       }
+		   });
+
 		   
         toggleFields();
         toggleCustomerRemarks();

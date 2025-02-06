@@ -194,5 +194,17 @@ public class CustomerController {
 
 		return ResponseEntity.ok(idDetailsList);
 	}
+	@GetMapping("/emailId")
+	public ResponseEntity<Map<String, String>> verifyEmail(@RequestParam("emailId") String emailId) {
+		logger.info(emailId.toString());
+		Map<String, String> response = new HashMap<>();
+		boolean emailIdExist = customerService.verifyEmailId(emailId);
+
+		if (emailIdExist) {
+			response.put("message", "emailId already exists.");
+		}
+
+		return ResponseEntity.ok(response);
+	}
 
 }

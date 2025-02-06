@@ -768,5 +768,9 @@ public class CustomerService {
 	            .map(Customer::getIdDetails)
 	            .orElse(Collections.emptyList());
 	}
+
+	public boolean verifyEmailId(String emailId) {
+		return customerRepository.existsByEmailId(emailId);
+	}
 	
 }

@@ -47,7 +47,13 @@ public class MyConfig {
                         .failureHandler(customAuthenticationFailureHandler)
                         .permitAll())
                 .logout(LogoutConfigurer::permitAll)
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .sessionManagement(session -> session
+                        .invalidSessionUrl("/login")  // URL to redirect to when the session expires
+                        .maximumSessions(10)  // Allow n number session per user
+                        .expiredUrl("/login"));  // URL to redirect to when the session is expired
+//                        .and()
+//                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
 
         return http.build();
     }

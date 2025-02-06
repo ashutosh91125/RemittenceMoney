@@ -15,7 +15,8 @@ import java.time.LocalDateTime;
 public class BranchDetails {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "branch_details_seq")
+	@SequenceGenerator(name = "branch_details_seq", sequenceName = "branch_details_seq", allocationSize = 1)
 	private Long id;
 
 	private String agent;

@@ -25,5 +25,7 @@ public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Lo
     List<BranchDetails> findByBranchLocationIdAndStatus(String branchLocationId,boolean status);
     
     List<BranchProjection> findAllProjectedBy();
+
+    boolean existsByOutletCode(String outletCode);
 }
 

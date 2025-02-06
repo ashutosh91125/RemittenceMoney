@@ -50,9 +50,10 @@ public class AgentRestController {
 		String username = authentication.getName();
 		logger.info(agentDTO.toString());
 		try {
-			if (agentDTO.getAgentName().isEmpty()) {
-				return new ResponseEntity<>("Failed to create agent!", HttpStatus.BAD_REQUEST);
+			if (agentRepositories.existsByUsername(agentDTO.getUsername())){
+				return new ResponseEntity<>("Username already exists!!", HttpStatus.CONFLICT);
 			}
+
 			if (agentRepositories.existsByBranchLocationId(agentDTO.getBranchLocationId())){
 				return new ResponseEntity<>("Agent Location Id already exists!!", HttpStatus.CONFLICT);
 			}

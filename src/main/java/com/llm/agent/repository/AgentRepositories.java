@@ -27,4 +27,6 @@ public interface AgentRepositories extends JpaRepository<Agent, Long> {
 	List<Agent> findByCountries(String countries);
 
 	List<AgentBranchProjection> findProjectionsByCountries(String country);
+
+	boolean existsByUsername(String username);
 }

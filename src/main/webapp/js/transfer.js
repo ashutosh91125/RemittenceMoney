@@ -97,10 +97,10 @@ $(document).ready(function () {
             success: function (response) {
                 console.log(response);
                 if (response) {
-                    if(response.amlScanStatus != 'Accepted' && response.customerStatus != 'ACTIVE'){
-                        alert("Customer is not valid for transaction!");
-                        return;
-                    }
+					if (response.amlScanStatus !== 'Accepted' || response.customerStatus !== 'ACTIVE') {
+					           alert("Customer is not valid for transaction!");
+					           return;
+					       }
 					if (Array.isArray(response.idDetails) && response.idDetails.length > 0) {
 					                       var activeIdDetail = response.idDetails.find(function(detail) {
 					                           return detail.activeStatus === true;

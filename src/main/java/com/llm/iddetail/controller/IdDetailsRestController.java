@@ -1,11 +1,12 @@
 package com.llm.iddetail.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.llm.iddetail.model.IdDetail;
@@ -55,5 +56,18 @@ public class IdDetailsRestController {
 		return "id not found";
 
 	}
+	
+	@GetMapping("/verify-idNumber")
+	public ResponseEntity<String> verifyWithIdNumber(@RequestParam("idNumber") String idNumber) {
+	    boolean existedIdNumber = idetailsService.verifyIdNumber(idNumber);
+	    
+	    if (existedIdNumber) {
+	        return ResponseEntity.ok("ID Number exists: " + idNumber);
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("ID Number not found: " + idNumber);
+	    }
+	}
+
+
 
 }

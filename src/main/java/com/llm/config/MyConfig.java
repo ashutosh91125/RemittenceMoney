@@ -31,7 +31,7 @@ public class MyConfig {
                 .exceptionHandling(exception -> exception
                         .authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/login", "/api/auth/token", "/staff-login", "/api/v1/raas/**", "/api/v1/banks/**",
+                        .requestMatchers("/login", "/api/auth/token", "/staff-login", "/api/v1/raas/**", "/api/v1/banks/**","/caas/api/v2/iddetail/**",
                                 "/caas/api/v2/customer/**", "/api/v1/transfer/**","/api/v1/staff/**","/api/enumEntities/**",
                                 "/api/v1/agent/**", "/api/v1/beneficiaries/**", "/static/**", "/assets/**", "/WEB-INF/views/**")
                         .permitAll()

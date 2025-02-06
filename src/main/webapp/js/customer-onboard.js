@@ -368,6 +368,17 @@ function copyAddress() {
 
                 const errorSpan = document.getElementById('idNumberError');
                 errorSpan.textContent = ""; 
+				
+				$.ajax({
+								            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
+								            type: "GET",
+								            success: function(response) {
+												errorSpan.textContent = "This Id Number Already Exists. Please change! ";
+								            },
+								            error: function() {
+								                errorSpan.text("Error verifying ID Number. Try again.");
+								            }
+								        });
 
                 if (residentType !== "101") {
                     return; 
@@ -402,7 +413,7 @@ function copyAddress() {
                     errorSpan.textContent = "Last digit must be 1 for Male or 0 for Female";
                     return;
                 }
-
+				
                 errorSpan.textContent = "";
             });
         document.getElementById('primaryMobileNumber').addEventListener('input', function () {
@@ -499,8 +510,6 @@ function copyAddress() {
 		           errorSpan.textContent = "Enter a valid Email.";
 		       }
 		   });
-
-		   
         toggleFields();
         toggleCustomerRemarks();
     });

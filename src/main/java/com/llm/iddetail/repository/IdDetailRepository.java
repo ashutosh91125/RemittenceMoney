@@ -15,4 +15,6 @@ public interface IdDetailRepository extends JpaRepository<IdDetail, Long> {
 
 	IdDetail findByIdNumber(String idNumber);
 
+	boolean existsByIdNumber(String idNumber);
+
 }

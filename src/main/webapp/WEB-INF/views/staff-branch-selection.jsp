@@ -47,7 +47,7 @@
 						<form action="${pageContext.request.contextPath}/select-branch"
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
-								<input name="branch" type="text" class="form-control"
+								<input name="branch" type="number" class="form-control"
 									placeholder="Enter your branch Id" required>
 							</div>
 

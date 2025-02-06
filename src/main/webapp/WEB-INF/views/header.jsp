@@ -42,7 +42,7 @@
 	<div class="nxl-navigation" id="navBar_Id">
 		<div class="navbar-wrapper">
 			<div class="m-header">
-				<a href="index.html" class="b-brand"> <!-- ========   change your logo hear   ============ -->
+				<a href="/welcome" class="b-brand"> <!-- ========   change your logo hear   ============ -->
 					<img src="assets/images/LuluMoney.png" class="img-fluid">
 				</a>
 			</div>

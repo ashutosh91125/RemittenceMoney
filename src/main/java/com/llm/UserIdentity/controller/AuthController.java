@@ -169,8 +169,10 @@ public class AuthController {
 
     // Welcome Page (accessible only for logged-in users)
     @GetMapping("/welcome")
-    public String welcome(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String welcome(@AuthenticationPrincipal User userDetails, Model model) {
         model.addAttribute("username", userDetails.getUsername());
+        model.addAttribute("name", userDetails.getAdminName());
+
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
         if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
             Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(userDetails.getUsername());

@@ -247,7 +247,7 @@ $.ajax({
 						<h5 class="m-b-10">Customers</h5>
 					</div>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
 						<li class="breadcrumb-item">Add Customer</li>
 					</ul>
 				</div>
@@ -259,17 +259,17 @@ $.ajax({
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						<div
+						<!-- <div
 							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-							<!-- <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
+							 <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
-                            </a> -->
+                            </a>
 							<a href="javascript:void(0);"
 								class="btn btn-primary successAlertMessage"> <i
 								class="feather-user-plus me-2"></i> <span>Add Customer</span>
 							</a>
-						</div>
+						</div> -->
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">

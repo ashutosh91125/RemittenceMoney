@@ -179,7 +179,7 @@
 						<h5 class="m-b-10">Customers</h5>
 					</div>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
 						<li class="breadcrumb-item">Add Customer</li>
 					</ul>
 				</div>
@@ -191,17 +191,17 @@
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						<div
-							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-							<!-- <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
+						<!-- <div
+                            class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+                             <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
-                            </a> -->
-							<a href="javascript:void(0);"
-								class="btn btn-primary successAlertMessage"> <i
-								class="feather-user-plus me-2"></i> <span>Add Customer</span>
-							</a>
-						</div>
+                            </a>
+                            <a href="javascript:void(0);"
+                                class="btn btn-primary successAlertMessage"> <i
+                                class="feather-user-plus me-2"></i> <span>Add Customer</span>
+                            </a>
+                        </div> -->
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -1066,7 +1066,7 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Tax Registration Number</label>
-														<form:input path="taxRegistrationNumber" type="text"
+														<form:input path="taxRegistrationNumber" type="number"
 															class="form-control"
 															placeholder="Tax Registration Number" />
 														<span id="taxRegistrationNumberError" style="color: red;"></span>

@@ -266,6 +266,23 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
         error.textContent = ''; 
     }
 }
+
+function validateBranchName(inputId, errorId) {
+    var input = document.getElementById(inputId);
+    var errorElement = document.getElementById(errorId);
+
+    // Regular expression to allow only alphabetic characters and spaces
+    var regex = /^[A-Za-z\s]*$/;
+
+    // If the input does not match the allowed characters (alphabet and spaces), prevent input
+    if (!regex.test(input.value)) {
+        // Remove the last character that was entered (invalid input)
+        input.value = input.value.slice(0, -1);
+        errorElement.textContent = "Only alphabetic characters and spaces are allowed.";
+    } else {
+        errorElement.textContent = ""; // Clear the error message
+    }
+}
 </script>
 </head>
 
@@ -380,7 +397,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<form:input path="branchName" type="text"
 												class="form-control" id="branchName"
 												placeholder="Branch Name"
-												oninput="validateLengthWithMaxMessage('branchName', 60, 'branchNameError')"/>
+												oninput="validateLengthWithMaxMessage('branchName', 60, 'branchNameError'); validateBranchName('branchName', 'branchNameError')"/>
 											<span id="branchNameError" style="color:red;"></span>
 										</div>
 									</div>

@@ -189,7 +189,7 @@
                 if (Array.isArray(response)) {
                     var dropdown = $('#transactionBranchList');
                     dropdown.empty();
-                    dropdown.append('<option value="">Select Branch</option>');
+                    dropdown.append('<option value="">Filter by Branch</option>');
                     $.each(response, function (index, item) {
                         dropdown.append('<option value="' + item.id + '">' + item.branchName + '</option>');
                     });
@@ -224,7 +224,7 @@
                 if (Array.isArray(response)) {
                     var dropdown = $('#transactionStaffList');
                     dropdown.empty();
-                    dropdown.append('<option value="">Select Staff</option>');
+                    dropdown.append('<option value="">Filter by Staff</option>');
                     $.each(response, function (index, item) {
                         dropdown.append('<option value="' + item.id + '">' + item.firstName + '</option>');
                     });
@@ -270,7 +270,7 @@
                 if (Array.isArray(response)) {
                     var dropdown = $('#transactionAgentList');
                     dropdown.empty();
-                    dropdown.append('<option value="">Select Agent</option>');
+                    dropdown.append('<option value="">Filter by Agent</option>');
                     $.each(response, function (index, item) {
                         dropdown.append('<option value="' + item.branchLocationId + '">' + item.agentName + '</option>');
                     });

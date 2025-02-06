@@ -80,7 +80,7 @@ public class CustomerController {
 		boolean isMobileExist = customerService.verifyPrimaryMobileNumber(primaryMobileNumber);
 
 		if (isMobileExist) {
-			response.put("message", "Customer already exists with this mobile number.");
+			response.put("message", "Customer exists with this mobile number. Please Change!");
 		}
 
 		return ResponseEntity.ok(response);
@@ -193,6 +193,18 @@ public class CustomerController {
 //				.collect(Collectors.toList());
 
 		return ResponseEntity.ok(idDetailsList);
+	}
+	@GetMapping("/emailId")
+	public ResponseEntity<Map<String, String>> verifyEmail(@RequestParam("emailId") String emailId) {
+		logger.info(emailId.toString());
+		Map<String, String> response = new HashMap<>();
+		boolean emailIdExist = customerService.verifyEmailId(emailId);
+
+		if (emailIdExist) {
+			response.put("message", "emailId already exists Please Change!.");
+		}
+
+		return ResponseEntity.ok(response);
 	}
 
 }

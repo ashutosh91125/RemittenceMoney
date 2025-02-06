@@ -565,8 +565,8 @@ public class CustomerService {
 			updatedIdDetail.setIssuedCountry("MY");
 			updatedIdDetail.setIssuedBy("MYKD");
 			updatedIdDetail.setIssuedAt("Malaysia");
-			updatedIdDetail.setActiveStatus(true);
-			updatedIdDetail.setDefaultStatus(true);
+//			updatedIdDetail.setActiveStatus(true);
+//			updatedIdDetail.setDefaultStatus(true);
 
 			idMap.put("id_type", updatedIdDetail.getIdType());
 
@@ -592,10 +592,10 @@ public class CustomerService {
 			idMap.put("content_type", updatedIdDetail.getBackContentType());
 			idMap.put("id_back", idBackData);
 		}else if(updateCustomer.getResidentTypeId() == 100) {
-			updatedIdDetail.setActiveStatus(true);
-			updatedIdDetail.setDefaultStatus(true);
-			idMap.put("active_status", updatedIdDetail.getActiveStatus());
-			idMap.put("default_status", updatedIdDetail.getDefaultStatus());
+//			updatedIdDetail.setActiveStatus(true);
+//			updatedIdDetail.setDefaultStatus(true);
+			idMap.put("active_status", updatedIdDetail != null && updatedIdDetail.getActiveStatus() != null ? updatedIdDetail.getActiveStatus() : existingIdDetail != null ? existingIdDetail.getActiveStatus() : null );
+			idMap.put("default_status",updatedIdDetail != null && updatedIdDetail.getDefaultStatus() != null ? updatedIdDetail.getDefaultStatus() : existingIdDetail != null ? existingIdDetail.getDefaultStatus() : null);
 			idMap.put("id_type", updatedIdDetail != null && updatedIdDetail.getIdType() != null ? updatedIdDetail.getIdType() : existingIdDetail != null ? existingIdDetail.getIdType() : null);
 			idMap.put("id_number", updatedIdDetail != null && updatedIdDetail.getIdNumber() != null ? updatedIdDetail.getIdNumber() : existingIdDetail != null ? existingIdDetail.getIdNumber() : null);
 
@@ -733,6 +733,7 @@ public class CustomerService {
 			            if (updatedIdDetail.getBackContentType() != null) existingIdDetail.setBackContentType(updatedIdDetail.getBackContentType());
 			           
 			            if (updatedIdDetail.getActiveStatus() != null) existingIdDetail.setActiveStatus(updatedIdDetail.getActiveStatus());
+			            if (updatedIdDetail.getDefaultStatus() != null) existingIdDetail.setDefaultStatus(updatedIdDetail.getDefaultStatus());
 			        }
 			 }
 		}
@@ -767,6 +768,10 @@ public class CustomerService {
 	    return customerRepository.findById(customerId)
 	            .map(Customer::getIdDetails)
 	            .orElse(Collections.emptyList());
+	}
+
+	public boolean verifyEmailId(String emailId) {
+		return customerRepository.existsByEmailId(emailId);
 	}
 	
 }

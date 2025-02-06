@@ -20,6 +20,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long> {
      List<Customer> findByIdNumberContaining(@Param("idNumber")String idNumber); // Assuming IdDetail has idNumber field
      List<Customer> findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(String firstName, String lastName);
      boolean existsByPrimaryMobileNumber(String primaryMobileNumber);
+     boolean existsByEmailId(String emailId);
 
 
 }

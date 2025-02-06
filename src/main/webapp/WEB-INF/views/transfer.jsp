@@ -1009,7 +1009,7 @@
 												<div class="mb-1">
 													<label class="form-label">Date of Birth</label> <input
 														type="date" class="form-control" id="beneficiaryDob"
-														name="beneficiaryDob">
+														name="beneficiaryDob" min="1900-01-01" max="${today}">
 												</div>
 											</div>
 											<div class="col-12 col-md-4">

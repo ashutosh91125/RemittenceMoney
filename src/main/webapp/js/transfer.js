@@ -1294,7 +1294,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const payInAmount = document.getElementById('payInAmount');
     const errorMessage = document.getElementById('error-message');
+	const beneficiaryDob = document.getElementById('beneficiaryDob');
 	const MAX_LENGTH = 34;
+	
+	const today = new Date().toISOString().split("T")[0];
+	const tomorrow = new Date();
+	      tomorrow.setDate(tomorrow.getDate() + 1);
+    const tomorrowString = tomorrow.toISOString().split("T")[0];
+	beneficiaryDob.setAttribute("max", today);
     function validateAccountNumbers() {
         const accountNumberValue = accountNumber.value.trim();
         const confirmAccountNumberValue = confirmAccountNumber.value.trim();

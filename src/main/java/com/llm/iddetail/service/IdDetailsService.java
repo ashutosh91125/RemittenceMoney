@@ -27,4 +27,8 @@ public class IdDetailsService {
 	public IdDetail getByIdNumber(String idNumber) {
 		return idDetailRepository.findByIdNumber(idNumber);
 	}
+
+	public boolean verifyIdNumber(String idNumber) {
+		return idDetailRepository.existsByIdNumber(idNumber);
+	}
 }

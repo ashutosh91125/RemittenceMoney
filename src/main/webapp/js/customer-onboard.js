@@ -368,6 +368,17 @@ function copyAddress() {
 
                 const errorSpan = document.getElementById('idNumberError');
                 errorSpan.textContent = ""; 
+				
+				$.ajax({
+								            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
+								            type: "GET",
+								            success: function(response) {
+												errorSpan.textContent = "This Id Number Already Exists. Please change! ";
+								            },
+								            error: function() {
+								                errorSpan.text("Error verifying ID Number. Try again.");
+								            }
+								        });
 
                 if (residentType !== "101") {
                     return; 
@@ -402,7 +413,7 @@ function copyAddress() {
                     errorSpan.textContent = "Last digit must be 1 for Male or 0 for Female";
                     return;
                 }
-
+				
                 errorSpan.textContent = "";
             });
         document.getElementById('primaryMobileNumber').addEventListener('input', function () {
@@ -416,7 +427,7 @@ function copyAddress() {
                     type: 'GET',
                     data: { primaryMobileNumber: mobileNumber },
                     success: function (response) {
-                        if (response && response.message === "Customer already exists with this mobile number.") {
+                        if (response && response.message === "Customer exists with this mobile number. Please Change!") {
                             errorSpan.textContent = response.message; 
                         } else {
                             errorSpan.textContent = "";
@@ -438,11 +449,12 @@ function copyAddress() {
 
            const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
            const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
-
+		   const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
+		   const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
            issuedOnInput.setAttribute("max", today);
            dateOfExpiryInput.setAttribute("min", tomorrowString);
-
-
+		   visaExpiryDate.setAttribute("min",tomorrowString)
+		   dateOfBirth.setAttribute("max",today);
            issuedOnInput.addEventListener('change', function () {
                const issuedOnValue = this.value;
                const dateOfExpiryValue = dateOfExpiryInput.value;
@@ -469,6 +481,35 @@ function copyAddress() {
                    return;
                }
            });
+		   
+		   document.getElementById('emailId').addEventListener('input', function () {
+		       const emailId = this.value.trim();
+		       const errorSpan = document.getElementById('emailIdError');
+		       errorSpan.textContent = "";
+
+		       // Email validation regex pattern
+		       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+		       if (emailPattern.test(emailId)) {
+		           $.ajax({
+		               url: '/caas/api/v2/customer/emailId?emailId='+ emailId,
+		               type: 'GET',
+		               success: function (response) {
+		                   if (response && response.message === "emailId already exists Please Change!.") {
+		                       errorSpan.textContent = response.message;
+		                   } else {
+		                       errorSpan.textContent = "";
+		                   }
+		               },
+		               error: function (xhr, status, error) {
+		                   console.error("AJAX Error:", status, error);
+		                   errorSpan.textContent = "Error checking email. Please try again.";
+		               }
+		           });
+		       } else {
+		           errorSpan.textContent = "Enter a valid Email.";
+		       }
+		   });
         toggleFields();
         toggleCustomerRemarks();
     });

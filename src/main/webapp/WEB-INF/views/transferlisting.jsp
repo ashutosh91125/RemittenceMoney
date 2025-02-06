@@ -361,10 +361,16 @@
         });
         </c:if> */
         $('.dataTables_filter input').on('input', function () {
-            var searchValue = $(this).val();
+            var searchValue = $(this).val().trim();
             table.search(searchValue).draw();
-            $('#transfer-list tbody').show();
+            
+            if (searchValue === "") {
+                $('#transfer-list tbody').hide(); // Hide table body if search is empty
+            } else {
+                $('#transfer-list tbody').show(); // Show table body when searching
+            }
         });
+
         $('#transfer-list').on('click', '.transactionLogo', function () {
             var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();
             if (!transactionRefNumber) {

@@ -100,7 +100,7 @@
                                                  <th class="text-end">Actions</th>
                                             </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody style="display:none;">
                                             <c:forEach var="transfer" items="${transferList}" varStatus="status">
                                                 <tr>
                                                     <td>${transfer.branchLocationId}</td>
@@ -149,8 +149,9 @@
     <!-- DataTables Initialization -->
     <script>
     
-    $(document).ready(function () {
-    	 $('#transfer-list tbody').hide();
+    $(document).ready(function () {	
+    
+    	 $('#transfer-list tbody').hide();	
         var table = $('#transfer-list').DataTable({
             "pageLength": 10,
             "ordering": true,

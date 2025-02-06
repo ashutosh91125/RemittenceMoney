@@ -359,7 +359,7 @@
             var staffValue = $(this).val();
             table.column(2).search(staffValue ? staffValue : '').draw();
         });
-        </c:if> */
+        </c:if> */ 
         $('.dataTables_filter input').on('input', function () {
             var searchValue = $(this).val().trim();
             table.search(searchValue).draw();

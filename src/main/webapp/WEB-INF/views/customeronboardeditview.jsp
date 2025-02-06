@@ -493,7 +493,7 @@ $.ajax({
 													value="${customer.amlScanStatus}" disabled="true" />
 											</div>
 										</div>
-										<div class="col-xl-4">
+										<div class="col-xl-4"> 
 											<div class="mb-4">
 												<label class="form-label">Customer Status</label> <input
 													name="amlScanStatus" type="text"

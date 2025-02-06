@@ -96,7 +96,7 @@ $(document).ready(function () {
             type: 'GET',
             success: function (response) {
                 console.log(response);
-                if (response) {
+                if (response) { 
 					if (response.amlScanStatus !== 'Accepted' || response.customerStatus !== 'ACTIVE') {
 					           alert("Customer is not valid for transaction!");
 					           return;

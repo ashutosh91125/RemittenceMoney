@@ -675,7 +675,12 @@
 											</div>
 										</div>
 									</div> -->
-									<div class="row mt-5" id="idDetailsSection"
+									<div style="display: flex;justify-content: end;">
+									<button onclick="addIdentity()" class="avatar-text avatar-md bg-primary text-white"> <i
+                                    	class="feather-plus"></i>
+                                    </button>
+									</div>
+									<div class="row mt-2 " id="idDetailsSection"
 										style="display: none;">
 										<div class="col-12">
 											<h6>ID Details</h6>

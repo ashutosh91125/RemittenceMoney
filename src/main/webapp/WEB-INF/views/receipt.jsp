@@ -90,11 +90,11 @@
             height: 12px;
             border: 1px solid #000;
         }
-        /* Position Print Button at the Upper Right */
-        .print-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+         /* Center Print Button at the Bottom */
+        .print-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
         }
 
         /* Hide print button when printing */
@@ -107,8 +107,6 @@
 </head>
 
 <body>
-    <!-- Print Button (Upper Right) -->
-        <button class="btn btn-primary print-button" onclick="window.print()">Print Receipt</button>
 
     <div class="container mt-5">
         <div class="row">
@@ -287,6 +285,10 @@
                     </a>
                 </div>
             </div>
+        </div>
+        <!-- Print Button (Centered at Bottom) -->
+        <div class="print-button-container">
+            <button class="btn btn-primary" onclick="window.print()">Print Receipt</button>
         </div>
 </body>
 

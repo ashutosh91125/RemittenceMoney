@@ -338,25 +338,55 @@ public class CustomerService {
 
 			return responseBody;
 		} catch (HttpClientErrorException e) {
-				loger.error("Error occurred: " + e.getMessage());
+			loger.error("Error occurred: " + e.getMessage());
 
-				// Extract response body from the exception
-				String responseBody = e.getResponseBodyAsString();
+			// Extract response body from the exception
+			String responseBody = e.getResponseBodyAsString();
 
-				try {
-					ObjectMapper objectMapper = new ObjectMapper();
-					Map<String, Object> errorResponse = objectMapper.readValue(responseBody, Map.class);
-					return errorResponse; // Return error response directly
-				} catch (JsonProcessingException jsonEx) {
-					loger.error("Error parsing error response: " + jsonEx.getMessage());
+			try {
+				ObjectMapper objectMapper = new ObjectMapper();
+				Map<String, Object> errorResponse = objectMapper.readValue(responseBody, Map.class);
+
+				// Check if status code is 406 and error_code is 45013
+				if (e.getStatusCode() == HttpStatus.NOT_ACCEPTABLE && errorResponse.containsKey("error_code")) {
+					int errorCode = (int) errorResponse.get("error_code");
+
+					if (errorCode == 45013) {
+						String message = (String) errorResponse.get("message");
+						String ecrn = extractCustomerId(message); // Extract the customer ID
+
+						customer.setEcrn(ecrn);
+						customer.setAmlScanStatus("Under Investigation");
+						customer.setCustomerStatus("ACTIVE");
+
+						customerRepository.save(customer);
+						loger.info("Customer saved with status 'ACTIVE' and AML status 'Under Investigation': " + errorResponse);
+					}
 				}
 
-				// If JSON parsing fails, return a generic error response
-				Map<String, Object> genericError = new HashMap<>();
-				genericError.put("status", "failed");
-				genericError.put("message", "An unexpected error occurred.");
-				return genericError;
+				return errorResponse;
+			} catch (JsonProcessingException jsonEx) {
+				loger.error("Error parsing error response: " + jsonEx.getMessage());
+			}
+
+			// If JSON parsing fails, return a generic error response
+			Map<String, Object> genericError = new HashMap<>();
+			genericError.put("status", "failed");
+			genericError.put("message", "An unexpected error occurred.");
+			return genericError;
 		}
+	}
+
+	private String extractCustomerId(String message) {
+		if (message != null) {
+			String[] words = message.split(" ");
+			for (String word : words) {
+				if (word.matches("\\d+")) { // Check if word is a number
+					return word;
+				}
+			}
+		}
+		return null;
 	}
 
 	@Transactional

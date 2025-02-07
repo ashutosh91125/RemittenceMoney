@@ -150,27 +150,26 @@ document.addEventListener('DOMContentLoaded', function () {
 <body>
 
 	<jsp:include page="header.jsp"></jsp:include>
-
 	<div class="nxl-container" style="background: aliceblue;">
-		<%--<div class="page-header">
+		<div class="page-header">
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
+					<div
 						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<a href="javascript:void(0);"
+						<!-- <a href="javascript:void(0);"
 							class="btn btn-primary successAlertMessage"> <i
 							class="feather-user-plus me-2"></i> <span>Add Admin</span>
-						</a>
+						</a> -->
+						<a onclick="goBack()">
+                                                         <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
+                                                     </a>
 					</div>
 				</div>
 			</div>
 		</div>
-		--%>
 		<div class="nxl-content p-3">
 			<div class="main-content">
 				<div class="card border-top-0">
-					<div class="card-header p-0">
-						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
-					</div>
 					<form action="/signup" method="post" enctype="multipart/form-data"
 						onsubmit="return validation(this)">
 						<div class="card-body lead-status">

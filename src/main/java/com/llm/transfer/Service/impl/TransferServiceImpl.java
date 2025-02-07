@@ -109,6 +109,7 @@ public class TransferServiceImpl implements TransferService {
 			beneficiaryDetails.setBeneficiaryDob(transfer.getBeneficiaryDob());
 			beneficiaryDetails.setBeneficiaryIdType(transfer.getBeneficiaryIdType());
 			beneficiaryDetails.setBeneficiaryIdNo(transfer.getBeneficiaryIdNo());
+			beneficiaryDetails.setStatus(true);
 
 			beneficiaryRepository.save(beneficiaryDetails);
 		}

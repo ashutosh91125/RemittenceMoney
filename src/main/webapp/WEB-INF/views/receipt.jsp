@@ -106,12 +106,12 @@
 
                 <table class="mt-4">
                     <tr>
-                        <td colspan="4"><b> YO Pin </b> <b> : ${transactionRefNumber}</b> </td>
+                        <td colspan="4"><b> YO Pin </b> <b> : ${receiptDetails.transactionRefNumber}</b> </td>
                     </tr>
                     <tr>
-                        <td colspan="2">Date <b>:</b> ${date}</td>
+                        <td colspan="2">Date <b>:</b> ${receiptDetails.date}</td>
                         <td><strong>Lulu Now-Account Credit</strong></td>
-                        <td>${transactionRefNumber}</td>
+                        <td>${receiptDetails.transactionRefNumber}</td>
                     </tr>
                     <tr class="beneficiary py-5">
                         <td colspan="2" class="pt-3"> <strong>Customer Details</strong></td>
@@ -122,49 +122,49 @@
                     </tr>
                     <tr>
                         <td>Customer No</td>
-                        <td> <b>:</b>   <strong>${customerNo}</strong></td>
+                        <td> <b>:</b>   <strong>${receiptDetails.customerNo}</strong></td>
                         <td>PayoutAmount</td>
-                        <td> <b>:</b>   <strong>${payoutAmount} ${payOutCurrency}</strong></td>
+                        <td> <b>:</b>   <strong>${receiptDetails.payoutAmount} ${receiptDetails.payOutCurrency}</strong></td>
                     </tr>
                     <tr>
                         <td>Customer Name</td>
-                        <td> <b>:</b>   ${customerName}</td>
+                        <td> <b>:</b>   ${receiptDetails.customerName}</td>
                         <td>Rate</td>
-                        <td> <b>:</b>   ${rate}</td>
+                        <td> <b>:</b>   ${receiptDetails.rate}</td>
                     </tr>
                     <tr>
                         <td>Mobile/Phone</td>
-                        <td> <b>:</b>   ${customerPhone}</td>
+                        <td> <b>:</b>   ${receiptDetails.customerPhone}</td>
                         <td>PayinAmount</td>
-                        <td><b>:</b>   ${payInAmount}</td>
+                        <td><b>:</b>   ${receiptDetails.payInAmount}</td>
                     </tr>
                     <tr>
                         <td>Cust. ID/ExpiryDate</td>
-                        <td> <b>:</b>   ${customerIdType} / ${customerIdNo} / ${idDateOfExpiry}</td>
+                        <td> <b>:</b>   ${receiptDetails.customerIdType} / ${receiptDetails.customerIdNo} / ${receiptDetails.idDateOfExpiry}</td>
                         <td>Commission</td>
-                        <td> <b>:</b> ${commission} ${payInCurrency}</td>
+                        <td> <b>:</b> ${receiptDetails.commission} ${receiptDetails.payInCurrency}</td>
                     </tr>
                     <tr>
                         <td>Nationality/ID Issue At</td>
-                        <td> <b>:</b>   ${nationality} / ${issuedAt}</td>
+                        <td> <b>:</b>   ${receiptDetails.nationality} / ${receiptDetails.issuedAt}</td>
                         <td>Tax</td>
-                        <td> <b>:</b>   ${tax} ${payInCurrency}</td>
+                        <td> <b>:</b>   ${receiptDetails.tax} ${receiptDetails.payInCurrency}</td>
                     </tr>
                     <tr>
                         <td>Source of Funds/Purpose</td>
-                        <td> <b>:</b>   ${sourceOfFund} / ${purposeOfTxn}</td>
+                        <td> <b>:</b>   ${receiptDetails.sourceOfFund} / ${receiptDetails.purposeOfTxn}</td>
                         <td>Other Charges</td>
-                        <td> <b>:</b>   0.00 ${payInCurrency}</td>
+                        <td> <b>:</b>   0.00 ${receiptDetails.payInCurrency}</td>
                     </tr>
                     <tr>
                         <td>Cust Address/City</td>
-                        <td> <b>:</b>  ${customerCity}</td>
+                        <td> <b>:</b>  ${receiptDetails.customerCity}</td>
                         <td>Total Paying Amount</td>
-                        <td> <b>:</b>   ${totalPayInAmount} ${payInCurrency}</td>
+                        <td> <b>:</b>   ${receiptDetails.totalPayInAmount} ${receiptDetails.payInCurrency}</td>
                     </tr>
                     <tr>
                         <td>Employer Name</td>
-                        <td> <b>:</b>   ${employerName}</td>
+                        <td> <b>:</b>   ${receiptDetails.employerName}</td>
                         <td>Card</td>
                         <td> <b>:</b>   0.00 </td>
                     </tr>
@@ -176,7 +176,7 @@
                     </tr>
                     <tr>
                         <td>Profession/Occupation</td>
-                        <td> <b>:</b>   ${occupation}</td>
+                        <td> <b>:</b>   ${receiptDetails.occupation}</td>
                         <td>CQ/Bank </td>
                         <td> <b>:</b>   0.00 </td>
                     </tr>
@@ -194,38 +194,38 @@
                     </tr>
                     <tr>
                         <td>Name</td>
-                        <td> <b>:</b>   ${beneficiaryName}</td>
+                        <td> <b>:</b>   ${receiptDetails.beneficiaryName}</td>
                         <td>Mobile</td>
-                        <td> <b>:</b>   ${beneficiaryPhone}</td>
+                        <td> <b>:</b>   ${receiptDetails.beneficiaryPhone}</td>
                     </tr>
                     <tr>
                         <td>Relation</td>
-                        <td> <b>:</b>   ${beneficiaryRelation}</td>
+                        <td> <b>:</b>   ${receiptDetails.beneficiaryRelation}</td>
                         <td>Nationality</td>
-                        <td> <b>:</b>   ${beneficiaryNationality}</td>
+                        <td> <b>:</b>   ${receiptDetails.beneficiaryNationality}</td>
                     </tr>
                     <tr>
                         <td>Bene. Bank</td>
-                        <td> <b>:</b>   ${benBank}</td>
+                        <td> <b>:</b>   ${receiptDetails.benBank}</td>
                         <td>Bene. IBAN</td>
-                        <td> <b>:</b>   ${iban}</td>
+                        <td> <b>:</b>   ${receiptDetails.iban}</td>
                     </tr>
                     <tr>
                         <td>Account No</td>
-                        <td> <b>:</b>   ${accountNo}</td>
+                        <td> <b>:</b>   ${receiptDetails.accountNo}</td>
                         <td>Remarks</td>
-                        <td> <b>:</b> ${remarks}</td>
+                        <td> <b>:</b> ${receiptDetails.remarks}</td>
                     </tr>
                     <tr>
                         <td colspan="4" class="py-3"></td>
                     </tr>
                     <tr>
                         <td>Bene Branch</td>
-                        <td colspan="3"> <b>:</b>  ${benBranch}</td>
+                        <td colspan="3"> <b>:</b>  ${receiptDetails.benBranch}</td>
                     </tr>
                     <tr>
                         <td>Benef Address</td>
-                        <td colspan="3"> <b>:</b>   ${beneficiaryAddress}</td>
+                        <td colspan="3"> <b>:</b>   ${receiptDetails.beneficiaryAddress}</td>
                     </tr>
                     <tr>
                         <td colspan="4">
@@ -245,39 +245,33 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row mb-5 d-flex justify-content-between"> <!-- Use d-flex and justify-content-between to space columns -->
-            <div class="col-5"> <!-- Set the width of the first column to 5/12 of the row -->
-                <b>Created By</b>
-                <p>Dayang Sarminee Abdul Wahap</p>
-            </div>
-            <div class="col-5 text-right"> <!-- Set the width of the second column to 5/12 of the row and align text to the right -->
-                <b>Cashier</b>
-                <p>Dayang Sarminee Abdul Wahap</p>
-            </div>
-        </div>
-
-        <div class="row custom-gap d-flex justify-content-between"> <!-- Use d-flex and justify-content-between to space columns -->
-            <div class="col text-left">
-                <b>Customer's Signature</b>
-            </div>
-        </div>
-        <div class="row d-flex justify-content-between">
-            <div class="col text-right">
-                <b>Agent&apos;s Signature &amp; Seal</b>
-            </div>
-        </div>
-        <div class="row mb-4"> <!-- Use d-flex and justify-content-between to space columns -->
-
-        </div>
-        <div class="row mb-5 d-flex justify-content-center">
-            <div class="col text-center">
-                <a href="https://imgbb.com/">
-                    <img src="https://i.ibb.co/Tqc6K5Xm/image.png" alt="image" class="img-fluid" />
-                </a>
+    <div class="container mt-5">
+            <div class="row">
+                <div class="col-10">
+                    <div class="row">
+                        <div class="col">
+                            <b>Customer's Signature</b>
+                        </div>
+                        <div class="col text-center">
+                            <b>Created By</b>
+                            <p>${receiptDetails.createdBy}</p>
+                        </div>
+                        <div class="col text-center">
+                            <b >Cashier</b>
+                            <p>${receiptDetails.createdBy}</p>
+                        </div>
+                        <div class="col">
+                            <b>Agent's Signature & Seal</b>
+                        </div>
+                    </div>
+                </div>
+                <div class="col text-center">
+                    <a href="https://imgbb.com/">
+                        <img src="https://i.ibb.co/Tqc6K5Xm/image.png" alt="image" class="img-fluid" />
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
 </body>
 
 </html>

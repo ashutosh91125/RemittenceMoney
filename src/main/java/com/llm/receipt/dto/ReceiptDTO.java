@@ -45,5 +45,6 @@ public class ReceiptDTO {
     private String accountNo;
     private String remarks;
     private String beneficiaryAddress;
+    private String createdBy;
 }
 

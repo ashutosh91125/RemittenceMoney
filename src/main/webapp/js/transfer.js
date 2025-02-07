@@ -1081,7 +1081,7 @@ function getQuote() {
 
                         if (confirmResponse.status === 'success') {
                             alert("Transaction confirmed successfully with Reference Number: " + transactionRefNumber);
-                            window.location.href = "transfer-list";
+                            window.location.href = "/receipt/" + transactionRefNumber ;
                         }
                     },
                     error: function(jqXHR) {

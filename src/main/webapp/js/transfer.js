@@ -370,9 +370,15 @@ $(document).ready(function () {
             url: '/api/v1/beneficiaries/' + beneficiaryId,
             type: 'GET',
             success: function (response) {
+
             	console.log(response);
-                if (response && response.data) { 
+                if (response && response.data) {
                     var beneficiary = response.data;
+                    if(!beneficiary.status){
+                    alert("Beneficiary Not Active!");
+                    return;
+                    }
+                    console.log(beneficiary);
                     $('#beneficiaryDeliveryOption').val(beneficiary.beneficiaryDeliveryOption?.trim() || '').change();
                     $('#payOutCountry').val(beneficiary.payOutCountry?.trim() || '').change();
                     $('#currencies').val(beneficiary.currencies?.trim() || '').change();

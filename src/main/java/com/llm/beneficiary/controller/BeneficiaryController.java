@@ -29,7 +29,6 @@ public class BeneficiaryController {
 	@PostMapping
 	public ResponseEntity<ApiResponse> createBeneficiary(@RequestBody BeneficiaryDetails beneficiaryDetails) {
 		try {
-			beneficiaryDetails.setStatus(true);
 			BeneficiaryDetails savedBeneficiary = beneficiaryService.saveBeneficiary(beneficiaryDetails);
 			return ResponseEntity.ok(new ApiResponse(true, "Beneficiary created successfully", savedBeneficiary));
 		} catch (Exception e) {

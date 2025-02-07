@@ -70,52 +70,60 @@
     <main class="nxl-container">
       <div class="nxl-content">
         <div class="main-content" style="background: aliceblue;">
-          <c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
-          <div class="row" style="display: flex; justify-content: space-between;">
-            <!-- First column: Admin -->
-            <div class="col-half" style="flex: 1; padding: 10px;">
-              <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #E0F7FA;">
-                <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${subAdminCount}</span></div>
-                  <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Admin</p>
-                </div>
-              </div>
-            </div>
 
-            <!-- Second column: Agent -->
-            <div class="col-half" style="flex: 1; padding: 10px;">
-              <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #FFECB3;">
-                <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${agentCount}</span></div>
-                  <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Agent</p>
+          <!-- First Row -->
+          <div class="row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 10px;">
+            <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
+              <!-- First column: Admin -->
+              <div class="col-half">
+                <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #E0F7FA;">
+                  <div class="card-body rounded-3 text-center">
+                    <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${subAdminCount}</span></div>
+                    <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Admin</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </c:if>
 
-            <!-- Third column: Branch -->
-            <div class="col-half" style="flex: 1; padding: 10px;">
-              <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #C8E6C9;">
-                <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${branchCount}</span></div>
-                  <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Branch</p>
+            <c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
+              <!-- Second column: Agent -->
+              <div class="col-half">
+                <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #FFECB3;">
+                  <div class="card-body rounded-3 text-center">
+                    <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${agentCount}</span></div>
+                    <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Agent</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </c:if>
 
-            <!-- Fourth column: Customer -->
-            <div class="col-half" style="flex: 1; padding: 10px;">
-              <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #FFCDD2;">
-                <div class="card-body rounded-3 text-center">
-                  <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${customerCount}</span></div>
-                  <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Customer</p>
+            <c:if test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
+              <!-- Third column: Branch -->
+              <div class="col-half">
+                <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #C8E6C9;">
+                  <div class="card-body rounded-3 text-center">
+                    <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${branchCount}</span></div>
+                    <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Branch</p>
+                  </div>
                 </div>
               </div>
-            </div>
+
+              <!-- Fourth column: Customer -->
+              <div class="col-half">
+                <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #FFCDD2;">
+                  <div class="card-body rounded-3 text-center">
+                    <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${customerCount}</span></div>
+                    <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Customer</p>
+                  </div>
+                </div>
+              </div>
+            </c:if>
           </div>
-          </c:if>
+
+          <!-- Second Row (Staff) -->
           <c:if test="${pageContext.request.isUserInRole('STAFF') or pageContext.request.isUserInRole('STAFF_TR') or pageContext.request.isUserInRole('STAFF_HO')}">
-          <div class="row" style="display: flex; justify-content: space-between;">
-              <div class="col-half" style="flex: 1; padding: 10px;">
+            <div class="row" style="display: grid; grid-template-columns: repeat(1, 1fr); gap: 20px; padding: 10px;">
+              <div class="col-half">
                 <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #E0F7FA;">
                   <div class="card-body rounded-3 text-center">
                     <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>${transferCount}</span></div>
@@ -123,7 +131,7 @@
                   </div>
                 </div>
               </div>
-          </div>
+            </div>
           </c:if>
         </div>
       </div>

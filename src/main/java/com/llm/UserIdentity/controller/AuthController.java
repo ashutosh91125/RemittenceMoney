@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
 import com.llm.branch.model.BranchDetails;
 import com.llm.staff.model.StaffDetails;
 import com.llm.staff.repository.StaffDetailsRepository;
@@ -58,6 +60,9 @@ public class AuthController {
 
     @Autowired
     private TransferRepository transferRepository;
+
+    @Autowired
+    private AgentRepositories agentRepositories;
 
     @Autowired
     private final AuthenticationManager authenticationManager;
@@ -179,6 +184,22 @@ public class AuthController {
             model.addAttribute("transferCount", transferRepository.countByStaffId(staffDetails.get().getId()));
             return "superadmindasbord";
         }
+        if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_SUB_ADMIN"))) {
+            String country = userRepository.findByUsername(userDetails.getUsername()).get().getCountry();
+            model.addAttribute("agentCount", userRepository.countByRoleAndCountry(Role.AGENT, country));
+            model.addAttribute("customerCount", customerRepository.countByNationality(country));
+            model.addAttribute("branchCount", branchDetailsRepository.countByCounty(country));
+            return "superadmindasbord";
+        }
+
+        if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_AGENT"))) {
+
+            Agent agent = agentRepositories.findByUsername(userDetails.getUsername());
+            model.addAttribute("customerCount", customerRepository.countByNationality(agent.getCountries()));
+            model.addAttribute("branchCount", branchDetailsRepository.countByBranchLocationId(agent.getBranchLocationId()));
+            return "superadmindasbord";
+        }
+
         model.addAttribute("subAdminCount", customUserDetailsService.getUserCountByRole(Role.SUB_ADMIN));
         model.addAttribute("agentCount", customUserDetailsService.getUserCountByRole(Role.AGENT));
         model.addAttribute("customerCount", customerRepository.count());

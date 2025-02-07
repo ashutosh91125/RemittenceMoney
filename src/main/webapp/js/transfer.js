@@ -1694,7 +1694,7 @@ function showSelectBeneficiaryDiv() {
 		  function openPopupForIdDetailsUpdate(idNumber, customerId) {
 		  		    const popupIdDetails = document.getElementById('popupIdDetails');
 		  		    const container = document.querySelector('.nxl-container');
-
+					const today = new Date().toISOString().split('T')[0];
 		  		    $.ajax({
 		  		      url: '/caas/api/v2/customer/id-detail/' + customerId,
 		  		      type: 'GET',
@@ -1743,7 +1743,7 @@ function showSelectBeneficiaryDiv() {
 		  		                  </div>
 		  		                  <div class="col-12 col-md-4">
 		  		                    <label class="form-label">Date of Expiry</label>
-		  		                    <input type="date" name="dateOfExpiry" class="form-control" placeholder="Date of Expiry" value="${idDetail.dateOfExpiry || ''}" >
+		  		                    <input type="date" name="dateOfExpiry" id="dateOfExpiry" class="form-control" placeholder="Date of Expiry" min="${today}" value="${idDetail.dateOfExpiry || ''}" >
 		  		                  </div>
 								  <div class="col-12 col-md-4">
 								  <label class="form-label">Id Status<span class="text-danger">*</span></label>								  

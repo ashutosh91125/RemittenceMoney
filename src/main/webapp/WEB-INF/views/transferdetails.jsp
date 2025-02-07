@@ -226,68 +226,71 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
-document.addEventListener("DOMContentLoaded", function() {
-    const accountTypeInput = document.getElementById("beneficiaryAccountType");
-    if (accountTypeInput) {
-        const accountTypeValue = accountTypeInput.value;
-        if (accountTypeValue === "1") {
-            accountTypeInput.value = "Saving";
-        } else if (accountTypeValue === "2") {
-            accountTypeInput.value = "Current";
-        }
-    }
-});
-    function viewReceipt() {
-        var transactionRefNumber = $('#transactionRefNumber').val();
-        var url = '/api/receipt/' + transactionRefNumber;
+	document.addEventListener("DOMContentLoaded", function() {
+		const accountTypeInput = document
+				.getElementById("beneficiaryAccountType");
+		if (accountTypeInput) {
+			const accountTypeValue = accountTypeInput.value;
+			if (accountTypeValue === "1") {
+				accountTypeInput.value = "Saving";
+			} else if (accountTypeValue === "2") {
+				accountTypeInput.value = "Current";
+			}
+		}
+	});
+	function viewReceipt() {
+		var transactionRefNumber = $('#transactionRefNumber').val();
+		var url = '/api/receipt/' + transactionRefNumber;
 
-        $('#loader').show();
-        $('#viewReceiptButton').prop('disabled', true);
+		$('#loader').show();
+		$('#viewReceiptButton').prop('disabled', true);
 
-        $.ajax({
-            url: url,
-            type: 'GET',
-            success: function (response) {
-                // Assuming the response contains the receiptBase64Data directly
-                if (response && response.receiptBase64Data) {
-                    // Decode the Base64 data and create a Blob
-                    const base64Data = response.receiptBase64Data;
-                    const binaryString = atob(base64Data);  // Decoding the Base64 string
-                    const len = binaryString.length;
-                    const bytes = new Uint8Array(len);
+		$.ajax({
+			url : url,
+			type : 'GET',
+			success : function(response) {
+				// Assuming the response contains the receiptBase64Data directly
+				if (response && response.receiptBase64Data) {
+					// Decode the Base64 data and create a Blob
+					const base64Data = response.receiptBase64Data;
+					const binaryString = atob(base64Data); // Decoding the Base64 string
+					const len = binaryString.length;
+					const bytes = new Uint8Array(len);
 
-                    // Convert each character code into a byte
-                    for (let i = 0; i < len; i++) {
-                        bytes[i] = binaryString.charCodeAt(i);
-                    }
+					// Convert each character code into a byte
+					for (let i = 0; i < len; i++) {
+						bytes[i] = binaryString.charCodeAt(i);
+					}
 
-                    // Create a Blob object from the decoded byte array
-                    const blob = new Blob([bytes], { type: 'application/pdf' });
+					// Create a Blob object from the decoded byte array
+					const blob = new Blob([ bytes ], {
+						type : 'application/pdf'
+					});
 
-                    // Create a URL for the Blob and open in a new tab
-                    const blobUrl = URL.createObjectURL(blob);
+					// Create a URL for the Blob and open in a new tab
+					const blobUrl = URL.createObjectURL(blob);
 
-                    // Hide loader and enable the button after the PDF opens
-                    $('#loader').hide();
-                    $('#viewReceiptButton').prop('disabled', false);
+					// Hide loader and enable the button after the PDF opens
+					$('#loader').hide();
+					$('#viewReceiptButton').prop('disabled', false);
 
-                    // Open the Blob URL (PDF) in a new tab
-                    window.open(blobUrl, '_blank');
-                } else {
-                    // Handle error: No receipt data found
-                    alert('Failed to fetch receipt: Receipt data is missing.');
-                    $('#loader').hide();
-                    $('#viewReceiptButton').prop('disabled', false);
-                }
-            },
-            error: function (xhr, status, error) {
-                // Handle any unexpected AJAX error
-                alert('Error occurred: ' + error);
-                $('#loader').hide();
-                $('#viewReceiptButton').prop('disabled', false);
-            }
-        });
-    }
+					// Open the Blob URL (PDF) in a new tab
+					window.open(blobUrl, '_blank');
+				} else {
+					// Handle error: No receipt data found
+					alert('Failed to fetch receipt: Receipt data is missing.');
+					$('#loader').hide();
+					$('#viewReceiptButton').prop('disabled', false);
+				}
+			},
+			error : function(xhr, status, error) {
+				// Handle any unexpected AJAX error
+				alert('Error occurred: ' + error);
+				$('#loader').hide();
+				$('#viewReceiptButton').prop('disabled', false);
+			}
+		});
+	}
 </script>
 </head>
 
@@ -315,13 +318,16 @@ document.addEventListener("DOMContentLoaded", function() {
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						<div
+					<!--	<div
 							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 							<a href="javascript:void(0);"
-								class="btn btn-primary successAlertMessage"> <!-- <i class="feather-user-plus me-2"></i> -->
+								class="btn btn-primary successAlertMessage">  <i class="feather-user-plus me-2"></i>
 								<span>Transfer</span>
 							</a>
-						</div>
+						</div> -->
+						<a onclick="goBack()">
+                            <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
+                         </a>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -762,19 +768,13 @@ document.addEventListener("DOMContentLoaded", function() {
 									<div class="card-body pass-security">
 										<div class="row">
 											<div class="col-xl-4">
-												<label class="form-label">PayIn Currency<span
-													class="text-danger"></span></label> <input type="text"
-													class="form-control" id="payInCurrency"
-													name="payInCurrency" placeholder="PayIn Currency"
-													value="${payInCurrency}" readonly>
-											</div>
-											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
 													class="text-danger"></span></label> <input type="text"
 													class="form-control" id="sourceOfFund" name="sourceOfFund"
 													placeholder="Source of Fund"
 													value="${transferDetails.sourceOfFund}" readonly>
 											</div>
+
 											<div class="col-xl-4">
 												<label class="form-label">Transaction Purpose<span
 													class="text-danger"></span></label> <input type="text"
@@ -782,26 +782,12 @@ document.addEventListener("DOMContentLoaded", function() {
 													name="transactionPurpose" placeholder="Transaction Purpose"
 													value="${transferDetails.transactionPurpose}" readonly>
 											</div>
-										</div>
-										<div class="row">
-											<div class="col-xl-4">
-												<label class="form-label">Value Date<span
-													class="text-danger"></span></label> <input type="date"
-													class="form-control" id="valueDate" name="valueDate"
-													value="${transferDetails.valueDate}" readonly>
-											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payment Mode<span
 													class="text-danger"></span></label> <input type="text"
 													class="form-control" id="paymentMode" name="paymentMode"
 													placeholder="Payment Mode"
 													value="${transferDetails.paymentMode}" readonly>
-											</div>
-											<div class="col-xl-4">
-												<label class="form-label">Remarks<span
-													class="text-danger"></span></label> <input type="text"
-													class="form-control" placeholder="Remarks" id="remarks"
-													name="remarks" value="${transferDetails.remarks}" readonly>
 											</div>
 										</div>
 										<div class="row">
@@ -812,7 +798,6 @@ document.addEventListener("DOMContentLoaded", function() {
 													id="payInAmount" name="payInAmount" min="5" max="50000"
 													value="${transferDetails.payInAmount}" required readonly>
 											</div>
-
 											<div class="col-xl-4">
 												<label class="form-label">Rate<span
 													class="text-danger"></span></label> <input type="text"
@@ -828,7 +813,6 @@ document.addEventListener("DOMContentLoaded", function() {
 													value="${transferDetails.payoutAmount}" readonly>
 											</div>
 										</div>
-
 										<div class="row">
 											<div class="col-xl-2">
 												<label class="form-label">Commission</label> <input
@@ -850,37 +834,48 @@ document.addEventListener("DOMContentLoaded", function() {
 													style="color: green;" name="totalPayInAmount"
 													value="${transferDetails.totalPayInAmount}" readonly>
 											</div>
-
 											<div class="col-xl-4">
-                                                <label class="form-label">Transaction Number</label> <input
-                                                    type="text" class="form-control"
-                                                    placeholder="Transaction Number" id="transactionRefNumber"
-                                                    style="color: green;" name="transactionRefNumber"
-                                                    value="${transferDetails.transactionReferenceNumber}" readonly>
-                                            </div>
+												<label class="form-label">Remarks<span
+													class="text-danger"></span></label> <input type="text"
+													class="form-control" placeholder="Remarks" id="remarks"
+													name="remarks" value="${transferDetails.remarks}" readonly>
+											</div>
 										</div>
 										<div class="row">
-                                            <div class="col-xl-4">
-                                                <label class="form-label">Payment Status<span
-                                                    class="text-danger"></span></label> <input type="text"
-                                                    class="form-control" id="paymentStatus" name="paymentStatus"
-                                                    placeholder="Payment Status"
-                                                    value="${transferDetails.paymentStatus}" readonly>
-                                            </div>
-                                             <div class="col-xl-4">
-                                                <label class="form-label">Transaction State<span
-                                                     class="text-danger"></span></label> <input type="text"
-                                                     class="form-control" id="transactionState" name="transactionState"
-                                                     placeholder="Transaction State"
-                                                     value="${transferDetails.transactionState}" readonly>
-                                             </div>
-                                            <div class="col-xl-4">
-                                                <label class="form-label">Transaction SubState<span
-                                                     class="text-danger"></span></label> <input type="text"
-                                                     class="form-control" id="transactionSubState" name="transactionSubState"
-                                                     placeholder="Transaction SubState"
-                                                     value="${transferDetails.transactionSubState}" readonly>
-                                           </div>
+											<div class="col-xl-4">
+												<label class="form-label">Transaction Number</label> <input
+													type="text" class="form-control"
+													placeholder="Transaction Number" id="transactionRefNumber"
+													style="color: green;" name="transactionRefNumber"
+													value="${transferDetails.transactionReferenceNumber}"
+													readonly>
+											</div>
+
+											<div class="col-xl-4">
+												<label class="form-label">Payment Status<span
+													class="text-danger"></span></label> <input type="text"
+													class="form-control" id="paymentStatus"
+													name="paymentStatus" placeholder="Payment Status"
+													value="${transferDetails.paymentStatus}" readonly>
+											</div>
+											<div class="col-xl-4">
+												<label class="form-label">Transaction State<span
+													class="text-danger"></span></label> <input type="text"
+													class="form-control" id="transactionState"
+													name="transactionState" placeholder="Transaction State"
+													value="${transferDetails.transactionState}" readonly>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<label class="form-label">Transaction SubState<span
+													class="text-danger"></span></label> <input type="text"
+													class="form-control" id="transactionSubState"
+													name="transactionSubState"
+													placeholder="Transaction SubState"
+													value="${transferDetails.transactionSubState}" readonly>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
@@ -888,12 +883,13 @@ document.addEventListener("DOMContentLoaded", function() {
 					</div>
 				</div>
 				<div class="mt-5 mb-5 text-center"
-                    style="display: flex; justify-content: center">
-                    <div>
-                        <button type="button" id="viewReceiptButton" onclick="viewReceipt()"
-                            class="btn btn-warning">View Receipt</button>
-                    </div>
-                </div>
+					style="display: flex; justify-content: center">
+					<div>
+						<button type="button" id="viewReceiptButton"
+							onclick="viewReceipt()" class="btn btn-warning">View
+							Receipt</button>
+					</div>
+				</div>
 			</form>
 		</div>
 		<jsp:include page="footer.jsp"></jsp:include>

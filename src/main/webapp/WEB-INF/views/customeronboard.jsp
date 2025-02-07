@@ -158,7 +158,7 @@
 	/* font-size: 12px; /* Adjust font size */
 /* 	 white-space: nowrap; /* Prevent wrapping */
 /* } */
- 
+
 .hidden {
 	display: none;
 }
@@ -201,9 +201,9 @@
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
                             </a>-->
-                            <button onclick="goBack()"
-                                class="btn btn-primary"><i class="fa fa-arrow-left"></i><span></span>
-                            </button>
+                            <a onclick="goBack()">
+                                <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
+                            </a>
                         </div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">

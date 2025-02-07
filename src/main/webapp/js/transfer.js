@@ -250,8 +250,13 @@ $(document).ready(function () {
 		                            <td>${idDetail.dateOfExpiry || ''}</td>
 		                             <td>${issuedCountry}</td>
 									<td>${activeStatusDisplay}</td>
-		                            <td class="text-end" onclick="openPopup('${idDetail.idNumber}', ${idDetail.activeStatus})">
-									<i class="bi bi-pencil-square"></i>
+		                            <td class="text-end" >
+									<i class="feather feather-eye me-2" class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+										onmouseout="this.style.color='#303030'" onclick="openPopupForIdDetails('${idDetail.idNumber}', '${idDetail.customerId}')"></i>
+									<i class="feather feather-edit-3 me-2" 	class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+										onmouseout="this.style.color='#303030'" onclick="openPopupForIdDetailsUpdate('${idDetail.idNumber}', '${idDetail.customerId}')"></i>
+								 <!--	<i class="bi bi-check-circle text-success" 	class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
+									onmouseout="this.style.color='#303030'" onclick="openPopup('${idDetail.idNumber}', ${idDetail.activeStatus})"></i> -->
 		                            </td>
 		                        </tr>`;
 		                        idDetailsTable.append(row);
@@ -1686,6 +1691,186 @@ function showSelectBeneficiaryDiv() {
 		      }
 		    });
 		  }
+		  function openPopupForIdDetailsUpdate(idNumber, customerId) {
+		  		    const popupIdDetails = document.getElementById('popupIdDetails');
+		  		    const container = document.querySelector('.nxl-container');
+
+		  		    $.ajax({
+		  		      url: '/caas/api/v2/customer/id-detail/' + customerId,
+		  		      type: 'GET',
+		  		      success: function (response) {
+		  		        console.log("ID details fetched by customerId", response);
+
+		  		        if (Array.isArray(response) && response.length > 0) {
+		  		          $('#idDetailsContainer').empty(); 
+		  		          $.each(response, function(index, idDetail) {
+		  		            let idDetailHtml = `
+		  		              <div class="id-detail-item mb-4">
+		  		                <div class="row">
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">ID Type</label>
+		  		                    <input type="text" name="idType" class="form-control" placeholder="Id Type" value="${idDetail.idType || ''}" readonly id="idTypes-${index}">
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">ID No.</label>
+		  		                    <input type="text" name="idNumber" class="form-control" placeholder="ID No." value="${idDetail.idNumber || ''}" readonly>
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Name as per ID</label>
+		  		                    <input type="text" name="nameAsPerId" class="form-control" placeholder="Name as per ID" value="${idDetail.nameAsPerId || ''}" readonly>
+		  		                  </div>
+		  		                </div>
+
+		  		                <div class="row mt-2">
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Issued Country</label>
+		  		                    <input type="text" name="issuedCountry" class="form-control" placeholder="Issued Country" value="${idDetail.issuedCountry || ''}" readonly id="issuedCountrys-${index}">
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Issued at</label>
+		  		                    <input type="text" name="issuedAt" class="form-control" placeholder="Issued at" value="${idDetail.issuedAt || ''}" readonly id="issuedAts-${index}">
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Issued By</label>
+		  		                    <input type="text" name="issuedBy" class="form-control" placeholder="Issued By" value="${idDetail.issuedBy || ''}" readonly>
+		  		                  </div>
+		  		                </div>
+
+		  		                <div class="row mt-2">
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Issued on</label>
+		  		                    <input type="text" name="issuedOn" class="form-control" placeholder="Date of Issue" value="${idDetail.issuedOn || ''}" readonly>
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Date of Expiry</label>
+		  		                    <input type="date" name="dateOfExpiry" class="form-control" placeholder="Date of Expiry" value="${idDetail.dateOfExpiry || ''}" >
+		  		                  </div>
+								  <div class="col-12 col-md-4">
+								  <label class="form-label">Id Status<span class="text-danger">*</span></label>								  
+								  <select data-select2-selector="icon" class="form-control p-2" name="activeStatus" id="activeStatus-${index}">
+								   <option value="false" ${idDetail.activeStatus === false ? 'selected' : ''}>Inactive</option>
+								   <option value="true" ${idDetail.activeStatus === true ? 'selected' : ''}>Active</option>
+								 </select>
+								 </div>
+		  		                </div>
+
+		  		                <div class="row mt-2">
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">ID Front</label>
+		  		                    <img src="data:${idDetail.frontContentType};base64,${idDetail.frontBase64Data}" alt="ID Front" class="img-thumbnail id-picture" style="width: 300px; height: 180px;">
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">ID Back</label>
+		  		                    <img src="data:${idDetail.backContentType};base64,${idDetail.backBase64Data}" alt="ID Back" class="img-thumbnail id-picture" style="width: 300px; height: 180px;">
+		  		                  </div>
+		  		                </div>
+
+		  		                ${idDetail.visaDetails ? `
+		  		                <div class="row mt-4" id="visaDetails-${index}">
+		  		                  <h5 class="fw-bold mb-0 me-4">
+		  		                    <span class="d-block mb-4">Visa Details</span>
+		  		                  </h5>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Visa Number</label>
+		  		                    <input type="text" name="visaNumber" class="form-control" placeholder="Visa Number" value="${idDetail.visaDetails.visaNumber || ''}" readonly>
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Visa Expiry Date</label>
+		  		                    <input type="text" name="visaExpiryDate" class="form-control" placeholder="Visa Expiry Date" value="${idDetail.visaDetails.visaExpiryDate || ''}" readonly>
+		  		                  </div>
+		  		                  <div class="col-12 col-md-4">
+		  		                    <label class="form-label">Visa Type</label>
+		  		                    <input type="text" name="visaType" class="form-control" placeholder="Visa Type" value="${idDetail.visaDetails.visaType || ''}" readonly>
+		  		                  </div>
+		  		                </div>
+		  		                ` : ''}
+		  		              </div>`;
+		  		              
+		  		            $('#idDetailsContainer').append(idDetailHtml);
+
+		  		            
+		  		            if (idDetail.idType) {
+		  		              fetchEnumValue("idTypes", idDetail.idType, function(description) {
+		  		                $(`#idTypes-${index}`).val(description || "Unknown Type");
+		  		              });
+		  		            }
+		  		            if (idDetail.issuedCountry) {
+		  		              fetchEnumValue("country", idDetail.issuedCountry, function(description) {
+		  		                $(`#issuedCountrys-${index}`).val(description || "Unknown Country");
+		  		              });
+		  		            }
+		  		            if (idDetail.issuedAt) {
+		  		              fetchEnumValue("country", idDetail.issuedAt, function(description) {
+		  		                $(`#issuedAts-${index}`).val(description || "Unknown Country");
+		  		              });
+		  		            }
+		  		          });
+						  $('#idDetailsContainer').append(`
+						    <div class="row mt-4">
+						      <div class="col-12 text-center" style="display: flex;justify-content: center;">
+						        <button type="button" class="btn btn-primary" id="updateIdDetailsButton">Submit</button>
+						      </div>
+						    </div>
+						  `);
+						  $('#updateIdDetailsButton').on('click', function() {
+						   
+						 let updatedIdDetails = [];
+						 $('.id-detail-item').each(function () {
+							let idDetail = {
+							    idNumber: $(this).find('input[name="idNumber"]').val(),
+							    dateOfExpiry: $(this).find('input[name="dateOfExpiry"]').val(),
+								activeStatus: $(this).find('select[name="activeStatus"]').val()
+							    
+							  };
+							  updatedIdDetails.push(idDetail);
+							});
+
+							console.log("Updated ID Details:", updatedIdDetails);
+
+							
+							$.ajax({
+							  url: '/caas/api/v2/iddetail/date-of-expiry/update',
+							  type: 'PUT',
+							  contentType: 'application/json',
+							  data: JSON.stringify(updatedIdDetails),
+							  success: function (response) {
+								alert("Id  Updated Successfully!");
+								window.location.reload();
+							  },
+							  error: function (xhr, status, error) {
+							      console.error('Error updating ID details:', error);
+							      alert('Failed to update ID details. Please try again.');
+							  }
+							});
+
+							
+						  });
+		  		          popupIdDetails.style.display = 'block';
+		  		          container.classList.add('blur-background');
+
+		  		          $('.id-picture').on('click', function() {
+		  		            
+		  		            const imgElement = this;
+		  		            if (imgElement.requestFullscreen) {
+		  		              imgElement.requestFullscreen();
+		  		            } else if (imgElement.webkitRequestFullscreen) { 
+		  		              imgElement.webkitRequestFullscreen();
+		  		            } else if (imgElement.msRequestFullscreen) { 
+		  		              imgElement.msRequestFullscreen();
+		  		            } else {
+		  		              alert("Fullscreen mode is not supported by your browser.");
+		  		            }
+		  		          });
+		  		        } else {
+		  		          alert("No ID details found for this customer.");
+		  		        }
+		  		      },
+		  		      error: function (xhr, status, error) {
+		  		        console.error("Error fetching ID details:", error);
+		  		        alert("Failed to fetch ID details. Please try again.");
+		  		      }
+		  		    });
+		  		  }
 
 					function closePopup() {
 					    const container = document.querySelector('.nxl-container');

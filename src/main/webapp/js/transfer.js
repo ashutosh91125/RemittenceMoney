@@ -1871,13 +1871,21 @@ function showSelectBeneficiaryDiv() {
 		  		      }
 		  		    });
 		  		  }
+				  function addIdentity(){
+				  				const popupIdDetailsForUpdate = document.getElementById('popupIdDetailsForUpdate');
+				  				const container = document.querySelector('.nxl-container');
+				  				const today = new Date().toISOString().split('T')[0];
 
+				  				container.classList.add('blur-background');
+				  				 popupIdDetailsForUpdate.style.display = 'block';
+				  			  }
 					function closePopup() {
 					    const container = document.querySelector('.nxl-container');
 					    container.classList.remove('blur-background');
 					    $('#openPopup').hide();
 						$('#openPopupForBeneficiary').hide();
-						$('#popupIdDetails').hide();	
+						$('#popupIdDetails').hide();
+						$('#popupIdDetailsForUpdate').hide();	
 					}
 					
 					$(document).on('mouseenter', '.passport-picture', function(e) {

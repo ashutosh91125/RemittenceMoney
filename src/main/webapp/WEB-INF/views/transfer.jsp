@@ -253,7 +253,7 @@
 <script type="text/javascript" src="js/transfer.js"></script>
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
-
+	
 </script>
 </head>
 <body>
@@ -314,9 +314,87 @@
 						onclick="closePopup()" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
+					<div id="idDetailsContainer"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade show" id="popupIdDetailsForUpdate" tabindex="-1"
+		style="display: none;" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">ID Details</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						onclick="closePopup()" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
 					<div id="idDetailsContainer">
-						<div id="idDetails"></div>
+						<div class="row">
+							<div class="col-12 col-md-4">
+								<label class="form-label">ID Type</label> <input type="text"
+									name="idDetails[0].idType" class="form-control" placeholder="Id Type" id="idType1">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">ID No.</label> <input type="text"
+									name="idDetails[0].idNumber" class="form-control" placeholder="ID No." id="idNumber1">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Name as per ID</label> <input
+									type="text" name="idDetails[0].nameAsPerId" class="form-control"
+									placeholder="Name as per ID" id="nameAsPerId">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued Country</label> <input
+									type="text" name="idDetails[0].issuedCountry" class="form-control"
+									placeholder="Issued Country" id="issuedCountry1">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued at</label> <input type="text"
+									name="idDetails[0].issuedAt" class="form-control" placeholder="Issued at" id="issuedAt1">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued By</label> <input type="text"
+									name="idDetails[0].issuedBy" class="form-control" id="issuedBy1"
+									placeholder="Issued By">
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued on</label> <input type="text"
+									name="idDetails[0].issuedOn" class="form-control"
+									placeholder="Date of Issue" id="issuedOn">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Date of Expiry</label> <input
+									type="date" name="idDetails[0].dateOfExpiry" class="form-control"
+									placeholder="Date of Expiry" min="${today}" id="dateOfExpiry">
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Id Front (Jpg only)<span
+									class="text-danger">*</span></label> <input
+									path="idDetails[0].frontPictureFile" type="file"
+									accept="image/jpeg, image/jpg" class="form-control p-2"
+									placeholder="Id Front" id="frontPictureFile" />
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Id Back (Jpg only)<span
+									class="text-danger">*</span></label> <input
+									path="idDetails[0].backPictureFile" type="file"
+									accept="image/jpeg, image/jpg" class="form-control p-2"
+									placeholder="Id Back"  id="backPictureFile"/>
+							</div>
+						</div>
 					</div>
+				</div>
+				<div class="modal-footer"
+					style="display: flex; justify-content: center;">
+					<button type="button" class="btn btn-primary"
+						id="updateIdDetailsButton">Submit</button>
 				</div>
 			</div>
 		</div>
@@ -349,9 +427,9 @@
 								<span>Transfer</span>
 							</a>
 						</div> -->
-						<a onclick="goBack()">
-                              <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
-                        </a>
+						<a onclick="goBack()"> <i class="bi bi-arrow-left-circle-fill"
+							style="font-size: 30px; color: grey;"></i>
+						</a>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -416,8 +494,12 @@
 				</div>
 			</div>
 			<c:if test="${showHeading}">
-				<div style="display: flex; justify-content: center;  background-color: #8080803b;  ">
-					<marquee><h5 style="color: #003366;">Please search and select a customer!</h5></marquee>
+				<div
+					style="display: flex; justify-content: center; background-color: #8080803b;">
+					<marquee>
+						<h5 style="color: #003366;">Please search and select a
+							customer!</h5>
+					</marquee>
 				</div>
 			</c:if>
 			<c:if test="${showBlank}">
@@ -459,21 +541,21 @@
 
 			<form>
 
-				<input type="hidden" id="residentTypeId" name="residentTypeId" value=""> 
-				<input type="hidden" id="agentId" name="agentId" value="${agentId}"> 
-				<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" /> 
-				<input type="hidden" id="dailyCredit" value="${dailyCredit}" /> 
-				<input type="hidden" id="perDayLimit" value="${perDayLimit}" /> 
-				<input type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> 
-				<input type="hidden" id="visaType" value="" /> 
-				<input type="hidden" id="idNumber" value="" /> 
-				<input type="hidden" id="idType" value="" /> 
-				<input type="hidden" id="issuedBy" value="" /> 
-				<input type="hidden" id="issuedOn" value="" /> 
-				<input type="hidden" id="dateOfExpiry" value="" /> 
-				<input type="hidden" id="visaExpiryDate" value="" /> 
-				<input type="hidden" id="visaNumber" value="" /> 
-				<input type="hidden" id="issuedCountry" value="" />
+				<input type="hidden" id="residentTypeId" name="residentTypeId"
+					value=""> <input type="hidden" id="agentId" name="agentId"
+					value="${agentId}"> <input type="hidden"
+					id="dailyCreditLimit" value="${dailyCreditLimit}" /> <input
+					type="hidden" id="dailyCredit" value="${dailyCredit}" /> <input
+					type="hidden" id="perDayLimit" value="${perDayLimit}" /> <input
+					type="hidden" id="perMonthLimit" value="${perMonthLimit}" /> <input
+					type="hidden" id="visaType" value="" /> <input type="hidden"
+					id="idNumber" value="" /> <input type="hidden" id="idType"
+					value="" /> <input type="hidden" id="issuedBy" value="" /> <input
+					type="hidden" id="issuedOn" value="" /> <input type="hidden"
+					id="dateOfExpiry" value="" /> <input type="hidden"
+					id="visaExpiryDate" value="" /> <input type="hidden"
+					id="visaNumber" value="" /> <input type="hidden"
+					id="issuedCountry" value="" />
 				<div class="spinner-container" id="loader">
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
@@ -675,10 +757,11 @@
 											</div>
 										</div>
 									</div> -->
-									<div style="display: flex;justify-content: end;">
-									<button onclick="addIdentity()" class="avatar-text avatar-md bg-primary text-white"> <i
-                                    	class="feather-plus"></i>
-                                    </button>
+									<div style="display: flex; justify-content: end;">
+										<button onclick="addIdentity()"
+											class="avatar-text avatar-md bg-primary text-white">
+											<i class="feather-plus"></i>
+										</button>
 									</div>
 									<div class="row mt-2 " id="idDetailsSection"
 										style="display: none;">

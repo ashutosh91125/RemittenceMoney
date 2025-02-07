@@ -28,10 +28,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/theme.min.css">
 </head>
-<script type="text/javascript">
-	
-</script>
-
+<script type="text/javascript" src="js/commons.js"></script>
 <body>
 
 	<main class="auth-minimal-wrapper">

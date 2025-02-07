@@ -80,14 +80,8 @@
 	background-color: aliceblue;
 }
 </style>
-
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
-
-
 function toggleFields() {
     const residentType = document.getElementById('residentType').value;
     const idTypeInput = document.getElementById("idType");

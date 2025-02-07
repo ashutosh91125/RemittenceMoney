@@ -161,6 +161,7 @@
 	display: none;
 }
 </style>
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
 function registerBranch() {
 	 if(!validation($("#branchForm")))  {
@@ -200,13 +201,6 @@ function registerBranch() {
        }
    });
 }
-
-
-function toggleDiv(divId) {
-const element = document.getElementById(divId);
-element.classList.toggle("show");
-}
-
 function toggleRemarks() {
     
     let status = document.getElementById('statusFlag').value;
@@ -254,18 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
     updateFields(); // Call the function to ensure proper state on page load
     toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
-
-function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
-    const input = document.getElementById(inputId);
-    const error = document.getElementById(errorId);
-
-    if (input.value.length > maxLength) {
-        input.value = input.value.slice(0, maxLength); 
-        error.textContent = `Maximum allowed characters  reached.`; 
-    } else {
-        error.textContent = ''; 
-    }
-}
 
 function validateBranchName(inputId, errorId) {
     var input = document.getElementById(inputId);

@@ -163,6 +163,7 @@
 	display: none;
 }
 </style>
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
 function updateStaff() {
 	 if (!validation($("#staffForm"))) {
@@ -190,12 +191,6 @@ function updateStaff() {
 		}
 	});
 }
-
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");

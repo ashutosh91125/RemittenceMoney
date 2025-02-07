@@ -151,6 +151,7 @@
 </style>
 
 <script type="text/javascript" src="js/customer-update-validations.js"></script>
+<script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
 /*let identityIndex = ${customer.idDetails != null ? customer.idDetails.size() : 0}; */
 let identityIndex=0;
@@ -240,11 +241,6 @@ function removeIdentities() {
         alert("At least one identity must be present.");
     }
 }
-function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-
 $(document).ready(function () {
     $("#customerOnboardForm").on("submit", function (e) {
         e.preventDefault();

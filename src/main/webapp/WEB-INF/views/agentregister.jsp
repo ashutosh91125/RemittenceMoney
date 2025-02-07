@@ -163,7 +163,7 @@
 	display: none;
 }
 </style>
-<!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
 function registerAgent() {
 	if(!validation($("#agentForm")))  {
@@ -193,11 +193,6 @@ function registerAgent() {
 }
 
 
-
-function toggleDiv(divId) {
-const element = document.getElementById(divId);
-element.classList.toggle("show");
-}
 
 $(document).ready(function() {
 $('#countries').on('change', function() {
@@ -329,19 +324,6 @@ document.addEventListener('DOMContentLoaded', function () {
     form.addEventListener("submit", validateOnSubmit);
 });	
 
-
-function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
-    const input = document.getElementById(inputId);
-    const error = document.getElementById(errorId);
-
-    if (input.value.length > maxLength) {
-        input.value = input.value.slice(0, maxLength); 
-        error.textContent = `Maximum allowed characters  reached.`; 
-    } else {
-        error.textContent = ''; 
-    }
-}
-	
 </script>
 </head>
 

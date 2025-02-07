@@ -251,11 +251,9 @@
 }
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
+<script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
+
 </script>
 </head>
 <body>

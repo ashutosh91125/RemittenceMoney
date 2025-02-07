@@ -17,10 +17,7 @@
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript">
-function toggleDropdown(element) {
-	const dropdownMenu = element.nextElementSibling;
-	dropdownMenu.classList.toggle('show');
-}
+
 </script> 
 </head>
 

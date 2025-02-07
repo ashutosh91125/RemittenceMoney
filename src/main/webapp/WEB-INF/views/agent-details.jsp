@@ -163,7 +163,7 @@
 	display: none;
 }
 </style>
-<!-- <script type="text/javascript" src="js/customervalidation.js"></script> -->
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
 function updateAgent() {
 	    const id= $("#id").val();
@@ -187,11 +187,6 @@ function updateAgent() {
 	        }
 	    });
 	}
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-
 	$(document).ready(function () {
 	    const statusFlag = document.getElementById('statusFlag'); 
 	    const status = document.getElementById('status'); 

@@ -164,6 +164,7 @@
 	display: none;
 }
 </style>
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
 
      function registerStaff() {
@@ -187,14 +188,7 @@
                 alert("Error: " + xhr.responseText);
             }
         });
-    } 
-
-
-function toggleDiv(divId) {
-	const element = document.getElementById(divId);
-	element.classList.toggle("show");
-}
-
+    }
 $(document).ready(function () {
     const status = document.getElementById('status'); 
     

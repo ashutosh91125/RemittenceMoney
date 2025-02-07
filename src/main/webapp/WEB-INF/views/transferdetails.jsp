@@ -47,16 +47,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
-
-<script type="text/javascript">
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-</script>
-
-
-
 <style>
 .search-bar-container input {
 	width: 100%;
@@ -234,6 +224,7 @@
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function() {
     const accountTypeInput = document.getElementById("beneficiaryAccountType");
@@ -297,11 +288,6 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         });
     }
-
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
 </script>
 </head>
 

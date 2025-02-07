@@ -256,6 +256,7 @@ Remove any width restrictions if there are any /
 	display: none;
 }
 </style>
+<script type="text/javascript" src="js/commons.js"></script>
 <script>
 	function viewUpdateBranch() {
 		const formData = $("#branchForm").serialize(); // Serialize form data for submission
@@ -282,12 +283,6 @@ Remove any width restrictions if there are any /
 			}
 		});
 	}
-
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
-
 	$(document).ready(function() {
 		const status = document.getElementById('status');
 

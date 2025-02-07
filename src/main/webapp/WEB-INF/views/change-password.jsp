@@ -27,7 +27,7 @@
 	href="${pageContext.request.contextPath}/assets/vendors/css/vendors.min.css">
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/assets/css/theme.min.css">
-
+<script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript"> 
 document.addEventListener('DOMContentLoaded', function () {
     const password = document.getElementById("password");

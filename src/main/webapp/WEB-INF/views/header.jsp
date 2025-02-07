@@ -36,6 +36,26 @@
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    .user-name {
+        font-family: 'Poppins', sans-serif; /* Modern and clean font */
+        color: #66B2FF;  /* Lighter blue */
+        font-weight: 600; /* Slightly bolder */
+        font-size: 18px;
+        margin-left: 10px;
+        transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+    }
+
+    /* Hover effect for interaction */
+    .user-name:hover {
+        color: #3399FF; /* Slightly darker blue */
+        transform: scale(1.1); /* Slightly enlarges on hover */
+        text-shadow: 1px 1px 5px rgba(102, 178, 255, 0.5);
+    }
+</style>
+
 </head>
 
 <body>
@@ -169,13 +189,15 @@
 
 					</div>
 					<div class="dropdown nxl-h-item">
-						<a href="javascript:void(0);" data-bs-toggle="dropdown"
-							role="button" data-bs-auto-close="outside"> <img
-							src="assets/images/avatar/1.png" alt="user-image"
-							class="img-fluid user-avtar me-0">
-						</a>
-
-					</div>
+                        <a href="javascript:void(0);" data-bs-toggle="dropdown"
+                            role="button" data-bs-auto-close="outside">
+                            <img src="assets/images/avatar/1.png" alt="user-image"
+                                class="img-fluid user-avtar me-0">
+                            <span class="user-name">
+                                <c:out value="${sessionScope.loggedInUser}" />
+                            </span>
+                        </a>
+                    </div>
 				</div>
 			</div>
 			<!--! [End] Header Right !-->

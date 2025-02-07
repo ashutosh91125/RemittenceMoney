@@ -31,6 +31,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         } else if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
                 response.sendRedirect("/select-branch");
         }else {
+            request.getSession().setAttribute("loggedInUser", user.getAdminName());
             response.sendRedirect("/welcome");
         }
 

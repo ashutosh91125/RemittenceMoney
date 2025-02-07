@@ -237,6 +237,9 @@ function updateAgent() {
 								class="btn btn-primary successAlertMessage"> <i
 								class="feather-user-plus me-2"></i> <span>Add Agent</span>
 							</a> -->
+							<a onclick="goBack()">
+                               <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
+                              </a>
 						</div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">

@@ -11,7 +11,7 @@
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
 
-<title>Login</title>
+<title>Update Password</title>
 
 <link rel="shortcut icon" type="image/x-icon"
 	href="assets/images/favicon.ico">

@@ -90,10 +90,26 @@
             height: 12px;
             border: 1px solid #000;
         }
+        /* Position Print Button at the Upper Right */
+        .print-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+
+        /* Hide print button when printing */
+        @media print {
+            .print-button {
+                display: none;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <!-- Print Button (Upper Right) -->
+        <button class="btn btn-primary print-button" onclick="window.print()">Print Receipt</button>
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-10">

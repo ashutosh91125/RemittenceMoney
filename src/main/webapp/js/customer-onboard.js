@@ -23,7 +23,7 @@ $(document).ready(function () {
                 if (response && response.status === "success" && response.data && response.data.ecrn) {
                     alert("Customer Onboarded successfully with ECRN: " + response.data.ecrn);
                 } else {
-                    alert("Customer Onboarded successfully!");
+                    alert("Your session is ended!");
                 }
 
                 $("#customerOnboardForm")[0].reset();
@@ -35,6 +35,12 @@ $(document).ready(function () {
 
                 try {
                     let response = JSON.parse(xhr.responseText);
+
+                    if (xhr.status === 406) {
+                        alert(response.message);
+                        window.location.reload();
+                        return;
+                    }
 
                     if ((response.status === "failure" || response.status === "failed") && response.message) {
                         alert("Error: " + response.message);

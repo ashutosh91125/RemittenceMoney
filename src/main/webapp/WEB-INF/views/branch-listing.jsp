@@ -25,6 +25,15 @@
 	</div>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
+		 <div class="page-header-left d-flex align-items-center">
+					<div class="page-header-title">
+						<h5 class="m-b-10">Branch</h5>
+					</div>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
+						<li class="breadcrumb-item">Branch List</li>
+					</ul>
+				</div>
 			<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 				<div class="page-header-right ms-auto">
 					<div class="page-header-right-items">

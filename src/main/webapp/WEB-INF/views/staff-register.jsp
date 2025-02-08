@@ -298,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					</div>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-						<li class="breadcrumb-item">Add Staff</li>
+						<li class="breadcrumb-item">Staff Register</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">
@@ -309,20 +309,19 @@ document.addEventListener('DOMContentLoaded', function () {
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						<div
+						<!-- <div
 							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-							<!-- <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
-                                <i class="feather-layers me-2"></i>
-                                <span>Save as Draft</span>
-                            </a>
 							<a href="javascript:void(0);"
-								class="btn btn-primary successAlertMessage"> <i
-								class="feather-user-plus me-2"></i> <span>Add Staff</span>
-							</a> -->
-							<a onclick="goBack()">
-                                    <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
-                                </a>
+								class="btn btn-primary successAlertMessage">  <i class="feather-user-plus me-2"></i>
+								<span>Transfer</span>
+							</a>
+						</div> -->
+						<div>
+							<a onclick="goBack()"> <i
+								class="bi bi-arrow-left-circle-fill text-primary"
+								style="font-size: 30px;"></i></a>
 						</div>
+							<label class="form-label">Back</label>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -332,7 +331,6 @@ document.addEventListener('DOMContentLoaded', function () {
 				</div>
 			</div>
 		</div>
-		<!-- [ page-header ] end -->
 
 		<div class="spinner-container" id="loader">
 			<div class="spinner-border text-primary" role="status">

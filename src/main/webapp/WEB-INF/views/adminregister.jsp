@@ -151,25 +151,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	<jsp:include page="header.jsp"></jsp:include>
 	<div class="nxl-container" style="background: aliceblue;">
-		<div class="page-header">
-			<div class="page-header-right ms-auto">
-				<div class="page-header-right-items">
-					<div
-						class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-						<!-- <a href="javascript:void(0);"
-							class="btn btn-primary successAlertMessage"> <i
-							class="feather-user-plus me-2"></i> <span>Add Admin</span>
-						</a> -->
-					<div>
+		<div class="page-header" style="background: aliceblue;">
+				<div class="page-header-left d-flex align-items-center">
+					<div class="page-header-title">
+						<h5 class="m-b-10">Admin</h5>
+					</div>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+						<li class="breadcrumb-item">Admin Register</li>
+					</ul>
+				</div>
+				<div class="page-header-right ms-auto">
+					<div class="page-header-right-items">
+						<div class="d-flex d-md-none">
+							<a href="javascript:void(0)"
+								class="page-header-right-close-toggle"> <i
+								class="feather-arrow-left me-2"></i> <span>Back</span>
+							</a>
+						</div>
+						<!-- <div
+							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+							<a href="javascript:void(0);"
+								class="btn btn-primary successAlertMessage">  <i class="feather-user-plus me-2"></i>
+								<span>Transfer</span>
+							</a>
+						</div> -->
+						<div>
 							<a onclick="goBack()"> <i
 								class="bi bi-arrow-left-circle-fill text-primary"
 								style="font-size: 30px;"></i></a>
 						</div>
 							<label class="form-label">Back</label>
 					</div>
+					<div class="d-md-none d-flex align-items-center">
+						<a href="javascript:void(0)" class="page-header-right-open-toggle">
+							<i class="feather-align-right fs-20"></i>
+						</a>
+					</div>
 				</div>
 			</div>
-		</div>
+		
 		<div class="nxl-content p-3">
 			<div class="main-content">
 				<div class="card border-top-0">

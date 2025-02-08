@@ -25,6 +25,15 @@
 	</div>
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="page-header">
+		 <div class="page-header-left d-flex align-items-center">
+					<div class="page-header-title">
+						<h5 class="m-b-10">Admin</h5>
+					</div>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
+						<li class="breadcrumb-item">Admin List</li>
+					</ul>
+				</div>
 			<div class="page-header-right ms-auto">
 				<div class="page-header-right-items">
 					<div

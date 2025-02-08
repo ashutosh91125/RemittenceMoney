@@ -64,8 +64,17 @@
     <!-- Page Content -->
     <div class="nxl-container" style="background: aliceblue;">
         <div class="page-header">
-            <c:if test="${pageContext.request.isUserInRole('STAFF_TR')}">
+          <div class="page-header-left d-flex align-items-center">
+					<div class="page-header-title">
+						<h5 class="m-b-10">Transfer</h5>
+					</div>
+					<ul class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
+						<li class="breadcrumb-item">Transfer List</li>
+					</ul>
+				</div>
             <div class="page-header-right ms-auto">
+              <c:if test="${pageContext.request.isUserInRole('STAFF_TR')}">
                 <div class="page-header-right-items">
                     <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
                         <a href="transfer" class="btn btn-primary">
@@ -73,10 +82,11 @@
                         </a>
                     </div>
                 </div>
+               </c:if>
             </div>
-            </c:if>
+          
         </div>
-
+ 
         <!-- Table Section -->
         <div class="nxl-content p-3">
             <div class="main-content">

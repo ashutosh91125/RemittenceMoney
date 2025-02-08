@@ -1871,14 +1871,100 @@ function showSelectBeneficiaryDiv() {
 		  		      }
 		  		    });
 		  		  }
-				  function addIdentity(){
-				  				const popupIdDetailsForUpdate = document.getElementById('popupIdDetailsForUpdate');
-				  				const container = document.querySelector('.nxl-container');
-				  				const today = new Date().toISOString().split('T')[0];
+				  function addIdentity() {
+				      const popupIdDetailsForUpdate = document.getElementById('popupIdDetailsForCraete');
+				      const container = document.querySelector('.nxl-container');
+					  const today = new Date().toISOString().split('T')[0];
 
-				  				container.classList.add('blur-background');
-				  				 popupIdDetailsForUpdate.style.display = 'block';
-				  			  }
+				      container.classList.add('blur-background');
+				      popupIdDetailsForUpdate.style.display = 'block';
+
+				      fetchAndPopulateDropdown('/api/enumEntities/country', '#issuedCountry1', 'Issued Country');
+				      fetchAndPopulateDropdown('/api/enumEntities/idTypes', '#idType1', 'Id Type');
+				      fetchAndPopulateDropdown('/api/enumEntities/country', '#issuedAt1', 'Issued Country');
+					
+					  
+				  }
+
+				  function fetchAndPopulateDropdown(url, dropdownSelector, defaultText) {
+				      $.ajax({
+				          url: url,
+				          type: 'GET',
+				          success: function (response) {
+				              console.log(response);
+				              const dropdown = $(dropdownSelector);
+				              dropdown.empty();
+				              dropdown.append(`<option value="" disabled selected>${defaultText}</option>`);
+
+				              if (response && response.key) {
+				                  $.each(response.values, function (index, obj) {
+				                      dropdown.append(`<option value="${obj.valueId}">${obj.description}</option>`);
+				                  });
+				              } else {
+				                  console.error(`No data found in response for ${defaultText}.`);
+				              }
+				          },
+				          error: function () {
+				              console.error(`Error fetching data for ${defaultText}.`);
+				          }
+				      });
+				  }
+				  document.addEventListener("DOMContentLoaded", function () {
+					const today = new Date();
+					   const tomorrow = new Date();
+					   tomorrow.setDate(today.getDate() + 1);
+					   
+					   const todayString = today.toISOString().split("T")[0];
+					   const tomorrowString = tomorrow.toISOString().split("T")[0];
+
+					   const issuedOn1 = document.getElementById("issuedOn1");
+					   const dateOfExpiry1 = document.getElementById("dateOfExpiry1");
+
+					   issuedOn1.setAttribute("max", todayString);
+					   dateOfExpiry1.setAttribute("min", tomorrowString);
+				      document.getElementById("createIdDetailsButton").addEventListener("click", function () {
+				          alert(22);
+
+				          var ecrn = document.getElementById("ecrn").value; 
+				          var formData = new FormData();
+				          formData.append("idType", document.getElementById("idType1").value);
+				          formData.append("idNumber", document.getElementById("idNumber1").value);
+				          formData.append("nameAsPerId", document.getElementById("nameAsPerId1").value);
+				          formData.append("issuedCountry", document.getElementById("issuedCountry1").value);
+				          formData.append("issuedAt", document.getElementById("issuedAt1").value);
+				          formData.append("issuedBy", document.getElementById("issuedBy1").value);
+				          formData.append("issuedOn", document.getElementById("issuedOn1").value);
+				          formData.append("dateOfExpiry", document.getElementById("dateOfExpiry1").value);
+
+				          var frontFile = document.getElementById("frontPictureFile").files[0];
+				          var backFile = document.getElementById("backPictureFile").files[0];
+
+				          if (frontFile) {
+				              formData.append("frontPictureFile", frontFile);
+				          }
+				          if (backFile) {
+				              formData.append("backPictureFile", backFile);
+				          }
+
+				          $.ajax({
+				              url: '/caas/api/v2/customer/id-details?ecrn=' + ecrn,
+				              type: 'POST',
+				              data: formData,
+				              contentType: false,  
+				              processData: false,   
+				              success: function (response) {
+				                  alert("ID Craeated Successfully!");
+				                  window.location.reload();
+				              },
+				              error: function (xhr, status, error) {
+				                  console.error('Error updating ID details:', error);
+				                  alert('Failed to craete ID details. Please try again.');
+				              }
+				          });
+				      });
+				  });
+
+
 					function closePopup() {
 					    const container = document.querySelector('.nxl-container');
 					    container.classList.remove('blur-background');
@@ -1886,6 +1972,7 @@ function showSelectBeneficiaryDiv() {
 						$('#openPopupForBeneficiary').hide();
 						$('#popupIdDetails').hide();
 						$('#popupIdDetailsForUpdate').hide();	
+						$('#popupIdDetailsForCraete').hide();
 					}
 					
 					$(document).on('mouseenter', '.passport-picture', function(e) {
@@ -1894,5 +1981,4 @@ function showSelectBeneficiaryDiv() {
 					      $('#imagePreview').html('<img src="' + imgSrc + '">');
 					      $('#imagePreview').fadeIn(200);
 					    });
-						
-						
+							

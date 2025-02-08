@@ -329,67 +329,7 @@
 						onclick="closePopup()" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
-					<div id="idDetailsContainer">
-						<div class="row">
-							<div class="col-12 col-md-4">
-								<label class="form-label">ID Type</label> <input type="text"
-									name="idDetails[0].idType" class="form-control" placeholder="Id Type" id="idType1">
-							</div>
-							<div class="col-12 col-md-4">
-								<label class="form-label">ID No.</label> <input type="text"
-									name="idDetails[0].idNumber" class="form-control" placeholder="ID No." id="idNumber1">
-							</div>
-							<div class="col-12 col-md-4">
-								<label class="form-label">Name as per ID</label> <input
-									type="text" name="idDetails[0].nameAsPerId" class="form-control"
-									placeholder="Name as per ID" id="nameAsPerId">
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-12 col-md-4">
-								<label class="form-label">Issued Country</label> <input
-									type="text" name="idDetails[0].issuedCountry" class="form-control"
-									placeholder="Issued Country" id="issuedCountry1">
-							</div>
-							<div class="col-12 col-md-4">
-								<label class="form-label">Issued at</label> <input type="text"
-									name="idDetails[0].issuedAt" class="form-control" placeholder="Issued at" id="issuedAt1">
-							</div>
-							<div class="col-12 col-md-4">
-								<label class="form-label">Issued By</label> <input type="text"
-									name="idDetails[0].issuedBy" class="form-control" id="issuedBy1"
-									placeholder="Issued By">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12 col-md-4">
-								<label class="form-label">Issued on</label> <input type="text"
-									name="idDetails[0].issuedOn" class="form-control"
-									placeholder="Date of Issue" id="issuedOn">
-							</div>
-							<div class="col-12 col-md-4">
-								<label class="form-label">Date of Expiry</label> <input
-									type="date" name="idDetails[0].dateOfExpiry" class="form-control"
-									placeholder="Date of Expiry" min="${today}" id="dateOfExpiry">
-							</div>
-						</div>
-						<div class="row mt-2">
-							<div class="col-12 col-md-4">
-								<label class="form-label">Id Front (Jpg only)<span
-									class="text-danger">*</span></label> <input
-									path="idDetails[0].frontPictureFile" type="file"
-									accept="image/jpeg, image/jpg" class="form-control p-2"
-									placeholder="Id Front" id="frontPictureFile" />
-							</div>
-							<div class="col-12 col-md-4">
-								<label class="form-label">Id Back (Jpg only)<span
-									class="text-danger">*</span></label> <input
-									path="idDetails[0].backPictureFile" type="file"
-									accept="image/jpeg, image/jpg" class="form-control p-2"
-									placeholder="Id Back"  id="backPictureFile"/>
-							</div>
-						</div>
-					</div>
+					<div id="idDetailsContainer"></div>
 				</div>
 				<div class="modal-footer"
 					style="display: flex; justify-content: center;">
@@ -399,6 +339,95 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade show" id="popupIdDetailsForCraete" tabindex="-1"
+		style="display: none;" aria-modal="true" role="dialog">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">ID Details</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						onclick="closePopup()" aria-label="Close"></button>
+				</div>
+				
+				<div class="modal-body">
+					<div id="idDetailsContainer"> 
+						<div class="row">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Id Type</label> <select name="idType"
+									class="form-control p-2" id="idType1">
+									<option value="" disabled selected>Id Type</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Id NUmber.</label> <input type="text"
+									name="idNumber" class="form-control" placeholder="Id NUmber"
+									id="idNumber1">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Name as per ID</label> <input
+									type="text" name="nameAsPerId" class="form-control"
+									placeholder="Name as per ID" id="nameAsPerId1">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued Country</label> <select
+									name="issuedCountry" class="form-control p-2"
+									id="issuedCountry1">
+									<option value="" disabled selected>Issued Country</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued at</label> <select
+									name="issuedAt" class="form-control p-2" id="issuedAt1">
+									<option value="" disabled selected>Issued at</option>
+								</select>
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued By</label> <input type="text"
+									name="issuedBy" class="form-control" id="issuedBy1"
+									placeholder="Issued By">
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Issued on</label> <input type="date"
+									name="issuedOn" class="form-control" min="1900-01-01" max="${today}"
+									placeholder="Date of Issue" id="issuedOn1">
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Date of Expiry</label> <input
+									type="date" name="dateOfExpiry" class="form-control"
+									placeholder="Date of Expiry" min="${today}" id="dateOfExpiry1">
+							</div>
+						</div>
+						<div class="row mt-2">
+							<div class="col-12 col-md-4">
+								<label class="form-label">Id Front (Jpg only)<span
+									class="text-danger">*</span></label> <input name="frontPictureFile"
+									type="file" accept="image/jpeg, image/jpg"
+									class="form-control p-2" placeholder="Id Front"
+									id="frontPictureFile" />
+							</div>
+							<div class="col-12 col-md-4">
+								<label class="form-label">Id Back (Jpg only)<span
+									class="text-danger">*</span></label> <input name="backPictureFile"
+									type="file" accept="image/jpeg, image/jpg"
+									class="form-control p-2" placeholder="Id Back"
+									id="backPictureFile" />
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer"
+					style="display: flex; justify-content: center;">
+					<button type="button" class="btn btn-primary"
+						id="createIdDetailsButton">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 			<!-- [ page-header ] start -->

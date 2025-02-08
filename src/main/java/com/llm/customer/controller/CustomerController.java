@@ -6,9 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +18,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.llm.customer.model.Customer;
 import com.llm.customer.service.CustomerService;
-import com.llm.iddetail.dto.IdDetailDto;
 import com.llm.iddetail.model.IdDetail;
+import com.llm.iddetail.service.IdDetailsService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/caas/api/v2/customer")
@@ -38,6 +41,8 @@ public class CustomerController {
 	private static final String BASE_URL = "https://drap-sandbox.digitnine.com";
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private IdDetailsService idDetailsService;
 
 	@GetMapping
 	public ResponseEntity<List<Customer>> customer() {
@@ -205,6 +210,50 @@ public class CustomerController {
 		}
 
 		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/id-details")
+	public ResponseEntity<String> createIdDetails(@RequestParam("ecrn") String ecrn, @ModelAttribute IdDetail idDetail) {
+		try {
+			if (idDetail.getFrontPictureFile() != null && !idDetail.getFrontPictureFile().isEmpty()) {
+				String contentType = idDetail.getFrontPictureFile().getContentType();
+
+			
+				if (contentType == null || !contentType.startsWith("image/")) {
+					throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+				}
+				idDetail.setFrontBase64Data(idDetail.getFrontPictureFile().getBytes());
+				idDetail.setFrontContentType(contentType);
+			}
+		} catch (Exception e) {
+			// Return error response with exception message
+			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+		}
+	 try {
+		if (idDetail.getBackPictureFile() != null && !idDetail.getBackPictureFile().isEmpty()) {
+			String contentType = idDetail.getBackPictureFile().getContentType();
+
+		
+			if (contentType == null || !contentType.startsWith("image/")) {
+				throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
+			}
+			idDetail.setBackBase64Data(idDetail.getBackPictureFile().getBytes());
+			idDetail.setBackContentType(contentType);
+		}
+	} catch (Exception e) {
+		return ResponseEntity.badRequest().body("Error: " + e.getMessage());
+	}
+	    Optional<Customer> customerOpt = customerService.getByEcrn(ecrn);
+	    
+	    if (customerOpt.isPresent()) {
+	        Customer customer = customerOpt.get();
+	        idDetail.setCustomerId(customer.getId());
+	        idDetailsService.saveIdDetails(idDetail); 
+	        
+	        return ResponseEntity.status(HttpStatus.CREATED).body("ID Details saved successfully.");
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Customer not found with ECRN: " + ecrn);
+	    }
 	}
 
 }

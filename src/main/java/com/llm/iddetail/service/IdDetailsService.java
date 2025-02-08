@@ -31,4 +31,9 @@ public class IdDetailsService {
 	public boolean verifyIdNumber(String idNumber) {
 		return idDetailRepository.existsByIdNumber(idNumber);
 	}
+
+	public void saveIdDetails(IdDetail idDetail) {
+		idDetailRepository.save(idDetail);
+		
+	}
 }

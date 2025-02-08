@@ -380,9 +380,12 @@ $(document).ready(function () {
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
                             </a> -->
-							<a onclick="goBack()">
-                                 <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
-                             </a>
+							<div>
+							<a onclick="goBack()"> <i
+								class="bi bi-arrow-left-circle-fill text-primary"
+								style="font-size: 30px;"></i></a>
+						</div>
+							<label class="form-label">Back</label>
 						</div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">

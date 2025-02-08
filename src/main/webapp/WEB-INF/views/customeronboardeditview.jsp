@@ -264,9 +264,12 @@ $.ajax({
 								class="feather-user-plus me-2"></i> <span>Add Customer</span>
 							</a>
 						</div> -->
-						<a onclick="goBack()">
-                             <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
-                        </a>
+						<div>
+							<a onclick="goBack()"> <i
+								class="bi bi-arrow-left-circle-fill text-primary"
+								style="font-size: 30px;"></i></a>
+						</div>
+							<label class="form-label">Back</label>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">

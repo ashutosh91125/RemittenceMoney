@@ -114,9 +114,7 @@ function updateAdmin() {
 							class="btn btn-primary successAlertMessage"> <i
 							class="feather-user-plus me-2"></i> <span>Add Admin</span>
 						</a> -->
-						<a onclick="goBack()">
-                                                         <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
-                                                     </a>
+					<a onclick="goBack()">  <i class="bi bi-arrow-left-circle-fill text-primary" style="font-size: 30px;"></i></a>
 					</div>
 				</div>
 			</div>

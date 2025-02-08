@@ -237,9 +237,12 @@ $(document).ready(function () {
 								class="btn btn-primary successAlertMessage"> <i
 								class="feather-user-plus me-2"></i> <span>Add Staff</span>
 							</a> -->
-							<a onclick="goBack()">
-                               <i class="bi bi-arrow-left-circle-fill" style="font-size: 30px; color: grey;"></i>
-                             </a>
+							<div>
+							<a onclick="goBack()"> <i
+								class="bi bi-arrow-left-circle-fill text-primary"
+								style="font-size: 30px;"></i></a>
+						</div>
+							<label class="form-label">Back</label>
 						</div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">

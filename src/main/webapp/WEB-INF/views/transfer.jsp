@@ -348,9 +348,9 @@
 					<button type="button" class="btn-close" data-bs-dismiss="modal"
 						onclick="closePopup()" aria-label="Close"></button>
 				</div>
-				
+
 				<div class="modal-body">
-					<div id="idDetailsContainer"> 
+					<div id="idDetailsContainer">
 						<div class="row">
 							<div class="col-12 col-md-4">
 								<label class="form-label">Id Type</label> <select name="idType"
@@ -392,8 +392,8 @@
 						<div class="row mt-2">
 							<div class="col-12 col-md-4">
 								<label class="form-label">Issued on</label> <input type="date"
-									name="issuedOn" class="form-control" min="1900-01-01" max="${today}"
-									placeholder="Date of Issue" id="issuedOn1">
+									name="issuedOn" class="form-control" min="1900-01-01"
+									max="${today}" placeholder="Date of Issue" id="issuedOn1">
 							</div>
 							<div class="col-12 col-md-4">
 								<label class="form-label">Date of Expiry</label> <input
@@ -456,9 +456,12 @@
 								<span>Transfer</span>
 							</a>
 						</div> -->
-						<a onclick="goBack()"> <i class="bi bi-arrow-left-circle-fill"
-							style="font-size: 30px; color: grey;"></i>
-						</a>
+						<div>
+							<a onclick="goBack()"> <i
+								class="bi bi-arrow-left-circle-fill text-primary"
+								style="font-size: 30px;"></i></a>
+						</div>
+							<label class="form-label">Back</label>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -569,7 +572,6 @@
 			</c:if>
 
 			<form>
-
 				<input type="hidden" id="residentTypeId" name="residentTypeId" value="">
 				<input type="hidden" id="agentId" name="agentId" value="${agentId}">
 				<input type="hidden" id="dailyCreditLimit" value="${dailyCreditLimit}" />
@@ -585,6 +587,7 @@
 				<input type="hidden" id="visaExpiryDate" value="" />
 				<input type="hidden" id="visaNumber" value="" />
 				<input type="hidden" id="issuedCountry" value="" />
+
 				<div class="spinner-container" id="loader">
 					<div class="spinner-border text-primary" role="status">
 						<span class="visually-hidden">Loading...</span>
@@ -786,19 +789,23 @@
 											</div>
 										</div>
 									</div> -->
-									<div style="display: flex; justify-content: end;">
-										<button onclick="addIdentity()"
-											class="avatar-text avatar-md bg-primary text-white">
-											<i class="feather-plus"></i>
-										</button>
-									</div>
+
 									<div class="row mt-2 " id="idDetailsSection"
 										style="display: none;">
-										<div class="col-12">
+										<div class="col-4"
+											style="display: flex; justify-content: start;">
 											<h6>ID Details</h6>
 										</div>
+										<div class="col-8"
+											style="display: flex; justify-content: end;">
+											<h6 style="padding: inherit;">Add ID Details</h6>
+											<button onclick="addIdentity()"
+												class="avatar-text avatar-md bg-primary text-white">
+												<i class="feather-plus"></i>
+											</button>
+										</div>
 										<div id="idDetails">
-											<div class="row"
+											<div class="row p-3"
 												style="display: flex; justify-content: center;">
 												<div class="col-lg-12">
 													<div class="card stretch stretch-full">

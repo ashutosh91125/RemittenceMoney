@@ -281,7 +281,11 @@ function validateBranchName(inputId, errorId) {
 					</div>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-						<li class="breadcrumb-item">Branch Register</li>
+						<li class="breadcrumb-item">
+    				<c:if test="${not isUpdate}">Branch Register</c:if>
+   					 <c:if test="${isUpdate}">Branch Update</c:if>
+					</li>
+
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">

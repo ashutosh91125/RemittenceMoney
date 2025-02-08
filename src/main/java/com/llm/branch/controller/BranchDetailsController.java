@@ -64,6 +64,7 @@ public class BranchDetailsController {
         }
         else {
         	model.addAttribute("branch", new BranchDetails());
+        	model.addAttribute("isUpdate", false);
         }
         try {
             List<EnumValue> nativeRegionEntity = enumEntityService.getDataByDependent(country);

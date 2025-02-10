@@ -235,6 +235,7 @@ $(document).ready(function () {
 		            idDetailsTable.empty(); 
 
 		            if (idDetailsList.length > 0) {
+						let lastFiveRecords = idDetailsList.slice(-5);
 		                idDetailsList.forEach(function (idDetail) {
 							fetchEnumValue("idTypes", idDetail.idType, function (fullIdType) {
 							                        var idTypeDisplay = fullIdType || idDetail.idType || '';
@@ -2025,7 +2026,7 @@ function showSelectBeneficiaryDiv() {
 						                 contentType: false,
 						                 processData: false,
 						                 success: function (response) {
-						                     alert("ID Created Successfully!");
+						                     alert("ID Added Successfully!");
 						                     window.location.reload();
 						                 },
 						                 error: function (xhr, status, error) {
@@ -2102,7 +2103,6 @@ function showSelectBeneficiaryDiv() {
 					
 					$(document).on('mouseenter', '.passport-picture', function(e) {
 					      var imgSrc = $(this).attr('src');
-					      // Insert an image into the preview container
 					      $('#imagePreview').html('<img src="' + imgSrc + '">');
 					      $('#imagePreview').fadeIn(200);
 					    });

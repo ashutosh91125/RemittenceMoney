@@ -245,7 +245,7 @@
 						<div class="col-lg-12 p-4">
 							<div class="card stretch stretch-full">
 								<div class="card-body p-0">
-									<div class="table-responsive">
+									<div class="table-responsive" style="overflow-x: hidden; max-height: 300px; overflow-y: auto;">
 										<table class="table table-hover" id="search-result">
 											<thead>
 												<tr>
@@ -293,7 +293,7 @@
                         <div class="col-lg-12 p-4">
                             <div class="card stretch stretch-full">
                                 <div class="card-body p-0">
-                                    <div class="table-responsive">
+                                    <div class="table-responsive" style="overflow-x: hidden; max-height: 300px; overflow-y: auto;">
                                         <table class="table table-hover" id="search-result">
                                             <thead>
                                                 <tr>

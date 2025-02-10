@@ -36,16 +36,14 @@ $(document).ready(function () {
                 try {
                     let response = JSON.parse(xhr.responseText);
 
-                    if (xhr.status === 406) {
+                    if (response.code === 406) {
                         alert(response.message);
                         window.location.reload();
-                        return;
-                    }
-
-                    if ((response.status === "failure" || response.status === "failed") && response.message) {
-                        alert("Error: " + response.message);
                     } else if (response.code === 504 && response.message) {
                         alert("Server Error: " + response.message);
+                    }
+                    else if ((response.status === "failure" || response.status === "failed") && response.message) {
+                      alert("Error: " + response.message);
                     } else if (response.error) {
                         alert("Error: " + response.error);
                     } else {

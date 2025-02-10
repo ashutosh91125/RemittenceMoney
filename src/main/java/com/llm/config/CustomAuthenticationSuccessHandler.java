@@ -24,6 +24,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
         boolean isPasswordExpired = user.getPasswordExpiryDate() != null && user.getPasswordExpiryDate().isBefore(LocalDate.now());
 
+        String fetchRole = String.valueOf(user.getRole());
+        fetchRole = fetchRole.replace("_"," ");
+
+        request.getSession().setAttribute("roleName", fetchRole);
+        request.getSession().setAttribute("loggedInUser", user.getAdminName());
+
         if (user.isFirstLogin()) {
             response.sendRedirect("/change-password?message=Password change required");
         } else if (isPasswordExpired) {
@@ -31,7 +37,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         } else if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
                 response.sendRedirect("/select-branch");
         }else {
-            request.getSession().setAttribute("loggedInUser", user.getAdminName());
             response.sendRedirect("/welcome");
         }
 

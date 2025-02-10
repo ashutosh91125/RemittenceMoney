@@ -72,7 +72,7 @@
 												varStatus="status">
 												<tr>
 													<td>${status.index + 1}</td>
-													<td>${staffDetails.firstName}${staffDetails.lastName}</td>
+													<td>${staffDetails.firstName} ${staffDetails.lastName}</td>
 													<td>${staffDetails.username}</td>
 													<td>${staffDetails.email}</td>
 													<td>${staffDetails.mobile}</td>

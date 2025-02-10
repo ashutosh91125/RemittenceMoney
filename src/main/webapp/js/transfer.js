@@ -235,7 +235,6 @@ $(document).ready(function () {
 		            idDetailsTable.empty(); 
 
 		            if (idDetailsList.length > 0) {
-						let lastFiveRecords = idDetailsList.slice(-5);
 		                idDetailsList.forEach(function (idDetail) {
 							fetchEnumValue("idTypes", idDetail.idType, function (fullIdType) {
 							                        var idTypeDisplay = fullIdType || idDetail.idType || '';

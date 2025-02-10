@@ -93,6 +93,7 @@
 																class="avatar-text avatar-md"> <i
 																class="feather feather-eye"></i>
 															</a>
+															<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 															<div class="dropdown">
 																<a href="javascript:void(0)"
 																	onclick="toggleDropdown(this)"
@@ -112,6 +113,7 @@
 																	</a></li> -->
 																</ul>
 															</div>
+															</c:if>
 														</div></td>
 												</tr>
 											</c:forEach>

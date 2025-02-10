@@ -110,11 +110,18 @@ public class AuthController {
 
                     try {
                         // Get new role for authentication (without saving to DB)
-                        Role newRole = Role.valueOf(fetchedBranch.getBranchStaffRole());
+                        String newRole = fetchedBranch.getBranchStaffRole();
+                        if (newRole.contains("_TR")){
+                            newRole = "STAFF (TR)";
+                        } else if (newRole.contains("_HO")){
+                            newRole = "STAFF (HO)";
+                        }else {
+                            newRole = "STAFF";
+                        }
 
-                        // Update the user's authentication role in SecurityContext
-//                        updateUserAuthentication(authentication, newRole, request, response);
-                        request.getSession().setAttribute("role", newRole.name());
+                        request.getSession().setAttribute("roleName", newRole);
+                        request.getSession().setAttribute("branchName", fetchedBranch.getBranchName());
+                        request.getSession().setAttribute("role", fetchedBranch.getBranchStaffRole());
                         request.getSession().setAttribute("selectedBranch", branch);
                     } catch (IllegalArgumentException e) {
                         return logoutAndRedirect(request, response, "Invalid role");

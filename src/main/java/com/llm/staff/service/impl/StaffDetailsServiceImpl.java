@@ -74,6 +74,7 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 			existingDetails.setLastName(updatedDetails.getLastName());
 			existingDetails.setEmail(updatedDetails.getEmail());
 			existingDetails.setModifiedBy(updatedBy);
+			existingDetails.setBranches(updatedDetails.getBranches());
 			existingDetails.setModifiedOn(LocalDateTime.now());
 			existingDetails.setRemarks(updatedBy);
 			if (!updatedDetails.isStatus()){

@@ -40,13 +40,38 @@
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
     .user-name {
-        font-family: 'Poppins', sans-serif; /* Modern and clean font */
+        font-family: 'Poppins', sans-serif;
         color: #66B2FF;  /* Lighter blue */
-        font-weight: 600; /* Slightly bolder */
-        font-size: 18px;
+        font-weight: 600;
+        font-size: 16px;  /* Slightly smaller */
         margin-left: 10px;
         transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
     }
+
+    .user-role {
+        font-family: 'Poppins', sans-serif;
+        color: #666;
+        font-weight: 500;
+        font-size: 12px;  /* Smaller font size */
+        margin-left: 10px;
+        margin-top: -3px;
+    }
+
+    .user-branch {
+        font-family: 'Poppins', sans-serif;
+        color: #888; /* Lighter gray for branch */
+        font-weight: 400; /* Less emphasis */
+        font-size: 12px;  /* Smaller font size to match role */
+        margin-left: 10px;
+        margin-top: 2px; /* Adjust to ensure it fits below the role */
+    }
+
+    .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start; /* Align everything to the left */
+    }
+
 
     /* Hover effect for interaction */
     .user-name:hover {
@@ -188,16 +213,31 @@
 						</a>
 
 					</div>
-					<div class="dropdown nxl-h-item">
+					<div class="dropdown nxl-h-item ms-auto">
                         <a href="javascript:void(0);" data-bs-toggle="dropdown"
-                            role="button" data-bs-auto-close="outside">
+                            role="button" data-bs-auto-close="outside"
+                            class="d-flex align-items-center">
+
+                            <!-- User Details (Name + Role + Branch) -->
+                            <div class="user-info text-start me-2">
+                                <span class="user-name fw-bold d-block">
+                                    <c:out value="${sessionScope.loggedInUser}" />
+                                </span>
+                                <span class="user-role d-block">
+                                    <c:out value="${sessionScope.roleName}" />
+                                </span>
+                                <span class="user-branch d-block">
+                                   <c:out value="${sessionScope.branchName}" />
+                                </span>
+                            </div>
+
+                            <!-- Profile Image -->
                             <img src="assets/images/avatar/1.png" alt="user-image"
-                                class="img-fluid user-avtar me-0">
-                            <span class="user-name">
-                                <c:out value="${sessionScope.loggedInUser}" />
-                            </span>
+                                class="img-fluid user-avtar">
                         </a>
                     </div>
+
+
 				</div>
 			</div>
 			<!--! [End] Header Right !-->

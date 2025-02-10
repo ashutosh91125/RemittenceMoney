@@ -25,7 +25,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         boolean isPasswordExpired = user.getPasswordExpiryDate() != null && user.getPasswordExpiryDate().isBefore(LocalDate.now());
 
         String fetchRole = String.valueOf(user.getRole());
-        fetchRole = fetchRole.replace("_"," ");
+        if (fetchRole.equals("SUB_ADMIN")){
+            fetchRole = "ADMIN";
+        }
+        else if (fetchRole.equals("ADMIN")){
+            fetchRole = "SUPER ADMIN";
+        }
 
         request.getSession().setAttribute("roleName", fetchRole);
         request.getSession().setAttribute("loggedInUser", user.getAdminName());

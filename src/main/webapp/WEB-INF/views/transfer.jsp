@@ -1,4 +1,4 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="zxx">
@@ -252,9 +252,7 @@
 </style>
 <script type="text/javascript" src="js/transfer.js"></script>
 <script type="text/javascript" src="js/commons.js"></script>
-<script type="text/javascript">
-	
-</script>
+
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -353,52 +351,60 @@
 					<div id="idDetailsContainer">
 						<div class="row">
 							<div class="col-12 col-md-4">
-								<label class="form-label">Id Type</label> <select name="idType"
-									class="form-control p-2" id="idType1">
-									<option value="" disabled selected>Id Type</option>
-								</select>
+								<label class="form-label">Id Type<span class="text-danger">*</span></label> 
+								<select name="idType" class="form-control p-2" id="idType1"></select>
+								<span id="idType1Error" style="color: red;"></span>
 							</div>
 							<div class="col-12 col-md-4">
-								<label class="form-label">Id NUmber.</label> <input type="text"
-									name="idNumber" class="form-control" placeholder="Id NUmber"
+								<label class="form-label">Id Number.<span class="text-danger">*</span>
+								</label> <input type="text" name="idNumber" class="form-control" placeholder="Id Number"
 									id="idNumber1">
+									<span id="idNumber1Error" style="color: red;"></span>
 							</div>
 							<div class="col-12 col-md-4">
-								<label class="form-label">Name as per ID</label> <input
-									type="text" name="nameAsPerId" class="form-control"
+								<label class="form-label">Name as per ID<span class="text-danger">*</span>
+								</label> <input type="text" name="nameAsPerId" class="form-control"
 									placeholder="Name as per ID" id="nameAsPerId1">
+									<span id="nameAsPerId1Error" style="color: red;"></span>
 							</div>
 						</div>
 						<div class="row">
 							<div class="col-12 col-md-4">
-								<label class="form-label">Issued Country</label> <select
-									name="issuedCountry" class="form-control p-2"
+								<label class="form-label">Issued Country<span class="text-danger">*</span>
+								</label> <select name="issuedCountry" class="form-control p-2"
 									id="issuedCountry1">
 									<option value="" disabled selected>Issued Country</option>
 								</select>
+								<span id="issuedCountry1Error" style="color: red;"></span>
 							</div>
 							<div class="col-12 col-md-4">
-								<label class="form-label">Issued at</label> <select
+								<label class="form-label">Issued at
+								<span class="text-danger">*</span></label> <select
 									name="issuedAt" class="form-control p-2" id="issuedAt1">
 									<option value="" disabled selected>Issued at</option>
 								</select>
+								<span id="issuedAt1Error" style="color: red;"></span>
 							</div>
 							<div class="col-12 col-md-4">
-								<label class="form-label">Issued By</label> <input type="text"
-									name="issuedBy" class="form-control" id="issuedBy1"
+								<label class="form-label">Issued By<span class="text-danger">*</span></label> 
+								<input type="text" name="issuedBy" class="form-control" id="issuedBy1"
 									placeholder="Issued By">
+									<span id="issuedBy1Error" style="color: red;"></span>
 							</div>
 						</div>
 						<div class="row mt-2">
 							<div class="col-12 col-md-4">
-								<label class="form-label">Issued on</label> <input type="date"
+								<label class="form-label">Issued on<span class="text-danger">*</span>
+								</label> <input type="date"
 									name="issuedOn" class="form-control" min="1900-01-01"
 									max="${today}" placeholder="Date of Issue" id="issuedOn1">
+									<span id="issuedOn1Error" style="color: red;"></span>
 							</div>
 							<div class="col-12 col-md-4">
-								<label class="form-label">Date of Expiry</label> <input
+								<label class="form-label">Date of Expiry<span class="text-danger">*</span></label> <input
 									type="date" name="dateOfExpiry" class="form-control"
 									placeholder="Date of Expiry" min="${today}" id="dateOfExpiry1">
+									<span id="dateOfExpiry1Error" style="color: red;"></span>
 							</div>
 						</div>
 						<div class="row mt-2">
@@ -415,6 +421,27 @@
 									type="file" accept="image/jpeg, image/jpg"
 									class="form-control p-2" placeholder="Id Back"
 									id="backPictureFile" />
+							</div>
+						</div>
+						<div class="row mt-2" style="display:none;"  id="visa_details" >
+						<div class="col-12 col-md-4">
+								<label class="form-label">Visa Number<span class="text-danger">*</span></label> 
+								<input type="text" name="visaNumber" class="form-control" id="visaNumber1"
+									placeholder="Visa Number">
+							</div>
+						<div class="col-12 col-md-4">
+								<label class="form-label">Visa Expiry Date<span class="text-danger">*</span></label> <input
+									type="date" name="visaExpiryDate" class="form-control"
+									placeholder="Visa Expiry Date" min="${today}" id="visaExpiryDate1">
+							</div>
+						<div class="col-12 col-md-4"> 
+								<label class="form-label">Visa Type</label>
+								<select name="visaType" class="form-control p-2" id="visaType1">
+										<option value="" disabled="true" selected="true">Visa Type</option>
+										<option value="1">Employment</option>
+										<option value="2">Visitor</option>
+										<option value="3">MyKad</option>
+								</select>
 							</div>
 						</div>
 					</div>

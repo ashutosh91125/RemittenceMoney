@@ -1880,8 +1880,9 @@ function showSelectBeneficiaryDiv() {
 				      popupIdDetailsForUpdate.style.display = 'block';
 
 				      fetchAndPopulateDropdown('/api/enumEntities/country', '#issuedCountry1', 'Issued Country');
-				      fetchAndPopulateDropdown('/api/enumEntities/idTypes', '#idType1', 'Id Type');
-				      fetchAndPopulateDropdown('/api/enumEntities/country', '#issuedAt1', 'Issued Country');
+//				      fetchAndPopulateDropdown('/api/enumEntities/idTypes', '#idType1', 'Id Type');
+				      fetchAndPopulateDropdown('/api/enumEntities/country', '#issuedAt1', 'Issued at');
+					  fetchIdTypes();
 					
 					  
 				  }
@@ -1909,62 +1910,186 @@ function showSelectBeneficiaryDiv() {
 				          }
 				      });
 				  }
-				  document.addEventListener("DOMContentLoaded", function () {
-					const today = new Date();
-					   const tomorrow = new Date();
-					   tomorrow.setDate(today.getDate() + 1);
-					   
-					   const todayString = today.toISOString().split("T")[0];
-					   const tomorrowString = tomorrow.toISOString().split("T")[0];
+				  function fetchIdTypes() {
+				      $.ajax({
+				          url: '/api/enumEntities/idTypes',
+				          type: 'GET',
+				          success: function (response) {
+				              console.log(response);
+				              const dropdown = $('#idType1');
+				              dropdown.empty(); 
+							  let hasValue2 = false;
 
-					   const issuedOn1 = document.getElementById("issuedOn1");
-					   const dateOfExpiry1 = document.getElementById("dateOfExpiry1");
-
-					   issuedOn1.setAttribute("max", todayString);
-					   dateOfExpiry1.setAttribute("min", tomorrowString);
-				      document.getElementById("createIdDetailsButton").addEventListener("click", function () {
-				          alert(22);
-
-				          var ecrn = document.getElementById("ecrn").value; 
-				          var formData = new FormData();
-				          formData.append("idType", document.getElementById("idType1").value);
-				          formData.append("idNumber", document.getElementById("idNumber1").value);
-				          formData.append("nameAsPerId", document.getElementById("nameAsPerId1").value);
-				          formData.append("issuedCountry", document.getElementById("issuedCountry1").value);
-				          formData.append("issuedAt", document.getElementById("issuedAt1").value);
-				          formData.append("issuedBy", document.getElementById("issuedBy1").value);
-				          formData.append("issuedOn", document.getElementById("issuedOn1").value);
-				          formData.append("dateOfExpiry", document.getElementById("dateOfExpiry1").value);
-
-				          var frontFile = document.getElementById("frontPictureFile").files[0];
-				          var backFile = document.getElementById("backPictureFile").files[0];
-
-				          if (frontFile) {
-				              formData.append("frontPictureFile", frontFile);
-				          }
-				          if (backFile) {
-				              formData.append("backPictureFile", backFile);
-				          }
-
-				          $.ajax({
-				              url: '/caas/api/v2/customer/id-details?ecrn=' + ecrn,
-				              type: 'POST',
-				              data: formData,
-				              contentType: false,  
-				              processData: false,   
-				              success: function (response) {
-				                  alert("ID Craeated Successfully!");
-				                  window.location.reload();
-				              },
-				              error: function (xhr, status, error) {
-				                  console.error('Error updating ID details:', error);
-				                  alert('Failed to craete ID details. Please try again.');
+				              if (response && Array.isArray(response)) {
+				                  $.each(response, function (index, obj) {
+				                      dropdown.append(`<option value="${obj.valueId}">${obj.description}</option>`);
+									  if (obj.valueId == 2) hasValue2 = true;
+									  
+				                  });
+				              } else if (response && response.values && Array.isArray(response.values)) {
+				                  $.each(response.values, function (index, obj) {
+				                      dropdown.append(`<option value="${obj.valueId}">${obj.description}</option>`);
+									  if (obj.valueId == 2) hasValue2 = true;
+									  $('#visa_details').show(); 
+				                  });
+				              } else {
+				                  console.error("No data found for Id Type.");
 				              }
-				          });
+							  if (hasValue2) {
+							                  dropdown.val(2).trigger('change');
+							              }
+				          },
+				          error: function () {
+				              console.error("Error fetching Id Types.");
+				          }
 				      });
+				  }
+				  $(document).on('change', '#idType1', function () {
+				      if ($(this).val() == '2') {
+				          $('#visa_details').show(); 
+				      } else {
+				          $('#visa_details').hide();
+				      }
+				  })
+				  $(document).ready(function () {
+				      fetchIdTypes();
 				  });
+				  
+				  document.addEventListener("DOMContentLoaded", function () {
+				      const today = new Date();
+				      const tomorrow = new Date();
+				      tomorrow.setDate(today.getDate() + 1);
+
+				      const todayString = today.toISOString().split("T")[0];
+				      const tomorrowString = tomorrow.toISOString().split("T")[0];
+
+				      document.getElementById("issuedOn1").setAttribute("max", todayString);
+				      document.getElementById("dateOfExpiry1").setAttribute("min", tomorrowString);
+					  document.getElementById("idNumber1").addEventListener("input", function () {
+					         let idNumber = this.value;
+					         if (idNumber.trim().length > 0) {
+					             verifyIdNumber(idNumber, function (exists) {
+					                 const errorElement = document.getElementById("idNumber1Error");
+					                 if (exists) {
+					                     errorElement.innerText = "Please change ID Number, this ID is already available.";
+					                 } else {
+					                     errorElement.innerText = "";
+					                 }
+					             });
+					         }
+					     });
 
 
+						 document.getElementById("createIdDetailsButton").addEventListener("click", function (event) {
+						         event.preventDefault(); 
+
+						         const idNumber = document.getElementById("idNumber1").value;
+
+						         verifyIdNumber(idNumber, function (exists) {
+						             if (exists) {
+						                 return;
+						             }
+
+						             if (!validateForm()) {
+						                 return;
+						             }
+
+						             const ecrn = document.getElementById("ecrn").value;
+						             const formData = new FormData();
+						             formData.append("idType", document.getElementById("idType1").value);
+						             formData.append("idNumber", document.getElementById("idNumber1").value);
+						             formData.append("nameAsPerId", document.getElementById("nameAsPerId1").value);
+						             formData.append("issuedCountry", document.getElementById("issuedCountry1").value);
+						             formData.append("issuedAt", document.getElementById("issuedAt1").value);
+						             formData.append("issuedBy", document.getElementById("issuedBy1").value);
+						             formData.append("issuedOn", document.getElementById("issuedOn1").value);
+						             formData.append("dateOfExpiry", document.getElementById("dateOfExpiry1").value);
+						             formData.append("visaNumber", document.getElementById("visaNumber1").value);
+						             formData.append("visaExpiryDate", document.getElementById("visaExpiryDate1").value);
+						             formData.append("visaType", document.getElementById("visaType1").value);
+
+						             const frontFile = document.getElementById("frontPictureFile").files[0];
+						             const backFile = document.getElementById("backPictureFile").files[0];
+
+						             if (frontFile) {
+						                 formData.append("frontPictureFile", frontFile);
+						             }
+						             if (backFile) {
+						                 formData.append("backPictureFile", backFile);
+						             }
+
+						             $.ajax({
+						                 url: '/caas/api/v2/customer/id-details?ecrn=' + ecrn,
+						                 type: 'POST',
+						                 data: formData,
+						                 contentType: false,
+						                 processData: false,
+						                 success: function (response) {
+						                     alert("ID Created Successfully!");
+						                     window.location.reload();
+						                 },
+						                 error: function (xhr, status, error) {
+						                     console.error('Error updating ID details:', error);
+						                     alert('Failed to create ID details. Please try again.');
+						                 }
+						             });
+						         });
+						     });
+
+				      function verifyIdNumber(idNumber,callback) {
+				          $.ajax({
+				              url: '/caas/api/v2/iddetail/verify-idNumber?idNumber=' + idNumber,
+				              type: 'GET',
+				              success: function (response) {
+								console.log(response);
+				                  if (response) {
+				                      document.getElementById("idNumber1Error").innerText = "Please change Id Number, this ID is already available.";
+				                      callback(true);
+				                  } else {
+				                      document.getElementById("idNumber1Error").innerText = "";
+				                     callback(false);
+				                  }
+				              },
+							  error: function (xhr, status, error) {
+							  	console.error('Error verify ID details:', error);
+								callback(false);
+							  	}
+				          });
+				      }
+				      function validateForm() {
+				          let isValid = true;
+
+				          function setError(id, message) {
+				              document.getElementById(id).innerText = message;
+				              isValid = false;
+				          }
+
+				          function clearError(id) {
+				              document.getElementById(id).innerText = "";
+				          }
+
+				       
+				          const requiredFields = [
+				              { id: "idType1", errorId: "idType1Error", message: "ID Type is required." },
+				              { id: "idNumber1", errorId: "idNumber1Error", message: "ID Number is required." },
+				              { id: "nameAsPerId1", errorId: "nameAsPerId1Error", message: "Name as per ID is required." },
+				              { id: "issuedCountry1", errorId: "issuedCountry1Error", message: "Issued Country is required." },
+				              { id: "issuedAt1", errorId: "issuedAt1Error", message: "Issued at is required." },
+				              { id: "issuedBy1", errorId: "issuedBy1Error", message: "Issued By is required." },
+				             
+				          ];
+
+				          requiredFields.forEach(field => {
+				              const value = document.getElementById(field.id).value.trim();
+				              if (value === "") {
+				                  setError(field.errorId, field.message);
+				              } else {
+				                  clearError(field.errorId);
+				              }
+				          });			        
+				          return isValid;
+				      }
+				  });
 					function closePopup() {
 					    const container = document.querySelector('.nxl-container');
 					    container.classList.remove('blur-background');

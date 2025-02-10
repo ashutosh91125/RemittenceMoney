@@ -206,7 +206,7 @@
                     });
                 } else {
                     alert('Failed to load branches. Response format is incorrect.');
-                }
+                } 
             },
             error: function (xhr, status, error) {
                 console.error('Error fetching branches:', error);

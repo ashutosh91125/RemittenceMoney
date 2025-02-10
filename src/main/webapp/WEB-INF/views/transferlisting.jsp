@@ -260,7 +260,7 @@
         if (!staffValue) {
             $('#transfer-list tbody').hide(); // Hide table body if value is empty
         } else {
-            table.column(1).search(staffValue).draw();
+            table.column(2).search(staffValue).draw();
             $('#transfer-list tbody').show(); // Show table body when a value is selected
         }
     });
@@ -306,7 +306,7 @@
         if (!agentValue) {
             $('#transfer-list tbody').hide(); // Hide table body if value is empty
         } else {
-            table.column(1).search(agentValue).draw();
+            table.column(0).search(agentValue).draw();
             $('#transfer-list tbody').show(); // Show table body when a value is selected
         }
     });

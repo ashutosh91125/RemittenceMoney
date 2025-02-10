@@ -341,7 +341,7 @@ document.addEventListener('DOMContentLoaded', function () {
 					</div>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
-						<li class="breadcrumb-item">Add Agent</li>
+						<li class="breadcrumb-item">Agent Register</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">

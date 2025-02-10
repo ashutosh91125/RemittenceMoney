@@ -176,15 +176,14 @@
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 
-			<!-- [ page-header ] start -->
 			<div class="page-header" style="background: aliceblue;">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
-						<h5 class="m-b-10">Customers</h5>
+						<h5 class="m-b-10">Customer</h5>
 					</div>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
-						<li class="breadcrumb-item">Add Customer</li>
+						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
+						<li class="breadcrumb-item">Customer Register</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">
@@ -195,19 +194,19 @@
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						 <div
-                            class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                       <!--      <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
-                                <i class="feather-layers me-2"></i>
-                                <span>Save as Draft</span>
-                            </a>-->
-                         <div>
+						<!-- <div
+							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
+							<a href="javascript:void(0);"
+								class="btn btn-primary successAlertMessage">  <i class="feather-user-plus me-2"></i>
+								<span>Transfer</span>
+							</a>
+						</div> -->
+						<div>
 							<a onclick="goBack()"> <i
 								class="bi bi-arrow-left-circle-fill text-primary"
 								style="font-size: 30px;"></i></a>
 						</div>
 							<label class="form-label">Back</label>
-                        </div>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -216,7 +215,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- [ page-header ] end -->
 
 			<jsp:include page="customersearch.jsp"></jsp:include>
 

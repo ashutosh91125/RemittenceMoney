@@ -242,7 +242,7 @@ $.ajax({
 					</div>
 					<ul class="breadcrumb">
 						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
-						<li class="breadcrumb-item">Add Customer</li>
+						<li class="breadcrumb-item">Customer Details</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">

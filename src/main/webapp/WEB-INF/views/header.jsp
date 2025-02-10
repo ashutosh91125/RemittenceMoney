@@ -138,7 +138,7 @@
 
                     <c:if
                         test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
-                    <li class="nxl-item nxl-hasmenu"><a href="#"
+                    <li class="nxl-item nxl-hasmenu"><a href="/lulu-staff-list"
                         class="nxl-link"> <span class="nxl-micon"><i
                                 class="feather-users"></i></span> <span class="nxl-mtext">All Lulu Staff</span>
                     </a></li>

@@ -532,7 +532,12 @@ public class CustomerService {
 		result.put("native_region", updateCustomer.getNativeRegion() != null ? updateCustomer.getNativeRegion() : existingCustomer.getNativeRegion());
 		result.put("date_of_birth", updateCustomer.getDateOfBirth() != null ? updateCustomer.getDateOfBirth() : existingCustomer.getDateOfBirth());  // Ensure this is formatted properly
 		result.put("country_of_birth", updateCustomer.getCountryOfBirth() != null ? updateCustomer.getCountryOfBirth() : existingCustomer.getCountryOfBirth());
-		result.put("place_of_birth", updateCustomer.getPlaceOfBirth() != null ? updateCustomer.getPlaceOfBirth() : existingCustomer.getPlaceOfBirth());
+			if (Objects.equals(updateCustomer.getCountryOfBirth(), "MY")) {
+			String placeOfBirth = (updateCustomer.getPlaceOfBirth().substring(0, updateCustomer.getPlaceOfBirth().length() - 4)).trim();
+			result.put("place_of_birth", placeOfBirth);
+			}else {
+				result.put("place_of_birth", updateCustomer.getPlaceOfBirth() != null ? updateCustomer.getPlaceOfBirth() : existingCustomer.getPlaceOfBirth());
+			}
 		result.put("resident_type_id", updateCustomer.getResidentTypeId() != null ? updateCustomer.getResidentTypeId() : existingCustomer.getResidentTypeId());
 		result.put("country_of_residence", updateCustomer.getCountryOfResidence() != null ? updateCustomer.getCountryOfResidence() : existingCustomer.getCountryOfResidence());
 		result.put("gender", updateCustomer.getGender() != null ? updateCustomer.getGender() : existingCustomer.getGender());

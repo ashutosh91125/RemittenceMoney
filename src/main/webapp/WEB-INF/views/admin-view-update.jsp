@@ -10,7 +10,7 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<title>payment.html</title>
+<title>Admin Update</title>
 <link rel="stylesheet" type="text/css"
 	href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"

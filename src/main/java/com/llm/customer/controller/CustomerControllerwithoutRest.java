@@ -1,8 +1,12 @@
 package com.llm.customer.controller;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +24,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.llm.common.enums.Gender;
 import com.llm.common.model.EnumEntity;
+import com.llm.common.model.EnumValue;
 import com.llm.common.service.EnumEntityService;
 import com.llm.customer.model.Customer;
 import com.llm.customer.service.CustomerService;
 import com.llm.iddetail.model.IdDetail;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 //@SessionAttributes({ "custDTO" })
@@ -402,7 +409,18 @@ public class CustomerControllerwithoutRest {
 	}
 	@GetMapping("/updateCustomer")
 	public String onboardCustomer2(@RequestParam("ecrn") String ecrn, Model model) {
-		Optional<Customer> customer = customerService.getByEcrn(ecrn);
+		Optional<Customer> optionalCustomer = customerService.getByEcrn(ecrn);
+		if (optionalCustomer.isPresent()) {
+	        Customer customer = optionalCustomer.get(); // Get the actual Customer object
+	        if (customer.getNationality() != null) {
+	            List<EnumValue> nativeRegionList = enumEntityService.getDataByDependent(customer.getNationality());
+	            model.addAttribute("nativeRegionList", nativeRegionList);
+	        } else {
+	        	Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
+				nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
+	        }
+	        model.addAttribute("customer", customer);
+	    }
 		try {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
 			salutationEntity.ifPresent(entity -> model.addAttribute("salutationList", entity.getValues()));
@@ -534,14 +552,6 @@ public class CustomerControllerwithoutRest {
 			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
 		}
 		try {
-			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
-			nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
-
-		} catch (Exception e) {
-			logger.error("Error Native Region List: ", e);
-			model.addAttribute("native Region List", List.of()); // or set a default list if needed
-		}
-		try {
 			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
 			placeofBirthEntity.ifPresent(entity -> model.addAttribute("placeOfBirthList", entity.getValues()));
 
@@ -557,7 +567,7 @@ public class CustomerControllerwithoutRest {
 			logger.error("Error State List: ", e);
 			model.addAttribute("State List", List.of()); // or set a default list if needed
 		}
-		model.addAttribute("customer",customer.get());
+	
 		return "customeronboardupdate";
 	}
 }

@@ -154,8 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: 'GET',
 //                 data: { ecrn: ecrn },
                 success: function(response) {
-                	 $('body').html(response);
+//                 	 $('body').html(response);
 //                     window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);
+                	window.location.href = 'updateCustomer?ecrn='+ecrn;
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX Error: ' + error);

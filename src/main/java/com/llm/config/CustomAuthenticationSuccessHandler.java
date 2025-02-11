@@ -30,6 +30,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         }
         else if (fetchRole.equals("ADMIN")){
             fetchRole = "SUPER ADMIN";
+        } else if (fetchRole.equals("STAFF_ALL")) {
+            fetchRole = "LULU STAFF";
         }
 
         request.getSession().setAttribute("roleName", fetchRole);
@@ -39,7 +41,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             response.sendRedirect("/change-password?message=Password change required");
         } else if (isPasswordExpired) {
             response.sendRedirect("/change-password?message=Password expired");
-        } else if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
+        } else if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF") && !role.getAuthority().equals("ROLE_STAFF_ALL"))) {
                 response.sendRedirect("/select-branch");
         }else {
             response.sendRedirect("/welcome");

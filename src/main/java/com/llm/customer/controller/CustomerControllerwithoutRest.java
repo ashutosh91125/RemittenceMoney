@@ -419,10 +419,18 @@ public class CustomerControllerwithoutRest {
 	        	Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
 				nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
 	        }
-	        if (customer.getCountryOfBirth() != null) {
-	            List<EnumValue> placeOfBirthList = enumEntityService.getDataByDependent(customer.getCountryOfBirth());
+//	        List<EnumValue> placeOfBirthList = null;
+	        if (customer.getCountryOfBirth().equals("MY")) {
+	            List<EnumValue> placeOfBirthList = enumEntityService.getDataByDependent(customer.getCountryOfBirth()+"R");
+
 	            model.addAttribute("placeOfBirthList", placeOfBirthList);
-	        } else {
+	        }
+	        else if (customer.getCountryOfBirth() != null) {
+	            List<EnumValue> placeOfBirthList = enumEntityService.getDataByDependent(customer.getCountryOfBirth());
+
+	            model.addAttribute("placeOfBirthList", placeOfBirthList);
+	        }
+	        else {
 	        	Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
 	        	placeofBirthEntity.ifPresent(entity -> model.addAttribute("placeOfBirthList", entity.getValues()));
 	        }

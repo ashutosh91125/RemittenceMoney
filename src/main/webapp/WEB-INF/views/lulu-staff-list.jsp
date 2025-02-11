@@ -107,7 +107,7 @@
 																<ul class="dropdown-menu"
 																	style="position: absolute; right: 38px; top: 54px;">
 																	<li><a class="dropdown-item"
-																		href="/luluStaff-update-form?id=${luluStaff.id}"> <i
+																		href="/lulu-staff-update?id=${luluStaff.id}"> <i
 																			class="feather feather-edit-3 me-3"></i> <span>Edit</span>
 																	</a></li>
 																	<!-- 																	<li class="dropdown-divider"></li> -->

@@ -18,7 +18,7 @@
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
-function updateAdmin() {
+function updateLuluStaff() {
     document.getElementById("adminNameError").innerHTML = "";
     document.getElementById("userNameError").innerHTML = "";
     document.getElementById("phoneNumberError").innerHTML = "";
@@ -34,7 +34,7 @@ function updateAdmin() {
     const country = document.getElementById("country").value;
 
     if (!adminName) {
-        document.getElementById("adminNameError").innerHTML = "Admin Name is required.";
+        document.getElementById("adminNameError").innerHTML = "Lulu Staff Name is required.";
         isValid = false;
     }
     if (!userName) {
@@ -72,14 +72,14 @@ function updateAdmin() {
 
 
     const id = $('#id').val();
-    const formData = $("#adminForm").serializeArray();
+    const formData = $("#luluStaffForm").serializeArray();
     const data = {};
     formData.forEach(item => data[item.name] = item.value);
 
     $('#loader').show();
     $('#submitButton').prop('disabled', true);
     $.ajax({
-        url: "/admin-update?id=" + id,
+        url: "/lulu-staff-update?id=" + id,
         type: "PUT",
         contentType: "application/json", // Send JSON data
         data: JSON.stringify(data),
@@ -87,7 +87,7 @@ function updateAdmin() {
             $('#loader').hide();
             $('#submitButton').prop('disabled', false);
             alert(response);
-            window.location.href = "/adminlist";
+            window.location.href = "/lulu-staff-list";
         },
         error: function(xhr) {
             $('#loader').hide();
@@ -108,11 +108,11 @@ function updateAdmin() {
 	<div class="page-header" style="background: aliceblue;">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
-						<h5 class="m-b-10">Admin</h5>
+						<h5 class="m-b-10">Lulu Staff</h5>
 					</div>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="index.html">Home</a></li>
-						<li class="breadcrumb-item">Admin Update</li>
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
+						<li class="breadcrumb-item">Lulu Staff Update</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">
@@ -151,22 +151,22 @@ function updateAdmin() {
 					<div class="card-header p-0">
 						<%-- <jsp:include page="subheaderagent.jsp"></jsp:include> --%>
 					</div>
-					<form:form method="post" modelAttribute="user" id="adminForm"
+					<form:form method="post" modelAttribute="user" id="luluStaffForm"
 						enctype="multipart/form-data"
-						onsubmit="event.preventDefault(); updateAdmin();">
+						onsubmit="event.preventDefault(); updateLuluStaff();">
 						<form:hidden path="id" value="" id="id" />
 						<div class="card-body lead-status">
 
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Name<span
+									<label class="form-label">Full Name<span
 										class="text-danger">*</span></label>
 									<form:input path="adminName" type="text" class="form-control"
-										id="adminName" placeholder="Admin Name" />
+										id="adminName" placeholder="Lulu Staff Name" />
 									<span id="adminNameError" style="color: red;"></span>
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">User Name<span
+									<label class="form-label">Username<span
 										class="text-danger">*</span></label>
 									<form:input path="username" type="text" class="form-control"
 										id="userName" placeholder="User Name" />

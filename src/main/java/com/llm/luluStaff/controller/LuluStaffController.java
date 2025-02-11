@@ -58,7 +58,7 @@ public class LuluStaffController {
         return "redirect:/lulu-staff-list";
     }
 
-    @GetMapping("/lulu-staff-update-form")
+    @GetMapping("/lulu-staff-update")
     public String getUserUpdateForm(@RequestParam("id") Long id, Model model) {
         Optional<User> userOptional = customUserDetailsService.getById(id);
         try {
@@ -72,7 +72,7 @@ public class LuluStaffController {
         if (userOptional.isPresent()) {
             model.addAttribute("user", userOptional.get());
         }
-        return "admin-view-update";
+        return "lulu-staff-update";
     }
 
     @PutMapping("/lulu-staff-update")

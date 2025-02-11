@@ -407,7 +407,7 @@ public class CustomerControllerwithoutRest {
 		}
 		return "redirect:/customer";
 	}
-	@GetMapping("/updateCustomer")
+	@GetMapping("/updateCustomer") 
 	public String onboardCustomer2(@RequestParam("ecrn") String ecrn, Model model) {
 		Optional<Customer> optionalCustomer = customerService.getByEcrn(ecrn);
 		if (optionalCustomer.isPresent()) {

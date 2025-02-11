@@ -186,7 +186,7 @@ public class AuthController {
         model.addAttribute("name", userDetails.getAdminName());
 
         Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
-        if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF"))) {
+        if (authorities.stream().anyMatch(role -> role.getAuthority().startsWith("ROLE_STAFF") && !role.getAuthority().equals("ROLE_STAFF_ALL"))) {
             Optional<StaffDetails> staffDetails = staffDetailsRepository.findByUsername(userDetails.getUsername());
             model.addAttribute("transferCount", transferRepository.countByStaffId(staffDetails.get().getId()));
             return "superadmindasbord";

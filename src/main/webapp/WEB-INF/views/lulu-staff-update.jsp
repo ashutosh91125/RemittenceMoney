@@ -190,11 +190,12 @@ function updateLuluStaff() {
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country<span
-										class="text-danger">*</span></label> <select class="form-control"
-										id="country" name="country">
-										<c:forEach items="${countryList}" var="country">
-											<option value="${country.valueId}">${country.description}</option>
-										</c:forEach>
+										class="text-danger">*</span></label>
+                                    <form:select path="country" data-select2-selector="tag"
+                                        id="country" title="Select a country" class="form-control">
+                                        <form:options items="${countryList}"
+                                            itemValue="valueId" itemLabel="description" />
+                                    </form:select>
 									</select> <span id="countryError" style="color: red;"></span>
 								</div>
 

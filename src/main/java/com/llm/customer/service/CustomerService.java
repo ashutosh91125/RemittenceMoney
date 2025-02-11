@@ -655,25 +655,25 @@ public class CustomerService {
 		}
 		result.put("id_details", idDetails);
 		Map<String, Object> classificationMap = new HashMap<>();
-		classificationMap.put("customer_type_id", updateCustomer.getCustomerTypeId() != null && updateCustomer.getCustomerTypeId() != null ? updateCustomer.getCustomerTypeId() : existingCustomer.getCustomerTypeId());
-		classificationMap.put("income_type", updateCustomer.getIncomeType() != null && updateCustomer.getIncomeType() != null ? updateCustomer.getIncomeType() : existingCustomer.getIncomeType());
-		classificationMap.put("annual_income_range_id", updateCustomer.getAnnualIncomeRangeId() != null && updateCustomer.getAnnualIncomeRangeId() != null ? updateCustomer.getAnnualIncomeRangeId() : existingCustomer.getAnnualIncomeRangeId());
-		classificationMap.put("annual_income_currency_code", updateCustomer.getAnnualIncomeCurrencyCode() != null && updateCustomer.getAnnualIncomeCurrencyCode() != null ? updateCustomer.getAnnualIncomeCurrencyCode(): existingCustomer.getAnnualIncomeCurrencyCode());
-		classificationMap.put("txn_vol_month", updateCustomer.getTxnVolMonth() != null && updateCustomer.getTxnVolMonth() != null ? updateCustomer.getTxnVolMonth() : existingCustomer.getTxnVolMonth());
-		classificationMap.put("txn_count_month", updateCustomer.getTxnCountMonth() != null && updateCustomer.getTxnCountMonth() != null ? updateCustomer.getTxnCountMonth() : existingCustomer.getTxnCountMonth());
-		classificationMap.put("employer_name", updateCustomer.getEmployerName() != null && updateCustomer.getEmployerName() != null ? updateCustomer.getEmployerName(): existingCustomer.getEmployerName());
-		classificationMap.put("employer_address", updateCustomer.getEmployerAddress() != null && updateCustomer.getEmployerAddress() != null ? updateCustomer.getEmployerAddress() : existingCustomer.getEmployerAddress());
-		classificationMap.put("employer_phone", updateCustomer.getEmployerPhone() != null && updateCustomer.getEmployerPhone() != null ? updateCustomer.getEmployerPhone(): existingCustomer.getEmployerPhone());
-		classificationMap.put("profession_category", updateCustomer.getProfessionCategory() != null && updateCustomer.getProfessionCategory() != null ? updateCustomer.getProfessionCategory(): existingCustomer.getProfessionCategory());
-		classificationMap.put("first_language", updateCustomer.getFirstLanguage() != null && updateCustomer.getFirstLanguage() != null ? updateCustomer.getFirstLanguage(): existingCustomer.getFirstLanguage());
-		classificationMap.put("marital_status", updateCustomer.getMaritalStatus() != null && updateCustomer.getMaritalStatus() != null ? updateCustomer.getMaritalStatus(): existingCustomer.getMaritalStatus());
-		classificationMap.put("risk_rating_id", updateCustomer.getRiskRatingId() != null && updateCustomer.getRiskRatingId() != null ? updateCustomer.getRiskRatingId(): existingCustomer.getRiskRatingId());
-		classificationMap.put("dnfbp", updateCustomer.getDnfbp() != null && updateCustomer.getDnfbp() != null ? updateCustomer.getDnfbp(): existingCustomer.getDnfbp());
-		classificationMap.put("dpms", updateCustomer.getDpms() != null && updateCustomer.getDpms() != null ? updateCustomer.getDpms(): existingCustomer.getDpms());
-		classificationMap.put("tax_registration_number", updateCustomer.getTaxRegistrationNumber() != null && updateCustomer.getTaxRegistrationNumber() != null ? updateCustomer.getTaxRegistrationNumber(): existingCustomer.getTaxRegistrationNumber());
-		classificationMap.put("txn_issued_country", updateCustomer.getTxnIssuedCountry() != null && updateCustomer.getTxnIssuedCountry() != null ? updateCustomer.getTxnIssuedCountry(): existingCustomer.getTxnIssuedCountry());
-		classificationMap.put("show_remarks_on_txn", updateCustomer.getShowRemarksOnTxn() != null && updateCustomer.getShowRemarksOnTxn() != null ? updateCustomer.getShowRemarksOnTxn(): existingCustomer.getShowRemarksOnTxn());
-		classificationMap.put("customer_remarks", updateCustomer.getCustomerRemarks() != null && updateCustomer.getCustomerRemarks() != null ? updateCustomer.getCustomerRemarks(): existingCustomer.getCustomerRemarks());
+		classificationMap.put("customer_type_id", updateCustomer.getCustomerTypeId() != null ? updateCustomer.getCustomerTypeId() : existingCustomer.getCustomerTypeId());
+		classificationMap.put("income_type",updateCustomer.getIncomeType() != null ? updateCustomer.getIncomeType() : existingCustomer.getIncomeType());
+		classificationMap.put("annual_income_range_id",updateCustomer.getAnnualIncomeRangeId() != null ? updateCustomer.getAnnualIncomeRangeId() : existingCustomer.getAnnualIncomeRangeId());
+		classificationMap.put("annual_income_currency_code", updateCustomer.getAnnualIncomeCurrencyCode() != null ? updateCustomer.getAnnualIncomeCurrencyCode(): existingCustomer.getAnnualIncomeCurrencyCode());
+		classificationMap.put("txn_vol_month",  updateCustomer.getTxnVolMonth() != null ? updateCustomer.getTxnVolMonth() : existingCustomer.getTxnVolMonth());
+		classificationMap.put("txn_count_month", updateCustomer.getTxnCountMonth() != null ? updateCustomer.getTxnCountMonth() : existingCustomer.getTxnCountMonth());
+		classificationMap.put("employer_name",  updateCustomer.getEmployerName() != null ? updateCustomer.getEmployerName(): existingCustomer.getEmployerName());
+		classificationMap.put("employer_address", updateCustomer.getEmployerAddress() != null ? updateCustomer.getEmployerAddress() : existingCustomer.getEmployerAddress());
+		classificationMap.put("employer_phone", updateCustomer.getEmployerPhone() != null ? updateCustomer.getEmployerPhone(): existingCustomer.getEmployerPhone());
+		classificationMap.put("profession_category", updateCustomer.getProfessionCategory() != null ? updateCustomer.getProfessionCategory(): existingCustomer.getProfessionCategory());
+		classificationMap.put("first_language",  updateCustomer.getFirstLanguage() != null ? updateCustomer.getFirstLanguage(): existingCustomer.getFirstLanguage());
+		classificationMap.put("marital_status",  updateCustomer.getMaritalStatus() != null ? updateCustomer.getMaritalStatus(): existingCustomer.getMaritalStatus());
+		classificationMap.put("risk_rating_id", updateCustomer.getRiskRatingId() != null ? updateCustomer.getRiskRatingId(): existingCustomer.getRiskRatingId());
+		classificationMap.put("dnfbp",updateCustomer.getDnfbp() != null ? updateCustomer.getDnfbp(): existingCustomer.getDnfbp());
+		classificationMap.put("dpms",  updateCustomer.getDpms() != null ? updateCustomer.getDpms(): existingCustomer.getDpms());
+		classificationMap.put("tax_registration_number", updateCustomer.getTaxRegistrationNumber() != null ? updateCustomer.getTaxRegistrationNumber(): existingCustomer.getTaxRegistrationNumber());
+		classificationMap.put("txn_issued_country", updateCustomer.getTxnIssuedCountry() != null ? updateCustomer.getTxnIssuedCountry(): existingCustomer.getTxnIssuedCountry());
+		classificationMap.put("show_remarks_on_txn", updateCustomer.getShowRemarksOnTxn() != null ? updateCustomer.getShowRemarksOnTxn(): existingCustomer.getShowRemarksOnTxn());
+		classificationMap.put("customer_remarks",  updateCustomer.getCustomerRemarks() != null ? updateCustomer.getCustomerRemarks(): existingCustomer.getCustomerRemarks());
 
 		Map<String, Object> profilePhotoData = new HashMap<>();
 		classificationMap.put("base64_data", updateCustomer.getProfBase64Data());
@@ -722,6 +722,17 @@ public class CustomerService {
 		if (updateCustomer.getZip() != null) existingCustomer.setZip(updateCustomer.getZip());
 		if (updateCustomer.getPoBox() != null) existingCustomer.setPoBox(updateCustomer.getPoBox());
 		if (updateCustomer.getMobileNumber() != null) existingCustomer.setMobileNumber(updateCustomer.getMobileNumber());
+		
+		if (updateCustomer.getParBuildingName() != null) existingCustomer.setParBuildingName(updateCustomer.getParBuildingName());
+		if (updateCustomer.getParStreetName() != null) existingCustomer.setParStreetName(updateCustomer.getParStreetName());
+		if (updateCustomer.getParLandmark() != null) existingCustomer.setParLandmark(updateCustomer.getParLandmark());
+		if (updateCustomer.getParCity() != null) existingCustomer.setParCity(updateCustomer.getParCity());
+		if (updateCustomer.getParDistrict() != null) existingCustomer.setParDistrict(updateCustomer.getParDistrict());
+		if (updateCustomer.getParState() != null) existingCustomer.setParState(updateCustomer.getParState());
+		if (updateCustomer.getParCountry() != null) existingCustomer.setParCountry(updateCustomer.getParCountry());
+		if (updateCustomer.getParZip() != null) existingCustomer.setParZip(updateCustomer.getParZip());
+		if (updateCustomer.getParPoBox() != null) existingCustomer.setParPoBox(updateCustomer.getParPoBox());
+		if (updateCustomer.getParMobileNumber() != null) existingCustomer.setParMobileNumber(updateCustomer.getParMobileNumber());
 
 		// ID details update (if non-empty list)
 //		if (updateCustomer.getIdDetails() != null && !updateCustomer.getIdDetails().isEmpty()) {

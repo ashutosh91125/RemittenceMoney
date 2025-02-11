@@ -246,9 +246,9 @@ $(document).ready(function () {
         e.preventDefault();
         console.log("Form Submitted");
 
-       /*  if (!validation(this)) {
+         if (!validation(this)) {
             return false;
-        } */
+        } 
 
         $('#loader').show();
         const formData = new FormData(this);
@@ -1194,7 +1194,6 @@ $(document).ready(function() {
 																		<form:select id="idTypeDropdown${status.index}"
 																			path="idDetails[${status.index}].idType"
 																			class="form-control">
-																			<%--  																	 <form:option value="2" selected="true">PASSPORT</form:option>   --%>
 																			<form:options items="${idTypesList}"
 																				itemValue="valueId" itemLabel="description" />
 																		</form:select>

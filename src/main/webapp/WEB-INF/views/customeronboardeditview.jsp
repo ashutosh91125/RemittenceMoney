@@ -33,7 +33,7 @@
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
 <script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Feather Icons (optional for search icon) -->
+<!-- Feather Icons (optional for search icon) --> 
 <script src="https://unpkg.com/feather-icons"></script>
 <style>
 .search-bar-container input {

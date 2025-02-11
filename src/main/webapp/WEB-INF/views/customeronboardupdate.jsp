@@ -409,7 +409,7 @@ $(document).ready(function() {
                     console.error("Error fetching states for the selected country.");
                 }
             });
-        } else {
+        } else { 
             $('#parStateDropdown')
                 .empty()
                 .append('<option value="" disabled selected>Select State</option>');

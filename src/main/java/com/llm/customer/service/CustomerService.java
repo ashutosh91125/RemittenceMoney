@@ -72,10 +72,10 @@ public class CustomerService {
 
 		customer.setChannel(branch.get().getCdpChannel());
 		customer.setAgentLocationId(formattedCountry);
-		if (Objects.equals(customer.getCountryOfBirth(), "MY")) {
-			customer.setPlaceOfBirth(
-					(customer.getPlaceOfBirth().substring(0, customer.getPlaceOfBirth().length() - 4)).trim());
-		}
+//		if (Objects.equals(customer.getCountryOfBirth(), "MY")) {
+//			customer.setPlaceOfBirth(
+//					(customer.getPlaceOfBirth().substring(0, customer.getPlaceOfBirth().length() - 4)).trim());
+//		}
 		// customer.setAgentLocationId("India");
 
 		ZoneId mytZone = ZoneId.of("Asia/Kuala_Lumpur");
@@ -101,7 +101,13 @@ public class CustomerService {
 			customerData.put("date_of_birth", customer.getDateOfBirth());
 		}
 		customerData.put("country_of_birth", customer.getCountryOfBirth());
-		customerData.put("place_of_birth", customer.getPlaceOfBirth());
+		if (Objects.equals(customer.getCountryOfBirth(), "MY")) {
+			
+					String placeOfBirth = (customer.getPlaceOfBirth().substring(0, customer.getPlaceOfBirth().length() - 4)).trim();
+					customerData.put("place_of_birth", placeOfBirth);
+		}
+		
+		
 		customerData.put("resident_type_id", customer.getResidentTypeId());
 		customerData.put("country_of_residence", customer.getCountryOfResidence());
 		customerData.put("gender", customer.getGender());

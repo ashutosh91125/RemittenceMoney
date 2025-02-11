@@ -407,7 +407,7 @@ public class CustomerControllerwithoutRest {
 		}
 		return "redirect:/customer";
 	}
-	@GetMapping("/updateCustomer") 
+	@GetMapping("/updateCustomer")
 	public String onboardCustomer2(@RequestParam("ecrn") String ecrn, Model model) {
 		Optional<Customer> optionalCustomer = customerService.getByEcrn(ecrn);
 		if (optionalCustomer.isPresent()) {
@@ -419,8 +419,29 @@ public class CustomerControllerwithoutRest {
 	        	Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
 				nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
 	        }
-	        model.addAttribute("customer", customer);
-	    }
+	        if (customer.getCountryOfBirth() != null) {
+	            List<EnumValue> placeOfBirthList = enumEntityService.getDataByDependent(customer.getCountryOfBirth());
+	            model.addAttribute("placeOfBirthList", placeOfBirthList);
+	        } else {
+	        	Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
+	        	placeofBirthEntity.ifPresent(entity -> model.addAttribute("placeOfBirthList", entity.getValues()));
+	        }
+	        
+	        if (customer.getCountry() != null) {
+	            List<EnumValue> stateList = enumEntityService.getDataByDependent(customer.getCountry());
+	            model.addAttribute("stateList", stateList);
+	        } else {
+	        	Optional<EnumEntity> stateEntity = enumEntityService.getEnumEntityByKey("state");
+	        	stateEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
+	        }
+	        if (customer.getCountry() != null) {
+	            List<EnumValue> stateList = enumEntityService.getDataByDependent(customer.getParCountry());
+	            model.addAttribute("stateList", stateList);
+	        } else {
+	        	Optional<EnumEntity> stateEntity = enumEntityService.getEnumEntityByKey("state");
+	        	stateEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
+	        }
+	     
 		try {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
 			salutationEntity.ifPresent(entity -> model.addAttribute("salutationList", entity.getValues()));
@@ -551,23 +572,8 @@ public class CustomerControllerwithoutRest {
 			logger.error("Error occupation Id list: ", e);
 			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
 		}
-		try {
-			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
-			placeofBirthEntity.ifPresent(entity -> model.addAttribute("placeOfBirthList", entity.getValues()));
-
-		} catch (Exception e) {
-			logger.error("Error  Place Of Birth List: ", e);
-			model.addAttribute("Place Of Birth List", List.of()); // or set a default list if needed
-		}
-		try {
-			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
-			nativeRegionEntity.ifPresent(entity -> model.addAttribute("stateList", entity.getValues()));
-
-		} catch (Exception e) {
-			logger.error("Error State List: ", e);
-			model.addAttribute("State List", List.of()); // or set a default list if needed
-		}
-	
+		   model.addAttribute("customer", customer);
+	    }
 		return "customeronboardupdate";
 	}
 }

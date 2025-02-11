@@ -346,7 +346,190 @@ function toggleFields() {
 $(document).ready(function () {
     toggleFields();
 });
-	
+$(document).ready(function() {
+    $('#currentCountry').on('change', function() {
+        let dependent = $(this).val(); 
+
+        if (dependent) { 
+            $.ajax({
+                url: '/api/enumEntities/dependent', 
+                type: 'GET',
+                data: {
+                    dependent: dependent
+                },
+                success: function(data) {
+                    $('#stateDropdown')
+                        .empty()
+                        .append('<option value="" disabled selected>Select State</option>');
+
+                    $.each(data, function(index, enumValue) {
+                        $('#stateDropdown').append(
+                            '<option value="' + enumValue.description + '">' +
+                            enumValue.description +
+                            '</option>'
+                        );
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching states for the selected country.");
+                }
+            });
+        } else {
+            $('#stateDropdown')
+                .empty()
+                .append('<option value="" disabled selected>Select State</option>');
+        }
+    });
+});
+
+$(document).ready(function() {
+    $('#permanentCountry').on('change', function() {
+        let dependent = $(this).val(); 
+        if (dependent) { 
+            $.ajax({
+                url: '/api/enumEntities/dependent',
+                type: 'GET',
+                data: {
+                    dependent: dependent 
+                },
+                success: function(data) {
+                    $('#parStateDropdown')
+                        .empty()
+                        .append('<option value="" disabled selected>Select State</option>');
+
+                    $.each(data, function(index, enumValue) {
+                        $('#parStateDropdown').append(
+                            '<option value="' + enumValue.description + '">' +
+                            enumValue.description +
+                            '</option>'
+                        );
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching states for the selected country.");
+                }
+            });
+        } else { 
+            $('#parStateDropdown')
+                .empty()
+                .append('<option value="" disabled selected>Select State</option>');
+        }
+    });
+});
+
+
+
+$(document).ready(function() {
+    $('#nationality').on('change', function() {
+        let dependent = $(this).val();
+
+        if (dependent) { 
+            $.ajax({
+                url: '/api/enumEntities/dependent',
+                type: 'GET',
+                data: {
+                    dependent: dependent 
+                },
+                success: function(data) {
+                    $('#nativeRegion')
+                        .empty()
+                        .append('<option value="" disabled selected>Select Native Region</option>');
+
+                    $.each(data, function(index, enumValue) {
+                        $('#nativeRegion').append(
+                            '<option value="' + enumValue.valueId + '">' +
+                            enumValue.description +
+                            '</option>'
+                        );
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching native regions for the selected country.");
+                }
+            });
+        } else {
+            $('#nativeRegion')
+                .empty()
+                .append('<option value="" disabled selected>Select Native Region</option>');
+        }
+    });
+});
+
+
+$(document).ready(function() {
+    
+    $('#countryOfBirth').on('change', function() {
+        let dependent = $(this).val(); 
+        
+        if (dependent == "MY") {
+            dependent += "R";
+        }
+
+        if (dependent) { 
+            $.ajax({
+                url: '/api/enumEntities/dependent',
+                type: 'GET',
+                data: {
+                    dependent: dependent 
+                },
+                success: function(data) {
+                    $('#placeOfBirth')
+                        .empty()
+                        .append('<option value="" disabled selected>Select Place Of Birth</option>');
+
+                    $.each(data, function(index, enumValue) {
+                        $('#placeOfBirth').append(
+                            '<option value="' + enumValue.description + '">' +
+                            enumValue.description +
+                            '</option>'
+                        );
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching Place Of Birth for the selected country.");
+                }
+            });
+        } else {
+            $('#placeOfBirth')
+                .empty()
+                .append('<option value="" disabled selected>Select Place Of Birth</option>');
+        }
+    });
+
+    $('#countryOfResidence').on('change', function() {
+        let dependent = $(this).val(); 
+        dependent += "PC";
+
+        if (dependent) { 
+            $.ajax({
+                url: '/api/enumEntities/dependent',
+                type: 'GET',
+                data: {
+                    dependent: dependent 
+                },
+                success: function(data) {
+                    $('#phoneCode')
+                        .empty();
+
+                    $.each(data, function(index, enumValue) {
+                        $('#phoneCode').append(
+                            '<option value="' + enumValue.valueId + '">' +
+                            enumValue.description +
+                            '</option>'
+                        );
+                    });
+                },
+                error: function() {
+                    console.error("Error fetching phone code for the selected country.");
+                }
+            });
+        } else {
+            $('#phoneCode')
+                .empty()
+                .append('<option value="" disabled selected>Select State</option>');
+        }
+    });
+});
 </script>
 </head>
 
@@ -803,7 +986,7 @@ $(document).ready(function () {
 															class="form-control" data-select2-selector="icon"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
-															<form:options items="${stateList}" itemValue="valueId"
+															<form:options items="${stateList}" itemValue="description"
 																itemLabel="description" />
 														</form:select>
 														<span id="stateError" style="color: red;"></span>
@@ -914,7 +1097,7 @@ $(document).ready(function () {
 															class="form-control" multiple="false" style="height: 46;"
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
-															<form:options items="${stateList}" itemValue="valueId"
+															<form:options items="${stateList}" itemValue="description"
 																itemLabel="description" />
 														</form:select>
 														<span id="parStateError" style="color: red;"></span>

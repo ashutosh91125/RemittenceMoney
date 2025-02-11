@@ -33,7 +33,7 @@
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
 <script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Feather Icons (optional for search icon) -->
+<!-- Feather Icons (optional for search icon) --> 
 <script src="https://unpkg.com/feather-icons"></script>
 <style>
 .search-bar-container input {
@@ -154,8 +154,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 type: 'GET',
 //                 data: { ecrn: ecrn },
                 success: function(response) {
-                	 $('body').html(response);
+//                 	 $('body').html(response);
 //                     window.location.href = '/customer?ecrn='+ encodeURIComponent(ecrn);
+                	window.location.href = 'updateCustomer?ecrn='+ecrn;
                 },
                 error: function(xhr, status, error) {
                     console.log('AJAX Error: ' + error);

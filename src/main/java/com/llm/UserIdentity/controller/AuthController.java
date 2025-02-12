@@ -206,8 +206,8 @@ public class AuthController {
             model.addAttribute("branchCount", branchDetailsRepository.countByBranchLocationId(agent.getBranchLocationId()));
 
             String bankName = agent.getBankName() != null ? agent.getBankName() : "Not Assigned";
-            String branchName = agent.getBranchName() != null ? agent.getBankName() : "Not Assigned";
-            String accountNumber = agent.getAccountNumber() != null ? agent.getBankName() : "Not Assigned";
+            String branchName = agent.getBranchName() != null ? agent.getBranchName() : "Not Assigned";
+            String accountNumber = agent.getAccountNumber() != null ? agent.getAccountNumber() : "Not Assigned";
 
             model.addAttribute("bankName", bankName);
             model.addAttribute("branchName", branchName);

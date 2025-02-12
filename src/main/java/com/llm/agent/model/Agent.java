@@ -74,6 +74,14 @@ public class Agent {
 	@Column(name="apiPassword", length = 60)
 	private String apiPassword;
 
+	//Funding Bank Details
+	@Column(name="bank_name", length = 60)
+	private String bankName;
+	@Column(name="branch_name", length = 60)
+	private String branchName;
+	@Column(name="account_number", length = 60)
+	private String accountNumber;
+
 	private double perTransactionLimit;
 	private double perDayLimit;
 	private double perMonthLimit;

@@ -1,5 +1,6 @@
 package com.llm.agent.model.dto;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 
 @Data
@@ -58,6 +59,10 @@ public class AgentDTO {
 
     private String username;
     private String password;
+
+    private String bankName;
+    private String branchName;
+    private String accountNumber;
 
     private String outletCode;
     private String branchLocationId;

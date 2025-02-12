@@ -156,6 +156,11 @@ public class AgentServiceImpl implements IAgentService {
 	    existingAgent.setPerTransactionLimit(updatedAgent.getPerTransactionLimit());
 	    existingAgent.setPerDayLimit(updatedAgent.getPerDayLimit());
 	    existingAgent.setPerMonthLimit(updatedAgent.getPerMonthLimit());
+
+		existingAgent.setBankName(updatedAgent.getBankName());
+		existingAgent.setBranchName(updatedAgent.getBranchName());
+		existingAgent.setAccountNumber(updatedAgent.getAccountNumber());
+
 	    existingAgent.setBranchLocationId(updatedAgent.getBranchLocationId());
 	    existingAgent.setCreditLimitStatus(updatedAgent.getCreditLimitStatus());
 		existingAgent.setRemainingDaily(updatedAgent.getDaily());

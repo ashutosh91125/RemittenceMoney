@@ -699,13 +699,60 @@ document.addEventListener('DOMContentLoaded', function () {
 					</div>
 				</div>
 				<div class="accordion-item" style="background: aliceblue;">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button"
+                        style="background: aliceblue;"
+                        onclick="toggleDiv('panelsStayOpen-collapseFour')">Funding Bank Details</button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour"
+                    class="accordion-collapse collapse">
+                    <div class="accordion-body" style="background: aliceblue;">
+                        <div class="card-body personal-info">
+                            <div class="main-content">
+                                <div class="card-body pass-security">
+                                    <div class="row">
+                                        <div class="col-xl-4">
+                                            <div class="mb-4">
+                                                <label class="form-label">Bank Name<span
+                                                    class="text-danger">*</span></label>
+                                                <form:input path="BankName" type="text" class="form-control"
+                                                    id="BankName" placeholder="Enter bank name" />
+                                                <span id="BankNameError" class="text-danger1"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="mb-4">
+                                                <label class="form-label">Branch Name<span
+                                                    class="text-danger">*</span></label>
+                                                <form:input path="branchName" type="text" class="form-control"
+                                                    id="branchName" placeholder="Enter branch name" />
+                                                <span id="branchNameError" class="text-danger1"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-4">
+                                            <div class="mb-4">
+                                                <label class="form-label">Account Number<span
+                                                    class="text-danger">*</span></label>
+                                                <form:input path="accountNumber" type="number" class="form-control"
+                                                    id="accountNumber" placeholder="Enter account number" />
+                                                <span id="accountNumberError" class="text-danger1"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseFour')">Credit
+							onclick="toggleDiv('panelsStayOpen-collapseFive')">Credit
 							Limit</button>
 					</h2>
-					<div id="panelsStayOpen-collapseFour"
+					<div id="panelsStayOpen-collapseFive"
 						class="accordion-collapse collapse">
 						<div class="accordion-body" style="background: aliceblue;">
 							<div class="card-body personal-info">
@@ -774,10 +821,10 @@ document.addEventListener('DOMContentLoaded', function () {
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseFive')">Customer
+							onclick="toggleDiv('panelsStayOpen-collapseSix')">Customer
 							Txn Limit</button>
 					</h2>
-					<div id="panelsStayOpen-collapseFive"
+					<div id="panelsStayOpen-collapseSix"
 						class="accordion-collapse collapse">
 						<div class="accordion-body" style="background: aliceblue;">
 							<div class="card-body personal-info">
@@ -826,10 +873,10 @@ document.addEventListener('DOMContentLoaded', function () {
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseSix')">Api
+							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Api
 							Details</button>
 					</h2>
-					<div id="panelsStayOpen-collapseSix"
+					<div id="panelsStayOpen-collapseSeven"
 						class="accordion-collapse collapse">
 						<div class="accordion-body" style="background: aliceblue;">
 							<div class="card-body personal-info">
@@ -922,10 +969,10 @@ document.addEventListener('DOMContentLoaded', function () {
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Login
+							onclick="toggleDiv('panelsStayOpen-collapseEight')">Login
 							Credentials</button>
 					</h2>
-					<div id="panelsStayOpen-collapseSeven"
+					<div id="panelsStayOpen-collapseEight"
 						class="accordion-collapse collapse">
 						<div class="accordion-body" style="background: aliceblue;">
 							<div class="card-body personal-info">

@@ -139,12 +139,44 @@
                 <div class="col-half">
                     <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #FFCDD2;">
                       <div class="card-body rounded-3 text-center">
-                        <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>50</span></div>
+                        <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>0</span></div>
                         <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Fund Requests</p>
                       </div>
                     </div>
                 </div>
               </div>
+            </c:if>
+            <c:if test="${pageContext.request.isUserInRole('AGENT') }">
+                <div class="row" style="display: grid; grid-template-columns: 1fr; gap: 20px; padding: 10px;">
+                    <div class="col-12">
+                        <!-- Card for Funding Bank Details -->
+                        <div class="card border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #ede6f5; cursor: pointer; height: auto; border-radius: 20px;">
+                            <div class="card-body rounded-3 p-4">
+                                <!-- Card Header -->
+                                <h5 class="fs-5 fw-bolder text-dark mb-3" style="font-size: 1.2rem; text-align: left;">Funding Bank Details</h5>
+
+                                <!-- Bank Details (Side by Side) -->
+                                <div class="bank-details" style="display: flex; gap: 20px; text-align: left; flex-wrap: wrap;">
+                                    <div class="mb-2" style="flex: 1;">
+                                        <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Bank Name:</strong>
+                                        <p class="fs-6 text-muted">${bankName}</p>
+                                    </div>
+                                    <div class="mb-2" style="flex: 1;">
+                                        <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Branch Name:</strong>
+                                        <p class="fs-6 text-muted">${branchName}</p>
+                                    </div>
+                                    <div class="mb-2" style="flex: 1;">
+                                        <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Account Number:</strong>
+                                        <p class="fs-6 text-muted">${accountNumber}</p>
+                                    </div>
+                                </div>
+
+                                <!-- Interactive Button
+                                <button class="btn btn-primary mt-3" style="transition: background-color 0.3s ease; background-color: #3F51B5; border-color: #3F51B5; width: 100%;">View More Details</button> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </c:if>
         </div>
       </div>

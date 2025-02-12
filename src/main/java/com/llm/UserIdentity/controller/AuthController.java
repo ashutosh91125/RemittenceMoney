@@ -204,6 +204,15 @@ public class AuthController {
             Agent agent = agentRepositories.findByUsername(userDetails.getUsername());
             model.addAttribute("customerCount", customerRepository.countByNationality(agent.getCountries()));
             model.addAttribute("branchCount", branchDetailsRepository.countByBranchLocationId(agent.getBranchLocationId()));
+
+            String bankName = agent.getBankName() != null ? agent.getBankName() : "Not Assigned";
+            String branchName = agent.getBranchName() != null ? agent.getBankName() : "Not Assigned";
+            String accountNumber = agent.getAccountNumber() != null ? agent.getBankName() : "Not Assigned";
+
+            model.addAttribute("bankName", bankName);
+            model.addAttribute("branchName", branchName);
+            model.addAttribute("accountNumber", accountNumber);
+
             return "superadmindasbord";
         }
 

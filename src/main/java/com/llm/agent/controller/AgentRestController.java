@@ -91,6 +91,10 @@ public class AgentRestController {
 			agent.setClientId(agentDTO.getClientId());
 			agent.setClientSecret(agentDTO.getClientSecret());
 			agent.setCreditLimitStatus(agentDTO.getCreditLimitStatus());
+
+			agent.setBankName(agentDTO.getBankName());
+			agent.setBranchName(agentDTO.getBranchName());
+			agent.setAccountNumber(agentDTO.getAccountNumber());
 //			agent.setModifiedBy(agentDTO.getModifiedBy());
 //			agent.setModifiedOn(agentDTO.getModifiedOn());
 //			agent.setDisabledBy(agentDTO.getDisabledBy());

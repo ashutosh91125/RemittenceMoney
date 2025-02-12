@@ -1,15 +1,6 @@
 $(document).ready(function () {
     $("#customerOnboardForm").on("submit", function (e) {
         e.preventDefault();
-		/*const mobileNumber = document.getElementById("primaryMobileNumber").value;
-		const errorSpan = document.getElementById('primaryMobileNumberError');
-		        
-
-		verifyPhoneNumber(mobileNumber, function (exists) {
-		if (exists) {
-			errorSpan.innerText = "Customer exists with this mobile number. Please change!";
-			return;
-		}*/
         if (!validation(this)) {
             return false;
         }
@@ -64,7 +55,6 @@ $(document).ready(function () {
         });
     });
 });
-
 function copyAddress() {
     const checkbox = document.getElementById("sameAsCurrentAddress");
     const permanentCountryDropdown = document.getElementById("permanentCountry");
@@ -368,90 +358,64 @@ function copyAddress() {
     }
 
 	document.addEventListener('DOMContentLoaded', function() {
-	    console.log("Page Loaded");
+	       console.log("Page Loaded");
+		   document.getElementById("primaryMobileNumber").addEventListener("input", function () {
+		           let mobileNumber = this.value;
+		           const errorSpan = document.getElementById('primaryMobileNumberError');
 
-	    document.getElementById("primaryMobileNumber").addEventListener("input", function () {
-	        let mobileNumber = this.value;
-	        const errorSpan = document.getElementById('primaryMobileNumberError');
+		           if (mobileNumber.length >= 10 && /^\d{10,15}$/.test(mobileNumber)) {
+		               verifyPhoneNumber(mobileNumber);
+		           } else {
+		               errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
+		           }
+		       });
+		  document.getElementById('emailId').addEventListener('input', function () {
+			   	 const emailId = this.value.trim();
+			   	 const errorSpan = document.getElementById('emailIdError');
+			   	       errorSpan.textContent = "";
 
-	        if (mobileNumber.length >= 10 && /^\d{10,15}$/.test(mobileNumber)) {
-	            verifyPhoneNumber(mobileNumber);
-	        } else {
-	            errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
-	        }
-	    });
+			   	 const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-	    document.getElementById('emailId').addEventListener('input', function () {
-	        const emailId = this.value.trim();
-	        const errorSpan = document.getElementById('emailIdError');
-	        errorSpan.textContent = "";
+			   	  if (emailPattern.test(emailId)) {
+			   	    verifyEmail(emailId);
+			   	   } else {
+			   	         errorSpan.textContent = "Enter a valid Email.";
+			   	     }
+			   	   });
+		  document.getElementById('idNumber').addEventListener('input', function () {
+				  const idNumber = this.value.trim();
+			      const residentType = document.getElementById('residentType').value;
+				  const dateOfBirth = document.getElementById('dateOfBirth').value;
+				  const placeOfBirth = document.getElementById('placeOfBirth').value.trim();
+				  const gender = document.getElementById('gender').value;
+				  const errorSpan = document.getElementById('idNumberError');
+					  errorSpan.textContent = "";
+						verifyIdNumber(idNumber);
+					        if (residentType !== "101") {
+					            return;
+					        }
+					        
+					        validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan);
+					});
+	      
+	          const today = new Date().toISOString().split("T")[0];
+	          const tomorrow = new Date();
+	          tomorrow.setDate(tomorrow.getDate() + 1);
+	          const tomorrowString = tomorrow.toISOString().split("T")[0];
 
-	        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	          const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
+	          const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
+		      const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
+		      const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
+	          issuedOnInput.setAttribute("max", today);
+	          dateOfExpiryInput.setAttribute("min", tomorrowString);
+		      visaExpiryDate.setAttribute("min",tomorrowString)
+		      dateOfBirth.setAttribute("max",today);
+	    
+	       toggleFields();
+	       toggleCustomerRemarks();
+	   });
 
-	        if (emailPattern.test(emailId)) {
-	            verifyEmail(emailId);
-	        } else {
-	            errorSpan.textContent = "Enter a valid Email.";
-	        }
-	    });
-
-	    document.getElementById('idNumber').addEventListener('input', function () {
-	        const idNumber = this.value.trim();
-	        const residentType = document.getElementById('residentType').value;
-	        const dateOfBirth = document.getElementById('dateOfBirth').value;
-	        const placeOfBirth = document.getElementById('placeOfBirth').value.trim();
-	        const gender = document.getElementById('gender').value;
-	        const errorSpan = document.getElementById('idNumberError');
-	        errorSpan.textContent = "";
-
-	        verifyIdNumber(idNumber);
-	        if (residentType !== "101") {
-	            return;
-	        }
-	        
-	        validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan);
-	    });
-		validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan);
-	    const today = new Date().toISOString().split("T")[0];
-	    const tomorrow = new Date();
-	    tomorrow.setDate(tomorrow.getDate() + 1);
-	    const tomorrowString = tomorrow.toISOString().split("T")[0];
-
-	    const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
-	    const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
-	    const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
-	    const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
-	    issuedOnInput.setAttribute("max", today);
-	    dateOfExpiryInput.setAttribute("min", tomorrowString);
-	    visaExpiryDate.setAttribute("min", tomorrowString);
-	    dateOfBirth.setAttribute("max", today);
-
-	    issuedOnInput.addEventListener('change', function () {
-	        const issuedOnValue = this.value;
-	        const issuedOnError = document.getElementById('issuedOnError');
-	        issuedOnError.textContent = "";
-
-	        if (!issuedOnValue) {
-	            issuedOnError.textContent = "Issued On date is required.";
-	            return;
-	        }
-	    });
-
-	    dateOfExpiryInput.addEventListener('change', function () {
-	        const dateOfExpiryValue = this.value;
-	        const dateOfExpiryError = document.getElementById('dateOfExpiryError');
-	        dateOfExpiryError.textContent = "";
-
-	        if (!dateOfExpiryValue) {
-	            dateOfExpiryError.textContent = "Date of Expiry is required.";
-	            return;
-	        }
-	    });
-
-	    toggleFields();
-	    toggleCustomerRemarks();
-	});
-	
 	function validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan) {
 	        const placeOfBirthMatch = placeOfBirth.match(/\((\d+)\)$/);
 	        const placeOfBirthCode = placeOfBirthMatch ? placeOfBirthMatch[1] : null;
@@ -502,6 +466,7 @@ function copyAddress() {
 	            if (response) {
 	             	errorSpan.textContent = response.message;
 	                callback(true);
+					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
 	            } else {
 	                errorSpan.innerText = "";
 	                callback(false);
@@ -526,6 +491,7 @@ function copyAddress() {
 	            if (response) {
 	                errorSpan.textContent = response.message;
 	                callback(true);
+					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
 	            } else {
 	                errorSpan.textContent = "";
 	                callback(false);
@@ -547,6 +513,7 @@ function copyAddress() {
 					if(response){
 	                errorSpan.textContent = "This ID Number already exists. Please change!";
 					callback(true)
+					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
 					}else{
 						errorSpan.textContent = "";
 						callback(false);
@@ -558,3 +525,71 @@ function copyAddress() {
 	            }
 	        });
 	    }
+		function verifyPhoneNumber(mobileNumber, callback) {
+		    $.ajax({
+		        url: '/caas/api/v2/customer/verify-mobile',
+		        type: 'GET',
+		        data: { primaryMobileNumber: mobileNumber },
+		        success: function (response) {
+		            console.log(response);
+		            let errorSpan = document.getElementById("primaryMobileNumberError");
+
+		            if (response) {
+		             	errorSpan.textContent = response.message;
+		                callback(true);
+		            } else {
+		                errorSpan.innerText = "";
+		                callback(false);
+		            }
+		        },
+		        error: function (xhr, status, error) {
+		            console.error('Error verifying mobile number:', error);
+		            callback(false);
+		        }
+		    });
+		}
+
+		function verifyEmail(emailId, callback) {
+		    $.ajax({
+		        url: '/caas/api/v2/customer/emailId',
+		        type: 'GET',
+		        data: { emailId: emailId },  
+		        success: function (response) {
+		            console.log(response);
+		            let errorSpan = document.getElementById("emailIdError"); 
+
+		            if (response) {
+		                errorSpan.textContent = response.message;
+		                callback(true);
+		            } else {
+		                errorSpan.textContent = "";
+		                callback(false);
+		            }
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("AJAX Error:", status, error);
+					callback(false);
+		           
+		        }
+		    });
+		}
+		function verifyIdNumber(idNumber, callback) {
+		        $.ajax({
+		            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
+		            type: "GET",
+		            success: function(response) {
+						let errorSpan = document.getElementById("idNumberError");
+						if(response){
+		                errorSpan.textContent = "This ID Number already exists. Please change!";
+						callback(true)
+						}else{
+							errorSpan.textContent = "";
+							callback(false);
+						}
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("AJAX Error:", status, error);
+						callback(false);
+		            }
+		        });
+		    }

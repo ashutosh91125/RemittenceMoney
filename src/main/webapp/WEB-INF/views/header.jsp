@@ -137,6 +137,17 @@
                     </c:if>
 
                     <c:if
+                        test="${pageContext.request.isUserInRole('AGENT')}">
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="#" class="nxl-link">
+                            <span class="nxl-micon">
+                                <img src="<c:url value='assets/images/fund-arrow.png'/>" alt="#" style="width: 24px; height: 24px;" />
+                            </span><span class="nxl-mtext">Fund Request</span>
+                        </a>
+                    </li>
+                    </c:if>
+
+                    <c:if
                         test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
                     <li class="nxl-item nxl-hasmenu"><a href="/lulu-staff-list"
                         class="nxl-link"> <span class="nxl-micon"><i
@@ -150,6 +161,16 @@
 								class="feather-users"></i></span> <span class="nxl-mtext">Customers</span>
 					</a></li>
 					</c:if>
+
+		            <c:if test="${pageContext.request.isUserInRole('STAFF_ALL')}">
+                    <li class="nxl-item nxl-hasmenu">
+                        <a href="#" class="nxl-link">
+                            <span class="nxl-micon">
+                                <img src="<c:url value='assets/images/fund-request.png'/>" alt="#" style="width: 24px; height: 24px;" />
+                            </span><span class="nxl-mtext">Approve Fund</span>
+                        </a>
+                    </li>
+                    </c:if>
 
 					<li class="nxl-item nxl-hasmenu"><a href="transfer-list"
 						class="nxl-link"> <span class="nxl-micon"><i

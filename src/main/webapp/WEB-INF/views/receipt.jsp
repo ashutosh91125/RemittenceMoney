@@ -99,7 +99,7 @@
 
         /* Hide print button when printing */
         @media print {
-            .print-button {
+            .print-button-container {
                 display: none;
             }
         }
@@ -137,7 +137,7 @@
                     <tr>
                         <td>Customer No</td>
                         <td> <b>:</b>   <strong>${receiptDetails.customerNo}</strong></td>
-                        <td>PayoutAmount</td>
+                        <td>Payout Amount</td>
                         <td> <b>:</b>   <strong>${receiptDetails.payoutAmount} ${receiptDetails.payOutCurrency}</strong></td>
                     </tr>
                     <tr>
@@ -149,7 +149,7 @@
                     <tr>
                         <td>Mobile/Phone</td>
                         <td> <b>:</b>   ${receiptDetails.customerPhone}</td>
-                        <td>PayinAmount</td>
+                        <td>PayIn Amount</td>
                         <td><b>:</b>   ${receiptDetails.payInAmount}</td>
                     </tr>
                     <tr>
@@ -197,7 +197,7 @@
                     <tr>
                         <td></td>
                         <td></td>
-                        <td>BalancePaid</td>
+                        <td>Balance Paid</td>
                         <td> <b>:</b>   0.0</td>
                     </tr>
                     <tr class="beneficiary">
@@ -288,7 +288,7 @@
         </div>
         <!-- Print Button (Centered at Bottom) -->
         <div class="print-button-container">
-            <button class="btn btn-primary" onclick="window.print()">Print Receipt</button>
+            <button class="btn btn-primary print-button" onclick="window.print()">Print Receipt</button>
         </div>
 </body>
 

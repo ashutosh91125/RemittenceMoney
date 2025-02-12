@@ -133,6 +133,19 @@
               </div>
             </div>
           </c:if>
+          <!-- Third Row (Lulu Staff) -->
+            <c:if test="${pageContext.request.isUserInRole('STAFF_ALL') }">
+              <div class="row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 10px;">
+                <div class="col-half">
+                    <div class="card stretch stretch-full border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #FFCDD2;">
+                      <div class="card-body rounded-3 text-center">
+                        <div class="fs-4 fw-bolder text-dark mt-3 mb-1"><span>50</span></div>
+                        <p class="fs-12 fw-medium text-muted text-spacing-1 mb-0 text-truncate-1-line">Fund Requests</p>
+                      </div>
+                    </div>
+                </div>
+              </div>
+            </c:if>
         </div>
       </div>
     </main>

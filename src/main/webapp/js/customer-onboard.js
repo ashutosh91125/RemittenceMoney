@@ -55,7 +55,6 @@ $(document).ready(function () {
         });
     });
 });
-
 function copyAddress() {
     const checkbox = document.getElementById("sameAsCurrentAddress");
     const permanentCountryDropdown = document.getElementById("permanentCountry");
@@ -467,6 +466,7 @@ function copyAddress() {
 	            if (response) {
 	             	errorSpan.textContent = response.message;
 	                callback(true);
+					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
 	            } else {
 	                errorSpan.innerText = "";
 	                callback(false);
@@ -491,6 +491,7 @@ function copyAddress() {
 	            if (response) {
 	                errorSpan.textContent = response.message;
 	                callback(true);
+					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
 	            } else {
 	                errorSpan.textContent = "";
 	                callback(false);
@@ -512,6 +513,7 @@ function copyAddress() {
 					if(response){
 	                errorSpan.textContent = "This ID Number already exists. Please change!";
 					callback(true)
+					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
 					}else{
 						errorSpan.textContent = "";
 						callback(false);
@@ -523,3 +525,71 @@ function copyAddress() {
 	            }
 	        });
 	    }
+		function verifyPhoneNumber(mobileNumber, callback) {
+		    $.ajax({
+		        url: '/caas/api/v2/customer/verify-mobile',
+		        type: 'GET',
+		        data: { primaryMobileNumber: mobileNumber },
+		        success: function (response) {
+		            console.log(response);
+		            let errorSpan = document.getElementById("primaryMobileNumberError");
+
+		            if (response) {
+		             	errorSpan.textContent = response.message;
+		                callback(true);
+		            } else {
+		                errorSpan.innerText = "";
+		                callback(false);
+		            }
+		        },
+		        error: function (xhr, status, error) {
+		            console.error('Error verifying mobile number:', error);
+		            callback(false);
+		        }
+		    });
+		}
+
+		function verifyEmail(emailId, callback) {
+		    $.ajax({
+		        url: '/caas/api/v2/customer/emailId',
+		        type: 'GET',
+		        data: { emailId: emailId },  
+		        success: function (response) {
+		            console.log(response);
+		            let errorSpan = document.getElementById("emailIdError"); 
+
+		            if (response) {
+		                errorSpan.textContent = response.message;
+		                callback(true);
+		            } else {
+		                errorSpan.textContent = "";
+		                callback(false);
+		            }
+		        },
+		        error: function (xhr, status, error) {
+		            console.error("AJAX Error:", status, error);
+					callback(false);
+		           
+		        }
+		    });
+		}
+		function verifyIdNumber(idNumber, callback) {
+		        $.ajax({
+		            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
+		            type: "GET",
+		            success: function(response) {
+						let errorSpan = document.getElementById("idNumberError");
+						if(response){
+		                errorSpan.textContent = "This ID Number already exists. Please change!";
+						callback(true)
+						}else{
+							errorSpan.textContent = "";
+							callback(false);
+						}
+		            },
+		            error: function(xhr, status, error) {
+		                console.error("AJAX Error:", status, error);
+						callback(false);
+		            }
+		        });
+		    }

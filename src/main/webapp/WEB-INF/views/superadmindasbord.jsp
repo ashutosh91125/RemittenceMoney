@@ -71,6 +71,39 @@
       <div class="nxl-content">
         <div class="main-content" style="background: aliceblue;">
 
+          <c:if test="${pageContext.request.isUserInRole('AGENT') }">
+              <div class="row" style="display: grid; grid-template-columns: 1fr; gap: 20px; padding: 10px;">
+                  <div class="col-12">
+                      <!-- Card for Funding Bank Details -->
+                      <div class="card border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #ede6f5; cursor: pointer; height: auto; border-radius: 20px;">
+                          <div class="card-body rounded-3 p-3" style="padding: 10px 14px;">
+                              <!-- Card Header -->
+                              <h5 class="fs-5 fw-bolder text-dark mb-2" style="font-size: 1.2rem; text-align: left;">Funding Bank Details</h5>
+
+                              <!-- Bank Details (Side by Side) -->
+                              <div class="bank-details" style="display: flex; gap: 12px; text-align: left; flex-wrap: wrap;">
+                                  <div class="mb-2" style="flex: 1;">
+                                      <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Bank Name:</strong>
+                                      <p class="fs-6 text-muted">${bankName}</p>
+                                  </div>
+                                  <div class="mb-2" style="flex: 1;">
+                                      <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Branch Name:</strong>
+                                      <p class="fs-6 text-muted">${branchName}</p>
+                                  </div>
+                                  <div class="mb-2" style="flex: 1;">
+                                      <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Account Number:</strong>
+                                      <p class="fs-6 text-muted">${accountNumber}</p>
+                                  </div>
+                              </div>
+                              <!-- Interactive Button -->
+                              <!-- <button class="btn btn-primary mt-3" style="transition: background-color 0.3s ease; background-color: #3F51B5; border-color: #3F51B5; width: 100%;">View More Details</button> -->
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+          </c:if>
+
           <!-- First Row -->
           <div class="row" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 10px;">
             <c:if test="${pageContext.request.isUserInRole('ADMIN')}">
@@ -145,38 +178,6 @@
                     </div>
                 </div>
               </div>
-            </c:if>
-            <c:if test="${pageContext.request.isUserInRole('AGENT') }">
-                <div class="row" style="display: grid; grid-template-columns: 1fr; gap: 20px; padding: 10px;">
-                    <div class="col-12">
-                        <!-- Card for Funding Bank Details -->
-                        <div class="card border border-dashed border-gray-5" style="transition: transform 0.3s ease, background-color 0.3s ease; background-color: #ede6f5; cursor: pointer; height: auto; border-radius: 20px;">
-                            <div class="card-body rounded-3 p-4">
-                                <!-- Card Header -->
-                                <h5 class="fs-5 fw-bolder text-dark mb-3" style="font-size: 1.2rem; text-align: left;">Funding Bank Details</h5>
-
-                                <!-- Bank Details (Side by Side) -->
-                                <div class="bank-details" style="display: flex; gap: 20px; text-align: left; flex-wrap: wrap;">
-                                    <div class="mb-2" style="flex: 1;">
-                                        <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Bank Name:</strong>
-                                        <p class="fs-6 text-muted">${bankName}</p>
-                                    </div>
-                                    <div class="mb-2" style="flex: 1;">
-                                        <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Branch Name:</strong>
-                                        <p class="fs-6 text-muted">${branchName}</p>
-                                    </div>
-                                    <div class="mb-2" style="flex: 1;">
-                                        <strong class="fs-6" style="font-size: 1.1rem; font-weight: bold; color: #333;">Account Number:</strong>
-                                        <p class="fs-6 text-muted">${accountNumber}</p>
-                                    </div>
-                                </div>
-
-                                <!-- Interactive Button
-                                <button class="btn btn-primary mt-3" style="transition: background-color 0.3s ease; background-color: #3F51B5; border-color: #3F51B5; width: 100%;">View More Details</button> -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </c:if>
         </div>
       </div>

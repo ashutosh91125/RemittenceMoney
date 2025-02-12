@@ -1,7 +1,15 @@
 $(document).ready(function () {
     $("#customerOnboardForm").on("submit", function (e) {
         e.preventDefault();
+		/*const mobileNumber = document.getElementById("primaryMobileNumber").value;
+		const errorSpan = document.getElementById('primaryMobileNumberError');
+		        
 
+		verifyPhoneNumber(mobileNumber, function (exists) {
+		if (exists) {
+			errorSpan.innerText = "Customer exists with this mobile number. Please change!";
+			return;
+		}*/
         if (!validation(this)) {
             return false;
         }
@@ -56,8 +64,6 @@ $(document).ready(function () {
         });
     });
 });
-
-
 
 function copyAddress() {
     const checkbox = document.getElementById("sameAsCurrentAddress");
@@ -361,160 +367,194 @@ function copyAddress() {
         }
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log("Page Loaded");
-        document.getElementById('idNumber').addEventListener('input', function () {
-                const idNumber = this.value.trim();
-                const residentType = document.getElementById('residentType').value;
-                const dateOfBirth = document.getElementById('dateOfBirth').value;
-                const placeOfBirth = document.getElementById('placeOfBirth').value.trim();
-                const gender = document.getElementById('gender').value;
+	document.addEventListener('DOMContentLoaded', function() {
+	    console.log("Page Loaded");
 
-                const errorSpan = document.getElementById('idNumberError');
-                errorSpan.textContent = ""; 
-				
-				$.ajax({
-								            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
-								            type: "GET",
-								            success: function(response) {
-												errorSpan.textContent = "This Id Number Already Exists. Please change! ";
-								            },
-								            error: function() {
-								                errorSpan.text("Error verifying ID Number. Try again.");
-								            }
-								        });
+	    document.getElementById("primaryMobileNumber").addEventListener("input", function () {
+	        let mobileNumber = this.value;
+	        const errorSpan = document.getElementById('primaryMobileNumberError');
 
-                if (residentType !== "101") {
-                    return; 
-                }
-                const placeOfBirthMatch = placeOfBirth.match(/\((\d+)\)$/); 
-                const placeOfBirthCode = placeOfBirthMatch ? placeOfBirthMatch[1] : null;
-                if (idNumber.length < 12) {
-                    errorSpan.textContent = "ID Number must be 12 digit.";
-                    return;
-                }
-                if (dateOfBirth) {
-                    const dobParts = dateOfBirth.split("-");
-                    const expectedDob = dobParts[0].substring(2) + dobParts[1] + dobParts[2]; 
-                    if (idNumber.substring(0, 6) !== expectedDob) {
-                        errorSpan.textContent = "First 6 characters must match Date of Birth";
-                        return;
-                    }
-                } else {
-                    errorSpan.textContent = "Please select Date of Birth";
-                    return;
-                }
-                if (placeOfBirthCode && idNumber.substring(6, 8) !== placeOfBirthCode) {
-                    errorSpan.textContent = "7th and 8th digit must be Place of Birth code";
-                    return;
-                } else if (!placeOfBirthCode) {
-                    errorSpan.textContent = "Please select Place of Birth";
-                    return;
-                }
+	        if (mobileNumber.length >= 10 && /^\d{10,15}$/.test(mobileNumber)) {
+	            verifyPhoneNumber(mobileNumber);
+	        } else {
+	            errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
+	        }
+	    });
 
-                const expectedGenderChar = gender === "Male" ? "1" : "0";
-                if (idNumber.charAt(11) !== expectedGenderChar) {
-                    errorSpan.textContent = "Last digit must be 1 for Male or 0 for Female";
-                    return;
-                }
-				
-                errorSpan.textContent = "";
-            });
-        document.getElementById('primaryMobileNumber').addEventListener('input', function () {
-            const mobileNumber = this.value.trim();
-            const errorSpan = document.getElementById('primaryMobileNumberError');
-            errorSpan.textContent = ""; 
+	    document.getElementById('emailId').addEventListener('input', function () {
+	        const emailId = this.value.trim();
+	        const errorSpan = document.getElementById('emailIdError');
+	        errorSpan.textContent = "";
 
-            if (mobileNumber.length >= 10 && /^\d{10,15}$/.test(mobileNumber)) {
-                $.ajax({
-                    url: '/caas/api/v2/customer/verify-mobile',
-                    type: 'GET',
-                    data: { primaryMobileNumber: mobileNumber },
-                    success: function (response) {
-                        if (response && response.message === "Customer exists with this mobile number. Please Change!") {
-                            errorSpan.textContent = response.message; 
-                        } else {
-                            errorSpan.textContent = "";
-                        }
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("AJAX Error:", status, error);
-                        errorSpan.textContent = "Error checking mobile number. Please try again.";
-                    }
-                });
-            } else {
-                errorSpan.textContent = "Enter a valid mobile number (10-15 digits).";
-            }
-        });
-        const today = new Date().toISOString().split("T")[0];
-           const tomorrow = new Date();
-           tomorrow.setDate(tomorrow.getDate() + 1);
-           const tomorrowString = tomorrow.toISOString().split("T")[0];
+	        const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-           const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
-           const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
-		   const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
-		   const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
-           issuedOnInput.setAttribute("max", today);
-           dateOfExpiryInput.setAttribute("min", tomorrowString);
-		   visaExpiryDate.setAttribute("min",tomorrowString)
-		   dateOfBirth.setAttribute("max",today);
-           issuedOnInput.addEventListener('change', function () {
-               const issuedOnValue = this.value;
-               const dateOfExpiryValue = dateOfExpiryInput.value;
+	        if (emailPattern.test(emailId)) {
+	            verifyEmail(emailId);
+	        } else {
+	            errorSpan.textContent = "Enter a valid Email.";
+	        }
+	    });
 
-               const issuedOnError = document.getElementById('issuedOnError');
-               issuedOnError.textContent = "";
+	    document.getElementById('idNumber').addEventListener('input', function () {
+	        const idNumber = this.value.trim();
+	        const residentType = document.getElementById('residentType').value;
+	        const dateOfBirth = document.getElementById('dateOfBirth').value;
+	        const placeOfBirth = document.getElementById('placeOfBirth').value.trim();
+	        const gender = document.getElementById('gender').value;
+	        const errorSpan = document.getElementById('idNumberError');
+	        errorSpan.textContent = "";
 
-               if (!issuedOnValue) {
-                   issuedOnError.textContent = "Issued On date is required.";
-                   return;
-               }
+	        verifyIdNumber(idNumber);
+	        if (residentType !== "101") {
+	            return;
+	        }
+	        
+	        validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan);
+	    });
+		validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan);
+	    const today = new Date().toISOString().split("T")[0];
+	    const tomorrow = new Date();
+	    tomorrow.setDate(tomorrow.getDate() + 1);
+	    const tomorrowString = tomorrow.toISOString().split("T")[0];
 
-           });
+	    const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
+	    const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
+	    const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
+	    const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
+	    issuedOnInput.setAttribute("max", today);
+	    dateOfExpiryInput.setAttribute("min", tomorrowString);
+	    visaExpiryDate.setAttribute("min", tomorrowString);
+	    dateOfBirth.setAttribute("max", today);
 
-           dateOfExpiryInput.addEventListener('change', function () {
-               const dateOfExpiryValue = this.value;
-               const issuedOnValue = issuedOnInput.value;
+	    issuedOnInput.addEventListener('change', function () {
+	        const issuedOnValue = this.value;
+	        const issuedOnError = document.getElementById('issuedOnError');
+	        issuedOnError.textContent = "";
 
-               const dateOfExpiryError = document.getElementById('dateOfExpiryError');
-               dateOfExpiryError.textContent = "";
+	        if (!issuedOnValue) {
+	            issuedOnError.textContent = "Issued On date is required.";
+	            return;
+	        }
+	    });
 
-               if (!dateOfExpiryValue) {
-                   dateOfExpiryError.textContent = "Date of Expiry is required.";
-                   return;
-               }
-           });
-		   
-		   document.getElementById('emailId').addEventListener('input', function () {
-		       const emailId = this.value.trim();
-		       const errorSpan = document.getElementById('emailIdError');
-		       errorSpan.textContent = "";
+	    dateOfExpiryInput.addEventListener('change', function () {
+	        const dateOfExpiryValue = this.value;
+	        const dateOfExpiryError = document.getElementById('dateOfExpiryError');
+	        dateOfExpiryError.textContent = "";
 
-		       // Email validation regex pattern
-		       const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+	        if (!dateOfExpiryValue) {
+	            dateOfExpiryError.textContent = "Date of Expiry is required.";
+	            return;
+	        }
+	    });
 
-		       if (emailPattern.test(emailId)) {
-		           $.ajax({
-		               url: '/caas/api/v2/customer/emailId?emailId='+ emailId,
-		               type: 'GET',
-		               success: function (response) {
-		                   if (response && response.message === "emailId already exists Please Change!.") {
-		                       errorSpan.textContent = response.message;
-		                   } else {
-		                       errorSpan.textContent = "";
-		                   }
-		               },
-		               error: function (xhr, status, error) {
-		                   console.error("AJAX Error:", status, error);
-		                   errorSpan.textContent = "Error checking email. Please try again.";
-		               }
-		           });
-		       } else {
-		           errorSpan.textContent = "Enter a valid Email.";
-		       }
-		   });
-        toggleFields();
-        toggleCustomerRemarks();
-    });
+	    toggleFields();
+	    toggleCustomerRemarks();
+	});
+	
+	function validateIdNumber(idNumber, dateOfBirth, placeOfBirth, gender, errorSpan) {
+	        const placeOfBirthMatch = placeOfBirth.match(/\((\d+)\)$/);
+	        const placeOfBirthCode = placeOfBirthMatch ? placeOfBirthMatch[1] : null;
 
+	        if (idNumber.length < 12) {
+	            errorSpan.textContent = "ID Number must be 12 digits.";
+	            return;
+	        }
+
+	        if (dateOfBirth) {
+	            const dobParts = dateOfBirth.split("-");
+	            const expectedDob = dobParts[0].substring(2) + dobParts[1] + dobParts[2];
+	            if (idNumber.substring(0, 6) !== expectedDob) {
+	                errorSpan.textContent = "First 6 characters must match Date of Birth";
+	                return;
+	            }
+	        } else {
+	            errorSpan.textContent = "Please select Date of Birth";
+	            return;
+	        }
+
+	        if (placeOfBirthCode && idNumber.substring(6, 8) !== placeOfBirthCode) {
+	            errorSpan.textContent = "7th and 8th digit must be Place of Birth code";
+	            return;
+	        } else if (!placeOfBirthCode) {
+	            errorSpan.textContent = "Please select Place of Birth";
+	            return;
+	        }
+
+	        const expectedGenderChar = gender === "Male" ? "1" : "0";
+	        if (idNumber.charAt(11) !== expectedGenderChar) {
+	            errorSpan.textContent = "Last digit must be 1 for Male or 0 for Female";
+	            return;
+	        }
+
+	        errorSpan.textContent = "";
+	    }
+		
+	function verifyPhoneNumber(mobileNumber, callback) {
+	    $.ajax({
+	        url: '/caas/api/v2/customer/verify-mobile',
+	        type: 'GET',
+	        data: { primaryMobileNumber: mobileNumber },
+	        success: function (response) {
+	            console.log(response);
+	            let errorSpan = document.getElementById("primaryMobileNumberError");
+
+	            if (response) {
+	             	errorSpan.textContent = response.message;
+	                callback(true);
+	            } else {
+	                errorSpan.innerText = "";
+	                callback(false);
+	            }
+	        },
+	        error: function (xhr, status, error) {
+	            console.error('Error verifying mobile number:', error);
+	            callback(false);
+	        }
+	    });
+	}
+
+	function verifyEmail(emailId, callback) {
+	    $.ajax({
+	        url: '/caas/api/v2/customer/emailId',
+	        type: 'GET',
+	        data: { emailId: emailId },  
+	        success: function (response) {
+	            console.log(response);
+	            let errorSpan = document.getElementById("emailIdError"); 
+
+	            if (response) {
+	                errorSpan.textContent = response.message;
+	                callback(true);
+	            } else {
+	                errorSpan.textContent = "";
+	                callback(false);
+	            }
+	        },
+	        error: function (xhr, status, error) {
+	            console.error("AJAX Error:", status, error);
+				callback(false);
+	           
+	        }
+	    });
+	}
+	function verifyIdNumber(idNumber, callback) {
+	        $.ajax({
+	            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
+	            type: "GET",
+	            success: function(response) {
+					let errorSpan = document.getElementById("idNumberError");
+					if(response){
+	                errorSpan.textContent = "This ID Number already exists. Please change!";
+					callback(true)
+					}else{
+						errorSpan.textContent = "";
+						callback(false);
+					}
+	            },
+	            error: function(xhr, status, error) {
+	                console.error("AJAX Error:", status, error);
+					callback(false);
+	            }
+	        });
+	    }

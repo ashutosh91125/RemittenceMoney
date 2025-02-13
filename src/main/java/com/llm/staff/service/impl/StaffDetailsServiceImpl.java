@@ -128,7 +128,15 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 		List<BranchDetails> branchDetailsList = branchDetailsRepository.findByIdIn(staff.getBranches());
 
 		return branchDetailsList.stream()
-				.map(branch -> new BranchResponseDto(branch.getId(), branch.getBranchName()))
+				.map(branch -> {
+					String suffix = "";
+					if ("STAFF_TR".equals(branch.getBranchStaffRole())) {
+						suffix = " (TR)";
+					} else if ("STAFF_HO".equals(branch.getBranchStaffRole())) {
+						suffix = " (HO)";
+					}
+					return new BranchResponseDto(branch.getId(), branch.getBranchName() + suffix);
+				})
 				.collect(Collectors.toList());
 	}
 

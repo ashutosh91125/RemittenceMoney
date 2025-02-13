@@ -42,7 +42,7 @@
     <%@ include file="header.jsp" %>
 
     <div class="main-content">
-        <div class="card shadow-lg p-4">
+        <div class="card shadow-lg p-4" style= "margin-top: 470px;">
             <div class="header-section">
                 <h4 class="mb-0" style="color: white;">FUND REQUEST FORM</h4>
             </div>

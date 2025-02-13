@@ -225,14 +225,14 @@ document.addEventListener('DOMContentLoaded', function () {
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Email<span
 										class="text-danger">*</span></label> <input name="email" type="text"
-										class="form-control" id="email" placeholder="Email"> <span
-										id="emailError" style="color: red;"></span>
+										class="form-control" id="email" placeholder="Email" autocomplete="email"> <span
+										id="emailError" style="color: red;" ></span>
 								</div>
 								<div class="col-xl-4">
 									<div class="mb-4">
 										<label class="form-label">Password<span
 											class="text-danger">*</span></label> <input name="password"
-											type="password" class="form-control" id="password"
+											type="password" class="form-control" id="password" autocomplete="new-password"
 											placeholder="Set Password" /> <span id="password-error"
 											style="color: red; display: none;"></span> <span
 											id="passwordError" class="text-danger1"></span>
@@ -242,8 +242,8 @@ document.addEventListener('DOMContentLoaded', function () {
 									<div class="mb-4">
 										<label class="form-label">Confirm Password<span
 											class="text-danger">*</span></label> <input name="confirmPassword"
-											type="password" class="form-control" id="confirmPassword"
-											placeholder="Confirm Password" /> <span
+											type="password" class="form-control" id="confirmPassword" 
+											placeholder="Confirm Password" autocomplete="new-password"/> <span
 											id="validationMessage"></span>
 									</div>
 								</div>

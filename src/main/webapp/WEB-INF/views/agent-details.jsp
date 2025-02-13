@@ -28,11 +28,7 @@
 	href="assets/vendors/css/select2-theme.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/datepicker.min.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-KyZXEJr1X2X-0yyJ9s5ANx6kPqcp8TDCwNjdbREKxQl11jOlWEeUwzoytbDxs9yE"
-	crossorigin="anonymous">
+
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 
 <link rel='stylesheet'

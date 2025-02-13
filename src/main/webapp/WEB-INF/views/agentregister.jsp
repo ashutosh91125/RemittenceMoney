@@ -23,11 +23,11 @@
 	href="assets/vendors/css/select2-theme.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/datepicker.min.css">
-<link
+<!-- <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
 	integrity="sha384-KyZXEJr1X2X-0yyJ9s5ANx6kPqcp8TDCwNjdbREKxQl11jOlWEeUwzoytbDxs9yE"
-	crossorigin="anonymous">
+	crossorigin="anonymous"> -->
 
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 
@@ -363,10 +363,10 @@ document.addEventListener('DOMContentLoaded', function () {
 			</div>
 		</div>
 
-		<script
+		<!-- <script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 			integrity="sha384-pzjw8f+ua7Kw1TIq0FB2a7oI4GvYbgPpQXqzZyoxFQsF3jyBzJrb8tO9gW0Gi7km"
-			crossorigin="anonymous"></script>
+			crossorigin="anonymous"></script> -->
 
 		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 		<form:form id="agentForm" modelAttribute="agent"

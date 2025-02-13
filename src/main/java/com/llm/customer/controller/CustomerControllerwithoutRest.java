@@ -61,21 +61,9 @@ public class CustomerControllerwithoutRest {
 			model.addAttribute("customerList", new ArrayList<Customer>());
 		}
 		logger.info("Model attributes before rendering form: " + model.asMap());
-//		IdDetail idDetail = new IdDetail();
-//		CustomerClassification customerClassification = new CustomerClassification();
-//
-//		customerClassification.setProfilePhoto(new ProfilePhoto());
-//		customerClassification.setSocialLinks(Arrays.asList(new SocialLink()));
-//
-//		idDetail.setIdFront(new IdFront());
-//		idDetail.setIdBack(new IdBack());
-//
-//		customer.setAddressList(Arrays.asList(new Address(), new Address()));
-//		customer.setAdditionalDocs(Arrays.asList(new Document()) );
-//		customer.setIdDetails(Arrays.asList(idDetail));
-//		customer.setCustomerClassification(customerClassification);
 
-		model.addAttribute("customer", customer); // Ensure custDTO is added here
+
+		model.addAttribute("customer", customer); 
 
 		try {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("salutation");
@@ -83,7 +71,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving salutation list: ", e);
-			model.addAttribute("salutationList", List.of()); // or set a default list if needed
+			model.addAttribute("salutationList", List.of()); 
 		}
 
 		try {
@@ -92,10 +80,9 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
-			model.addAttribute("countryList", List.of()); // or set a default list if needed
+			model.addAttribute("countryList", List.of());
 		}
 
-		// Repeat the same pattern for other attributes
 		try {
 			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
 			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
@@ -114,8 +101,7 @@ public class CustomerControllerwithoutRest {
 
 		try {
 			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
-			professionCategoryEntity
-					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+			professionCategoryEntity.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
 		} catch (Exception e) {
 			logger.error("Error retrieving profession category list: ", e);
 			model.addAttribute("professionCategoryList", List.of());
@@ -130,28 +116,20 @@ public class CustomerControllerwithoutRest {
 		}
 
 		try {
-			Optional<EnumEntity> nationalityEntity = enumEntityService.getEnumEntityByKey("nationality");
-			nationalityEntity.ifPresent(entity -> model.addAttribute("nationalityList", entity.getValues()));
-		} catch (Exception e) {
-			logger.error("Error retrieving nationality list: ", e);
-			model.addAttribute("nationalityList", List.of());
-		}
-		try {
 			Optional<EnumEntity> salutationEntity = enumEntityService.getEnumEntityByKey("residentType");
 			salutationEntity.ifPresent(entity -> model.addAttribute("residentTypeList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving residentType list: ", e);
-			model.addAttribute("residentTypeList", List.of()); // or set a default list if needed
+			model.addAttribute("residentTypeList", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> annualIncomeRangeEntity = enumEntityService.getEnumEntityByKey("annualIncomeRange");
-			annualIncomeRangeEntity
-					.ifPresent(entity -> model.addAttribute("annualIncomeRangeList", entity.getValues()));
+			annualIncomeRangeEntity.ifPresent(entity -> model.addAttribute("annualIncomeRangeList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving annual Income Range list: ", e);
-			model.addAttribute("annualIncomeRangeList", List.of()); // or set a default list if needed
+			model.addAttribute("annualIncomeRangeList", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> transactionCountMonthEntity = enumEntityService
@@ -161,17 +139,15 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving annual Income Range list: ", e);
-			model.addAttribute("transactionCountMonthList", List.of()); // or set a default list if needed
+			model.addAttribute("transactionCountMonthList", List.of()); 
 		}
 		try {
-			Optional<EnumEntity> transactionVolumeMonthEntity = enumEntityService
-					.getEnumEntityByKey("transactionVolumeMonth");
-			transactionVolumeMonthEntity
-					.ifPresent(entity -> model.addAttribute("transactionVolumeMonthList", entity.getValues()));
+			Optional<EnumEntity> transactionVolumeMonthEntity = enumEntityService.getEnumEntityByKey("transactionVolumeMonth");
+			transactionVolumeMonthEntity.ifPresent(entity -> model.addAttribute("transactionVolumeMonthList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving transaction Volume Month List: ", e);
-			model.addAttribute("transactionVolumeMonthList", List.of()); // or set a default list if needed
+			model.addAttribute("transactionVolumeMonthList", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> riskRatingIdEntity = enumEntityService.getEnumEntityByKey("riskRatingId");
@@ -179,16 +155,9 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving riskRatingId list: ", e);
-			model.addAttribute("riskRatingIdList", List.of()); // or set a default list if needed
+			model.addAttribute("riskRatingIdList", List.of()); 
 		}
-		try {
-			Optional<EnumEntity> incomeTypeEntity = enumEntityService.getEnumEntityByKey("incomeType");
-			incomeTypeEntity.ifPresent(entity -> model.addAttribute("incomeTypeList", entity.getValues()));
 
-		} catch (Exception e) {
-			logger.error("Error income Type list: ", e);
-			model.addAttribute("incomeTypeList", List.of()); // or set a default list if needed
-		}
 		try {
 			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
 			professionCategoryEntity
@@ -196,7 +165,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error profession Category list: ", e);
-			model.addAttribute("professionCategoryList", List.of()); // or set a default list if needed
+			model.addAttribute("professionCategoryList", List.of()); 
 		}
 
 		try {
@@ -205,7 +174,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error occupation Id list: ", e);
-			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
+			model.addAttribute("occupationIdList", List.of());
 		}
 		try {
 			Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
@@ -213,7 +182,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error Native Region List: ", e);
-			model.addAttribute("native Region List", List.of()); // or set a default list if needed
+			model.addAttribute("native Region List", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
@@ -221,7 +190,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error  Place Of Birth List: ", e);
-			model.addAttribute("Place Of Birth List", List.of()); // or set a default list if needed
+			model.addAttribute("Place Of Birth List", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> placeofBirthEntity = enumEntityService.getEnumEntityByKey("state");
@@ -229,17 +198,9 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error State List: ", e);
-			model.addAttribute("State List", List.of()); // or set a default list if needed
+			model.addAttribute("State List", List.of()); 
 		}
-//		model.addAttribute("nativeRegion", enumEntityService.getEnumValueDescriptionByKeyAndFilters("state",
-//				customer.get().getNationality(), String.valueOf(customer.get().getNativeRegion())));
-//		model.addAttribute("salutationList", salutationService.findAllRecords());
-//		model.addAttribute("countryList", countryService.fetchCountries());
-//		model.addAttribute("currencyList", currencyService.fetchCurrencies());
-//		model.addAttribute("incomeTypeList", incomeTypeService.getAllIncomeType());
-//		model.addAttribute("professionCategoryList", professionCategoryService.getAllProfessionCategory());
-//		model.addAttribute("idTypesList", idTypesService.getAllIdTypes());
-//		model.addAttribute("nationalityList", nationalityService.getAllNationality());
+
 		model.addAttribute("genderList", Gender.values());
 		return "customeronboard";
 	}
@@ -258,7 +219,7 @@ public class CustomerControllerwithoutRest {
 
 	}
 
-	// Handle user creation form submission
+	
 	@PostMapping("/createUser")
 	@ResponseBody
 	public ResponseEntity<?> createUser(@ModelAttribute Customer customer, HttpServletRequest httpServletRequest) throws JsonProcessingException {
@@ -393,7 +354,7 @@ public class CustomerControllerwithoutRest {
 	public String searchCustomers(@RequestParam("criteria") String criteria, @RequestParam("query") String query,
 			RedirectAttributes redirectAttributes) {
 		try {
-			// Use the searchByCriteria method from the service
+			
 			List<Customer> customers = customerService.searchByCriteria(criteria, query);
 			redirectAttributes.addFlashAttribute("customerList", customers);
 			if(!customers.isEmpty()) {
@@ -403,10 +364,10 @@ public class CustomerControllerwithoutRest {
 			}
 		} catch (Exception e) {
 			logger.error(e.toString());
-//			model.addAttribute("error", "Error occurred while searching: " + e.getMessage());
 		}
 		return "redirect:/customer";
 	}
+	
 	@GetMapping("/updateCustomer")
 	public String onboardCustomer2(@RequestParam("ecrn") String ecrn, Model model) {
 		Optional<Customer> optionalCustomer = customerService.getByEcrn(ecrn);
@@ -419,7 +380,7 @@ public class CustomerControllerwithoutRest {
 	        	Optional<EnumEntity> nativeRegionEntity = enumEntityService.getEnumEntityByKey("state");
 				nativeRegionEntity.ifPresent(entity -> model.addAttribute("nativeRegionList", entity.getValues()));
 	        }
-//	        List<EnumValue> placeOfBirthList = null;
+
 	        if (customer.getCountryOfBirth().equals("MY")) {
 	            List<EnumValue> placeOfBirthList = enumEntityService.getDataByDependent(customer.getCountryOfBirth()+"R");
 
@@ -456,7 +417,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving salutation list: ", e);
-			model.addAttribute("salutationList", List.of()); // or set a default list if needed
+			model.addAttribute("salutationList", List.of());
 		}
 
 		try {
@@ -465,10 +426,10 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving country list: ", e);
-			model.addAttribute("countryList", List.of()); // or set a default list if needed
+			model.addAttribute("countryList", List.of()); 
 		}
 
-		// Repeat the same pattern for other attributes
+		
 		try {
 			Optional<EnumEntity> currencyEntity = enumEntityService.getEnumEntityByKey("currency");
 			currencyEntity.ifPresent(entity -> model.addAttribute("currencyList", entity.getValues()));
@@ -487,8 +448,7 @@ public class CustomerControllerwithoutRest {
 
 		try {
 			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
-			professionCategoryEntity
-					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+			professionCategoryEntity.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
 		} catch (Exception e) {
 			logger.error("Error retrieving profession category list: ", e);
 			model.addAttribute("professionCategoryList", List.of());
@@ -515,36 +475,31 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving residentType list: ", e);
-			model.addAttribute("residentTypeList", List.of()); // or set a default list if needed
+			model.addAttribute("residentTypeList", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> annualIncomeRangeEntity = enumEntityService.getEnumEntityByKey("annualIncomeRange");
-			annualIncomeRangeEntity
-					.ifPresent(entity -> model.addAttribute("annualIncomeRangeList", entity.getValues()));
+			annualIncomeRangeEntity.ifPresent(entity -> model.addAttribute("annualIncomeRangeList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving annual Income Range list: ", e);
-			model.addAttribute("annualIncomeRangeList", List.of()); // or set a default list if needed
+			model.addAttribute("annualIncomeRangeList", List.of()); 
 		}
 		try {
-			Optional<EnumEntity> transactionCountMonthEntity = enumEntityService
-					.getEnumEntityByKey("transactionCountMonth");
-			transactionCountMonthEntity
-					.ifPresent(entity -> model.addAttribute("transactionCountMonthList", entity.getValues()));
+			Optional<EnumEntity> transactionCountMonthEntity = enumEntityService.getEnumEntityByKey("transactionCountMonth");
+			transactionCountMonthEntity.ifPresent(entity -> model.addAttribute("transactionCountMonthList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving annual Income Range list: ", e);
-			model.addAttribute("transactionCountMonthList", List.of()); // or set a default list if needed
+			model.addAttribute("transactionCountMonthList", List.of());
 		}
 		try {
-			Optional<EnumEntity> transactionVolumeMonthEntity = enumEntityService
-					.getEnumEntityByKey("transactionVolumeMonth");
-			transactionVolumeMonthEntity
-					.ifPresent(entity -> model.addAttribute("transactionVolumeMonthList", entity.getValues()));
+			Optional<EnumEntity> transactionVolumeMonthEntity = enumEntityService.getEnumEntityByKey("transactionVolumeMonth");
+			transactionVolumeMonthEntity.ifPresent(entity -> model.addAttribute("transactionVolumeMonthList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error retrieving transaction Volume Month List: ", e);
-			model.addAttribute("transactionVolumeMonthList", List.of()); // or set a default list if needed
+			model.addAttribute("transactionVolumeMonthList", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> riskRatingIdEntity = enumEntityService.getEnumEntityByKey("riskRatingId");
@@ -552,7 +507,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error retrieving riskRatingId list: ", e);
-			model.addAttribute("riskRatingIdList", List.of()); // or set a default list if needed
+			model.addAttribute("riskRatingIdList", List.of());
 		}
 		try {
 			Optional<EnumEntity> incomeTypeEntity = enumEntityService.getEnumEntityByKey("incomeType");
@@ -560,16 +515,15 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error income Type list: ", e);
-			model.addAttribute("incomeTypeList", List.of()); // or set a default list if needed
+			model.addAttribute("incomeTypeList", List.of()); 
 		}
 		try {
 			Optional<EnumEntity> professionCategoryEntity = enumEntityService.getEnumEntityByKey("professionCategory");
-			professionCategoryEntity
-					.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
+			professionCategoryEntity.ifPresent(entity -> model.addAttribute("professionCategoryList", entity.getValues()));
 
 		} catch (Exception e) {
 			logger.error("Error profession Category list: ", e);
-			model.addAttribute("professionCategoryList", List.of()); // or set a default list if needed
+			model.addAttribute("professionCategoryList", List.of()); 
 		}
 
 		try {
@@ -578,7 +532,7 @@ public class CustomerControllerwithoutRest {
 
 		} catch (Exception e) {
 			logger.error("Error occupation Id list: ", e);
-			model.addAttribute("occupationIdList", List.of()); // or set a default list if needed
+			model.addAttribute("occupationIdList", List.of()); 
 		}
 		   model.addAttribute("customer", customer);
 	    }

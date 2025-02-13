@@ -32,13 +32,15 @@ import com.llm.iddetail.model.IdDetail;
 import com.llm.iddetail.service.IdDetailsService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/caas/api/v2/customer")
 public class CustomerController {
 
-	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
-	private static final String BASE_URL = "https://drap-sandbox.digitnine.com";
+//	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
+	
 	@Autowired
 	private CustomerService customerService;
 	@Autowired
@@ -80,7 +82,7 @@ public class CustomerController {
 
 	@GetMapping("/verify-mobile")
 	public ResponseEntity<Map<String, String>> verifyMobile(@RequestParam String primaryMobileNumber) {
-		logger.info(primaryMobileNumber.toString());
+		log.info(primaryMobileNumber.toString());
 		Map<String, String> response = new HashMap<>();
 		boolean isMobileExist = customerService.verifyPrimaryMobileNumber(primaryMobileNumber);
 
@@ -131,21 +133,19 @@ public class CustomerController {
 			}
 		}
 		try {
-			// Validate picture file if present
 			if (updateCustomer.getProfPictureFile() != null && !updateCustomer.getProfPictureFile().isEmpty()) {
 				String contentType = updateCustomer.getProfPictureFile().getContentType();
 
-				// Ensure only image files are allowed
+				
 				if (contentType == null || !contentType.startsWith("image/")) {
 					throw new IllegalArgumentException("Only image files are allowed (JPEG, PNG, etc.).");
 				}
 
-				// Set image data in ToDo object
+			
 				updateCustomer.setProfBase64Data(updateCustomer.getProfPictureFile().getBytes());
 				updateCustomer.setProfContentType(contentType);
 			}
 		} catch (Exception e) {
-			// Return error response with exception message
 			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
 		}
 		try {
@@ -177,31 +177,16 @@ public class CustomerController {
 		return customer.getProfBase64Data();
 	}
 
-//	@GetMapping("/id-detail/{customerId}")
-//	public ResponseEntity<List<IdDetail>> getIdDetails(@PathVariable Long customerId) {
-//		List<IdDetail> idDetailsList = customerService.getIdDetailsByCustomerId(customerId);
-//		Collections.reverse(idDetailsList);
-//		return ResponseEntity.ok(idDetailsList);
-//	}
 
 	@GetMapping("/id-detail/{customerId}")
 	public ResponseEntity<List<IdDetail>> getIdDetails2(@PathVariable Long customerId) {
 		List<IdDetail> idDetailsList = customerService.getIdDetailsByCustomerId(customerId);
 		Collections.reverse(idDetailsList);
 
-//		// Convert IdDetail to IdDetailDto
-//		List<IdDetailDto> idDetailDtos = idDetailsList.stream()
-//				.map(idDetail -> new IdDetailDto(idDetail.getId(), idDetail.getIdType(), idDetail.getIdNumber(),
-//						idDetail.getIssuedBy(), idDetail.getIssuedOn(), idDetail.getDateOfExpiry(),
-//						idDetail.getIssuedCountry(), idDetail.getVisaType(), idDetail.getVisaNumber(),
-//						idDetail.getVisaExpiryDate(), idDetail.getActiveStatus()))
-//				.collect(Collectors.toList());
-
 		return ResponseEntity.ok(idDetailsList);
 	}
 	@GetMapping("/emailId")
 	public ResponseEntity<Map<String, String>> verifyEmail(@RequestParam("emailId") String emailId) {
-		logger.info(emailId.toString());
 		Map<String, String> response = new HashMap<>();
 		boolean emailIdExist = customerService.verifyEmailId(emailId);
 
@@ -226,7 +211,7 @@ public class CustomerController {
 				idDetail.setFrontContentType(contentType);
 			}
 		} catch (Exception e) {
-			// Return error response with exception message
+			
 			return ResponseEntity.badRequest().body("Error: " + e.getMessage());
 		}
 	 try {

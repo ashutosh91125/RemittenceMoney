@@ -17,6 +17,9 @@ import com.llm.iddetail.model.IdDetail;
 import com.llm.iddetail.repository.IdDetailRepository;
 import com.llm.iddetail.service.IdDetailsService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/caas/api/v2/iddetail")
 public class IdDetailsRestController {
@@ -88,6 +91,7 @@ public class IdDetailsRestController {
 	            return ResponseEntity.badRequest().body("Invalid request: No details provided.");
 	        }
 	    } catch (Exception e) {
+	    	log.error(e.toString());
 	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 	                .body("Error updating ID Details");
 	    }

@@ -9,7 +9,7 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<title>LuLu Money || Customers Create</title>
+<title>Customers Details</title>
 <link rel="shortcut icon" type="image/x-icon"
 	href="assets/images/favicon.ico">
 

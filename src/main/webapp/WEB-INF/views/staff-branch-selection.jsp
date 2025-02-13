@@ -19,6 +19,10 @@
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/vendors/css/vendors.min.css">
 <link rel="stylesheet" href="assets/css/theme.min.css">
+<link rel="stylesheet" type="text/css"
+	href="assets/vendors/css/select2.min.css">
+<link rel="stylesheet" type="text/css"
+	href="assets/vendors/css/select2-theme.min.css">
 
 
 <link rel="stylesheet"
@@ -48,7 +52,7 @@
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
 
-                                <select name="branch" required class="form-control" id="status">
+                                <select name="branch" required data-select2-selector="icon" class="form-control" id="status">
                                     <option value="" disabled="true" selected="true">Select Branch</option>
                                     <c:forEach var="branch" items="${branches}">
                                         <option value="${branch.branchId}">${branch.branchName}</option>
@@ -74,6 +78,8 @@
 	<script src="assets/js/common-init.min.js"></script>
 
 	<script src="assets/js/theme-customizer-init.min.js"></script>
+	<script src="assets/vendors/js/select2.min.js"></script>
+    <script src="assets/vendors/js/select2-active.min.js"></script>
 
 	<script
 		src="${pageContext.request.contextPath}/assets/vendors/js/vendors.min.js"></script>

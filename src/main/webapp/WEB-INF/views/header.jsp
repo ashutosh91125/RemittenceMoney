@@ -177,7 +177,7 @@ $(document).ready(function () {
 					<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 						
 						<li class="nxl-item nxl-hasmenu"><a href="#"
-							class="nxl-link ajax-link" data-url="#"><span class="nxl-micon"><img
+							class="nxl-link ajax-link" data-url="/fund-request"><span class="nxl-micon"><img
 									src="<c:url value='assets/images/fund-arrow.png'/>" alt="#"
 									style="width: 24px; height: 24px;" /></span><span
 								class="nxl-mtext">Fund Request</span>

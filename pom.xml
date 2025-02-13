@@ -99,6 +99,13 @@
 			<version>0.11.5</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>2.15.0</version> <!-- Use latest version -->
+		</dependency>
+
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

@@ -1,10 +1,11 @@
 $(document).ready(function () {
+    $("#customerOnboardForm button[type='submit']").prop('disabled', true);
+
     $("#customerOnboardForm").on("submit", function (e) {
         e.preventDefault();
         if (!validation(this)) {
             return false;
         }
-
         $('#loader').show();
         $("#customerOnboardForm button[type='submit']").prop('disabled', true);
         const formData = new FormData(this);
@@ -22,7 +23,7 @@ $(document).ready(function () {
                 if (response && response.status === "success" && response.data && response.data.ecrn) {
                     alert("Customer Onboarded successfully with ECRN: " + response.data.ecrn);
                 } else {
-                    alert("Your session is ended!");
+                    alert("Your session has ended!");
                 }
 
                 $("#customerOnboardForm")[0].reset();
@@ -40,9 +41,8 @@ $(document).ready(function () {
                         window.location.reload();
                     } else if (response.code === 504 && response.message) {
                         alert("Server Error: " + response.message);
-                    }
-                    else if ((response.status === "failure" || response.status === "failed") && response.message) {
-                      alert("Error: " + response.message);
+                    } else if ((response.status === "failure" || response.status === "failed") && response.message) {
+                        alert("Error: " + response.message);
                     } else if (response.error) {
                         alert("Error: " + response.error);
                     } else {
@@ -55,6 +55,8 @@ $(document).ready(function () {
         });
     });
 });
+
+	
 function copyAddress() {
     const checkbox = document.getElementById("sameAsCurrentAddress");
     const permanentCountryDropdown = document.getElementById("permanentCountry");
@@ -87,12 +89,6 @@ function copyAddress() {
         permanentStateDropdown.innerHTML = '<option value="" disabled selected>Select State</option>'; 
     }
 }
-
-
-	function toggleDiv(divId) {
-		const element = document.getElementById(divId);
-		element.classList.toggle("show");
-	}
 
 	$(document).ready(function() {
 	    $('#currentCountry').on('change', function() {
@@ -436,7 +432,7 @@ function copyAddress() {
 	            errorSpan.textContent = "Please select Date of Birth";
 	            return;
 	        }
-
+ 
 	        if (placeOfBirthCode && idNumber.substring(6, 8) !== placeOfBirthCode) {
 	            errorSpan.textContent = "7th and 8th digit must be Place of Birth code";
 	            return;
@@ -454,78 +450,19 @@ function copyAddress() {
 	        errorSpan.textContent = "";
 	    }
 		
-	function verifyPhoneNumber(mobileNumber, callback) {
-	    $.ajax({
-	        url: '/caas/api/v2/customer/verify-mobile',
-	        type: 'GET',
-	        data: { primaryMobileNumber: mobileNumber },
-	        success: function (response) {
-	            console.log(response);
-	            let errorSpan = document.getElementById("primaryMobileNumberError");
+		let isPhoneValid = false;
+		let isEmailValid = false;
+		let isIdValid = false;
 
-	            if (response) {
-	             	errorSpan.textContent = response.message;
-	                callback(true);
-					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
-	            } else {
-	                errorSpan.innerText = "";
-	                callback(false);
-	            }
-	        },
-	        error: function (xhr, status, error) {
-	            console.error('Error verifying mobile number:', error);
-	            callback(false);
-	        }
-	    });
-	}
+		function checkFormValidity() {
+		    if (isPhoneValid || isEmailValid || isIdValid) {
+		        $("#customerOnboardForm button[type='submit']").prop('disabled', true);
+		    } else {
+		        $("#customerOnboardForm button[type='submit']").prop('disabled', false);
+		    }
+		}
 
-	function verifyEmail(emailId, callback) {
-	    $.ajax({
-	        url: '/caas/api/v2/customer/emailId',
-	        type: 'GET',
-	        data: { emailId: emailId },  
-	        success: function (response) {
-	            console.log(response);
-	            let errorSpan = document.getElementById("emailIdError"); 
-
-	            if (response) {
-	                errorSpan.textContent = response.message;
-	                callback(true);
-					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
-	            } else {
-	                errorSpan.textContent = "";
-	                callback(false);
-	            }
-	        },
-	        error: function (xhr, status, error) {
-	            console.error("AJAX Error:", status, error);
-				callback(false);
-	           
-	        }
-	    });
-	}
-	function verifyIdNumber(idNumber, callback) {
-	        $.ajax({
-	            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
-	            type: "GET",
-	            success: function(response) {
-					let errorSpan = document.getElementById("idNumberError");
-					if(response){
-	                errorSpan.textContent = "This ID Number already exists. Please change!";
-					callback(true)
-					$("#customerOnboardForm button[type='submit']").prop('disabled', true);
-					}else{
-						errorSpan.textContent = "";
-						callback(false);
-					}
-	            },
-	            error: function(xhr, status, error) {
-	                console.error("AJAX Error:", status, error);
-					callback(false);
-	            }
-	        });
-	    }
-		function verifyPhoneNumber(mobileNumber, callback) {
+		function verifyPhoneNumber(mobileNumber) {
 		    $.ajax({
 		        url: '/caas/api/v2/customer/verify-mobile',
 		        type: 'GET',
@@ -534,22 +471,25 @@ function copyAddress() {
 		            console.log(response);
 		            let errorSpan = document.getElementById("primaryMobileNumberError");
 
-		            if (response) {
-		             	errorSpan.textContent = response.message;
-		                callback(true);
+		            if (response && response.message) {
+		                errorSpan.textContent = response.message;
+		                isPhoneValid = true;
 		            } else {
 		                errorSpan.innerText = "";
-		                callback(false);
+		                isPhoneValid = false;
 		            }
+					checkFormValidity();
 		        },
-		        error: function (xhr, status, error) {
-		            console.error('Error verifying mobile number:', error);
-		            callback(false);
+		        error: function () {
+		            isPhoneValid = false;
+					checkFormValidity();
 		        }
 		    });
 		}
 
-		function verifyEmail(emailId, callback) {
+
+
+		function verifyEmail(emailId) {
 		    $.ajax({
 		        url: '/caas/api/v2/customer/emailId',
 		        type: 'GET',
@@ -558,38 +498,40 @@ function copyAddress() {
 		            console.log(response);
 		            let errorSpan = document.getElementById("emailIdError"); 
 
-		            if (response) {
+		            if (response && response.message) {
 		                errorSpan.textContent = response.message;
-		                callback(true);
+		                isEmailValid = true;
 		            } else {
 		                errorSpan.textContent = "";
-		                callback(false);
+		                isEmailValid = false;
 		            }
+					checkFormValidity();
 		        },
-		        error: function (xhr, status, error) {
-		            console.error("AJAX Error:", status, error);
-					callback(false);
-		           
+		        error: function () {
+		            isEmailValid = false;
+					checkFormValidity();
 		        }
 		    });
 		}
-		function verifyIdNumber(idNumber, callback) {
-		        $.ajax({
-		            url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
-		            type: "GET",
-		            success: function(response) {
-						let errorSpan = document.getElementById("idNumberError");
-						if(response){
+
+		function verifyIdNumber(idNumber) {
+		    $.ajax({
+		        url: "/caas/api/v2/iddetail/verify-idNumber?idNumber=" + idNumber,
+		        type: "GET",
+		        success: function(response) {
+		            let errorSpan = document.getElementById("idNumberError");
+		            if (response) {
 		                errorSpan.textContent = "This ID Number already exists. Please change!";
-						callback(true)
-						}else{
-							errorSpan.textContent = "";
-							callback(false);
-						}
-		            },
-		            error: function(xhr, status, error) {
-		                console.error("AJAX Error:", status, error);
-						callback(false);
-		            }
-		        });
-		    }
+		                isIdValid = true;
+		            } else {
+		                errorSpan.textContent = "";
+		                isIdValid = false;
+		            } 
+					checkFormValidity();
+		        },
+		        error: function () {
+		            isIdValid = false;
+					checkFormValidity();
+		        }
+		    });
+		}

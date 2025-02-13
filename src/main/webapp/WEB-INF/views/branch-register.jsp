@@ -10,7 +10,10 @@
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
 
-<title>Branch Register</title>
+<title>
+<c:if test="${not isUpdate}">Branch Register</c:if>
+<c:if test="${isUpdate}">Branch Update</c:if>
+</title>
 
 <link rel="shortcut icon" type="image/x-icon"
 	href="assets/images/favicon.ico">

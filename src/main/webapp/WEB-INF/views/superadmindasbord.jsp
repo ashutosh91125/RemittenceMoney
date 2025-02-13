@@ -191,7 +191,6 @@
   <script src="assets/vendors/js/jquery.time-to.min.js"></script>
   <script src="assets/vendors/js/circle-progress.min.js"></script>
   <script src="assets/js/common-init.min.js"></script>
-  <script src="assets/js/analytics-init.min.js"></script>
   <script src="assets/js/theme-customizer-init.min.js"></script>
 </body>
 

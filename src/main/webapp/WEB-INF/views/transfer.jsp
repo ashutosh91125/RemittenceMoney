@@ -10,19 +10,15 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
-<!--! BEGIN: Apps Title-->
-<title>LuLu Money || Customers Create</title>
-<!--! END:  Apps Title-->
-<!--! BEGIN: Favicon-->
+
+<title>Transfer</title>
+
 <link rel="shortcut icon" type="image/x-icon"
 	href="assets/images/favicon.ico">
-<!--! END: Favicon-->
-<!--! BEGIN: Bootstrap CSS-->
+
 <link rel="stylesheet" type="text/css"
 	href="assets/css/bootstrap.min.css">
-<!--! END: Bootstrap CSS-->
-<!--! BEGIN: Vendors CSS-->
+
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/vendors.min.css">
 <link rel="stylesheet" type="text/css"
@@ -31,14 +27,9 @@
 	href="assets/vendors/css/select2-theme.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/datepicker.min.css">
-<!--! END: Vendors CSS-->
-<!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<!--! END: Custom CSS-->
-<!-- for KYC -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-<link rel="stylesheet" href="./style.css">
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
@@ -1344,9 +1335,7 @@
 	<script src="assets/vendors/js/vendors.min.js"></script>
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
-	<script src="assets/vendors/js/lslstrength.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
-	<script src="assets/js/customers-create-init.min.js"></script>
 	<script src="assets/js/theme-customizer-init.min.js"></script>
 </body>
 </html>

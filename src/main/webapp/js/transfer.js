@@ -1291,7 +1291,6 @@ function getQuote() {
                     });
                 });
 document.addEventListener('DOMContentLoaded', function () {
-    console.log("Page Loaded");
     const accountNumber = document.getElementById("accountNo");
     const confirmAccountNumber = document.getElementById("confirmAccountNo");
     const messageElement = document.getElementById("validationMessage");

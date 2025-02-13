@@ -9,19 +9,11 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
-<!--! BEGIN: Apps Title-->
-<title>LuLu Money || Staff Register</title>
-<!--! END:  Apps Title-->
-<!--! BEGIN: Favicon-->
-<link rel="shortcut icon" type="image/x-icon"
-	href="assets/images/favicon.ico">
-<!--! END: Favicon-->
-<!--! BEGIN: Bootstrap CSS-->
+
+<title>Staff Update</title>
+
 <link rel="stylesheet" type="text/css"
 	href="assets/css/bootstrap.min.css">
-<!--! END: Bootstrap CSS-->
-<!--! BEGIN: Vendors CSS-->
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/vendors.min.css">
 <link rel="stylesheet" type="text/css"
@@ -35,27 +27,14 @@
 	rel="stylesheet"
 	integrity="sha384-KyZXEJr1X2X-0yyJ9s5ANx6kPqcp8TDCwNjdbREKxQl11jOlWEeUwzoytbDxs9yE"
 	crossorigin="anonymous">
-<!--! END: Vendors CSS-->
-<!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<!--! END: Custom CSS-->
-<!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
-<!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
-<!--[if lt IE 9]>
-			<script src="https:oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https:oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
 
-
-<!-- for KYC -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-<link rel="stylesheet" href="./style.css">
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
-<script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
@@ -191,59 +170,10 @@ function updateStaff() {
 		}
 	});
 }
-document.addEventListener('DOMContentLoaded', function () {
-    const password = document.getElementById("password");
-    const confirmPassword = document.getElementById("confirmPassword");
-    const validationMessage = document.getElementById("validationMessage");
-    const passwordError = document.getElementById("password-error");
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/;
 
-    function validateRealTime() {
-        const passwordValue = password.value.trim();
-        const confirmPasswordValue = confirmPassword.value.trim();
-
-
-        if (!passwordPattern.test(passwordValue)) {
-            passwordError.textContent = "Password must be 8+ characters with at least one uppercase, one lowercase, and one special character.";
-            passwordError.style.display = "block";   
-        } else {
-            passwordError.style.display = "none";
-        }
-        if (confirmPasswordValue === "") {
-            validationMessage.textContent = ""; 
-            return;
-        }
-        if (passwordValue !== confirmPasswordValue) {
-            validationMessage.textContent = "Passwords do not match!";
-            validationMessage.style.color = "red"; 
-        } else {
-            if (passwordPattern.test(passwordValue)) {
-                validationMessage.textContent = "Matched password";
-                validationMessage.style.color = "green";
-            } else {
-                validationMessage.textContent = "";
-            }
-        }
-    }
-    password.addEventListener("focus", function () {
-        if (!passwordPattern.test(password.value.trim())) {
-            passwordError.style.display = "block";
-        }
-    });
-
-    password.addEventListener("blur", function () {
-        if (password.value.trim() === "" || !passwordPattern.test(password.value.trim())) {
-            passwordError.style.display = "none";
-        }
-    });
-
-    password.addEventListener("input", validateRealTime);
-    confirmPassword.addEventListener("input", validateRealTime);
-});	
 function toggleRemarks() {
     
     let status = document.getElementById('status').value;
-    console.log(status); 
     
     let remarksSection = document.getElementById('remarksSection');
     if (status === 'false') {
@@ -254,7 +184,6 @@ function toggleRemarks() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Page Loaded");
     toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
 
@@ -488,8 +417,6 @@ document.addEventListener('DOMContentLoaded', function() {
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
-	<script src="assets/js/customers-create-init.min.js"></script>
-	<script src="assets/js/theme-customizer-init.min.js"></script>
 	<script type="text/javascript" src="js/staffRegister.js"></script>
 </body>
 

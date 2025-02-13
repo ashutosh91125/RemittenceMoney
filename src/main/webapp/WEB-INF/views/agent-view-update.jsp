@@ -28,18 +28,15 @@
 	rel="stylesheet"
 	integrity="sha384-KyZXEJr1X2X-0yyJ9s5ANx6kPqcp8TDCwNjdbREKxQl11jOlWEeUwzoytbDxs9yE"
 	crossorigin="anonymous">
-<!--! END: Vendors CSS-->
-<!--! BEGIN: Custom CSS-->
+
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
-<link rel="stylesheet" href="./style.css">
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js'></script>
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
-<script src="./script.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
@@ -218,7 +215,6 @@ $('#state').empty().append('<option value="" disabled selected>Select State</opt
 function toggleRemarks() {
     
     let status = document.getElementById('statusFlag').value;
-    console.log(status); 
     
     let remarksSection = document.getElementById('remarksSection');
     if (status === 'false') {
@@ -912,8 +908,6 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
-	<script src="assets/js/customers-create-init.min.js"></script>
-	<script src="assets/js/theme-customizer-init.min.js"></script>
 	<script type="text/javascript" src="js/agentRegister.js"></script>
 
 </body>

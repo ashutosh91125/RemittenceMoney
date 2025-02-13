@@ -35,16 +35,7 @@
 <!--! END: Vendors CSS-->
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<!--! END: Custom CSS-->
-<!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
-<!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
-<!--[if lt IE 9]>
-			<script src="https:oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-			<script src="https:oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-		<![endif]-->
 
-
-<!-- for KYC -->
 <link rel='stylesheet'
 	href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css'>
 <script
@@ -55,30 +46,7 @@
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
 
-
-
-
-
-
-
 <style>
-.search-bar-container input {
-	width: 100%;
-}
-
-.radio-container label {
-	display: block;
-	margin: 5px 0;
-}
-
-.search-bar-container {
-	margin: 15px 0;
-}
-
-.search-heading {
-	font-size: 17px;
-}
-
 /* for accordion */
 .accordion-button::after {
 	display: none;
@@ -141,22 +109,6 @@
 	box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 	/* Optional: focus effect */
 }
-
-#search-result td {
-	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
-}
-
-#search-result th {
-	padding: 5px; /* Adjust padding */
-	font-size: 12px; /* Adjust font size */
-	white-space: nowrap; /* Prevent wrapping */
-}
-
-.hidden {
-	display: none;
-}
 </style>
 <script type="text/javascript" src="js/commons.js"></script>
 <script>
@@ -201,8 +153,7 @@ function registerBranch() {
 function toggleRemarks() {
     
     let status = document.getElementById('statusFlag').value;
-    console.log(status); 
-    
+  
     let remarksSection = document.getElementById('remarksSection');
     if (status === 'false') {
         remarksSection.style.display = 'block';
@@ -212,7 +163,6 @@ function toggleRemarks() {
 }
 
     function updateFields() {
-            console.log("updateFields function called");
             var branchMode = document.getElementById("branchMode").value;
             var branchType = $('#branchType');  // Using jQuery to select Select2 element
             var cdpChannel = $('#cdpChannel');
@@ -236,12 +186,10 @@ function toggleRemarks() {
 
         // Call updateFields on page load to handle initial state
         window.onload = function() {
-            console.log("window.onload triggered");
             updateFields();
         };
 
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Page Loaded");
     updateFields(); // Call the function to ensure proper state on page load
     toggleRemarks();  // Call toggleRemarks to show/hide the remarks section on page load
 });
@@ -682,8 +630,6 @@ function validateBranchName(inputId, errorId) {
 	<script src="assets/vendors/js/select2.min.js"></script>
 	<script src="assets/vendors/js/select2-active.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
-	<script src="assets/js/customers-create-init.min.js"></script>
-	<script src="assets/js/theme-customizer-init.min.js"></script>
 	<script type="text/javascript" src="js/branchRegister.js"></script>
 </body>
 

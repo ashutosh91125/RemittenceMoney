@@ -47,8 +47,13 @@
 						<form action="${pageContext.request.contextPath}/select-branch"
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
-								<input name="branch" type="number" class="form-control"
-									placeholder="Enter your branch Id" required>
+
+                                <select name="branch" required class="form-control" id="status">
+                                    <option value="" disabled="true" selected="true">Select Branch</option>
+                                    <c:forEach var="branch" items="${branches}">
+                                        <option value="${branch.branchId}">${branch.branchName}</option>
+                                    </c:forEach>
+                                </select>
 							</div>
 
 							<div class="mt-5">

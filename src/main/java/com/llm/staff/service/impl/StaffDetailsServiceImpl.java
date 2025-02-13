@@ -2,14 +2,14 @@ package com.llm.staff.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.llm.UserIdentity.model.User;
-import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.repository.UserRepository;
-import com.llm.agent.model.Agent;
-import com.llm.agent.repository.AgentRepositories;
+import com.llm.branch.model.BranchDetails;
+import com.llm.branch.repository.BranchDetailsRepository;
+import com.llm.staff.model.dto.BranchResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 	private StaffDetailsRepository staffDetailsRepository;
 
 	@Autowired
-	private AgentRepositories agentRepositories;
+	private BranchDetailsRepository branchDetailsRepository;
 
 	@Autowired
 	private UserRepository userRepository;
@@ -115,6 +115,21 @@ public class StaffDetailsServiceImpl implements StaffDetailsService {
 	@Override
 	public List<StaffDetailsProjection> getAllStaffByProjectionByAgent(String agent) {
 		return staffDetailsRepository.findProjectionsByAgent(agent);
+	}
+
+	@Override
+	public List<BranchResponseDto> getBranchesByUsername(String username) {
+		StaffDetails staff = staffDetailsRepository.findByUsername(username).orElse(null);
+
+		if (staff == null || staff.getBranches() == null || staff.getBranches().isEmpty()) {
+			return List.of();
+		}
+
+		List<BranchDetails> branchDetailsList = branchDetailsRepository.findByIdIn(staff.getBranches());
+
+		return branchDetailsList.stream()
+				.map(branch -> new BranchResponseDto(branch.getId(), branch.getBranchName()))
+				.collect(Collectors.toList());
 	}
 
 }

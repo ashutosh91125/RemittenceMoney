@@ -1,6 +1,7 @@
 package com.llm.staff.service;
 
 import com.llm.staff.model.StaffDetails;
+import com.llm.staff.model.dto.BranchResponseDto;
 import com.llm.staff.projection.StaffDetailsProjection;
 
 import java.util.List;
@@ -27,4 +28,6 @@ public interface StaffDetailsService {
     List<StaffDetailsProjection> getAllStaffByProjectionByCountry(String country);
 
     List<StaffDetailsProjection> getAllStaffByProjectionByAgent(String agent);
+
+    List<BranchResponseDto> getBranchesByUsername(String username);
 }

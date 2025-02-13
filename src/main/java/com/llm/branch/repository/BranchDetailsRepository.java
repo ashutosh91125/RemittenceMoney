@@ -31,5 +31,7 @@ public interface BranchDetailsRepository extends JpaRepository<BranchDetails, Lo
     long countByCounty(String country);
 
     Object countByBranchLocationId(String branchLocationId);
+
+    List<BranchDetails> findByIdIn(List<Long> ids);
 }
 

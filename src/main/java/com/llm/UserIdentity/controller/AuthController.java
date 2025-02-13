@@ -10,7 +10,9 @@ import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.branch.model.BranchDetails;
 import com.llm.staff.model.StaffDetails;
+import com.llm.staff.model.dto.BranchResponseDto;
 import com.llm.staff.repository.StaffDetailsRepository;
+import com.llm.staff.service.StaffDetailsService;
 import com.llm.transfer.repository.TransferRepository;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -59,6 +61,9 @@ public class AuthController {
     private StaffDetailsRepository staffDetailsRepository;
 
     @Autowired
+    private StaffDetailsService staffDetailsService;
+
+    @Autowired
     private TransferRepository transferRepository;
 
     @Autowired
@@ -87,7 +92,11 @@ public class AuthController {
     }
 
     @GetMapping("/select-branch")
-    public String staffBranchSelection() {
+    public String staffBranchSelection(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        List<BranchResponseDto> branchResponseDto = staffDetailsService.getBranchesByUsername(username);
+        model.addAttribute("branches", branchResponseDto);
         return "staff-branch-selection";
     }
 

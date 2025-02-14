@@ -1,11 +1,22 @@
 package com.llm.fundRequst.service;
 import com.llm.fundRequst.dto.DepositRequestDto;
+import com.llm.fundRequst.dto.DepositResponseDto;
 import com.llm.fundRequst.model.DepositRequest;
 import com.llm.fundRequst.repository.DepositRequestRepository;
 import com.llm.fundRequst.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -18,7 +29,10 @@ import java.nio.file.Files;
 public class DepositRequestService {
 
     private final DepositRequestRepository depositRequestRepository;
-    private static final String UPLOAD_DIR = "uploads/receipts/";
+//    private static final String UPLOAD_DIR = "D:/SMD/LLM/uploads/receipts/";
+
+    @Value("${file.upload-dir}")
+    private String UPLOAD_DIR;
 
     public ApiResponse<String> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt) {
         try {
@@ -52,17 +66,63 @@ public class DepositRequestService {
             throw new IllegalArgumentException("File is required.");
         }
 
-        // Ensure directory exists
         Path uploadPath = Paths.get(UPLOAD_DIR);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
-        // Save file with unique name
         String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
         Path filePath = uploadPath.resolve(fileName);
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        return filePath.toString(); // Save this path in PostgreSQL
+        return filePath.toString();
+    }
+
+    public ApiResponse<DepositResponseDto> getDepositById(Long id) {
+        Optional<DepositRequest> depositOpt = depositRequestRepository.findById(id);
+        if (depositOpt.isEmpty()) {
+            return new ApiResponse<>(false, "Deposit not found", null);
+        }
+
+        DepositRequest deposit = depositOpt.get();
+        DepositResponseDto dto = new DepositResponseDto();
+        dto.setId(deposit.getId());
+        dto.setAmount(deposit.getAmount());
+        dto.setDepositMode(deposit.getDepositMode());
+        dto.setReferenceNumber(deposit.getReferenceNumber());
+        dto.setDepositBy(deposit.getDepositBy());
+        dto.setRemarks(deposit.getRemarks());
+        dto.setDepositDate(deposit.getDepositDate().toString());
+
+        String fileDownloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path("/api/deposit/download/")
+                .path(deposit.getId().toString())
+                .toUriString();
+
+        dto.setBankReceiptPath(fileDownloadUrl);
+
+        return new ApiResponse<>(true, "Deposit retrieved successfully", dto);
+    }
+
+    public ResponseEntity<Resource> downloadFile(Long id) {
+        Optional<DepositRequest> depositOpt = depositRequestRepository.findById(id);
+        if (depositOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String filePath = depositOpt.get().getBankReceiptPath();
+        Path path = Paths.get(UPLOAD_DIR).resolve(filePath);
+        try {
+            Resource resource = new UrlResource(path.toUri());
+            if (!resource.exists() || !resource.isReadable()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+                    .body(resource);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

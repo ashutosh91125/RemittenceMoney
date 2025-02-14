@@ -1,11 +1,14 @@
 package com.llm.fundRequst.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.llm.fundRequst.dto.DepositRequestDto;
+import com.llm.fundRequst.dto.DepositResponseDto;
 import com.llm.fundRequst.response.ApiResponse;
 import com.llm.fundRequst.service.DepositRequestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +33,7 @@ public class DepositRequestController {
         try {
             // Convert JSON string to DTO
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule()); // Register JavaTimeModule
             DepositRequestDto dto = objectMapper.readValue(dataJson, DepositRequestDto.class);
 
             return depositRequestService.saveDepositRequest(dto, bankReceipt);
@@ -42,7 +46,7 @@ public class DepositRequestController {
     @GetMapping("/file/{fileName}")
     public ResponseEntity<ByteArrayResource> getFile(@PathVariable String fileName) {
         try {
-            byte[] fileData = Files.readAllBytes(Paths.get("uploads/receipts/", fileName));
+            byte[] fileData = Files.readAllBytes(Paths.get("D:/SMD/LLM/uploads/receipts/", fileName));
             ByteArrayResource resource = new ByteArrayResource(fileData);
 
             return ResponseEntity.ok()
@@ -52,5 +56,15 @@ public class DepositRequestController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/{id}")
+    public ApiResponse<DepositResponseDto> getDepositById(@PathVariable Long id) {
+        return depositRequestService.getDepositById(id);
+    }
+
+    @GetMapping("/download/{id}")
+    public ResponseEntity<Resource> downloadFile(@PathVariable Long id) {
+        return depositRequestService.downloadFile(id);
     }
 }

@@ -64,11 +64,11 @@
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Reference Number</label>
-                    <input type="text" name="referenceNumber" class="form-control" placeholder="Enter reference number" required>
+                    <input type="number" name="referenceNumber" class="form-control" placeholder="Enter reference number" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Upload Bank Receipt</label>
-                    <input type="file" name="bankReceipt" class="form-control" id="bankReceipt" required>
+                    <input type="file" name="bankReceipt" class="form-control" id="bankReceipt">
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Deposit By</label>

@@ -8,14 +8,8 @@
     <meta http-equiv="x-ua-compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Admin List</title>
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
-
-    <!-- DataTables CSS (correct version) -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
-
-    <!-- Custom Theme CSS -->
     <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 </head>
 

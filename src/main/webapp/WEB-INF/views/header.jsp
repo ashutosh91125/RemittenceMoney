@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
-<html>
+<html lang="zxx">
 
 <head>
 <meta charset="utf-8">
@@ -35,11 +35,10 @@
 <!--! END: Vendors CSS-->
 <!--! BEGIN: Custom CSS-->
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
-<!-- Load DataTables scripts before jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-
+<script type="text/javascript" src="js/commons.js"></script>
 
 <style>
 @import
@@ -86,18 +85,20 @@
 	text-shadow: 1px 1px 5px rgba(102, 178, 255, 0.5);
 }
 </style>
-<script type="text/javascript" src="js/commons.js"></script>
 </head>
 
 <body>
-	<div class="nxl-navigation" id="navBar_Id">
+	<!--! ================================================================ !-->
+	<!--! [Start] Navigation Manu !-->
+	<!--! ================================================================ !-->
+	<div class="nxl-navigation">
 		<div class="navbar-wrapper">
 			<div class="m-header">
 				<a href="/welcome" class="b-brand"> <!-- ========   change your logo hear   ============ -->
 					<img src="assets/images/LuluMoney.png" class="img-fluid">
 				</a>
 			</div>
-			<div class="navbar-content">
+				<div class="navbar-content">
 				<ul class="nxl-navbar">
 					
 					<li class="nxl-item nxl-hasmenu"><a href="#"
@@ -236,7 +237,7 @@
 						</ul></li>
 					
 					<li class="nxl-item nxl-hasmenu"><a href="#"
-							class="nxl-link ajax-link" data-url="/logout"><i class="feather-power"></i></span> <span
+							class="nxl-link ajax-link" data-url="/logout"><i class="feather-power"></i> <span
 							class="nxl-mtext">Logout</span>
 					</a>
 					</li>
@@ -245,10 +246,36 @@
 			</div>
 		</div>
 	</div>
-
-	<header class="nxl-header">
+	
+	<!--! ================================================================ !-->
+	<div class="nxl-header">
 		<div class="header-wrapper">
-
+			<!--! [Start] Header Left !-->
+			<div class="header-left d-flex align-items-center gap-4">
+				<!--! [Start] nxl-head-mobile-toggler !-->
+				<a href="javascript:void(0);" class="nxl-head-mobile-toggler"
+					id="mobile-collapse">
+					
+				</a>
+				<!--! [Start] nxl-head-mobile-toggler !-->
+				<!--! [Start] nxl-navigation-toggle !-->
+				<div class="nxl-navigation-toggle">
+					<a href="javascript:void(0);" id="menu-mini-button"> <i
+						class="feather-align-left"></i>
+					</a> <a href="javascript:void(0);" id="menu-expend-button"
+						style="display: none"> <i class="feather-arrow-right"></i>
+					</a>
+				</div>
+				<!--! [End] nxl-navigation-toggle !-->
+				<!--! [Start] nxl-lavel-mega-menu-toggle !-->
+				<div class="nxl-lavel-mega-menu-toggle d-flex d-lg-none">
+					<a href="javascript:void(0);" id="nxl-lavel-mega-menu-open"> <i
+						class="feather-align-left"></i>
+					</a>
+				</div>
+				<!--! [End] nxl-lavel-mega-menu-toggle !-->
+			
+			</div>
 			<div class="header-right ms-auto">
 				<div class="d-flex align-items-center">
 					<div class="nxl-h-item d-none d-sm-flex"></div>
@@ -280,15 +307,11 @@
 
 				</div>
 			</div>
-			<!--! [End] Header Right !-->
 		</div>
-	</header>
-
-	<!--! BEGIN: Vendors JS !-->
+	</div>
 	<script src="assets/vendors/js/vendors.min.js"></script>
-	<script src="assets/vendors/js/tui-code-snippet.min.js"></script>
-	<script src="assets/vendors/js/moment.min.js"></script>
 	<script src="assets/js/common-init.min.js"></script>
+
 </body>
 
 </html>

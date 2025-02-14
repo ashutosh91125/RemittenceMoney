@@ -10,36 +10,13 @@
 <meta name="description" content="">
 <meta name="keyword" content="">
 <meta name="author" content="theme_ocean">
-<title>Admin Details</title>
+<title>Fund Request Details</title>
 <link rel="stylesheet" type="text/css"
 	href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript" src="js/commons.js"></script>
-<script type="text/javascript">
-	function viewAdminUpdateForm() {
-		const id = $("#id").val();
-		$.ajax({
-			url : "/admin-update-form?id=" + id,
-			type : "GET",
-			contentType : "application/x-www-form-urlencoded",
-			/*   data: formData, */
-			success : function(response) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				 $('body').html(response);
-// 				alert(response);
-				console.log(response);
-			},
-			error : function(xhr) {
-				$('#loader').hide();
-				$('#submitButton').prop('disabled', false);
-				alert("Error: " + xhr.responseText);
-			}
-		});
-	}
-</script>
 </head>
 
 <body>
@@ -49,11 +26,11 @@
 		<div class="page-header" style="background: aliceblue;">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
-						<h5 class="m-b-10">Admin</h5>
+						<h5 class="m-b-10">Fund Request</h5>
 					</div>
 					<ul class="breadcrumb">
-						<li class="breadcrumb-item"><a href="welcome">Home</a></li>
-						<li class="breadcrumb-item">Admin Details</li>
+						<li class="breadcrumb-item"><a href="/welcome">Home</a></li>
+						<li class="breadcrumb-item">Fund Request Details</li>
 					</ul>
 				</div>
 				<div class="page-header-right ms-auto">
@@ -64,13 +41,6 @@
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						<!-- <div
-							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-							<a href="javascript:void(0);"
-								class="btn btn-primary successAlertMessage">  <i class="feather-user-plus me-2"></i>
-								<span>Transfer</span>
-							</a>
-						</div> -->
 						<div>
 							<a onclick="goBack()"> <i
 								class="bi bi-arrow-left-circle-fill text-primary"
@@ -85,49 +55,54 @@
 					</div>
 				</div>
 			</div>
-		
+
 		<div class="nxl-content p-3">
 			<div class="main-content">
 				<div class="card border-top-0">
-					<form:form method="post" enctype="multipart/form-data"
-						modelAttribute="user"
-						onsubmit="event.preventDefault(); viewAdminUpdateForm() "
-						id="adminForm">
+					<form:form method="post" modelAttribute="fundRequest" id="fundRequest">
 						<form:hidden path="id" value="" id="id" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Admin Name</label>
-									<form:input path="adminName" type="text" class="form-control"
-										id="adminName" placeholder="Admin Name" readonly="true" />
+									<label class="form-label">Fund Request No.</label>
+									<form:input path="depositRequestNumber" type="text" class="form-control"
+									  readonly="true" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">User Name</label>
-									<form:input path="username" type="text" class="form-control"
-										id="userName" placeholder="User Name" readonly="true" />
+									<label class="form-label">Transaction Reference No.</label>
+									<form:input path="referenceNumber" type="text" class="form-control"
+									 readonly="true" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Phone Number</label>
-									<form:input path="phoneNumber" type="text" class="form-control"
-										id="phoneNumber" placeholder="Phone Number" readonly="true" />
+									<label class="form-label">Deposit Mode</label>
+									<form:input path="depositMode" type="text" class="form-control"
+									 readonly="true" />
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Email</label>
-									<form:input path="email" type="text" class="form-control"
-										id="email" placeholder="Email" readonly="true" />
+									<label class="form-label">Amount</label>
+									<form:input path="amount" type="text" class="form-control"
+										 readonly="true" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-									<label class="form-label">Country</label>
-									<input value="${country }" id="countries"
-										class="form-control" placeholder="Country" readonly="true" />
-								</div>
+                                    <label class="form-label">Deposit Date</label>
+                                    <form:input path="depositDate" type="text" class="form-control"
+                                         readonly="true" />
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                                    <label class="form-label">Deposit By</label>
+                                    <form:input path="depositBy" type="text" class="form-control"
+                                        readonly="true" />
+                                </div>
+
 							</div>
-							<!-- <div class="mt-5 mb-5 text-center"
-								style="display: flex; justify-content: center">
-								<button id="submitButton" type="submit" class="btn btn-primary">Update</button>
-							</div> --> 
+							<div class="row">
+							    <div class="">
+                                    <label class="form-label">Remarks</label>
+                                    <form:textarea path="remarks" rows="3" class="form-control" readonly="true" ></form:textarea>
+                                </div>
+							</div>
 						</div>
 					</form:form>
 				</div>

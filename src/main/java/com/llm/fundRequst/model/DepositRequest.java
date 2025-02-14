@@ -36,6 +36,9 @@ public class DepositRequest {
     @Column(nullable = false)
     private String depositBy;
 
+    @Column(nullable = false)
+    private String createdBy;
+
     @Column(columnDefinition = "TEXT")
     private String remarks;
 

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Optional;
 
 import java.io.File;
@@ -34,7 +35,7 @@ public class DepositRequestService {
     @Value("${file.upload-dir}")
     private String UPLOAD_DIR;
 
-    public ApiResponse<String> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt) {
+    public ApiResponse<String> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt, String createdBy) {
         try {
             // Check if reference number already exists
             if (depositRequestRepository.existsByReferenceNumber(dto.getReferenceNumber())) {
@@ -53,6 +54,7 @@ public class DepositRequestService {
             depositRequest.setBankReceiptPath(filePath);
             depositRequest.setDepositBy(dto.getDepositBy());
             depositRequest.setRemarks(dto.getRemarks());
+            depositRequest.setCreatedBy(createdBy);
 
             depositRequestRepository.save(depositRequest);
             return new ApiResponse<>(true, "Deposit request saved successfully", null);
@@ -76,6 +78,14 @@ public class DepositRequestService {
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
         return filePath.toString();
+    }
+
+    public DepositRequest getById(Long id){
+        Optional<DepositRequest> fetchedRequest = depositRequestRepository.findById(id);
+        if (fetchedRequest.isEmpty()){
+            throw new RuntimeException("Fund Request not found with id " +id);
+        }
+        return fetchedRequest.get();
     }
 
     public ApiResponse<DepositResponseDto> getDepositById(Long id) {
@@ -125,5 +135,14 @@ public class DepositRequestService {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    public List<DepositRequest> getAllByCreatedBy(String createdBy) {
+        List<DepositRequest> depositRequests = depositRequestRepository.findByCreatedBy(createdBy);
+
+        if (depositRequests.isEmpty()){
+            return List.of();
+        }
+        return depositRequests;
     }
 }

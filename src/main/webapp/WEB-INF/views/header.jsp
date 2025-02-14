@@ -86,27 +86,7 @@
 	text-shadow: 1px 1px 5px rgba(102, 178, 255, 0.5);
 }
 </style>
-<script>
-$(document).ready(function () {
-    $('.ajax-link').on('click', function (e) {
-        e.preventDefault();
-
-        const url = $(this).data('url');
-
-        $.ajax({
-            url: url,
-            method: 'GET',
-            dataType: 'html',
-            success: function (response) {
-            	window.location.href = url;
-            },
-            error: function (xhr, status, error) {
-                alert('Failed to load content: ' + error);
-            }
-        });
-    });
-});
-</script>
+<script type="text/javascript" src="js/commons.js"></script>
 </head>
 
 <body>
@@ -167,8 +147,8 @@ $(document).ready(function () {
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
 						
 						
-						<li class="nxl-item nxl-hasmenu"><a href="/staff-list"
-							class="nxl-link ajax-link" data-url="/branch-list"> <span class="nxl-micon"><i
+						<li class="nxl-item nxl-hasmenu"><a href="#"
+							class="nxl-link ajax-link" data-url="/staff-list""> <span class="nxl-micon"><i
 									class="feather-users"></i></span> <span class="nxl-mtext">All
 									Agent Staff</span>
 						</a></li>

@@ -130,9 +130,12 @@
                                                         <div>(${transfer.transactionSubState})</div>
                                                     </td>
                                                     <td class="text-end">
-                                                        <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" title="view">
+                                                       <%--  <a href="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }" title="view">
                                                             <i class="feather feather-eye"></i>
-                                                        </a>
+                                                        </a> --%>
+                                                         <a href="#" class="avatar-text avatar-md ajax-link" data-url="transfer-details?transactionReferenceNumber=${transfer.transactionReferenceNumber }">
+                                                                <i class="feather feather-eye"></i>
+                                                            </a>
                                                     </td>
                                                 </tr>
                                             </c:forEach>

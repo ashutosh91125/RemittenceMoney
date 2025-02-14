@@ -14,5 +14,6 @@ public class DepositResponseDto {
     private String remarks;
     private String depositDate;
     private String bankReceiptPath;
+    private String depositRequestNumber;
 }
 

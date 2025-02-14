@@ -93,6 +93,7 @@ public class DepositRequestService {
         dto.setDepositBy(deposit.getDepositBy());
         dto.setRemarks(deposit.getRemarks());
         dto.setDepositDate(deposit.getDepositDate().toString());
+        dto.setDepositRequestNumber(deposit.getDepositRequestNumber());
 
         String fileDownloadUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/api/deposit/download/")

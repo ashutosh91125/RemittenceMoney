@@ -369,7 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                                 class="text-danger">*</span></label>
                                             <form:input path="password" type="password"
                                                 class="form-control" id="password"
-                                                placeholder="Set your password" />
+                                                placeholder="Set your password" autocomplete="new-password" />
                                             <span id="password-error" style="color: red; display: none;"></span>
                                             <span id="passwordError" class="text-danger1"></span>
                                         </div>
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function () {
 											<label class="form-label">Confirm Password<span
 												class="text-danger">*</span></label> <input name="confirmPassword"
 												type="password" class="form-control" id="confirmPassword"
-												placeholder="Confirm Password" />
+												placeholder="Confirm Password" autocomplete="new-password" />
 												<span id="validationMessage"></span>
 										</div>	
 									</div>

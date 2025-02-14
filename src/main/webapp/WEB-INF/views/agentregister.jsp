@@ -19,10 +19,7 @@
 	href="assets/vendors/css/vendors.min.css">
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/select2.min.css">
-<link rel="stylesheet" type="text/css"
-	href="assets/vendors/css/select2-theme.min.css">
-<link rel="stylesheet" type="text/css"
-	href="assets/vendors/css/datepicker.min.css">
+
 <!-- <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -934,7 +931,7 @@ document.addEventListener('DOMContentLoaded', function () {
 														class="text-danger">*</span></label>
 													<form:input path="apiPassword" type="password"
 														class="form-control" id="adminPassword"
-														placeholder="Set Password"
+														placeholder="Set Password" autocomplete="new-password"
 														oninput="validateLengthWithMaxMessage('adminPassword', 60, 'adminPasswordError')" />
 													<span id="adminPasswordError" style="color: red;"></span>
 												</div>
@@ -977,7 +974,7 @@ document.addEventListener('DOMContentLoaded', function () {
 														class="text-danger">*</span></label>
 													<form:input path="password" type="password"
 														class="form-control" id="password"
-														placeholder="Set Password" />
+														placeholder="Set Password" autocomplete="new-password"/>
 													<span id="password-error"
 														style="color: red; display: none;"></span> <span
 														id="passwordError" class="text-danger1"></span>
@@ -987,7 +984,7 @@ document.addEventListener('DOMContentLoaded', function () {
 												<div class="mb-4">
 													<label class="form-label">Confirm Password<span
 														class="text-danger">*</span></label> <input name="confirmPassword"
-														type="password" class="form-control" id="confirmPassword"
+														type="password" class="form-control" id="confirmPassword" autocomplete="new-password"
 														placeholder="Confirm Password" /> <span
 														id="validationMessage"></span>
 												</div>

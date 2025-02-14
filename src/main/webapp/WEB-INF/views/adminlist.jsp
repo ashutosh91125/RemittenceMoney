@@ -14,11 +14,11 @@
 </head>
 
 <body>
-    <div class="nxl-navigation">
-        <jsp:include page="header.jsp"></jsp:include>
-    </div>
 
-    <div class="nxl-container" style="background: aliceblue;">
+        <jsp:include page="header.jsp"></jsp:include>
+
+
+    <div class="nxl-container" >
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
                 <div class="page-header-title">
@@ -109,10 +109,9 @@
                 </div>
             </div>
         </div>
-
-        <jsp:include page="footer.jsp"></jsp:include>
+         <jsp:include page="footer.jsp"></jsp:include>
     </div>
-
+  
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

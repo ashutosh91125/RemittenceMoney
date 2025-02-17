@@ -11,7 +11,7 @@
 <meta name="author" content="theme_ocean">
 <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
 <!--! BEGIN: Apps Title-->
-<title>LuLu Money || Customers Create</title>
+<title>Customers Register</title>
 <!--! END:  Apps Title-->
 <!--! BEGIN: Favicon-->
 <link rel="shortcut icon" type="image/x-icon"
@@ -333,8 +333,7 @@
 											<div class="mb-4">
 												<label class="form-label">Salutation<span
 													class="text-danger">*</span></label>
-												<form:select path="salutation" class="form-control"
-													data-select2-selector="icon" multiple="false">
+												<form:select path="salutation" class="form-select" style="font-size: inherit;"  multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
 													<form:options items="${salutationList}" itemValue="valueId"
 														itemLabel="displayName" />
@@ -382,8 +381,7 @@
 											<div class="mb-4">
 												<label class="form-label">Nationality <span
 													class="text-danger">*</span></label>
-												<form:select path="nationality" id="nationality"
-													class="form-control" data-select2-selector="icon"
+												<form:select path="nationality" id="nationality" class="form-select" style="font-size: inherit;"
 													multiple="false">
 													<form:option value="" disabled="true" selected="true">Nationality</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -397,8 +395,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Secondary Nationality </label>
-												<form:select path="secondNationality" class="form-control"
-													data-select2-selector="icon" multiple="false">
+												<form:select path="secondNationality" class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
@@ -411,8 +408,7 @@
 												<label class="form-label">Native Region <span
 													class="text-danger">*</span></label>
 												<form:select path="nativeRegion" id="nativeRegion"
-													class="form-control" multiple="false"
-													data-select2-selector="icon">
+													class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
 													<form:options items="${nativeRegionList}"
 														itemValue="valueId" itemLabel="description" />
@@ -436,9 +432,7 @@
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" id="countryOfBirth"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
+												<form:select path="countryOfBirth" id="countryOfBirth" class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
@@ -449,9 +443,7 @@
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Place of Birth </label>
-												<form:select path="placeOfBirth" id="placeOfBirth"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
+												<form:select path="placeOfBirth" id="placeOfBirth" class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
 													<form:options items="${placeOfBirthList}"
 														itemValue="description" itemLabel="description" />
@@ -463,8 +455,7 @@
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfResidence" class="form-control"
-													data-select2-selector="icon" multiple="false"
+												<form:select path="countryOfResidence" class="form-select" style="font-size: inherit;" multiple="false"
 													id="countryOfResidence">
 													<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -480,8 +471,7 @@
 											<div class="mb-4">
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
-												<form:select path="gender" id="gender" class="form-control"
-													data-select2-selector="icon" multiple="false">
+												<form:select path="gender" id="gender" class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Gender</form:option>
 													<form:options items="${genderList}" />
 												</form:select>
@@ -622,8 +612,7 @@
 													<div class="mb-4">
 														<label class="form-label">Country<span
 															class="text-danger">*</span></label>
-														<form:select path="country" class="form-control"
-															data-select2-selector="icon" multiple="false"
+														<form:select path="country" class="form-select" style="font-size: inherit;" multiple="false"
 															id="currentCountry">
 															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
@@ -639,8 +628,7 @@
 													<div class="mb-4">
 														<label class="form-label">State<span
 															class="text-danger">*</span></label>
-														<form:select path="state" id="stateDropdown"
-															class="form-control" data-select2-selector="icon"
+														<form:select path="state" id="stateDropdown" class="form-select" style="font-size: inherit;"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 															<form:options items="${stateList}" itemValue="valueId"
@@ -735,8 +723,7 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label>
-														<form:select path="parCountry" class="form-control"
-															data-select2-selector="icon" multiple="false"
+														<form:select path="parCountry" class="form-select" style="font-size: inherit;" multiple="false"
 															id="permanentCountry">
 															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
@@ -751,7 +738,7 @@
 													<div class="mb-4">
 														<label class="form-label">State</label>
 														<form:select path="parState" id="parStateDropdown"
-															class="form-control" multiple="false" style="height: 46;"
+														class="form-select" style="font-size: inherit; height: 46;" multiple="false" 
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 															<form:options items="${stateList}" itemValue="valueId"
@@ -871,7 +858,7 @@
 																	<label class="form-label">Issued Country<span
 																		class="text-danger">*</span></label>
 																	<form:select path="idDetails[0].issuedCountry"
-																		class="form-control" data-select2-selector="icon"
+																		class="form-select" style="font-size: inherit;"
 																		multiple="false" id="issuedCountry">
 																		<form:option value="" disabled="true" selected="true">Issued Country</form:option>
 																		<form:options items="${countryList}"
@@ -885,7 +872,7 @@
 																	<label class="form-label">Issued at<span
 																		class="text-danger">*</span></label>
 																	<form:select path="idDetails[0].issuedAt"
-																		class="form-control" data-select2-selector="icon"
+																		class="form-select" style="font-size: inherit;"
 																		multiple="false" id="issuedAt">
 																		<form:option value="" disabled="true" selected="true">Issued at</form:option>
 																		<form:options items="${countryList}"
@@ -976,7 +963,7 @@
 																	<div class="mb-4">
 																		<label class="form-label">Visa Type</label>
 																		<form:select path="idDetails[0].visaType"
-																			class="form-control" data-select2-selector="icon">
+																			class="form-select" style="font-size: inherit;">
 																			<form:option value="" disabled="true" selected="true">Visa Type</form:option>
 																			<option value="1">Employment</option>
 																			<option value="2">Visitor</option>
@@ -1028,7 +1015,7 @@
 														<label class="form-label">Annual Income Range<span
 															class="text-danger">*</span></label>
 														<form:select path="annualIncomeRangeId"
-															class="form-control" data-select2-selector="icon"
+															class="form-select" style="font-size: inherit;"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
 															<form:options items="${annualIncomeRangeList}"
@@ -1043,7 +1030,7 @@
 															Code<span class="text-danger">*</span>
 														</label>
 														<form:select path="annualIncomeCurrencyCode"
-															class="form-control" data-select2-selector="icon"
+															class="form-select" style="font-size: inherit;"
 															multiple="false">
 															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
 															<%-- <form:options items="${currencyList}" itemValue="valueId"
@@ -1070,8 +1057,7 @@
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
 														class="text-danger">*</span></label>
-													<form:select path="riskRatingId" class="form-control"
-														data-select2-selector="icon" multiple="false">
+													<form:select path="riskRatingId" class="form-select" style="font-size: inherit;" multiple="false">
 														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
 														<form:options items="${riskRatingIdList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1083,8 +1069,7 @@
 												<div class="mb-4">
 													<label class="form-label">Income Type<span
 														class="text-danger">*</span></label>
-													<form:select path="incomeType" class="form-control"
-														data-select2-selector="icon" multiple="false">
+													<form:select path="incomeType" class="form-select" style="font-size: inherit;" multiple="false">
 														<form:option value="" disabled="true" selected="true">Income Type</form:option>
 														<form:options items="${incomeTypeList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1096,8 +1081,7 @@
 												<div class="mb-4">
 													<label class="form-label">Profession Catagory<span
 														class="text-danger">*</span></label>
-													<form:select path="professionCategory" class="form-control"
-														data-select2-selector="icon" multiple="false">
+													<form:select path="professionCategory" class="form-select" style="font-size: inherit;" multiple="false">
 														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
 														<form:options items="${professionCategoryList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1141,8 +1125,7 @@
 													<label class="form-label">Transaction Volume Month<span
 														class="text-danger">*</span>
 													</label>
-													<form:select path="txnVolMonth" class="form-control"
-														data-select2-selector="icon" multiple="false">
+													<form:select path="txnVolMonth" class="form-select" style="font-size: inherit;" multiple="false">
 														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
 														<form:options items="${transactionVolumeMonthList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1154,8 +1137,7 @@
 												<div class="mb-4">
 													<label class="form-label">Transaction Count Month<span
 														class="text-danger">*</span></label>
-													<form:select path="txnCountMonth" class="form-control"
-														data-select2-selector="icon" multiple="false">
+													<form:select path="txnCountMonth" class="form-select" style="font-size: inherit;" multiple="false">
 														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
 														<form:options items="${transactionCountMonthList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1167,8 +1149,7 @@
 												<div class="mb-4">
 													<label class="form-label">First Language<span
 														class="text-danger">*</span></label>
-													<form:select path="firstLanguage" class="form-control"
-														data-select2-selector="icon">
+													<form:select path="firstLanguage" class="form-select" style="font-size: inherit;">
 														<option value="en">English</option>
 													</form:select>
 													<span id="firstLanguageError" style="color: red;"></span>
@@ -1180,8 +1161,7 @@
 												<div class="mb-4">
 													<label class="form-label">Marital Status<span
 														class="text-danger">*</span></label>
-													<form:select path="maritalStatus" class="form-control"
-														data-select2-selector="icon">
+													<form:select path="maritalStatus" class="form-select" style="font-size: inherit;">
 														<form:option value="" disabled="true" selected="true">Marital Status</form:option>
 														<option value="2">Unmarried</option>
 														<option value="1">Married</option>
@@ -1192,8 +1172,7 @@
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Occupation</label>
-													<form:select path="occupationId" class="form-control"
-														data-select2-selector="icon" multiple="false">
+													<form:select path="occupationId" class="form-select" style="font-size: inherit;" multiple="false">
 														<form:option value="" disabled="true" selected="true">Occupation</form:option>
 														<form:options items="${occupationIdList}"
 															itemValue="valueId" itemLabel="description" />
@@ -1205,7 +1184,7 @@
 												<div class="mb-4">
 													<label class="form-label">Political Exposed Person</label>
 													<form:select path="politicalExposedPerson"
-														class="form-control" data-select2-selector="icon">
+														class="form-select" style="font-size: inherit;">
 														<form:option value="0">No</form:option>
 														<form:option value="1">Yes</form:option>
 													</form:select>
@@ -1220,7 +1199,7 @@
 														Transaction <span class="text-danger">*</span>
 													</label>
 													<form:select path="showRemarksOnTxn" id="showRemarksOnTxn"
-														class="form-control" data-select2-selector="icon"
+														class="form-select" style="font-size: inherit;"
 														onchange="toggleCustomerRemarks();">
 														<option value="0">No</option>
 														<option value="1">Yes</option>

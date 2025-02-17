@@ -673,8 +673,7 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Salutation<span
 													class="text-danger">*</span></label>
-												<form:select path="salutation" class="form-control"
-													data-select2-selector="icon" multiple="false"
+												<form:select path="salutation" class="form-select" style="font-size: inherit;" multiple="false"
 													id="salutation">
 													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
 													<form:options items="${salutationList}" itemValue="valueId"
@@ -725,7 +724,7 @@ $(document).ready(function() {
 												<label class="form-label">Nationality <span
 													class="text-danger">*</span></label>
 												<form:select path="nationality" id="nationality"
-													class="form-control" data-select2-selector="icon"
+													class="form-select" style="font-size: inherit;"
 													multiple="false">
 													<form:option value="" disabled="true" selected="true">Nationality</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -739,8 +738,7 @@ $(document).ready(function() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Secondary Nationality </label>
-												<form:select path="secondNationality" class="form-control"
-													data-select2-selector="icon" multiple="false"
+												<form:select path="secondNationality" class="form-select" style="font-size: inherit;"
 													id="secondNationality">
 													<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -753,9 +751,8 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Native Region <span
 													class="text-danger">*</span></label>
-												<form:select path="nativeRegion" class="form-control"
-													multiple="false" data-select2-selector="icon"
-													id="nativeRegion">
+												<form:select path="nativeRegion" class="form-select" style="font-size: inherit;"
+													multiple="false" id="nativeRegion">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
 													<form:options items="${nativeRegionList}"
 														itemValue="valueId" itemLabel="description" />
@@ -779,8 +776,7 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" class="form-control"
-													data-select2-selector="icon" multiple="false"
+												<form:select path="countryOfBirth" class="form-select" style="font-size: inherit;" multiple="false"
 													id="countryOfBirth">
 													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -793,8 +789,7 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Place of Birth </label>
 												<form:select path="placeOfBirth" id="placeOfBirth"
-													class="form-control" data-select2-selector="icon"
-													multiple="false">
+													class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
 													<form:options items="${placeOfBirthList}"
 														itemValue="description" itemLabel="description" />
@@ -806,8 +801,7 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfResidence" class="form-control"
-													data-select2-selector="icon" multiple="false"
+												<form:select path="countryOfResidence" class="form-select" style="font-size: inherit;" multiple="false"
 													id="countryOfResidence">
 													<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -823,8 +817,7 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
-												<form:select path="gender" id="gender" class="form-control"
-													data-select2-selector="icon" multiple="false">
+												<form:select path="gender" id="gender" class="form-select" style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Gender</form:option>
 													<form:options items="${genderList}" />
 												</form:select>
@@ -965,8 +958,7 @@ $(document).ready(function() {
 													<div class="mb-4">
 														<label class="form-label">Country<span
 															class="text-danger">*</span></label>
-														<form:select path="country" class="form-control"
-															data-select2-selector="icon" multiple="false"
+														<form:select path="country" class="form-select" style="font-size: inherit;" multiple="false"
 															id="currentCountry">
 															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
@@ -982,9 +974,7 @@ $(document).ready(function() {
 													<div class="mb-4">
 														<label class="form-label">State<span
 															class="text-danger">*</span></label>
-														<form:select path="state" id="stateDropdown"
-															class="form-control" data-select2-selector="icon"
-															multiple="false">
+														<form:select path="state" id="stateDropdown" class="form-select" style="font-size: inherit;" multiple="false">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 															<form:options items="${stateList}" itemValue="description"
 																itemLabel="description" />
@@ -1078,9 +1068,7 @@ $(document).ready(function() {
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label>
-														<form:select path="parCountry" class="form-control"
-															data-select2-selector="icon" multiple="false"
-															id="permanentCountry">
+														<form:select path="parCountry" class="form-select" style="font-size: inherit;" id="permanentCountry">
 															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
@@ -1094,7 +1082,7 @@ $(document).ready(function() {
 													<div class="mb-4">
 														<label class="form-label">State</label>
 														<form:select path="parState" id="parStateDropdown"
-															class="form-control" multiple="false" style="height: 46;"
+															class="form-select" style="font-size: inherit; height: 46;" multiple="false" 
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
 															<form:options items="${stateList}" itemValue="description"
@@ -1193,7 +1181,7 @@ $(document).ready(function() {
 																			class="text-danger">*</span></label>
 																		<form:select id="idTypeDropdown${status.index}"
 																			path="idDetails[${status.index}].idType"
-																			class="form-control">
+																			class="form-select" style="font-size: inherit;">
 																			<form:options items="${idTypesList}"
 																				itemValue="valueId" itemLabel="description" />
 																		</form:select>
@@ -1234,7 +1222,7 @@ $(document).ready(function() {
 																				class="text-danger">*</span></label>
 																			<form:select
 																				path="idDetails[${status.index}].issuedCountry"
-																				class="form-control" multiple="false">
+																				class="form-select" style="font-size: inherit;" multiple="false">
 																				<form:option value="" disabled="true"
 																					selected="true">Issued Country</form:option>
 																				<form:options items="${countryList}"
@@ -1250,7 +1238,7 @@ $(document).ready(function() {
 																				class="text-danger">*</span></label>
 																			<form:select
 																				path="idDetails[${status.index}].issuedAt"
-																				class="form-control" multiple="false">
+																				class="form-select" style="font-size: inherit;" multiple="false">
 																				<form:option value="" disabled="true"
 																					selected="true">Issued at</form:option>
 																				<form:options items="${countryList}"
@@ -1357,7 +1345,7 @@ $(document).ready(function() {
 																				<label class="form-label">Visa Type</label>
 																				<form:select
 																					path="idDetails[${status.index}].visaType"
-																					class="form-control">
+																					class="form-select" style="font-size: inherit;">
 																					<form:option value="" disabled="true"
 																						selected="true">Visa Type</form:option>
 																					<option value="1">Employment</option>
@@ -1412,7 +1400,7 @@ $(document).ready(function() {
 														<label class="form-label">Annual Income Range<span
 															class="text-danger">*</span></label>
 														<form:select path="annualIncomeRangeId"
-															class="form-control" data-select2-selector="icon"
+															class="form-select" style="font-size: inherit;"
 															multiple="false" id="annualIncomeRangeId">
 															<form:option value="" disabled="true" selected="true">Annual Income Range</form:option>
 															<form:options items="${annualIncomeRangeList}"
@@ -1427,7 +1415,7 @@ $(document).ready(function() {
 															Code<span class="text-danger">*</span>
 														</label>
 														<form:select path="annualIncomeCurrencyCode"
-															class="form-control" data-select2-selector="icon"
+															class="form-select" style="font-size: inherit;"
 															multiple="false" id="annualIncomeCurrencyCode">
 															<form:option value="" disabled="true" selected="true">Annual Income Currency</form:option>
 															<%-- <form:options items="${currencyList}" itemValue="valueId"
@@ -1454,8 +1442,7 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Risk Rating Id<span
 														class="text-danger">*</span></label>
-													<form:select path="riskRatingId" class="form-control"
-														data-select2-selector="icon" multiple="false"
+													<form:select path="riskRatingId" class="form-select" style="font-size: inherit;" multiple="false"
 														id="riskRatingId">
 														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
 														<form:options items="${riskRatingIdList}"
@@ -1468,8 +1455,7 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Income Type<span
 														class="text-danger">*</span></label>
-													<form:select path="incomeType" class="form-control"
-														data-select2-selector="icon" multiple="false"
+													<form:select path="incomeType" class="form-select" style="font-size: inherit;" multiple="false"
 														id="incomeType">
 														<form:option value="" disabled="true" selected="true">Income Type</form:option>
 														<form:options items="${incomeTypeList}"
@@ -1482,8 +1468,7 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Profession Catagory<span
 														class="text-danger">*</span></label>
-													<form:select path="professionCategory" class="form-control"
-														data-select2-selector="icon" multiple="false"
+													<form:select path="professionCategory" class="form-select" style="font-size: inherit;" multiple="false"
 														id="professionCategory">
 														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
 														<form:options items="${professionCategoryList}"
@@ -1531,8 +1516,7 @@ $(document).ready(function() {
 													<label class="form-label">Transaction Volume Month<span
 														class="text-danger">*</span>
 													</label>
-													<form:select path="txnVolMonth" class="form-control"
-														data-select2-selector="icon" multiple="false"
+													<form:select path="txnVolMonth" class="form-select" style="font-size: inherit;" multiple="false"
 														id="txnVolMonth">
 														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
 														<form:options items="${transactionVolumeMonthList}"
@@ -1545,8 +1529,7 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Transaction Count Month<span
 														class="text-danger">*</span></label>
-													<form:select path="txnCountMonth" class="form-control"
-														data-select2-selector="icon" multiple="false"
+													<form:select path="txnCountMonth" class="form-select" style="font-size: inherit;" multiple="false"
 														id="txnCountMonth">
 														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
 														<form:options items="${transactionCountMonthList}"
@@ -1572,8 +1555,7 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Marital Status<span
 														class="text-danger">*</span></label>
-													<form:select path="maritalStatus" class="form-control"
-														data-select2-selector="icon" id="maritalStatus">
+													<form:select path="maritalStatus" class="form-select" style="font-size: inherit;" id="maritalStatus">
 														<%-- 														<form:option value="" disabled="true" selected="true">Marital Status</form:option> --%>
 														<option value="2">Unmarried</option>
 														<option value="1">Married</option>
@@ -1584,8 +1566,7 @@ $(document).ready(function() {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Occupation</label>
-													<form:select path="occupationId" class="form-control"
-														data-select2-selector="icon" multiple="false"
+													<form:select path="occupationId" class="form-select" style="font-size: inherit;" multiple="false"
 														id="occupationId">
 														<form:option value="" disabled="true" selected="true">Occupation</form:option>
 														<form:options items="${occupationIdList}"
@@ -1597,8 +1578,7 @@ $(document).ready(function() {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Political Exposed Person</label>
-													<form:select path="politicalExposedPerson"
-														class="form-control" data-select2-selector="icon">
+													<form:select path="politicalExposedPerson" class="form-select" style="font-size: inherit;">
 														<form:option value="0">No</form:option>
 														<form:option value="1">Yes</form:option>
 													</form:select>
@@ -1613,7 +1593,7 @@ $(document).ready(function() {
 														Transaction <span class="text-danger">*</span>
 													</label>
 													<form:select path="showRemarksOnTxn" id="showRemarksOnTxn"
-														class="form-control" data-select2-selector="icon"
+														class="form-select" style="font-size: inherit;"
 														onchange="toggleCustomerRemarks();">
 														<option value="0">No</option>
 														<option value="1">Yes</option>

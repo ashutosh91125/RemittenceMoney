@@ -1,22 +1,33 @@
+.back-btn i {
+	font-size: 30px;
+	transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+}
 
-    .back-btn i {
-        font-size: 30px;
-        transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
-        top: 0;
-        left: 0;
-        cursor: pointer;
-    }
+.hover-icon {
+	display: none;
+}
 
-    .hover-icon {
-        display: none;
-    }
+.back-btn:hover .normal-icon {
+	display: none;
+}
 
-    .back-btn:hover .normal-icon {
-        display: none;
-    }
+.back-btn:hover .hover-icon {
+	display: inline;
+	transform: scale(1.1);
+	color: #0056b3;
+}
 
-    .back-btn:hover .hover-icon {
-        display: inline;
-        transform: scale(1.1);
-        color: #0056b3;
-    }
+.accordion-body {
+	background: aliceblue;
+}
+
+.accordion-button {
+	background-color: aliceblue !important;
+}
+
+.nxl-container {
+	background: aliceblue;
+}

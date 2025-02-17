@@ -161,10 +161,10 @@
 
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
-	<div class="nxl-container" style="background: aliceblue;">
-		<div class="nxl-content" style="background: aliceblue;">
+	<div class="nxl-container" >
+		<div class="nxl-content" >
 
-			<div class="page-header" style="background: aliceblue;">
+			<div class="page-header" >
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
 						<h5 class="m-b-10">Customer</h5>
@@ -310,17 +310,16 @@
 					</div>
 				</c:if>
 				<div class="accordion" id="accordionPanelsStayOpenExample">
-					<div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" >
 						<h2 class="accordion-header">
 							<button class="accordion-button" type="button"
-								style="background: aliceblue;"
+								
 								onclick="toggleDiv('panelsStayOpen-collapseOne')">Personal
 								Details</button>
 						</h2>
 						<div id="panelsStayOpen-collapseOne"
 							class="accordion-collapse collapse show">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -40px;">
+							<div class="accordion-body p-3">
 								<div class="main-content">
 									<!-- <div
 										class="mb-4 d-flex align-items-center justify-content-between">
@@ -509,17 +508,17 @@
 						</div>
 					</div>
 
-					<div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" >
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
+								
 								onclick="toggleDiv('panelsStayOpen-collapseTwo')">Address</button>
 						</h2>
 						<div id="panelsStayOpen-collapseTwo"
 							class="accordion-collapse collapse">
 							<hr class="my-0">
 							<div class="card-body pass-security">
-								<div class="accordion-body" style="margin-top: -20px;">
+								<div class="accordion-body p-3">
 									<div class="card-body personal-info">
 
 										<div class="main-content">
@@ -750,17 +749,17 @@
 
 
 					</div>
-					<div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" >
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
+								
 								onclick="toggleDiv('panelsStayOpen-collapseThree')">Contact
 								Details</button>
 						</h2>
 						<div id="panelsStayOpen-collapseThree"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -30px;">
+							<div class="accordion-body p-3"
+								>
 								<div class="card-body personal-info">
 									<div class="main-content">
 
@@ -818,16 +817,16 @@
 							</div>
 						</div>
 					</div>
-					<div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" >
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
+								
 								onclick="toggleDiv('panelsStayOpen-collapseFour')">KYC</button>
 						</h2>
 						<div id="panelsStayOpen-collapseFour"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -40px;">
+							<div class="accordion-body p-3"
+								>
 								<div class="card-body pass-info">
 									<div class="main-content">
 
@@ -1051,17 +1050,17 @@
 						</div>
 					</div>
 
-					<div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item" >
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
+								
 								onclick="toggleDiv('panelsStayOpen-collapseFive')">Other
 								Information</button>
 						</h2>
 						<div id="panelsStayOpen-collapseFive"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -30px;">
+							<div class="accordion-body p-3"
+								style="background: aliceblue;">
 								<div class="card-body personal-info">
 									<div class="main-content">
 										<div class="card-body pass-security">

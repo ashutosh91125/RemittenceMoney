@@ -299,8 +299,8 @@ $.ajax({
 						</h2>
 						<div id="panelsStayOpen-collapseOne"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -40px;">
+							<div class="accordion-body p-3"
+								style="background: aliceblue;">
 
 								<div class="main-content">
 									<!-- <div
@@ -470,7 +470,7 @@ $.ajax({
 							class="accordion-collapse collapse">
 							<hr class="my-0">
 							<div class="card-body pass-security">
-								<div class="accordion-body" style="margin-top: -20px;">
+								<div class="accordion-body p-3" >
 									<div class="card-body personal-info">
 										<div class="main-content">
 											<div class="row">
@@ -648,8 +648,8 @@ $.ajax({
 						</h2>
 						<div id="panelsStayOpen-collapseThree"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -30px;">
+							<div class="accordion-body p-3"
+								style="background: aliceblue;">
 								<div class="card-body personal-info">
 									<div class="main-content">
 
@@ -718,8 +718,8 @@ $.ajax({
 						</h2>
 						<div id="panelsStayOpen-collapseFour"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -40px;">
+							<div class="accordion-body p-3"
+								style="background: aliceblue;">
 								<div class="card-body pass-info">
 									<div class="main-content">
 										<div
@@ -934,8 +934,8 @@ $.ajax({
 						<div id="panelsStayOpen-collapseFive"
 							class="accordion-collapse collapse">
 
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -30px;">
+							<div class="accordion-body p-3"
+								style="background: aliceblue;">
 								<div class="card-body personal-info">
 									<div class="main-content">
 										<!-- <div

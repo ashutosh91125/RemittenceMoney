@@ -47,11 +47,6 @@
 <script src="https://unpkg.com/feather-icons"></script>
 
 
-
-
-
-
-
 <style>
 .search-bar-container input {
 	width: 100%;
@@ -531,6 +526,7 @@ $(document).ready(function() {
         }
     });
 });
+
 </script>
 </head>
 
@@ -539,7 +535,7 @@ $(document).ready(function() {
 	<div class="nxl-container" style="background: aliceblue;">
 		<div class="nxl-content" style="background: aliceblue;">
 
-				<div class="page-header" style="background: aliceblue;">
+			<div class="page-header" style="background: aliceblue;">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
 						<h5 class="m-b-10">Customer</h5>
@@ -565,12 +561,12 @@ $(document).ready(function() {
 							</a>
 						</div> -->
 						<div>
-							<a onclick="goBack()" class="back-btn">
-   								 <i class="bi bi-arrow-left-circle text-primary normal-icon"></i>
-    							 <i class="bi bi-arrow-left-circle-fill text-primary hover-icon"></i>
+							<a onclick="goBack()" class="back-btn"> <i
+								class="bi bi-arrow-left-circle text-primary normal-icon"></i> <i
+								class="bi bi-arrow-left-circle-fill text-primary hover-icon"></i>
 							</a>
 						</div>
-							<label class="form-label">Back</label>
+						<label class="form-label">Back</label>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -657,8 +653,8 @@ $(document).ready(function() {
 						</h2>
 						<div id="panelsStayOpen-collapseOne"
 							class="accordion-collapse collapse show">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -40px;">
+							<div class="accordion-body p-3
+								style=" background:aliceblue;">
 								<div class="main-content">
 									<!-- <div
 										class="mb-4 d-flex align-items-center justify-content-between">
@@ -675,7 +671,8 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Salutation<span
 													class="text-danger">*</span></label>
-												<form:select path="salutation" class="form-select" style="font-size: inherit;" multiple="false"
+												<form:select path="salutation" class="form-select"
+													style="font-size: inherit;" multiple="false"
 													id="salutation">
 													<form:option value="" disabled="true" selected="true">Select Salutation</form:option>
 													<form:options items="${salutationList}" itemValue="valueId"
@@ -740,8 +737,8 @@ $(document).ready(function() {
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Secondary Nationality </label>
-												<form:select path="secondNationality" class="form-select" style="font-size: inherit;"
-													id="secondNationality">
+												<form:select path="secondNationality" class="form-select"
+													style="font-size: inherit;" id="secondNationality">
 													<form:option value="" disabled="true" selected="true">Secondary Nationality</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
 														itemLabel="description" />
@@ -753,8 +750,9 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Native Region <span
 													class="text-danger">*</span></label>
-												<form:select path="nativeRegion" class="form-select" style="font-size: inherit;"
-													multiple="false" id="nativeRegion">
+												<form:select path="nativeRegion" class="form-select"
+													style="font-size: inherit;" multiple="false"
+													id="nativeRegion">
 													<form:option value="" disabled="true" selected="true">Select Native Region</form:option>
 													<form:options items="${nativeRegionList}"
 														itemValue="valueId" itemLabel="description" />
@@ -778,7 +776,8 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Country of Birth<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfBirth" class="form-select" style="font-size: inherit;" multiple="false"
+												<form:select path="countryOfBirth" class="form-select"
+													style="font-size: inherit;" multiple="false"
 													id="countryOfBirth">
 													<form:option value="" disabled="true" selected="true">Country of Birth</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -791,7 +790,8 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Place of Birth </label>
 												<form:select path="placeOfBirth" id="placeOfBirth"
-													class="form-select" style="font-size: inherit;" multiple="false">
+													class="form-select" style="font-size: inherit;"
+													multiple="false">
 													<form:option value="" disabled="true" selected="true">Select Place of Birth</form:option>
 													<form:options items="${placeOfBirthList}"
 														itemValue="description" itemLabel="description" />
@@ -803,7 +803,8 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Country of Residence<span
 													class="text-danger">*</span></label>
-												<form:select path="countryOfResidence" class="form-select" style="font-size: inherit;" multiple="false"
+												<form:select path="countryOfResidence" class="form-select"
+													style="font-size: inherit;" multiple="false"
 													id="countryOfResidence">
 													<form:option value="" disabled="true" selected="true">Country of Residence</form:option>
 													<form:options items="${countryList}" itemValue="valueId"
@@ -819,7 +820,8 @@ $(document).ready(function() {
 											<div class="mb-4">
 												<label class="form-label">Gender<span
 													class="text-danger">*</span></label>
-												<form:select path="gender" id="gender" class="form-select" style="font-size: inherit;" multiple="false">
+												<form:select path="gender" id="gender" class="form-select"
+													style="font-size: inherit;" multiple="false">
 													<form:option value="" disabled="true" selected="true">Gender</form:option>
 													<form:options items="${genderList}" />
 												</form:select>
@@ -851,7 +853,7 @@ $(document).ready(function() {
 							class="accordion-collapse collapse">
 							<hr class="my-0">
 							<div class="card-body pass-security">
-								<div class="accordion-body" style="margin-top: -20px;">
+								<div class="accordion-body p-3">
 									<div class="card-body personal-info">
 
 										<div class="main-content">
@@ -916,7 +918,8 @@ $(document).ready(function() {
 													<div class="mb-4">
 														<label class="form-label">Country<span
 															class="text-danger">*</span></label>
-														<form:select path="country" class="form-select" style="font-size: inherit;" multiple="false"
+														<form:select path="country" class="form-select"
+															style="font-size: inherit;" multiple="false"
 															id="currentCountry">
 															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
@@ -932,10 +935,12 @@ $(document).ready(function() {
 													<div class="mb-4">
 														<label class="form-label">State<span
 															class="text-danger">*</span></label>
-														<form:select path="state" id="stateDropdown" class="form-select" style="font-size: inherit;" multiple="false">
+														<form:select path="state" id="stateDropdown"
+															class="form-select" style="font-size: inherit;"
+															multiple="false">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
-															<form:options items="${stateList}" itemValue="description"
-																itemLabel="description" />
+															<form:options items="${stateList}"
+																itemValue="description" itemLabel="description" />
 														</form:select>
 														<span id="stateError" style="color: red;"></span>
 													</div>
@@ -1026,7 +1031,8 @@ $(document).ready(function() {
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Country</label>
-														<form:select path="parCountry" class="form-select" style="font-size: inherit;" id="permanentCountry">
+														<form:select path="parCountry" class="form-select"
+															style="font-size: inherit;" id="permanentCountry">
 															<form:option value="" disabled="true" selected="true">Select Country</form:option>
 															<form:options items="${countryList}" itemValue="valueId"
 																itemLabel="description" />
@@ -1040,11 +1046,12 @@ $(document).ready(function() {
 													<div class="mb-4">
 														<label class="form-label">State</label>
 														<form:select path="parState" id="parStateDropdown"
-															class="form-select" style="font-size: inherit; height: 46;" multiple="false" 
+															class="form-select"
+															style="font-size: inherit; height: 46;" multiple="false"
 															title="Select State">
 															<form:option value="" disabled="true" selected="true">Select State</form:option>
-															<form:options items="${stateList}" itemValue="description"
-																itemLabel="description" />
+															<form:options items="${stateList}"
+																itemValue="description" itemLabel="description" />
 														</form:select>
 														<span id="parStateError" style="color: red;"></span>
 													</div>
@@ -1081,8 +1088,7 @@ $(document).ready(function() {
 						</h2>
 						<div id="panelsStayOpen-collapseThree"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -30px;">
+							<div class="accordion-body p-3" style="background: aliceblue;">
 								<div class="card-body personal-info">
 									<div class="main-content">
 
@@ -1148,8 +1154,7 @@ $(document).ready(function() {
 						</h2>
 						<div id="panelsStayOpen-collapseFour"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -40px;">
+							<div class="accordion-body p-3" style="background: aliceblue;">
 								<div class="card-body pass-info">
 									<div class="main-content">
 
@@ -1244,7 +1249,8 @@ $(document).ready(function() {
 																				class="text-danger">*</span></label>
 																			<form:select
 																				path="idDetails[${status.index}].issuedCountry"
-																				class="form-select" style="font-size: inherit;" multiple="false">
+																				class="form-select" style="font-size: inherit;"
+																				multiple="false">
 																				<form:option value="" disabled="true"
 																					selected="true">Issued Country</form:option>
 																				<form:options items="${countryList}"
@@ -1260,7 +1266,8 @@ $(document).ready(function() {
 																				class="text-danger">*</span></label>
 																			<form:select
 																				path="idDetails[${status.index}].issuedAt"
-																				class="form-select" style="font-size: inherit;" multiple="false">
+																				class="form-select" style="font-size: inherit;"
+																				multiple="false">
 																				<form:option value="" disabled="true"
 																					selected="true">Issued at</form:option>
 																				<form:options items="${countryList}"
@@ -1400,8 +1407,7 @@ $(document).ready(function() {
 						</h2>
 						<div id="panelsStayOpen-collapseFive"
 							class="accordion-collapse collapse">
-							<div class="accordion-body"
-								style="background: aliceblue; margin-top: -30px;">
+							<div class="accordion-body p-3" style="background: aliceblue;">
 								<div class="card-body personal-info">
 									<div class="main-content">
 										<!-- <div
@@ -1464,7 +1470,8 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Risk Rating<span
 														class="text-danger">*</span></label>
-													<form:select path="riskRatingId" class="form-select" style="font-size: inherit;" multiple="false"
+													<form:select path="riskRatingId" class="form-select"
+														style="font-size: inherit;" multiple="false"
 														id="riskRatingId">
 														<form:option value="" disabled="true" selected="true">Risk Rating</form:option>
 														<form:options items="${riskRatingIdList}"
@@ -1477,7 +1484,8 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Income Type<span
 														class="text-danger">*</span></label>
-													<form:select path="incomeType" class="form-select" style="font-size: inherit;" multiple="false"
+													<form:select path="incomeType" class="form-select"
+														style="font-size: inherit;" multiple="false"
 														id="incomeType">
 														<form:option value="" disabled="true" selected="true">Income Type</form:option>
 														<form:options items="${incomeTypeList}"
@@ -1490,7 +1498,8 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Profession Catagory<span
 														class="text-danger">*</span></label>
-													<form:select path="professionCategory" class="form-select" style="font-size: inherit;" multiple="false"
+													<form:select path="professionCategory" class="form-select"
+														style="font-size: inherit;" multiple="false"
 														id="professionCategory">
 														<form:option value="" disabled="true" selected="true">Profession Catagory</form:option>
 														<form:options items="${professionCategoryList}"
@@ -1535,10 +1544,11 @@ $(document).ready(function() {
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Monthly Transaction Volume<span
-														class="text-danger">*</span>
+													<label class="form-label">Monthly Transaction
+														Volume<span class="text-danger">*</span>
 													</label>
-													<form:select path="txnVolMonth" class="form-select" style="font-size: inherit;" multiple="false"
+													<form:select path="txnVolMonth" class="form-select"
+														style="font-size: inherit;" multiple="false"
 														id="txnVolMonth">
 														<form:option value="" disabled="true" selected="true">Monthly Transaction Volume</form:option>
 														<form:options items="${transactionVolumeMonthList}"
@@ -1551,7 +1561,8 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Monthly Transaction Count<span
 														class="text-danger">*</span></label>
-													<form:select path="txnCountMonth" class="form-select" style="font-size: inherit;" multiple="false"
+													<form:select path="txnCountMonth" class="form-select"
+														style="font-size: inherit;" multiple="false"
 														id="txnCountMonth">
 														<form:option value="" disabled="true" selected="true">Monthly Transaction Count</form:option>
 														<form:options items="${transactionCountMonthList}"
@@ -1577,7 +1588,8 @@ $(document).ready(function() {
 												<div class="mb-4">
 													<label class="form-label">Marital Status<span
 														class="text-danger">*</span></label>
-													<form:select path="maritalStatus" class="form-select" style="font-size: inherit;" id="maritalStatus">
+													<form:select path="maritalStatus" class="form-select"
+														style="font-size: inherit;" id="maritalStatus">
 														<%-- 														<form:option value="" disabled="true" selected="true">Marital Status</form:option> --%>
 														<option value="2">Unmarried</option>
 														<option value="1">Married</option>
@@ -1588,7 +1600,8 @@ $(document).ready(function() {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Occupation</label>
-													<form:select path="occupationId" class="form-select" style="font-size: inherit;" multiple="false"
+													<form:select path="occupationId" class="form-select"
+														style="font-size: inherit;" multiple="false"
 														id="occupationId">
 														<form:option value="" disabled="true" selected="true">Occupation</form:option>
 														<form:options items="${occupationIdList}"
@@ -1600,7 +1613,8 @@ $(document).ready(function() {
 											<div class="col-xl-4">
 												<div class="mb-4">
 													<label class="form-label">Political Exposed Person</label>
-													<form:select path="politicalExposedPerson" class="form-select" style="font-size: inherit;">
+													<form:select path="politicalExposedPerson"
+														class="form-select" style="font-size: inherit;">
 														<form:option value="0">No</form:option>
 														<form:option value="1">Yes</form:option>
 													</form:select>

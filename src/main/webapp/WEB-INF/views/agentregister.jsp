@@ -408,8 +408,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label>
-											<form:select path="countries" class="form-control"
-												data-select2-selector="icon" multiple="false" id="countries">
+											<form:select path="countries" class="form-select"  multiple="false" id="countries" style="font-size: inherit;">
 												<form:option value="" disabled="true" selected="true">Select Country</form:option>
 												<form:options items="${countryList}" itemValue="valueId"
 													itemLabel="description" />
@@ -424,9 +423,9 @@ document.addEventListener('DOMContentLoaded', function () {
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label>
 											<form:select path="currencies" id="currencies"
-												class="form-control" data-select2-selector="icon"
+												 class="form-select" style="font-size: inherit;" 
 												multiple="false">
-												<form:option value="" disabled="true" selected="true">Select Currency</form:option>
+												<form:option value="" disabled="true" selected="true" >Select Currency</form:option>
 												<form:options items="${currencyList}" itemValue="valueId"
 													itemLabel="description" />
 											</form:select>
@@ -436,8 +435,7 @@ document.addEventListener('DOMContentLoaded', function () {
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">State</label>
-											<form:select path="state" id="state" class="form-control"
-												data-select2-selector="icon" multiple="false">
+											<form:select path="state" id="state"  class="form-select"  multiple="false" style="font-size: inherit;">
 												<form:option value="" disabled="true" selected="true">Select State</form:option>
 												<form:options items="${stateList}" itemValue="valueId"
 													itemLabel="description" />
@@ -497,8 +495,7 @@ document.addEventListener('DOMContentLoaded', function () {
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
-											<form:select path="timeZone" class="form-control"
-												data-select2-selector="icon" multiple="false" id="timeZone">
+											<form:select path="timeZone"  class="form-select" style="font-size: inherit;"  multiple="false" id="timeZone" >
 												<form:option value="" disabled="true" selected="true">Select Timezone</form:option>
 												<form:options items="${timezoneList}" itemValue="valueId"
 													itemLabel="description" />
@@ -641,7 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
 												<label class="form-label">Tax Applicable<span
 													class="text-danger">*</span></label>
 												<form:select path="taxApplicable" class="form-control"
-													data-select2-selector="icon" id="taxApplicable">
+													id="taxApplicable">
 													<form:option value="0">No</form:option>
 													<form:option value="1">Yes</form:option>
 												</form:select>
@@ -651,8 +648,7 @@ document.addEventListener('DOMContentLoaded', function () {
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span
 													class="text-danger">*</span></label>
-												<form:select path="workingHours" class="form-control"
-													data-select2-selector="icon" multiple="false" id="working">
+												<form:select path="workingHours"  class="form-select"  multiple="false" id="working" style="font-size: inherit;">
 													<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
 													<form:options items="${workingHoursList}"
 														itemValue="valueId" itemLabel="description" />
@@ -751,8 +747,8 @@ document.addEventListener('DOMContentLoaded', function () {
 												<div class="mb-4">
 													<label class="form-label">Settlement Mode<span
 														class="text-danger">*</span></label>
-													<form:select path="settlementMode" class="form-control"
-														data-select2-selector="icon" id="settlementMode">
+													<form:select path="settlementMode" class="form-select" 
+														 id="settlementMode" style="font-size: inherit;">
 														<form:option value="" disabled="true" selected="true">Select Settlement Mode</form:option>
 														<form:option value="Rolling">Rolling</form:option>
 														<form:option value="Expire Everyday">Expire Everyday</form:option>
@@ -764,8 +760,8 @@ document.addEventListener('DOMContentLoaded', function () {
 												<div class="mb-4">
 													<label class="form-label">Settlement Type<span
 														class="text-danger">*</span></label>
-													<form:select path="settlementType" class="form-control"
-														data-select2-selector="icon" id="settlementType">
+													<form:select path="settlementType" class="form-select" 
+														id="settlementType" style="font-size: inherit;">
 														<form:option value="" disabled="true" selected="true">Select Settlement Type</form:option>
 														<form:option value="Pre-Funding">Pre-Funding</form:option>
 														<form:option value="Post-Funding">Post-Funding</form:option>
@@ -780,8 +776,8 @@ document.addEventListener('DOMContentLoaded', function () {
 												<div class="mb-4">
 													<label class="form-label">Status<span
 														class="text-danger">*</span></label>
-													<form:select path="creditLimitStatus" class="form-control"
-														data-select2-selector="icon" id="status">
+													<form:select path="creditLimitStatus"  class="form-select" 
+														 id="status" style="font-size: inherit;">
 														<%-- <form:option value="" disabled="true" selected="true">Select Status</form:option> --%>
 														<form:option value="0">Inactive</form:option>
 														<form:option value="1">Active</form:option>

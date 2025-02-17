@@ -41,12 +41,6 @@
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
 
-
-
-
-
-
-
 <style>
 .search-bar-container input {
 	width: 100%;
@@ -278,7 +272,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 								class="bi bi-arrow-left-circle-fill text-primary"
 								style="font-size: 30px;"></i></a>
 						</div>
-							<label class="form-label">Back</label>
+						<label class="form-label">Back</label>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -324,27 +318,27 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<label class="form-label">Agent Name<span
 												class="text-danger">*</span></label>
 											<form:input path="agentName" type="text" class="form-control"
-												id="agentName" placeholder="Agent Name"  maxlength="60"
+												id="agentName" placeholder="Agent Name" maxlength="60"
 												oninput="validateLengthWithMaxMessage('agentName', 60, 'agentNameError')" />
 											<span id="agentNameError" style="color: red;"></span>
 										</div>
 									</div>
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Agent Display Name<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="agentDisplayName" type="text"
-                                                class="form-control" id="agentDisplayName"
-                                                placeholder="Agent Display Name" />
-                                            <span id="agentDisplayNameError" class="text-danger1"></span>
-                                        </div>
-                                    </div>
+										<div class="mb-4">
+											<label class="form-label">Agent Display Name<span
+												class="text-danger">*</span></label>
+											<form:input path="agentDisplayName" type="text"
+												class="form-control" id="agentDisplayName"
+												placeholder="Agent Display Name" />
+											<span id="agentDisplayNameError" class="text-danger1"></span>
+										</div>
+									</div>
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">Country<span
 												class="text-danger">*</span></label>
-											<form:select path="countries" class="form-control"
-												data-select2-selector="icon" multiple="false" id="countries">
+											<form:select path="countries" class="form-select"
+												multiple="false" id="countries" style="font-size: inherit;">
 												<form:option value="" disabled="true" selected="true">Select Country</form:option>
 												<form:options items="${countryList}" itemValue="valueId"
 													itemLabel="description" />
@@ -359,8 +353,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<label class="form-label">Country Currency<span
 												class="text-danger">*</span></label>
 											<form:select path="currencies" id="currencies"
-												class="form-control" data-select2-selector="icon"
-												multiple="false">
+												class="form-select" multiple="false" style="font-size: inherit;">
 												<form:option value="" disabled="true" selected="true">Select Currency</form:option>
 												<form:options items="${currencyList}" itemValue="valueId"
 													itemLabel="description" />
@@ -371,8 +364,8 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 									<div class="col-xl-4">
 										<div class="mb-4">
 											<label class="form-label">State</label>
-											<form:select path="state" id="state" class="form-control"
-												data-select2-selector="icon" multiple="false">
+											<form:select path="state" id="state" class="form-select"
+												multiple="false" style="font-size: inherit;">
 												<form:option value="" disabled="true" selected="true">Select State</form:option>
 												<form:options items="${stateList}" itemValue="valueId"
 													itemLabel="description" />
@@ -380,15 +373,15 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 											<span id="stateError" class="text-danger1"></span>
 										</div>
 									</div>
-                                    <div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">City<span
-                                                class="text-danger">*</span></label>
-                                            <form:input path="city" type="text" class="form-control"
-                                                id="city" placeholder="City" />
-                                            <span id="cityError" class="text-danger1"></span>
-                                        </div>
-                                    </div>
+									<div class="col-xl-4">
+										<div class="mb-4">
+											<label class="form-label">City<span
+												class="text-danger">*</span></label>
+											<form:input path="city" type="text" class="form-control"
+												id="city" placeholder="City" />
+											<span id="cityError" class="text-danger1"></span>
+										</div>
+									</div>
 								</div>
 								<div class="row">
 									<div class="col-xl-4">
@@ -431,8 +424,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 										<div class="mb-4">
 											<label class="form-label">TimeZone<span
 												class="text-danger">*</span></label>
-											<form:select path="timeZone" class="form-control"
-												data-select2-selector="icon" multiple="false" id="timeZone">
+											<form:select path="timeZone" class="form-select" multiple="false" id="timeZone" style="font-size: inherit;">
 												<form:option value="" disabled="true" selected="true">Select Timezone</form:option>
 												<form:options items="${timezoneList}" itemValue="valueId"
 													itemLabel="description" />
@@ -441,182 +433,347 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 										</div>
 									</div>
 									<div class="col-xl-4">
-                                        <div class="mb-4">
-                                            <label class="form-label">Status <span
-                                                class="text-danger">*</span></label>
-                                            <form:select path="statusFlag" class="form-control"
-                                                data-select2-selector="icon" id="statusFlag"
-                                                onchange="toggleRemarks()">
-                                                <form:option value="false">Inactive</form:option>
-                                                <form:option value="true">Active</form:option>
-                                            </form:select>
-                                        </div>
-                                    </div>
+										<div class="mb-4">
+											<label class="form-label">Status <span
+												class="text-danger">*</span></label>
+											<form:select path="statusFlag" class="form-select"  id="statusFlag"
+												onchange="toggleRemarks()" style="font-size: inherit;">
+												<form:option value="false">Inactive</form:option>
+												<form:option value="true">Active</form:option>
+											</form:select>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseTwo')">Contact
-								Details</button>
-						</h2>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseTwo')">Contact
+							Details</button>
+					</h2>
 
-						<div id="panelsStayOpen-collapseTwo"
-							class="accordion-collapse collapse">
-							<hr class="my-0">
-							<div class="card-body pass-security">
-								<div class="accordion-body mt-3">
-									<div class="card-body personal-info">
+					<div id="panelsStayOpen-collapseTwo"
+						class="accordion-collapse collapse">
+						<hr class="my-0">
+						<div class="card-body pass-security">
+							<div class="accordion-body mt-3">
+								<div class="card-body personal-info">
 
-										<div class="main-content">
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Email<span
-															class="text-danger">*</span></label>
-														<form:input path="email" type="email" class="form-control"
-															id="email" placeholder="Email" />
-														<span id="emailError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Mobile</label>
-														<form:input path="mobile" type="tel" class="form-control"
-															id="mobile" placeholder="Mobile" />
-														<span id="mobileError" class="text-danger1"></span>
-
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Phone<span
-															class="text-danger">*</span></label>
-														<form:input path="phone" type="tel" class="form-control"
-															id="phone" placeholder="Phone" />
-														<span id="phoneError" class="text-danger1"></span>
-													</div>
+									<div class="main-content">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Email<span
+														class="text-danger">*</span></label>
+													<form:input path="email" type="email" class="form-control"
+														id="email" placeholder="Email" />
+													<span id="emailError" class="text-danger1"></span>
 												</div>
 											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Mobile</label>
+													<form:input path="mobile" type="tel" class="form-control"
+														id="mobile" placeholder="Mobile" />
+													<span id="mobileError" class="text-danger1"></span>
 
-
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Contact Person<span
-															class="text-danger">*</span></label>
-														<form:input path="contactPerson" type="tel"
-															class="form-control" id="contactPerson"
-															placeholder="Contact Person" />
-														<span id="contactPersonError" class="text-danger1"></span>
-													</div>
 												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Mis Email Id<span
-															class="text-danger">*</span></label>
-														<form:input path="misEmailId" type="email"
-															class="form-control" id="misEmailId"
-															placeholder="Mis Email Id" />
-														<span id="misEmailIdError" class="text-danger1"></span>
-													</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Phone<span
+														class="text-danger">*</span></label>
+													<form:input path="phone" type="tel" class="form-control"
+														id="phone" placeholder="Phone" />
+													<span id="phoneError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Contact Person<span
+														class="text-danger">*</span></label>
+													<form:input path="contactPerson" type="tel"
+														class="form-control" id="contactPerson"
+														placeholder="Contact Person" />
+													<span id="contactPersonError" class="text-danger1"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Mis Email Id<span
+														class="text-danger">*</span></label>
+													<form:input path="misEmailId" type="email"
+														class="form-control" id="misEmailId"
+														placeholder="Mis Email Id" />
+													<span id="misEmailIdError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
+							</div>
 
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseThree')">Regulatory
+							Details</button>
+					</h2>
+					<div id="panelsStayOpen-collapseThree"
+						class="accordion-collapse collapse">
+						<div class="accordion-body mt-3" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Company Id<span
+														class="text-danger">*</span></label>
+													<form:input path="agentId" type="text" class="form-control"
+														id="agentId" placeholder="Agent Id" maxlength="6"
+														oninput="validateLengthWithMaxMessage('agentId', 6, 'agentIdError')" />
+													<span id="agentIdError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Agent Location Id<span
+														class="text-danger">*</span>
+													</label>
+													<form:input path="branchLocationId" type="number"
+														class="form-control" id="branchLocationId"
+														placeholder="Branch Location Id" maxlength="6"
+														oninput="validateLengthWithMaxMessageAgentLocation('branchLocationId', 6, 'branchLocationIdError')" />
+													<span id="branchLocationIdError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Licence No.<span
+														class="text-danger">*</span></label>
+													<form:input path="licenceNo" type="text"
+														class="form-control" id="licenceNo"
+														placeholder="Licence No." />
+													<span id="licenceNoError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xl-4">
+											<div class="mb-4">
+												<label class="form-label">Tax Identification Number<span
+													class="text-danger">*</span>
+												</label>
+												<form:input path="taxIdentificationNumber" type="text"
+													class="form-control" id="taxIdentificationNumber"
+													placeholder="Tax Identification Number" />
+												<span id="taxIdentificationNumberError" class="text-danger1"></span>
+											</div>
+										</div>
+										<div class="col-xl-4">
+											<div class="mb-4">
+												<label class="form-label">Tax Applicable<span
+													class="text-danger">*</span></label>
+												<form:select path="taxApplicable" class="form-select" id="taxApplicable" style="font-size: inherit;">
+													<form:option value="0">No</form:option>
+													<form:option value="1">Yes</form:option>
+												</form:select>
+											</div>
+										</div>
+										<div class="col-xl-4">
+											<div class="mb-4">
+												<label class="form-label">Working Hours<span
+													class="text-danger">*</span></label>
+												<form:select path="workingHours" class="form-select" multiple="false" id="working" style="font-size: inherit;">
+													<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
+													<form:options items="${workingHoursList}"
+														itemValue="valueId" itemLabel="description" />
+												</form:select>
+												<span id="workingError" class="text-danger1"></span>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseThree')">Regulatory
-								Details</button>
-						</h2>
-						<div id="panelsStayOpen-collapseThree"
-							class="accordion-collapse collapse">
-							<div class="accordion-body mt-3" style="background: aliceblue;">
-								<div class="card-body personal-info">
-									<div class="main-content">
-										<div class="card-body pass-security">
-											<div class="row">
-
-                                                <div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Company Id<span
-                                                            class="text-danger">*</span></label>
-                                                        <form:input path="agentId" type="text" class="form-control"
-                                                            id="agentId" placeholder="Agent Id" maxlength="6"
-														oninput="validateLengthWithMaxMessage('agentId', 6, 'agentIdError')"  />
-                                                        <span id="agentIdError" style="color: red;"></span>
-                                                    </div>
-                                                </div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Agent Location Id<span
-															class="text-danger">*</span>
-														</label>
-														<form:input path="branchLocationId" type="number"
-															class="form-control" id="branchLocationId"
-															placeholder="Branch Location Id" maxlength="6"
-														oninput="validateLengthWithMaxMessageAgentLocation('branchLocationId', 6, 'branchLocationIdError')" />
-													<span id="branchLocationIdError" style="color: red;"></span>
-													</div>
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseFour')">Funding
+							Bank Details</button>
+					</h2>
+					<div id="panelsStayOpen-collapseFour"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Bank Name<span
+														class="text-danger">*</span></label>
+													<form:input path="BankName" type="text"
+														class="form-control" id="BankName"
+														placeholder="Enter bank name" />
+													<span id="BankNameError" class="text-danger1"></span>
 												</div>
-												<div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Licence No.<span
-                                                            class="text-danger">*</span></label>
-                                                        <form:input path="licenceNo" type="text"
-                                                            class="form-control" id="licenceNo"
-                                                            placeholder="Licence No." />
-                                                        <span id="licenceNoError" class="text-danger1"></span>
-                                                    </div>
-                                                </div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Branch Name<span
+														class="text-danger">*</span></label>
+													<form:input path="branchName" type="text"
+														class="form-control" id="branchName"
+														placeholder="Enter branch name" />
+													<span id="branchNameError" class="text-danger1"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Account Number<span
+														class="text-danger">*</span></label>
+													<form:input path="accountNumber" type="number"
+														class="form-control" id="accountNumber"
+														placeholder="Enter account number" />
+													<span id="accountNumberError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseFive')">Credit
+							Limit</button>
+					</h2>
+					<div id="panelsStayOpen-collapseFive"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Daily<span
+														class="text-danger">*</span></label>
+													<form:input path="daily" type="number" class="form-control"
+														id="daily" placeholder="Daily" />
+													<span id="dailyError" class="text-danger1"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Settlement Mode<span
+														class="text-danger">*</span></label>
+													<form:select path="settlementMode" class="form-select" id="settlementMode" style="font-size: inherit;">
+														<form:option value="" disabled="true" selected="true">Select Settlement Mode</form:option>
+														<form:option value="Rolling">Rolling</form:option>
+														<form:option value="Expire Everyday">Expire Everyday</form:option>
+													</form:select>
+													<span id="settlementModeError" class="text-danger1"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Settlement Type<span
+														class="text-danger">*</span></label>
+													<form:select path="settlementType" class="form-select" id="settlementType">
+														<form:option value="" disabled="true" selected="true">Select Settlement Type</form:option>
+														<form:option value="Pre-Funding">Pre-Funding</form:option>
+														<form:option value="Post-Funding">Post-Funding</form:option>
+													</form:select>
+
+													<span id="settlementTypeError" class="text-danger1"></span>
+												</div>
 											</div>
 										</div>
 										<div class="row">
 											<div class="col-xl-4">
-                                                <div class="mb-4">
-                                                    <label class="form-label">Tax Identification
-                                                        Number<span class="text-danger">*</span>
-                                                    </label>
-                                                    <form:input path="taxIdentificationNumber" type="text"
-                                                        class="form-control" id="taxIdentificationNumber"
-                                                        placeholder="Tax Identification Number" />
-                                                    <span id="taxIdentificationNumberError"
-                                                        class="text-danger1"></span>
-                                                </div>
-                                            </div>
+												<div class="mb-4">
+													<label class="form-label">Status<span
+														class="text-danger">*</span></label>
+													<form:select path="creditLimitStatus" class="form-select" id="status" style="font-size: inherit;">
+														<form:option value="0">Inactive</form:option>
+														<form:option value="1">Active</form:option>
+													</form:select>
+													<span id="statusError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button"
+							style="background: aliceblue;"
+							onclick="toggleDiv('panelsStayOpen-collapseSix')">Customer
+							Txn Limit</button>
+					</h2>
+					<div id="panelsStayOpen-collapseSix"
+						class="accordion-collapse collapse">
+						<div class="accordion-body" style="background: aliceblue;">
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Tax Applicable<span
+													<label class="form-label">Per Transaction<span
 														class="text-danger">*</span></label>
-													<form:select path="taxApplicable" class="form-control"
-														data-select2-selector="icon" id="taxApplicable">
-														<form:option value="0">No</form:option>
-														<form:option value="1">Yes</form:option>
-													</form:select>
+													<form:input path="perTransactionLimit" type="number"
+														class="form-control" id="perTransactionLimit"
+														placeholder="Per Transaction" />
+													<span id="perTransactionLimitError" class="text-danger1"></span>
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Working Hours<span
+													<label class="form-label">Per Day<span
 														class="text-danger">*</span></label>
-													<form:select path="workingHours" class="form-control"
-														data-select2-selector="icon" multiple="false" id="working">
-														<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
-														<form:options items="${workingHoursList}"
-															itemValue="valueId" itemLabel="description" />
-													</form:select>
-													<span id="workingError" class="text-danger1"></span>
+													<form:input path="perDayLimit" type="number"
+														class="form-control" id="perDayLimit"
+														placeholder="Per Day" />
+													<span id="perDayLimitError" class="text-danger1"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Per Month<span
+														class="text-danger">*</span></label>
+													<form:input path="perMonthLimit" type="number"
+														class="form-control" id="perMonthLimit"
+														placeholder="Per Month" />
+													<span id="perMonthLimitError" class="text-danger1"></span>
 												</div>
 											</div>
 										</div>
@@ -625,176 +782,8 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 							</div>
 						</div>
 					</div>
-					<div class="accordion-item" style="background: aliceblue;">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button"
-                                style="background: aliceblue;"
-                                onclick="toggleDiv('panelsStayOpen-collapseFour')">Funding Bank Details</button>
-                        </h2>
-                        <div id="panelsStayOpen-collapseFour"
-                            class="accordion-collapse collapse">
-                            <div class="accordion-body" style="background: aliceblue;">
-                                <div class="card-body personal-info">
-                                    <div class="main-content">
-                                        <div class="card-body pass-security">
-                                            <div class="row">
-                                                <div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Bank Name<span
-                                                            class="text-danger">*</span></label>
-                                                        <form:input path="BankName" type="text" class="form-control"
-                                                            id="BankName" placeholder="Enter bank name" />
-                                                        <span id="BankNameError" class="text-danger1"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Branch Name<span
-                                                            class="text-danger">*</span></label>
-                                                        <form:input path="branchName" type="text" class="form-control"
-                                                            id="branchName" placeholder="Enter branch name" />
-                                                        <span id="branchNameError" class="text-danger1"></span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-4">
-                                                    <div class="mb-4">
-                                                        <label class="form-label">Account Number<span
-                                                            class="text-danger">*</span></label>
-                                                        <form:input path="accountNumber" type="number" class="form-control"
-                                                            id="accountNumber" placeholder="Enter account number" />
-                                                        <span id="accountNumberError" class="text-danger1"></span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseFive')">Credit
-								Limit</button>
-						</h2>
-						<div id="panelsStayOpen-collapseFive"
-							class="accordion-collapse collapse">
-							<div class="accordion-body" style="background: aliceblue;">
-								<div class="card-body personal-info">
-									<div class="main-content">
-										<div class="card-body pass-security">
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Daily<span
-															class="text-danger">*</span></label>
-														<form:input path="daily" type="number"
-															class="form-control" id="daily" placeholder="Daily" />
-														<span id="dailyError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Settlement Mode<span
-															class="text-danger">*</span></label>
-														<form:select path="settlementMode" class="form-control"
-															data-select2-selector="icon" id="settlementMode">
-															<form:option value="" disabled="true" selected="true">Select Settlement Mode</form:option>
-															<form:option value="Rolling">Rolling</form:option>
-															<form:option value="Expire Everyday">Expire Everyday</form:option>
-														</form:select>
-														<span id="settlementModeError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Settlement Type<span
-															class="text-danger">*</span></label>
-														<form:select path="settlementType" class="form-control"
-															data-select2-selector="icon" id="settlementType">
-															<form:option value="" disabled="true" selected="true">Select Settlement Type</form:option>
-															<form:option value="Pre-Funding">Pre-Funding</form:option>
-															<form:option value="Post-Funding">Post-Funding</form:option>
-														</form:select>
-
-														<span id="settlementTypeError" class="text-danger1"></span>
-													</div>
-												</div>
-											</div>
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Status<span
-															class="text-danger">*</span></label>
-														<form:select path="creditLimitStatus" class="form-control"
-															data-select2-selector="icon" id="status">
-															<form:option value="0">Inactive</form:option>
-															<form:option value="1">Active</form:option>
-														</form:select>
-														<span id="statusError" class="text-danger1"></span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="accordion-item" style="background: aliceblue;">
-						<h2 class="accordion-header">
-							<button class="accordion-button collapsed" type="button"
-								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseSix')">Customer
-								Txn Limit</button>
-						</h2>
-						<div id="panelsStayOpen-collapseSix"
-							class="accordion-collapse collapse">
-							<div class="accordion-body" style="background: aliceblue;">
-								<div class="card-body personal-info">
-									<div class="main-content">
-										<div class="card-body pass-security">
-											<div class="row">
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Per Transaction<span
-															class="text-danger">*</span></label>
-														<form:input path="perTransactionLimit" type="number"
-															class="form-control" id="perTransactionLimit"
-															placeholder="Per Transaction" />
-														<span id="perTransactionLimitError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Per Day<span
-															class="text-danger">*</span></label>
-														<form:input path="perDayLimit" type="number"
-															class="form-control" id="perDayLimit"
-															placeholder="Per Day" />
-														<span id="perDayLimitError" class="text-danger1"></span>
-													</div>
-												</div>
-												<div class="col-xl-4">
-													<div class="mb-4">
-														<label class="form-label">Per Month<span
-															class="text-danger">*</span></label>
-														<form:input path="perMonthLimit" type="number"
-															class="form-control" id="perMonthLimit"
-															placeholder="Per Month" />
-														<span id="perMonthLimitError" class="text-danger1"></span>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="accordion-item" style="background: aliceblue;">
+				</div>
+				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -891,15 +880,16 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 						</div>
 					</div>
 				</div>
-				</div>
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<span id="validationError"  style="color:#ff000087; display:none;"><b>Please fill  all the required fields before submitting!</b></span>
-				</div>
-				<div class="mt-5 mb-5 text-center"
-					style="display: flex; justify-content: center">
-					<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
-				</div>
+			</div>
+			<div class="mt-5 mb-5 text-center"
+				style="display: flex; justify-content: center">
+				<span id="validationError" style="color: #ff000087; display: none;"><b>Please
+						fill all the required fields before submitting!</b></span>
+			</div>
+			<div class="mt-5 mb-5 text-center"
+				style="display: flex; justify-content: center">
+				<button id="submitButton" type="submit" class="btn btn-primary">Submit</button>
+			</div>
 		</form:form>
 		<jsp:include page="footer.jsp"></jsp:include>
 	</div>

@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country<span
 										class="text-danger">*</span></label> <select name="country"
-										class="form-control" id="country">
+										class="form-select" style="font-size: inherit;" id="country">
 										<option value="" disabled="true" selected="true">Select
 											Country</option>
 										<c:forEach items="${countryList}" var="country">

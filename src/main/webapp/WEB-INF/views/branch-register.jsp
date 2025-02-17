@@ -299,8 +299,7 @@ function validateBranchName(inputId, errorId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch Mode<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="branchMode" class="form-control"
-                                                data-select2-selector="icon" id="branchMode" onchange="updateFields()">
+                                            <form:select path="branchMode" class="form-select" style="font-size: inherit;" id="branchMode" onchange="updateFields()">
                                                 <form:option value="" disabled="true" selected="true">Select Branch Mode</form:option>
                                                 <form:option value="Head Office">Head Office</form:option>
                                                 <form:option value="Transaction">Transaction</form:option>
@@ -312,8 +311,7 @@ function validateBranchName(inputId, errorId) {
                                         <div class="mb-4">
                                             <label class="form-label">Branch Type<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="branchType" class="form-control"
-                                            data-select2-selector="icon" id="branchType">
+                                            <form:select path="branchType" class="form-select" style="font-size: inherit;" id="branchType">
                                                 <form:option value="" disabled="true" selected="true">Select Branch Type</form:option>
                                                 <form:option value="Remittance">Remittance</form:option>
                                                 <form:option value="FC">FC</form:option>
@@ -340,8 +338,7 @@ function validateBranchName(inputId, errorId) {
                                         <div class="mb-4">
                                             <label class="form-label">Agent<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="agent" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="agent">
+                                            <form:select path="agent" class="form-select" style="font-size: inherit;" multiple="false" id="agent">
                                                 <form:options items="${agentList}" itemValue="agentId"
                                                     itemLabel="agentName" />
                                             </form:select>
@@ -352,8 +349,7 @@ function validateBranchName(inputId, errorId) {
                                         <div class="mb-4">
                                             <label class="form-label">State<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="state" class="form-control"
-                                                data-select2-selector="icon" multiple="false" id="state">
+                                            <form:select path="state" class="form-select" style="font-size: inherit;" multiple="false" id="state">
                                                 <form:option value="" disabled="true" selected="true">Select State</form:option>
                                                 <form:options items="${stateList}" itemValue="valueId"
                                                     itemLabel="description" />
@@ -425,8 +421,7 @@ function validateBranchName(inputId, errorId) {
                                         <div class="mb-4">
                                             <label class="form-label">CDP Channel<span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="cdpChannel" class="form-control"
-                                                data-select2-selector="icon" id="cdpChannel">
+                                            <form:select path="cdpChannel" class="form-select" style="font-size: inherit;" id="cdpChannel">
                                                 <form:option value="" disabled="true" selected="true">Select CDP Channel</form:option>
                                                 <form:option value="WEB">Web</form:option>
                                                 <form:option value="DIGITAL">Digital</form:option>
@@ -443,8 +438,7 @@ function validateBranchName(inputId, errorId) {
 										<div class="mb-4">
 											<label class="form-label">RAAS Channel<span
 												class="text-danger">*</span></label>
-											<form:select path="raasChannel" class="form-control"
-												data-select2-selector="icon" id="raasChannel">
+											<form:select path="raasChannel" class="form-select" style="font-size: inherit;" id="raasChannel">
 												<form:option value="" disabled="true" selected="true">Select RAAS Channel</form:option>
 												<form:option value="Agency">Agency</form:option>
 												<form:option value="Direct">Direct</form:option>
@@ -458,8 +452,7 @@ function validateBranchName(inputId, errorId) {
                                         <div class="mb-4">
                                             <label class="form-label">Status <span
                                                 class="text-danger">*</span></label>
-                                            <form:select path="status" class="form-control"
-                                                data-select2-selector="icon" id="statusFlag"
+                                            <form:select path="status" class="form-select" style="font-size: inherit;" id="statusFlag"
                                                 onchange="toggleRemarks()">
                                                 <form:option value="false">Inactive</form:option>
                                                 <form:option value="true">Active</form:option>
@@ -594,8 +587,7 @@ function validateBranchName(inputId, errorId) {
 											<div class="mb-4">
 												<label class="form-label">Working Hours<span
 													class="text-danger">*</span></label>
-												<form:select path="workingHours" class="form-control"
-													data-select2-selector="icon" multiple="false"
+												<form:select path="workingHours" class="form-select" style="font-size: inherit;" multiple="false"
 													id="workingHours">
 													<form:option value="" disabled="true" selected="true">Select Working Hours</form:option>
 													<form:options items="${workingHoursList}"

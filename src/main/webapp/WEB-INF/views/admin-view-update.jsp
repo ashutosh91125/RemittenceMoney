@@ -191,8 +191,8 @@ function updateAdmin() {
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Country<span
 										class="text-danger">*</span></label>
-										<form:select path="country" data-select2-selector="tag"
-                                            id="country" title="Select a country" class="form-control">
+										<form:select path="country" class="form-select" style="font-size: inherit;"
+                                            id="country" title="Select a country" >
                                             <form:options items="${countryList}"
                                                 itemValue="valueId" itemLabel="description" />
                                         </form:select>

@@ -52,7 +52,7 @@
 							method="post" class="w-100 mt-4 pt-2">
 							<div class="row mb-2">
 
-                                <select name="branch" required data-select2-selector="icon" class="form-control" id="status">
+                                <select name="branch" required class="form-select" style="font-size: inherit;" id="status">
                                     <option value="" disabled="true" selected="true">Select Branch</option>
                                     <c:forEach var="branch" items="${branches}">
                                         <option value="${branch.branchId}">${branch.branchName}</option>

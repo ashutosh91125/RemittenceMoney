@@ -23,6 +23,9 @@ public class DepositRequest {
     private Double amount;
 
     @Column(nullable = false)
+    private String depositCurrency;
+
+    @Column(nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate depositDate;
 
@@ -41,6 +44,8 @@ public class DepositRequest {
     @Column(nullable = false)
     private String createdBy;
 
+    private String createdByUsername;
+
     private LocalDateTime createOn;
 
     @Column(columnDefinition = "TEXT")
@@ -51,6 +56,11 @@ public class DepositRequest {
 
     @Column(nullable = false, unique = true)
     private String depositRequestNumber;
+
+    private String depositBank;
+    private String depositAcNumber;
+    private String depositBankBranch;
+    private String agentAddress;
 
     @PrePersist
     public void generateRequestNumber() {

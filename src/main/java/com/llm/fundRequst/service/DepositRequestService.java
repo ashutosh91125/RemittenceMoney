@@ -1,4 +1,8 @@
 package com.llm.fundRequst.service;
+import com.llm.UserIdentity.model.User;
+import com.llm.agent.model.Agent;
+import com.llm.agent.repository.AgentRepositories;
+import com.llm.common.service.EnumEntityService;
 import com.llm.fundRequst.dto.DepositRequestDto;
 import com.llm.fundRequst.dto.DepositResponseDto;
 import com.llm.fundRequst.enums.FundRequestStatus;
@@ -29,18 +33,23 @@ import java.nio.file.Files;
 public class DepositRequestService {
 
     private final DepositRequestRepository depositRequestRepository;
-//    private static final String UPLOAD_DIR = "D:/SMD/LLM/uploads/receipts/";
+    private final AgentRepositories agentRepositories;
 
     @Value("${file.upload-dir}")
-    private String UPLOAD_DIR;
+    private String uploadDir;
 
-    public ApiResponse<DepositRequest> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt, String createdBy) {
+    public ApiResponse<DepositRequest> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt, String username) {
         try {
             if (depositRequestRepository.existsByReferenceNumber(dto.getReferenceNumber())) {
                 return new ApiResponse<>(false, "Reference number already exists!", null);
             }
 
+
             String filePath = saveFile(bankReceipt);
+
+            Agent agent = agentRepositories.findByUsername(username);
+
+            String agentAddress = agent.getAddress1()+ " " + agent.getCity() + " " + agent.getState();
 
             DepositRequest depositRequest = new DepositRequest();
             depositRequest.setAmount(dto.getAmount());
@@ -50,9 +59,16 @@ public class DepositRequestService {
             depositRequest.setBankReceiptPath(filePath);
             depositRequest.setDepositBy(dto.getDepositBy());
             depositRequest.setRemarks(dto.getRemarks());
-            depositRequest.setCreatedBy(createdBy);
+            depositRequest.setCreatedBy(agent.getAgentName());
+            depositRequest.setCreatedByUsername(username);
             depositRequest.setCreateOn(LocalDateTime.now());
             depositRequest.setFundRequestStatus(FundRequestStatus.PENDING);
+
+            depositRequest.setDepositCurrency(agent.getCurrencies());
+            depositRequest.setDepositBank(agent.getBankName());
+            depositRequest.setDepositAcNumber(agent.getAccountNumber());
+            depositRequest.setDepositBankBranch(agent.getBankName()+", "+agent.getBranchName());
+            depositRequest.setAgentAddress(agentAddress);
 
             DepositRequest saveFundRequest = depositRequestRepository.save(depositRequest);
             return new ApiResponse<>(true, "Deposit request saved successfully", saveFundRequest);
@@ -66,7 +82,7 @@ public class DepositRequestService {
             throw new IllegalArgumentException("File is required.");
         }
 
-        Path uploadPath = Paths.get(UPLOAD_DIR);
+        Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
@@ -120,7 +136,7 @@ public class DepositRequestService {
         }
 
         String filePath = depositOpt.get().getBankReceiptPath();
-        Path path = Paths.get(UPLOAD_DIR).resolve(filePath);
+        Path path = Paths.get(uploadDir).resolve(filePath);
         try {
             Resource resource = new UrlResource(path.toUri());
             if (!resource.exists() || !resource.isReadable()) {

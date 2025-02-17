@@ -148,8 +148,9 @@
 .hidden {
 	display: none;
 }
-</style>
 
+</style>
+<link rel="stylesheet" type="text/css" href="css/common.css">
 <script type="text/javascript" src="js/customer-update-validations.js"></script>
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
@@ -564,7 +565,7 @@ $(document).ready(function() {
 							</a>
 						</div> -->
 						<div>
-							<a onclick="goBack()"> <i
+							<a onclick="goBack()" class="back-btn"> <i
 								class="bi bi-arrow-left-circle-fill text-primary"
 								style="font-size: 30px;"></i></a>
 						</div>
@@ -833,50 +834,6 @@ $(document).ready(function() {
 												<span id="mothersMaidenNameError" style="color: red;"></span>
 											</div>
 										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Primary Mobile Number<span
-													class="text-danger">*</span></label>
-												<div class="input-group">
-													<form:select path="phoneCode" id="phoneCode"
-														class="form-control" multiple="false"
-														style="max-width: 80px; padding: 0;text-align:center;">
-														<form:option value="+60" disabled="true" selected="true">+60</form:option>
-													</form:select>
-													<form:input path="primaryMobileNumber" type="text"
-														class="form-control" placeholder="Primary Mobile Number"
-														id="primaryMobileNumber" />
-												</div>
-												<span id="primaryMobileNumberError" style="color: red;"></span>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Secondary Mobile Number</label>
-												<form:input path="secondaryMobileNumber" type="text"
-													class="form-control" placeholder="Secondary Mobile Number" />
-												<span id="secondaryMobileNumberError" style="color: red;"></span>
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Email<span
-													class="text-danger">*</span></label>
-												<form:input path="emailId" type="email" class="form-control"
-													placeholder="Email" id="emailId" />
-												<span id="emailIdError" style="color: red;"></span>
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Phone Number</label>
-												<form:input path="phoneNumber" type="text"
-													class="form-control" placeholder="Phone Number" />
-												<span id="phoneNumberError" style="color: red;"></span>
-											</div>
-										</div>
 									</div>
 								</div>
 							</div>
@@ -1108,23 +1065,87 @@ $(document).ready(function() {
 													</div>
 												</div> -->
 											</div>
-
 										</div>
 									</div>
 								</div>
-
 							</div>
 						</div>
-
-
 					</div>
 					<div class="accordion-item" style="background: aliceblue;">
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseThree')">KYC</button>
+								onclick="toggleDiv('panelsStayOpen-collapseThree')">Contact
+								Details</button>
 						</h2>
 						<div id="panelsStayOpen-collapseThree"
+							class="accordion-collapse collapse">
+							<div class="accordion-body"
+								style="background: aliceblue; margin-top: -30px;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Primary Mobile Number<span
+															class="text-danger">*</span></label>
+														<div class="input-group">
+															<form:select path="phoneCode" id="phoneCode"
+																class="form-control" multiple="false"
+																style="max-width: 80px; padding: 0;text-align:center;">
+																<form:option value="+60" disabled="true" selected="true">+60</form:option>
+															</form:select>
+															<form:input path="primaryMobileNumber" type="text"
+																class="form-control" placeholder="Primary Mobile Number"
+																id="primaryMobileNumber" />
+														</div>
+														<span id="primaryMobileNumberError" style="color: red;"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Secondary Mobile Number</label>
+														<form:input path="secondaryMobileNumber" type="text"
+															class="form-control"
+															placeholder="Secondary Mobile Number" />
+														<span id="secondaryMobileNumberError" style="color: red;"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Email<span
+															class="text-danger">*</span></label>
+														<form:input path="emailId" type="email"
+															class="form-control" placeholder="Email" id="emailId" />
+														<span id="emailIdError" style="color: red;"></span>
+													</div>
+												</div>
+												<div class="row">
+													<div class="col-xl-4">
+														<div class="mb-4">
+															<label class="form-label">Phone Number</label>
+															<form:input path="phoneNumber" type="text"
+																class="form-control" placeholder="Phone Number" />
+															<span id="phoneNumberError" style="color: red;"></span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseFour')">KYC</button>
+						</h2>
+						<div id="panelsStayOpen-collapseFour"
 							class="accordion-collapse collapse">
 							<div class="accordion-body"
 								style="background: aliceblue; margin-top: -40px;">
@@ -1373,10 +1394,10 @@ $(document).ready(function() {
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseFour')">Other
+								onclick="toggleDiv('panelsStayOpen-collapseFive')">Other
 								Information</button>
 						</h2>
-						<div id="panelsStayOpen-collapseFour"
+						<div id="panelsStayOpen-collapseFive"
 							class="accordion-collapse collapse">
 							<div class="accordion-body"
 								style="background: aliceblue; margin-top: -30px;">
@@ -1440,11 +1461,11 @@ $(document).ready(function() {
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Risk Rating Id<span
+													<label class="form-label">Risk Rating<span
 														class="text-danger">*</span></label>
 													<form:select path="riskRatingId" class="form-select" style="font-size: inherit;" multiple="false"
 														id="riskRatingId">
-														<form:option value="" disabled="true" selected="true">Risk Rating Id</form:option>
+														<form:option value="" disabled="true" selected="true">Risk Rating</form:option>
 														<form:options items="${riskRatingIdList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
@@ -1513,12 +1534,12 @@ $(document).ready(function() {
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Transaction Volume Month<span
+													<label class="form-label">Monthly Transaction Volume<span
 														class="text-danger">*</span>
 													</label>
 													<form:select path="txnVolMonth" class="form-select" style="font-size: inherit;" multiple="false"
 														id="txnVolMonth">
-														<form:option value="" disabled="true" selected="true">Transaction Volume Month</form:option>
+														<form:option value="" disabled="true" selected="true">Monthly Transaction Volume</form:option>
 														<form:options items="${transactionVolumeMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
@@ -1527,11 +1548,11 @@ $(document).ready(function() {
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Transaction Count Month<span
+													<label class="form-label">Monthly Transaction Count<span
 														class="text-danger">*</span></label>
 													<form:select path="txnCountMonth" class="form-select" style="font-size: inherit;" multiple="false"
 														id="txnCountMonth">
-														<form:option value="" disabled="true" selected="true">Transaction Count Month</form:option>
+														<form:option value="" disabled="true" selected="true">Monthly Transaction Count</form:option>
 														<form:options items="${transactionCountMonthList}"
 															itemValue="valueId" itemLabel="description" />
 													</form:select>
@@ -1612,8 +1633,7 @@ $(document).ready(function() {
 
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Profile Photo (Jpg only)<span
-														class="text-danger">*</span></label>
+													<label class="form-label">Profile Photo (Jpg only)</label>
 													<form:input path="profPictureFile" type="file"
 														accept="image/jpeg, image/jpg" class="form-control"
 														placeholder="Profile Photo" />

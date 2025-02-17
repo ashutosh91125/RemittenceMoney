@@ -240,7 +240,7 @@ function copyAddress() {
 	        }
 	    });
 
-	    $('#countryOfResidence').on('change', function() {
+	    $('#currentCountry').on('change', function() {
 	        let dependent = $(this).val(); 
 	        dependent += "PC";
 
@@ -284,7 +284,8 @@ function copyAddress() {
 	    const idNumberField = document.getElementById('idNumberField');
 	//     const nonResident = document.getElementById('nonResident');
 	    const customerIdentityContainer = document.getElementById('customerIdentityContainer');
-
+		const issuedDateExpiryForResidence = document.getElementById('issuedDateExpiryForResidence');
+				
 	    if (residentType === '101') {
 	        idTypeDropdowns.forEach(dropdown => {
 	            dropdown.style.display = "block";
@@ -297,6 +298,7 @@ function copyAddress() {
 	        idDetails.style.display = 'block';
 	        idDetailsFields.style.display = 'none';
 	        idNumberField.style.display = 'block';
+			issuedDateExpiryForResidence.style.display = 'block'
 	//         nonResident.style.display = 'none';
 	        customerIdentityContainer.style.display = 'block';
 	    } else if (residentType === '100') {
@@ -323,8 +325,9 @@ function copyAddress() {
 	        idDetails.style.display = 'block';
 	        idDetailsFields.style.display = 'block';
 	        idNumberField.style.display = 'block';
-	//         nonResident.style.display = 'flex';
+	//         nonResident.style.display = 'flex';	
 	        customerIdentityContainer.style.display = 'block';
+			issuedDateExpiryForResidence.style.display = 'none'
 	    } else {
 	        idTypeDropdowns.forEach(dropdown => {
 	            dropdown.style.display = "none";
@@ -338,6 +341,7 @@ function copyAddress() {
 	        idNumberField.style.display = 'none';
 	//         nonResident.style.display = 'none';
 	        customerIdentityContainer.style.display = 'none';
+			issuedDateExpiryForResidence.style.display = 'none'
 	    }
 	}
 
@@ -402,12 +406,19 @@ function copyAddress() {
 	          const issuedOnInput = document.querySelector('input[name="idDetails[0].issuedOn"]');
 	          const dateOfExpiryInput = document.querySelector('input[name="idDetails[0].dateOfExpiry"]');
 		      const visaExpiryDate = document.querySelector('input[name="idDetails[0].visaExpiryDate"]');
-		      const dateOfBirth = document.querySelector('input[name="dateOfBirth"]');
+		      const dateOfBirth = document.getElementById('dateOfBirth');
+			  const issuedOn1 = document.getElementById('issuedOn1');
+			  const dateOfExpiry1 = document.getElementById('dateOfExpiry1');
 	          issuedOnInput.setAttribute("max", today);
 	          dateOfExpiryInput.setAttribute("min", tomorrowString);
-		      visaExpiryDate.setAttribute("min",tomorrowString)
+		      visaExpiryDate.setAttribute("min",tomorrowString);
 		      dateOfBirth.setAttribute("max",today);
-	    
+			  
+			  const expiryDate = new Date();
+			  	    expiryDate.setFullYear(expiryDate.getFullYear() + 2); 
+			  const expiryDateStr = expiryDate.toISOString().split('T')[0];
+			  issuedOn1.setAttribute("value", today);
+			  dateOfExpiry1.setAttribute("value", expiryDateStr);
 	       toggleFields();
 	       toggleCustomerRemarks();
 	   });

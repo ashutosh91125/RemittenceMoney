@@ -31,7 +31,7 @@
 <script
 	src='https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js'></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Feather Icons (optional for search icon) --> 
+<!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
 <style>
 .search-bar-container input {
@@ -78,6 +78,7 @@
 	background-color: aliceblue;
 }
 </style>
+<link rel="stylesheet" type="text/css" href="css/common.css">
 <script type="text/javascript" src="js/commons.js"></script>
 <script>
 function toggleFields() {
@@ -224,7 +225,7 @@ $.ajax({
         callback(null);
     }
 });
-}		
+}	
 </script>
 </head>
 
@@ -264,11 +265,11 @@ $.ajax({
 							</a>
 						</div> -->
 						<div>
-							<a onclick="goBack()"> <i
+							<a onclick="goBack()" class="back-btn"> <i
 								class="bi bi-arrow-left-circle-fill text-primary"
 								style="font-size: 30px;"></i></a>
 						</div>
-							<label class="form-label">Back</label>
+						<label class="form-label">Back</label>
 					</div>
 					<div class="d-md-none d-flex align-items-center">
 						<a href="javascript:void(0)" class="page-header-right-open-toggle">
@@ -435,64 +436,15 @@ $.ajax({
 										</div>
 										<div class="col-xl-4">
 											<div class="mb-4">
-												<label class="form-label">Primary Mobile Number<span
-													class="text-danger"></span></label>
-												<div class="input-group">
-													<!-- Fixed Phone Code -->
-													<input name="phoneCode" id="phoneCode" class="form-control"
-														multiple="false" value="${customer.phoneCode}"
-														style="max-width: 80px; padding: 0; text-align: center;"
-														disabled="true" />
-													<!-- Combined Input Box -->
-													<input name="primaryMobileNumber" type="text"
-														class="form-control" placeholder="Primary Mobile Number"
-														id="primaryMobileNumber" disabled="true"
-														value="${customer.primaryMobileNumber}" />
-												</div>
-												<span id="primaryMobileNumberError" class="text-danger"></span>
-											</div>
-										</div>
-
-									</div>
-
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Secondary Mobile Number</label> <input
-													name="secondaryMobileNumber" type="tel"
-													value="${customer.secondaryMobileNumber}"
-													class="form-control" placeholder="Secondary Mobile Number"
-													disabled="true" />
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Email<span
-													class="text-danger"></span></label> <input name="emailId"
-													type="email" class="form-control"
-													value="${customer.emailId}" placeholder="Email"
-													disabled="true" />
-											</div>
-										</div>
-										<div class="col-xl-4">
-											<div class="mb-4">
-												<label class="form-label">Phone Number</label> <input
-													name="phoneNumber" type="tel"
-													value="${customer.phoneNumber}" class="form-control"
-													placeholder="Phone Number" disabled="true" />
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xl-4">
-											<div class="mb-4">
 												<label class="form-label">AML Status</label> <input
 													name="amlScanStatus" type="text" class="form-control"
 													lass="form-control" placeholder="AML Status"
 													value="${customer.amlScanStatus}" disabled="true" />
 											</div>
 										</div>
-										<div class="col-xl-4"> 
+									</div>
+									<div class="row">
+										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Customer Status</label> <input
 													name="amlScanStatus" type="text"
@@ -690,9 +642,80 @@ $.ajax({
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseThree')">KYC</button>
+								onclick="toggleDiv('panelsStayOpen-collapseThree')">Contact
+								Details</button>
 						</h2>
 						<div id="panelsStayOpen-collapseThree"
+							class="accordion-collapse collapse">
+							<div class="accordion-body"
+								style="background: aliceblue; margin-top: -30px;">
+								<div class="card-body personal-info">
+									<div class="main-content">
+
+										<div class="card-body pass-security">
+											<div class="row">
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Primary Mobile Number<span
+															class="text-danger"></span></label>
+														<div class="input-group">
+
+															<input name="phoneCode" id="phoneCode"
+																class="form-control" multiple="false"
+																value="${customer.phoneCode}"
+																style="max-width: 80px; padding: 0; text-align: center;"
+																disabled="true" /> <input name="primaryMobileNumber"
+																type="text" class="form-control"
+																placeholder="Primary Mobile Number"
+																id="primaryMobileNumber" disabled="true"
+																value="${customer.primaryMobileNumber}" />
+														</div>
+														<span id="primaryMobileNumberError" class="text-danger"></span>
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Secondary Mobile Number</label>
+														<input name="secondaryMobileNumber" type="tel"
+															value="${customer.secondaryMobileNumber}"
+															class="form-control"
+															placeholder="Secondary Mobile Number" disabled="true" />
+													</div>
+												</div>
+												<div class="col-xl-4">
+													<div class="mb-4">
+														<label class="form-label">Email<span
+															class="text-danger"></span></label> <input name="emailId"
+															type="email" class="form-control"
+															value="${customer.emailId}" placeholder="Email"
+															disabled="true" />
+													</div>
+												</div>
+												<div class="row">
+
+													<div class="col-xl-4">
+														<div class="mb-4">
+															<label class="form-label">Phone Number</label> <input
+																name="phoneNumber" type="tel"
+																value="${customer.phoneNumber}" class="form-control"
+																placeholder="Phone Number" disabled="true" />
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="accordion-item" style="background: aliceblue;">
+						<h2 class="accordion-header">
+							<button class="accordion-button collapsed" type="button"
+								style="background: aliceblue;"
+								onclick="toggleDiv('panelsStayOpen-collapseFour')">KYC</button>
+						</h2>
+						<div id="panelsStayOpen-collapseFour"
 							class="accordion-collapse collapse">
 							<div class="accordion-body"
 								style="background: aliceblue; margin-top: -40px;">
@@ -833,7 +856,6 @@ $.ajax({
 																			<div>
 																				<label class="form-label">Id Front</label>
 																			</div>
-
 																			<img
 																				src="/caas/api/v2/iddetail/frontimage/${idDetails[status.index].id}"
 																				alt="Id Front"
@@ -905,10 +927,10 @@ $.ajax({
 						<h2 class="accordion-header">
 							<button class="accordion-button collapsed" type="button"
 								style="background: aliceblue;"
-								onclick="toggleDiv('panelsStayOpen-collapseFour')">Other
+								onclick="toggleDiv('panelsStayOpen-collapseFive')">Other
 								Information</button>
 						</h2>
-						<div id="panelsStayOpen-collapseFour"
+						<div id="panelsStayOpen-collapseFive"
 							class="accordion-collapse collapse">
 
 							<div class="accordion-body"
@@ -959,9 +981,9 @@ $.ajax({
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Risk Rating Id<span
+													<label class="form-label">Risk Rating<span
 														class="text-danger"></span></label> <input type="text"
-														class="form-control" placeholder="Risk Rating Id"
+														class="form-control" placeholder="Risk Rating"
 														value="${riskRatingId}" disabled="true" />
 												</div>
 											</div>
@@ -1011,18 +1033,19 @@ $.ajax({
 										<div class="row">
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Transaction Volume Month<span
-														class="text-danger"></span>
+													<label class="form-label">Monthly Transaction
+														Volume<span class="text-danger"></span>
 													</label> <input type="text" class="form-control"
-														placeholder="Transaction Volume Month"
+														placeholder="Monthly Transaction Volume"
 														value="${txnVolMonth}" disabled="true" />
 												</div>
 											</div>
 											<div class="col-xl-4">
 												<div class="mb-4">
-													<label class="form-label">Transaction Count Month<span
+													<label class="form-label">Monthly Transaction Count<span
 														class="text-danger"></span></label> <input type="text"
-														class="form-control" placeholder="Transaction Count Month"
+														class="form-control"
+														placeholder="Monthly Transaction Count"
 														value="${txnCountMonth}" disabled="true" />
 												</div>
 											</div>

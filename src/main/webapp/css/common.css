@@ -1,0 +1,15 @@
+ .back-btn {
+        cursor: pointer;
+        text-decoration: none; /* Removes underline if any */
+    }
+
+    /* Change hover effects */
+    .back-btn i {
+        font-size: 30px;
+        transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
+
+    .back-btn:hover i {
+        transform: scale(1.1); /* Slight zoom effect */
+        color: #0056b3; /* Darker shade of primary color */
+    }

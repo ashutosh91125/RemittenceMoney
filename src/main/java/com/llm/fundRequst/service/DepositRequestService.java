@@ -1,6 +1,7 @@
 package com.llm.fundRequst.service;
 import com.llm.fundRequst.dto.DepositRequestDto;
 import com.llm.fundRequst.dto.DepositResponseDto;
+import com.llm.fundRequst.enums.FundRequestStatus;
 import com.llm.fundRequst.model.DepositRequest;
 import com.llm.fundRequst.repository.DepositRequestRepository;
 import com.llm.fundRequst.response.ApiResponse;
@@ -19,9 +20,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.Files;
 
@@ -35,17 +34,14 @@ public class DepositRequestService {
     @Value("${file.upload-dir}")
     private String UPLOAD_DIR;
 
-    public ApiResponse<String> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt, String createdBy) {
+    public ApiResponse<DepositRequest> saveDepositRequest(DepositRequestDto dto, MultipartFile bankReceipt, String createdBy) {
         try {
-            // Check if reference number already exists
             if (depositRequestRepository.existsByReferenceNumber(dto.getReferenceNumber())) {
                 return new ApiResponse<>(false, "Reference number already exists!", null);
             }
 
-            // Save the uploaded file and get file path
             String filePath = saveFile(bankReceipt);
 
-            // Map DTO to Entity
             DepositRequest depositRequest = new DepositRequest();
             depositRequest.setAmount(dto.getAmount());
             depositRequest.setDepositDate(dto.getDepositDate());
@@ -55,9 +51,11 @@ public class DepositRequestService {
             depositRequest.setDepositBy(dto.getDepositBy());
             depositRequest.setRemarks(dto.getRemarks());
             depositRequest.setCreatedBy(createdBy);
+            depositRequest.setCreateOn(LocalDateTime.now());
+            depositRequest.setFundRequestStatus(FundRequestStatus.PENDING);
 
-            depositRequestRepository.save(depositRequest);
-            return new ApiResponse<>(true, "Deposit request saved successfully", null);
+            DepositRequest saveFundRequest = depositRequestRepository.save(depositRequest);
+            return new ApiResponse<>(true, "Deposit request saved successfully", saveFundRequest);
         } catch (Exception e) {
             return new ApiResponse<>(false, "Error saving deposit request: " + e.getMessage(), null);
         }

@@ -17,6 +17,25 @@
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
 <script type="text/javascript" src="js/commons.js"></script>
+<script type="text/javascript">
+
+function viewReceipt() {
+    var id = $('#id').val().trim();
+
+    if (!id) {
+        alert('Something went wrong!');
+        return;
+    }
+
+    var url = '/fund-request-receipt?id=' + id;
+    var newTab = window.open(url, '_blank');
+
+    if (!newTab || newTab.closed || typeof newTab.closed === "undefined") {
+        alert('Failed to open the receipt. Please allow pop-ups for this site.');
+    }
+}
+
+</script>
 </head>
 
 <body>
@@ -60,12 +79,12 @@
 			<div class="main-content">
 				<div class="card border-top-0">
 					<form:form method="post" modelAttribute="fundRequest" id="fundRequest">
-						<form:hidden path="id" value="" id="id" />
+						<form:hidden path="id" id="id" />
 						<div class="card-body lead-status">
 							<div class="row">
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
 									<label class="form-label">Fund Request No.</label>
-									<form:input path="depositRequestNumber" type="text" class="form-control"
+									<form:input path="depositRequestNumber" id="depositRequestNumber" type="text" class="form-control"
 									  readonly="true" />
 								</div>
 								<div class="col-lg-4 col-md-6 col-sm-12 mb-4">
@@ -103,6 +122,17 @@
                                     <form:textarea path="remarks" rows="3" class="form-control" readonly="true" ></form:textarea>
                                 </div>
 							</div>
+							<div class="mt-5 mb-1 text-center"
+                                style="display: flex; justify-content: center">
+                                <div>
+                                    <button type="button" id="viewReceiptButton"
+                                        onclick="viewReceipt()" class="btn btn-warning">View
+                                        Receipt</button>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                            </div>
 						</div>
 					</form:form>
 				</div>

@@ -31,7 +31,7 @@ public class DepositRequestController {
     private final DepositRequestService depositRequestService;
 
     @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ApiResponse<String> saveDepositRequest(
+    public ApiResponse<DepositRequest> saveDepositRequest(
             @RequestPart("data") String dataJson,
             @RequestPart("bankReceipt") MultipartFile bankReceipt, Authentication authentication) {
 

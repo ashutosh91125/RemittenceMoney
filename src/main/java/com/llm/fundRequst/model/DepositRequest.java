@@ -1,10 +1,12 @@
 package com.llm.fundRequst.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.llm.fundRequst.enums.FundRequestStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Entity
@@ -39,8 +41,13 @@ public class DepositRequest {
     @Column(nullable = false)
     private String createdBy;
 
+    private LocalDateTime createOn;
+
     @Column(columnDefinition = "TEXT")
     private String remarks;
+
+    @Enumerated(EnumType.STRING)
+    private FundRequestStatus fundRequestStatus;
 
     @Column(nullable = false, unique = true)
     private String depositRequestNumber;

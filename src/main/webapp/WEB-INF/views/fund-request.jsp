@@ -125,6 +125,7 @@
                     contentType: false,
                     success: function (response) {
                         alert(response.message);
+                        window.location.href = "/fund-request-by-id?id=" + response.data.id ;
                         if (response.status) {
                             $("#depositForm")[0].reset();
                         }

@@ -13,7 +13,7 @@
 <title>Admin Register</title>
 <link rel="stylesheet" type="text/css"
 	href="assets/css/bootstrap.min.css">
-
+<link rel="stylesheet" type="text/css" href="css/common.css">
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
 function validation(form) {
@@ -175,9 +175,10 @@ document.addEventListener('DOMContentLoaded', function () {
 							</a>
 						</div> -->
 						<div>
-							<a onclick="goBack()"> <i
-								class="bi bi-arrow-left-circle-fill text-primary"
-								style="font-size: 30px;"></i></a>
+							<a onclick="goBack()" class="back-btn">
+   								 <i class="bi bi-arrow-left-circle text-primary normal-icon"></i>
+    							 <i class="bi bi-arrow-left-circle-fill text-primary hover-icon"></i>
+							</a>
 						</div>
 							<label class="form-label">Back</label>
 					</div>

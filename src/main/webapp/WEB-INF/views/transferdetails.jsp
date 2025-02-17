@@ -12,7 +12,7 @@
 <meta name="author" content="theme_ocean">
 <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
 <!--! BEGIN: Apps Title-->
-<title>LuLu Money || Transfer View</title>
+<title>Transfer Details</title>
 <!--! END:  Apps Title-->
 <!--! BEGIN: Favicon-->
 <link rel="shortcut icon" type="image/x-icon"
@@ -223,6 +223,7 @@
 	display: none;
 }
 </style>
+<link rel="stylesheet" type="text/css" href="css/common.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
@@ -288,9 +289,10 @@
 							</a>
 						</div> -->
 						<div>
-							<a onclick="goBack()"> <i
-								class="bi bi-arrow-left-circle-fill text-primary"
-								style="font-size: 30px;"></i></a>
+							<a onclick="goBack()" class="back-btn">
+   								 <i class="bi bi-arrow-left-circle text-primary normal-icon"></i>
+    							 <i class="bi bi-arrow-left-circle-fill text-primary hover-icon"></i>
+							</a>
 						</div>
 							<label class="form-label">Back</label>
 					</div>

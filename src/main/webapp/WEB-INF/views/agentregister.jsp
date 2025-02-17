@@ -38,7 +38,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <!-- Feather Icons (optional for search icon) -->
 <script src="https://unpkg.com/feather-icons"></script>
-
+<link rel="stylesheet" type="text/css" href="css/common.css">
 
 
 
@@ -340,9 +340,10 @@ document.addEventListener('DOMContentLoaded', function () {
 							</a>
 						</div> --%>
 						<div>
-							<a onclick="goBack()"> <i
-								class="bi bi-arrow-left-circle-fill text-primary"
-								style="font-size: 30px;"></i></a>
+							<a onclick="goBack()" class="back-btn">
+   								 <i class="bi bi-arrow-left-circle text-primary normal-icon"></i>
+    							 <i class="bi bi-arrow-left-circle-fill text-primary hover-icon"></i>
+							</a>
 						</div>
 							<label class="form-label">Back</label>
 					</div>

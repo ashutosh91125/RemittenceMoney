@@ -16,6 +16,7 @@
 <link rel="stylesheet" type="text/css"
 	href="assets/vendors/css/dataTables.bs5.min.css">
 <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+<link rel="stylesheet" type="text/css" href="css/common.css">
 <script type="text/javascript" src="js/commons.js"></script>
 <script type="text/javascript">
 	function viewAdminUpdateForm() {
@@ -72,9 +73,10 @@
 							</a>
 						</div> -->
 						<div>
-							<a onclick="goBack()"> <i
-								class="bi bi-arrow-left-circle-fill text-primary"
-								style="font-size: 30px;"></i></a>
+							<a onclick="goBack()" class="back-btn">
+   								 <i class="bi bi-arrow-left-circle text-primary normal-icon"></i>
+    							 <i class="bi bi-arrow-left-circle-fill text-primary hover-icon"></i>
+							</a>
 						</div>
 							<label class="form-label">Back</label>
 					</div>

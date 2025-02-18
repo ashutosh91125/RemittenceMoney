@@ -153,7 +153,7 @@ a:hover {
 						
 						
 						<li class="nxl-item nxl-hasmenu"><a
-							class="nxl-link ajax-link" data-url="/staff-list""> <span class="nxl-micon"><i
+							class="nxl-link ajax-link" data-url="/staff-list"> <span class="nxl-micon"><i
 									class="feather-users"></i></span> <span class="nxl-mtext">All
 									Agent Staff</span>
 						</a></li>

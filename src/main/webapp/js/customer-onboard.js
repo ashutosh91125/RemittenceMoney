@@ -287,12 +287,18 @@ function copyAddress() {
 		const issuedDateExpiryForResidence = document.getElementById('issuedDateExpiryForResidence');
 				
 	    if (residentType === '101') {
-	        idTypeDropdowns.forEach(dropdown => {
+	       /* idTypeDropdowns.forEach(dropdown => {
 	            dropdown.style.display = "block";
 	            dropdown.value = "28";
 	            dropdown.setAttribute("disabled", true);
-	        });
-
+	        });*/
+			idTypeDropdowns.forEach(dropdown => {
+			            dropdown.style.display = "block";
+			            dropdown.innerHTML = `<option value="28">MALAYSIA ID CARD (MYKAD)</option>
+			                                  <option value="2">PASSPORT</option>
+			                                  <option value="29">UNHCR CARD</option>`;
+			          
+			        });
 	        issuedDateExpiryNonResident.style.display = 'none';
 	        issuedForNonResidents.style.display = 'none';
 	        idDetails.style.display = 'block';

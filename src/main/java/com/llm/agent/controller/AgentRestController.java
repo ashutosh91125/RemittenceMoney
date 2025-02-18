@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.llm.agent.repository.AgentRepositories;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +19,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.llm.UserIdentity.model.User;
@@ -28,9 +29,13 @@ import com.llm.UserIdentity.model.enums.Role;
 import com.llm.UserIdentity.repository.UserRepository;
 import com.llm.agent.model.Agent;
 import com.llm.agent.model.dto.AgentDTO;
-import com.llm.agent.projection.AgentProjection;
+import com.llm.agent.model.dto.AgentDto1;
+import com.llm.agent.repository.AgentRepositories;
 import com.llm.agent.service.IAgentService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/agent")
 public class AgentRestController {
@@ -198,4 +203,48 @@ public class AgentRestController {
 		}
 	return ResponseEntity.ok(List.of());
 	}
+	
+	@PostMapping("/api-details/{id}")
+	public ResponseEntity<AgentDto1> getAgentApiDetailsById(
+	        @PathVariable("id") Long id, 
+	        @RequestParam String password) {
+	    
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String username = authentication.getName();
+	    
+	    Optional<User> user = userRepository.findByUsername(username);
+	    
+	    if (user.isPresent()) {
+	        User foundUser = user.get();
+	        String foundPassword = foundUser.getPassword();
+	        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	        if (passwordEncoder.matches(password, foundPassword)) {
+	            Optional<Agent> existingAgent = agentService.getById(id);
+	            
+	            if (existingAgent.isPresent()) {
+	                Agent agent = existingAgent.get();
+	                
+	                
+	                AgentDto1 agentDto = new AgentDto1();
+	                agentDto.setId(agent.getId());
+	                agentDto.setClientId(agent.getClientId());
+	                agentDto.setClientSecret(agent.getClientSecret());
+	                agentDto.setGrantType(agent.getGrantType());
+	                agentDto.setScope(agent.getScope());
+	                agentDto.setApiUsername(agent.getApiUsername());
+	                agentDto.setApiPassword(agent.getApiPassword());
+	                
+	                return ResponseEntity.ok().body(agentDto);
+	            } else {
+	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+	            }
+	        } else {
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
+	        }
+	    } else {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null); 
+	    }
+	}
+
+
 }

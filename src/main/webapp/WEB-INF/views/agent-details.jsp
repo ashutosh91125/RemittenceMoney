@@ -178,18 +178,89 @@ function updateAgent() {
 	    	statusFlag.value = 'Inactive';
 	    }
 	});
-
+function openPopupForApi(){
+	 const popupForApi = document.getElementById('popupForApi');
+	 popupForApi.style.display = 'block'; 
+}
+function closePopup() {
+    $('#popupForApi').hide();
+}
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("submitPasswordButton").addEventListener("click", function (event) {
+    	  const apiDetails = document.getElementById("panelsStayOpen-collapseSeven");
+    	  const container = document.querySelector('.nxl-container');
+    	  const passwordError = document.getElementById("passwordError");
+    	  const password =   document.getElementById('password').value.trim();;
+    	  const id =   document.getElementById('id').value.trim();;
+    	  
+    	  $.ajax({
+    		  url: '/api/v1/agent/api-details/' + id +'?password='+password,
+              type: 'POST',
+              contentType: 'application/json',
+//               data: JSON.stringify({ password: password }),
+              success: function (response) {
+            	  if(response){
+            		  $('#grantType').val(response.grantType);
+                	  $('#scope').val(response.scope);
+                	  $('#clientId').val(response.clientId);
+                	  $('#clientSecret').val(response.clientSecret);
+                	  $('#adminUserName').val(response.apiUsername);
+                	  $('#adminPassword').val(response.apiPassword);
+                      apiDetails.style.display ='block';
+                     
+                      passwordError.textContent = '';
+            	  }else{
+            		  apiDetails.style.display ='none';
+            		  passwordError.textContent = 'Please enter the correct password'; 
+                      passwordError.style.color = 'red';
+            		  
+            	  }
+            	 
+              },
+              error: function (xhr, status, error) {
+                  console.error('Error fetch Api Details:', error);
+                  apiDetails.style.display ='none';
+        		  passwordError.textContent = 'Please enter the correct password'; 
+                  passwordError.style.color = 'red';
+              }
+          });
+        
+    });
+});
 </script>
 </head>
 
 <body>
-
+<div class="modal fade show" id="popupForApi" tabindex="-1"
+		style="display: none; padding-left: 0px;">
+		<div class="modal-dialog modal-lg" role="document"
+			style="width: 508px; height: 360px; display: flex; align-items: center;">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div style="align-items: end;">
+						<h5 class="modal-title" style="position: absolute; top: 15px;">Confirm Password</h5>
+						<button type="button" class="btn-close" onclick="closePopup()"
+							style="position: absolute; top: 15px; right: 25px;"></button>
+					</div>
+				</div>
+				<div class="modal-body" style="display: flex;justify-content: center;">
+				<input type="password" name="password" placeholder="Enter Your Password" id="password" autocomplete="new-password">
+				<span id="passwordError" style="color: red;position: absolute;margin-top: 52;"></span>
+				</div>
+				<div class="modal-footer"
+					style="display: flex; justify-content: center;">
+					<button type="button" class="btn btn-primary"
+						id="submitPasswordButton">Submit</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	<jsp:include page="header.jsp"></jsp:include>
-	<div class="nxl-container" style="background: aliceblue;">
-		<div class="nxl-content" style="background: aliceblue;">
+	<div class="nxl-container">
+		<div class="nxl-content">
 
 			<!-- [ page-header ] start -->
-		<div class="page-header" style="background: aliceblue;">
+		<div class="page-header">
 				<div class="page-header-left d-flex align-items-center">
 					<div class="page-header-title">
 						<h5 class="m-b-10">Agent</h5>
@@ -250,7 +321,7 @@ function updateAgent() {
 			<form:hidden path="isValid" value="true" />
 			<form:hidden path="id" value="" id="id" />
 			<div class="accordion" id="accordionPanelsStayOpenExample">
-				<div class="accordion-item" style="background: aliceblue;">
+				<div class="accordion-item">
 					<h2 class="accordion-header">
 						<button class="accordion-button" type="button"
 							style="background: aliceblue;"
@@ -259,8 +330,7 @@ function updateAgent() {
 					</h2>
 					<div id="panelsStayOpen-collapseOne"
 						class="accordion-collapse collapse show">
-						<div class="accordion-body mt-2"
-							style="background: aliceblue; margin-top: -40px;">
+						<div class="accordion-body p-3">
 							<div class="main-content">
 								<div class="row">
 									<div class="col-xl-4">
@@ -377,10 +447,9 @@ function updateAgent() {
 						</div>
 					</div>
 				</div>
-				<div class="accordion-item" style="background: aliceblue;">
+				<div class="accordion-item">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
 							onclick="toggleDiv('panelsStayOpen-collapseTwo')">Contact
 							Details</button>
 					</h2>
@@ -389,7 +458,7 @@ function updateAgent() {
 						class="accordion-collapse collapse">
 						<hr class="my-0">
 						<div class="card-body pass-security">
-							<div class="accordion-body mt-3">
+							<div class="accordion-body p-3">
 								<div class="card-body personal-info">
 
 									<div class="main-content">
@@ -457,7 +526,7 @@ function updateAgent() {
 						</div>
 					</div>
 				</div>
-				<div class="accordion-item" style="background: aliceblue;">
+				<div class="accordion-item">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -466,7 +535,7 @@ function updateAgent() {
 					</h2>
 					<div id="panelsStayOpen-collapseThree"
 						class="accordion-collapse collapse">
-						<div class="accordion-body mt-3" style="background: aliceblue;">
+						<div class="accordion-body p-3">
 							<div class="card-body personal-info">
 								<div class="main-content">
 									<div class="card-body pass-security">
@@ -547,7 +616,7 @@ function updateAgent() {
                 </h2>
                 <div id="panelsStayOpen-collapseFour"
                     class="accordion-collapse collapse">
-                    <div class="accordion-body" style="background: aliceblue;">
+                    <div class="accordion-body">
                         <div class="card-body personal-info">
                             <div class="main-content">
                                 <div class="card-body pass-security">
@@ -586,7 +655,7 @@ function updateAgent() {
                     </div>
                 </div>
                 </div>
-				<div class="accordion-item" style="background: aliceblue;">
+				<div class="accordion-item">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
 							style="background: aliceblue;"
@@ -595,7 +664,7 @@ function updateAgent() {
 					</h2>
 					<div id="panelsStayOpen-collapseFive"
 						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
+						<div class="accordion-body p-3">
 							<div class="card-body personal-info">
 								<div class="main-content">
 									<div class="card-body pass-security">
@@ -645,16 +714,15 @@ function updateAgent() {
 						</div>
 					</div>
 				</div>
-				<div class="accordion-item" style="background: aliceblue;">
+				<div class="accordion-item">
 					<h2 class="accordion-header">
 						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
 							onclick="toggleDiv('panelsStayOpen-collapseSix')">Customer
 							Txn Limit</button>
 					</h2>
 					<div id="panelsStayOpen-collapseSix"
 						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
+						<div class="accordion-body p-3">
 							<div class="card-body personal-info">
 								<div class="main-content">
 									<div class="card-body pass-security">
@@ -697,16 +765,111 @@ function updateAgent() {
 						</div>
 					</div>
 				</div>
-					<div class="accordion-item" style="background: aliceblue;">
+					<div class="accordion-item">
 					<h2 class="accordion-header">
-						<button class="accordion-button collapsed" type="button"
-							style="background: aliceblue;"
-							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Api
-							Details</button>
+						 <button class="accordion-button collapsed" type="button" onclick="openPopupForApi()">Api
+							Details</button> 
 					</h2>
-					<div id="panelsStayOpen-collapseSeven"
+					 <div id="panelsStayOpen-collapseSeven"
+						class="accordion-collapse collapse" style="display:none;">
+						<div class="accordion-body p-3" >
+							<div class="card-body personal-info">
+								<div class="main-content">
+									<div class="card-body pass-security">
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Grant Type<span
+														class="text-danger">*</span></label>
+													<input name="grantType" type="text"
+														class="form-control" id="grantType" maxlength="10"
+														placeholder="Grant Type" readonly="true" 
+														oninput="validateLengthWithMaxMessage('grantType', 10, 'grantTypeError')" />
+													<span id="grantTypeError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">Scope<span
+														class="text-danger">*</span></label>
+													<!-- <label id="scopeValidation" style="color:red; display:none;">Scope
+														(max 60 characters):</label> -->
+													<input name="scope" type="text" class="form-control"
+														id="scope" placeholder="Scope" maxlength="60" readonly="true" 
+														oninput="validateLengthWithMaxMessage('scope', 60, 'scopeError')" />
+													<span id="scopeError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">Client Id<span
+														class="text-danger">*</span></label>
+													<!--  <label id="clientIdValidation" style="color:red; display:none;">Client
+														Id (max 60 characters):</label> -->
+													<input name="clientId" type="text"
+														class="form-control" id="clientId" placeholder="Client Id" readonly="true" 
+														oninput="validateLengthWithMaxMessage('clientId', 60, 'clientIdValidation')"
+														maxlength="60" />
+													<span id="clientIdError" class="text-danger1"></span>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">Client Secret<span
+														class="text-danger">*</span></label>
+													<input name="clientSecret" type="text"
+														class="form-control" id="clientSecret"
+														placeholder="Client Secret" maxlength="60" readonly="true" 
+														oninput="validateLengthWithMaxMessage('clientSecret', 60, 'clientSecretValidation')" />
+													<span id="clientSecretError" style="color: red;"></span>
+												</div>
+											</div>
+											<div class="col-xl-4">
+												<div class="mb-4">
+
+													<label class="form-label">API Username<span
+														class="text-danger">*</span></label>
+													<input name="apiUsername" type="text"
+														class="form-control" id="adminUserName" maxlength="60" readonly="true" 
+														placeholder="Set Username"
+														oninput="validateLengthWithMaxMessage('adminUserName', 60, 'adminUserNameError')" />
+													<span id="adminUserNameError" style="color: red;"></span>
+												</div>
+											</div>
+
+											<div class="col-xl-4">
+												<div class="mb-4">
+													<label class="form-label">API Password<span
+														class="text-danger">*</span></label>
+													<input name="apiPassword" type="password"
+														class="form-control" id="adminPassword" maxlength="60" readonly="true" 
+														placeholder="Set Password"
+														oninput="validateLengthWithMaxMessage('adminPassword', 60, 'adminPasswordError')" />
+													<span id="adminPasswordError" style="color: red;"></span>
+												</div>
+											</div>
+
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div> 
+				</div>
+				
+				 <%--	<div class="accordion-item">
+					<h2 class="accordion-header">
+						<!-- <button class="accordion-button collapsed" type="button"
+							onclick="toggleDiv('panelsStayOpen-collapseSeven')">Api
+							Details</button> -->
+					</h2>
+					 <div id="panelsStayOpen-collapseSeven"
 						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
+						<div class="accordion-body p-3" >
 							<div class="card-body personal-info">
 								<div class="main-content">
 									<div class="card-body pass-security">
@@ -792,8 +955,8 @@ function updateAgent() {
 								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					</div> 
+				</div>--%>
 				
 				<div class="accordion-item" style="background: aliceblue;">
 					<h2 class="accordion-header">
@@ -804,7 +967,7 @@ function updateAgent() {
 					</h2>
 					<div id="panelsStayOpen-collapseEight"
 						class="accordion-collapse collapse">
-						<div class="accordion-body" style="background: aliceblue;">
+						<div class="accordion-body p-3">
 							<div class="card-body personal-info">
 								<div class="main-content">
 									<div class="card-body pass-security">

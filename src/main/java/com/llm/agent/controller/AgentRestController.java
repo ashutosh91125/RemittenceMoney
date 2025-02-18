@@ -219,7 +219,7 @@ public class AgentRestController {
 	        String foundPassword = foundUser.getPassword();
 	        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	        if (passwordEncoder.matches(password, foundPassword)) {
-	            Optional<Agent> existingAgent = agentService.getById(id);
+	            Optional<Agent> existingAgent = agentService.getById(id); 
 	            
 	            if (existingAgent.isPresent()) {
 	                Agent agent = existingAgent.get();

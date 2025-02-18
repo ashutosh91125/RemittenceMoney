@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
 								class="feather-arrow-left me-2"></i> <span>Back</span>
 							</a>
 						</div>
-						<!-- <div
+						<!-- <div 
 							class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
 							<a href="javascript:void(0);"
 								class="btn btn-primary successAlertMessage">  <i class="feather-user-plus me-2"></i>

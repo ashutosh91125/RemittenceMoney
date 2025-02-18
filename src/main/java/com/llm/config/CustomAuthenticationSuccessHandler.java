@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
 @Component
@@ -34,8 +36,12 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             fetchRole = "LULU STAFF";
         }
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         request.getSession().setAttribute("roleName", fetchRole);
         request.getSession().setAttribute("loggedInUser", user.getAdminName());
+        request.getSession().setAttribute("loginTime", LocalDateTime.now().format(formatter));
+        request.getSession().setAttribute("ipAddress", request.getRemoteAddr());
 
         if (user.isFirstLogin()) {
             response.sendRedirect("/change-password?message=Password change required");

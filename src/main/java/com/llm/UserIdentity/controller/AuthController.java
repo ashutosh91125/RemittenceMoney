@@ -1,6 +1,8 @@
 package com.llm.UserIdentity.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -127,11 +129,14 @@ public class AuthController {
                         }else {
                             newRole = "STAFF";
                         }
+                        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
                         request.getSession().setAttribute("roleName", newRole);
                         request.getSession().setAttribute("branchName", fetchedBranch.getBranchName());
                         request.getSession().setAttribute("role", fetchedBranch.getBranchStaffRole());
                         request.getSession().setAttribute("selectedBranch", branch);
+                        request.getSession().setAttribute("loginTime", LocalDateTime.now().format(formatter));
+                        request.getSession().setAttribute("ipAddress", request.getRemoteAddr());
                     } catch (IllegalArgumentException e) {
                         return logoutAndRedirect(request, response, "Invalid role");
                     }

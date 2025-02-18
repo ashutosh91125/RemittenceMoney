@@ -58,9 +58,14 @@ public class DepositRequest {
     private String depositRequestNumber;
 
     private String depositBank;
-    private String depositAcNumber;
-    private String depositBankBranch;
+
+    private String fundingBank;
+    private String fundingAcNumber;
+    private String fundingBankBranch;
     private String agentAddress;
+    private String agentName;
+
+    private String approvedBy;
 
     @PrePersist
     public void generateRequestNumber() {

@@ -1,5 +1,5 @@
 package com.llm.fundRequst.service;
-import com.llm.UserIdentity.model.User;
+
 import com.llm.agent.model.Agent;
 import com.llm.agent.repository.AgentRepositories;
 import com.llm.common.service.EnumEntityService;
@@ -34,6 +34,7 @@ public class DepositRequestService {
 
     private final DepositRequestRepository depositRequestRepository;
     private final AgentRepositories agentRepositories;
+    private final EnumEntityService enumEntityService;
 
     @Value("${file.upload-dir}")
     private String uploadDir;
@@ -49,7 +50,9 @@ public class DepositRequestService {
 
             Agent agent = agentRepositories.findByUsername(username);
 
-            String agentAddress = agent.getAddress1()+ " " + agent.getCity() + " " + agent.getState();
+            String state = enumEntityService.getEnumValueDescriptionByKeyAndValueId("state", agent.getState());
+
+            String agentAddress = agent.getAddress1()+ " " + agent.getCity() + " " + state + " Zip/Postal Code: " + agent.getZip();
 
             DepositRequest depositRequest = new DepositRequest();
             depositRequest.setAmount(dto.getAmount());
@@ -65,10 +68,12 @@ public class DepositRequestService {
             depositRequest.setFundRequestStatus(FundRequestStatus.PENDING);
 
             depositRequest.setDepositCurrency(agent.getCurrencies());
-            depositRequest.setDepositBank(agent.getBankName());
-            depositRequest.setDepositAcNumber(agent.getAccountNumber());
-            depositRequest.setDepositBankBranch(agent.getBankName()+", "+agent.getBranchName());
+//            depositRequest.setDepositBank(agent.getBankName());
+            depositRequest.setFundingBank(agent.getBankName());
+            depositRequest.setFundingAcNumber(agent.getAccountNumber());
+            depositRequest.setFundingBankBranch(agent.getBranchName());
             depositRequest.setAgentAddress(agentAddress);
+            depositRequest.setAgentName(agent.getAgentName());
 
             DepositRequest saveFundRequest = depositRequestRepository.save(depositRequest);
             return new ApiResponse<>(true, "Deposit request saved successfully", saveFundRequest);
@@ -151,8 +156,17 @@ public class DepositRequestService {
         }
     }
 
-    public List<DepositRequest> getAllByCreatedBy(String createdBy) {
-        List<DepositRequest> depositRequests = depositRequestRepository.findByCreatedBy(createdBy);
+    public List<DepositRequest> getAllByCreatedBy(String createdByUsername) {
+        List<DepositRequest> depositRequests = depositRequestRepository.findByCreatedByUsername(createdByUsername);
+
+        if (depositRequests.isEmpty()){
+            return List.of();
+        }
+        return depositRequests;
+    }
+
+    public List<DepositRequest> getAll() {
+        List<DepositRequest> depositRequests = depositRequestRepository.findAll();
 
         if (depositRequests.isEmpty()){
             return List.of();

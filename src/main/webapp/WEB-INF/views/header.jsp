@@ -274,6 +274,20 @@
 					</a>
 				</div>
 				<!--! [End] nxl-lavel-mega-menu-toggle !-->
+				<div class="nxl-h-item d-none d-sm-flex"></div>
+                <div class="dropdown nxl-h-item ms-auto">
+                    <a href="javascript:void(0);" data-bs-toggle="dropdown"
+                        role="button" data-bs-auto-close="outside"
+                        class="d-flex align-items-center">
+                        <div class="user-info text-start me-2">
+                            <span class="user-name fw-bold d-block"> <c:out
+                                    value="IP: ${sessionScope.ipAddress}" />
+                            </span> <span class="user-role d-block"> <c:out
+                                    value="Logged in at: ${sessionScope.loginTime}" />
+                            </span>
+                        </div>
+                    </a>
+                </div>
 			
 			</div>
 			<div class="header-right ms-auto">

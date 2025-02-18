@@ -54,6 +54,10 @@
 	transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
 }
 
+a:hover {
+    cursor: pointer;
+}
+
 .user-role {
 	font-family: 'Poppins', sans-serif;
 	color: #666;
@@ -101,14 +105,14 @@
 				<div class="navbar-content">
 				<ul class="nxl-navbar">
 					
-					<li class="nxl-item nxl-hasmenu"><a href="#"
+					<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/welcome"><span class="nxl-micon"><i
 								class="feather-airplay"></i></span> <span class="nxl-mtext">Dashboards</span>
 						</a></li>
 
 					<c:if test="${sessionScope.role == 'STAFF_TR'}">
 					
-							<li class="nxl-item nxl-hasmenu"><a href="#"
+							<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/transfer"> <span class="nxl-micon"><i
 									class="feather-dollar-sign"></i></span> <span class="nxl-mtext">New
 									Transfer </span>
@@ -117,7 +121,7 @@
 
 					<c:if test="${pageContext.request.isUserInRole('ADMIN')}">
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/adminlist"> <span class="nxl-micon"><i
 									class="feather-users"></i></span> <span class="nxl-mtext">All
 									Admins</span>
@@ -127,7 +131,7 @@
 					<c:if
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/agentlist"> <span class="nxl-micon"><i
 									class="feather-users"></i></span> <span class="nxl-mtext">All
 									Agents</span>
@@ -138,7 +142,7 @@
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
 						
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/branch-list"> <span class="nxl-micon"><i
 									class="bi bi-bezier me-1"></i></span><span class="nxl-mtext">All
 									Branches</span>
@@ -148,7 +152,7 @@
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('AGENT') or pageContext.request.isUserInRole('ADMIN')}">
 						
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/staff-list""> <span class="nxl-micon"><i
 									class="feather-users"></i></span> <span class="nxl-mtext">All
 									Agent Staff</span>
@@ -157,7 +161,7 @@
 
 					<c:if test="${pageContext.request.isUserInRole('AGENT')}">
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/fund-request-list"><span class="nxl-micon"><img
 									src="<c:url value='assets/images/fund-arrow.png'/>" alt="#"
 									style="width: 24px; height: 24px;" /></span><span
@@ -168,7 +172,7 @@
 					<c:if
 						test="${pageContext.request.isUserInRole('SUB_ADMIN') or pageContext.request.isUserInRole('ADMIN')}">
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/lulu-staff-list"> <span
 								class="nxl-micon"><i class="feather-users"></i></span> <span
 								class="nxl-mtext">Lulu Staff</span>
@@ -177,7 +181,7 @@
 
 					<c:if test="${sessionScope.role == 'STAFF_TR'}">
 					
-						<li class="nxl-item nxl-hasmenu"><a href="#"
+						<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/customer"> <span
 								class="nxl-micon"><i class="feather-users"></i></span> <span
 								class="nxl-mtext">Customers</span>
@@ -186,8 +190,8 @@
 
 					<c:if test="${pageContext.request.isUserInRole('STAFF_ALL')}">
 						
-						<li class="nxl-item nxl-hasmenu"><a href="#"
-							class="nxl-link ajax-link" data-url="#"><span class="nxl-micon"><img
+						<li class="nxl-item nxl-hasmenu"><a
+							class="nxl-link ajax-link" data-url="/fund-request-list"><span class="nxl-micon"><img
 									src="<c:url value='assets/images/fund-request.png'/>" alt="#"
 									style="width: 24px; height: 24px;" />
 							</span><span class="nxl-mtext">Approve Fund</span>
@@ -195,7 +199,7 @@
 					</c:if>
 
 					
-					<li class="nxl-item nxl-hasmenu"><a href="#"
+					<li class="nxl-item nxl-hasmenu"><a
 							class="nxl-link ajax-link" data-url="/transfer-list"> <span class="nxl-micon"><i
 								class="feather-dollar-sign"></i></span> <span class="nxl-mtext">Transaction
 								Enquiry</span>

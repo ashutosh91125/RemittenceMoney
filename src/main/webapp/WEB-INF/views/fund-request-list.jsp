@@ -61,6 +61,7 @@
                                                 <th>Deposit Mode</th>
                                                 <th>Deposit Date</th>
                                                 <th>Deposit By</th>
+                                                <th>Status</th>
                                                 <th class="text-end">Actions</th>
                                             </tr>
                                         </thead>
@@ -74,6 +75,7 @@
                                                     <td>${fundRequest.depositMode}</td>
                                                     <td>${fundRequest.depositDate}</td>
                                                     <td>${fundRequest.depositBy}</td>
+                                                    <td>${fundRequest.fundRequestStatus}</td>
                                                     <td>
                                                         <div class="hstack gap-2 justify-content-end">
                                                             <a href="#" class="avatar-text avatar-md ajax-link" data-url="/fund-request-by-id?id=${fundRequest.id}" >

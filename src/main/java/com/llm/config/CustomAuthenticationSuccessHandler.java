@@ -36,7 +36,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             fetchRole = "LULU STAFF";
         }
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MMM-yyyy hh:mm:ss a");
 
         request.getSession().setAttribute("roleName", fetchRole);
         request.getSession().setAttribute("loggedInUser", user.getAdminName());

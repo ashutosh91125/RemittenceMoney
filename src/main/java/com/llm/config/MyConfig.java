@@ -49,11 +49,9 @@ public class MyConfig {
                 .logout(LogoutConfigurer::permitAll)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement(session -> session
-                        .invalidSessionUrl("/login")  // URL to redirect to when the session expires
-                        .maximumSessions(10)  // Allow n number session per user
-                        .expiredUrl("/login"));  // URL to redirect to when the session is expired
-//                        .and()
-//                        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED));
+                        .invalidSessionUrl("/login")
+                        .maximumSessions(1)
+                        .expiredUrl("/login"));
 
         return http.build();
     }

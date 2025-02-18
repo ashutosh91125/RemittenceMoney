@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface DepositRequestRepository extends JpaRepository<DepositRequest, Long> {
     boolean existsByReferenceNumber(String referenceNumber);
-    List<DepositRequest> findByCreatedBy(String createdBy);
+
+    List<DepositRequest> findByCreatedByUsername(String createdByUsername);
 }
 

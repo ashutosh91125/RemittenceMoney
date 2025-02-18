@@ -184,6 +184,10 @@ public class AuthController {
         user.setRole(Role.SUB_ADMIN);
         user.setApproved(true);
         user.setFirstLogin(true);
+        if (user.getPasswordHistory() == null) {
+            user.setPasswordHistory(new ArrayList<>());
+        }
+        user.getPasswordHistory().add(user.getPassword());
         userRepository.save(user);
         return "redirect:/adminlist";
     }

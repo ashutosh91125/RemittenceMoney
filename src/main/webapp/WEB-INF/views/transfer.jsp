@@ -991,7 +991,7 @@
 												<div class="mb-1">
 													<label class="form-label">Account No.<span
 														class="text-danger">*</span></label> <input type="password"
-														class="form-control" id="accountNo"
+														class="form-control" id="accountNo"  autocomplete="new-password"
 														name="beneficiaryAccountNo" placeholder="Account No.">
 													<span id="accountNoError" style="color: red;"></span>
 												</div>
@@ -1001,7 +1001,7 @@
 													<label class="form-label">Confirm Account No.<span
 														class="text-danger">*</span></label> <input type="text"
 														class="form-control" id="confirmAccountNo"
-														name="beneficiaryConfirmAccountNo"
+														name="beneficiaryConfirmAccountNo"  autocomplete="new-password"
 														placeholder="Confirm Account No."> <span
 														id="validationMessage" style="color: red;"></span>
 												</div>

@@ -180,6 +180,7 @@ function updateAgent() {
 	});
 function openPopupForApi(){
 	 const popupForApi = document.getElementById('popupForApi');
+	 const container = document.querySelector('.nxl-container');
 	 popupForApi.style.display = 'block'; 
 }
 function closePopup() {
@@ -207,8 +208,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 	  $('#adminUserName').val(response.apiUsername);
                 	  $('#adminPassword').val(response.apiPassword);
                       apiDetails.style.display ='block';
-                     
                       passwordError.textContent = '';
+                      $('#popupForApi').hide();
             	  }else{
             		  apiDetails.style.display ='none';
             		  passwordError.textContent = 'Please enter the correct password'; 
@@ -233,9 +234,9 @@ document.addEventListener("DOMContentLoaded", function () {
 <body>
 <div class="modal fade show" id="popupForApi" tabindex="-1"
 		style="display: none; padding-left: 0px;">
-		<div class="modal-dialog modal-lg" role="document"
+		<div class="modal-dialog" role="document"
 			style="width: 508px; height: 360px; display: flex; align-items: center;">
-			<div class="modal-content">
+			<div class="modal-content" style="position: absolute;top: 144;">
 				<div class="modal-header">
 					<div style="align-items: end;">
 						<h5 class="modal-title" style="position: absolute; top: 15px;">Confirm Password</h5>

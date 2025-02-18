@@ -255,10 +255,11 @@
         }
     }
 	$(document).ready(function () {
-        var payInCurrency = "${transferDetails.payInCurrency}"; 
-        var selectedPayoutCurrency = "${transferDetails.payOutCurrency}"; 
+        const payInCurrency = "${transferDetails.payInCurrency}"; 
+        const selectedPayoutCurrency = "${transferDetails.payOutCurrency}"; 
         $("#selectedPayInCurrency").text(payInCurrency);
         $("#selectedPayoutCurrency").text(selectedPayoutCurrency);
+        
     });
 </script>
 </head>
@@ -741,19 +742,28 @@
 									<div class="card-body pass-security">
 										<div class="row">
 											<div class="col-xl-4">
-												<label class="form-label">Source of Fund<span
-													class="text-danger"></span></label> <input type="text"
-													class="form-control" id="sourceOfFund" name="sourceOfFund"
-													placeholder="Source of Fund"
-													value="${transferDetails.sourceOfFund}" readonly>
-											</div>
-
-											<div class="col-xl-4">
-												<label class="form-label">Transaction Purpose<span
-													class="text-danger"></span></label> <input type="text"
-													class="form-control" id="transactionPurpose"
-													name="transactionPurpose" placeholder="Transaction Purpose"
-													value="${transferDetails.transactionPurpose}" readonly>
+  										 <label class="form-label">Source of Fund</label>
+    									<select class="form-control p-2" id="sourceOfFund" name="sourceOfFund" disabled >
+    									<option value="">Select Source of Fund</option>
+    									<option value="BUSINESS" ${transferDetails.sourceOfFund == 'BUSINESS' ? 'selected' : ''}>Business</option>
+    									<option value="LOAN" ${transferDetails.sourceOfFund == 'LOAN' ? 'selected' : ''}>Loan</option>
+   									    <option value="LOTTERY" ${transferDetails.sourceOfFund == 'LOTTERY' ? 'selected' : ''}>Lottery Income</option>
+    									<option value="SLRY" ${transferDetails.sourceOfFund == 'SLRY' ? 'selected' : ''}>Salary</option>
+    									<option value="SVGS" ${transferDetails.sourceOfFund == 'SVGS' ? 'selected' : ''}>Savings</option>
+										</select>
+										</div>
+									  <div class="col-xl-4">
+									  <label class="form-label">Transaction Purpose</label> 
+										<select class="form-control p-2" id="transactionPurpose" name="transactionPurpose" disabled >
+    									<option value="">Select Transaction Purpose</option>
+    									<option value="P52" ${transferDetails.transactionPurpose == 'P52' ? 'selected' : ''}>Business travel</option>
+    									<option value="P147" ${transferDetails.transactionPurpose == 'P147' ? 'selected' : ''}>Education services</option>
+   									    <option value="FAMA" ${transferDetails.transactionPurpose == 'FAMA' ? 'selected' : ''}>Family Maintenance</option>
+    									<option value="P18" ${transferDetails.transactionPurpose == 'P18' ? 'selected' : ''}>Gift</option>
+    									<option value="MDCS" ${transferDetails.transactionPurpose == 'MDCS' ? 'selected' : ''}>Medical Expenses</option>
+    									<option value="SAVG" ${transferDetails.transactionPurpose == 'SAVG' ? 'selected' : ''}>Savings</option>
+										</select>
+													
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payment Mode<span

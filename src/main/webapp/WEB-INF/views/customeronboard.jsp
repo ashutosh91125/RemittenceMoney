@@ -1033,7 +1033,7 @@
 																			<form:option value="" disabled="true" selected="true">Visa Type</form:option>
 																			<option value="1">Employment</option>
 																			<option value="2">Visitor</option>
-																			<option value="3">MyKad</option>
+<!-- 																			<option value="3">MyKad</option> -->
 																		</form:select>
 																		<span id="visaTypeError" style="color: red;"></span>
 																	</div>

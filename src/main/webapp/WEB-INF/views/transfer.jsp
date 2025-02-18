@@ -507,12 +507,12 @@
 												<%--  id="customerRow-${customer.ecrn}"
 													data-customer-ecrn="${customer.ecrn}">
  --%>
-												<th>Ecrn</th>
-												<th>First Name</th>
+												<th>Customer No</th>
+												<th>Customer Name</th>
 												<th>Mobile Number</th>
 												<th>Email</th>
-												<th>Country</th>
-												<th>Gender</th>
+<!-- 												<th>Country</th> -->
+<!-- 												<th>Gender</th> -->
 
 												<th class="text-end">Actions</th>
 											</tr>
@@ -524,11 +524,16 @@
 													<td
 														onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
 														onmouseout="this.style.color='#303030'">${customer.ecrn}</td>
-													<td>${customer.firstName}</td>
+													<td>
+   														 ${customer.firstName}
+    														<c:if test="${not empty customer.middleName}"> ${customer.middleName}</c:if>
+   														 ${customer.lastName}
+												   </td>
+
 													<td>${customer.phoneCode}${customer.primaryMobileNumber}</td>
 													<td>${customer.emailId}</td>
-													<td>${customer.countryOfResidence }</td>
-													<td>${customer.gender }</td>
+<%-- 													<td>${customer.countryOfResidence }</td> --%>
+<%-- 													<td>${customer.gender }</td> --%>
 													<td><div style="display: flex; justify-content: end;">
 															<a href="customerdetails?ecrn=${customer.ecrn}"
 																class="avatar-text avatar-md" title="view"> <i
@@ -818,7 +823,7 @@
 										</div>
 										<div class="col-8"
 											style="display: flex; justify-content: end;">
-											<h6 style="padding: inherit;">Add ID Details</h6>
+											<h6 style="padding: inherit;">Customer Creation</h6>
 											<button onclick="addIdentity()"
 												class="avatar-text avatar-md bg-primary text-white">
 												<i class="feather-plus"></i>

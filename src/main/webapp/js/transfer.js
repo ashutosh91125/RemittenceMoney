@@ -210,7 +210,7 @@ $(document).ready(function () {
                     ].filter(Boolean).join(' ');
                     $('#address2').val(mergedAddress2);
 					fetchBeneficiaries(customerEcrn);
-                    toggleFields();
+//                    toggleFields();
 
                 } else {
                     console.error("No customer data found for the provided ECRN.");
@@ -568,7 +568,7 @@ function fetchEnumValue(key, valueId, callback) {
        });
    }
    
-function toggleFields() {
+/*function toggleFields() {
     const residentTypeId = document.getElementById('residentTypeId').value;
     const idType = document.getElementById('idType').value;
     const idDetailsFields = document.getElementById('idDetailsFields');
@@ -581,7 +581,7 @@ function toggleFields() {
         idDetailsFields.style.display = "none";
     }
 }
-
+*/
 $(document).ready(function() {
    const currencySelect = $('#currencies');
    $('#payOutCountry').on('change', function() {
@@ -1061,6 +1061,7 @@ function getQuote() {
                              beneficiaryIdType: $('#beneficiaryIdType').val(),
                              beneficiaryIdNo: $('#beneficiaryIdNo').val(),
                              payInCurrency: $('#payInCurrency').val(),
+							 payOutCurrency: $('#selectedPayoutCurrency').val(),
                              sourceOfFund: $('#sourceOfFund').val(),
                              transactionPurpose: $('#transactionPurpose').val(),
                              valueDate: $('#valueDate').val(),
@@ -1158,6 +1159,7 @@ function getQuote() {
                              beneficiaryIdType: $('#beneficiaryIdType').val(),
                              beneficiaryIdNo: $('#beneficiaryIdNo').val(),
                              payInCurrency: $('#payInCurrency').val(),
+							 payOutCurrency: $('#selectedPayoutCurrency').val(),
                              sourceOfFund: $('#sourceOfFund').val(),
                              transactionPurpose: $('#transactionPurpose').val(),
                              valueDate: $('#valueDate').val(),
@@ -1402,7 +1404,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    residentTypeField.addEventListener('change', toggleFields);
+//    residentTypeField.addEventListener('change', toggleFields);
     accountNumber.addEventListener("input", validateAccountNumbers);
     confirmAccountNumber.addEventListener("input", validateAccountNumbers);
     payInAmount.addEventListener("input", validatePayInAmount);

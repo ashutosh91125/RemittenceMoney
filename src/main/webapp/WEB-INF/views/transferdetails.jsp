@@ -254,6 +254,12 @@
             alert('Failed to open the receipt. Please allow pop-ups for this site.');
         }
     }
+	$(document).ready(function () {
+        var payInCurrency = "${transferDetails.payInCurrency}"; 
+        var selectedPayoutCurrency = "${transferDetails.payOutCurrency}"; 
+        $("#selectedPayInCurrency").text(payInCurrency);
+        $("#selectedPayoutCurrency").text(selectedPayoutCurrency);
+    });
 </script>
 </head>
 
@@ -759,9 +765,11 @@
 										</div>
 										<div class="row">
 											<div class="col-xl-4">
+											
 												<label class="form-label">PayIn Amount<span
-													class="text-danger"></span></label> <input type="number"
-													class="form-control" placeholder="PayIn Amount"
+													class="text-danger"></span>&nbsp;<span id="selectedPayInCurrency"
+													style="font-weight: bold; color: #007bff;"></span></label> 
+													<input type="number"class="form-control" placeholder="PayIn Amount"
 													id="payInAmount" name="payInAmount" min="5" max="50000"
 													value="${transferDetails.payInAmount}" required readonly>
 											</div>
@@ -773,8 +781,8 @@
 													value="${transferDetails.rate}" readonly>
 											</div>
 											<div class="col-xl-4">
-												<label class="form-label">Payout Amount<span
-													class="text-danger"></span></label> <input type="text"
+												<label class="form-label">Payout Amount&nbsp;<span
+													id="selectedPayoutCurrency" style="font-weight: bold; color: #007bff;"></span></label> <input type="text"
 													class="form-control" placeholder="Payout Amount"
 													style="color: green;" id="payoutAmount" name="payoutAmount"
 													value="${transferDetails.payoutAmount}" readonly>

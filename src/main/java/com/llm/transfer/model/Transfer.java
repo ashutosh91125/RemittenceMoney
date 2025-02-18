@@ -123,6 +123,7 @@ public class Transfer {
 	private String beneficiaryIdNo;
 
 	private String payInCurrency;
+	private String payOutCurrency;
 	private String sourceOfFund;
 	private String transactionPurpose;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")

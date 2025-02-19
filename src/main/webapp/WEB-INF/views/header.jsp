@@ -89,6 +89,44 @@ a:hover {
 	text-shadow: 1px 1px 5px rgba(102, 178, 255, 0.5);
 }
 </style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let utcTime = "${sessionScope.loginTime}"; // Get UTC time from session
+
+        console.log("Raw login time from session:", utcTime); // Debugging
+
+        if (!utcTime || utcTime.trim() === "") {
+            console.error("No login time found.");
+            return;
+        }
+
+        try {
+            // Convert UTC time string to Date object
+            let date = new Date(utcTime);
+
+            console.log("Parsed Date Object:", date); // Debugging
+
+            // Convert to user's local timezone
+            let options = {
+                day: '2-digit', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit', second: '2-digit',
+                hour12: true, timeZoneName: 'short'
+            };
+
+            let formattedDate = date.toLocaleString(undefined, options)
+                .replace(',', '') // Remove comma
+                .replace(/\s(AM|PM)$/, ' $1'); // Ensure AM/PM spacing
+
+            console.log("Formatted Login Time:", formattedDate); // Debugging
+
+            // Set formatted time
+            document.getElementById("loginTimeDisplay").innerText =
+                "Logged in at: " + formattedDate;
+        } catch (error) {
+            console.error("Error parsing login time:", error);
+        }
+    });
+</script>
 </head>
 
 <body>
@@ -286,8 +324,8 @@ a:hover {
                         <div class="user-info text-start me-2">
                             <span class="user-name fw-bold d-block"> <c:out
                                     value="IP: ${sessionScope.ipAddress}" />
-                            </span> <span class="user-role d-block"> <c:out
-                                    value="Logged in at: ${sessionScope.loginTime}" />
+                            </span>  <span class="user-role d-block" id="loginTimeDisplay">
+                            Logged in at: <c:out value="${sessionScope.loginTime}" />
                             </span>
                         </div>
                     </a>

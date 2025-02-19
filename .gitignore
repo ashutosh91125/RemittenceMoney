@@ -27,6 +27,9 @@ HELP.md
 # Ignore target directory (for Maven/Gradle builds)
 target/
 
+# Ignore uploads directory (for Maven/Gradle builds)
+uploads/
+
 # Do not ignore the Maven wrapper jar
 !.mvn/wrapper/maven-wrapper.jar
 

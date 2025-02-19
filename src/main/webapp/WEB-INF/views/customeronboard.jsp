@@ -1083,7 +1083,7 @@
 												<div class="col-xl-4">
 													<div class="mb-4">
 														<label class="form-label">Annual Income Currency
-															Code<span class="text-danger">*</span>
+															<span class="text-danger">*</span>
 														</label>
 														<form:select path="annualIncomeCurrencyCode"
 															class="form-select" style="font-size: inherit;"

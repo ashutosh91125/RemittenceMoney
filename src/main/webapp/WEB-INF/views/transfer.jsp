@@ -1239,7 +1239,8 @@
 													id="paymentMode" name="paymentMode">
 													<option value="" disabled selected>Select Payment
 														Mode</option>
-													<option value="BANK">Bank Transfer</option>
+													<%-- <option value="BANK">Bank Transfer</option> --%>
+													<option value="CASH">CASH</option>
 												</select> <span id="paymentModeError" style="color: red;"></span>
 											</div>
 										</div>

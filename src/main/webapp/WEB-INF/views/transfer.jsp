@@ -432,7 +432,7 @@
 										<option value="" disabled="true" selected="true">Visa Type</option>
 										<option value="1">Employment</option>
 										<option value="2">Visitor</option>
-										<option value="3">MyKad</option>
+<!-- 										<option value="3">MyKad</option> -->
 								</select>
 							</div>
 						</div>
@@ -921,7 +921,7 @@
 											<div class="col-12 col-md-4">
 												<label class="form-label">Delivery Option<span
 													class="text-danger">*</span></label><select
-													data-select2-selector="icon" class="form-control"
+													class="form-select" style="font-size: inherit;"
 													name="beneficiaryDeliveryOption"
 													id="beneficiaryDeliveryOption">
 													<option value="">Select Delivery Option</option>
@@ -934,8 +934,8 @@
 											<div class="col-12 col-md-4">
 												<label class="form-label">Payout Country<span
 													class="text-danger">*</span></label> <select
-													data-select2-selector="icon" name="payOutCountry"
-													id="payOutCountry" class="form-control">
+													class="form-select" style="font-size: inherit;" name="payOutCountry"
+													id="payOutCountry" >
 													<option value="" disabled selected>Select Payout
 														Country</option>
 													<c:forEach var="country" items="${countryList}">
@@ -946,8 +946,7 @@
 											<div class="col-12 col-md-4">
 												<label class="form-label">Payout Currency<span
 													class="text-danger">*</span></label> <select name="currencies"
-													id="currencies" class="form-control"
-													data-select2-selector="icon">
+													id="currencies" class="form-select" style="font-size: inherit;">
 													<option value="" disabled selected>Select Currency</option>
 													<c:forEach var="currency" items="${currencyList}">
 														<option value="${currency.valueId}">${currency.description}</option>
@@ -959,9 +958,8 @@
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Bank<span
-														class="text-danger">*</span></label> <select class="form-control"
-														id="beneficiaryBank" name="beneficiaryBank"
-														data-select2-selector="icon">
+														class="text-danger">*</span></label> <select class="form-select" style="font-size: inherit;"
+														id="beneficiaryBank" name="beneficiaryBank">
 														<option value="" disabled selected>Select Bank</option>
 													</select> <span id="beneficiaryBankError" style="color: red;"></span>
 												</div>
@@ -969,9 +967,8 @@
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Branch<span
-														class="text-danger">*</span></label> <select class="form-control"
-														id="bankBranches" name="beneficiaryBranch"
-														data-select2-selector="icon">
+														class="text-danger">*</span></label> <select class="form-select" style="font-size: inherit;"
+														id="bankBranches" name="beneficiaryBranch">
 														<option value="" disabled selected>Select Branch</option>
 													</select> <span id="bankBranchesError" style="color: red;"></span>
 													<!-- <input type="text" class="form-control" id="branch"
@@ -981,9 +978,8 @@
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Account Type<span
-														class="text-danger">*</span></label> <select class="form-control"
-														id="beneficiaryAccountType" name="beneficiaryAccountType"
-														data-select2-selector="icon">
+														class="text-danger">*</span></label> <select class="form-select" style="font-size: inherit;"
+														id="beneficiaryAccountType" name="beneficiaryAccountType">
 														<option value="1">Savings</option>
 														<option value="2">Current</option>
 													</select> <span id="beneficiaryAccountTypeError" style="color: red;"></span>
@@ -1033,8 +1029,8 @@
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Beneficiary Type</label> <select
-														class="form-control" id="beneficiaryType"
-														name="beneficiaryType" data-select2-selector="icon">
+														class="form-select" style="font-size: inherit;" id="beneficiaryType"
+														name="beneficiaryType" >
 														<option value="Individual">Individual</option>
 														<option value="Company">Company</option>
 													</select>
@@ -1043,8 +1039,8 @@
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">Relation</label> <select
-														class="form-control" id="beneficiaryRelation"
-														name="beneficiaryRelation" data-select2-selector="icon">
+														class="form-select" style="font-size: inherit;" id="beneficiaryRelation"
+														name="beneficiaryRelation">
 														<option value="Spouse">Spouse</option>
 														<option value="Friend">Friend</option>
 													</select>
@@ -1123,7 +1119,7 @@
 													<label class="form-label">Nationality<span
 														class="text-danger">*</span></label> <select
 														name="beneficiaryNationality" id="beneficiaryNationality"
-														class="form-control" data-select2-selector="icon">
+														class="form-select" style="font-size: inherit;">
 														<option value="" disabled selected>Nationality</option>
 														<c:forEach var="country" items="${countryList}">
 															<option value="${country.valueId}">${country.description}</option>
@@ -1135,7 +1131,7 @@
 												<div class="mb-1">
 													<label class="form-label">Beneficiary State</label> <select
 														name="beneficiaryState" id="beneficiaryState"
-														class="form-control" data-select2-selector="icon">
+														class="form-select" style="font-size: inherit;">
 														<option value="" disabled selected>Select
 															Beneficiary State</option>
 														<c:forEach var="states" items="${stateList}">
@@ -1165,7 +1161,7 @@
 											<div class="col-12 col-md-4">
 												<div class="mb-1">
 													<label class="form-label">ID Type</label> <select
-														data-select2-selector="icon" class="form-control"
+														class="form-select" style="font-size: inherit;"
 														id="beneficiaryIdType" name="beneficiaryIdType">
 														<option value="NationalId">National ID</option>
 														<option value="Passport">Passport</option>
@@ -1205,7 +1201,7 @@
 													value="${userCountry}"> <label class="form-label">Pay
 													In Currency<span class="text-danger">*</span>
 												</label> <select name="payInCurrency" id="payInCurrency"
-													class="form-control" data-select2-selector="icon">
+													class="form-select" style="font-size: inherit;">
 													<c:forEach var="currency" items="${payInCurrKey}">
 														<option value="${currency.valueId}">${currency.description}</option>
 													</c:forEach>
@@ -1214,7 +1210,7 @@
 											<div class="col-xl-4">
 												<label class="form-label">Source of Fund<span
 													class="text-danger">*</span></label> <select
-													data-select2-selector="icon" class="form-control"
+													class="form-select" style="font-size: inherit;"
 													id="sourceOfFund" name="sourceOfFund">
 													<option value="">Select Source of Fund</option>
 													<option value="BUSINESS">Business</option>
@@ -1227,7 +1223,7 @@
 											<div class="col-xl-4">
 												<label class="form-label">Transaction Purpose<span
 													class="text-danger">*</span></label> <select
-													data-select2-selector="icon" class="form-control"
+													class="form-select" style="font-size: inherit;"
 													id="transactionPurpose" name="transactionPurpose">
 													<option value="">Select Transaction Purpose</option>
 													<option value="P52">Business travel</option>
@@ -1240,9 +1236,8 @@
 											</div>
 											<div class="col-xl-4">
 												<label class="form-label">Payment Mode<span
-													class="text-danger">*</span></label> <select class="form-control"
-													id="paymentMode" name="paymentMode"
-													data-select2-selector="icon">
+													class="text-danger">*</span></label> <select class="form-select" style="font-size: inherit;"
+													id="paymentMode" name="paymentMode">
 													<option value="" disabled selected>Select Payment
 														Mode</option>
 													<option value="BANK">Bank Transfer</option>

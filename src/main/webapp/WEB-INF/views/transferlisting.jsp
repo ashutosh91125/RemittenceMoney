@@ -96,13 +96,14 @@
                                     <table class="table table-hover" id="transfer-list">
                                         <thead>
                                             <tr>
-                                                 <th>Agent Location Id</th>
+                                                 <th>Agent Loc. Id</th>
                                                  <th style="display:none;">Branch</th>
                                                  <th style="display:none;">Staff</th>
-                                                 <th>Transaction Number</th>
+                                                 <th>Transaction No.</th>
                                                  <th>Date</th>
                                                  <th>PayIn Amount</th>
                                                  <th>PayOut Amount</th>
+                                                 <th>Customer Details</th>
                                                  <th>Beneficiary Details</th>
                                                  <th>Transaction State</th>
                                                  <th class="text-end">Actions</th>
@@ -118,6 +119,12 @@
                                                     <td>${transfer.transactionDateFormatted}</td>
                                                     <td>${transfer.payInCurrency} ${transfer.totalPayInAmount}</td>
                                                     <td>${transfer.currencies} ${transfer.payoutAmount}</td>
+                                                     <td>
+                                                     <div> ${transfer.ecrn}</div>
+                                                     <div> ${transfer.firstName}
+    														<c:if test="${not empty transfer.middleName}"> ${transfer.middleName}</c:if>
+   														 ${transfer.lastName}</div>	
+												   </td>
                                                     <td>
                                                         <div>${transfer.beneficiaryFirstName}${transfer.beneficiaryMiddleName} ${transfer.beneficiaryLastName}</div>
                                                         <div><span class="truncate-text" title="${transfer.beneficiaryBank}">${transfer.beneficiaryBank}</span></div>
@@ -219,17 +226,26 @@
 //             table.column(1).search(branchValue ? branchValue : '').draw();
 //             $('#transfer-list tbody').show();
 //         });
- $('#transactionBranchList').on('change', function () {
-        var branchValue = $(this).val();
-        if (!branchValue) {
-            $('#transfer-list tbody').hide(); // Hide table body if value is empty
-        } else {
-            table.column(1).search(branchValue).draw();
-            $('#transfer-list tbody').show(); // Show table body when a value is selected
-        }
-    });
-
-        $.ajax({
+//partially match
+//  $('#transactionBranchList').on('change', function () {
+//         var branchValue = $(this).val();
+//         if (!branchValue) {
+//             $('#transfer-list tbody').hide(); // Hide table body if value is empty
+//         } else {
+//             table.column(1).search(branchValue).draw();
+//             $('#transfer-list tbody').show(); // Show table body when a value is selected
+//         }
+//     });
+$('#transactionBranchList').on('change', function () {
+    var branchValue = $(this).val();
+    if (!branchValue) {
+        $('#transfer-list tbody').hide(); // Hide table body if no value selected
+    } else {
+        table.column(1).search('^' + $.fn.dataTable.util.escapeRegex(branchValue) + '$', true, false).draw();
+        $('#transfer-list tbody').show(); // Show table body only for exact match
+    }
+});
+    $.ajax({
             url: '/api/v1/staff/staff',
             type: 'GET',
             success: function (response) {
@@ -255,16 +271,25 @@
 //             table.column(2).search(staffValue ? staffValue : '').draw();
 //             $('#transfer-list tbody').show();
 //         });
-
- $('#transactionStaffList').on('change', function () {
-        var staffValue = $(this).val();
-        if (!staffValue) {
-            $('#transfer-list tbody').hide(); // Hide table body if value is empty
-        } else {
-            table.column(2).search(staffValue).draw();
-            $('#transfer-list tbody').show(); // Show table body when a value is selected
-        }
-    });
+//partially match
+//  $('#transactionStaffList').on('change', function () {
+//         var staffValue = $(this).val();
+//         if (!staffValue) {
+//             $('#transfer-list tbody').hide(); // Hide table body if value is empty
+//         } else {
+//             table.column(2).search(staffValue).draw();
+//             $('#transfer-list tbody').show(); // Show table body when a value is selected
+//         }
+//     });
+$('#transactionStaffList').on('change', function () {
+    var staffValue = $(this).val();
+    if (!staffValue) {
+        $('#transfer-list tbody').hide();
+    } else {
+        table.column(2).search('^' + $.fn.dataTable.util.escapeRegex(staffValue) + '$', true, false).draw();
+        $('#transfer-list tbody').show();
+    }
+});
 
         </c:if>
         <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')}">
@@ -302,85 +327,46 @@
 //             table.column(0).search(agentValue ? agentValue : '').draw();
 //             $('#transfer-list tbody').show();
 //         });
- $('#transactionAgentList').on('change', function () {
-        var agentValue = $(this).val();
-        if (!agentValue) {
-            $('#transfer-list tbody').hide(); // Hide table body if value is empty
-        } else {
-            table.column(0).search(agentValue).draw();
-            $('#transfer-list tbody').show(); // Show table body when a value is selected
-        }
-    });
-        </c:if>
- /*        <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')} || pageContext.request.isUserInRole('AGENT')}">
-        const dropdowns1 = `<select id="transactionBranchList" class="form-control" style="width: 200px; height: 43px;"></select>
-            &nbsp;&nbsp;
-            <select id="transactionStaffList" class="form-control" style="width: 200px; height: 43px;"></select>
-        `;
-         $('.col-md-6').css({ display: 'flex', justifyContent: 'space-between' }).prepend(dropdowns1);
-
-        $.ajax({
-            url: '/api/v1/branch/branches',
-            type: 'GET',
-            success: function (response) {
-                if (Array.isArray(response)) {
-                    var dropdown = $('#transactionBranchList');
-                    dropdown.empty();
-                    dropdown.append('<option value="">Select Branch</option>');
-                    $.each(response, function (index, item) {
-                        dropdown.append('<option value="' + item.id + '">' + item.branchName + '</option>');
-                    });
-                } else {
-                    alert('Failed to load branches. Response format is incorrect.');
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error('Error fetching branches:', error);
-                alert('Error fetching branch list.');
-            }
-        });
-        $('#transactionBranchList').on('change', function () {
-            var branchValue = $(this).val();
-            table.column(1).search(branchValue ? branchValue : '').draw();
-        });
-
-
-        $.ajax({
-            url: '/api/v1/staff/staff',
-            type: 'GET',
-            success: function (response) {
-                if (Array.isArray(response)) {
-                    var dropdown = $('#transactionStaffList');
-                    dropdown.empty();
-                    dropdown.append('<option value="">Select Staff</option>');
-                    $.each(response, function (index, item) {
-                        dropdown.append('<option value="' + item.id + '">' + item.firstName + '</option>');
-                    });
-                } else {
-                    alert('Failed to load staff. Response format is incorrect.');
-                }
-            },
-            error: function (xhr, status, error) {
-                console.error('Error fetching staff:', error);
-                alert('Error fetching staff list.');
-            }
-        });
-        
-        $('#transactionStaffList').on('change', function () {
-            var staffValue = $(this).val();
-            table.column(2).search(staffValue ? staffValue : '').draw();
-        });
-        </c:if> */ 
-        $('.dataTables_filter input').on('input', function () {
-            var searchValue = $(this).val().trim();
-            table.search(searchValue).draw();
+//partially match
+//  $('#transactionAgentList').on('change', function () {
+//         var agentValue = $(this).val();
+//         if (!agentValue) {
+//             $('#transfer-list tbody').hide(); // Hide table body if value is empty
+//         } else {
+//             table.column(0).search(agentValue).draw();
+//             $('#transfer-list tbody').show(); // Show table body when a value is selected
+//         }
+//     });
+$('#transactionAgentList').on('change', function () {
+    var agentValue = $(this).val();
+    if (!agentValue) {
+        $('#transfer-list tbody').hide();
+    } else {
+        table.column(0).search('^' + $.fn.dataTable.util.escapeRegex(agentValue) + '$', true, false).draw();
+        $('#transfer-list tbody').show();
+    }
+});       </c:if>
+//partially match
+//         $('.dataTables_filter input').on('input', function () {
+//             var searchValue = $(this).val().trim();
+//             table.search(searchValue).draw();
             
-            if (searchValue === "") {
-                $('#transfer-list tbody').hide(); // Hide table body if search is empty
-            } else {
-                $('#transfer-list tbody').show(); // Show table body when searching
-            }
-        });
+//             if (searchValue === "") {
+//                 $('#transfer-list tbody').hide(); // Hide table body if search is empty
+//             } else {
+//                 $('#transfer-list tbody').show(); // Show table body when searching
+//             }
+//         });
+$('.dataTables_filter input').on('input', function () {
+    var searchValue = $(this).val().trim();
+    if (searchValue === "") {
+        $('#transfer-list tbody').hide();
+    } else {
+        table.search('^' + $.fn.dataTable.util.escapeRegex(searchValue) + '$', true, false).draw();
+        $('#transfer-list tbody').show();
+    }
+});
+
 
         $('#transfer-list').on('click', '.transactionLogo', function () {
             var transactionRefNumber = $(this).closest('tr').find('#transactionRefNumberCell').text().trim();

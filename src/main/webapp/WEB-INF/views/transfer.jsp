@@ -823,11 +823,7 @@
 										</div>
 										<div class="col-8"
 											style="display: flex; justify-content: end;">
-											<h6 style="padding: inherit;">Customer Creation</h6>
-											<button onclick="addIdentity()"
-												class="avatar-text avatar-md bg-primary text-white">
-												<i class="feather-plus"></i>
-											</button>
+											<button onclick="addIdentity()"class="btn btn-primary" ><i class="feather-plus"></i>Add New Id </button>
 										</div>
 										<div id="idDetails">
 											<div class="row p-3"

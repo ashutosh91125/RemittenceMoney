@@ -11,13 +11,12 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
 </head>
 
 <body>
 
         <jsp:include page="header.jsp"></jsp:include>
-
-
     <div class="nxl-container" >
         <div class="page-header">
             <div class="page-header-left d-flex align-items-center">
@@ -40,7 +39,7 @@
             </div>
         </div>
 
-        <div class="nxl-content" style="margin-top: -89px;">
+        <div class="nxl-content">
             <div class="main-content">
                 <div class="row">
                     <div class="col-lg-12">

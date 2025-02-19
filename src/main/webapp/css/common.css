@@ -31,3 +31,7 @@
 .nxl-container {
 	background: aliceblue;
 }
+
+.nxl-container .page-header + .nxl-content {
+  padding-top: 0px !important;
+}

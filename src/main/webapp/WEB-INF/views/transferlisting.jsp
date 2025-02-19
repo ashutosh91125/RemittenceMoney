@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/theme.min.css">
+    <link rel="stylesheet" type="text/css" href="css/common.css">
     <style type="text/css">
    .truncate-text {
         display: inline-block;
@@ -86,7 +87,7 @@
         </div>
  
         <!-- Table Section -->
-        <div class="nxl-content p-3">
+        <div class="nxl-content">
             <div class="main-content">
                 <div class="row">
                     <div class="col-lg-12">

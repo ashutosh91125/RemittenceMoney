@@ -178,9 +178,9 @@ function toggleRemarks() {
                 outletCode.val("N/A").prop('disabled', true); // For input text field
             } else {
                 // Reset the fields if branch mode is not "Head Office"
-                branchType.val("").prop('disabled', false).trigger('change');
-                cdpChannel.val("").prop('disabled', false).trigger('change');
-                raasChannel.val("").prop('disabled', false).trigger('change');
+//                 branchType.val("").prop('disabled', false).trigger('change');
+//                 cdpChannel.val("").prop('disabled', false).trigger('change');
+//                 raasChannel.val("").prop('disabled', false).trigger('change');
 //                  outletCode.val("").prop('disabled', false); // Re-enable text field
             }
         }

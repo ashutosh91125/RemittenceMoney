@@ -167,45 +167,46 @@ function updateAgent() {
         }
     });
 }
-$(document).ready(function() {
-$('#countries').on('change', function() {
-    let countryDependent = $(this).val();
-    $('#currencies').empty().append('<option value="" disabled selected>Select Currency</option>');
-    
-    if (countryDependent) {
-        let currencyDependent = countryDependent + "C";
-        $.ajax({
-            url: '/api/enumEntities/dependent',
-            type: 'GET',
-            data: { dependent: currencyDependent },
-            success: function(data) {
-                $.each(data, function(index, enumValue) {
-                    $('#currencies').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                });
-            },
-            error: function() {
-                console.error("Error fetching currencies for the selected country.");
-            }
-        });
-    }
-$('#state').empty().append('<option value="" disabled selected>Select State</option>');     
-    if (countryDependent) {
-        let currencyDependent = countryDependent;
-        $.ajax({
-            url: '/api/enumEntities/dependent',
-            type: 'GET',
-            data: { dependent: currencyDependent },
-            success: function(data) {
-                $.each(data, function(index, enumValue) {
-                    $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
-                });
-            },
-            error: function() {
-                console.error("Error fetching currencies for the selected country.");
-            }
-        });
-    }
-});
+document.addEventListener("DOMContentLoaded", function () {
+	$('#countries').on('change', function() {
+	    let countryDependent = $(this).val();
+	   
+	    
+	    if (countryDependent) {
+	        let currencyDependent = countryDependent + "C";
+	        $.ajax({
+	            url: '/api/enumEntities/dependent',
+	            type: 'GET',
+	            data: { dependent: currencyDependent },
+	            success: function(data) {
+	            	console.log(data);
+	                $.each(data, function(index, enumValue) {
+	                    $('#currencies').empty().append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+	                });
+	            },
+	            error: function() {
+	                console.error("Error fetching currencies for the selected country.");
+	            }
+	        });
+	    }
+	$('#state').empty().append('<option value="" disabled selected>Select State</option>');     
+	    if (countryDependent) {
+	        let currencyDependent = countryDependent;
+	        $.ajax({
+	            url: '/api/enumEntities/dependent',
+	            type: 'GET',
+	            data: { dependent: currencyDependent },
+	            success: function(data) {
+	                $.each(data, function(index, enumValue) {
+	                    $('#state').append('<option value="' + enumValue.valueId + '">' + enumValue.description + '</option>');
+	                });
+	            },
+	            error: function() {
+	                console.error("Error fetching currencies for the selected country.");
+	            }
+	        });
+	    }
+	});
 });
 function toggleRemarks() {
     
@@ -705,7 +706,7 @@ function validateLengthWithMaxMessage(inputId, maxLength, errorId) {
 												<div class="mb-4">
 													<label class="form-label">Settlement Type<span
 														class="text-danger">*</span></label>
-													<form:select path="settlementType" class="form-select" id="settlementType">
+													<form:select path="settlementType" class="form-select" id="settlementType" style="font-size: inherit;">
 														<form:option value="" disabled="true" selected="true">Select Settlement Type</form:option>
 														<form:option value="Pre-Funding">Pre-Funding</form:option>
 														<form:option value="Post-Funding">Post-Funding</form:option>

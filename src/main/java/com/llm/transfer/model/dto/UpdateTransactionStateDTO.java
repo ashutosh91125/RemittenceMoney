@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UpdateTransactionStateDTO {
-    @JsonProperty("transaction_reference_number")
+    @JsonProperty("transaction_ref_number")
     private String transactionReferenceNumber;
     @JsonProperty("state")
     private String transactionState;

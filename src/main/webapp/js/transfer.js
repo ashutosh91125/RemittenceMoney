@@ -1280,7 +1280,7 @@ function getQuote() {
                     const selectedValueId = payInCurrencySelect.options[payInCurrencySelect.selectedIndex]?.value || '';
                     document.getElementById('selectedPayInCurrency').textContent = '(' + selectedValueId + ')';
             };
-            $(document).ready(function () {
+/*            $(document).ready(function () {
 
                     const currencySelect = $('#currencies');
 
@@ -1294,7 +1294,17 @@ function getQuote() {
                         console.log('Selected value (Select2):', selectedValue);
                         $('#selectedPayoutCurrency').text(selectedValue ? '(' + selectedValue +')' : 'None');
                     });
-                });
+                });*/
+				document.addEventListener("DOMContentLoaded", function () {
+							    const currencySelect = document.getElementById("currencies");
+
+							    currencySelect.addEventListener("change", function () {
+							        console.log("Dropdown changed!");
+							        const selectedValue = currencySelect.value;
+							        console.log("Selected value:", selectedValue);
+							        document.getElementById("selectedPayoutCurrency").textContent = selectedValue ? "(" + selectedValue + ")" : "None";
+							    });
+							});
 document.addEventListener('DOMContentLoaded', function () {
     const accountNumber = document.getElementById("accountNo");
     const confirmAccountNumber = document.getElementById("confirmAccountNo");

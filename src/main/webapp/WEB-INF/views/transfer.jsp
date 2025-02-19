@@ -901,6 +901,9 @@
 																		<th>Beneficiary Full Name</th>
 																		<th>Bank Name</th>
 																		<th>Account Number</th>
+																		<th>Delivery Option</th>
+																		<th>Payout Country</th>
+																		<th>Payout Currency</th>
 																		<th>Status</th>
 																		<th>Action</th>
 																	</tr>

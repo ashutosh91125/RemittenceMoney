@@ -305,7 +305,6 @@ $(document).ready(function () {
 		        type: 'GET',
 		        success: function (response) {
 		            if (response.success && response.data?.length > 0) {
-		                console.log("Beneficiaries fetched successfully:", response.data);
 		                let tableBody = $('#search-result1 tbody');
 		                tableBody.empty();
 
@@ -316,19 +315,23 @@ $(document).ready(function () {
 		                        type: 'GET',
 		                        success: function (bankResponse) {
 		                            let bankName = bankResponse?.bankName || "Unknown Bank";
-									console.log(bankName,"search-result1");
 									let statusText = beneficiary.status ? 'Active' : 'Inactive';
+									fetchEnumValue('country',beneficiary.payOutCountry, function (countryName) {
 									let row = `<tr data-beneficiary-id="${beneficiary.id}">
 									                                <td class="clickable" onmouseover="this.style.cursor='pointer';this.style.color='#263cab'"
 																		onmouseout="this.style.color='#303030'">${beneficiary.fullName}</td>
 									                                <td>${bankName}</td>
 									                                <td>${beneficiary.beneficiaryAccountNo}</td>
+																	<td>${beneficiary.beneficiaryDeliveryOption}</td>
+																	<td>${countryName}</td>
+																	<td>${beneficiary.currencies}</td>
 																	<td>${statusText}</td>
 																	<td class="text-end" onclick="openPopupForBeneficiary('${beneficiary.id}', ${beneficiary.status})">
 																	<i class="bi bi-pencil-square"></i>
 																	</td>
 									                            </tr>`;
 		                            tableBody.append(row);
+									});
 		                        },
 		                        error: function () {
 		                            console.error("Error fetching bank name for bank ID:", beneficiary.beneficiaryBank);

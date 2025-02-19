@@ -67,7 +67,9 @@ public class BeneficiaryServiceImpl implements BeneficiaryService {
                 beneficiary.getId(),
                 beneficiary.getEcrn(),
                 fullName,beneficiary.getBeneficiaryAccountNo(), // Assuming this field exists in BeneficiaryDetails
-                beneficiary.getBeneficiaryBank(),beneficiary.getStatus()
+                beneficiary.getBeneficiaryBank(),beneficiary.getStatus(),
+                beneficiary.getBeneficiaryDeliveryOption(),
+                beneficiary.getPayOutCountry(), beneficiary.getCurrencies()
         );
     }
 

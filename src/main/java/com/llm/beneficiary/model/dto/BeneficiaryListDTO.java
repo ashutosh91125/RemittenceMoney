@@ -16,6 +16,9 @@ public class BeneficiaryListDTO {
     private String beneficiaryAccountNo;
     private String beneficiaryBank;
     private Boolean status;
+    private String beneficiaryDeliveryOption;
+	private String payOutCountry;
+	private String currencies;
     
    
     

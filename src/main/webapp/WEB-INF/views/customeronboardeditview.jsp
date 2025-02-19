@@ -448,7 +448,7 @@ $.ajax({
 										<div class="col-xl-4">
 											<div class="mb-4">
 												<label class="form-label">Customer Status</label> <input
-													name="amlScanStatus" type="text"
+													name="customerStatus" type="text"
 													value="${customer.customerStatus}" class="form-control"
 													placeholder="Customer Status" disabled="true" />
 											</div>

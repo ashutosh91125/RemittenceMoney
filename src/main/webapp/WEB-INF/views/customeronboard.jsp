@@ -242,6 +242,8 @@
 													<th>Email</th>
 													<th>Country</th>
 													<th>Gender</th>
+													<th>AML Status</th>
+													<th>Customer Status</th>
 
 													<th class="text-end">Actions</th>
 												</tr>
@@ -258,6 +260,8 @@
 														<td>${customer.emailId}</td>
 														<td>${customer.countryOfResidence }</td>
 														<td>${customer.gender }</td>
+														<td>${customer.amlScanStatus }</td>
+														<td>${customer.customerStatus }</td>
 														<td><div style="display: flex; justify-content: end;">
 																<a href="customerdetails?ecrn=${customer.ecrn}"
 																	class="avatar-text avatar-md" title="view"> <i

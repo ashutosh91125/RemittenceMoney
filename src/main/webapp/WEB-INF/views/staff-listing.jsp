@@ -55,6 +55,7 @@
                                         <thead>
                                             <tr>
                                                 <th>S.No</th>
+                                                <th  style="display:none;">agent</th>
                                                 <th>Staff Name</th>
                                                 <th>Username</th>
                                                 <th>Email</th>
@@ -68,6 +69,7 @@
                                             <c:forEach var="staffDetails" items="${staffDetailsList}" varStatus="status">
                                                 <tr>
                                                     <td>${status.index + 1}</td>
+                                                    <td  style="display:none;">${staffDetails.branchLocationId}</td>
                                                     <td>${staffDetails.firstName} ${staffDetails.lastName}</td>
                                                     <td>${staffDetails.username}</td>
                                                     <td>${staffDetails.email}</td>
@@ -120,30 +122,63 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('#staffDetailsList').DataTable({
-                "pageLength": 10,
-                "ordering": true,
-                "searching": true,
-                "paging": true,
-                "info": true,
-                "language": {
-                    "emptyTable": "No data available",
-                    "info": "Showing _START_ to _END_ of _TOTAL_ entries",
-                    "infoEmpty": "No entries available",
-                    "paginate": {
-                        "previous": "Previous",
-                        "next": "Next"
+    $(document).ready(function() {
+        var table = $('#staffDetailsList').DataTable({
+            "pageLength": 10,
+            "ordering": true,
+            "searching": true,
+            "paging": true,
+            "info": true,
+            "language": {
+                "emptyTable": "No data available",
+                "info": "Showing _START_ to _END_ of _TOTAL_ entries",
+                "infoEmpty": "No entries available",
+                "paginate": {
+                    "previous": "Previous",
+                    "next": "Next"
+                }
+            },
+            "dom": "<'row'<'col-md-2'l><'col-md-6'B><'col-md-4'f>>tp",
+            "columnDefs": [{
+                "orderable": false,
+                "targets": -1
+            }]
+        });
+
+        <c:if test="${pageContext.request.isUserInRole('ADMIN') || pageContext.request.isUserInRole('SUB_ADMIN')}">
+            $('.col-md-6').css({ display: 'flex' }).prepend('<select id="agentList" class="form-control" style="width: 200px; height: 43px;"><option value="">Select Agent</option></select>');
+
+            $.ajax({
+                url: '/api/v1/agent/agents',
+                type: 'GET',
+                success: function (response) {
+                    if (Array.isArray(response)) {
+                        var dropdown = $('#agentList');
+                        dropdown.empty();
+                        dropdown.append('<option value="">Filter by Agent</option>');
+                        $.each(response, function (index, item) {
+                            dropdown.append('<option value="' + item.branchLocationId + '">' + item.agentName + '</option>');
+                        });
+                    } else {
+                        alert('Failed to load agents. Response format is incorrect.');
                     }
                 },
-                "columnDefs": [
-                    {
-                        "orderable": false,
-                        "targets": -1
-                    }
-                ]
+                error: function (xhr, status, error) {
+                    console.error('Error fetching agents:', error);
+                    alert('Error fetching agent list.');
+                }
             });
-        });
+
+            $('#agentList').on('change', function() {
+                var selectedAgent = $(this).val();
+                if (selectedAgent) {
+                    table.column(1).search(selectedAgent).draw(); 
+                } else {
+                    table.column(1).search('').draw(); 
+                }
+            });
+        </c:if>
+    });
     </script>
   
 

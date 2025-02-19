@@ -91,39 +91,29 @@ a:hover {
 </style>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        let utcTime = "${sessionScope.loginTime}"; // Get UTC time from session
+        let loginTimeUTC = "<c:out value='${sessionScope.loginTime}' />";
+        if (loginTimeUTC) {
+            let loginDate = new Date(loginTimeUTC);
 
-        console.log("Raw login time from session:", utcTime); // Debugging
-
-        if (!utcTime || utcTime.trim() === "") {
-            console.error("No login time found.");
-            return;
-        }
-
-        try {
-            // Convert UTC time string to Date object
-            let date = new Date(utcTime);
-
-            console.log("Parsed Date Object:", date); // Debugging
-
-            // Convert to user's local timezone
+            // Format to desired output
             let options = {
-                day: '2-digit', month: 'short', year: 'numeric',
-                hour: '2-digit', minute: '2-digit', second: '2-digit',
-                hour12: true, timeZoneName: 'short'
+                year: 'numeric',
+                month: 'short',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: true,
+                timeZoneName: 'short'
             };
 
-            let formattedDate = date.toLocaleString(undefined, options)
-                .replace(',', '') // Remove comma
-                .replace(/\s(AM|PM)$/, ' $1'); // Ensure AM/PM spacing
+            let localTime = loginDate.toLocaleString('en-US', options);
 
-            console.log("Formatted Login Time:", formattedDate); // Debugging
+            // Extract timezone offset correctly
+            let timeZoneOffset = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-            // Set formatted time
-            document.getElementById("loginTimeDisplay").innerText =
-                "Logged in at: " + formattedDate;
-        } catch (error) {
-            console.error("Error parsing login time:", error);
+            // Set formatted time in the span
+            document.getElementById("loginTimeDisplay").innerHTML = "Logged in at: " + localTime + " (" + timeZoneOffset + ")";
         }
     });
 </script>

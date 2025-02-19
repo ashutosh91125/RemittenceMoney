@@ -10,10 +10,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 
@@ -38,11 +35,11 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             fetchRole = "LULU STAFF";
         }
 
-        DateTimeFormatter isoFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ssXXX");
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_INSTANT;
 
         request.getSession().setAttribute("roleName", fetchRole);
         request.getSession().setAttribute("loggedInUser", user.getAdminName());
-        request.getSession().setAttribute("loginTime", ZonedDateTime.now(ZoneId.of("UTC")).format(isoFormatter));
+        request.getSession().setAttribute("loginTime", Instant.now().toString());
         request.getSession().setAttribute("ipAddress", request.getRemoteAddr());
 
         if (user.isFirstLogin()) {

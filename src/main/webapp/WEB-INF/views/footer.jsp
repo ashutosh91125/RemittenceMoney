@@ -13,7 +13,7 @@
 		</div>	
 	</footer> -->
 	
-	<footer class="footer d-flex justify-content-center align-items-center" style="position: absolute;  width: 100%; color: white; text-align: center;bottom: 0;">
+	<footer class="footer d-flex justify-content-center align-items-center" style="position: absolute;width: 100%;color: white;text-align: center;bottom: -59px;">
     <p class="fs-11 text-muted fw-medium text-uppercase mb-0 copyright">
         <span class="d-inline-block">Lulu Money (Malaysia) Sdn. Bhd</span>
     </p>

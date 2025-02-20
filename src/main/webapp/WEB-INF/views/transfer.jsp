@@ -1309,26 +1309,26 @@
 							</div>
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center"
+					<div class="mt-3 mb-3 text-center"
 						style="display: flex; justify-content: center">
 						<span id="validationError"
 							style="color: #ff000087; display: none;"><b>Please
 								fill all the required fields before submitting!</b></span>
 					</div>
-					<div class="mt-5 mb-5 text-center"
+					<div class="mt-3 mb-3 text-center"
 						style="display: flex; justify-content: center">
 						<div id="createQuote">
 							<button type="button" id="quoteButton" onclick="getQuote()"
-								class="btn btn-warning">Proceed</button>
+								class="btn btn-warning mb-3">Proceed</button>
 							<div id="quoteMessage"
 								style="font-weight: bold; color: #10181166;"></div>
 							<input type="hidden" id="quoteId" />
 						</div>
 					</div>
-					<div class="mt-5 mb-5 text-center"
+					<div class="mt-3 mb-3 text-center"
 						style="display: flex; justify-content: center">
 						<button type="button" onclick="createTransaction()"
-							class="btn btn-primary" id="createTransactionSection"
+							class="btn btn-primary mb-3" id="createTransactionSection"
 							style="display: none;">Submit</button>
 						<div id="transactionMessage"
 							style="color: green; font-weight: bold;"></div>

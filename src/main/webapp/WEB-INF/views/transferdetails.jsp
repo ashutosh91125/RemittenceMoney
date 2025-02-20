@@ -867,11 +867,11 @@
 						</div>
 					</div>
 				</div>
-				<div class="mt-5 mb-5 text-center"
+				<div class="mt-3 mb-3 text-center"
 					style="display: flex; justify-content: center">
 					<div>
 						<button type="button" id="viewReceiptButton"
-							onclick="viewReceipt()" class="btn btn-warning">View
+							onclick="viewReceipt()" class="btn btn-warning mb-3">View
 							Receipt</button>
 					</div>
 				</div>

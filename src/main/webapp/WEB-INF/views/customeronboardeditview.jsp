@@ -1128,9 +1128,9 @@ $.ajax({
 					</div>
 
 				</div>
-				<div class="mt-5 mb-5 text-center"
+				<div class="mt-3 mb-3 text-center"
 					style="display: flex; justify-content: center">
-					<button type="button" class="btn btn-warning" id="updateButton">Update</button>
+					<button type="button" class="btn btn-warning mb-3" id="updateButton">Update</button>
 				</div>
 			</form>
 		</div>

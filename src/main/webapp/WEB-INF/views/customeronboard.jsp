@@ -1305,7 +1305,7 @@
 				</div>
 				<div class="mt-5 mb-5 text-center"
 					style="display: flex; justify-content: center">
-					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="submit" class="btn btn-primary mb-3">Submit</button>
 				</div>
 			</form:form>
 		</div>
